@@ -1,0 +1,10 @@
+{
+    "packages": {
+        "approvedOrgs": [
+            "Microsoft",
+            "LEGO"
+        ],
+        "approvedRepos": [
+        ]
+    }
+}

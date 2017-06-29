@@ -1,0 +1,17 @@
+{
+    "name": "core",
+    "description": "The core library",
+    "files": [
+        "README.md",
+        "pxt.h",
+        "pxtcore.h",
+        "ns.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "dependencies": {
+        "base": "file:../base"
+    }
+}

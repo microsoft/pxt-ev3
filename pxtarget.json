@@ -1,0 +1,136 @@
+{
+    "id": "ev3",
+    "platformid": "linux",
+    "nickname": "lego",
+    "name": "LEGO Mindstorms EV3",
+    "title": "LEGO Mindstorms EV3 - Blocks / Javascript editor",
+    "description": "A Blocks / JavaScript code editor for the LEGO Mindstorms EV3.",
+    "corepkg": "ev3",
+    "bundleddirs": [
+        "libs/base",
+        "libs/core",
+        "libs/ev3"
+    ],
+    "simulator": {
+        "autoRun": true,
+        "streams": true,
+        "aspectRatio": 1.0,
+        "parts": false,
+        "enableTrace": true
+    },
+    "cloud": {
+        "workspace": false,
+        "packages": true,
+        "sharing": true,
+        "publishing": true,
+        "importing": false,
+        "preferredPackages": [],
+        "githubPackages": true
+    },
+    "compile": {
+        "isNative": true,
+        "useUF2": true,
+        "hasHex": true,
+        "deployDrives": ".*",
+        "deployFileMarker": "INFO_UF2.TXT",
+        "driveName": "LEGO",
+        "flashCodeAlign": 256,
+        "floatingPoint": true,
+        "taggedInts": true
+    },
+    "runtime": {
+        "mathBlocks": true,
+        "loopsBlocks": true,
+        "logicBlocks": true,
+        "variablesBlocks": true,
+        "textBlocks": true,
+        "listsBlocks": true,
+        "functionBlocks": true,
+        "onStartNamespace": "loops",
+        "onStartColor": "#40bf4a"
+    },
+    "compileService": {
+        "buildEngine": "dockermake",
+        "serviceId": "ev3"
+    },
+    "appTheme": {
+        "accentColor": "#0089BF",
+        "logoUrl": "https://lego.makecode.com",
+        "logo": "./static/logo.svg",
+        "docsLogo": "./static/logo.square.svg",
+        "portraitLogo": "./static/logo.square.svg",
+        "footerLogo": "./static/logo.square.svg",
+        "cardLogo": "./static/icons/android-chrome-192x192.png",
+        "appLogo": "./static/icons/android-chrome-192x192.png",
+        "organization": "Microsoft MakeCode",
+        "organizationUrl": "https://makecode.com/",
+        "organizationLogo": "./static/Microsoft-logo_rgb_c-gray-square.png",
+        "organizationWideLogo": "./static/Microsoft-logo_rgb_c-white.png",
+        "homeUrl": "https://lego.makecode.com/",
+        "embedUrl": "https://lego.makecode.com/",
+        "privacyUrl": "https://go.microsoft.com/fwlink/?LinkId=521839",
+        "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
+        "githubUrl": "https://github.com/Microsoft/pxt-ev3",
+        "boardName": "LEGO Mindstorms EV3 Brick",
+        "docMenu": [
+            {
+                "name": "About",
+                "path": "/about"
+            },
+            {
+                "name": "Examples",
+                "path": "#projects:Examples"
+            },
+            {
+                "name": "Blocks",
+                "path": "/blocks"
+            },
+            {
+                "name": "JavaScript",
+                "path": "/javascript"
+            },
+            {
+                "name": "Reference",
+                "path": "/reference"
+            },
+            {
+                "name": "Buy",
+                "path": "https://www.lego.com/en-us/mindstorms/products/mindstorms-ev3-31313"
+            }
+        ],
+        "galleries": {
+            "Make": "projects",
+            "Examples": "examples"
+        },
+        "sideDoc": "tutorials/getting-started",
+        "invertedMenu": true,
+        "invertedToolbox": true,
+        "invertedMonaco": true,
+        "monacoToolbox": true,
+        "simAnimationEnter": "roll in",
+        "simAnimationExit": "roll out",
+        "exampleGallery": "examples",
+        "hasAudio": true,
+        "usbHelp": [],
+        "extendEditor": true,
+        "disableBlockIcons": true,
+        "blocklyOptions": {
+            "grid": {
+                "spacing": 20,
+                "length": 2,
+                "colour": "rgba(189, 195, 199, 0.20)",
+                "snap": true
+            }
+        },
+        "blockColors": {
+            "loops": "#40bf4a",
+            "logic": "#4cbfe6",
+            "math": "#9966ff",
+            "variables": "#FF6680",
+            "text": "#ffab19",
+            "advanced": "#00272B",
+            "functions": "#005a9e",
+            "arrays": "#8A1C7C"
+        }
+    }
+}

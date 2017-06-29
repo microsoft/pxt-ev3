@@ -1,0 +1,13 @@
+{
+    "name": "ev3",
+    "description": "The EV3 library",
+    "files": [
+        "README.md",
+        "ns.ts"
+    ],
+    "dependencies": {
+        "base": "file:../base",
+        "core": "file:../core"
+    },
+    "public": true
+}
