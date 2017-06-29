@@ -1,6 +1,6 @@
 include Makefile.inc
 
-COMMON_FLAGS = -W -Wall -Ipxtapp -fwrapv -fno-threadsafe-statics 
+COMMON_FLAGS = -W -Wall -Wno-unused-parameter -Ipxtapp -fwrapv -fno-threadsafe-statics 
 CFLAGS = $(COMMON_FLAGS) -std=c99
 CXXFLAGS = $(COMMON_FLAGS) -std=c++11 -fno-rtti -fno-exceptions -fno-unwind-tables
 LDFLAGS = -Wl,--gc-sections -Wl,--sort-common -Wl,--sort-section=alignment

@@ -6,6 +6,7 @@
         "Makefile",
         "pxt.h",
         "pxtcore.h",
+        "linux.cpp",
         "ns.ts"
     ],
     "testFiles": [
