@@ -3,6 +3,7 @@
     "description": "The core library",
     "files": [
         "README.md",
+        "Makefile",
         "pxt.h",
         "pxtcore.h",
         "ns.ts"
