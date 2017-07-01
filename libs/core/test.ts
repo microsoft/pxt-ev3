@@ -3,9 +3,11 @@ let f = 0.5
 let plus = i + f
 let minus = i - f
 
-let r = Math.random()
-let ri = Math.randomRange(5, 10)
+while (true) {
+    let r = Math.random()
+    serial.writeValue("R", r)
+    loops.pause(1000)
+}
 
-loops.forever(() => {
-    loops.pause(100)
-})
+//loops.forever(() => {
+//})

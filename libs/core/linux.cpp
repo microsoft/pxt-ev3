@@ -4,6 +4,18 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <time.h>
+#include <cstdarg>
+
+void dmesg(const char *format, ...) {
+    char buf[500];
+
+    va_list arg;
+    va_start(arg, format);
+    vsnprintf(buf, sizeof(buf), format, arg);
+    va_end(arg);
+
+    fprintf(stderr, "DMESG: %s\n", buf);
+}
 
 namespace pxt {
 
@@ -73,5 +85,4 @@ uint32_t afterProgramPage() {
 void dumpDmesg() {
     // TODO
 }
-
 }
