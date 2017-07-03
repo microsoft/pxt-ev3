@@ -92,21 +92,25 @@ void stopUser() {
     pthread_mutex_unlock(&execMutex);
 }
 
-void sleep_ms(uint32_t ms) {
-    stopUser();
-
+void sleep_core_ms(uint32_t ms) {
     struct timespec ts;
     ts.tv_sec = ms / 1000;
     ts.tv_nsec = (ms % 1000) * 1000000;
     while (nanosleep(&ts, &ts))
         ;
+}
 
-    startUser();
+void sleep_ms(uint32_t ms) {
+    if (execThread == pthread_self()) {
+        stopUser();
+        sleep_core_ms(ms);
+        startUser();
+    } else {
+        sleep_core_ms(ms);
+    }
 }
 
 void sleep_us(uint64_t us) {
-    checkUserMode();
-
     if (us > 10000) {
         sleep_ms(us / 1000);
     }
