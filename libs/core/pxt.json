@@ -13,8 +13,7 @@
         "test.ts"
     ],
     "npmDependencies": {
-      "pxt-linux-ev3-api": "1.0.0",
-      "pxt-linux-pth": "2.0.7"
+      "pxt-linux-ev3-api": "1.0.0"
     },
     "public": true,
     "dependencies": {
