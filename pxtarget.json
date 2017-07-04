@@ -29,14 +29,15 @@
     },
     "compile": {
         "isNative": true,
-        "useUF2": true,
+        "useELF": true,
         "hasHex": true,
         "deployDrives": ".*",
         "deployFileMarker": "INFO_UF2.TXT",
         "driveName": "LEGO",
         "flashCodeAlign": 256,
         "floatingPoint": true,
-        "taggedInts": true
+        "taggedInts": true,
+        "stackAlign": 2
     },
     "runtime": {
         "mathBlocks": true,
