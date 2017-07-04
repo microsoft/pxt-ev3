@@ -28,9 +28,7 @@ static int startTime;
 static std::map<std::pair<int, int>, Action> handlersMap;
 
 static pthread_mutex_t execMutex;
-static pthread_t execThread;
 static pthread_cond_t newEventBroadcast;
-static pthread_mutex_t newEventMutex;
 
 struct Thread {
     struct Thread *next;
@@ -76,49 +74,33 @@ extern "C" void target_reset() {
     exit(0);
 }
 
-void checkUserMode() {
-    assert(execThread == pthread_self());
-}
-
 void startUser() {
-    assert(execThread != pthread_self());
     pthread_mutex_lock(&execMutex);
-    execThread = pthread_self();
 }
 
 void stopUser() {
-    assert(execThread == pthread_self());
-    execThread = 0;
     pthread_mutex_unlock(&execMutex);
 }
 
-void sleep_core_ms(uint32_t ms) {
-    struct timespec ts;
-    ts.tv_sec = ms / 1000;
-    ts.tv_nsec = (ms % 1000) * 1000000;
-    while (nanosleep(&ts, &ts))
-        ;
-}
-
-void sleep_ms(uint32_t ms) {
-    if (execThread == pthread_self()) {
-        stopUser();
-        sleep_core_ms(ms);
-        startUser();
-    } else {
-        sleep_core_ms(ms);
-    }
-}
-
-void sleep_us(uint64_t us) {
-    if (us > 10000) {
-        sleep_ms(us / 1000);
-    }
+void sleep_core_us(uint64_t us) {
     struct timespec ts;
     ts.tv_sec = us / 1000000;
     ts.tv_nsec = (us % 1000000) * 1000;
     while (nanosleep(&ts, &ts))
         ;
+}
+
+void sleep_ms(uint32_t ms) {
+    stopUser();
+    sleep_core_us(ms * 1000);
+    startUser();
+}
+
+void sleep_us(uint64_t us) {
+    if (us > 50000) {
+        sleep_ms(us / 1000);
+    }
+    sleep_core_us(us);
 }
 
 uint64_t currTime() {
@@ -195,13 +177,10 @@ void waitForEvent(int source, int value) {
         if (t->pid == self) {
             t->waitSource = source;
             t->waitValue = value;
-            stopUser();
             // spourious wake ups may occur they say
             while (t->waitSource) {
-                pthread_mutex_lock(&newEventMutex);
-                pthread_cond_wait(&t->waitCond, &newEventMutex);
+                pthread_cond_wait(&t->waitCond, &execMutex);
             }
-            startUser();
             return;
         }
     }
@@ -221,9 +200,9 @@ static void dispatchEvent(Event &e) {
 }
 
 static void *evtDispatcher(void *dummy) {
-    pthread_mutex_lock(&newEventMutex);
+    startUser();
     while (true) {
-        pthread_cond_wait(&newEventBroadcast, &newEventMutex);
+        pthread_cond_wait(&newEventBroadcast, &execMutex);
         while (eventHead != NULL) {
             Event *ev = eventHead;
             eventHead = ev->next;
@@ -245,9 +224,7 @@ static void *evtDispatcher(void *dummy) {
 }
 
 void raiseEvent(int id, int event) {
-    checkUserMode();
     auto e = mkEvent(id, event);
-    pthread_mutex_lock(&newEventMutex);
     if (eventTail == NULL) {
         assert(eventHead == NULL);
         eventHead = eventTail = e;
@@ -256,7 +233,6 @@ void raiseEvent(int id, int event) {
         eventTail = e;
     }
     pthread_cond_broadcast(&newEventBroadcast);
-    pthread_mutex_unlock(&newEventMutex);
 }
 
 void registerWithDal(int id, int event, Action a) {
@@ -282,5 +258,6 @@ void initRuntime() {
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
+    startUser();
 }
 }
