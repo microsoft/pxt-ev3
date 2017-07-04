@@ -7,7 +7,8 @@ LDFLAGS = -Wl,--gc-sections -Wl,--sort-common -Wl,--sort-section=alignment
 PREF = arm-linux-gnueabi-
 CC = $(PREF)gcc
 LD = $(PREF)gcc
-LIBSTDCPP = /usr/lib/gcc/arm-linux-gnueabi/4.9/libstdc++.a
+#LIBSTDCPP = /usr/lib/gcc/arm-linux-gnueabi/4.9/libstdc++.a
+LIBSTDCPP = 
 NPM_LIBS = $(wildcard node_modules/*/lib/*.a)
 NPM_INCLUDES = $(addprefix -I, $(wildcard node_modules/*/include))
 

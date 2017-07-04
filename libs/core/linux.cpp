@@ -7,7 +7,6 @@
 #include <cstdarg>
 #include <pthread.h>
 #include <assert.h>
-#include <map>
 
 #define DEVICE_EVT_ANY 0
 
@@ -22,11 +21,23 @@ void dmesg(const char *format, ...) {
     fprintf(stderr, "DMESG: %s\n", buf);
 }
 
+void *operator new(size_t size) {
+    return malloc(size);
+}
+void *operator new[](size_t size) {
+    return malloc(size);
+}
+
+void operator delete(void *p) {
+    free(p);
+}
+void operator delete[](void *p) {
+    free(p);
+}
+
 namespace pxt {
 
 static int startTime;
-static std::map<std::pair<int, int>, Action> handlersMap;
-
 static pthread_mutex_t execMutex;
 static pthread_cond_t newEventBroadcast;
 
@@ -190,13 +201,13 @@ void waitForEvent(int source, int value) {
 static void dispatchEvent(Event &e) {
     lastEvent = e;
 
-    Action curr = handlersMap[{e.source, e.value}];
+    auto curr = findBinding(e.source, e.value);
     if (curr)
-        setupThread(curr, fromInt(e.value));
+        setupThread(curr->action, fromInt(e.value));
 
-    curr = handlersMap[{e.source, DEVICE_EVT_ANY}];
+    curr = findBinding(e.source, DEVICE_EVT_ANY);
     if (curr)
-        setupThread(curr, fromInt(e.value));
+        setupThread(curr->action, fromInt(e.value));
 }
 
 static void *evtDispatcher(void *dummy) {
@@ -236,14 +247,7 @@ void raiseEvent(int id, int event) {
 }
 
 void registerWithDal(int id, int event, Action a) {
-    Action prev = handlersMap[{id, event}];
-    if (prev)
-        decr(prev);
-    else {
-        // first time processing?
-    }
-    incr(a);
-    handlersMap[{id, event}] = a;
+    setBinding(id, event, a);
 }
 
 uint32_t afterProgramPage() {
