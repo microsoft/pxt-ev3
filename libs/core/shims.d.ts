@@ -38,6 +38,14 @@ declare namespace input {
     //% block="button exit" weight=95 fixedInstance shim=pxt::getButton(5)
     const buttonExit: Button;
 }
+declare namespace control {
+
+    /**
+     * Determine the version of system software currently running.
+     */
+    //% shim=control::deviceFirmwareVersion
+    function deviceFirmwareVersion(): string;
+}
 declare namespace output {
 
     /**
@@ -94,6 +102,12 @@ declare interface Button {
     //% button.fieldOptions.width=220
     //% button.fieldOptions.columns=3 shim=ButtonMethods::wasPressed
     wasPressed(): boolean;
+}
+declare namespace screen {
+
+    /** Draw text. */
+    //% shim=screen::drawText
+    function drawText(x: int32, y: int32, text: string, mode: Draw): void;
 }
 
 // Auto-generated. Do not edit. Really.

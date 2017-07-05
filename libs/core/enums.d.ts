@@ -34,4 +34,16 @@
     OrangePulse = 9,  // LED_ORANGE_PULSE
     }
 
+
+    /**
+     * Drawing modes
+     */
+
+    declare enum Draw {
+    Normal = (0x0000),  // DRAW_OPT_NORMAL
+    Clear = (0x0004),  // DRAW_OPT_CLEAR_PIXELS
+    Xor = (0x0018),  // DRAW_OPT_LOGICAL_XOR
+    Fill = (0x0020),  // DRAW_OPT_FILL_SHAPE
+    }
+
 // Auto-generated. Do not edit. Really.
