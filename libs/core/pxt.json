@@ -7,6 +7,9 @@
         "pxt.h",
         "pxtcore.h",
         "linux.cpp",
+        "buttons.cpp",
+        "shims.d.ts",
+        "enums.d.ts",
         "ns.ts"
     ],
     "testFiles": [

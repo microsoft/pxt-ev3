@@ -39,6 +39,7 @@ namespace pxt {
 
 static int startTime;
 static pthread_mutex_t execMutex;
+static pthread_mutex_t eventMutex;
 static pthread_cond_t newEventBroadcast;
 
 struct Thread {
@@ -186,12 +187,14 @@ void waitForEvent(int source, int value) {
     auto self = pthread_self();
     for (auto t = allThreads; t; t = t->next) {
         if (t->pid == self) {
+            pthread_mutex_lock(&eventMutex);
             t->waitSource = source;
             t->waitValue = value;
             // spourious wake ups may occur they say
             while (t->waitSource) {
-                pthread_cond_wait(&t->waitCond, &execMutex);
+                pthread_cond_wait(&t->waitCond, &eventMutex);
             }
+            pthread_mutex_unlock(&eventMutex);
             return;
         }
     }
@@ -211,9 +214,9 @@ static void dispatchEvent(Event &e) {
 }
 
 static void *evtDispatcher(void *dummy) {
-    startUser();
+    pthread_mutex_lock(&eventMutex);
     while (true) {
-        pthread_cond_wait(&newEventBroadcast, &execMutex);
+        pthread_cond_wait(&newEventBroadcast, &eventMutex);
         while (eventHead != NULL) {
             Event *ev = eventHead;
             eventHead = ev->next;
@@ -236,6 +239,7 @@ static void *evtDispatcher(void *dummy) {
 
 void raiseEvent(int id, int event) {
     auto e = mkEvent(id, event);
+    pthread_mutex_lock(&eventMutex);
     if (eventTail == NULL) {
         assert(eventHead == NULL);
         eventHead = eventTail = e;
@@ -244,6 +248,7 @@ void raiseEvent(int id, int event) {
         eventTail = e;
     }
     pthread_cond_broadcast(&newEventBroadcast);
+    pthread_mutex_unlock(&eventMutex);
 }
 
 void registerWithDal(int id, int event, Action a) {
@@ -257,11 +262,14 @@ void dumpDmesg() {
     // TODO
 }
 
+extern "C" void InitEV3();
+
 void initRuntime() {
     startTime = currTime();
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
+    InitEV3();
     startUser();
 }
 }
