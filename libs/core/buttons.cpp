@@ -16,17 +16,35 @@ enum class ButtonEvent {
     Down = 4,
 };
 
+/**
+ * Patterns for lights under the buttons.
+ */
+enum class LightsPattern {
+    Off = LED_BLACK,
+    Green = LED_GREEN,
+    Red = LED_RED,
+    Orange = LED_ORANGE,
+    GreenFlash = LED_GREEN_FLASH,
+    RedFlash = LED_RED_FLASH,
+    OrangeFlash = LED_ORANGE_FLASH,
+    GreenPulse = LED_GREEN_PULSE,
+    RedPulse = LED_RED_PULSE,
+    OrangePulse = LED_ORANGE_PULSE,
+};
+
 namespace pxt {
 
 void *buttonPoll(void *);
 
 class Button {
   public:
+    void *ptr;
     int id;
     bool wasPressed;
     bool isPressed;
     int timePressed;
     Button(int ev3id) {
+        ptr = 0; // make sure we're not treated as ref-counted object
         id = ev3id;
         wasPressed = false;
         isPressed = false;
@@ -121,7 +139,30 @@ Button *getButton(int id) {
 }
 }
 
-//% noRefCounting fixedInstances
+namespace control {
+
+/**
+* Determine the version of system software currently running.
+*/
+//%
+String deviceFirmwareVersion() {
+    return mkString(HardwareVersionString());
+}
+
+}
+
+// TODO rename this? move it somewhere?
+namespace output {
+/**
+ * Set lights.
+ */
+//% blockId=setLights block="set lights %pattern"
+void setLights(LightsPattern pattern) {
+    SetLedPattern((uint8_t)pattern);
+}
+}
+
+//% fixedInstances
 namespace ButtonMethods {
 /**
  * Do something when a button (`A`, `B` or both `A` + `B`) is clicked, double clicked, etc...

@@ -38,10 +38,18 @@ declare namespace input {
     //% block="button exit" weight=95 fixedInstance shim=pxt::getButton(5)
     const buttonExit: Button;
 }
+declare namespace output {
+
+    /**
+     * Set lights.
+     */
+    //% blockId=setLights block="set lights %pattern" shim=output::setLights
+    function setLights(pattern: LightsPattern): void;
+}
 
 
 
-    //% noRefCounting fixedInstances
+    //% fixedInstances
 declare interface Button {
     /**
      * Do something when a button (`A`, `B` or both `A` + `B`) is clicked, double clicked, etc...
