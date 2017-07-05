@@ -12,6 +12,7 @@ void sleep_core_us(uint64_t us);
 class Button;
 typedef Button *Button_;
 
+extern "C" void target_init();
 }
 
 #endif

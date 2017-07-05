@@ -119,8 +119,9 @@ void *buttonPoll(void *arg) {
         auto state = readButtons();
         if (state == prevState)
             continue;
-        if (state & BUTTON_ID_ESCAPE)
-            exit(0);
+        if ((prevState & BUTTON_ID_ESCAPE) && !(state & BUTTON_ID_ESCAPE))
+            target_reset();
+        prevState = state;
         for (int i = 0; i < LastButtonID; ++i) {
             auto btn = &wb->buttons[i];
             btn->setPressed(!!(state & btn->id));
@@ -134,6 +135,13 @@ Button *getButton(int id) {
         target_panic(42);
     return &getWButtons()->buttons[id];
 }
+
+void target_init() {
+    InitEV3();
+    getWButtons(); // always on - handles ESCAPE key
+    DMESG("runtime started [%s]", HardwareVersionString());
+}
+
 }
 
 namespace control {
@@ -145,7 +153,6 @@ namespace control {
 String deviceFirmwareVersion() {
     return mkString(HardwareVersionString());
 }
-
 }
 
 // TODO rename this? move it somewhere?

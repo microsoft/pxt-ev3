@@ -262,17 +262,14 @@ void dumpDmesg() {
     // TODO
 }
 
-extern "C" void InitEV3();
-
 void initRuntime() {
     startTime = currTime();
     DMESG("runtime starting...");
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
-    InitEV3();
+    target_init();
     startUser();
-    DMESG("runtime started");
 }
 
 void dmesg(const char *format, ...) {
