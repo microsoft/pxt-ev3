@@ -1,8 +1,16 @@
-let i = 1
-let f = 0.5
-let plus = i + f
-let minus = i - f
+screen.clear()
+screen.drawRect(10, 10, 20, 10)
+screen.drawText(10, 30, "Hello PXT!")
 
+output.setLights(LightsPattern.GreenFlash)
+
+input.buttonDown.onEvent(ButtonEvent.Click, () => {
+    screen.scroll(10)
+})
+
+input.buttonUp.onEvent(ButtonEvent.Click, () => {
+    screen.scroll(-10)
+})
 
 for (let i = 0; i < 3; ++i) {
     loops.forever(() => {

@@ -106,8 +106,20 @@ declare interface Button {
 declare namespace screen {
 
     /** Draw text. */
-    //% shim=screen::drawText
-    function drawText(x: int32, y: int32, text: string, mode: Draw): void;
+    //% mode.defl=0 shim=screen::drawText
+    function drawText(x: int32, y: int32, text: string, mode?: Draw): void;
+
+    /** Clear screen and reset font to normal. */
+    //% shim=screen::clear
+    function clear(): void;
+
+    /** Scroll screen vertically. */
+    //% shim=screen::scroll
+    function scroll(v: int32): void;
+
+    /** Set font for drawText() */
+    //% shim=screen::setFont
+    function setFont(font: ScreenFont): void;
 }
 
 // Auto-generated. Do not edit. Really.
