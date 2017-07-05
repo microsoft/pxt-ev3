@@ -23,6 +23,18 @@ enum class ScreenFont {
 
 // We only support up to 4 arguments for C++ functions - need to pack them on the TS side
 namespace screen {
+
+extern "C" {
+void DisplaySetPixel(byte X, byte Y);
+void DisplayClrPixel(byte X, byte Y);
+void DisplayXorPixel(byte X, byte Y);
+}
+
+void pokeScreen() {
+    DisplayXorPixel(0, 0);
+    DisplayXorPixel(0, 0);
+}
+
 //%
 void _drawLine(uint32_t p0, uint32_t p1, Draw mode) {
     DMESG("line %x %x %x", p0, p1, mode);
@@ -57,6 +69,8 @@ void clear() {
 //%
 void scroll(int v) {
     LcdScroll(v);
+    pokeScreen(); // missing in ev3-api
+    //LcdUpdate();
 }
 
 /** Set font for drawText() */
@@ -64,5 +78,4 @@ void scroll(int v) {
 void setFont(ScreenFont font) {
     LcdSelectFont((uint8_t)font);
 }
-
 }
