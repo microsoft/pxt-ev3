@@ -2,7 +2,6 @@
 #define __PXT_H
 
 #include "pxtbase.h"
-#undef DMESG
 
 #define ID_BUTTON_BASE 100
 

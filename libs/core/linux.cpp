@@ -7,19 +7,9 @@
 #include <cstdarg>
 #include <pthread.h>
 #include <assert.h>
+#include <unistd.h>
 
 #define DEVICE_EVT_ANY 0
-
-void dmesg(const char *format, ...) {
-    char buf[500];
-
-    va_list arg;
-    va_start(arg, format);
-    vsnprintf(buf, sizeof(buf), format, arg);
-    va_end(arg);
-
-    fprintf(stderr, "DMESG: %s\n", buf);
-}
 
 void *operator new(size_t size) {
     return malloc(size);
@@ -41,6 +31,8 @@ static int startTime;
 static pthread_mutex_t execMutex;
 static pthread_mutex_t eventMutex;
 static pthread_cond_t newEventBroadcast;
+static FILE *dmesgFile;
+static FILE *serialFile;
 
 struct Thread {
     struct Thread *next;
@@ -72,7 +64,15 @@ Event *mkEvent(int source, int value) {
 }
 
 void sendSerial(const char *data, int len) {
-    fwrite(data, 1, len, stderr);
+    if (!serialFile) {
+        serialFile = fopen("/tmp/serial.txt", "w");
+        if (!serialFile)
+            serialFile = stderr;
+    }
+
+    fwrite(data, 1, len, serialFile);
+    fflush(serialFile);
+    fdatasync(fileno(serialFile));
 }
 
 extern "C" void target_panic(int error_code) {
@@ -266,10 +266,32 @@ extern "C" void InitEV3();
 
 void initRuntime() {
     startTime = currTime();
+    DMESG("runtime starting...");
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
     InitEV3();
     startUser();
+    DMESG("runtime started");
 }
+
+void dmesg(const char *format, ...) {
+    char buf[500];
+
+    if (!dmesgFile) {
+        dmesgFile = fopen("/tmp/dmesg.txt", "w");
+        if (!dmesgFile)
+            dmesgFile = stderr;
+    }
+
+    va_list arg;
+    va_start(arg, format);
+    vsnprintf(buf, sizeof(buf), format, arg);
+    va_end(arg);
+
+    fprintf(dmesgFile, "[%8d] %s\n", current_time_ms(), buf);
+    fflush(dmesgFile);
+    fdatasync(fileno(dmesgFile));
+}
+
 }

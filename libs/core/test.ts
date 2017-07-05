@@ -1,6 +1,9 @@
 screen.clear()
-screen.drawRect(10, 10, 20, 10)
-screen.drawText(10, 30, "Hello PXT!")
+screen.setFont(ScreenFont.Large)
+//screen.drawText(10, 30, "Hello PXT!")
+for (let i = 0; i < 10; ++i)
+screen.drawRect(10, 70, 20, 10, Draw.Fill)
+//screen.drawEllipse(40, 40, 20, 10)
 
 output.setLights(LightsPattern.GreenFlash)
 

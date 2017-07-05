@@ -25,16 +25,19 @@ enum class ScreenFont {
 namespace screen {
 //%
 void _drawLine(uint32_t p0, uint32_t p1, Draw mode) {
+    DMESG("line %x %x %x", p0, p1, mode);
     LineOutEx(XX(p0), YY(p0), XX(p1), YY(p1), (uint32_t)mode);
 }
 
 //%
 void _drawRect(uint32_t p0, uint32_t p1, Draw mode) {
+    DMESG("rect %x %x %x", p0, p1, mode);
     RectOutEx(XX(p0), YY(p0), XX(p1), YY(p1), (uint32_t)mode);
 }
 
 //%
 void _drawEllipse(uint32_t p0, uint32_t p1, Draw mode) {
+    DMESG("ellip %x %x %x", p0, p1, mode);
     EllipseOutEx(XX(p0), YY(p0), XX(p1), YY(p1), (uint32_t)mode);
 }
 

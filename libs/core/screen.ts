@@ -9,7 +9,7 @@ namespace screen {
     function _drawEllipse(p0: uint32, p1: uint32, mode: Draw): void { }
 
     function pack(x: number, y: number) {
-        return Math.clamp(0, x, 512) | (Math.clamp(0, y, 512) << 16)
+        return Math.clamp(0, 512, x) | (Math.clamp(0, 512, y) << 16)
     }
 
     export function drawLine(x0: number, y0: number, x1: number, y1: number, mode?: Draw) {
