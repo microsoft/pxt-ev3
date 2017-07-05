@@ -31,12 +31,6 @@ declare namespace input {
      */
     //% block="button enter" weight=95 fixedInstance shim=pxt::getButton(4)
     const buttonEnter: Button;
-
-    /**
-     * Exit button.
-     */
-    //% block="button exit" weight=95 fixedInstance shim=pxt::getButton(5)
-    const buttonExit: Button;
 }
 declare namespace control {
 

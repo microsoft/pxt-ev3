@@ -96,15 +96,10 @@ class WButtons {
      */
     //% block="button enter" weight=95
     Button buttonEnter;
-    /**
-     * Exit button.
-     */
-    //% block="button exit" weight=95
-    Button buttonExit;
 
     WButtons()
         : buttonLeft(BUTTON_ID_LEFT), buttonRight(BUTTON_ID_RIGHT), buttonUp(BUTTON_ID_UP),
-          buttonDown(BUTTON_ID_DOWN), buttonEnter(BUTTON_ID_ENTER), buttonExit(BUTTON_ID_ESCAPE) {
+          buttonDown(BUTTON_ID_DOWN), buttonEnter(BUTTON_ID_ENTER) {
         pthread_t pid;
         pthread_create(&pid, NULL, buttonPoll, this);
         pthread_detach(pid);
@@ -112,7 +107,7 @@ class WButtons {
 };
 SINGLETON(WButtons);
 
-const int LastButtonID = (Button *)&((WButtons *)0)->buttonExit - ((WButtons *)0)->buttons;
+const int LastButtonID = (Button *)&((WButtons *)0)->buttonEnter - ((WButtons *)0)->buttons;
 
 extern "C" uint16_t readButtons();
 
@@ -124,6 +119,8 @@ void *buttonPoll(void *arg) {
         auto state = readButtons();
         if (state == prevState)
             continue;
+        if (state & BUTTON_ID_ESCAPE)
+            exit(0);
         for (int i = 0; i < LastButtonID; ++i) {
             auto btn = &wb->buttons[i];
             btn->setPressed(!!(state & btn->id));
