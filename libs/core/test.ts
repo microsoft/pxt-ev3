@@ -1,6 +1,6 @@
 screen.clear()
 screen.setFont(ScreenFont.Large)
-screen.drawText(10, 30, "Hello PXT!")
+screen.drawText(10, 30, "Welcome PXT!")
 
 screen.drawEllipse(40, 40, 20, 10, Draw.Fill)
 output.setLights(LightsPattern.Orange)
