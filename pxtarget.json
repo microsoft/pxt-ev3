@@ -12,6 +12,9 @@
         "libs/ev3"
     ],
     "simulator": {
+      "headless": true
+    },
+    "DISABLED-simulator": {
         "autoRun": true,
         "streams": true,
         "aspectRatio": 1.0,
