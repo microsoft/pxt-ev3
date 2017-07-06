@@ -122,7 +122,7 @@ void *buttonPoll(void *arg) {
         if ((prevState & BUTTON_ID_ESCAPE) && !(state & BUTTON_ID_ESCAPE))
             target_reset();
         prevState = state;
-        for (int i = 0; i < LastButtonID; ++i) {
+        for (int i = 0; i <= LastButtonID; ++i) {
             auto btn = &wb->buttons[i];
             btn->setPressed(!!(state & btn->id));
         }
