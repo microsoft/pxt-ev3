@@ -39,6 +39,11 @@
         "taggedInts": true,
         "stackAlign": 2
     },
+    "serial": {
+      "vendorId": "0x0694",
+      "productId": "0x0005",
+      "rawHID": true
+    },
     "runtime": {
         "mathBlocks": true,
         "loopsBlocks": true,

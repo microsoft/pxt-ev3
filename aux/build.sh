@@ -1,7 +1,10 @@
 #!/bin/sh
 
 LEGO=$HOME/src/lego/lms2012
-F=`pwd`/pxt
+P="`pwd`"
+F="$P"/pxt
 set -xe
 cd $LEGO/lmssrc/adk/lmsasm
 java -jar assembler.jar $F
+cd "$P"
+node -p 'require("fs").readFileSync("pxt.rbf").toString("hex")'

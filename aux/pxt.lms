@@ -8,7 +8,8 @@ vmthread  MAIN
   UI_WRITE(LED,LED_RED)
   UI_DRAW(TEXT,FG_COLOR,48,62,'Starting...')
   UI_DRAW(UPDATE)
-  SYSTEM('../prjs/BrkProg_SAVE/binary.elf', Status)
+  SYSTEM('XXXXXXXXX', Status)
+  //SYSTEM('../prjs/BrkProg_SAVE/binary.elf', Status)
 Loop:
   UI_BUTTON(WAIT_FOR_PRESS)
   UI_BUTTON(SHORTPRESS,BACK_BUTTON,State)
