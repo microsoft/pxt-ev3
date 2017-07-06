@@ -1,0 +1,22 @@
+define appv 'RunAndWaitForEsc V0.00'
+vmthread  MAIN
+{
+  DATA8   State
+  DATA32  Status
+  //DATA32  Timer
+
+  UI_WRITE(LED,LED_RED)
+  UI_DRAW(TEXT,FG_COLOR,48,62,'Starting...')
+  UI_DRAW(UPDATE)
+  SYSTEM('../prjs/BrkProg_SAVE/binary.elf', Status)
+Loop:
+  UI_BUTTON(WAIT_FOR_PRESS)
+  UI_BUTTON(SHORTPRESS,BACK_BUTTON,State)
+  JR_FALSE(State,Loop)
+  //UI_WRITE(LED,LED_RED)
+  //TIMER_WAIT(1000, Timer)
+  //TIMER_READY(Timer)
+  UI_DRAW(TEXT,FG_COLOR,48,62,'Bye!')
+  UI_DRAW(UPDATE)
+}
+

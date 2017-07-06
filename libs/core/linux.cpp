@@ -263,6 +263,7 @@ void dumpDmesg() {
 }
 
 void initRuntime() {
+    daemon(1, 1);
     startTime = currTime();
     DMESG("runtime starting...");
     pthread_t disp;
