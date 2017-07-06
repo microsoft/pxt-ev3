@@ -1,0 +1,12 @@
+{
+    "name": "{0}",
+    "dependencies": {
+        "ev3": "file:../ev3"
+    },
+    "description": "",
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ]
+}
