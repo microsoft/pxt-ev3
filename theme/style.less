@@ -15,8 +15,16 @@
     Add your custom CSS here
 *******************************/
 
+/* Roboto font */
+@RobotoFont: data-uri("../docs/static/fonts/Roboto_400_normal.woff");
+
+@font-face  {
+    font-family: 'Roboto';
+    src: @RobotoFont format("woff");
+}
+
 .ui.button.download-button {
-    &:extend(.ui.secondary.button all);
+    &:extend(.ui.primary.button all);
 }
 
 .ui.button.editortools-btn {
@@ -24,7 +32,6 @@
 }
 
 .projectname-input {
-    &:extend(.inverted all);
 }
 
 .ui.button.getting-started-btn {
@@ -35,43 +42,48 @@
     &:extend(.ui.blue.button all);
 }
 
+/* Menu bar colors */
+#menubar .ui.item {
+    color: @blue;
+}
+
+/* logo */
+#logo a.ui.image .ui.logo {
+    min-width: 2.0rem;
+}
+
+/* Toolbox padding */
+.blocklyToolboxDiv, .monacoToolboxDiv {
+    padding: 0.5rem;
+    -webkit-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,0.31);
+    -moz-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,0.31);
+    box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,0.31);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+div.blocklyTreeRow {
+    border-radius: 0px;
+    -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.50);
+    -moz-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.50);
+    box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.50);
+}
+
+div.blocklyTreeRoot div div div div div.blocklyTreeRow {
+    padding-top: 0.5rem !important;
+}
 
 /* Remove shadow around blockly blocks */
 .blocklyPathDark, .blocklyPathLight {
     display: none;
 }
 
-/* Specifying rounded toolbox borders. */
-div.blocklyTreeRow {
-    border-radius: 3px;
-    margin-bottom: 3px !important;
-    border: 1px solid #1e1e1e;
-    border-left-width: 1px !important;
-}
-div.blocklyTreeRoot div div div div div.blocklyTreeRow {
-    border-left-width: 1px !important;
-}
-
-/* Highlight category item */
-div.blocklyTreeRow.blocklyTreeSelected, div.blocklyTreeRoot div div div div div.blocklyTreeRow.blocklyTreeSelected {
-    border: 2px solid #fc3;
-    border-left-width: 2px !important;
-}
-
-/* This removes any padding at the top of the toolbox */
-div.blocklyTreeRoot {
-    padding: 0px !important;
-}
-
 /* Blockly Text */
 span.blocklyTreeLabel {
-    font-family: "Gotham SSm A","Gotham SSm B","Montserrat","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif  !important;
+    font-family: @pageFont !important;
     text-transform: uppercase !important;
     font-size:1rem !important;
-}
-
-svg.blocklySvg {
-    background: #00487C; /* For browsers that do not support gradients */
+    font-weight: bold;
 }
 
 .blocklyFlyoutBackground {
@@ -81,40 +93,31 @@ svg.blocklySvg {
     background: rgba(40, 40, 40, 0.9);
 }
 
-.blocklyToolboxDiv, .monacoToolboxDiv {
-    padding: 0.5rem;
-    border-right: solid 1px #282828;
-    background-color: #383838 !important;
-}
-
-.blocklyScrollbarHandle {
-    fill: #000 !important;
-    fill-opacity:.8;
-}
-
 /* Editor menu toggle */
-.ui.menu .item.editor-menuitem {
-    background: fade(@black, 20%) !important;
+#menubar .ui.menu .item.editor-menuitem {
+    background: @red !important;
+}
+#menubar .ui.menu .item.editor-menuitem .item {
+    color: white !important;
 }
 
 /* Search box */
 #blocklySearchArea {
     margin: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 .blocklySearchInputField {
-    border-radius: 0.2rem !important;
+    border-radius: 1rem !important;
 }
 
 .sandboxfooter a:not(.thin) {
     color:white !important;
 }
 
-/* Scrollbars */
-::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
-    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+/* Monaco editor */
+.monaco-editor, .monaco-editor .inputarea, .monaco-editor-background {
+    background: @blocklySvgColor !important;
 }
 
 /* Mobile */
@@ -132,14 +135,23 @@ svg.blocklySvg {
 
 /* Tablet */
 @media only screen and (min-width: @tabletBreakpoint) and (max-width: @largestTabletScreen) {
+    div.blocklyTreeRow {
+        padding-left: 0.5rem !important;
+    }
 }
 
 /* Small Monitor */
 @media only screen and (min-width: @computerBreakpoint) and (max-width: @largestSmallMonitor) {
+    div.blocklyTreeRow {
+        padding-left: 0.5rem !important;
+    }
 }
 
 /* Large Monitor */
 @media only screen and (min-width: @largeMonitorBreakpoint) {
+    div.blocklyTreeRow {
+        padding-left: 0.5rem !important;
+    }
 }
 /* Mobile, Tablet AND thin screen */
 @media only screen and (max-width: @largestTabletScreen) and (max-height: @thinEditorBreakpoint) {

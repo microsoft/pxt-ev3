@@ -57,7 +57,7 @@
         "listsBlocks": true,
         "functionBlocks": true,
         "onStartNamespace": "loops",
-        "onStartColor": "#40bf4a"
+        "onStartColor": "#0F841C"
     },
     "compileService": {
         "buildEngine": "dockermake",
@@ -76,7 +76,7 @@
         "organization": "Microsoft MakeCode",
         "organizationUrl": "https://makecode.com/",
         "organizationLogo": "./static/Microsoft-logo_rgb_c-gray-square.png",
-        "organizationWideLogo": "./static/Microsoft-logo_rgb_c-white.png",
+        "organizationWideLogo": "./static/Microsoft-logo_rgb_c-gray.png",
         "homeUrl": "https://lego.makecode.com/",
         "embedUrl": "https://lego.makecode.com/",
         "privacyUrl": "https://go.microsoft.com/fwlink/?LinkId=521839",
@@ -114,10 +114,10 @@
             "Examples": "examples"
         },
         "sideDoc": "tutorials/getting-started",
-        "invertedMenu": true,
-        "invertedToolbox": true,
-        "invertedMonaco": true,
+        "invertedMenu": false,
+        "invertedMonaco": false,
         "monacoToolbox": true,
+        "invertedToolbox": true,
         "simAnimationEnter": "roll in",
         "simAnimationExit": "roll out",
         "exampleGallery": "examples",
@@ -126,22 +126,16 @@
         "extendEditor": true,
         "disableBlockIcons": true,
         "blocklyOptions": {
-            "grid": {
-                "spacing": 20,
-                "length": 2,
-                "colour": "rgba(189, 195, 199, 0.20)",
-                "snap": true
-            }
         },
         "blockColors": {
-            "loops": "#40bf4a",
-            "logic": "#4cbfe6",
-            "math": "#9966ff",
-            "variables": "#FF6680",
-            "text": "#ffab19",
-            "advanced": "#00272B",
-            "functions": "#005a9e",
-            "arrays": "#8A1C7C"
+            "loops": "#0F841C",
+            "logic": "#3979B9",
+            "math": "#8A83BA",
+            "variables": "#D4000D",
+            "text": "#F0890A",
+            "advanced": "#7A8284",
+            "functions": "#064597",
+            "arrays": "#890058"
         }
     }
 }

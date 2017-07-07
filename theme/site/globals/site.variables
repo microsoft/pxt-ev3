@@ -2,32 +2,91 @@
      User Global Variables
 *******************************/
 
-@importGoogleFonts: true;
+@importGoogleFonts: false;
 
-@fontName  : 'Open Sans';
+@headerFont        : Roboto,"Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+@pageFont          : Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
 
 @emSize      : 14px;
 @fontSize    : 13px;
 
-@primaryColor: @blue;
-@secondaryColor: @pink;
+@primaryColor: @red;
+@secondaryColor: @yellow;
 
-@red:#CC2936;
-@yellow:#FFC914;
 @teal:#08415C;
 @violet:#C200C0;
 @brown:#2E282A;
 @grey:#999;
-
-/* Adafruit colors */
-@blue:#2EB7ED;
 @pink:#FB48C7;
-
-@green: #40bf4a; /*#00922B;*/
 @purple:#8073E5;
-@orange:#FFA702;
 
-@pageBackground: #ecf0f1;
+/* Lego colors */
+@red: @brightRed;
+@blue: #008ad2;
+@yellow: #fccd00;
+@orange: #fa7f2a;
+@green: #9acc1f;
+
+/* Lego official colors */
+
+/* Solid */
+@brightYellow: #FDB80C;
+@brightOrange: #DF5014;
+@brightRed: #D4000D;
+@brightPurple: #D42878;
+@brightBlue: #064597;
+@brightGreen: #0F841C;
+@brightYellowishGreen: #84AB0F;
+@brightReddishViolet: #890058;
+
+@mediumBlue: #3979B9;
+@mediumLilac: #211063;
+@mediumNougat: #996A44;
+
+@darkBrown: #240D08;
+@darkStoneGrey: #3B4044;
+@darkOrange: #962E12;
+@darkRed: #6C0815;
+@darkGreen: #0C681F;
+@earthBlue: #011C32;
+@earthGreen: #032712;
+
+@lightRoyalBlue: #75B3E4;
+@lightPurple: #E88BB6;
+@lightNougat: #F1B477;
+@lightStoneGrey: #DDDED1;
+
+@sandYellow: #7A6141;
+@coolYellow: #FFFF88;
+@flameYellowishOrange: #F0890A;
+
+@reddishBrown: #48150C;
+@nougat: #CB5F32;
+@brickYellow: #D0AD68;
+
+/* Effects */
+@silver: #7A8284;
+@warmGold: #996C23;
+@metallicDarkGrey: #38302D;
+@phosphorusGreen: #FEFBCC;
+
+/* Transparent */
+@transparentYellow: #F7EB58;
+@transparentBrightOrange: #E5630F;
+@transparentReddishOrange: #DF5338;
+@transparentRed: #D61F1F;
+@transparentReddishViolet: #E88BB6;
+@transparentBrightBluishViolet: #8A83BA;
+@transparentLightBlue: #A8D9E5;
+@transparentBlue: #42A1E2;
+@transparentFluorescentBlue: #C3DCF3;
+@transparentGreen: #52A35B;
+@transparentBrightGreen: #8AFF55;
+@transparentFluorescentGreen: #F8E94B;
+@transparentBrown: #957F6F;
+@transparent: #EAEAEA;
+
+@pageBackground: #fff;
 
 /*******************************
          PXT Overrides
@@ -37,10 +96,8 @@
    Menu
 --------------------*/
 
-@mainMenuInvertedBackground: @blue;
+@mainMenuInvertedBackground: @yellow;
 @mainMenuTutorialBackground: @orange;
-
-@mainMenuBlocksJsToggleColor: @black;
 
 @tutorialSelectedMenuColor: @blue;
 
@@ -56,9 +113,9 @@
    Background
 --------------------*/
 
-@simulatorBackground: #2F2F2F; /*#313638;*/
-@editorToolsBackground: #2F2F2F; /*#1e1e1e;*/
-@blocklySvgColor: #4c4b4d; /*#1e1e1e;*/
+@simulatorBackground: #fcfbfa;
+@editorToolsBackground: #fcfbfa;
+@blocklySvgColor: #ecf6ff;
 
 /*-------------------
    Full screen
@@ -78,7 +135,7 @@
    Editor
 --------------------*/
 
-@blocklyToolboxColor: transparent;
+@blocklyToolboxColor: #FED30D;
 @trashIconColor: @primaryColor;
 
 
@@ -88,3 +145,10 @@
 
 @blocklyRowWidthWide: 160px;
 @blocklyRowWidthComputer: 140px;
+@blocklyRowWidthTablet: 100px;
+@blocklyRowWidthMobile: 50px;
+
+@blocklyRowHeightWide: 50px;
+@blocklyRowHeightComputer: 50px;
+@blocklyRowHeightTablet: 50px;
+@blocklyRowHeightMobile: 50px;

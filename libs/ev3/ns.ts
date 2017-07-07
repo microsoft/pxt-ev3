@@ -1,6 +1,10 @@
 
-//% color="#d65cd6"
+//% color="#D42878"
 namespace input {
+}
+
+//% color="#DF5014" weight=90 icon="\uf185"
+namespace output {
 }
 
 //% color="#F55D3E"
@@ -8,7 +12,7 @@ namespace music {
 
 }
 
-//% color="#1B998B"
+//% color="#48150C"
 namespace control {
 
 }
@@ -18,12 +22,12 @@ namespace pins {
 
 }
 
-//% color="#006E90"
+//% color="#011C32"
 namespace serial {
 
 }
 
-//% color="#40bf4a"
+//% color="#0F841C"
 namespace loops {
 
 }
