@@ -222,10 +222,18 @@ static void *evtDispatcher(void *dummy) {
                 eventTail = NULL;
 
             for (auto thr = allThreads; thr; thr = thr->next) {
-                if (thr->waitSource == ev->source &&
-                    (thr->waitValue == ev->value || thr->waitValue == DEVICE_EVT_ANY)) {
+                if (thr->waitSource == 0)
+                    continue;
+                if (thr->waitValue != ev->value && thr->waitValue != DEVICE_EVT_ANY)
+                    continue;
+                if (thr->waitSource == ev->source) {
                     thr->waitSource = 0; // once!
                     pthread_cond_broadcast(&thr->waitCond);
+                } else if (thr->waitSource == DEVICE_ID_NOTIFY &&
+                           ev->source == DEVICE_ID_NOTIFY_ONE) {
+                    thr->waitSource = 0; // once!
+                    pthread_cond_broadcast(&thr->waitCond);
+                    break; // do not wake up any other threads
                 }
             }
 
