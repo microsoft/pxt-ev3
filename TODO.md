@@ -1,4 +1,4 @@
-* [ ] try unlink ELF file before uploading
+* [x] try unlink ELF file before uploading - didn't work
 * [ ] implement serialPoll
 * [ ] try some motors
 

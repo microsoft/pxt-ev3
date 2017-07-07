@@ -9,8 +9,6 @@
 #include <assert.h>
 #include <unistd.h>
 
-#define DEVICE_EVT_ANY 0
-
 void *operator new(size_t size) {
     return malloc(size);
 }
@@ -237,6 +235,14 @@ static void *evtDispatcher(void *dummy) {
     }
 }
 
+int allocateNotifyEvent() {
+    static volatile int notifyId;
+    pthread_mutex_lock(&eventMutex);
+    int res = ++notifyId;
+    pthread_mutex_unlock(&eventMutex);
+    return res;
+}
+
 void raiseEvent(int id, int event) {
     auto e = mkEvent(id, event);
     pthread_mutex_lock(&eventMutex);
@@ -293,5 +299,4 @@ void dmesg(const char *format, ...) {
     fflush(dmesgFile);
     fdatasync(fileno(dmesgFile));
 }
-
 }

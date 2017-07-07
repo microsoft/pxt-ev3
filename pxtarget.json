@@ -9,6 +9,7 @@
     "bundleddirs": [
         "libs/base",
         "libs/core",
+        "libs/music",
         "libs/ev3"
     ],
     "simulator": {

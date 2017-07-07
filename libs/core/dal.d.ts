@@ -647,6 +647,9 @@ declare const enum DAL {
     // built/dockermake/node_modules/ev3api-bin/include/uart.h
     // built/dockermake/pxtapp/pxt.h
     ID_BUTTON_BASE = 100,
+    DEVICE_EVT_ANY = 0,
+    DEVICE_ID_NOTIFY = 10000,
+    DEVICE_ID_NOTIFY_ONE = 10001,
     // built/dockermake/pxtapp/pxtbase.h
     PXT_REF_TAG_STRING = 1,
     PXT_REF_TAG_BUFFER = 2,

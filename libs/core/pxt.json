@@ -7,6 +7,7 @@
         "pxt.h",
         "pxtcore.h",
         "linux.cpp",
+        "control.cpp",
         "buttons.cpp",
         "screen.cpp",
         "screen.ts",

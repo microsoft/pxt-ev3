@@ -7,7 +7,8 @@
     ],
     "dependencies": {
         "base": "file:../base",
-        "core": "file:../core"
+        "core": "file:../core",
+        "music": "file:../music"
     },
     "public": true
 }
