@@ -262,6 +262,7 @@ void dumpDmesg() {
     // TODO
 }
 
+void screen_init();
 void initRuntime() {
     daemon(1, 1);
     startTime = currTime();
@@ -270,6 +271,7 @@ void initRuntime() {
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
     target_init();
+    screen_init();
     startUser();
 }
 

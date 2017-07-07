@@ -137,7 +137,10 @@ Button *getButton(int id) {
 }
 
 void target_init() {
-    InitEV3();
+    OutputInit();
+	ButtonLedInit();
+	SoundInit();
+
     getWButtons(); // always on - handles ESCAPE key
     DMESG("runtime started [%s]", HardwareVersionString());
 }

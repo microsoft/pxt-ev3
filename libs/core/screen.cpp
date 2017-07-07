@@ -1,5 +1,6 @@
 #include "pxt.h"
 #include "ev3.h"
+#include <pthread.h>
 
 /**
 * Drawing modes
@@ -24,32 +25,19 @@ enum class ScreenFont {
 // We only support up to 4 arguments for C++ functions - need to pack them on the TS side
 namespace screen {
 
-extern "C" {
-void DisplaySetPixel(byte X, byte Y);
-void DisplayClrPixel(byte X, byte Y);
-void DisplayXorPixel(byte X, byte Y);
-}
-
-void pokeScreen() {
-    DisplayXorPixel(0, 0);
-    DisplayXorPixel(0, 0);
-}
 
 //%
 void _drawLine(uint32_t p0, uint32_t p1, Draw mode) {
-    DMESG("line %x %x %x", p0, p1, mode);
     LineOutEx(XX(p0), YY(p0), XX(p1), YY(p1), (uint32_t)mode);
 }
 
 //%
 void _drawRect(uint32_t p0, uint32_t p1, Draw mode) {
-    DMESG("rect %x %x %x", p0, p1, mode);
     RectOutEx(XX(p0), YY(p0), XX(p1), YY(p1), (uint32_t)mode);
 }
 
 //%
 void _drawEllipse(uint32_t p0, uint32_t p1, Draw mode) {
-    DMESG("ellip %x %x %x", p0, p1, mode);
     EllipseOutEx(XX(p0), YY(p0), XX(p1), YY(p1), (uint32_t)mode);
 }
 
@@ -69,8 +57,6 @@ void clear() {
 //%
 void scroll(int v) {
     LcdScroll(v);
-    pokeScreen(); // missing in ev3-api
-    //LcdUpdate();
 }
 
 /** Set font for drawText() */
@@ -78,4 +64,24 @@ void scroll(int v) {
 void setFont(ScreenFont font) {
     LcdSelectFont((uint8_t)font);
 }
+}
+
+namespace pxt {
+
+void *screenRefresh(void *dummy) {
+    while (true) {
+        sleep_core_us(30000);
+        LcdUpdate();
+    }
+}
+
+void screen_init() {
+    LcdInitNoAutoRefresh();
+    LcdClean();
+
+    pthread_t pid;
+    pthread_create(&pid, NULL, screenRefresh, NULL);
+    pthread_detach(pid);
+}
+
 }

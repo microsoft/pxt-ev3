@@ -117,6 +117,14 @@ namespace pxt.editor {
                     }).filter(v => !!v))
         }
 
+        rmAsync(path: string): Promise<void> {
+            let rmReq = this.allocSystem(path.length + 1, 0x9c)
+            U.memcpy(rmReq, 6, U.stringToUint8Array(path))
+
+            return this.talkAsync(rmReq)
+                .then(resp => { })
+        }
+
         private initAsync() {
             return Promise.resolve()
         }
