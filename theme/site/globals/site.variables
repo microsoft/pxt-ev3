@@ -25,7 +25,7 @@
 @blue: #008ad2;
 @yellow: #fccd00;
 @orange: #fa7f2a;
-@green: #9acc1f;
+@green: @brightYellowishGreen;
 
 /* Lego official colors */
 
