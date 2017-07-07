@@ -127,6 +127,8 @@ span.blocklyTreeLabel {
     }
     div.blocklyTreeRow {
         padding-bottom: 2rem !important;
+        min-height: @blocklyRowHeightMobile;
+        line-height: @blocklyRowHeightMobile/2;
     }
     #blocklyTrashIcon {
         margin: 0.2rem;
@@ -137,6 +139,8 @@ span.blocklyTreeLabel {
 @media only screen and (min-width: @tabletBreakpoint) and (max-width: @largestTabletScreen) {
     div.blocklyTreeRow {
         padding-left: 0.5rem !important;
+        min-height: @blocklyRowHeightTablet;
+        line-height: @blocklyRowHeightTablet/2;
     }
 }
 
@@ -144,6 +148,8 @@ span.blocklyTreeLabel {
 @media only screen and (min-width: @computerBreakpoint) and (max-width: @largestSmallMonitor) {
     div.blocklyTreeRow {
         padding-left: 0.5rem !important;
+        min-height: @blocklyRowHeightComputer;
+        line-height: @blocklyRowHeightComputer/2;
     }
 }
 
@@ -151,6 +157,8 @@ span.blocklyTreeLabel {
 @media only screen and (min-width: @largeMonitorBreakpoint) {
     div.blocklyTreeRow {
         padding-left: 0.5rem !important;
+        min-height: @blocklyRowHeightWide;
+        line-height: @blocklyRowHeightWide/2;
     }
 }
 /* Mobile, Tablet AND thin screen */
