@@ -133,5 +133,14 @@ declare namespace screen {
     //% shim=screen::setFont
     function setFont(font: ScreenFont): void;
 }
+declare namespace output {
+
+    /**
+     * Create a new zero-initialized buffer.
+     * @param size number of bytes in the buffer
+     */
+    //% shim=output::createBuffer
+    function createBuffer(size: int32): Buffer;
+}
 
 // Auto-generated. Do not edit. Really.
