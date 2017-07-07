@@ -18,6 +18,7 @@ namespace pxt.editor {
         msgs = new U.PromiseBuffer<Uint8Array>()
         private cmdSeq = U.randomUint32() & 0xffff;
         private lock = new U.PromiseQueue();
+        isStreaming = false;
 
         constructor(public io: pxt.HF2.PacketIO) {
             io.onData = buf => {
@@ -90,11 +91,12 @@ namespace pxt.editor {
             let begin = this.allocSystem(4 + path.length + 1, 0x92)
             HF2.write32(begin, 6, file.length) // fileSize
             U.memcpy(begin, 10, U.stringToUint8Array(path))
-            return this.talkAsync(begin)
-                .then(resp => {
-                    handle = resp[7]
-                    return loopAsync(0)
-                })
+            return this.lock.enqueue("file", () =>
+                this.talkAsync(begin)
+                    .then(resp => {
+                        handle = resp[7]
+                        return loopAsync(0)
+                    }))
         }
 
         lsAsync(path: string): Promise<DirEntry[]> {
@@ -129,23 +131,26 @@ namespace pxt.editor {
                 .then(resp => { })
         }
 
-        streamFileAsync(path: string, cb: (d: Uint8Array) => void) {
+        private streamFileOnceAsync(path: string, cb: (d: Uint8Array) => void) {
             let fileSize = 0
             let filePtr = 0
             let handle = -1
-            let restart = () => Promise.delay(500).then(() => this.streamFileAsync(path, cb))
             let resp = (buf: Uint8Array): Promise<void> => {
                 if (buf[6] == 2) {
                     // handle not ready - file is missing
-                    return restart()
+                    this.isStreaming = false
+                    return Promise.resolve()
                 }
 
                 if (buf[6] != 0 && buf[6] != 8)
-                    U.userError("bad response when streaming file: " + buf[6])
+                    U.userError("bad response when streaming file: " + buf[6] + " " + U.toHex(buf))
 
+                this.isStreaming = true
                 fileSize = HF2.read32(buf, 7)
-                if (handle == -1)
+                if (handle == -1) {
                     handle = buf[11]
+                    log(`stream on, handle=${handle}`)
+                }
                 let data = buf.slice(12)
                 filePtr += data.length
                 if (data.length > 0)
@@ -153,7 +158,8 @@ namespace pxt.editor {
 
                 if (buf[6] == 8) {
                     // end of file
-                    return this.rmAsync(path).then(restart)
+                    this.isStreaming = false
+                    return this.rmAsync(path)
                 }
 
                 let contFileReq = this.allocSystem(1 + 2, 0x97)
@@ -168,6 +174,15 @@ namespace pxt.editor {
             HF2.write16(getFileReq, 6, 1000) // maxRead
             U.memcpy(getFileReq, 8, U.stringToUint8Array(path))
             return this.talkAsync(getFileReq, -1).then(resp)
+        }
+
+        streamFileAsync(path: string, cb: (d: Uint8Array) => void) {
+            let loop = (): Promise<void> =>
+                this.lock.enqueue("file", () =>
+                    this.streamFileOnceAsync(path, cb))
+                    .then(() => Promise.delay(500))
+                    .then(loop)
+            return loop()
         }
 
         private initAsync() {

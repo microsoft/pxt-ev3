@@ -41,9 +41,8 @@ namespace pxt.editor {
         return initAsync()
             .then(w_ => {
                 w = w_
-                // run LS to make sure we can talk to device first
-                // otherwise flashing a file might lock it
-                return w.lsAsync("/")
+                if (w.isStreaming)
+                    U.userError("please stop the program first")
             }).then(() => {
                 let f = U.stringToUint8Array(atob(resp.outfiles[pxt.outputName()]))
                 return w.flashAsync(elfPath, f)
