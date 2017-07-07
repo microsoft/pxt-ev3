@@ -1,6 +1,31 @@
 // Auto-generated. Do not edit.
 declare namespace control {
 
+    /** Create new file mapping in memory */
+    //% shim=control::mmap
+    function mmap(filename: string, size: int32, offset: int32): MMap;
+}
+
+
+declare interface MMap {
+    /**
+     * Write a number in specified format in the buffer.
+     */
+    //% shim=MMapMethods::setNumber
+    setNumber(format: NumberFormat, offset: int32, value: number): void;
+
+    /**
+     * Read a number in specified format from the buffer.
+     */
+    //% shim=MMapMethods::getNumber
+    getNumber(format: NumberFormat, offset: int32): number;
+
+    /** Returns the length of a Buffer object. */
+    //% property shim=MMapMethods::length
+    length: int32;
+}
+declare namespace control {
+
     /**
      * Announce that an event happened to registered handlers.
      * @param src ID of the Component that generated the event

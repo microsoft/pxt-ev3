@@ -14,6 +14,20 @@ class Button;
 typedef Button *Button_;
 
 extern "C" void target_init();
+
+
+class MMap : public RefObject {
+  public:
+    int length;
+    int fd;
+    uint8_t *data;
+
+    MMap();
+    void destroy();
+    void print();
+};
+
+
 }
 
 #define DEVICE_EVT_ANY 0
