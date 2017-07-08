@@ -3,11 +3,11 @@
 namespace input {
 }
 
-//% color="#DF5014" weight=90 icon="\uf185"
+//% color="#8AC044" weight=90 icon="\uf185"
 namespace output {
 }
 
-//% color="#F55D3E"
+//% color="#DF5014" weight=80
 namespace music {
 
 }
