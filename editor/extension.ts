@@ -9,9 +9,8 @@ eval("if (typeof process === 'object' && process + '' === '[object process]') px
 namespace pxt.editor {
     // this comes from aux/pxt.lms
     const rbfTemplate = `
-4c45474f710000006d000100000000001c000000000000000a000000821b028405018130813e8053
-74617274696e672e2e2e008400c002802f746d702f73657269616c2e74787400486080XX00448303
-83010640414082f5ff8405018130813e80427965210084000a
+4c45474f580000006d000100000000001c000000000000000e000000821b038405018130813e8053
+74617274696e672e2e2e0084006080XX00448581644886488405018130813e80427965210084000a
 `
 
     function hf2Async() {
@@ -43,6 +42,7 @@ namespace pxt.editor {
                 w = w_
                 if (w.isStreaming)
                     U.userError("please stop the program first")
+                return w.rmAsync(elfPath)
             }).then(() => {
                 let f = U.stringToUint8Array(atob(resp.outfiles[pxt.outputName()]))
                 return w.flashAsync(elfPath, f)
@@ -69,6 +69,7 @@ namespace pxt.editor {
             deployCoreAsync,
         };
         initAsync()
+        /*
             .then(w => w.streamFileAsync("/tmp/serial.txt", buf => {
                 let str = Util.fromUTF8(Util.uint8ArrayToString(buf))
                 window.postMessage({
@@ -77,6 +78,7 @@ namespace pxt.editor {
                     data: str
                 }, "*")
             }))
+        */
         return Promise.resolve<pxt.editor.ExtensionResult>(res);
     }
 }

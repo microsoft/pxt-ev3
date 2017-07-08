@@ -3,23 +3,23 @@ vmthread  MAIN
 {
   DATA8   State
   DATA32  Status
-  //DATA32  Timer
+  DATA32  Timer
   DATA16 Serial
 
-  UI_WRITE(LED,LED_RED)
+  UI_WRITE(LED,LED_ORANGE)
   UI_DRAW(TEXT,FG_COLOR,48,62,'Starting...')
   UI_DRAW(UPDATE)
   // Make sure VM knows that /tmp/serial.txt is open for writing and can stream the content
-  FILE(OPEN_WRITE, '/tmp/serial.txt', Serial)
+  //FILE(OPEN_WRITE, '/tmp/serial.txt', Serial)
   // Actual filename is patched-in here
   SYSTEM('XXXXXXXXX', Status)
 Loop:
-  UI_BUTTON(WAIT_FOR_PRESS)
-  UI_BUTTON(SHORTPRESS,BACK_BUTTON,State)
-  JR_FALSE(State,Loop)
+  //UI_BUTTON(WAIT_FOR_PRESS)
+  //UI_BUTTON(SHORTPRESS,BACK_BUTTON,State)
+  //JR_FALSE(State,Loop)
   //UI_WRITE(LED,LED_RED)
-  //TIMER_WAIT(1000, Timer)
-  //TIMER_READY(Timer)
+  TIMER_WAIT(100, Timer)
+  TIMER_READY(Timer)
   UI_DRAW(TEXT,FG_COLOR,48,62,'Bye!')
   UI_DRAW(UPDATE)
 }

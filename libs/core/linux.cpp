@@ -8,6 +8,11 @@
 #include <pthread.h>
 #include <assert.h>
 #include <unistd.h>
+#include <dirent.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 void *operator new(size_t size) {
     return malloc(size);
@@ -29,8 +34,6 @@ static int startTime;
 static pthread_mutex_t execMutex;
 static pthread_mutex_t eventMutex;
 static pthread_cond_t newEventBroadcast;
-static FILE *dmesgFile;
-static FILE *serialFile;
 
 struct Thread {
     struct Thread *next;
@@ -46,6 +49,9 @@ struct Thread {
 
 static struct Thread *allThreads;
 static struct Event *eventHead, *eventTail;
+static int usbFD;
+static int dmesgPtr;
+static char dmesgBuf[4096];
 
 struct Event {
     struct Event *next;
@@ -63,27 +69,43 @@ Event *mkEvent(int source, int value) {
     return res;
 }
 
-void sendSerial(const char *data, int len) {
-    if (!serialFile) {
-        serialFile = fopen("/tmp/serial.txt", "w");
-        if (!serialFile)
-            serialFile = stderr;
-    }
+#define USB_MAGIC 0x3d3f
+#define USB_SERIAL 1
 
-    fwrite(data, 1, len, serialFile);
-    fflush(serialFile);
-    fdatasync(fileno(serialFile));
+struct UsbPacket {
+    uint16_t size;
+    uint16_t msgcount;
+    uint16_t magic;
+    uint16_t code;
+    char buf[1000];
+};
+
+void sendUsb(uint16_t code, const char *data, int len) {
+    if (usbFD == 0)
+        usbFD = open("/dev/lms_usbdev", O_RDWR, 0666);
+
+    while (len > 0) {
+        int sz = len;
+        if (sz > 1000)
+            sz = 1000;
+        UsbPacket pkt = {(uint16_t)(6 + sz), 0, USB_MAGIC, code, {}};
+        memcpy(pkt.buf, data, sz);
+        write(usbFD, &pkt, sizeof(pkt));
+        len -= sz;
+        data += sz;
+    }
+}
+
+void sendSerial(const char *data, int len) {
+    sendUsb(USB_SERIAL, data, len);
 }
 
 extern "C" void target_panic(int error_code) {
     char buf[50];
     snprintf(buf, sizeof(buf), "\nPANIC %d\n", error_code);
     sendSerial(buf, strlen(buf));
-    abort();
-}
-
-extern "C" void target_reset() {
-    exit(0);
+    DMESG("PANIC %d", error_code);
+    target_reset();
 }
 
 void startUser() {
@@ -294,7 +316,7 @@ static void runPoller(Thread *thr) {
             prev = curr;
         }
     }
-//    disposeThread(thr);
+    //    disposeThread(thr);
 }
 
 //%
@@ -306,14 +328,76 @@ uint32_t afterProgramPage() {
     return 0;
 }
 void dumpDmesg() {
-    // TODO
+    sendSerial("\nDMESG:\n", 8);
+    sendSerial(dmesgBuf, dmesgPtr);
+    sendSerial("\n\n", 2);
+}
+
+int lmsPid;
+void stopLMS() {
+    struct dirent *ent;
+    DIR *dir;
+
+    dir = opendir("/proc");
+    if (dir == NULL)
+        return;
+
+    while ((ent = readdir(dir)) != NULL) {
+        int pid = atoi(ent->d_name);
+        if (!pid)
+            continue;
+        char namebuf[100];
+        snprintf(namebuf, 1000, "/proc/%d/cmdline", pid);
+        FILE *f = fopen(namebuf, "r");
+        if (f) {
+            fread(namebuf, 1, 99, f);
+            if (strcmp(namebuf, "./lms2012") == 0) {
+                lmsPid = pid;
+            }
+            fclose(f);
+            if (lmsPid)
+                break;
+        }
+    }
+
+    closedir(dir);
+
+    lmsPid = 0; // disable SIGSTOP for now - rethink if problems with I2C (runs on a thread)
+
+    if (lmsPid) {
+        DMESG("SIGSTOP to lmsPID=%d", lmsPid);
+        if (kill(lmsPid, SIGSTOP))
+            DMESG("SIGSTOP failed");
+    }
+}
+
+void runLMS() {
+    DMESG("re-starting LMS2012");
+    kill(lmsPid, SIGCONT);
+    sleep_core_us(200000);
+    exit(0);
+    /*
+    chdir("/home/root/lms2012/sys");
+    for (int fd = 3; fd < 9999; ++fd)
+        close(fd);
+    execl("lms2012", "./lms2012");
+    exit(100); // should not be reached
+    */
+}
+
+extern "C" void target_reset() {
+    if (lmsPid)
+        runLMS();
+    else
+        exit(0);
 }
 
 void screen_init();
 void initRuntime() {
-    daemon(1, 1);
+    // daemon(1, 1);
     startTime = currTime();
     DMESG("runtime starting...");
+    stopLMS();
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
@@ -322,21 +406,38 @@ void initRuntime() {
     startUser();
 }
 
-void dmesg(const char *format, ...) {
-    char buf[500];
+static FILE *dmesgFile;
 
+void dmesgRaw(const char *buf, uint32_t len) {
     if (!dmesgFile) {
         dmesgFile = fopen("/tmp/dmesg.txt", "w");
         if (!dmesgFile)
             dmesgFile = stderr;
     }
 
+    if (len > sizeof(dmesgBuf) / 2)
+        return;
+    if (dmesgPtr + len > sizeof(dmesgBuf)) {
+        dmesgPtr = 0;
+    }
+    memcpy(dmesgBuf + dmesgPtr, buf, len);
+    dmesgPtr += len;
+    fwrite(buf, 1, len, dmesgFile);
+}
+
+void dmesg(const char *format, ...) {
+    char buf[500];
+
+    snprintf(buf, sizeof(buf), "[%8d] ", current_time_ms());
+    dmesgRaw(buf, strlen(buf));
+
     va_list arg;
     va_start(arg, format);
     vsnprintf(buf, sizeof(buf), format, arg);
     va_end(arg);
+    dmesgRaw(buf, strlen(buf));
+    dmesgRaw("\n", 1);
 
-    fprintf(dmesgFile, "[%8d] %s\n", current_time_ms(), buf);
     fflush(dmesgFile);
     fdatasync(fileno(dmesgFile));
 }

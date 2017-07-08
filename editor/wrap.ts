@@ -23,6 +23,15 @@ namespace pxt.editor {
         constructor(public io: pxt.HF2.PacketIO) {
             io.onData = buf => {
                 buf = buf.slice(0, HF2.read16(buf, 0) + 2)
+                if (HF2.read16(buf, 4) == 0x3d3f) {
+                    let code = HF2.read16(buf, 6)
+                    let payload = buf.slice(8)
+                    if (code == 1)
+                        console.log("Serial: " + U.uint8ArrayToString(payload))
+                    else
+                        console.log("Magic: " + code + ": " + U.toHex(payload))
+                    return
+                }
                 //log("DATA: " + U.toHex(buf))
                 this.msgs.push(buf)
             }
@@ -56,8 +65,9 @@ namespace pxt.editor {
         }
 
         talkAsync(buf: Uint8Array, altResponse = 0) {
-            return this.lock.enqueue("talk", () =>
-                this.io.sendPacketAsync(buf)
+            return this.lock.enqueue("talk", () => {
+                this.msgs.drain()
+                return this.io.sendPacketAsync(buf)
                     .then(() => this.msgs.shiftAsync(1000))
                     .then(resp => {
                         if (resp[2] != buf[2] || resp[3] != buf[3])
@@ -69,7 +79,8 @@ namespace pxt.editor {
                                 U.userError("cmd error: " + resp[6])
                         }
                         return resp
-                    }))
+                    })
+            })
         }
 
         flashAsync(path: string, file: Uint8Array) {
