@@ -23,6 +23,10 @@ declare interface MMap {
     /** Returns the length of a Buffer object. */
     //% property shim=MMapMethods::length
     length: int32;
+
+    /** Perform ioctl(2) on the underlaying file */
+    //% shim=MMapMethods::ioctl
+    ioctl(id: uint32, data: Buffer): void;
 }
 declare namespace control {
 

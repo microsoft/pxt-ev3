@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 
 namespace pxt {
 PXT_VTABLE_CTOR(MMap) {
@@ -28,6 +29,7 @@ namespace control {
 /** Create new file mapping in memory */
 //%
 MMap *mmap(String filename, int size, int offset) {
+    DMESG("mmap %s len=%d off=%d", filename->data, size, offset);
     int fd = open(filename->data, O_RDWR, 0);
     if (fd < 0)
         return 0;
@@ -41,7 +43,7 @@ MMap *mmap(String filename, int size, int offset) {
     auto r = new MMap();
     r->fd = fd;
     r->length = size;
-    r->data = (uint8_t*)data;
+    r->data = (uint8_t *)data;
     return r;
 }
 }
@@ -73,4 +75,11 @@ TNumber getNumber(MMap *buf, NumberFormat format, int offset) {
 int length(MMap *s) {
     return s->length;
 }
+
+/** Perform ioctl(2) on the underlaying file */
+//%
+void ioctl(MMap *mmap, uint32_t id, Buffer data) {
+    ::ioctl(mmap->fd, id, data->data);
+}
+
 }
