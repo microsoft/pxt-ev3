@@ -40,6 +40,8 @@ struct Thread {
     pthread_cond_t waitCond;
     int waitSource;
     int waitValue;
+    TValue data0;
+    TValue data1;
 };
 
 static struct Thread *allThreads;
@@ -139,6 +141,9 @@ void disposeThread(Thread *t) {
         }
     }
     decr(t->act);
+    decr(t->arg0);
+    decr(t->data0);
+    decr(t->data1);
     pthread_cond_destroy(&t->waitCond);
     delete t;
 }
@@ -150,17 +155,19 @@ static void runAct(Thread *thr) {
     disposeThread(thr);
 }
 
-void setupThread(Action a, TValue arg = 0, void (*runner)(Thread *) = NULL) {
+void setupThread(Action a, TValue arg = 0, void (*runner)(Thread *) = NULL, TValue d0 = 0,
+                 TValue d1 = 0) {
     if (runner == NULL)
         runner = runAct;
     auto thr = new Thread();
     memset(thr, 0, sizeof(Thread));
     thr->next = allThreads;
     allThreads = thr;
-    thr->act = a;
-    thr->arg0 = a;
+    thr->act = incr(a);
+    thr->arg0 = incr(arg);
+    thr->data0 = incr(d0);
+    thr->data1 = incr(d1);
     pthread_cond_init(&thr->waitCond, NULL);
-    incr(a);
     pthread_create(&thr->pid, NULL, (void *(*)(void *))runner, thr);
     pthread_detach(thr->pid);
 }
@@ -267,6 +274,32 @@ void raiseEvent(int id, int event) {
 
 void registerWithDal(int id, int event, Action a) {
     setBinding(id, event, a);
+}
+
+static void runPoller(Thread *thr) {
+    Action query = thr->data0;
+    auto us = (uint64_t)toInt(thr->data1) * 1000;
+
+    // note that this is run without the user mutex held - it should not modify any state!
+    TValue prev = pxt::runAction0(query);
+
+    while (true) {
+        sleep_core_us(us);
+        TValue curr = pxt::runAction0(query);
+        if (curr != prev) {
+            startUser();
+            pxt::runAction2(thr->act, prev, curr);
+            stopUser();
+            decr(prev);
+            prev = curr;
+        }
+    }
+//    disposeThread(thr);
+}
+
+//%
+void unsafePollForChanges(int ms, Action query, Action handler) {
+    setupThread(handler, 0, runPoller, query, fromInt(ms));
 }
 
 uint32_t afterProgramPage() {
