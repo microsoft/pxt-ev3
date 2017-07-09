@@ -42,6 +42,8 @@ namespace pxt.editor {
                 w = w_
                 if (w.isStreaming)
                     U.userError("please stop the program first")
+                return w.stopAsync()
+            }).then(() => {
                 return w.rmAsync(elfPath)
             }).then(() => {
                 let f = U.stringToUint8Array(atob(resp.outfiles[pxt.outputName()]))
@@ -60,6 +62,7 @@ namespace pxt.editor {
                     return w.disconnectAsync()
                 else
                     return Promise.resolve()
+                    //return Promise.delay(1000).then(() => w.dmesgAsync())
             })
     }
 
@@ -72,11 +75,7 @@ namespace pxt.editor {
         /*
             .then(w => w.streamFileAsync("/tmp/serial.txt", buf => {
                 let str = Util.fromUTF8(Util.uint8ArrayToString(buf))
-                window.postMessage({
-                    type: 'serial',
-                    id: 'n/a', // TODO
-                    data: str
-                }, "*")
+                
             }))
         */
         return Promise.resolve<pxt.editor.ExtensionResult>(res);

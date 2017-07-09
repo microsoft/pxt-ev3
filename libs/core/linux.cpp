@@ -12,6 +12,7 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <fcntl.h>
 
 void *operator new(size_t size) {
@@ -71,19 +72,56 @@ Event *mkEvent(int source, int value) {
 
 #define USB_MAGIC 0x3d3f
 #define USB_SERIAL 1
+#define USB_RESTART 2
+#define USB_DMESG 3
 
 struct UsbPacket {
     uint16_t size;
     uint16_t msgcount;
     uint16_t magic;
     uint16_t code;
-    char buf[1000];
+    char buf[1024 - 8];
 };
 
-void sendUsb(uint16_t code, const char *data, int len) {
-    if (usbFD == 0)
-        usbFD = open("/dev/lms_usbdev", O_RDWR, 0666);
+void *usbThread(void *) {
+    UsbPacket pkt;
+    UsbPacket resp;
+    while (true) {
+        int len = read(usbFD, &pkt, sizeof(pkt));
+        if (len <= 4) {
+            sleep_core_us(20000);
+            continue;
+        }
+        resp.msgcount = pkt.msgcount;
+        if (pkt.magic == USB_MAGIC) {
+            if (pkt.code == USB_RESTART) {
+                target_reset();
+            } else if (pkt.code == USB_DMESG) {
+                dumpDmesg();
+            }
+            /*
+            resp.magic = pkt.magic;
+            resp.code = pkt.code;
+            resp.size = 8;
+            write(usbFD, &resp, sizeof(resp));
+            */
+        } else {
+            resp.magic = 0xffff;
+            resp.size = 4;
+            write(usbFD, &resp, sizeof(resp));
+        }
+        sleep_core_us(1000);
+    }
+}
 
+static void startUsb() {
+    usbFD = open("/dev/lms_usbdev", O_RDWR, 0666);
+    pthread_t pid;
+    pthread_create(&pid, NULL, usbThread, NULL);
+    pthread_detach(pid);
+}
+
+void sendUsb(uint16_t code, const char *data, int len) {
     while (len > 0) {
         int sz = len;
         if (sz > 1000)
@@ -398,6 +436,7 @@ void initRuntime() {
     startTime = currTime();
     DMESG("runtime starting...");
     stopLMS();
+    startUsb();
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);

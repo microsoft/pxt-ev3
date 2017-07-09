@@ -4,9 +4,9 @@
 require("./editor")
 
 declare namespace pxt.editor {
-    function deployCoreAsync(resp: pxtc.CompileResult, isCli?: boolean): Promise<void>;
+    function deployCoreAsync(resp: pxtc.CompileResult, disconnect?: boolean): Promise<void>;
 }
 
 export function deployCoreAsync(resp: pxtc.CompileResult) {
-    return pxt.editor.deployCoreAsync(resp, true)
+    return pxt.editor.deployCoreAsync(resp, process.env["PXT_SERIAL"] ? false : true)
 }

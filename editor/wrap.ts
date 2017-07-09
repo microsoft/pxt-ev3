@@ -13,26 +13,37 @@ namespace pxt.editor {
     }
 
     const runTemplate = "C00882010084XX0060640301606400"
+    const usbMagic = 0x3d3f
 
     export class Ev3Wrapper {
         msgs = new U.PromiseBuffer<Uint8Array>()
         private cmdSeq = U.randomUint32() & 0xffff;
         private lock = new U.PromiseQueue();
         isStreaming = false;
+        dataDump = false;
 
         constructor(public io: pxt.HF2.PacketIO) {
             io.onData = buf => {
                 buf = buf.slice(0, HF2.read16(buf, 0) + 2)
-                if (HF2.read16(buf, 4) == 0x3d3f) {
+                if (HF2.read16(buf, 4) == usbMagic) {
                     let code = HF2.read16(buf, 6)
                     let payload = buf.slice(8)
-                    if (code == 1)
-                        console.log("Serial: " + U.uint8ArrayToString(payload))
-                    else
+                    if (code == 1) {
+                        let str = U.uint8ArrayToString(payload)
+                        if (Util.isNodeJS)
+                            console.log("SERIAL: " + str.replace(/\n+$/, ""))
+                        else
+                            window.postMessage({
+                                type: 'serial',
+                                id: 'n/a', // TODO?
+                                data: str
+                            }, "*")
+                    } else
                         console.log("Magic: " + code + ": " + U.toHex(payload))
                     return
                 }
-                //log("DATA: " + U.toHex(buf))
+                if (this.dataDump)
+                    log("RECV: " + U.toHex(buf))
                 this.msgs.push(buf)
             }
         }
@@ -52,6 +63,30 @@ namespace pxt.editor {
             return buf
         }
 
+        private allocCustom(code: number, addSize = 0) {
+            let buf = this.allocCore(1 + 2 + addSize, 0)
+            HF2.write16(buf, 4, usbMagic)
+            HF2.write16(buf, 6, code)
+            return buf
+        }
+
+        stopAsync() {
+            return this.isVmAsync()
+                .then(vm => {
+                    if (vm) return Promise.resolve();
+                    log(`stopping PXT app`)
+                    let buf = this.allocCustom(2)
+                    return this.justSendAsync(buf)
+                        .then(() => Promise.delay(500))
+                })
+        }
+
+        dmesgAsync() {
+            log(`asking for DMESG buffer over serial`)
+            let buf = this.allocCustom(3)
+            return this.justSendAsync(buf)
+        }
+
         runAsync(path: string) {
             let codeHex = runTemplate.replace("XX", U.toHex(U.stringToUint8Array(path)))
             let code = U.fromHex(codeHex)
@@ -59,21 +94,30 @@ namespace pxt.editor {
             HF2.write16(pkt, 5, 0x0800)
             U.memcpy(pkt, 7, code)
             log(`run ${path}`)
-            return this.talkAsync(pkt)
-                .then(buf => {
-                })
+            return this.justSendAsync(pkt)
+        }
+
+        justSendAsync(buf: Uint8Array) {
+            return this.lock.enqueue("talk", () => {
+                this.msgs.drain()
+                if (this.dataDump)
+                    log("SEND: " + U.toHex(buf))
+                return this.io.sendPacketAsync(buf)
+            })
         }
 
         talkAsync(buf: Uint8Array, altResponse = 0) {
             return this.lock.enqueue("talk", () => {
                 this.msgs.drain()
+                if (this.dataDump)
+                    log("TALK: " + U.toHex(buf))
                 return this.io.sendPacketAsync(buf)
                     .then(() => this.msgs.shiftAsync(1000))
                     .then(resp => {
                         if (resp[2] != buf[2] || resp[3] != buf[3])
                             U.userError("msg count de-sync")
                         if (buf[4] == 1) {
-                            if (resp[5] != buf[5])
+                            if (altResponse != -1 && resp[5] != buf[5])
                                 U.userError("cmd de-sync")
                             if (altResponse != -1 && resp[6] != 0 && resp[6] != altResponse)
                                 U.userError("cmd error: " + resp[6])
@@ -84,7 +128,7 @@ namespace pxt.editor {
         }
 
         flashAsync(path: string, file: Uint8Array) {
-            log(`write ${file.length} to ${path}`)
+            log(`write ${file.length} bytes to ${path}`)
 
             let handle = -1
 
@@ -138,8 +182,20 @@ namespace pxt.editor {
             let rmReq = this.allocSystem(path.length + 1, 0x9c)
             U.memcpy(rmReq, 6, U.stringToUint8Array(path))
 
-            return this.talkAsync(rmReq)
+            return this.talkAsync(rmReq, 5)
                 .then(resp => { })
+        }
+
+        isVmAsync(): Promise<boolean> {
+            let path = "/no/such/dir"
+            let mkdirReq = this.allocSystem(path.length + 1, 0x9b)
+            U.memcpy(mkdirReq, 6, U.stringToUint8Array(path))
+            return this.talkAsync(mkdirReq, -1)
+                .then(resp => {
+                    let isVM = resp[6] == 0x05
+                    log(`${isVM ? "PXT app" : "VM"} running`)
+                    return isVM
+                })
         }
 
         private streamFileOnceAsync(path: string, cb: (d: Uint8Array) => void) {
