@@ -33,11 +33,14 @@ MMap *mmap(String filename, int size, int offset) {
     int fd = open(filename->data, O_RDWR, 0);
     if (fd < 0)
         return 0;
-
-    void *data = ::mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, offset);
-    if (data == MAP_FAILED) {
-        close(fd);
-        return 0;
+    
+    void *data = NULL;
+    if (size > 0) {
+        data = ::mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, offset);
+        if (data == MAP_FAILED) {
+            close(fd);
+            return 0;
+        }
     }
 
     auto r = new MMap();
@@ -68,6 +71,18 @@ TNumber getNumber(MMap *buf, NumberFormat format, int offset) {
     if (offset < 0)
         return fromInt(0);
     return getNumberCore(buf->data + offset, buf->length - offset, format);
+}
+
+/**
+ * Read a range of bytes into a buffer.
+ */
+//%
+Buffer slice(MMap *buf, int offset = 0, int length = -1) {
+    offset = min((int)buf->length, offset);
+    if (length < 0)
+        length = buf->length;
+    length = min(length, buf->length - offset);
+    return mkBuffer(buf->data + offset, length);
 }
 
 /** Returns the length of a Buffer object. */

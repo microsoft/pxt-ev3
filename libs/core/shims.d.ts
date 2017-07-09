@@ -20,6 +20,12 @@ declare interface MMap {
     //% shim=MMapMethods::getNumber
     getNumber(format: NumberFormat, offset: int32): number;
 
+    /**
+     * Read a range of bytes into a buffer.
+     */
+    //% offset.defl=0 length.defl=-1 shim=MMapMethods::slice
+    slice(offset?: int32, length?: int32): Buffer;
+
     /** Returns the length of a Buffer object. */
     //% property shim=MMapMethods::length
     length: int32;
