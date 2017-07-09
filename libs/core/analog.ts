@@ -15,7 +15,8 @@ namespace input {
         Crc = 52, // uint16
         ADRaw = 54, // uint16[4]
         SensorRaw = 62, // uint16[4]
-        Size = 70
+        Padding = 70,
+        Size = 72
     }
     const enum AnalogOff {
         InPin1 = 0, // int16[4]
@@ -30,20 +31,25 @@ namespace input {
         Actual = 4832, // uint16[4]
         LogIn = 4840, // uint16[4]
         LogOut = 4848, // uint16[4]
-        NxtCol = 4856, // int16[35][4] - NxtCol * 4
-        OutPin5Low = 5136, // int16[4]
-        Updated = 5144, // int8[4]
-        InDcm = 5148, // int8[4]
-        InConn = 5152, // int8[4]
-        OutDcm = 5156, // int8[4]
-        OutConn = 5160, // int8[4]
-        Size = 5164
+        NxtCol = 4856, // uint16[36][4] - NxtColor*4
+        OutPin5Low = 5144, // int16[4]
+        Updated = 5152, // int8[4]
+        InDcm = 5156, // int8[4]
+        InConn = 5160, // int8[4]
+        OutDcm = 5164, // int8[4]
+        OutConn = 5168, // int8[4]
+        Size = 5172
     }
 
     function init() {
         if (analogMM) return
         analogMM = control.mmap("/dev/lms_analog", AnalogOff.Size, 0)
         if (!analogMM) control.fail("no analog sensor")
+    }
+
+    export function portState() {
+        init()
+        return analogMM.slice(AnalogOff.Updated, 12)
     }
 
     export class AnalogSensor {
@@ -273,12 +279,7 @@ namespace input {
 
     function getUartBytes(port: number): Buffer {
         let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
-        let buf = output.createBuffer(32)
-        for (let i = 0; i < 32; i += 4) {
-            let v = uartMM.getNumber(NumberFormat.Int32LE, UartOff.Raw + 32 * 300 * port + 32 * index + i)
-            buf.setNumber(NumberFormat.Int32LE, i, v)
-        }
-        return buf
+        return uartMM.slice(UartOff.Raw + 32 * 300 * port + 32 * index, 32)
     }
 
     function getUartNumber(fmt: NumberFormat, off: number, port: number) {
@@ -358,6 +359,17 @@ namespace input {
             this.setMode(IrSensorMode.Seek)
             return getUartNumber(NumberFormat.UInt16LE, this.channel * 2, this.port)
         }
+    }
+
+    function testPorts() {
+        let tstPin = control.mmap("/dev/lms_tst_pin", 0, 0)
+        let tstUart = control.mmap("/dev/lms_tst_uart", 0, 0)
+        let buf = output.createBuffer(0)
+        tstPin.ioctl(IO.TST_PIN_ON, buf)
+        tstUart.ioctl(IO.TST_UART_ON, buf)
+        loops.pause(30000)
+        tstUart.ioctl(IO.TST_UART_OFF, buf)
+        tstPin.ioctl(IO.TST_PIN_OFF, buf)
     }
 
 
