@@ -361,16 +361,5 @@ namespace input {
         }
     }
 
-    function testPorts() {
-        let tstPin = control.mmap("/dev/lms_tst_pin", 0, 0)
-        let tstUart = control.mmap("/dev/lms_tst_uart", 0, 0)
-        let buf = output.createBuffer(0)
-        tstPin.ioctl(IO.TST_PIN_ON, buf)
-        tstUart.ioctl(IO.TST_UART_ON, buf)
-        loops.pause(30000)
-        tstUart.ioctl(IO.TST_UART_OFF, buf)
-        tstPin.ioctl(IO.TST_PIN_OFF, buf)
-    }
-
 
 }
