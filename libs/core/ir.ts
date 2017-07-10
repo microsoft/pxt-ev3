@@ -109,7 +109,36 @@ namespace input {
         }
     }
 
-
     //% whenUsed
     export const ir: IrSensor = new IrSensor()
+
+    /**
+     * Remote top-left button.
+     */
+    //% whenUsed block="remote top-left" weight=95 fixedInstance
+    export const remoteTopLeft = ir.button(IrRemoteButton.TopLeft)
+
+    /**
+     * Remote top-right button.
+     */
+    //% whenUsed block="remote top-right" weight=95 fixedInstance
+    export const remoteTopRight = ir.button(IrRemoteButton.TopRight)
+
+    /**
+     * Remote bottom-left button.
+     */
+    //% whenUsed block="remote bottom-left" weight=95 fixedInstance
+    export const remoteBottomLeft = ir.button(IrRemoteButton.BottomLeft)
+
+    /**
+     * Remote bottom-right button.
+     */
+    //% whenUsed block="remote bottom-right" weight=95 fixedInstance
+    export const remoteBottomRight = ir.button(IrRemoteButton.BottomRight)
+
+    /**
+     * Remote beacon (center) button.
+     */
+    //% whenUsed block="remote center" weight=95 fixedInstance
+    export const remoteCenter = ir.button(IrRemoteButton.CenterBeacon)
 }

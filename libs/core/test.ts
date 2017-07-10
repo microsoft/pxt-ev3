@@ -29,17 +29,17 @@ input.buttonUp.onEvent(ButtonEvent.Click, () => {
 
 let num = 0
 
-input.touch.button.onEvent(ButtonEvent.Click, () => {
+input.touchSensor.onEvent(ButtonEvent.Click, () => {
     screen.drawText(10, 60, "Click!  " + num)
     num++
 })
 
-input.ir.button(IrRemoteButton.TopLeft).onEvent(ButtonEvent.Click, () => {
+input.remoteTopLeft.onEvent(ButtonEvent.Click, () => {
     screen.drawText(10, 60, "TOPLEFT " + num)
     num++
 })
 
-input.ir.button(IrRemoteButton.TopRight).onEvent(ButtonEvent.Down, () => {
+input.remoteTopRight.onEvent(ButtonEvent.Down, () => {
     screen.drawText(10, 60, "TOPRIGH " + num)
     num++
 })

@@ -21,5 +21,8 @@ namespace input {
     }
 
     //% whenUsed
-    export const touch: TouchSensor = new TouchSensor()
+    export const touchSensorImpl: TouchSensor = new TouchSensor()
+
+    //% whenUsed
+    export const touchSensor: Button = touchSensorImpl.button
 }

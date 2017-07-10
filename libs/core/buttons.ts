@@ -15,7 +15,6 @@ const enum LightsPattern {
     OrangePulse = 9,  // LED_ORANGE_PULSE
 }
 
-
 /**
  * User interaction on buttons
  */
