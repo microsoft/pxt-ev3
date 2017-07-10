@@ -2,7 +2,7 @@
 * [x] implement serialPoll
 * [x] try some motors
 * [x] add `control.interrupt(ms, () => { ... sync function ... })` - running outside regular JS thread
-* [ ] add `//% whenUsed` on global variable initializers in PXT
+* [x] add `//% whenUsed` on global variable initializers in PXT
 * [ ] fix `@PXT@:` handling for ELF in PXT
 * [x] parse Python field lists into offsets
 
