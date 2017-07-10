@@ -77,6 +77,10 @@ namespace input {
             }
         }
 
+        _deviceType() {
+            return LMS.DEVICE_TYPE_IR
+        }
+
         setRemoteChannel(c: IrRemoteChannel) {
             c = Math.clamp(0, 3, c | 0)
             this.channel = c

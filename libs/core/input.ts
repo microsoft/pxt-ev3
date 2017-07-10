@@ -80,16 +80,19 @@ namespace input.internal {
             info.connType = newConn
             info.devType = LMS.DEVICE_TYPE_NONE
             if (newConn == LMS.CONN_INPUT_UART) {
+                control.dmesg(`new UART connection at ${info.port}`)
                 setUartMode(info.port, 0)
                 let uinfo = readUartInfo(info.port, 0)
                 info.devType = uinfo[TypesOff.Type]
+                control.dmesg(`UART type ${info.devType}`)
             } else if (newConn == LMS.CONN_INPUT_DUMB) {
+                control.dmesg(`new DUMB connection at ${info.port}`)
                 // TODO? for now assume touch
                 info.devType = LMS.DEVICE_TYPE_TOUCH
-            } else if (newConn == LMS.CONN_NONE) {
-                // OK
+            } else if (newConn == LMS.CONN_NONE || newConn == 0) {
+                control.dmesg(`disconnect at ${info.port}`)
             } else {
-                // ???
+                control.dmesg(`unknown connection type: ${newConn} at ${info.port}`)
             }
         }
 
@@ -106,12 +109,16 @@ namespace input.internal {
 
         for (let info of autos) {
             if (!info.sensor && info.devType != LMS.DEVICE_TYPE_NONE) {
+                let found = false
                 for (let s of autoSensors) {
                     if (s.getPort() == 0 && s._deviceType() == info.devType) {
                         s._setPort(info.port + 1)
+                        found = true
                         break
                     }
                 }
+                if (!found)
+                    control.dmesg(`sensor not found for type=${info.devType} at ${info.port}`)
             }
         }
     }
@@ -133,6 +140,8 @@ namespace input.internal {
         _setPort(port: number, manual = false) {
             port = Math.clamp(0, 4, port | 0) - 1;
             if (port == this.port) return
+            this.port = port
+            control.dmesg(`sensor set port ${port} on devtype=${this._deviceType()}`)
             for (let i = 0; i < sensors.length; ++i) {
                 if (i != this.port && sensors[i].sensor == this) {
                     sensors[i] = null
@@ -190,27 +199,33 @@ namespace input.internal {
 
     export class UartSensor extends Sensor {
         protected mode: number
+        protected realmode: number
 
         constructor() {
             super()
+            this.mode = 0
+            this.realmode = -1
         }
 
         protected _portUpdated() {
-            this.mode = -1
+            this.realmode = -1
             if (this.port > 0) {
                 if (this.isManual()) {
                     uartReset(this.port)
                 } else {
-                    this.mode = 0
+                    this.realmode = 0
                 }
+                this._setMode(this.mode)
             }
         }
 
         protected _setMode(m: number) {
-            if (this.port < 0) return
+            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
             let v = m | 0
-            if (v != this.mode) {
-                this.mode = v
+            this.mode = v
+            if (this.port < 0) return
+            if (this.realmode != this.mode) {
+                this.realmode = v
                 setUartMode(this.port, v)
             }
         }
@@ -226,6 +241,7 @@ namespace input.internal {
 
     function uartReset(port: number) {
         if (port < 0) return
+        control.dmesg(`UART reset at ${port}`)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, LMS.CONN_NONE)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
@@ -272,6 +288,7 @@ namespace input.internal {
         const UART_PORT_CHANGED = 1
         while (true) {
             if (port < 0) return
+            control.dmesg(`UART set mode to ${mode} at ${port}`)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, LMS.CONN_INPUT_UART)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)

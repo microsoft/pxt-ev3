@@ -52,6 +52,7 @@ static struct Thread *allThreads;
 static struct Event *eventHead, *eventTail;
 static int usbFD;
 static int dmesgPtr;
+static int dmesgSerialPtr;
 static char dmesgBuf[4096];
 
 struct Event {
@@ -366,9 +367,11 @@ uint32_t afterProgramPage() {
     return 0;
 }
 void dumpDmesg() {
-    sendSerial("\nDMESG:\n", 8);
-    sendSerial(dmesgBuf, dmesgPtr);
-    sendSerial("\n\n", 2);
+    auto len = dmesgPtr - dmesgSerialPtr;
+    if (len == 0)
+        return;
+    sendSerial(dmesgBuf + dmesgSerialPtr, len);
+    dmesgSerialPtr = dmesgPtr;
 }
 
 int lmsPid;
@@ -458,6 +461,7 @@ void dmesgRaw(const char *buf, uint32_t len) {
         return;
     if (dmesgPtr + len > sizeof(dmesgBuf)) {
         dmesgPtr = 0;
+        dmesgSerialPtr = 0;
     }
     memcpy(dmesgBuf + dmesgPtr, buf, len);
     dmesgPtr += len;

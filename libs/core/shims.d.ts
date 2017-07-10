@@ -56,6 +56,12 @@ declare namespace control {
     //% shim=control::dmesg
     function dmesg(s: string): void;
 }
+declare namespace serial {
+
+    /** Send DMESG debug buffer over serial. */
+    //% shim=serial::writeDmesg
+    function writeDmesg(): void;
+}
 declare namespace input {
 
     /**

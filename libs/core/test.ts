@@ -26,12 +26,27 @@ input.buttonUp.onEvent(ButtonEvent.Click, () => {
     screen.scroll(10)
 })
 
-for (let i = 0; i < 3; ++i) {
-    loops.forever(() => {
-        let r = Math.randomRange(0, 100)
-        serial.writeValue("R", r)
-        //screen.drawText(10, 10, `R=${r}`)
-        loops.pause(1000)
-    })
-    loops.pause(300)
-}
+
+let num = 0
+
+input.touch.button.onEvent(ButtonEvent.Click, () => {
+    screen.drawText(10, 60, "Click!  " + num)
+    num++
+})
+
+input.ir.getRemoteCommand()
+
+input.ir.button(IrRemoteButton.TopLeft).onEvent(ButtonEvent.Down, () => {
+    screen.drawText(10, 60, "TOPLEFT " + num)
+    num++
+})
+
+input.ir.button(IrRemoteButton.TopRight).onEvent(ButtonEvent.Down, () => {
+    screen.drawText(10, 60, "TOPRIGH " + num)
+    num++
+})
+
+loops.forever(() => {
+    serial.writeDmesg()
+    loops.pause(400)
+})

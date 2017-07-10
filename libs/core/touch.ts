@@ -14,6 +14,10 @@ namespace input {
         _update(prev: number, curr: number) {
             this.button.update(curr > 0)
         }
+
+        _deviceType() {
+            return LMS.DEVICE_TYPE_TOUCH
+        }
     }
 
     //% whenUsed

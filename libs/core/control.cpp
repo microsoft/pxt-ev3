@@ -27,4 +27,13 @@ int allocateNotifyEvent() {
 void dmesg(String s) {
     DMESG("# %s", s->data);
 }
+
+}
+
+namespace serial {
+    /** Send DMESG debug buffer over serial. */
+    //%
+    void writeDmesg() {
+        pxt::dumpDmesg();
+    }
 }
