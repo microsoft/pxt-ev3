@@ -49,6 +49,8 @@ namespace input {
             super()
             this.channel = IrRemoteChannel.Ch0
             this.buttons = []
+            // otherwise button events won't work
+            this.mode = IrSensorMode.RemoteControl
             for (let i = 0; i < 5; ++i) {
                 this.buttons.push(new ButtonTS())
             }

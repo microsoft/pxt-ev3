@@ -1,6 +1,0 @@
-[       1] runtime starting...
-[      53] runtime started [V0.60]
-[      55] mmap /dev/lms_analog len=5172 off=0
-[      56] mmap /dev/lms_uart len=42744 off=0
-[      64] Error: 7 [0]
-[      64] PANIC 42

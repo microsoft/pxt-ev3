@@ -34,9 +34,7 @@ input.touch.button.onEvent(ButtonEvent.Click, () => {
     num++
 })
 
-input.ir.getRemoteCommand()
-
-input.ir.button(IrRemoteButton.TopLeft).onEvent(ButtonEvent.Down, () => {
+input.ir.button(IrRemoteButton.TopLeft).onEvent(ButtonEvent.Click, () => {
     screen.drawText(10, 60, "TOPLEFT " + num)
     num++
 })
