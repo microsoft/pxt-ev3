@@ -42,7 +42,6 @@ namespace input {
 
     export class IrSensor extends internal.UartSensor {
         private channel: IrRemoteChannel
-        private pollRunning: boolean
         private buttons: Button[];
 
         constructor() {

@@ -17,6 +17,7 @@
         "core.ts",
         "input.ts",
         "ir.ts",
+        "color.ts",
         "touch.ts",
         "shims.d.ts",
         "enums.d.ts",

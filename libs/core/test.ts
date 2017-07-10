@@ -46,5 +46,13 @@ input.remoteTopRight.onEvent(ButtonEvent.Down, () => {
 
 loops.forever(() => {
     serial.writeDmesg()
-    loops.pause(400)
+    loops.pause(100)
 })
+
+/*
+loops.forever(() => {
+    let v = input.color.getColor()
+    screen.drawText(10, 60, v + "   ")
+    loops.pause(200)
+})
+*/
