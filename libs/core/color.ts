@@ -24,7 +24,6 @@ namespace input {
     export class ColorSensor extends internal.UartSensor {
         constructor() {
             super()
-            this.mode = ColorSensorMode.Reflect
         }
 
         _deviceType() {

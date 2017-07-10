@@ -18,6 +18,8 @@
         "input.ts",
         "ir.ts",
         "color.ts",
+        "gyro.ts",
+        "ultrasonic.ts",
         "touch.ts",
         "shims.d.ts",
         "enums.d.ts",
