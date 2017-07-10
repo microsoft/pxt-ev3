@@ -3,16 +3,16 @@
  * Patterns for lights under the buttons.
  */
 const enum LightsPattern {
-    Off = 0,  // LED_BLACK
-    Green = 1,  // LED_GREEN
-    Red = 2,  // LED_RED
-    Orange = 3,  // LED_ORANGE
-    GreenFlash = 4,  // LED_GREEN_FLASH
-    RedFlash = 5,  // LED_RED_FLASH
-    OrangeFlash = 6,  // LED_ORANGE_FLASH
-    GreenPulse = 7,  // LED_GREEN_PULSE
-    RedPulse = 8,  // LED_RED_PULSE
-    OrangePulse = 9,  // LED_ORANGE_PULSE
+    Off = 0,
+    Green = 1,
+    Red = 2,
+    Orange = 3,
+    GreenFlash = 4,
+    RedFlash = 5,
+    OrangeFlash = 6,
+    GreenPulse = 7,
+    RedPulse = 8,
+    OrangePulse = 9,
 }
 
 /**
