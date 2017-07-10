@@ -144,11 +144,11 @@ namespace input.internal {
             control.dmesg(`sensor set port ${port} on devtype=${this._deviceType()}`)
             for (let i = 0; i < sensors.length; ++i) {
                 if (i != this.port && sensors[i].sensor == this) {
-                    sensors[i] = null
+                    sensors[i].sensor = null
                     sensors[i].manual = false
                 }
             }
-            if (this.port > 0) {
+            if (this.port >= 0) {
                 let prev = sensors[this.port].sensor
                 if (prev && prev != this)
                     prev._setPort(0)
@@ -209,7 +209,7 @@ namespace input.internal {
 
         protected _portUpdated() {
             this.realmode = -1
-            if (this.port > 0) {
+            if (this.port >= 0) {
                 if (this.isManual()) {
                     uartReset(this.port)
                 } else {
