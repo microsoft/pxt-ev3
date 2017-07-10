@@ -1,4 +1,4 @@
-namespace core {
+namespace control {
     let nextComponentId = 20000;
 
     export class Component {

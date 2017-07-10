@@ -3,7 +3,7 @@
 
 namespace pxt {
 void dmesg(const char *fmt, ...);
-#define DMESG dmesg
+#define DMESG pxt::dmesg
 }
 
 #endif

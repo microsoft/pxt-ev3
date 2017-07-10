@@ -116,7 +116,7 @@ namespace input.internal {
         }
     }
 
-    export class Sensor extends core.Component {
+    export class Sensor extends control.Component {
         protected port: number
 
         constructor() {
@@ -407,7 +407,7 @@ namespace input.internal {
 }
 
 namespace input {
-    export class ButtonWrapper extends core.Component {
+    export class ButtonWrapper extends control.Component {
         private downTime: number;
         private _isPressed: boolean;
         private _wasPressed: boolean;

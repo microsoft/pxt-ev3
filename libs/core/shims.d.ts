@@ -51,6 +51,10 @@ declare namespace control {
      */
     //% help=control/allocate-notify-event shim=control::allocateNotifyEvent
     function allocateNotifyEvent(): int32;
+
+    /** Write data to DMESG debugging buffer. */
+    //% shim=control::dmesg
+    function dmesg(s: string): void;
 }
 declare namespace input {
 

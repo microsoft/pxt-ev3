@@ -22,4 +22,9 @@ int allocateNotifyEvent() {
     return pxt::allocateNotifyEvent();
 }
 
+/** Write data to DMESG debugging buffer. */
+//%
+void dmesg(String s) {
+    DMESG("# %s", s->data);
+}
 }
