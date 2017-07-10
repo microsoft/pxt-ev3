@@ -43,7 +43,7 @@ namespace input {
     export class IrSensor extends internal.UartSensor {
         private channel: IrRemoteChannel
         private pollRunning: boolean
-        private buttons: ButtonTS[];
+        private buttons: Button[];
 
         constructor() {
             super()
@@ -52,7 +52,7 @@ namespace input {
             // otherwise button events won't work
             this.mode = IrSensorMode.RemoteControl
             for (let i = 0; i < 5; ++i) {
-                this.buttons.push(new ButtonTS())
+                this.buttons.push(new Button())
             }
         }
 

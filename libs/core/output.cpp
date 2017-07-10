@@ -16,6 +16,14 @@ extern "C" int WriteToPWMDevice(char *bytes, int num_bytes);
 
 //%
 void writePWM(Buffer buf) {
-    WriteToPWMDevice((char*)buf->data, buf->length);
+    WriteToPWMDevice((char *)buf->data, buf->length);
+}
+}
+
+namespace pxt {
+
+void target_init() {
+    OutputInit();
+    SoundInit();
 }
 }

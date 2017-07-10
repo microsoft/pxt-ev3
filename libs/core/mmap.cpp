@@ -93,8 +93,22 @@ int length(MMap *s) {
 
 /** Perform ioctl(2) on the underlaying file */
 //%
-void ioctl(MMap *mmap, uint32_t id, Buffer data) {
-    ::ioctl(mmap->fd, id, data->data);
+int ioctl(MMap *mmap, uint32_t id, Buffer data) {
+    return ::ioctl(mmap->fd, id, data->data);
+}
+
+
+/** Perform write(2) on the underlaying file */
+//%
+int write(MMap *mmap, Buffer data) {
+    return ::write(mmap->fd, data->data, data->length);
+}
+
+
+/** Perform read(2) on the underlaying file */
+//%
+int read(MMap *mmap, Buffer data) {
+    return ::read(mmap->fd, data->data, data->length);
 }
 
 }

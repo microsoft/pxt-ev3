@@ -1,10 +1,10 @@
 namespace input {
     export class TouchSensor extends internal.AnalogSensor {
-        button: ButtonTS;
+        button: Button;
 
         constructor() {
             super()
-            this.button = new ButtonTS()
+            this.button = new Button()
         }
 
         _query() {

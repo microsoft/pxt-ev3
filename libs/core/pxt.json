@@ -9,7 +9,7 @@
         "linux.cpp",
         "mmap.cpp",
         "control.cpp",
-        "buttons.cpp",
+        "buttons.ts",
         "screen.cpp",
         "screen.ts",
         "output.cpp",

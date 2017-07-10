@@ -1,6 +1,6 @@
 namespace input.internal {
     //% shim=pxt::unsafePollForChanges
-    function unsafePollForChanges(
+    export function unsafePollForChanges(
         periodMs: int32,
         query: () => int32,
         changeHandler: (prev: int32, curr: int32) => void
@@ -423,8 +423,23 @@ namespace input.internal {
     }
 }
 
+/**
+ * User interaction on buttons
+ */
+const enum ButtonEvent {
+    //% block="click"
+    Click = 1,
+    //% block="long click"
+    LongClick = 2,
+    //% block="up"
+    Up = 3,
+    //% block="down"
+    Down = 4,
+}
+
 namespace input {
-    export class ButtonTS extends control.Component {
+    //% fixedInstances
+    export class Button extends control.Component {
         private downTime: number;
         private _isPressed: boolean;
         private _wasPressed: boolean;
@@ -451,15 +466,34 @@ namespace input {
         }
 
         /**
-         * Check if button is currently pressed.
+         * Check if button is currently pressed or not.
+         * @param button the button to query the request
          */
+        //% help=input/button/is-pressed weight=79
+        //% block="%button|is pressed"
+        //% blockId=buttonIsPressed
+        //% blockGap=8
+        //% parts="buttonpair"
+        //% blockNamespace=input
+        //% button.fieldEditor="gridpicker"
+        //% button.fieldOptions.width=220
+        //% button.fieldOptions.columns=3
         isPressed() {
             return this._isPressed
         }
 
         /**
-         * Check if button was pressed since last check.
+         * See if the button was pressed again since the last time you checked.
+         * @param button the button to query the request
          */
+        //% help=input/button/was-pressed weight=78
+        //% block="%button|was pressed"
+        //% blockId=buttonWasPressed
+        //% parts="buttonpair" blockGap=8
+        //% blockNamespace=input advanced=true
+        //% button.fieldEditor="gridpicker"
+        //% button.fieldOptions.width=220
+        //% button.fieldOptions.columns=3
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -467,13 +501,21 @@ namespace input {
         }
 
         /**
-         * Do something when a touch sensor is clicked, double clicked, etc...
+         * Do something when a button or sensor is clicked, double clicked, etc...
          * @param button the button that needs to be clicked or used
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
          */
+        //% help=input/button/on-event weight=99 blockGap=8
+        //% blockId=buttonEvent block="on %button|%event"
+        //% parts="buttonpair"
+        //% blockNamespace=input
+        //% button.fieldEditor="gridpicker"
+        //% button.fieldOptions.width=220
+        //% button.fieldOptions.columns=3
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
     }
 }
+
