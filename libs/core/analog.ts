@@ -105,7 +105,7 @@ const enum LMS {
     DEVICE_ID_NOTIFY_ONE = 10001,
 }
 
-namespace inputint {
+namespace input.internal {
     //% shim=pxt::unsafePollForChanges
     function unsafePollForChanges(
         periodMs: int32,
@@ -514,7 +514,7 @@ namespace inputint {
 }
 
 namespace input {
-    export class TouchSensor extends inputint.AnalogSensor {
+    export class TouchSensor extends internal.AnalogSensor {
         button: ButtonWrapper;
 
         constructor() {
@@ -602,7 +602,7 @@ namespace input {
         }
     }
 
-    export class IrSensor extends inputint.UartSensor {
+    export class IrSensor extends internal.UartSensor {
         private channel: IrRemoteChannel
         private pollRunning: boolean
         private buttons: ButtonWrapper[];
