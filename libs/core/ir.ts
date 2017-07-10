@@ -43,14 +43,14 @@ namespace input {
     export class IrSensor extends internal.UartSensor {
         private channel: IrRemoteChannel
         private pollRunning: boolean
-        private buttons: ButtonWrapper[];
+        private buttons: Button[];
 
         constructor() {
             super()
             this.channel = IrRemoteChannel.Ch0
             this.buttons = []
             for (let i = 0; i < 5; ++i) {
-                this.buttons.push(new ButtonWrapper())
+                this.buttons.push(new Button())
             }
         }
 

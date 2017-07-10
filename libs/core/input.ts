@@ -407,7 +407,7 @@ namespace input.internal {
 }
 
 namespace input {
-    export class ButtonWrapper extends control.Component {
+    export class Button extends control.Component {
         private downTime: number;
         private _isPressed: boolean;
         private _wasPressed: boolean;
