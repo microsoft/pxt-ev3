@@ -1,9 +1,9 @@
 namespace screen {
-    //% shim=screen::setPixelCore
-    function setPixelCore(p0: uint32, p1: uint32, mode: Draw): void { }
+    //% shim=screen::_setPixel
+    function _setPixel(p0: uint32, p1: uint32, mode: Draw): void { }
 
-    //% shim=screen::blitLine
-    function blitLine(xw: uint32, y: uint32, buf: Buffer, mode: Draw): void { }
+    //% shim=screen::_blitLine
+    function _blitLine(xw: uint32, y: uint32, buf: Buffer, mode: Draw): void { }
 
     function pack(x: number, y: number) {
         return Math.clamp(0, 512, x) | (Math.clamp(0, 512, y) << 16)
@@ -12,7 +12,7 @@ namespace screen {
     const ones = hex`ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff`
 
     function setLineCore(x: number, x1: number, y: number, mode: Draw) {
-        blitLine(pack(x, x1 - x), y, ones, mode)
+        _blitLine(pack(x, x1 - x), y, ones, mode)
     }
 
     export interface Font {
@@ -23,7 +23,7 @@ namespace screen {
     }
     let currFont: Font
 
-    export const heart = hex`07 367f7f3e1c08`
+    export const heart = hex`f007 367f7f3e1c08`
 
     export function defaultFont(): Font {
         return {
@@ -56,7 +56,7 @@ namespace screen {
         x |= 0
         y |= 0
         if (0 <= x && x < LMS.LCD_WIDTH && 0 <= y && y < LMS.LCD_HEIGHT)
-            setPixelCore(x, y, mode)
+            _setPixel(x, y, mode)
     }
 
     export function drawText(x: number, y: number, text: string, mode = Draw.Normal) {
@@ -66,21 +66,25 @@ namespace screen {
         let x0 = x
         let cp = 0
         let byteWidth = (currFont.charWidth + 7) >> 3
-        let iconBuf = output.createBuffer(1 + byteWidth * currFont.charHeight)
-        iconBuf[0] = currFont.charWidth
+        let charSize = byteWidth * currFont.charHeight
+        let iconBuf = output.createBuffer(2 + charSize)
+        let double = (mode & Draw.Double) ? 2 : 1
+        iconBuf[0] = 0xf0
+        iconBuf[1] = currFont.charWidth
         while (cp < text.length) {
             let ch = text.charCodeAt(cp++)
             if (ch == 10) {
-                y += currFont.charHeight + 2
+                y += double * currFont.charHeight + 2
                 x = x0
             }
             if (ch < 32) continue
-            let idx = (ch - currFont.firstChar) * byteWidth
+            let idx = (ch - currFont.firstChar) * charSize
             if (idx < 0 || idx + iconBuf.length - 1 > currFont.data.length)
-                iconBuf.fill(0, 1)
+                iconBuf.fill(0, 2)
             else
-                iconBuf.write(1, currFont.data.slice(idx, byteWidth))
+                iconBuf.write(2, currFont.data.slice(idx, charSize))
             drawIcon(x, y, iconBuf, mode)
+            x += double * currFont.charWidth
         }
     }
 
@@ -105,7 +109,7 @@ namespace screen {
         let y1 = Math.min(LMS.LCD_HEIGHT, y + h);
         if (w == 1) {
             while (y < y1)
-                setPixelCore(x, y++, mode);
+                _setPixel(x, y++, mode);
             return;
         }
 
@@ -114,8 +118,8 @@ namespace screen {
             if (mode & Draw.Fill) {
                 setLineCore(x, x1, y, mode);
             } else {
-                setPixelCore(x, y, mode);
-                setPixelCore(x1 - 1, y, mode);
+                _setPixel(x, y, mode);
+                _setPixel(x1 - 1, y, mode);
             }
             y++;
         }

@@ -72,21 +72,17 @@ declare namespace serial {
 }
 declare namespace screen {
 
-    /** Draw text. */
-    //% mode.defl=0 shim=screen::drawText
-    function drawText(x: int32, y: int32, text: string, mode?: Draw): void;
+    /** Double size of an icon. */
+    //% shim=screen::doubleIcon
+    function doubleIcon(buf: Buffer): Buffer;
+
+    /** Draw an icon on the screen. */
+    //% shim=screen::drawIcon
+    function drawIcon(x: int32, y: int32, buf: Buffer, mode: Draw): void;
 
     /** Clear screen and reset font to normal. */
     //% shim=screen::clear
     function clear(): void;
-
-    /** Scroll screen vertically. */
-    //% shim=screen::scroll
-    function scroll(v: int32): void;
-
-    /** Set font for drawText() */
-    //% shim=screen::setFont
-    function setFont(font: ScreenFont): void;
 }
 declare namespace output {
 
