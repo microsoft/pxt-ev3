@@ -1,5 +1,5 @@
 screen.clear()
-screen.drawText(10, 30, "Welcome PXT!", Draw.Double)
+screen.drawText(10, 30, "PXT!", Draw.Quad)
 
 screen.drawRect(40, 40, 20, 10, Draw.Fill)
 output.setLights(LightsPattern.Orange)

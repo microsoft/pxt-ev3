@@ -94,7 +94,7 @@ namespace screen {
         let byteWidth = (currFont.charWidth + 7) >> 3
         let charSize = byteWidth * currFont.charHeight
         let iconBuf = output.createBuffer(2 + charSize)
-        let double = (mode & Draw.Double) ? 2 : 1
+        let double = (mode & Draw.Quad) ? 4 : (mode & Draw.Double) ? 2 : 1
         iconBuf[0] = 0xf0
         iconBuf[1] = currFont.charWidth
         while (cp < text.length) {

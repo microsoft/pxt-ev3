@@ -12,6 +12,7 @@
     Fill = 0x04,
     Transparent = 0x08,
     Double = 0x10,
+    Quad = 0x20,
     }
 
 // Auto-generated. Do not edit. Really.

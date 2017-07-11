@@ -12,6 +12,7 @@ enum class Draw {
     Fill = 0x04,
     Transparent = 0x08,
     Double = 0x10,
+    Quad = 0x20,
 };
 
 inline bool operator&(Draw a, Draw b) {
@@ -21,7 +22,6 @@ inline bool operator&(Draw a, Draw b) {
 inline Draw operator|(Draw a, Draw b) {
     return (Draw)((int)a | (int)b);
 }
-
 
 #define XX(v) ((uint32_t)(v)&0xffff)
 #define YY(v) ((uint32_t)(v) >> 16)
@@ -171,8 +171,14 @@ Buffer doubleIcon(Buffer buf) {
 void drawIcon(int x, int y, Buffer buf, Draw mode) {
     if (!isValidIcon(buf))
         return;
-    if (mode & Draw::Double)
+    if (mode & (Draw::Double | Draw::Quad)) {
         buf = doubleIcon(buf);
+        if (mode & Draw::Quad) {
+            auto pbuf = buf;
+            buf = doubleIcon(buf);
+            decrRC(pbuf);
+        }
+    }
 
     int pixwidth = buf->data[1];
     int ptr = 2;
