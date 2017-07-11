@@ -22,12 +22,6 @@ inline Draw operator|(Draw a, Draw b) {
     return (Draw)((int)a | (int)b);
 }
 
-enum class ScreenFont {
-    Normal = FONTTYPE_NORMAL,
-    Small = FONTTYPE_SMALL,
-    Large = FONTTYPE_LARGE,
-    Tiny = FONTTYPE_TINY,
-};
 
 #define XX(v) ((uint32_t)(v)&0xffff)
 #define YY(v) ((uint32_t)(v) >> 16)

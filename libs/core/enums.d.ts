@@ -14,12 +14,4 @@
     Double = 0x10,
     }
 
-
-    declare enum ScreenFont {
-    Normal = 0,  // FONTTYPE_NORMAL
-    Small = 1,  // FONTTYPE_SMALL
-    Large = 2,  // FONTTYPE_LARGE
-    Tiny = 3,  // FONTTYPE_TINY
-    }
-
 // Auto-generated. Do not edit. Really.
