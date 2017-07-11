@@ -1,10 +1,28 @@
 namespace input.internal {
     //% shim=pxt::unsafePollForChanges
     export function unsafePollForChanges(
-        periodMs: int32,
-        query: () => int32,
-        changeHandler: (prev: int32, curr: int32) => void
-    ) { }
+        periodMs: number,
+        query: () => number,
+        changeHandler: (prev: number, curr: number) => void
+    ) {
+        // This is implemented in C++ without blocking the regular JS when query() is runnning
+        // which is generally unsafe. Query should not update globally visible state, and cannot
+        // call any yielding functions, like sleep().
+
+        // This is implementation for the simulator.
+
+        control.runInBackground(() => {
+            let prev = query()
+            while (true) {
+                loops.pause(periodMs)
+                let curr = query()
+                if (prev !== curr) {
+                    changeHandler(prev, curr)
+                    prev = curr
+                }
+            }
+        })
+    }
 
     let analogMM: MMap
     let uartMM: MMap
