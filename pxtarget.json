@@ -13,14 +13,14 @@
         "libs/ev3"
     ],
     "simulator": {
-      "headless": true
-    },
-    "DISABLED-simulator": {
         "autoRun": true,
         "streams": true,
-        "aspectRatio": 1.0,
+        "aspectRatio": 0.67,
         "parts": false,
-        "enableTrace": true
+        "enableTrace": true,
+        "boardDefinition": {
+            "visual": "ev3"
+        }
     },
     "cloud": {
         "workspace": false,
@@ -118,8 +118,6 @@
         "invertedMonaco": false,
         "monacoToolbox": true,
         "invertedToolbox": true,
-        "simAnimationEnter": "roll in",
-        "simAnimationExit": "roll out",
         "exampleGallery": "examples",
         "hasAudio": true,
         "usbHelp": [],

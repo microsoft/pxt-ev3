@@ -121,7 +121,7 @@
    Full screen
 --------------------*/
 
-@fullscreenBackgroundGradientStart: @mainMenuInvertedBackground;
+@fullscreenBackgroundGradientStart: @blue;
 @fullscreenBackgroundGradientEnd: #fff;
 
 /*-------------------
