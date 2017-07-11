@@ -13,6 +13,7 @@ input.buttonEnter.onEvent(ButtonEvent.Click, () => {
 input.buttonLeft.onEvent(ButtonEvent.Click, () => {
     screen.drawRect(10, 70, 20, 10, Draw.Fill)
     output.setLights(LightsPattern.Red)
+    screen.setFont(screen.microbitFont())
 })
 
 input.buttonRight.onEvent(ButtonEvent.Click, () => {
