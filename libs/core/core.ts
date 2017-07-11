@@ -1,9 +1,11 @@
 namespace control {
-    let nextComponentId = 20000;
+    let nextComponentId: number;
 
     export class Component {
         protected _id: number;
         constructor(id = 0) {
+            if (!nextComponentId)
+                nextComponentId = 20000
             if (!id) id = ++nextComponentId
             this._id = id
         }
