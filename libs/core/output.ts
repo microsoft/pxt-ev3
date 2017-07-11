@@ -13,8 +13,34 @@ enum OutputType {
 }
 
 namespace output {
-    //% shim=output::writePWM
-    function writePWM(buf: Buffer): void { }
+    let pwmMM: MMap
+    let motorMM: MMap
+
+    const enum MotorDataOff {
+        TachoCounts = 0, // int32
+        Speed = 4, // int8
+        Padding = 5, // int8[3]
+        TachoSensor = 8, // int32
+        Size = 12
+    }
+
+    function init() {
+        if (pwmMM) return
+        pwmMM = control.mmap("/dev/lms_pwm", 0, 0)
+        if (!pwmMM) control.fail("no PWM file")
+        motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
+        
+        stop(Output.ALL)
+
+        let buf = output.createBuffer(1)
+        buf[0] = DAL.opProgramStart
+        writePWM(buf)
+    }
+
+    function writePWM(buf: Buffer): void {
+        init()
+        pwmMM.write(buf)
+    }
 
     function mkCmd(out: Output, cmd: number, addSize: number) {
         let b = createBuffer(2 + addSize)

@@ -2,6 +2,7 @@
 declare const enum DAL {
     // built/dockermake/pxtapp/ev3const.h
     NUM_INPUTS = 4,
+    NUM_OUTPUTS = 4,
     LCD_WIDTH = 178,
     LCD_HEIGHT = 128,
     NUM_BUTTONS = 6,
@@ -45,6 +46,7 @@ declare const enum DAL {
     CONN_OUTPUT_TACHO = 125,
     CONN_NONE = 126,
     CONN_ERROR = 127,
+    opProgramStart = 0x03,
     opOutputGetType = 0xA0,
     opOutputSetType = 0xA1,
     opOutputReset = 0xA2,

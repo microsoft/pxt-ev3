@@ -1,5 +1,5 @@
 #include "pxt.h"
-#include "ev3.h"
+#include "ev3const.h"
 
 namespace output {
 
@@ -12,18 +12,11 @@ Buffer createBuffer(int size) {
     return mkBuffer(NULL, size);
 }
 
-extern "C" int WriteToPWMDevice(char *bytes, int num_bytes);
-
-//%
-void writePWM(Buffer buf) {
-    WriteToPWMDevice((char *)buf->data, buf->length);
-}
 }
 
 namespace pxt {
 
 void target_init() {
-    OutputInit();
 }
 
 }

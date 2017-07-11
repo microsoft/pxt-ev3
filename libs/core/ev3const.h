@@ -2,6 +2,7 @@
 #define __PXT_EV3CONST_H
 
 #define NUM_INPUTS 4
+#define NUM_OUTPUTS 4
 #define LCD_WIDTH 178
 #define LCD_HEIGHT 128
 #define NUM_BUTTONS 6
@@ -52,6 +53,7 @@
 #define CONN_NONE 126
 #define CONN_ERROR 127
 
+#define opProgramStart 0x03
 #define opOutputGetType 0xA0
 #define opOutputSetType 0xA1
 #define opOutputReset 0xA2
