@@ -24,6 +24,6 @@ namespace pxt {
 
 void target_init() {
     OutputInit();
-    SoundInit();
 }
+
 }

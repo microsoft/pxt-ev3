@@ -1,11 +1,23 @@
 #include "pxt.h"
-#include "ev3.h"
+#include "ev3const.h"
+
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 #define NOTE_PAUSE 20
 
 namespace music {
 
-byte currVolume = 100;
+uint8_t currVolume = 2;
+
+void writeDev(void *data, int size) {
+    int fd = open("/dev/lms_sound", O_WRONLY);
+    write(fd, data, size);
+    close(fd);
+}
 
 /**
 * Set the output volume of the sound synthesizer.
@@ -21,6 +33,35 @@ void setVolume(int volume) {
     currVolume = max(0, min(100, volume * 100 / 256));
 }
 
+#define SOUND_CMD_BREAK 0
+#define SOUND_CMD_TONE 1
+#define SOUND_CMD_PLAY 2
+#define SOUND_CMD_REPEAT 3
+#define SOUND_CMD_SERVICE 4
+
+struct ToneCmd {
+    uint8_t cmd;
+    uint8_t vol;
+    uint16_t freq;
+    uint16_t duration;
+};
+
+static void _stopSound() {
+    uint8_t cmd = SOUND_CMD_BREAK;
+    writeDev(&cmd, sizeof(cmd));
+}
+
+static void _playTone(uint16_t frequency, uint16_t duration, uint8_t volume)
+{
+    ToneCmd cmd;
+    cmd.cmd = SOUND_CMD_TONE;
+    cmd.vol = volume;
+    cmd.freq = frequency;
+    cmd.duration = duration;
+    //   (*SoundInstance.pSound).Busy = TRUE;
+    writeDev(&cmd, sizeof(cmd));
+}
+
 /**
 * Play a tone through the speaker for some amount of time.
 * @param frequency pitch of the tone to play in Hertz (Hz)
@@ -32,21 +73,20 @@ void setVolume(int volume) {
 //% blockNamespace=music
 void playTone(int frequency, int ms) {
     if (frequency <= 0) {
-        StopSound();
+        _stopSound();
         if (ms >= 0)
             sleep_ms(ms);
     } else {
         if (ms > 0) {
             int d = max(1, ms - NOTE_PAUSE); // allow for short rest
             int r = max(1, ms - d);
-            PlayToneEx(frequency, d, currVolume);
+            _playTone(frequency, d, currVolume);
             sleep_ms(d + r);
         } else {
             // ring
-            PlayToneEx(frequency, 60000, currVolume);
+            _playTone(frequency, 0, currVolume);
         }
     }
     sleep_ms(1);
 }
-
 }

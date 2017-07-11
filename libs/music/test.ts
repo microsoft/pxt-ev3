@@ -1,0 +1,7 @@
+music.setVolume(3)
+music.playTone(440, 500)
+loops.pause(500)
+music.playTone(1440, 500)
+loops.pause(500)
+music.playTone(2440, 500)
+loops.pause(500)
