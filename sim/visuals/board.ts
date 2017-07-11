@@ -718,7 +718,7 @@ namespace pxsim.visuals {
             this.g = <SVGGElement>svg.elt("g");
             this.element.appendChild(this.g);
 
-            const btnids = ["BTN_1", "BTN_2", "BTN_3", "BTN_4", "BTN_5", "BTN_BACK"];
+            const btnids = ["BTN_4", "BTN_2", "BTN_5", "BTN_3", "BTN_1", "BTN_BACK"];
             this.buttons = btnids.map(n => this.element.getElementById(n) as SVGElement);
             this.buttons.forEach(b => svg.addClass(b, "sim-button"));
 
