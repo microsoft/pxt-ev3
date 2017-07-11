@@ -6,18 +6,12 @@
      */
 
     declare enum Draw {
-    Normal = 0,
-    Clear = (0x0004),  // DRAW_OPT_CLEAR_PIXELS
-    Xor = (0x0018),  // DRAW_OPT_LOGICAL_XOR
-    Fill = (0x0020),  // DRAW_OPT_FILL_SHAPE
-    }
-
-
-    declare enum ScreenFont {
-    Normal = 0,  // FONTTYPE_NORMAL
-    Small = 1,  // FONTTYPE_SMALL
-    Large = 2,  // FONTTYPE_LARGE
-    Tiny = 3,  // FONTTYPE_TINY
+    Normal = 0x00,
+    Clear = 0x01,
+    Xor = 0x02,
+    Fill = 0x04,
+    Transparent = 0x08,
+    Double = 0x10,
     }
 
 // Auto-generated. Do not edit. Really.

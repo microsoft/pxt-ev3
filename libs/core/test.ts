@@ -1,9 +1,10 @@
 screen.clear()
-screen.setFont(ScreenFont.Large)
-screen.drawText(10, 30, "Welcome PXT!")
+screen.drawText(10, 30, "Welcome PXT!", Draw.Double)
 
-screen.drawEllipse(40, 40, 20, 10, Draw.Fill)
+screen.drawRect(40, 40, 20, 10, Draw.Fill)
 output.setLights(LightsPattern.Orange)
+
+screen.drawIcon(100, 50, screen.doubleIcon(screen.heart), Draw.Double|Draw.Transparent)
 
 input.buttonEnter.onEvent(ButtonEvent.Click, () => {
     screen.clear()
@@ -11,19 +12,20 @@ input.buttonEnter.onEvent(ButtonEvent.Click, () => {
 
 input.buttonLeft.onEvent(ButtonEvent.Click, () => {
     screen.drawRect(10, 70, 20, 10, Draw.Fill)
+    output.setLights(LightsPattern.Red)
+    screen.setFont(screen.microbitFont())
 })
 
 input.buttonRight.onEvent(ButtonEvent.Click, () => {
-    screen.setFont(ScreenFont.Normal)
-    screen.drawText(10, 60, "Bang!")
+    screen.drawText(10, 60, "Right!")
 })
 
 input.buttonDown.onEvent(ButtonEvent.Click, () => {
-    screen.scroll(-10)
+    screen.drawText(10, 60, "Down! ")
 })
 
 input.buttonUp.onEvent(ButtonEvent.Click, () => {
-    screen.scroll(10)
+    screen.drawText(10, 60, "Up!  ")
 })
 
 
