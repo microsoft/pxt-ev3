@@ -431,7 +431,7 @@ namespace pxsim.visuals {
                     svg.fill(this.light, "#ff0000");
                     break;
                 case 3:  // LED_ORANGE
-                    svg.fill(this.light, "#ffff00");
+                    svg.fill(this.light, "#FFA500");
                     break;
                 case 4:  // LED_GREEN_FLASH
                     break;
