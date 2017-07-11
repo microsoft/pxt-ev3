@@ -102,7 +102,7 @@ void blitLineCore(int x, int y, int w, uint8_t *data, Draw mode) {
     int off = OFF(x, y);
     int off0 = OFF(0, y);
     int off1 = OFF(LCD_WIDTH - 1, y);
-    int x1 = x + w;
+    int x1 = x + w + shift;
     int prev = 0;
 
     while (x < x1 - 8) {
