@@ -10,8 +10,7 @@ namespace pxsim {
                 new CommonButton(DAL.BUTTON_ID_DOWN),
                 new CommonButton(DAL.BUTTON_ID_RIGHT),
                 new CommonButton(DAL.BUTTON_ID_LEFT),
-                new CommonButton(DAL.BUTTON_ID_ESCAPE),
-                new CommonButton(DAL.BUTTON_ID_ALL)
+                new CommonButton(DAL.BUTTON_ID_ESCAPE)
             ];
             let data = new Uint8Array(this.buttons.length)
             MMapMethods.register("/dev/lms_ui", {

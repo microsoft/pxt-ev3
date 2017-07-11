@@ -39,8 +39,8 @@ namespace input.internal {
 
         constructor(p: number) {
             this.port = p
-            this.connType = LMS.CONN_NONE
-            this.devType = LMS.DEVICE_TYPE_NONE
+            this.connType = DAL.CONN_NONE
+            this.devType = DAL.DEVICE_TYPE_NONE
             this.sensor = null
             this.manual = false
         }
@@ -49,7 +49,7 @@ namespace input.internal {
     function init() {
         if (sensors) return
         sensors = []
-        for (let i = 0; i < LMS.NUM_INPUTS; ++i) sensors.push(new SensorInfo(i))
+        for (let i = 0; i < DAL.NUM_INPUTS; ++i) sensors.push(new SensorInfo(i))
         autoSensors = []
         devcon = output.createBuffer(DevConOff.Size)
 
@@ -87,7 +87,7 @@ namespace input.internal {
     }
 
     function detectDevices() {
-        let conns = analogMM.slice(AnalogOff.InConn, LMS.NUM_INPUTS)
+        let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0
 
         for (let info of sensors) {
@@ -96,18 +96,18 @@ namespace input.internal {
                 continue
             numChanged++
             info.connType = newConn
-            info.devType = LMS.DEVICE_TYPE_NONE
-            if (newConn == LMS.CONN_INPUT_UART) {
+            info.devType = DAL.DEVICE_TYPE_NONE
+            if (newConn == DAL.CONN_INPUT_UART) {
                 control.dmesg(`new UART connection at ${info.port}`)
                 setUartMode(info.port, 0)
                 let uinfo = readUartInfo(info.port, 0)
                 info.devType = uinfo[TypesOff.Type]
                 control.dmesg(`UART type ${info.devType}`)
-            } else if (newConn == LMS.CONN_INPUT_DUMB) {
+            } else if (newConn == DAL.CONN_INPUT_DUMB) {
                 control.dmesg(`new DUMB connection at ${info.port}`)
                 // TODO? for now assume touch
-                info.devType = LMS.DEVICE_TYPE_TOUCH
-            } else if (newConn == LMS.CONN_NONE || newConn == 0) {
+                info.devType = DAL.DEVICE_TYPE_TOUCH
+            } else if (newConn == DAL.CONN_NONE || newConn == 0) {
                 control.dmesg(`disconnect at ${info.port}`)
             } else {
                 control.dmesg(`unknown connection type: ${newConn} at ${info.port}`)
@@ -121,12 +121,12 @@ namespace input.internal {
 
         // first free up disconnected sensors
         for (let info of autos) {
-            if (info.sensor && info.devType == LMS.DEVICE_TYPE_NONE)
+            if (info.sensor && info.devType == DAL.DEVICE_TYPE_NONE)
                 info.sensor._setPort(0)
         }
 
         for (let info of autos) {
-            if (!info.sensor && info.devType != LMS.DEVICE_TYPE_NONE) {
+            if (!info.sensor && info.devType != DAL.DEVICE_TYPE_NONE) {
                 let found = false
                 for (let s of autoSensors) {
                     if (s.getPort() == 0 && s._deviceType() == info.devType) {
@@ -260,7 +260,7 @@ namespace input.internal {
     function uartReset(port: number) {
         if (port < 0) return
         control.dmesg(`UART reset at ${port}`)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, LMS.CONN_NONE)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NONE)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
         uartMM.ioctl(IO.UART_SET_CONN, devcon)
@@ -290,7 +290,7 @@ namespace input.internal {
             if ((status & UART_DATA_READY) != 0 && (status & UART_PORT_CHANGED) == 0)
                 break
 
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, LMS.CONN_INPUT_UART)
+            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
 
@@ -307,7 +307,7 @@ namespace input.internal {
         while (true) {
             if (port < 0) return
             control.dmesg(`UART set mode to ${mode} at ${port}`)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, LMS.CONN_INPUT_UART)
+            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
             uartMM.ioctl(IO.UART_SET_CONN, devcon)
@@ -322,18 +322,18 @@ namespace input.internal {
     }
 
     function getUartBytes(port: number): Buffer {
-        if (port < 0) return output.createBuffer(LMS.MAX_DEVICE_DATALENGTH)
+        if (port < 0) return output.createBuffer(DAL.MAX_DEVICE_DATALENGTH)
         let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
         return uartMM.slice(
-            UartOff.Raw + LMS.MAX_DEVICE_DATALENGTH * 300 * port + LMS.MAX_DEVICE_DATALENGTH * index,
-            LMS.MAX_DEVICE_DATALENGTH)
+            UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index,
+            DAL.MAX_DEVICE_DATALENGTH)
     }
 
     function getUartNumber(fmt: NumberFormat, off: number, port: number) {
         if (port < 0) return 0
         let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
         return uartMM.getNumber(fmt,
-            UartOff.Raw + LMS.MAX_DEVICE_DATALENGTH * 300 * port + LMS.MAX_DEVICE_DATALENGTH * index + off)
+            UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
     }
 
 

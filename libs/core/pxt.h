@@ -3,8 +3,6 @@
 
 #include "pxtbase.h"
 
-#define ID_BUTTON_BASE 100
-
 namespace pxt {
 void raiseEvent(int id, int event);
 int allocateNotifyEvent();

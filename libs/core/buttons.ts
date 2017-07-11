@@ -126,7 +126,7 @@ namespace input {
     }
 
     function readButtons() {
-        let sl = btnsMM.slice(0, LMS.NUM_BUTTONS)
+        let sl = btnsMM.slice(0, DAL.NUM_BUTTONS)
         let ret = 0
         for (let i = 0; i < sl.length; ++i) {
             if (sl[i])
@@ -137,11 +137,11 @@ namespace input {
 
     function initBtns() {
         if (btnsMM) return
-        btnsMM = control.mmap("/dev/lms_ui", LMS.NUM_BUTTONS, 0)
+        btnsMM = control.mmap("/dev/lms_ui", DAL.NUM_BUTTONS, 0)
         if (!btnsMM) control.fail("no buttons?")
         buttons = []
         input.internal.unsafePollForChanges(50, readButtons, (prev, curr) => {
-            if (curr & LMS.BUTTON_ID_ESCAPE)
+            if (curr & DAL.BUTTON_ID_ESCAPE)
                 control.reset()
             for (let b of buttons)
                 b.update(!!(curr & b.mask))
@@ -165,31 +165,31 @@ namespace input {
      * Left button.
      */
     //% whenUsed block="button left" weight=95 fixedInstance
-    export const buttonLeft: Button = new DevButton(LMS.BUTTON_ID_LEFT)
+    export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
      * Right button.
      */
     //% whenUsed block="button right" weight=94 fixedInstance
-    export const buttonRight: Button = new DevButton(LMS.BUTTON_ID_RIGHT)
+    export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
      * Up button.
      */
     //% whenUsed block="button up" weight=95 fixedInstance
-    export const buttonUp: Button = new DevButton(LMS.BUTTON_ID_UP)
+    export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
      * Down button.
      */
     //% whenUsed block="button down" weight=95 fixedInstance
-    export const buttonDown: Button = new DevButton(LMS.BUTTON_ID_DOWN)
+    export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
 
     /**
      * Enter button.
      */
     //% whenUsed block="button enter" weight=95 fixedInstance
-    export const buttonEnter: Button = new DevButton(LMS.BUTTON_ID_ENTER)
+    export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 }
 
 

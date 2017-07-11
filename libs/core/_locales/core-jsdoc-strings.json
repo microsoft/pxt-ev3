@@ -22,9 +22,8 @@
   "output.createBuffer|param|size": "number of bytes in the buffer",
   "output.setLights": "Set lights.",
   "screen.clear": "Clear screen and reset font to normal.",
-  "screen.drawText": "Draw text.",
-  "screen.scroll": "Scroll screen vertically.",
-  "screen.setFont": "Set font for drawText()",
+  "screen.doubleIcon": "Double size of an icon.",
+  "screen.drawIcon": "Draw an icon on the screen.",
   "serial": "Reading and writing data over a serial connection.",
   "serial.writeDmesg": "Send DMESG debug buffer over serial."
 }

@@ -24,35 +24,35 @@ namespace output {
     }
 
     export function stop(out: Output, useBreak = false) {
-        let b = mkCmd(out, LMS.opOutputStop, 1)
+        let b = mkCmd(out, DAL.opOutputStop, 1)
         b.setNumber(NumberFormat.UInt8LE, 2, useBreak ? 1 : 0)
         writePWM(b)
     }
 
     export function start(out: Output) {
-        let b = mkCmd(out, LMS.opOutputStart, 0)
+        let b = mkCmd(out, DAL.opOutputStart, 0)
         writePWM(b)
     }
 
     export function reset(out: Output) {
-        let b = mkCmd(out, LMS.opOutputReset, 0)
+        let b = mkCmd(out, DAL.opOutputReset, 0)
         writePWM(b)
     }
 
     export function setSpeed(out: Output, speed: number) {
-        let b = mkCmd(out, LMS.opOutputSpeed, 1)
+        let b = mkCmd(out, DAL.opOutputSpeed, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, speed))
         writePWM(b)
     }
 
     export function setPower(out: Output, power: number) {
-        let b = mkCmd(out, LMS.opOutputPower, 1)
+        let b = mkCmd(out, DAL.opOutputPower, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
         writePWM(b)
     }
 
     export function setPolarity(out: Output, polarity: number) {
-        let b = mkCmd(out, LMS.opOutputPolarity, 1)
+        let b = mkCmd(out, DAL.opOutputPolarity, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-1, 1, polarity))
         writePWM(b)
     }
@@ -68,11 +68,11 @@ namespace output {
     }
 
     export function step(out: Output, opts: StepOptions) {
-        let op = opts.useSteps ? LMS.opOutputStepSpeed : LMS.opOutputTimeSpeed
+        let op = opts.useSteps ? DAL.opOutputStepSpeed : DAL.opOutputTimeSpeed
         let speed = opts.speed
         if (speed == null) {
             speed = opts.power
-            op = opts.useSteps ? LMS.opOutputStepPower : LMS.opOutputTimePower
+            op = opts.useSteps ? DAL.opOutputStepPower : DAL.opOutputTimePower
             if (speed == null)
                 return
         }
@@ -90,7 +90,7 @@ namespace output {
 
     const types = [0, 0, 0, 0]
     export function setType(out: Output, type: OutputType) {
-        let b = mkCmd(out, LMS.opOutputSetType, 3)
+        let b = mkCmd(out, DAL.opOutputSetType, 3)
         for (let i = 0; i < 4; ++i) {
             if (out & (1 << i)) {
                 types[i] = type

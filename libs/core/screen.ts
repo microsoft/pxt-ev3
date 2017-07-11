@@ -81,7 +81,7 @@ namespace screen {
     export function setPixel(x: number, y: number, mode = Draw.Normal) {
         x |= 0
         y |= 0
-        if (0 <= x && x < LMS.LCD_WIDTH && 0 <= y && y < LMS.LCD_HEIGHT)
+        if (0 <= x && x < DAL.LCD_WIDTH && 0 <= y && y < DAL.LCD_HEIGHT)
             _setPixel(x, y, mode)
     }
 
@@ -131,8 +131,8 @@ namespace screen {
             return;
         if (h <= 0)
             return;
-        let x1 = Math.min(LMS.LCD_WIDTH, x + w);
-        let y1 = Math.min(LMS.LCD_HEIGHT, y + h);
+        let x1 = Math.min(DAL.LCD_WIDTH, x + w);
+        let y1 = Math.min(DAL.LCD_HEIGHT, y + h);
         if (w == 1) {
             while (y < y1)
                 _setPixel(x, y++, mode);

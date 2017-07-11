@@ -16,7 +16,7 @@ namespace input {
         }
 
         _deviceType() {
-            return LMS.DEVICE_TYPE_TOUCH
+            return DAL.DEVICE_TYPE_TOUCH
         }
     }
 

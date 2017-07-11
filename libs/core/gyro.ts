@@ -11,7 +11,7 @@ namespace input {
         }
 
         _deviceType() {
-            return LMS.DEVICE_TYPE_GYRO
+            return DAL.DEVICE_TYPE_GYRO
         }
 
         setMode(m: GyroSensorMode) {

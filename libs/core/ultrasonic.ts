@@ -6,7 +6,7 @@ namespace input {
         }
 
         _deviceType() {
-            return LMS.DEVICE_TYPE_ULTRASONIC
+            return DAL.DEVICE_TYPE_ULTRASONIC
         }
 
         /** Get distance in mm */

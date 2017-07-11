@@ -27,7 +27,7 @@ namespace input {
         }
 
         _deviceType() {
-            return LMS.DEVICE_TYPE_COLOR
+            return DAL.DEVICE_TYPE_COLOR
         }
 
         setMode(m: ColorSensorMode) {

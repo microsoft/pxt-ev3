@@ -79,7 +79,7 @@ namespace input {
         }
 
         _deviceType() {
-            return LMS.DEVICE_TYPE_IR
+            return DAL.DEVICE_TYPE_IR
         }
 
         setRemoteChannel(c: IrRemoteChannel) {
