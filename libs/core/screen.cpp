@@ -79,70 +79,31 @@ static inline void applyMask(int off, int mask, Draw mode) {
         bitBuffer[off] |= mask;
 }
 
-static inline void setPixelCore(int x, int y, Draw mode) {
+//%
+void _setPixel(int x, int y, Draw mode) {
     applyMask(OFF(x, y), MASK(x, y), mode);
 }
 
-static void setLineCore(int x0, int x1, int y, Draw mode) {
-    while (x0 < x1 && (x0 & 7)) {
-        setPixelCore(x0++, y, mode);
-    }
-    int off = OFF(x0, y);
-    // 8-aligned now
-    while (x0 < x1 - 8) {
-        applyMask(off++, 0xff, mode);
-        x0 += 8;
-    }
-    while (x0 < x1) {
-        setPixelCore(x0++, y, mode);
-    }
-    dirty = true;
-}
-
-void drawRect(int x, int y, int w, int h, Draw mode) {
-    if (x < 0) {
-        w += x;
-        x = 0;
-    }
-    if (y < 0) {
-        h += y;
-        y = 0;
-    }
-    if (w <= 0)
+void blitLineCore(int x, int y, int w, uint8_t *data, Draw mode) {
+    if (y < 0 || y >= LMS.LCD_HEIGHT)
         return;
-    if (h <= 0)
+    if (x + w <= 0)
         return;
-    int x1 = min(LCD_WIDTH, x + w);
-    int y1 = min(LCD_HEIGHT, y + h);
-    if (w == 1) {
-        while (y < y1)
-            setPixelCore(x, y++, mode);
+    if (x >= LMS.LCD_WIDTH)
         return;
-    }
 
-    setLineCore(x, x1, y++, mode);
-    while (y < y1 - 1) {
-        if (mode & Draw::Fill) {
-            setLineCore(x, x1, y, mode);
-        } else {
-            setPixelCore(x, y, mode);
-            setPixelCore(x1 - 1, y, mode);
-        }
-        y++;
-    }
-    if (y < y1)
-        setLineCore(x, x1, y, mode);
-}
-
-void blitLine(int x, int y, int w, uint8_t *data, Draw mode) {
     int shift = x & 7;
     int off = OFF(x, y);
+    int off0 = OFF(0, y);
+    int off1 = OFF(LMS.LCD_WIDTH - 1, y);
     int x1 = x + w;
     int prev = 0;
 
     while (x < x1 - 8) {
         int curr = *data++ << shift;
-        applyMask(off++, curr | prev);
+        if (off0 <= off && off <= off1)
+            applyMask(off, curr | prev);
+        off++;
         prev = curr >> 8;
         x += 8;
     }
@@ -150,64 +111,45 @@ void blitLine(int x, int y, int w, uint8_t *data, Draw mode) {
     int left = x1 - x;
     if (left > 0) {
         int curr = *data << shift;
-        applyMask(off, (curr | prev) & ((1 << left) - 1));
-    }
-}
-
-/** Update a pixel on the screen. */
-//%
-void setPixel(int x, int y, Draw mode) {
-    if (0 <= x && x < LCD_WIDTH && 0 <= y && y <= LCD_HEIGHT) {
-        setPixelCore(x, y, mode);
-        dirty = true;
+        if (off0 <= off && off <= off1)
+            applyMask(off, (curr | prev) & ((1 << left) - 1));
     }
 }
 
 //%
-void _drawRect(uint32_t p0, uint32_t p1, Draw mode) {
-    drawRect(XX(p0), YY(p0), XX(p1), YY(p1), mode);
+void _blitLine(int xw, int y, Buffer buf, Draw mode) {
+    blitLineCore(XX(xw), y, YY(xw), buf->data, mode);
 }
 
-static int fontFirst, fontWidth, fontHeight, fontByteWidth;
-static uint8_t *fontChars;
-static Buffer currFont;
+static uint8_t ones[] = {
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+};
 
-/** Set font. */
+/** Draw an icon on the screen. */
 //%
-void setFont(Buffer font) {
-    if (!font || font->length < 100)
+void drawIcon(int x, int y, Buffer buf, Draw mode) {
+    if (buf->length < 2)
         return;
-    if (font->data[0] != 0xf0 || font->data[1] != 0x42)
+    int pixwidth = buf->data[0];
+    if (pixwidth > 100)
         return;
-    fontFirst = font->data[2];
-    fontWidth = font->data[3];
-    fontHeight = font->data[4];
-    fontByteWidth = (fontWidth + 7) / 8;
-    fontChars = &font->data[8];
-}
-
-/** Draw text. */
-//% mode.defl=0
-void drawText(int x, int y, String text, Draw mode) {
-    LcdText((int)mode & (int)Draw::Clear ? 0 : 1, x, y, text->data);
+    int ptr = 1;
+    int bytewidth = (pixwidth + 7) >> 3;
+    while (ptr + bytewidth <= buf->length) {
+        if (mode == Draw::Normal)
+            blitLineCore(x, y, pixwidth, ones, Draw::Clear);
+        blitLineCore(x, y, pixwidth, &buf->data[ptr], mode);
+        y++;
+        ptr += bytewidth;
+    }
 }
 
 /** Clear screen and reset font to normal. */
 //%
 void clear() {
-    LcdClearDisplay();
-}
-
-/** Scroll screen vertically. */
-//%
-void scroll(int v) {
-    LcdScroll(v);
-}
-
-/** Set font for drawText() */
-//%
-void setFont(ScreenFont font) {
-    LcdSelectFont((uint8_t)font);
+    memset(bitBuffer, 0, sizeof(bitBuffer));
+    dirty = true;
 }
 }
 
