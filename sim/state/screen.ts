@@ -2,6 +2,7 @@
 namespace pxsim {
 
     export class EV3ScreenState {
+        shouldUpdate: boolean;
         points: {[x: number]: {[y: number]: number}};
         constructor() {
             this.points = {};
@@ -14,6 +15,7 @@ namespace pxsim {
             const xPoints = this.points[x]
             if (!xPoints) this.points[x] = {};
             this.points[x][y] = v;
+            this.shouldUpdate = true;
         }
     }
 }
@@ -24,7 +26,6 @@ namespace pxsim.screen {
     export function _setPixel(x: number, y: number, mode: Draw) {
         const screenState = (board() as DalBoard).screenState;
         screenState.setPixel(x, y, mode);
-        runtime.queueDisplayUpdate();
     }
 
 

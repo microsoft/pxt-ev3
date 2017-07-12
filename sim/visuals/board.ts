@@ -284,6 +284,11 @@ namespace pxsim.visuals {
                 this.updateState();
                 this.attachEvents();
             }
+
+            let board = this;
+            window.setInterval(function(){
+                board.updateScreen();
+            }, 30);
         }
 
         public getView(): SVGAndSize<SVGSVGElement> {
@@ -458,6 +463,9 @@ namespace pxsim.visuals {
         private updateScreen() {
             let state = this.board;
             if (!state || !state.screenState) return;
+
+            if (!state.screenState.shouldUpdate) return;
+            state.screenState.shouldUpdate = false;
 
             this.screenCanvasData = this.screenCanvasCtx.getImageData(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
