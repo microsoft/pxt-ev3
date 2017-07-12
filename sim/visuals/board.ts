@@ -173,8 +173,10 @@ namespace pxsim.visuals {
         { 'name': "PWR_1", 'touch': 0, 'text': null, tooltip: "+3.3V" },
         { 'name': "PWR_2", 'touch': 0, 'text': null, tooltip: "+3.3V" }
     ];
-    const MB_WIDTH = 169.82979;
-    const MB_HEIGHT = 259.11862;
+    const MB_WIDTH = 99.984346;
+    const MB_HEIGHT = 151.66585;
+    const SCREEN_WIDTH = 178;
+    const SCREEN_HEIGHT = 128;
     export interface IBoardTheme {
         accent?: string;
         display?: string;
@@ -240,6 +242,10 @@ namespace pxsim.visuals {
         private buttons: SVGElement[];
         private buttonABText: SVGTextElement;
         private light: SVGElement;
+        private screenCanvas: HTMLCanvasElement;
+        private screenCanvasCtx: CanvasRenderingContext2D;
+        private screenCanvasData: ImageData;
+        private screenXYText: SVGTextElement;
         private pins: SVGElement[];
         private pinControls: { [index: number]: AnalogPinControl };
         private systemLed: SVGCircleElement;
@@ -345,6 +351,7 @@ namespace pxsim.visuals {
             })
 
             this.updateLight();
+            this.updateScreen();
             /*
             
             this.updatePins();
@@ -446,6 +453,34 @@ namespace pxsim.visuals {
                 case 9:  // LED_ORANGE_PULSE
                     break;
             }
+        }
+
+        private updateScreen() {
+            let state = this.board;
+            if (!state || !state.screenState) return;
+
+            this.screenCanvasData = this.screenCanvasCtx.getImageData(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+            Object.keys(state.screenState.points).forEach(xStr => {
+                const x = parseInt(xStr);
+                Object.keys(state.screenState.points[x]).forEach(yStr => {
+                    const y = parseInt(yStr);
+                    
+                    const point = state.screenState.points[x][y];
+                    const r = 0;
+                    const g = 0;
+                    const b = 0;
+                    const a = 255;
+
+                    var index = (x + y * SCREEN_WIDTH) * 4;
+                    this.screenCanvasData.data[index + 0] = r;
+                    this.screenCanvasData.data[index + 1] = g;
+                    this.screenCanvasData.data[index + 2] = b;
+                    this.screenCanvasData.data[index + 3] = a;
+                })
+            })
+
+            this.screenCanvasCtx.putImageData(this.screenCanvasData, 0, 0);
         }
 
         private updateNeoPixels() {
@@ -700,6 +735,12 @@ namespace pxsim.visuals {
             this.element.style.perspective = "30em";
         }
 
+        private updateXY() {
+            this.screenXYText.textContent = `x:${this.currentCanvasX}, y:${this.currentCanvasY}`;
+        }
+
+        private currentCanvasX = 178;
+        private currentCanvasY = 128;
         private buildDom() {
             this.element = new DOMParser().parseFromString(BOARD_SVG, "image/svg+xml").querySelector("svg") as SVGSVGElement;
             svg.hydrate(this.element, {
@@ -723,6 +764,46 @@ namespace pxsim.visuals {
             this.buttons.forEach(b => svg.addClass(b, "sim-button"));
 
             this.light = this.element.getElementById("BOARD_Light") as SVGElement;
+
+            const screen = this.element.getElementById("Screen");
+            const foreignObjectG = svg.child(screen, "g", {
+                transform: "scale(1.75)"
+            })
+            const foreignObject = svg.child(foreignObjectG, "foreignObject", {
+                x: "119", y: "105", width: "178", height: "128"
+            });
+
+            const foBody = document.createElementNS("http://www.w3.org/1999/xhtml", "body") as HTMLElement;
+            foBody.style.width = `${SCREEN_WIDTH}px`;
+            foBody.style.height = `${SCREEN_HEIGHT}px`;
+            foBody.style.position = 'fixed';
+            foBody.style.backgroundColor = `none`;
+            foreignObject.appendChild(foBody);
+
+            this.screenCanvas = document.createElement("canvas");
+            this.screenCanvas.id = "Screen_canvas";
+            this.screenCanvas.style.cursor = "crosshair";
+            this.screenCanvas.onmousemove = (e: MouseEvent) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                this.currentCanvasX = x;
+                this.currentCanvasY = y;
+                this.updateXY();
+            }
+            this.screenCanvas.onmouseleave = () => {
+                this.currentCanvasX = SCREEN_WIDTH;
+                this.currentCanvasY = SCREEN_HEIGHT;
+                this.updateXY();
+            }
+            foBody.appendChild(this.screenCanvas);
+            //foreignObject.appendChild(this.screenCanvas);
+
+            this.screenCanvas.width = SCREEN_WIDTH;
+            this.screenCanvas.height = SCREEN_HEIGHT;
+            this.screenCanvasCtx = this.screenCanvas.getContext("2d");
+
+            this.screenXYText = this.element.getElementById('xyPos') as SVGTextElement;
+            this.updateXY();
         }
 
         private attachEvents() {

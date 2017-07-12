@@ -48,6 +48,7 @@ namespace pxsim {
         touchButtonState: TouchButtonState;
         irState: InfraredState;
         lightState: EV3LightState;
+        screenState: EV3ScreenState;
 
         view: SVGSVGElement;
 
@@ -60,6 +61,7 @@ namespace pxsim {
 
             this.builtinParts["buttons"] = this.buttonState = new EV3ButtonState();
             this.builtinParts["light"] = this.lightState = new EV3LightState();
+            this.builtinParts["screen"] = this.screenState = new EV3ScreenState();
             /*this.builtinParts["neopixel"] = this.neopixelState = new CommonNeoPixelState();
             this.builtinParts["buttonpair"] = this.buttonState = new CommonButtonState();
 

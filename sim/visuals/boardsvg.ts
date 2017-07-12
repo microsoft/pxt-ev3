@@ -9,15 +9,22 @@ namespace pxsim.visuals {
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="169.82979"
-   height="259.11862"
-   viewBox="0 0 169.82979 259.11862"
+   width="99.984344"
+   height="151.66585"
+   viewBox="0 0 99.984346 151.66585"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="board.svg">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 129.55931 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="169.82979 : 129.55931 : 1"
+       inkscape:persp3d-origin="84.914895 : 86.372875 : 1"
+       id="perspective4353" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient7522">
@@ -695,7 +702,7 @@ namespace pxsim.visuals {
        inkscape:label="Button"
        inkscape:menu="Bevels"
        inkscape:menu-tooltip="Soft bevel, slightly depressed middle"
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        id="filter7573">
       <feGaussianBlur
          stdDeviation="0.01"
@@ -814,7 +821,7 @@ namespace pxsim.visuals {
          id="feSpecularLighting4340"
          in="result4"
          surfaceScale="5"
-         specularExponent="17.9"
+         specularExponent="17.89999962"
          result="result94">
         <feDistantLight
            id="feDistantLight4342"
@@ -830,7 +837,7 @@ namespace pxsim.visuals {
        inkscape:label="Button"
        inkscape:menu="Bevels"
        inkscape:menu-tooltip="Soft bevel, slightly depressed middle"
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        id="filter4346">
       <feGaussianBlur
          stdDeviation="0.01"
@@ -880,7 +887,7 @@ namespace pxsim.visuals {
       <feSpecularLighting
          in="result4"
          surfaceScale="5"
-         specularExponent="17.9"
+         specularExponent="17.89999962"
          id="feSpecularLighting4368">
         <feDistantLight
            azimuth="225"
@@ -900,11 +907,11 @@ namespace pxsim.visuals {
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="67.374525"
-     inkscape:cy="102.35018"
+     inkscape:zoom="5.6"
+     inkscape:cx="26.741055"
+     inkscape:cy="70.052364"
      inkscape:document-units="px"
-     inkscape:current-layer="g7739"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1676"
      inkscape:window-height="1005"
@@ -924,7 +931,7 @@ namespace pxsim.visuals {
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -932,10 +939,10 @@ namespace pxsim.visuals {
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-286.75886,-393.46077)">
+     transform="translate(-321.68157,-447.18716)">
     <g
        id="g7739"
-       transform="matrix(0.28940625,0,0,0.28940625,266.4478,365.22322)">
+       transform="matrix(0.16751195,0,0,0.16751196,310.76765,431.68528)">
       <rect
          ry="2"
          rx="2"
@@ -1038,7 +1045,7 @@ namespace pxsim.visuals {
            style="fill:url(#linearGradient4251);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:20;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       </g>
       <g
-         id="g5520">
+         id="Screen">
         <g
            id="g5516">
           <rect
@@ -1053,13 +1060,13 @@ namespace pxsim.visuals {
         </g>
         <rect
            style="fill:#a0b5a6;fill-opacity:1;stroke:none;stroke-width:20;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-           id="Screen"
            width="342.28098"
            height="232.08661"
            x="192.45197"
            y="179.43317"
            rx="5"
-           ry="5" />
+           ry="5"
+           id="rect196" />
       </g>
       <path
          sodipodi:nodetypes="ccccccccc"
@@ -1173,6 +1180,21 @@ namespace pxsim.visuals {
          id="tspan5452"
          x="-916.42859"
          y="1035.2194" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#7f8c8d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="385"
+       y="507.42444"
+       id="xyPos"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text4342"><tspan
+         sodipodi:role="line"
+         id="tspan4344"
+         x="393.64587"
+         y="507.42444"
+         style="font-size:3.75px">x, y</tspan></text>
   </g>
-</svg>`;
+</svg>
+
+`;
 }
