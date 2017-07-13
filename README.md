@@ -55,9 +55,14 @@ cd libs/core
 pxt deploy
 ```
 
-## Jenkins build
+### Hosted editor
 
-https://ci2.dot.net/job/Private/job/pxt_project_pink/job/master/
+Currently hosted at:
+
+https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
+
+### Jenkins build
+https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/
 
 ## License
 MIT
