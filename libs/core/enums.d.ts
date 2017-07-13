@@ -5,7 +5,7 @@
      * Drawing modes
      */
 
-    declare enum Draw {
+    declare const enum Draw {
     Normal = 0x00,
     Clear = 0x01,
     Xor = 0x02,

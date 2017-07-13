@@ -175,8 +175,8 @@ namespace pxsim.visuals {
     ];
     const MB_WIDTH = 99.984346;
     const MB_HEIGHT = 151.66585;
-    const SCREEN_WIDTH = 178;
-    const SCREEN_HEIGHT = 128;
+    export const SCREEN_WIDTH = 178;
+    export const SCREEN_HEIGHT = 128;
     export interface IBoardTheme {
         accent?: string;
         display?: string;
@@ -469,24 +469,13 @@ namespace pxsim.visuals {
 
             this.screenCanvasData = this.screenCanvasCtx.getImageData(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-            Object.keys(state.screenState.points).forEach(xStr => {
-                const x = parseInt(xStr);
-                Object.keys(state.screenState.points[x]).forEach(yStr => {
-                    const y = parseInt(yStr);
-                    
-                    const point = state.screenState.points[x][y];
-                    const r = 0;
-                    const g = 0;
-                    const b = 0;
-                    const a = 255;
-
-                    var index = (x + y * SCREEN_WIDTH) * 4;
-                    this.screenCanvasData.data[index + 0] = r;
-                    this.screenCanvasData.data[index + 1] = g;
-                    this.screenCanvasData.data[index + 2] = b;
-                    this.screenCanvasData.data[index + 3] = a;
-                })
-            })
+            let sp = 3
+            const points = state.screenState.points
+            const data = this.screenCanvasData.data
+            for (let i = 0; i < points.length; ++i ) {
+                data[sp] = points[i]
+                sp += 4;
+            }
 
             this.screenCanvasCtx.putImageData(this.screenCanvasData, 0, 0);
         }

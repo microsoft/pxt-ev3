@@ -1,7 +1,7 @@
 // Auto-generated. Do not edit.
 
 
-    declare enum NumberFormat {
+    declare const enum NumberFormat {
     Int8LE = 1,
     UInt8LE = 2,
     Int16LE = 3,
@@ -22,7 +22,7 @@
     }
 
 
-    declare enum ValType {
+    declare const enum ValType {
     Undefined = 0,
     Boolean = 1,
     Number = 2,
