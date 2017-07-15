@@ -9,7 +9,6 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
-
 /**
 * Drawing modes
 */
@@ -265,6 +264,56 @@ void init() {
     pthread_create(&pid, NULL, screenRefresh, NULL);
     pthread_detach(pid);
 }
+
+static const uint8_t numbers[] = {
+    0x06, 0x09, 0x09, 0x09, 0x06, 0x04, 0x06, 0x04, 0x04, 0x0e, 0x07, 0x08, 0x06, 0x01, 0x0f, 0x0f,
+    0x08, 0x04, 0x09, 0x06, 0x0c, 0x0a, 0x09, 0x1f, 0x08, 0x1f, 0x01, 0x0f, 0x10, 0x0f, 0x08, 0x04,
+    0x0e, 0x11, 0x0e, 0x1f, 0x08, 0x04, 0x02, 0x01, 0x0e, 0x11, 0x0e, 0x11, 0x0e, 0x0e, 0x11, 0x0e,
+    0x04, 0x02,
+    // face
+    0b11011, 0b11011, 0b00000, 0b11111, 0b11011,
+};
+
+static void drawNumber(int off, int idx) {
+    const uint8_t *src = &numbers[idx * 5];
+    uint8_t *dst = &bitBuffer[off];
+    for (int i = 0; i < 5; i++) {
+        uint8_t ch = *src++;
+        for (int jj = 0; jj < 8; ++jj) {
+            for (int j = 0; j < 5; j++) {
+                if (ch & (1 << j))
+                    *dst = 0xff;
+                dst++;
+            }
+            dst += ROW_SIZE - 5;
+        }
+    }
+}
+
+extern "C" void drawPanic(int code) {
+    clear();
+
+    int ptr = ROW_SIZE * 16 + 3 + 6;
+    drawNumber(ptr, 10);
+    ptr += 6;
+
+    ptr = ROW_SIZE * 70 + 3;
+
+    drawNumber(ptr, (code / 100) % 10);
+    ptr += 6;
+    drawNumber(ptr, (code / 10) % 10);
+    ptr += 6;
+    drawNumber(ptr, (code / 1) % 10);
+    ptr += 6;
+
+    updateLCD();
+
+    int fd = open("/dev/lms_ui", O_RDWR);
+    uint8_t cmd[] = { 48 + 5, 0 };
+    write(fd, cmd, 2);
+    close(fd);
+}
+
 }
 
 namespace pxt {

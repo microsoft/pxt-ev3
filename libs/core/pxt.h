@@ -25,6 +25,7 @@ class MMap : public RefObject {
     void print();
 };
 
+extern volatile bool paniced;
 
 }
 

@@ -139,11 +139,24 @@ void sendSerial(const char *data, int len) {
     sendUsb(USB_SERIAL, data, len);
 }
 
+volatile bool paniced;
+extern "C" void drawPanic(int code);
+
 extern "C" void target_panic(int error_code) {
     char buf[50];
+    paniced = true;
+    pthread_mutex_trylock(&execMutex);
+
     snprintf(buf, sizeof(buf), "\nPANIC %d\n", error_code);
-    sendSerial(buf, strlen(buf));
+
+    drawPanic(error_code);
     DMESG("PANIC %d", error_code);
+
+    for (int i = 0; i < 10; ++i) {
+        sendSerial(buf, strlen(buf));
+        sleep_core_us(500 * 1000);
+    }
+
     target_reset();
 }
 
@@ -284,12 +297,16 @@ static void *evtDispatcher(void *dummy) {
     while (true) {
         pthread_cond_wait(&newEventBroadcast, &eventMutex);
         while (eventHead != NULL) {
+            if (paniced)
+                return 0;
             Event *ev = eventHead;
             eventHead = ev->next;
             if (eventHead == NULL)
                 eventTail = NULL;
 
             for (auto thr = allThreads; thr; thr = thr->next) {
+                if (paniced)
+                    return 0;
                 if (thr->waitSource == 0)
                     continue;
                 if (thr->waitValue != ev->value && thr->waitValue != DEVICE_EVT_ANY)
@@ -346,11 +363,15 @@ static void runPoller(Thread *thr) {
 
     while (true) {
         sleep_core_us(us);
+        if (paniced)
+            break;
         TValue curr = pxt::runAction0(query);
         if (curr != prev) {
             startUser();
             pxt::runAction2(thr->act, prev, curr);
             stopUser();
+            if (paniced)
+                break;
             decr(prev);
             prev = curr;
         }
