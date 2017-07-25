@@ -734,6 +734,5 @@ int rudolf_add(struct usb_composite_dev *cdev, bool autoresume)
     rudolf_driver.bmAttributes |= USB_CONFIG_ATT_WAKEUP;
   }
 
-
   return usb_add_config(cdev, &rudolf_driver);
 }

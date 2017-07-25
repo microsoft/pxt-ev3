@@ -705,6 +705,8 @@ static int do_read(struct fsg_common *common)
 	u32			amount_left;
 	loff_t			file_offset, file_offset_tmp;
 	unsigned int		amount;
+	// partial_page handling causes hangs
+	// same thing in do_write() --mmoskal
 	//unsigned int		partial_page;
 	ssize_t			nread;
 
@@ -2651,19 +2653,6 @@ static ssize_t fsg_store_active(struct device *dev, struct device_attribute *att
 
 	if (sscanf(buf, "%d", &i) != 1)
 		return -EINVAL;
-	
-	/*
-	if (i == 0) {
-		dUsbExit();
-		dUsbInit();
-	}
-	else if (i == 1) {
-		do_set_config(fsg_common, 0);
-	}
-	else if (i == 2) {
-		raise_exception(fsg_common, FSG_STATE_CONFIG_CHANGE);
-	}
-	*/
 
 	if (isActive() != i) {
 		if (i == 0) {

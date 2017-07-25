@@ -80,9 +80,6 @@ static    void ModuleExit(void);
 #include  <linux/utsname.h>
 #include  <linux/device.h>
 
-void myReset(void);
-static int dUsbInit(void);
-static void dUsbExit(void);
 static struct fsg_common *fsg_common;
 
 #include  "computil.c"                            // The composite framework used as utility file
@@ -747,9 +744,4 @@ static int msg_bind(struct usb_composite_dev *cdev)
 
 static int msg_config(struct usb_configuration *c) {
   return fsg_add(c->cdev, c, fsg_common);
-}
-
-void myReset() {
-  dUsbExit();
-  dUsbInit();
 }

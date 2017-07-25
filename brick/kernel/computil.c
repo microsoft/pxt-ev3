@@ -38,11 +38,12 @@
 // Keep Eclipse happy
 #endif
 
+#if 0
 #undef dev_vdbg
 #undef dev_dbg
 #define dev_vdbg(d, args...)   printk(args)
 #define dev_dbg(d, args...)   printk(args)
-
+#endif
 
 /* big enough to hold our biggest descriptor */
 #define USB_BUFSIZ  1024
