@@ -1,0 +1,4 @@
+#!/bin/sh
+sudo mkfs.cramfs dev-ev3 cram.bin
+node img
+ls -l firmware.bin
