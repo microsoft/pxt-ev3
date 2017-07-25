@@ -705,7 +705,7 @@ static int do_read(struct fsg_common *common)
 	u32			amount_left;
 	loff_t			file_offset, file_offset_tmp;
 	unsigned int		amount;
-	//unsigned int		partial_page;
+	unsigned int		partial_page;
 	ssize_t			nread;
 
 	/* Get the starting Logical Block Address and check that it's
@@ -747,12 +747,11 @@ static int do_read(struct fsg_common *common)
 		amount = min(amount_left, FSG_BUFLEN);
 		amount = min((loff_t) amount,
 				curlun->file_length - file_offset);
-				/*
 		partial_page = file_offset & (PAGE_CACHE_SIZE - 1);
 		if (partial_page > 0)
 			amount = min(amount, (unsigned int) PAGE_CACHE_SIZE -
 					partial_page);
-				*/
+
 		/* Wait for the next buffer to become available */
 		bh = common->next_buffhd_to_fill;
 		while (bh->state != BUF_STATE_EMPTY) {
@@ -835,7 +834,7 @@ static int do_write(struct fsg_common *common)
 	u32			amount_left_to_req, amount_left_to_write;
 	loff_t			usb_offset, file_offset, file_offset_tmp;
 	unsigned int		amount;
-	//unsigned int		partial_page;
+	unsigned int		partial_page;
 	ssize_t			nwritten;
 	int			rc;
 
@@ -844,7 +843,7 @@ static int do_write(struct fsg_common *common)
 		return -EINVAL;
 	}
 	spin_lock(&curlun->filp->f_lock);
-	curlun->filp->f_flags |= O_SYNC;	/* Default is  to wait */
+	curlun->filp->f_flags &= ~O_SYNC;	/* Default is not to wait */
 	spin_unlock(&curlun->filp->f_lock);
 
 	/* Get the starting Logical Block Address and check that it's
@@ -897,12 +896,10 @@ static int do_write(struct fsg_common *common)
 			amount = min(amount_left_to_req, FSG_BUFLEN);
 			amount = min((loff_t) amount, curlun->file_length -
 					usb_offset);
-					/*
 			partial_page = usb_offset & (PAGE_CACHE_SIZE - 1);
 			if (partial_page > 0)
 				amount = min(amount,
 	(unsigned int) PAGE_CACHE_SIZE - partial_page);
-					*/
 
 			if (amount == 0) {
 				get_some_more = 0;
@@ -2632,54 +2629,6 @@ static int fsg_main_thread(void *common_)
 static DEVICE_ATTR(ro, 0644, fsg_show_ro, fsg_store_ro);
 static DEVICE_ATTR(file, 0644, fsg_show_file, fsg_store_file);
 
-static struct fsg_dev *_fsg;
-
-static int isActive(void) {
-	return _fsg->function.config->cdev->deactivations == 0 ? 1 : 0;
-}
-
-static ssize_t fsg_show_active(struct device *dev, struct device_attribute *attr,
-			   char *buf)
-{
-	return sprintf(buf, "%d\n", isActive());
-}
-
-static ssize_t fsg_store_active(struct device *dev, struct device_attribute *attr,
-			    const char *buf, size_t count)
-{
-	int i;
-
-	if (sscanf(buf, "%d", &i) != 1)
-		return -EINVAL;
-	
-	/*
-	if (i == 0) {
-		dUsbExit();
-		dUsbInit();
-	}
-	else if (i == 1) {
-		do_set_config(fsg_common, 0);
-	}
-	else if (i == 2) {
-		raise_exception(fsg_common, FSG_STATE_CONFIG_CHANGE);
-	}
-	*/
-
-	if (isActive() != i) {
-		if (i == 0) {
-			usb_function_deactivate(&_fsg->function);
-		} else if (i == 1) {
-			usb_function_activate(&_fsg->function);
-		} else {
-			return -EINVAL;
-		}
-	}
-
-    return count;
-}
-
-static DEVICE_ATTR(active, 0644, fsg_show_active, fsg_store_active);
-
 
 /****************************** FSG COMMON ******************************/
 
@@ -2783,10 +2732,6 @@ static struct fsg_common *fsg_common_init(struct fsg_common *common,
 		if (rc)
 			goto error_luns;
 		rc = device_create_file(&curlun->dev, &dev_attr_file);
-		if (rc)
-			goto error_luns;
-
-		rc = device_create_file(&curlun->dev, &dev_attr_active);
 		if (rc)
 			goto error_luns;
 
@@ -3021,7 +2966,6 @@ static int fsg_add(struct usb_composite_dev *cdev,
 	int rc;
 
 	fsg = kzalloc(sizeof *fsg, GFP_KERNEL);
-	_fsg = fsg;
 	if (unlikely(!fsg))
 		return -ENOMEM;
 

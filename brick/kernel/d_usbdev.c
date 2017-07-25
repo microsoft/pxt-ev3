@@ -40,8 +40,8 @@
 #include  <asm/types.h>
 #endif
 
-#include  "source/lms2012.h"
-#include  "source/am1808.h"
+#include  "../../lms2012/source/lms2012.h"
+#include  "../../lms2012/source/am1808.h"
 
 
 #define   MODULE_NAME                   "usbdev_module"
@@ -80,18 +80,12 @@ static    void ModuleExit(void);
 #include  <linux/utsname.h>
 #include  <linux/device.h>
 
-void myReset(void);
-static int dUsbInit(void);
-static void dUsbExit(void);
-static struct fsg_common *fsg_common;
-
 #include  "computil.c"                            // The composite framework used as utility file
 #include  <../drivers/usb/gadget/gadget_chips.h>
 #include  <../drivers/usb/gadget/usbstring.c>
 #include  <../drivers/usb/gadget/config.c>
 #include  <../drivers/usb/gadget/epautoconf.c>
 
-#include "f_mass_storage.c"
 
 /*-------------------------------------------------------------------------*/
 
@@ -176,10 +170,9 @@ static struct usb_device_descriptor device_desc = {
   .bDescriptorType =  USB_DT_DEVICE,
 
   .bcdUSB =   cpu_to_le16(0x0200),
-  .bDeviceClass =		0xEF,
-	.bDeviceSubClass =	2,
-	.bDeviceProtocol =	1,
-
+  .bDeviceClass =   0,
+  .bDeviceSubClass =  0,
+  .bDeviceProtocol =  0,
   /*.bMaxPacketSize0 = f(hardware) */
   .idVendor =   cpu_to_le16(DRIVER_VENDOR_NUM),
   .idProduct =    cpu_to_le16(DRIVER_PRODUCT_NUM),
@@ -337,9 +330,6 @@ static void zero_resume(struct usb_composite_dev *cdev)
 
 /*-------------------------------------------------------------------------*/
 
-static int msg_bind(struct usb_composite_dev *cdev);
-static void msg_bind2(struct usb_composite_dev *cdev);
-
 static int zero_bind(struct usb_composite_dev *cdev)
 {
   int     gcnum;
@@ -372,10 +362,6 @@ static int zero_bind(struct usb_composite_dev *cdev)
   strings_dev[STRING_SERIAL_IDX].id = id;
   device_desc.iSerialNumber = id;
 
-  id = msg_bind(cdev);
-  if (id < 0)
-    return id;
-
   setup_timer(&autoresume_timer, zero_autoresume, (unsigned long) cdev);
 
   rudolf_add(cdev, autoresume != 0);
@@ -395,9 +381,6 @@ static int zero_bind(struct usb_composite_dev *cdev)
       longname, gadget->name);
     device_desc.bcdDevice = cpu_to_le16(0x9999);
   }
-
-  msg_bind2(cdev);
-
   return 0;
 }
 
@@ -713,43 +696,3 @@ static void ModuleExit(void)
 
 }
 
-
-
-
-// MSG
-
-
-/****************************** Configurations ******************************/
-
-static struct fsg_module_parameters fsg_mod_data = {
-	.stall = 1
-};
-FSG_MODULE_PARAMETERS(/* no prefix */, fsg_mod_data);
-
-/****************************** Gadget Bind ******************************/
-
-
-static void msg_bind2(struct usb_composite_dev *cdev)
-{
-  fsg_common_put(fsg_common);
-}
-
-static int msg_bind(struct usb_composite_dev *cdev)
-{
-	/* set up mass storage function */
-	fsg_common = fsg_common_from_params(0, cdev, &fsg_mod_data);
-	if (IS_ERR(fsg_common)) {
-		return PTR_ERR(fsg_common);
-	}
-  return 0;
-}
-
-
-static int msg_config(struct usb_configuration *c) {
-  return fsg_add(c->cdev, c, fsg_common);
-}
-
-void myReset() {
-  dUsbExit();
-  dUsbInit();
-}

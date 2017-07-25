@@ -551,8 +551,6 @@ static void f_rudolf_disable(struct usb_function *f)
 
 /*-------------------------------------------------------------------------*/
 
-static int msg_config(struct usb_configuration *c);
-
 static int rudolf_bind_config(struct usb_configuration *c)
 {
   struct f_rudolf   *rudolf;
@@ -570,18 +568,8 @@ static int rudolf_bind_config(struct usb_configuration *c)
   rudolf->function.disable = f_rudolf_disable;
 
   status = usb_add_function(c, &rudolf->function);
-  if (status) {
+  if (status)
     kfree(rudolf);
-    return status;
-  }
-
-
-  status = msg_config(c);
-  if (status) {
-    kfree(rudolf);
-    return status;
-  }
-  
   return status;
 }
 
@@ -733,7 +721,6 @@ int rudolf_add(struct usb_composite_dev *cdev, bool autoresume)
     rudolf_driver.descriptors = otg_desc;
     rudolf_driver.bmAttributes |= USB_CONFIG_ATT_WAKEUP;
   }
-
 
   return usb_add_config(cdev, &rudolf_driver);
 }

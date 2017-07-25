@@ -38,12 +38,6 @@
 // Keep Eclipse happy
 #endif
 
-#undef dev_vdbg
-#undef dev_dbg
-#define dev_vdbg(d, args...)   printk(args)
-#define dev_dbg(d, args...)   printk(args)
-
-
 /* big enough to hold our biggest descriptor */
 #define USB_BUFSIZ  1024
 
@@ -872,12 +866,6 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
   req->complete = composite_setup_complete;
   req->length = USB_BUFSIZ;
   gadget->ep0->driver_data = cdev;
-
-
-  VDBG(cdev,
-      "setup req %02x.%02x v%04x i%04x l%d\n",
-      ctrl->bRequestType, ctrl->bRequest,
-      w_value, w_index, w_length);
 
 switch (ctrl->bRequest) {
   /* we handle all standard USB descriptors */
