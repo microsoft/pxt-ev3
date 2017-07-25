@@ -25,8 +25,7 @@ void write_block(uint32_t block_no, uint8_t *data);
 
 #define CONCAT_1(a, b) a##b
 #define CONCAT_0(a, b) CONCAT_1(a, b)
-#define STATIC_ASSERT(e)                                                       \
-  enum { CONCAT_0(_static_assert_, __LINE__) = 1 / ((e) ? 1 : 0) }
+#define STATIC_ASSERT(e) enum { CONCAT_0(_static_assert_, __LINE__) = 1 / ((e) ? 1 : 0) }
 
 extern const char infoUf2File[];
 
@@ -34,20 +33,14 @@ void readAll(int fd, void *dst, uint32_t length);
 
 STATIC_ASSERT(sizeof(UF2_Block) == 512);
 
+void mylog(const char *fmt, ...);
 
 #define FAIL(args...)                                                                              \
     do {                                                                                           \
-        fprintf(stderr, args);                                                                     \
-        fprintf(stderr, "\n");                                                                     \
+        mylog(args);                                                                                 \
         exit(1);                                                                                   \
     } while (0)
 
-#define LOG(args...)                                                                               \
-    do {                                                                                           \
-        fprintf(stderr, args);                                                                     \
-        fprintf(stderr, "\n");                                                                     \
-        fflush(stderr);                                                                            \
-    } while (0)
-
+#define LOG mylog
 
 #endif
