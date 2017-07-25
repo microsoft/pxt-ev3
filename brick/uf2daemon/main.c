@@ -133,6 +133,7 @@ void runNBD() {
     reply.error = htonl(0);
 
     for (;;) {
+        nbd_ioctl(BLKFLSBUF, 0); // flush buffers - we don't want the kernel to cache the writes
         int nread = read(sock, &request, sizeof(request));
 
         if (nread < 0) {
@@ -199,7 +200,9 @@ int main() {
 
         if (!WIFEXITED(wstatus) || WEXITSTATUS(wstatus) != 0) {
             LOG("abnormal child return, %d", child);
-            sleep(3);
+            sleep(5);
+        } else {
+            sleep(2);
         }
     }
 

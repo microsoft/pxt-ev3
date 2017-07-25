@@ -8,5 +8,5 @@ mod:
 uf2:
 	$(MAKE) -C uf2daemon
 	@mkdir -p bin
-	cp uf2daemon/server bin/uf2daemon
+	cp uf2daemon/server bin/uf2d
 

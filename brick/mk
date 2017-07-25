@@ -1,6 +1,6 @@
 #!/bin/sh
 set -xe
-scp -qr * vm:linux/pxt/ 
+scp -qr kernel uf2daemon Makefile vm:linux/pxt/ 
 ssh vm "cd linux/pxt; make $1"
 mkdir -p bin
 scp vm:linux/pxt/bin/* bin/

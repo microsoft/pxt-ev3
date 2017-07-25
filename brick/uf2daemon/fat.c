@@ -666,21 +666,26 @@ void stopLMS() {
     closedir(dir);
 
     if (lmsPid) {
-        DBG("SIGSTOP to lmsPID=%d", lmsPid);
+        DBG("SIGSTOP to lmsPID=%d\n", lmsPid);
         kill(lmsPid, SIGSTOP);
+    } else {
+        DBG("LMS not found\n");
     }
 }
 
 void waitAndContinue() {
+    stopLMS();
     for (int fd = 3; fd < 9999; ++fd)
         close(fd);
     pid_t child = fork();
     if (child == 0) {
-        execl(elfPath, elfPath, "--msd");
+        DBG("start %s\n", elfPath);
+        execl(elfPath, elfPath, "--msd", (char*) NULL);
         exit(128);
     }
     int status;
     waitpid(child, &status, 0);
+    DBG("re-start LMS\n");
     if (lmsPid)
         kill(lmsPid, SIGCONT);
     exit(0);
