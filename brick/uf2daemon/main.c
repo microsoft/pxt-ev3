@@ -21,20 +21,9 @@
 
 #define NUM_BLOCKS NUM_FAT_BLOCKS
 
-#define FAIL(args...)                                                                              \
-    do {                                                                                           \
-        fprintf(stderr, args);                                                                     \
-        fprintf(stderr, "\n");                                                                     \
-        exit(1);                                                                                   \
-    } while (0)
-
-#define LOG(args...)                                                                               \
-    do {                                                                                           \
-        fprintf(stderr, args);                                                                     \
-        fprintf(stderr, "\n");                                                                     \
-    } while (0)
-
-uint64_t ntohll(uint64_t a) { return ((uint64_t)ntohl(a & 0xffffffff) << 32) | ntohl(a >> 32); }
+uint64_t ntohll(uint64_t a) {
+    return ((uint64_t)ntohl(a & 0xffffffff) << 32) | ntohl(a >> 32);
+}
 #define htonll ntohll
 
 void readAll(int fd, void *dst, uint32_t length) {
@@ -82,9 +71,8 @@ void startclient() {
 
 void handleread(int off, int len) {
     uint8_t buf[512];
-    // fprintf(stderr, "read @%d len=%d\n", off, len);
-    //  htonl(EPERM);
-    reply.error = 0;
+    LOG("read @%d len=%d", off, len);
+    reply.error = 0; //  htonl(EPERM);
     writeAll(sock, &reply, sizeof(struct nbd_reply));
     for (int i = 0; i < len; ++i) {
         read_block(off + i, buf);
@@ -94,7 +82,7 @@ void handleread(int off, int len) {
 
 void handlewrite(int off, int len) {
     uint8_t buf[512];
-    // fprintf(stderr, "write @%d len=%d\n", off, len);
+    LOG("write @%d len=%d", off, len);
     for (int i = 0; i < len; ++i) {
         readAll(sock, buf, 512);
         write_block(off + i, buf);

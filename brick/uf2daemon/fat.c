@@ -36,7 +36,7 @@
 
 #include "uf2.h"
 
-#define DBG printf
+#define DBG LOG
 
 typedef struct {
     uint8_t JumpInstruction[3];
@@ -592,6 +592,7 @@ void readBlock(uint8_t *dest, int blkno) {
             if (fd >= 0) {
                 lseek(fd, bl->targetAddr, SEEK_SET);
                 bl->payloadSize = read(fd, bl->data, 256);
+                close(fd);
             } else {
                 bl->payloadSize = -1;
             }

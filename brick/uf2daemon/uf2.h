@@ -34,4 +34,20 @@ void readAll(int fd, void *dst, uint32_t length);
 
 STATIC_ASSERT(sizeof(UF2_Block) == 512);
 
+
+#define FAIL(args...)                                                                              \
+    do {                                                                                           \
+        fprintf(stderr, args);                                                                     \
+        fprintf(stderr, "\n");                                                                     \
+        exit(1);                                                                                   \
+    } while (0)
+
+#define LOG(args...)                                                                               \
+    do {                                                                                           \
+        fprintf(stderr, args);                                                                     \
+        fprintf(stderr, "\n");                                                                     \
+        fflush(stderr);                                                                            \
+    } while (0)
+
+
 #endif
