@@ -332,8 +332,7 @@ void addClusterData(ClusterData *c, FsEntry *e) {
 
     c->myfile = e;
 
-    DBG("add cluster: flags=%d size=%d numcl=%d name=%s\n", c->flags, (int)c->st.st_size,
-        c->numclusters, c->name);
+    DBG("add cluster: flags=%d size=%d numcl=%d", c->flags, (int)c->st.st_size, c->numclusters);
 }
 
 FsEntry *addRootText(const char *filename, const char *contents) {
@@ -393,7 +392,7 @@ void setFatNames(FsEntry *dirent) {
             }
         }
 
-        DBG("setname: %s [%s] cl=%s @ %d sz=%d dents=%d\n", p->vfatname, p->fatname,
+        DBG("setname: %s [%s] cl=%s @ %d sz=%d dents=%d", p->vfatname, p->fatname,
             p->data ? p->data->name : "(no data)", p->startCluster, p->size, p->numdirentries);
     }
 }
@@ -528,7 +527,7 @@ void readDirData(uint8_t *dest, FsEntry *dirdata, int blkno) {
         if (idx >= 16)
             break;
 
-        // DBG("dir idx=%d %s\n", idx, e->vfatname);
+        // DBG("dir idx=%d %s", idx, e->vfatname);
 
         for (int i = 0; i < e->numdirentries; ++i, ++idx) {
             if (0 <= idx && idx < 16) {
@@ -562,15 +561,15 @@ void readDirData(uint8_t *dest, FsEntry *dirdata, int blkno) {
 }
 
 void readBlock(uint8_t *dest, int blkno) {
-    // DBG("readbl %d\n", blkno);
+    // DBG("readbl %d", blkno);
     int blkno0 = blkno;
     for (ClusterData *c = firstCluster; c; c = c->cnext) {
-        //  DBG("off=%d sz=%d\n", blkno, c->numclusters);
+        //  DBG("off=%d sz=%d", blkno, c->numclusters);
         if (blkno >= c->numclusters) {
             blkno -= c->numclusters;
             continue;
         }
-        // DBG("readbl off=%d %p\n", blkno, c);
+        // DBG("readbl off=%d %p", blkno, c);
         if (c->dirdata) {
             readDirData(dest, c->dirdata, blkno);
         } else if (c->flags & F_TEXT) {
@@ -667,10 +666,10 @@ void stopLMS() {
     closedir(dir);
 
     if (lmsPid) {
-        DBG("SIGSTOP to lmsPID=%d\n", lmsPid);
+        DBG("SIGSTOP to lmsPID=%d", lmsPid);
         kill(lmsPid, SIGSTOP);
     } else {
-        DBG("LMS not found\n");
+        DBG("LMS not found");
     }
 }
 
@@ -680,15 +679,16 @@ void waitAndContinue() {
         close(fd);
     pid_t child = fork();
     if (child == 0) {
-        DBG("start %s\n", elfPath);
-        execl(elfPath, elfPath, "--msd", (char*) NULL);
+        DBG("start %s", elfPath);
+        execl(elfPath, elfPath, "--msd", (char *)NULL);
         exit(128);
     }
     int status;
     waitpid(child, &status, 0);
-    DBG("re-start LMS\n");
-    if (lmsPid)
+    DBG("re-start LMS");
+    if (lmsPid) {
         kill(lmsPid, SIGCONT);
+    }
     exit(0);
 }
 
@@ -750,7 +750,7 @@ void write_block(uint32_t block_no, uint8_t *data) {
         if (fd >= 0) {
             ftruncate(fd, bl->fileSize);
             lseek(fd, bl->targetAddr, SEEK_SET);
-            // DBG("write %d bytes at %d to %s\n", bl->payloadSize, bl->targetAddr, fn);
+            // DBG("write %d bytes at %d to %s", bl->payloadSize, bl->targetAddr, fn);
             write(fd, bl->data, bl->payloadSize);
             close(fd);
 
@@ -774,6 +774,7 @@ void write_block(uint32_t block_no, uint8_t *data) {
                 // logval("incr", state->numWritten);
                 state->writtenMask[pos] |= mask;
                 state->numWritten++;
+                DBG("write %d/%d #%d", state->numWritten, state->numBlocks, bl->blockNo);
             }
             if (state->numWritten >= state->numBlocks) {
                 restartProgram();

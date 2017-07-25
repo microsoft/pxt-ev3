@@ -71,7 +71,7 @@ void startclient() {
 
 void handleread(int off, int len) {
     uint8_t buf[512];
-    LOG("read @%d len=%d", off, len);
+    //LOG("read @%d len=%d", off, len);
     reply.error = 0; //  htonl(EPERM);
     writeAll(sock, &reply, sizeof(struct nbd_reply));
     for (int i = 0; i < len; ++i) {
@@ -82,7 +82,7 @@ void handleread(int off, int len) {
 
 void handlewrite(int off, int len) {
     uint8_t buf[512];
-    LOG("write @%d len=%d", off, len);
+    //LOG("write @%d len=%d", off, len);
     for (int i = 0; i < len; ++i) {
         readAll(sock, buf, 512);
         write_block(off + i, buf);
@@ -121,7 +121,7 @@ void runNBD() {
     reply.error = htonl(0);
 
     for (;;) {
-        nbd_ioctl(BLKFLSBUF, 0); // flush buffers - we don't want the kernel to cache the writes
+        //nbd_ioctl(BLKFLSBUF, 0); // flush buffers - we don't want the kernel to cache the writes
         int nread = read(sock, &request, sizeof(request));
 
         if (nread < 0) {
