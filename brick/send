@@ -1,0 +1,8 @@
+#!/bin/sh
+
+./mk
+ev3duder up bin/d_usbdev.ko ../prjs/ko/d_usbdev.ko
+ev3duder up bin/nbd.ko ../prjs/ko/nbd.ko
+ev3duder up bin/nbd-serv ../prjs/ko/nbd-serv
+ev3duder up ins ../prjs/ko/ins
+

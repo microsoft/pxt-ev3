@@ -30,3 +30,4 @@ videos/**
 .piolibdeps
 lib/
 .vscode/
+bin

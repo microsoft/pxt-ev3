@@ -1,0 +1,22 @@
+#!/bin/sh
+set -ex
+cd /mnt/ramdisk/prjs/ko
+insmod ./nbd.ko
+sleep 1
+./nbd-serv &
+sleep 1
+insmod ./d_usbdev.ko file=/dev/nbd0 HostStr=EV3 SerialStr=0016535543af
+L=/sys/devices/platform/musb_hdrc/gadget/lun0
+echo $L
+echo -n "ent: "
+read LINE
+#echo > $L/file
+echo 3 > $L/reset
+killall nbd-serv
+sleep 1
+./nbd-serv &
+sleep 1
+#echo /dev/nbd0 > $L/file
+#sleep 1
+echo 4 > $L/reset
+

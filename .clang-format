@@ -3,3 +3,4 @@ IndentWidth: 4
 UseTab: Never
 ColumnLimit: 100
 AllowShortFunctionsOnASingleLine: Inline
+SortIncludes: false
