@@ -72,7 +72,8 @@ namespace pxt.editor {
         let r = UF2.concatFiles([elfUF2, mkFile(".rbf", rbfBIN)])
         let data = UF2.serializeFile(r)
 
-        resp.outfiles[pxtc.BINARY_UF2] = btoa(data)
+        // we repeat the file three times to minimze problems with failed writes
+        resp.outfiles[pxtc.BINARY_UF2] = btoa(data + data + data)
 
         let saveUF2Async = () => {
             if (isCli || !pxt.commands.saveOnlyAsync) {
