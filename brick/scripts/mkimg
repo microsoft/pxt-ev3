@@ -1,4 +1,6 @@
 #!/bin/sh
+# dd if=EV3\ Firmware\ V1.09D.bin of=orig.cram bs=65536 skip=37 count=400
+
 sudo mkfs.cramfs dev-ev3 cram.bin
 node img
 ls -l firmware.bin
