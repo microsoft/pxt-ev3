@@ -703,11 +703,22 @@ void restartProgram() {
         exit(0); // causes parent to eject MSD etc
 }
 
+int numWrites = 0;
 static WriteState wrState;
 void write_block(uint32_t block_no, uint8_t *data) {
     WriteState *state = &wrState;
 
     UF2_Block *bl = (void *)data;
+
+    if (bl->magicStart0 == 0x20da6d81 && bl->magicStart1 == 0x747e09d4) {
+        DBG("restart req, #wr=%d", numWrites);
+        if (numWrites) {
+            exit(0);
+        }
+        return;
+    }
+
+    numWrites++;
 
     if (!is_uf2_block(bl)) {
         return;

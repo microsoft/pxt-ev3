@@ -2410,7 +2410,28 @@ static void fsg_disable(struct usb_function *f)
 	fsg->common->prev_fsg = fsg->common->fsg;
 	fsg->common->fsg = fsg;
 	fsg->common->new_config = 0;
-	raise_exception(fsg->common, FSG_STATE_CONFIG_CHANGE);
+
+	DBG(common, "fsg_disable filp=%p\n", fsg->common->luns[0].filp);
+	raise_exception(fsg->common, FSG_STATE_CONFIG_CHANGE_DISABLE);
+}
+
+static void shutdown_server(void) {
+	DBG(fsg_common, "shutdown_server filp=%p\n", fsg_common->luns[0].filp);
+	if (fsg_common->luns[0].filp) {
+		uint32_t buf[512 / 4];
+		loff_t file_offset_tmp = 512 * 50000; // make sure we're outside of FS area
+		int i;
+
+		// this should shut down the nbd server, so that the caches are flushed
+		memset(buf, 0, sizeof(buf));
+		buf[0] = 0x20da6d81;
+		buf[1] = 0x747e09d4;
+
+		fsg_common->luns[0].filp->f_flags |= O_SYNC;
+		for (i = 0; i < 2; ++i)
+			vfs_write(fsg_common->luns[0].filp,
+							(char*)buf, 512, &file_offset_tmp);
+	}
 }
 
 
@@ -2532,6 +2553,9 @@ static void handle_exception(struct fsg_common *common)
 		/*		SS_RESET_OCCURRED;  */
 		break;
 
+	case FSG_STATE_CONFIG_CHANGE_DISABLE:
+		shutdown_server();
+		// fall-through
 	case FSG_STATE_CONFIG_CHANGE:
 		rc = do_set_config(common, new_config);
 		if (common->ep0_req_tag != exception_req_tag)
