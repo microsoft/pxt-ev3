@@ -73,6 +73,7 @@
 #undef DUMP_MSGS
 #endif /* !DEBUG */
 
+#define VERBOSE_DEBUG
 #ifdef VERBOSE_DEBUG
 #define VLDBG	LDBG
 #else

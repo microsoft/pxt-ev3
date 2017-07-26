@@ -938,6 +938,7 @@ static int do_write(struct fsg_common *common)
 			bh->outreq->length = amount;
 			bh->bulk_out_intended_length = amount;
 			bh->outreq->short_not_ok = 1;
+			printk("write transfer %d\n", amount);
 			START_TRANSFER_OR(common, bulk_out, bh->outreq,
 					  &bh->outreq_busy, &bh->state)
 				/* Don't know what to do if
@@ -1014,10 +1015,14 @@ static int do_write(struct fsg_common *common)
 			continue;
 		}
 
+		printk("before sleep\n");
+
 		/* Wait for something to happen */
 		rc = sleep_thread(common);
 		if (rc)
 			return rc;
+
+		printk("after sleep\n");
 	}
 
 	return -EIO;		/* No default reply */
