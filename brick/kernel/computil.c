@@ -38,7 +38,7 @@
 // Keep Eclipse happy
 #endif
 
-#if 0
+#if 1
 #undef dev_vdbg
 #undef dev_dbg
 #define dev_vdbg(d, args...)   printk(args)

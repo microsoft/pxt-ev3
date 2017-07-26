@@ -733,6 +733,9 @@ static int do_read(struct fsg_common *common)
 
 	/* Carry out the file reads */
 	amount_left = common->data_size_from_cmnd;
+
+	LDBG(curlun, "Uread off=%d cnt=%d\n", (int)lba, amount_left);
+
 	if (unlikely(amount_left == 0))
 		return -EIO;		/* No default reply */
 
@@ -880,6 +883,8 @@ static int do_write(struct fsg_common *common)
 	file_offset = usb_offset = ((loff_t) lba) << 9;
 	amount_left_to_req = common->data_size_from_cmnd;
 	amount_left_to_write = common->data_size_from_cmnd;
+
+	LDBG(curlun, "Uwrite off=%d cnt=%d\n", (int)lba, amount_left_to_req);
 
 	while (amount_left_to_write > 0) {
 

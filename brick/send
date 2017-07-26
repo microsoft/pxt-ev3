@@ -6,4 +6,5 @@ ev3duder up bin/nbd.ko ../prjs/ko/nbd.ko
 ev3duder up ins ../prjs/ko/ins
 ev3duder exec 'rm ../prjs/ko/uf2d'
 ev3duder up bin/uf2d ../prjs/ko/uf2d
+#ev3duder exec 'echo . /mnt/ramdisk/prjs/ko/ins > /mnt/ramdisk/rc.local'
 
