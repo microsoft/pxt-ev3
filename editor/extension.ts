@@ -41,7 +41,8 @@ namespace pxt.editor {
     export function deployCoreAsync(resp: pxtc.CompileResult, isCli = false) {
         let w: Ev3Wrapper
 
-        let filename = resp.downloadFileBaseName
+        let filename = resp.downloadFileBaseName || "pxt"
+        filename = filename.replace(/^lego-/, "")
 
         let fspath = "../prjs/BrkProg_SAVE/"
 
