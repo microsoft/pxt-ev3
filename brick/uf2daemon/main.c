@@ -29,23 +29,30 @@ uint64_t ntohll(uint64_t a) {
 
 void mylog(const char *fmt, ...) {
     va_list args;
-    char *p;
+    char *p, *p2;
 
     va_start(args, fmt);
     vasprintf(&p, fmt, args);
     vprintf(fmt, args);
     va_end(args);
 
-    int len = strlen(p) + 1;
-    p[len - 1] = '\n';
+    if (p[0] != '<')
+        asprintf(&p2, "<6>%s\n", p);
+    else
+        asprintf(&p2, "%s\n", p);
+
+    int len = strlen(p2);
 
 #ifdef X86
-    write(2, p, len);
+    write(2, p2, len);
 #else
     int fd = open("/dev/kmsg", O_WRONLY);
-    write(fd, p, len);
+    write(fd, p2, len);
     close(fd);
 #endif
+
+    free(p);
+    free(p2);
 }
 
 void readAll(int fd, void *dst, uint32_t length) {

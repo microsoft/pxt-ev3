@@ -37,7 +37,7 @@ void mylog(const char *fmt, ...);
 
 #define FAIL(args...)                                                                              \
     do {                                                                                           \
-        mylog(args);                                                                                 \
+        mylog("<4>" args);                                                                                 \
         exit(1);                                                                                   \
     } while (0)
 
