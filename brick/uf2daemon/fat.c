@@ -19,6 +19,8 @@
 #include <time.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/ioctl.h>
+#include <string.h>
 
 #define max(a, b)                                                                                  \
     ({                                                                                             \
@@ -627,6 +629,48 @@ void read_block(uint32_t block_no, uint8_t *data) {
     }
 }
 
+char rbfPath[300];
+
+uint8_t stopApp[] = {
+    0x05, 0x00, // size
+    0x00, 0x00, // seq. no.
+    0x3f, 0x3d, // usb magic,
+    0x02,       // req. no.
+};
+
+uint8_t runStart[] = {0x00, 0x00,       // size
+                      0x00, 0x00,       // seq. no.
+                      0x00, 0x00, 0x08, // something
+                      0xC0, 0x08, 0x82, 0x01, 0x00, 0x84};
+
+uint8_t runEnd[] = {0x00, 0x60, 0x64, 0x03, 0x01, 0x60, 0x64, 0x00};
+
+#define FEED_DATA _IOC(_IOC_WRITE, 't', 108, 1024)
+
+void startRbf() {
+    char buf[1024];
+    memset(buf, 0, sizeof(buf));
+    memcpy(buf, stopApp, sizeof(stopApp));
+
+    int fd = open("/dev/lms_usbdev", O_RDWR);
+    ioctl(fd, FEED_DATA, buf);
+    usleep(500000);
+
+    int off = 0;
+    memcpy(buf + off, runStart, sizeof(runStart));
+    off += sizeof(runStart);
+    strcpy(buf + off, rbfPath);
+    off += strlen(rbfPath);
+    memcpy(buf + off, runEnd, sizeof(runEnd));
+    off += sizeof(runEnd);
+    off -= 2;
+    buf[0] = off & 0xff;
+    buf[1] = off >> 8;
+    ioctl(fd, FEED_DATA, buf);
+
+    close(fd);
+}
+
 #define MAX_BLOCKS 8000
 typedef struct {
     uint32_t numBlocks;
@@ -634,73 +678,11 @@ typedef struct {
     uint8_t writtenMask[MAX_BLOCKS / 8 + 1];
 } WriteState;
 
-char elfPath[300];
-
-int lmsPid;
-void stopLMS() {
-    struct dirent *ent;
-    DIR *dir;
-
-    dir = opendir("/proc");
-    if (dir == NULL)
-        return;
-
-    while ((ent = readdir(dir)) != NULL) {
-        int pid = atoi(ent->d_name);
-        if (!pid)
-            continue;
-        char namebuf[100];
-        snprintf(namebuf, 1000, "/proc/%d/cmdline", pid);
-        FILE *f = fopen(namebuf, "r");
-        if (f) {
-            fread(namebuf, 1, 99, f);
-            if (strcmp(namebuf, "./lms2012") == 0) {
-                lmsPid = pid;
-            }
-            fclose(f);
-            if (lmsPid)
-                break;
-        }
-    }
-
-    closedir(dir);
-
-    if (lmsPid) {
-        DBG("SIGSTOP to lmsPID=%d", lmsPid);
-        kill(lmsPid, SIGSTOP);
-    } else {
-        DBG("LMS not found");
-    }
-}
-
-void waitAndContinue() {
-    stopLMS();
-    for (int fd = 3; fd < 9999; ++fd)
-        close(fd);
-    pid_t child = fork();
-    if (child == 0) {
-        DBG("start %s", elfPath);
-        execl(elfPath, elfPath, "--msd", (char *)NULL);
-        exit(128);
-    }
-    int status;
-    waitpid(child, &status, 0);
-    DBG("re-start LMS");
-    if (lmsPid) {
-        kill(lmsPid, SIGCONT);
-    }
-    exit(0);
-}
-
 void restartProgram() {
-    if (!elfPath[0])
+    if (!rbfPath[0])
         exit(0);
-
-    pid_t child = fork();
-    if (child == 0)
-        waitAndContinue();
-    else
-        exit(0); // causes parent to eject MSD etc
+    startRbf();
+    exit(0); // causes parent to eject MSD etc
 }
 
 int numWrites = 0;
@@ -765,8 +747,8 @@ void write_block(uint32_t block_no, uint8_t *data) {
             write(fd, bl->data, bl->payloadSize);
             close(fd);
 
-            if (strlen(fn) > 4 && !strcmp(fn + strlen(fn) - 4, ".elf")) {
-                strcpy(elfPath, fn);
+            if (strlen(fn) > 4 && !strcmp(fn + strlen(fn) - 4, ".rbf")) {
+                strcpy(rbfPath, fn);
             }
         }
     }

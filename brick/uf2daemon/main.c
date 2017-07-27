@@ -20,6 +20,9 @@
 
 #include "uf2.h"
 
+const char *dev_file = "/dev/nbd0";
+
+
 #define NUM_BLOCKS NUM_FAT_BLOCKS
 
 uint64_t ntohll(uint64_t a) {
@@ -95,8 +98,6 @@ void startclient() {
     nbd_ioctl(NBD_CLEAR_SOCK, 0);
     exit(0);
 }
-
-#define dev_file "/dev/nbd0"
 
 void handleread(int off, int len) {
     uint8_t buf[512];
@@ -196,10 +197,13 @@ void enableMSD(int enabled) {
 #endif
 }
 
-int main() {
+int main(int argc, char **argv) {
 #ifndef X86
     daemon(0, 1);
 #endif
+
+    if (argc > 1)
+        dev_file = argv[1];
 
     for (;;) {
         pid_t child = fork();

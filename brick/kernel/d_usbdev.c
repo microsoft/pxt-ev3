@@ -543,12 +543,27 @@ static int Device1Mmap(struct file *filp, struct vm_area_struct *vma)
 
    return (ret);
 }
+
+#define FEED_DATA _IOC(_IOC_WRITE, 't', 108, 1024)
+
+static int Device1Ioctl(struct inode *pNode, struct file *File, unsigned int Request, unsigned long Pointer)
+{
+  if (Request != FEED_DATA)
+    return -EINVAL;
+
+  copy_from_user(usb_char_buffer_out,(void*)Pointer,1024);
+  usb_char_out_length = 1024;
+
+  return 0;
+}
+
 static    const struct file_operations Device1Entries =
 {
   .owner        = THIS_MODULE,
   .read         = Device1Read,
   .write        = Device1Write,
-  .mmap         = Device1Mmap
+  .mmap         = Device1Mmap,
+  .ioctl        = Device1Ioctl
 };
 
 
