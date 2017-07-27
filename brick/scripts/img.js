@@ -16,8 +16,9 @@ function build() {
     bootnews += " "
 
   let cr = fs.readFileSync("cram.bin")
-  if (cr.length > 10878976) {
-    console.log("too big")
+
+  if (cr.length > 10485760) {
+    console.log("too big by " + (cr.length - 10485760))
     return
   }
   let img = fs.readFileSync("EV3 Firmware V1.09D.bin")
