@@ -8,3 +8,7 @@ Additionally, the `edimax01.ko` is replaced by now much more popular `rtl8192cu.
 
 The init script has a hook for running a shell script from `/mnt/ramdisk/`. This can be used
 for testing different modules etc.
+
+The kernel command line has been modified to:
+* disable DMA for the MUSB driver - otherwise the mass storage device is very unstable
+* increase the size of dmesg buffer to 128k

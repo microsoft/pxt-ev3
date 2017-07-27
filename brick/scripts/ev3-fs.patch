@@ -1,7 +1,15 @@
 diff -ur orig-ev3/etc/init.d/ev3init.sh dev-ev3/etc/init.d/ev3init.sh
 --- orig-ev3/etc/init.d/ev3init.sh	1970-01-01 01:00:00.000000000 +0100
-+++ dev-ev3/etc/init.d/ev3init.sh	2017-07-25 15:55:03.642866971 +0100
-@@ -60,3 +60,6 @@
++++ dev-ev3/etc/init.d/ev3init.sh	2017-07-27 12:19:43.195041798 +0100
+@@ -1,5 +1,7 @@
+ #!/bin/sh
+ 
++echo Y > /sys/module/printk/parameters/time
++
+ bluetoothd -n > /dev/null 2>&1 &
+ 
+ echo "Setting up VirtualDrive...";
+@@ -60,3 +62,6 @@
  sleep 2
  hciattach /dev/ttyS2 texas 2000000 "flow" "nosleep" $STRING
  sdptool add SP
@@ -11,7 +19,7 @@ diff -ur orig-ev3/etc/init.d/ev3init.sh dev-ev3/etc/init.d/ev3init.sh
 Only in orig-ev3/home/root/lms2012/sys: exit~
 diff -ur orig-ev3/home/root/lms2012/sys/init dev-ev3/home/root/lms2012/sys/init
 --- orig-ev3/home/root/lms2012/sys/init	1970-01-01 01:00:00.000000000 +0100
-+++ dev-ev3/home/root/lms2012/sys/init	2017-07-26 18:36:03.814459337 +0100
++++ dev-ev3/home/root/lms2012/sys/init	2017-07-27 12:23:43.072605126 +0100
 @@ -5,13 +5,15 @@
  var=$(printf 'HostStr=%s SerialStr=%s' $(cat /home/root/lms2012/sys/settings/BrickName) $(cat /home/root/lms2012/sys/settings/BTser))
  echo $var > /home/root/lms2012/sys/settings/UsbInfo.dat
@@ -29,6 +37,15 @@ diff -ur orig-ev3/home/root/lms2012/sys/init dev-ev3/home/root/lms2012/sys/init
  insmod ${PWD}/mod/d_usbhost.ko
  insmod ${PWD}/mod/d_sound.ko `cat /home/root/lms2012/sys/settings/HwId`
  insmod ${PWD}/mod/d_bt.ko `cat /home/root/lms2012/sys/settings/HwId`
+@@ -29,6 +31,8 @@
+ chmod 666 /dev/lms_iic
+ chmod 666 /dev/lms_bt
+ 
++echo 4 > /proc/sys/kernel/printk
++ 
+ cd ..
+ ls -R > /dev/null
+ cd sys
 Binary files orig-ev3/home/root/lms2012/sys/mod/d_usbdev.ko and dev-ev3/home/root/lms2012/sys/mod/d_usbdev.ko differ
 Only in dev-ev3/home/root/lms2012/sys/mod: nbd.ko
 Only in dev-ev3/home/root/lms2012/sys: uf2d

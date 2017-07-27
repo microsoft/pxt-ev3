@@ -1,8 +1,9 @@
 #!/bin/sh
 
 let fs = require("fs")
-  let bootargs = "mem=${memsize} initrd=${filesysaddr},${filesyssize} root=/dev/ram0 rw rootfstype=cramfs console=${console} ip=${ipaddr} lpj=747520 quiet"
-let bootnews = "mem=64M initrd=0xC1180000,10M root=/dev/ram0 rw rootfstype=cramfs console=${console} lpj=747520 quiet musb_hdrc.debug=2"
+// we try to use shorter versions of all parameters for the additional parameters to fit
+let bootargs = "mem=${memsize} initrd=${filesysaddr},${filesyssize} root=/dev/ram0 rw rootfstype=cramfs console=${console} ip=${ipaddr} lpj=747520 quiet"
+let bootnews = "mem=64M initrd=0xC1180000,10M root=1:0 rw rootfstype=cramfs console=${console} lpj=747520 musb_hdrc.use_dma=0 log_buf_len=128k quiet"
 let piggy = true
 
 function build() {
