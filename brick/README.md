@@ -11,8 +11,9 @@ they are derived from GPLv2 code).
 * the `d_usbdev` uses the composite framework to register an additional mass storage function in addtion
   to the pre-existing custom USB HID function
 * the `g_mass_storage` module has the following changes:
-  * a bug fixed, where page-misaligned writes would hang
   * additional `/sys/.../lun0/active` entry is added, which allows for signaling drive eject to the host
+* `d_usbdev` has an additional `ioctl()` to pretend data came from the USB host - this can be used to direct
+  the VM to do stuff
 
 ### Kernel modifications
 
