@@ -21,6 +21,7 @@
 #include <sys/wait.h>
 #include <sys/ioctl.h>
 #include <string.h>
+#include <errno.h>
 
 #define max(a, b)                                                                                  \
     ({                                                                                             \
@@ -740,6 +741,10 @@ void write_block(uint32_t block_no, uint8_t *data) {
         *p = '/';
 
         int fd = open(fn, O_WRONLY | O_CREAT, 0777);
+        if (fd < 0 && errno == ETXTBSY) {
+            unlink(fn);
+            fd = open(fn, O_WRONLY | O_CREAT, 0777);
+        }
         if (fd >= 0) {
             ftruncate(fd, bl->fileSize);
             lseek(fd, bl->targetAddr, SEEK_SET);
