@@ -98,11 +98,8 @@ span.blocklyTreeLabel {
 }
 
 /* Editor menu toggle */
-#menubar .ui.menu .item.editor-menuitem {
+#menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
     background: @blue !important;
-}
-#menubar .ui.menu .item.editor-menuitem .item {
-    color: white !important;
 }
 
 /* Search box */
@@ -124,11 +121,6 @@ span.blocklyTreeLabel {
     #filelist {
         background: transparent;
     }
-    div.blocklyTreeRow {
-        padding-bottom: 2rem !important;
-        min-height: @blocklyRowHeightMobile;
-        line-height: @blocklyRowHeightMobile/2;
-    }
     #blocklyTrashIcon {
         margin: 0.2rem;
     }
@@ -136,29 +128,14 @@ span.blocklyTreeLabel {
 
 /* Tablet */
 @media only screen and (min-width: @tabletBreakpoint) and (max-width: @largestTabletScreen) {
-    div.blocklyTreeRow {
-        padding-left: 0.5rem !important;
-        min-height: @blocklyRowHeightTablet;
-        line-height: @blocklyRowHeightTablet/2;
-    }
 }
 
 /* Small Monitor */
 @media only screen and (min-width: @computerBreakpoint) and (max-width: @largestSmallMonitor) {
-    div.blocklyTreeRow {
-        padding-left: 0.5rem !important;
-        min-height: @blocklyRowHeightComputer;
-        line-height: @blocklyRowHeightComputer/2;
-    }
 }
 
 /* Large Monitor */
 @media only screen and (min-width: @largeMonitorBreakpoint) {
-    div.blocklyTreeRow {
-        padding-left: 0.5rem !important;
-        min-height: @blocklyRowHeightWide;
-        line-height: @blocklyRowHeightWide/2;
-    }
 }
 /* Mobile, Tablet AND thin screen */
 @media only screen and (max-width: @largestTabletScreen) and (max-height: @thinEditorBreakpoint) {
