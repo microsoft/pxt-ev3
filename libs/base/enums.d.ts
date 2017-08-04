@@ -30,7 +30,5 @@
     Object = 4,
     Function = 5,
     }
-declare namespace serial {
-}
 
 // Auto-generated. Do not edit. Really.
