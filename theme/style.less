@@ -73,10 +73,6 @@ div.blocklyTreeRow {
     box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.1);
 }
 
-div.blocklyTreeRoot div div div div div.blocklyTreeRow {
-    padding-top: 0.5rem !important;
-}
-
 /* Remove shadow around blockly blocks */
 .blocklyPathDark, .blocklyPathLight {
     display: none;
@@ -100,6 +96,10 @@ span.blocklyTreeLabel {
 /* Editor menu toggle */
 #menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
     background: @blue !important;
+}
+
+#menubar .ui.menu.fixed .ui.item.editor-menuitem .item:not(.active) {
+    color: white;
 }
 
 /* Search box */
