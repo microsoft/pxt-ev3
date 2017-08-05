@@ -28,7 +28,8 @@ namespace pxt.editor {
 
     let initPromise: Promise<Ev3Wrapper>
     function initAsync() {
-        if (!initPromise)
+        const forceHexDownload = /forceHexDownload/i.test(window.location.href);
+        if (!initPromise && Cloud.isLocalHost() && Cloud.localToken && !forceHexDownload)
             initPromise = hf2Async()
                 .catch(err => {
                     initPromise = null
