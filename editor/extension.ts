@@ -121,13 +121,9 @@ namespace pxt.editor {
         const res: pxt.editor.ExtensionResult = {
             deployCoreAsync,
         };
-        initAsync()
-        /*
-            .then(w => w.streamFileAsync("/tmp/serial.txt", buf => {
-                let str = Util.fromUTF8(Util.uint8ArrayToString(buf))
-                
-            }))
-        */
+        initAsync().catch(e => {
+            // probably no HID - we'll try this again upon deployment
+        })
         return Promise.resolve<pxt.editor.ExtensionResult>(res);
     }
 }
