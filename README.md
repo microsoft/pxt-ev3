@@ -9,7 +9,7 @@ This repo contains the editor target hosted at https://lego.makecode.com
 These instructions assume familiarity with dev tools and languages.
 
 * install Node.js 6+
-* install [yotta](http://docs.yottabuild.org/#installing)
+* install Docker; make sure `docker` command is in your `PATH`
 * (optional) install [Visual Studio Code](https://code.visualstudio.com/)
 
 In a common folder,
