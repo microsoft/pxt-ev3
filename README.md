@@ -14,7 +14,7 @@ These instructions assume familiarity with dev tools and languages.
 
 In a common folder,
 
-* clone https://github.com/Microsoft/pxt to ``pxt`` folder
+* clone https://github.com/Microsoft/pxt to ``pxt`` folder (currently, build against `freshcoat` branch)
 * clone https://github.com/Microsoft/pxt-common-packages to ``pxt-common-packages`` folder
 * clone https://github.com/Microsoft/pxt-ev3 to ``pxt-ev3`` folder
 * go to ``pxt`` and run
