@@ -20,6 +20,7 @@
   "input.remoteTopRight": "Remote top-right button.",
   "output.createBuffer": "Create a new zero-initialized buffer.",
   "output.createBuffer|param|size": "number of bytes in the buffer",
+  "output.getPattern": "Pattern block.",
   "output.setLights": "Set lights.",
   "screen.clear": "Clear screen and reset font to normal.",
   "screen.doubleIcon": "Double size of an icon.",

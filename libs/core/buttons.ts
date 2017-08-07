@@ -216,13 +216,24 @@ namespace output {
     /**
      * Set lights.
      */
-    //% blockId=setLights block="set lights %pattern" 
-    export function setLights(pattern: LightsPattern): void {
+    //% blockId=setLights block="set lights %pattern=led_pattern" 
+    export function setLights(pattern: number): void {
         if (currPattern === pattern)
             return
         currPattern = pattern
         let cmd = output.createBuffer(2)
         cmd[0] = pattern + 48
         input.internal.getBtnsMM().write(cmd)
+    }
+
+
+    /**
+     * Pattern block.
+     */
+    //% blockId=led_pattern block="%pattern"
+    //% shim=TD_ID colorSecondary="#6e9a36"
+    //% blockHidden=true
+    export function getPattern(pattern: LightsPattern): number {
+        return pattern;
     }
 }
