@@ -36,6 +36,10 @@ namespace pxt.editor {
                     noHID = true
                     return Promise.reject(err)
                 })
+        else {
+            noHID = true
+            initPromise = Promise.reject(new Error("no HID"))
+        }
         return initPromise
     }
 
