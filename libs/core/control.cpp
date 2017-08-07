@@ -9,7 +9,7 @@ namespace control {
  * @param mode optional definition of how the event should be processed after construction.
  */
 //% weight=21 blockGap=12 blockId="control_raise_event"
-//% block="raise event|from %src|with value value" blockExternalInputs=1
+//% block="raise event|from %src|with value %value" blockExternalInputs=1
 void raiseEvent(int src, int value) {
     pxt::raiseEvent(src, value);
 }
