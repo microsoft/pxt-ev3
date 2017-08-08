@@ -84,8 +84,17 @@ namespace screen {
         if (0 <= x && x < DAL.LCD_WIDTH && 0 <= y && y < DAL.LCD_HEIGHT)
             _setPixel(x, y, mode)
     }
+    
 
-    export function drawText(x: number, y: number, text: string, mode = Draw.Normal) {
+    /**
+     * Show text on the screen.
+     * @param text the text to print on the screen, eg: "Hello world"
+     * @param x the starting position's x coordinate, eg: 0
+     * @param y the starting position's x coordinate, eg: 0
+     */
+    //% blockId=screen_drawText block="say %text| at x: %x| y: %y"
+    //% weight=99 group="Screen" blockNamespace=output inlineInputMode="inline"
+    export function drawText(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0
         y |= 0
         if (!currFont) currFont = defaultFont()

@@ -41,6 +41,10 @@
   "screen.clear": "Clear screen and reset font to normal.",
   "screen.doubleIcon": "Double size of an icon.",
   "screen.drawIcon": "Draw an icon on the screen.",
+  "screen.drawText": "Show text on the screen.",
+  "screen.drawText|param|text": "the text to print on the screen, eg: \"Hello world\"",
+  "screen.drawText|param|x": "the starting position's x coordinate, eg: 0",
+  "screen.drawText|param|y": "the starting position's x coordinate, eg: 0",
   "serial": "Reading and writing data over a serial connection.",
   "serial.writeDmesg": "Send DMESG debug buffer over serial."
 }

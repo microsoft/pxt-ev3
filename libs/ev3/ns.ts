@@ -1,10 +1,11 @@
 
 //% color="#D42878"
+//% groups="['Brick buttons']"
 namespace input {
 }
 
 //% color="#8AC044" weight=90 icon="\uf185"
-//% groups="['Lights', 'Motors']"
+//% groups="['Lights', 'Screen', Motors']"
 namespace output {
 }
 

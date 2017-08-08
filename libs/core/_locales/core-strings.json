@@ -24,6 +24,7 @@
   "output.stop|block": "turn motor %out| off",
   "output.turn|block": "turn motor %out| on for %ms| milliseconds",
   "output|block": "output",
+  "screen.drawText|block": "say %text| at x: %x| y: %y",
   "screen|block": "screen",
   "serial|block": "serial",
   "{id:category}Control": "Control",
@@ -32,5 +33,6 @@
   "{id:category}Screen": "Screen",
   "{id:category}Serial": "Serial",
   "{id:group}Lights": "Lights",
-  "{id:group}Motors": "Motors"
+  "{id:group}Motors": "Motors",
+  "{id:group}Screen": "Screen"
 }
