@@ -29,7 +29,7 @@ namespace output {
         pwmMM = control.mmap("/dev/lms_pwm", 0, 0)
         if (!pwmMM) control.fail("no PWM file")
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
-        
+
         stop(Output.ALL)
 
         let buf = output.createBuffer(1)
@@ -101,11 +101,39 @@ namespace output {
         writePWM(b)
     }
 
-    /*export function getSpeed(out: Output): number {
-        let b = mkCmd(out, DAL.opOutputSpeed, 0)
-        readPWM(b)
-        return b.getNumber(NumberFormat.Int16LE, 1)
-    }*/
+    export function clearCount(out: Output) {
+        let b = mkCmd(out, DAL.opOutputClearCount, 0)
+        writePWM(b)
+        for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+            if (out & (1 << i)) {
+                motorMM.setNumber(NumberFormat.Int32LE, i * MotorDataOff.Size + MotorDataOff.TachoSensor, 0)
+            }
+        }
+    }
+
+    function outOffset(out: Output) {
+        for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+            if (out & (1 << i))
+                return i * MotorDataOff.Size
+        }
+        return 0
+    }
+
+    export interface MotorData {
+        actualSpeed: number; // -100..+100
+        tachoCount: number;
+        count: number;
+    }
+
+    // only a single output at a time
+    export function getMotorData(out: Output): MotorData {
+        let buf = motorMM.slice(outOffset(out), MotorDataOff.Size)
+        return {
+            actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed),
+            tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts),
+            count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor),
+        }
+    }
 
     /**
      * Set motor speed.
