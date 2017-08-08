@@ -20,6 +20,8 @@
   "input.remoteTopRight": "Remote top-right button.",
   "output.createBuffer": "Create a new zero-initialized buffer.",
   "output.createBuffer|param|size": "number of bytes in the buffer",
+  "output.getCurrentSpeed": "Get motor speed.",
+  "output.getCurrentSpeed|param|out": "the output connection that the motor is connected to",
   "output.getPattern": "Pattern block.",
   "output.getPattern|param|pattern": "the lights pattern to use. eg: LightsPattern.Green",
   "output.setLights": "Set lights.",

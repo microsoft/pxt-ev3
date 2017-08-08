@@ -60,7 +60,7 @@ namespace output {
      * @param ms the number of milliseconds to turn the motor on, eg: 500
      * @param useBrake whether or not to use the brake, defaults to false
      */
-    //% blockId=output_turn block="turn motor %out| on for %ms| milliseconds"
+    //% blockId=output_turn block="turn motor %out| on for %ms|milliseconds"
     //% weight=100 group="Motors"
     export function turn(out: Output, ms: number, useBrake = false) {
         // TODO: use current power / speed configuration
@@ -77,7 +77,7 @@ namespace output {
      * Turn motor off.
      * @param out the output connection that the motor is connected to
      */
-    //% blockId=output_stop block="turn motor %out| off"
+    //% blockId=output_stop block="turn motor %out|off"
     //% weight=90 group="Motors"
     export function stop(out: Output, useBrake = false) {
         let b = mkCmd(out, DAL.opOutputStop, 1)
@@ -89,7 +89,7 @@ namespace output {
      * Turn motor on.
      * @param out the output connection that the motor is connected to
      */
-    //% blockId=output_start block="turn motor %out| on"
+    //% blockId=output_start block="turn motor %out|on"
     //% weight=95 group="Motors"
     export function start(out: Output) {
         let b = mkCmd(out, DAL.opOutputStart, 0)
@@ -133,6 +133,16 @@ namespace output {
             tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts),
             count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor),
         }
+    }
+
+    /**
+     * Get motor speed.
+     * @param out the output connection that the motor is connected to
+     */
+    //% blockId=output_getCurrentSpeed block="motor %out|speed"
+    //% weight=70 group="Motors"
+    export function getCurrentSpeed(out: Output) {
+        return getMotorData(out).actualSpeed;
     }
 
     /**
