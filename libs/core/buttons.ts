@@ -70,6 +70,7 @@ namespace input {
         //% blockGap=8
         //% parts="buttonpair"
         //% blockNamespace=input
+        //% group="Brick buttons"
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
@@ -86,6 +87,7 @@ namespace input {
         //% blockId=buttonWasPressed
         //% parts="buttonpair" blockGap=8
         //% blockNamespace=input advanced=true
+        //% group="Brick buttons"
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
@@ -105,6 +107,7 @@ namespace input {
         //% blockId=buttonEvent block="on %button|%event"
         //% parts="buttonpair"
         //% blockNamespace=input
+        //% group="Brick buttons"
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
@@ -215,8 +218,10 @@ namespace output {
 
     /**
      * Set lights.
+     * @param pattern the lights pattern to use.
      */
-    //% blockId=setLights block="set lights %pattern=led_pattern" 
+    //% blockId=setLights block="set status light %pattern=led_pattern"
+    //% weight=100 group="Lights"
     export function setLights(pattern: number): void {
         if (currPattern === pattern)
             return
@@ -229,6 +234,7 @@ namespace output {
 
     /**
      * Pattern block.
+     * @param pattern the lights pattern to use. eg: LightsPattern.Green
      */
     //% blockId=led_pattern block="%pattern"
     //% shim=TD_ID colorSecondary="#6e9a36"

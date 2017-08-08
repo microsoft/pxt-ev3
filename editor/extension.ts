@@ -29,16 +29,17 @@ namespace pxt.editor {
     let initPromise: Promise<Ev3Wrapper>
     function initAsync() {
         const forceHexDownload = /forceHexDownload/i.test(window.location.href);
-        if (!initPromise && Cloud.isLocalHost() && Cloud.localToken && !forceHexDownload)
-            initPromise = hf2Async()
-                .catch(err => {
-                    initPromise = null
-                    noHID = true
-                    return Promise.reject(err)
-                })
-        else {
+        if (Cloud.isLocalHost() && Cloud.localToken && !forceHexDownload) {
+            if (!initPromise)
+                initPromise = hf2Async()
+                    .catch(err => {
+                        initPromise = null
+                        noHID = true
+                        return Promise.reject(err)
+                    })
+        } else {
             noHID = true
-            initPromise = Promise.reject(new Error("no HID"))
+                initPromise = Promise.reject(new Error("no HID"))
         }
         return initPromise
     }

@@ -42,6 +42,11 @@ namespace output {
         pwmMM.write(buf)
     }
 
+    function readPWM(buf: Buffer): void {
+        init()
+        pwmMM.read(buf);
+    }
+
     function mkCmd(out: Output, cmd: number, addSize: number) {
         let b = createBuffer(2 + addSize)
         b.setNumber(NumberFormat.UInt8LE, 0, cmd)
@@ -49,12 +54,43 @@ namespace output {
         return b
     }
 
-    export function stop(out: Output, useBreak = false) {
+    /**
+     * Turn a motor on for a specified number of milliseconds.
+     * @param out the output connection that the motor is connected to
+     * @param ms the number of milliseconds to turn the motor on, eg: 500
+     * @param useBrake whether or not to use the brake, defaults to false
+     */
+    //% blockId=output_turn block="turn motor %out| on for %ms| milliseconds"
+    //% weight=100 group="Motors"
+    export function turn(out: Output, ms: number, useBrake = false) {
+        // TODO: use current power / speed configuration
+        output.step(out, {
+            power: 100,
+            step1: 0,
+            step2: ms,
+            step3: 0,
+            useBrake: useBrake
+        })
+    }
+
+    /**
+     * Turn motor off.
+     * @param out the output connection that the motor is connected to
+     */
+    //% blockId=output_stop block="turn motor %out| off"
+    //% weight=90 group="Motors"
+    export function stop(out: Output, useBrake = false) {
         let b = mkCmd(out, DAL.opOutputStop, 1)
-        b.setNumber(NumberFormat.UInt8LE, 2, useBreak ? 1 : 0)
+        b.setNumber(NumberFormat.UInt8LE, 2, useBrake ? 1 : 0)
         writePWM(b)
     }
 
+    /**
+     * Turn motor on.
+     * @param out the output connection that the motor is connected to
+     */
+    //% blockId=output_start block="turn motor %out| on"
+    //% weight=95 group="Motors"
     export function start(out: Output) {
         let b = mkCmd(out, DAL.opOutputStart, 0)
         writePWM(b)
@@ -65,12 +101,34 @@ namespace output {
         writePWM(b)
     }
 
+    /*export function getSpeed(out: Output): number {
+        let b = mkCmd(out, DAL.opOutputSpeed, 0)
+        readPWM(b)
+        return b.getNumber(NumberFormat.Int16LE, 1)
+    }*/
+
+    /**
+     * Set motor speed.
+     * @param out the output connection that the motor is connected to
+     * @param speed the desired speed to use. eg: 100
+     */
+    //% blockId=output_setSpeed block="set motor %out| speed to %speed"
+    //% weight=81 group="Motors"
+    //% speed.min=-100 speed.max=100
     export function setSpeed(out: Output, speed: number) {
         let b = mkCmd(out, DAL.opOutputSpeed, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, speed))
         writePWM(b)
     }
 
+    /**
+     * Set motor power.
+     * @param out the output connection that the motor is connected to
+     * @param power the desired power to use. eg: 100
+     */
+    //% blockId=output_setPower block="set motor %out| power to %power"
+    //% weight=80 group="Motors"
+    //% power.min=-100 power.max=100
     export function setPower(out: Output, power: number) {
         let b = mkCmd(out, DAL.opOutputPower, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
@@ -90,7 +148,7 @@ namespace output {
         step2: number;
         step3: number;
         useSteps?: boolean; // otherwise use milliseconds
-        useBreak?: boolean;
+        useBrake?: boolean;
     }
 
     export function step(out: Output, opts: StepOptions) {
@@ -110,7 +168,7 @@ namespace output {
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 0, opts.step1)
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 1, opts.step2)
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 2, opts.step3)
-        b.setNumber(NumberFormat.Int8LE, 4 + 4 * 3, opts.useBreak ? 1 : 0)
+        b.setNumber(NumberFormat.Int8LE, 4 + 4 * 3, opts.useBrake ? 1 : 0)
         writePWM(b)
     }
 

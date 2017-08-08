@@ -3,7 +3,7 @@
   "ButtonEvent.Down|block": "down",
   "ButtonEvent.LongClick|block": "long click",
   "ButtonEvent.Up|block": "up",
-  "control.raiseEvent|block": "raise event|from %src|with value value",
+  "control.raiseEvent|block": "raise event|from %src|with value %value",
   "control|block": "control",
   "input.buttonDown|block": "button down",
   "input.buttonEnter|block": "button enter",
@@ -17,7 +17,12 @@
   "input.remoteTopRight|block": "remote top-right",
   "input|block": "input",
   "output.getPattern|block": "%pattern",
-  "output.setLights|block": "set lights %pattern=led_pattern",
+  "output.setLights|block": "set status light %pattern=led_pattern",
+  "output.setPower|block": "set motor %out| power to %power",
+  "output.setSpeed|block": "set motor %out| speed to %speed",
+  "output.start|block": "turn motor %out| on",
+  "output.stop|block": "turn motor %out| off",
+  "output.turn|block": "turn motor %out| on for %ms| milliseconds",
   "output|block": "output",
   "screen|block": "screen",
   "serial|block": "serial",
@@ -25,5 +30,7 @@
   "{id:category}Input": "Input",
   "{id:category}Output": "Output",
   "{id:category}Screen": "Screen",
-  "{id:category}Serial": "Serial"
+  "{id:category}Serial": "Serial",
+  "{id:group}Lights": "Lights",
+  "{id:group}Motors": "Motors"
 }

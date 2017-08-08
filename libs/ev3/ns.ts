@@ -4,6 +4,7 @@ namespace input {
 }
 
 //% color="#8AC044" weight=90 icon="\uf185"
+//% groups="['Lights', 'Motors']"
 namespace output {
 }
 
