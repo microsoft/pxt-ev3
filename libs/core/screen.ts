@@ -92,7 +92,7 @@ namespace screen {
      * @param x the starting position's x coordinate, eg: 0
      * @param y the starting position's x coordinate, eg: 0
      */
-    //% blockId=screen_drawText block="say %text| at x: %x| y: %y"
+    //% blockId=screen_drawText block="print %text| at x: %x| y: %y"
     //% weight=99 group="Screen" blockNamespace=output inlineInputMode="inline"
     export function drawText(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0
