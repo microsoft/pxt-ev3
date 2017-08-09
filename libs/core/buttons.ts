@@ -3,15 +3,35 @@
  * Patterns for lights under the buttons.
  */
 const enum LightsPattern {
+    //% block=Off enumval=0
+    //% blockIdentity=output.getPattern
     Off = 0,
+    //% block=Green enumval=1
+    //% blockIdentity=output.getPattern
     Green = 1,
+    //% block=Red enumval=2
+    //% blockIdentity=output.getPattern
     Red = 2,
+    //% block=Orange enumval=3
+    //% blockIdentity=output.getPattern
     Orange = 3,
+    //% block="Flashing Green" enumval=4
+    //% blockIdentity=output.getPattern
     GreenFlash = 4,
+    //% block="Flashing Red" enumval=5
+    //% blockIdentity=output.getPattern
     RedFlash = 5,
+    //% block="Flashing Orange" enumval=6
+    //% blockIdentity=output.getPattern
     OrangeFlash = 6,
+    //% block="Pulsing Green" enumval=7
+    //% blockIdentity=output.getPattern
     GreenPulse = 7,
+    //% block="Pulsing Red" enumval=8
+    //% blockIdentity=output.getPattern
     RedPulse = 8,
+    //% block="Pulsing Orange" enumval=9
+    //% blockIdentity=output.getPattern
     OrangePulse = 9,
 }
 
@@ -238,7 +258,7 @@ namespace output {
      */
     //% blockId=led_pattern block="%pattern"
     //% shim=TD_ID colorSecondary="#6e9a36"
-    //% blockHidden=true
+    //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
     export function getPattern(pattern: LightsPattern): number {
         return pattern;
     }

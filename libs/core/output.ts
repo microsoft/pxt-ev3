@@ -15,6 +15,7 @@ enum OutputType {
 namespace output {
     let pwmMM: MMap
     let motorMM: MMap
+    let currentSpeed: number[] = []
 
     const enum MotorDataOff {
         TachoCounts = 0, // int32
@@ -31,6 +32,12 @@ namespace output {
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
 
         stop(Output.ALL)
+
+        currentSpeed[Output.A] = -1;
+        currentSpeed[Output.B] = -1;
+        currentSpeed[Output.C] = -1;
+        currentSpeed[Output.D] = -1;
+        currentSpeed[Output.ALL] = -1;
 
         let buf = output.createBuffer(1)
         buf[0] = DAL.opProgramStart
@@ -65,10 +72,11 @@ namespace output {
     export function turn(out: Output, ms: number, useBrake = false) {
         // TODO: use current power / speed configuration
         output.step(out, {
-            power: 100,
+            speed: 100,
             step1: 0,
             step2: ms,
             step3: 0,
+            useSteps: false,
             useBrake: useBrake
         })
     }
@@ -92,6 +100,7 @@ namespace output {
     //% blockId=output_start block="turn motor %out|on"
     //% weight=95 group="Motors"
     export function start(out: Output) {
+        if (currentSpeed[out] == -1) setSpeed(out, 50)
         let b = mkCmd(out, DAL.opOutputStart, 0)
         writePWM(b)
     }
@@ -154,6 +163,7 @@ namespace output {
     //% weight=81 group="Motors"
     //% speed.min=-100 speed.max=100
     export function setSpeed(out: Output, speed: number) {
+        currentSpeed[out] = speed;
         let b = mkCmd(out, DAL.opOutputSpeed, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, speed))
         writePWM(b)

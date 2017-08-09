@@ -94,6 +94,7 @@ namespace screen {
      */
     //% blockId=screen_drawText block="print %text| at x: %x| y: %y"
     //% weight=99 group="Screen" blockNamespace=output inlineInputMode="inline"
+    //% x.min=0 x.max=178 y.min=0 y.max=128
     export function drawText(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0
         y |= 0
