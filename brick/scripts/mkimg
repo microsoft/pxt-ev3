@@ -1,9 +1,0 @@
-#!/bin/sh
-# dd if=EV3\ Firmware\ V1.09D.bin of=orig.cram bs=65536 skip=37 count=400
-
-sudo cp linux/pxt/uf2daemon/server dev-ev3/home/root/lms2012/sys/uf2d
-sudo cp linux/pxt/kernel/d_usbdev.ko dev-ev3/home/root/lms2012/sys/mod/d_usbdev.ko
-sudo chown -R root:root dev-ev3/home/root/lms2012
-sudo mkfs.cramfs dev-ev3 cram.bin
-node img
-ls -l firmware.bin
