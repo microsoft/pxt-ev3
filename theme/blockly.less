@@ -1,0 +1,59 @@
+@import 'themes/default/globals/site.variables';
+@import 'themes/pxt/globals/site.variables';
+@import 'site/globals/site.variables';
+
+@import 'blockly-core';
+
+/* Toolbox padding */
+.blocklyToolboxDiv, .monacoToolboxDiv {
+    padding: 0.5rem;
+    -webkit-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,0.31);
+    -moz-box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,0.31);
+    box-shadow: inset 0px 0px 0px 2px rgba(255,255,255,0.31);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+div.blocklyTreeRow {
+    border-radius: 0px;
+    -webkit-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.1);
+    -moz-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.1);
+    box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.1);
+}
+
+/* Remove shadow around blockly blocks */
+.blocklyPathDark, .blocklyPathLight {
+    display: none;
+}
+
+/* Blockly Text */
+span.blocklyTreeLabel {
+    font-family: @pageFont !important;
+    text-transform: uppercase !important;
+    font-size:1rem !important;
+    font-weight: bold;
+}
+
+.blocklyFlyoutBackground {
+    fill: #282828 !important;
+}
+.monacoFlyout {
+    background: rgba(40, 40, 40, 0.9);
+}
+
+/* Search box */
+#blocklySearchArea {
+    margin: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.blocklySearchInputField {
+    border-radius: 1rem !important;
+}
+
+/* Mobile */
+@media only screen and (max-width: @largestMobileScreen) {
+    #blocklyTrashIcon {
+        margin: 0.2rem;
+    }
+}
