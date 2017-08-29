@@ -7,6 +7,7 @@
   "control.raiseEvent": "Announce that an event happened to registered handlers.",
   "control.raiseEvent|param|src": "ID of the Component that generated the event",
   "control.raiseEvent|param|value": "Component specific code indicating the cause of the event.",
+  "input": "Respond to and read data from buttons and sensors.",
   "input.Button": "Generic button class, for device buttons and sensors.",
   "input.buttonDown": "Down button.",
   "input.buttonEnter": "Enter button.",
