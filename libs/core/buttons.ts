@@ -126,7 +126,6 @@ namespace input {
         //% blockId=buttonEvent block="on %button|%event"
         //% parts="buttonpair"
         //% blockNamespace=input
-        //% group="Buttons"
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
