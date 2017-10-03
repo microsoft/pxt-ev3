@@ -22,7 +22,7 @@
 
 /* Lego colors */
 @red: @brightRed;
-@blue: #008ad2;
+@blue: #00a5c8; /*#008ad2;*/
 @yellow: #fccd00;
 @orange: #fa7f2a;
 @green: @brightYellowishGreen;
@@ -96,8 +96,10 @@
    Menu
 --------------------*/
 
+@mainMenuBackground: #f4f7f9;
 @mainMenuInvertedBackground: @yellow;
 @mainMenuTutorialBackground: @orange;
+
 
 @tutorialSelectedMenuColor: @blue;
 
@@ -116,6 +118,8 @@
 @simulatorBackground: #fcfbfa;
 @editorToolsBackground: #fcfbfa;
 @blocklySvgColor: #ecf6ff;
+
+@homeScreenBackground: #f4f7f9;
 
 /*-------------------
    Full screen
@@ -152,3 +156,13 @@
 @blocklyRowHeightComputer: 50px;
 @blocklyRowHeightTablet: 50px;
 @blocklyRowHeightMobile: 50px;
+
+
+/*-------------------
+   Flyout
+--------------------*/
+
+@flyoutLabelColor: white;
+@blocklyFlyoutColor: #282828;
+@blocklyFlyoutColorOpacity: 0.9;
+@monacoFlyoutColor: rgba(40, 40, 40,0.9);

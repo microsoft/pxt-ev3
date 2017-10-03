@@ -44,7 +44,7 @@
 
 /* Menu bar colors */
 #menubar .ui.item {
-    color: @red;
+    color: #373737;
 }
 .fullscreensim #menubar .ui.menu {
     box-shadow: none !important;
@@ -59,10 +59,16 @@
 /* Editor menu toggle */
 #menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
     background: @blue !important;
+    border-radius: 0px !important;
 }
-
 #menubar .ui.menu.fixed .ui.item.editor-menuitem .item:not(.active) {
     color: white;
+}
+#menubar .ui.menu.fixed .ui.item.editor-menuitem .item {
+    border-radius: 0px !important;
+}
+#menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
+    color: @blue;
 }
 
 .sandboxfooter a:not(.thin) {

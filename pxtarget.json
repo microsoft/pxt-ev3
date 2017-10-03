@@ -68,10 +68,10 @@
     "appTheme": {
         "accentColor": "#0089BF",
         "logoUrl": "https://lego.makecode.com",
-        "logo": "./static/logo.svg",
-        "docsLogo": "./static/logo.square.svg",
-        "portraitLogo": "./static/logo.square.svg",
-        "footerLogo": "./static/logo.square.svg",
+        "logo": "./static/lego_education_logo.png",
+        "docsLogo": "./static/lego-logo.svg",
+        "portraitLogo": "./static/lego-logo.svg",
+        "footerLogo": "./static/lego-logo.svg",
         "cardLogo": "./static/icons/android-chrome-192x192.png",
         "appLogo": "./static/icons/android-chrome-192x192.png",
         "organization": "Microsoft MakeCode",
@@ -111,9 +111,8 @@
             }
         ],
         "galleries": {
-            "Make": "projects",
-            "Examples": "examples"
         },
+        "useStartPage": true,
         "sideDoc": "tutorials/getting-started",
         "invertedMenu": false,
         "invertedMonaco": false,

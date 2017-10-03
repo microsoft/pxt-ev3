@@ -62,11 +62,12 @@ namespace pxsim {
             this.builtinParts["buttons"] = this.buttonState = new EV3ButtonState();
             this.builtinParts["light"] = this.lightState = new EV3LightState();
             this.builtinParts["screen"] = this.screenState = new EV3ScreenState();
+            this.builtinParts["audio"] = this.audioState = new AudioState();
+
             /*this.builtinParts["neopixel"] = this.neopixelState = new CommonNeoPixelState();
             this.builtinParts["buttonpair"] = this.buttonState = new CommonButtonState();
 
             this.builtinParts["switch"] = this.slideSwitchState = new SlideSwitchState();
-            this.builtinParts["audio"] = this.audioState = new AudioState();
             this.builtinParts["lightsensor"] = this.lightSensorState = new AnalogSensorState(DAL.DEVICE_ID_LIGHT_SENSOR, 0, 255);
             this.builtinParts["thermometer"] = this.thermometerState = new AnalogSensorState(DAL.DEVICE_ID_THERMOMETER, -5, 50);
             this.builtinParts["soundsensor"] = this.microphoneState = new AnalogSensorState(DAL.DEVICE_ID_TOUCH_SENSOR + 1, 0, 255);

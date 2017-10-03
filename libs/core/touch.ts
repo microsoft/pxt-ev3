@@ -1,4 +1,6 @@
 namespace input {
+
+    //% fixedInstances
     export class TouchSensor extends internal.AnalogSensor {
         button: Button;
 
@@ -23,6 +25,6 @@ namespace input {
     //% whenUsed
     export const touchSensorImpl: TouchSensor = new TouchSensor()
 
-    //% whenUsed
+    //% whenUsed block="touch sensor" weight=95 fixedInstance
     export const touchSensor: Button = touchSensorImpl.button
 }

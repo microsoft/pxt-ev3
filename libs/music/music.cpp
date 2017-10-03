@@ -67,10 +67,11 @@ static void _playTone(uint16_t frequency, uint16_t duration, uint8_t volume)
 * @param frequency pitch of the tone to play in Hertz (Hz)
 * @param ms tone duration in milliseconds (ms)
 */
-//% help=music/play-tone weight=90
+//% help=music/play-tone
 //% blockId=music_play_note block="play tone|at %note=device_note|for %duration=device_beat"
-//% parts="headphone" async blockGap=8
+//% parts="headphone" async
 //% blockNamespace=music
+//% weight=76 blockGap=8
 void playTone(int frequency, int ms) {
     if (frequency <= 0) {
         _stopSound();

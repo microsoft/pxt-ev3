@@ -1,6 +1,5 @@
 
 //% color="#D42878"
-//% groups='["Brick buttons"]'
 namespace input {
 }
 

@@ -84,16 +84,15 @@ namespace input {
          * Check if button is currently pressed or not.
          * @param button the button to query the request
          */
-        //% help=input/button/is-pressed weight=79
+        //% help=input/button/is-pressed
         //% block="%button|is pressed"
         //% blockId=buttonIsPressed
-        //% blockGap=8
         //% parts="buttonpair"
         //% blockNamespace=input
-        //% group="Brick buttons"
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
+        //% weight=81 blockGap=8
         isPressed() {
             return this._isPressed
         }
@@ -102,15 +101,15 @@ namespace input {
          * See if the button was pressed again since the last time you checked.
          * @param button the button to query the request
          */
-        //% help=input/button/was-pressed weight=78
+        //% help=input/button/was-pressed
         //% block="%button|was pressed"
         //% blockId=buttonWasPressed
-        //% parts="buttonpair" blockGap=8
-        //% blockNamespace=input advanced=true
-        //% group="Brick buttons"
+        //% parts="buttonpair"
+        //% blockNamespace=input
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
+        //% weight=80 blockGap=8
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -123,14 +122,15 @@ namespace input {
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
          */
-        //% help=input/button/on-event weight=99 blockGap=8
+        //% help=input/button/on-event
         //% blockId=buttonEvent block="on %button|%event"
         //% parts="buttonpair"
         //% blockNamespace=input
-        //% group="Brick buttons"
+        //% group="Buttons"
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
+        //% weight=99
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
