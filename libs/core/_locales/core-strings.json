@@ -33,6 +33,7 @@
   "output.setSpeed|block": "set motor %out| speed to %speed",
   "output.start|block": "turn motor %out|on",
   "output.stop|block": "turn motor %out|off",
+  "output.switchMotor|block": "turn motor %out|%on",
   "output.turn|block": "turn motor %out| on for %ms|milliseconds",
   "output|block": "output",
   "screen.drawText|block": "print %text| at x: %x| y: %y",

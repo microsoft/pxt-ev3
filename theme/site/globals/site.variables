@@ -119,7 +119,7 @@
 @editorToolsBackground: #fcfbfa;
 @blocklySvgColor: #ecf6ff;
 
-@homeScreenBackground: #f4f7f9;
+@homeScreenBackground: #EAEEEF;
 
 /*-------------------
    Full screen

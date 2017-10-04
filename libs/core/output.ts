@@ -81,12 +81,30 @@ namespace output {
         })
     }
 
+
+    /**
+     * Switch the motor on or off.
+     * @param out the output connection that the motor is connected to
+     * @param on 1 to turn the motor on, 0 to turn it off
+     */
+    //% blockId=output_switch block="turn motor %out|%on"
+    //% weight=90 group="Motors"
+    //% on.fieldEditor="toggle"
+    export function switchMotor(out: Output, on: number, useBrake = false) {
+        if (on == 0) {
+            output.stop(out, useBrake);
+        } else {
+            output.start(out);
+        }
+    }
+
     /**
      * Turn motor off.
      * @param out the output connection that the motor is connected to
      */
     //% blockId=output_stop block="turn motor %out|off"
     //% weight=90 group="Motors"
+    //% deprecated=1
     export function stop(out: Output, useBrake = false) {
         let b = mkCmd(out, DAL.opOutputStop, 1)
         b.setNumber(NumberFormat.UInt8LE, 2, useBrake ? 1 : 0)
@@ -99,6 +117,7 @@ namespace output {
      */
     //% blockId=output_start block="turn motor %out|on"
     //% weight=95 group="Motors"
+    //% deprecated=1
     export function start(out: Output) {
         if (currentSpeed[out] == -1) setSpeed(out, 50)
         let b = mkCmd(out, DAL.opOutputStart, 0)
