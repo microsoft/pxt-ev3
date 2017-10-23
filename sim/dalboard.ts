@@ -25,7 +25,7 @@ namespace pxsim {
     export class DalBoard extends CoreBoard implements
         AccelerometerBoard,
         CommonBoard,
-        LightBoard,
+        // LightBoard,
         LightSensorBoard,
         MicrophoneBoard,
         MusicBoard,
@@ -34,7 +34,7 @@ namespace pxsim {
         InfraredBoard,
         CapTouchBoard {
         // state & update logic for component services
-        neopixelState: CommonNeoPixelState;
+        // neopixelState: CommonNeoPixelState;
         buttonState: EV3ButtonState;
         slideSwitchState: SlideSwitchState;
         lightSensorState: AnalogSensorState;
@@ -175,9 +175,9 @@ namespace pxsim {
             return svg.toDataUri(new XMLSerializer().serializeToString(this.view));
         }
 
-        defaultNeopixelPin() {
-            return this.edgeConnectorState.getPin(CPlayPinName.D8);
-        }
+        //defaultNeopixelPin() {
+        //    return this.edgeConnectorState.getPin(CPlayPinName.D8);
+        //}
 
         getDefaultPitchPin() {
             return this.edgeConnectorState.getPin(CPlayPinName.D6);
