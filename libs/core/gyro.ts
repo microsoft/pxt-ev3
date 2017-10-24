@@ -21,15 +21,15 @@ namespace input {
 
         /**
          * Get the current angle from the gyroscope.
-         * @param color the gyroscope to query the request
+         * @param sensor the gyroscope to query the request
          */
         //% help=input/gyro/angle
-        //% block="%color|angle"
+        //% block="%sensor|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=input
         //% weight=65 blockGap=8
-        //% group="Gyroscope"
+        //% group="Gyro sensor"
         angle() {
             this.setMode(GyroSensorMode.Angle)
             return this.getNumber(NumberFormat.Int16LE, 0)
@@ -37,30 +37,30 @@ namespace input {
 
         /**
          * Get the current rotation rate from the gyroscope.
-         * @param color the gyroscope to query the request
+         * @param sensor the gyroscope to query the request
          */
         //% help=input/gyro/rate
-        //% block="%color|rotation rate"
+        //% block="%sensor|rotation rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=input
         //% weight=65 blockGap=8        
-        //% group="Gyroscope"
+        //% group="Gyro sensor"
         rate() {
             this.setMode(GyroSensorMode.Rate)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
     }
 
-    //% fixedInstance whenUsed block="gyroscope 1"
+    //% fixedInstance whenUsed block="gyro sensor 1"
     export const gyro1: GyroSensor = new GyroSensor(1)
 
-    //% fixedInstance whenUsed block="gyroscope 2"
+    //% fixedInstance whenUsed block="gyro sensor 2"
     export const gyro2: GyroSensor = new GyroSensor(2)
 
-    //% fixedInstance whenUsed block="gyroscope 3"
+    //% fixedInstance whenUsed block="gyro sensor 3"
     export const gyro3: GyroSensor = new GyroSensor(3)
 
-    //% fixedInstance whenUsed block="gyroscope 4"
+    //% fixedInstance whenUsed block="gyro sensor 4"
     export const gyro4: GyroSensor = new GyroSensor(4)
 }
