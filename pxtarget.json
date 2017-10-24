@@ -110,10 +110,7 @@
                 "path": "https://www.lego.com/en-us/mindstorms/products/mindstorms-ev3-31313"
             }
         ],
-        "galleries": {
-        },
         "useStartPage": true,
-        "sideDoc": "tutorials/getting-started",
         "invertedMenu": false,
         "invertedMonaco": false,
         "monacoToolbox": true,

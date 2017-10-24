@@ -480,6 +480,7 @@ namespace pxsim.visuals {
             this.screenCanvasCtx.putImageData(this.screenCanvasData, 0, 0);
         }
 
+        /*
         private updateNeoPixels() {
             let state = this.board;
             if (!state || !state.neopixelState) return;
@@ -509,6 +510,7 @@ namespace pxsim.visuals {
                 if (p_inner) svg.filter(p_inner, `url(#neopixelglow)`);
             }
         }
+        */
 
         private updateSound() {
             let state = this.board;
