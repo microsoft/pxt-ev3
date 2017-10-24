@@ -7,8 +7,8 @@ const enum GyroSensorMode {
 namespace input {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
-        constructor() {
-            super()
+        constructor(port: number) {
+            super(port)
         }
 
         _deviceType() {
@@ -51,5 +51,14 @@ namespace input {
     }
 
     //% whenUsed
-    export const gyro: GyroSensor = new GyroSensor()
+    export const gyro1: GyroSensor = new GyroSensor(1)
+
+    //% whenUsed
+    export const gyro2: GyroSensor = new GyroSensor(2)
+
+    //% whenUsed
+    export const gyro3: GyroSensor = new GyroSensor(3)
+
+    //% whenUsed
+    export const gyro4: GyroSensor = new GyroSensor(4)
 }

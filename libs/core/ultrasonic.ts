@@ -1,8 +1,8 @@
 namespace input {
 
     export class UltraSonicSensor extends internal.UartSensor {
-        constructor() {
-            super()
+        constructor(port: number) {
+            super(port)
         }
 
         _deviceType() {
@@ -18,5 +18,14 @@ namespace input {
     }
 
     //% whenUsed
-    export const ultrasonic: UltraSonicSensor = new UltraSonicSensor()
+    export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
+
+    //% whenUsed
+    export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
+
+    //% whenUsed
+    export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
+
+    //% whenUsed
+    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 }
