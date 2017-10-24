@@ -67,7 +67,7 @@ namespace output {
      * @param ms the number of milliseconds to turn the motor on, eg: 500
      * @param useBrake whether or not to use the brake, defaults to false
      */
-    //% blockId=output_turn block="turn motor %out| on for %ms|milliseconds"
+    //% blockId=output_turn block="turn motor %out| on for %ms=timePicker|milliseconds"
     //% weight=100 group="Motors"
     export function turn(out: Output, ms: number, useBrake = false) {
         // TODO: use current power / speed configuration
@@ -87,14 +87,14 @@ namespace output {
      * @param out the output connection that the motor is connected to
      * @param on 1 to turn the motor on, 0 to turn it off
      */
-    //% blockId=output_switch block="turn motor %out|%on"
+    //% blockId=outputMotorPowerOnOff block="power motor %out|%on"
     //% weight=90 group="Motors"
-    //% on.fieldEditor="toggle"
-    export function switchMotor(out: Output, on: number, useBrake = false) {
-        if (on == 0) {
-            output.stop(out, useBrake);
-        } else {
+    //% on.fieldEditor="toggleonoff"
+    export function powerMotor(out: Output, on: boolean, useBrake = false) {
+        if (on) {
             output.start(out);
+        } else {
+            output.stop(out, useBrake);
         }
     }
 
