@@ -40,6 +40,7 @@ namespace input {
         }
     }
 
+    //% fixedInstance
     export class IrSensor extends internal.UartSensor {
         private channel: IrRemoteChannel
         private buttons: Button[];
@@ -92,16 +93,37 @@ namespace input {
             this._setMode(m)
         }
 
-        getDistance() {
+        /**
+         * Get the distance measured by the infrared sensor.
+         * @param ir the infrared sensor
+         */
+        //% help=input/infrared/distance
+        //% block="%infrared|distance"
+        //% blockId=infraredGetDistance
+        //% parts="infrared"
+        //% blockNamespace=input
+        //% weight=65 blockGap=8        
+        distance() {
             this.setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
-        getRemoteCommand() {
+        /**
+         * Get the remote commandreceived the infrared sensor.
+         * @param ir the infrared sensor
+         */
+        //% help=input/infrared/remote-command
+        //% block="%infrared|remote command"
+        //% blockId=infraredGetRemoteCommand
+        //% parts="infrared"
+        //% blockNamespace=input
+        //% weight=65 blockGap=8        
+        remoteCommand() {
             this.setMode(IrSensorMode.RemoteControl)
             return this.getNumber(NumberFormat.UInt8LE, this.channel)
         }
 
+        // TODO
         getDirectionAndDistance() {
             this.setMode(IrSensorMode.Seek)
             return this.getNumber(NumberFormat.UInt16LE, this.channel * 2)

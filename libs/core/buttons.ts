@@ -4,34 +4,34 @@
  */
 const enum LightsPattern {
     //% block=Off enumval=0
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Off = 0,
     //% block=Green enumval=1
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Green = 1,
     //% block=Red enumval=2
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Red = 2,
     //% block=Orange enumval=3
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Orange = 3,
     //% block="Flashing Green" enumval=4
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     GreenFlash = 4,
     //% block="Flashing Red" enumval=5
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     RedFlash = 5,
     //% block="Flashing Orange" enumval=6
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     OrangeFlash = 6,
     //% block="Pulsing Green" enumval=7
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     GreenPulse = 7,
     //% block="Pulsing Red" enumval=8
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     RedPulse = 8,
     //% block="Pulsing Orange" enumval=9
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     OrangePulse = 9,
 }
 
@@ -241,7 +241,7 @@ namespace output {
      */
     //% blockId=setLights block="set status light %pattern=led_pattern"
     //% weight=100 group="Lights"
-    export function setLights(pattern: number): void {
+    export function setStatusLight(pattern: number): void {
         if (currPattern === pattern)
             return
         currPattern = pattern
@@ -258,7 +258,7 @@ namespace output {
     //% blockId=led_pattern block="%pattern"
     //% shim=TD_ID colorSecondary="#6e9a36"
     //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
-    export function getPattern(pattern: LightsPattern): number {
+    export function pattern(pattern: LightsPattern): number {
         return pattern;
     }
 }

@@ -5,6 +5,7 @@ const enum GyroSensorMode {
 }
 
 namespace input {
+    //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
         constructor() {
             super()
@@ -18,12 +19,32 @@ namespace input {
             this._setMode(m)
         }
 
-        getAngle() {
+        /**
+         * Get the current angle from the gyroscope.
+         * @param color the gyroscope to query the request
+         */
+        //% help=input/gyro/angle
+        //% block="%color|angle"
+        //% blockId=gyroGetAngle
+        //% parts="gyroscope"
+        //% blockNamespace=input
+        //% weight=65 blockGap=8        
+        angle() {
             this.setMode(GyroSensorMode.Angle)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
 
-        getRate() {
+        /**
+         * Get the current rotation rate from the gyroscope.
+         * @param color the gyroscope to query the request
+         */
+        //% help=input/gyro/rate
+        //% block="%color|rotation rate"
+        //% blockId=gyroGetRate
+        //% parts="gyroscope"
+        //% blockNamespace=input
+        //% weight=65 blockGap=8        
+        rate() {
             this.setMode(GyroSensorMode.Rate)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
