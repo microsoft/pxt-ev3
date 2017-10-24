@@ -93,6 +93,7 @@ namespace input {
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
         //% weight=81 blockGap=8
+        //% group="Buttons"
         isPressed() {
             return this._isPressed
         }
@@ -110,6 +111,7 @@ namespace input {
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
         //% weight=80 blockGap=8
+        //% group="Buttons"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -130,6 +132,7 @@ namespace input {
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
         //% weight=99
+        //% group="Buttons"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }

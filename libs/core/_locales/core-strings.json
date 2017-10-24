@@ -25,6 +25,7 @@
   "input.GyroSensor.rate|block": "%color|rotation rate",
   "input.IrSensor.distance|block": "%infrared|distance",
   "input.IrSensor.remoteCommand|block": "%infrared|remote command",
+  "input.UltraSonicSensor.distance|block": "%sonar|distance",
   "input.buttonDown|block": "button down",
   "input.buttonEnter|block": "button enter",
   "input.buttonLeft|block": "button left",
@@ -47,6 +48,10 @@
   "input.touchSensor2|block": "touch sensor 2",
   "input.touchSensor3|block": "touch sensor 3",
   "input.touchSensor4|block": "touch sensor 4",
+  "input.ultrasonic1|block": "ultrasonic 1",
+  "input.ultrasonic2|block": "ultrasonic 1",
+  "input.ultrasonic3|block": "ultrasonic 1",
+  "input.ultrasonic4|block": "ultrasonic 1",
   "input|block": "input",
   "output.getCurrentSpeed|block": "motor %out|speed",
   "output.pattern|block": "%pattern",
@@ -65,9 +70,12 @@
   "{id:category}Output": "Output",
   "{id:category}Screen": "Screen",
   "{id:category}Serial": "Serial",
+  "{id:group}Buttons": "Buttons",
   "{id:group}Color Sensor": "Color Sensor",
   "{id:group}Gyroscope": "Gyroscope",
+  "{id:group}Infrared sensor": "Infrared sensor",
   "{id:group}Lights": "Lights",
   "{id:group}Motors": "Motors",
-  "{id:group}Screen": "Screen"
+  "{id:group}Screen": "Screen",
+  "{id:group}Sonar": "Sonar"
 }

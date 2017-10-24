@@ -30,7 +30,7 @@
   "input.GyroSensor.rate": "Get the current rotation rate from the gyroscope.",
   "input.IrSensor.distance": "Get the distance measured by the infrared sensor.",
   "input.IrSensor.remoteCommand": "Get the remote commandreceived the infrared sensor.",
-  "input.UltraSonicSensor.getDistance": "Get distance in mm",
+  "input.UltraSonicSensor.distance": "Gets the distance from the sonar in millimeters",
   "input.buttonDown": "Down button.",
   "input.buttonEnter": "Enter button.",
   "input.buttonLeft": "Left button.",
