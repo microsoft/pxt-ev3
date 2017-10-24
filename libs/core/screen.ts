@@ -93,7 +93,7 @@ namespace screen {
      * @param y the starting position's x coordinate, eg: 0
      */
     //% blockId=screen_print block="print %text| at x: %x| y: %y"
-    //% weight=99 group="Screen" blockNamespace=output inlineInputMode="inline"
+    //% weight=99 group="Brick" blockNamespace=output inlineInputMode="inline"
     //% x.min=0 x.max=178 y.min=0 y.max=128
     export function print(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0

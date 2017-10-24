@@ -20,7 +20,7 @@ namespace input {
         //% parts="ultrasonic"
         //% blockNamespace=input
         //% weight=65 blockGap=8   
-        //% group="Ultrasonic sensor"     
+        //% group="Ultrasonic Sensor"     
         distance() {
             // it supposedly also has an inch mode, but we stick to mm
             this._setMode(0)
@@ -28,15 +28,15 @@ namespace input {
         }
     }
 
+    //% fixedInstance whenUsed block="ultrasonic sensor 4"
+    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
+    
     //% fixedInstance whenUsed block="ultrasonic sensor 1"
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
 
-    //% fixedInstance whenUsed block="ultrasonic sensor 1"
+    //% fixedInstance whenUsed block="ultrasonic sensor 2"
     export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
 
-    //% fixedInstance whenUsed block="ultrasonic sensor 1"
+    //% fixedInstance whenUsed block="ultrasonic sensor 3"
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
-
-    //% fixedInstance whenUsed block="ultrasonic sensor 1"
-    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 }

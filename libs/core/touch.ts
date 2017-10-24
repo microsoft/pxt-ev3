@@ -45,7 +45,7 @@ namespace input {
         //% parts="touch"
         //% blockNamespace=input
         //% weight=81 blockGap=8
-        //% group="Touch sensor"
+        //% group="Touch Sensor"
         isTouched() {
             return this.button.isPressed();
         }
@@ -61,7 +61,7 @@ namespace input {
         //% parts="touch"
         //% blockNamespace=input
         //% weight=99 blockGap=8
-        //% group="Touch sensor"
+        //% group="Touch Sensor"
         onEvent(ev: TouchSensorEvent, body: () => void) {
             this.button.onEvent(<ButtonEvent><number>ev, body)
         }

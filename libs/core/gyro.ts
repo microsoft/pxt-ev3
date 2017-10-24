@@ -29,7 +29,7 @@ namespace input {
         //% parts="gyroscope"
         //% blockNamespace=input
         //% weight=65 blockGap=8
-        //% group="Gyro sensor"
+        //% group="Gyro Sensor"
         angle() {
             this.setMode(GyroSensorMode.Angle)
             return this.getNumber(NumberFormat.Int16LE, 0)
@@ -45,18 +45,18 @@ namespace input {
         //% parts="gyroscope"
         //% blockNamespace=input
         //% weight=65 blockGap=8        
-        //% group="Gyro sensor"
+        //% group="Gyro Sensor"
         rate() {
             this.setMode(GyroSensorMode.Rate)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
     }
 
-    //% fixedInstance whenUsed block="gyro sensor 1"
-    export const gyro1: GyroSensor = new GyroSensor(1)
-
     //% fixedInstance whenUsed block="gyro sensor 2"
     export const gyro2: GyroSensor = new GyroSensor(2)
+    
+    //% fixedInstance whenUsed block="gyro sensor 1"
+    export const gyro1: GyroSensor = new GyroSensor(1)
 
     //% fixedInstance whenUsed block="gyro sensor 3"
     export const gyro3: GyroSensor = new GyroSensor(3)

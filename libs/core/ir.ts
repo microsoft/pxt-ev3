@@ -119,7 +119,7 @@ namespace input {
         //% parts="infrared"
         //% blockNamespace=input
         //% weight=65 blockGap=8   
-        //% group="Infrared sensor"     
+        //% group="Infrared Sensor"     
         distance() {
             this.setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
@@ -135,7 +135,7 @@ namespace input {
         //% parts="infrared"
         //% blockNamespace=input
         //% weight=65 blockGap=8        
-        //% group="Infrared sensor"     
+        //% group="Infrared Sensor"     
         remoteCommand() {
             this.setMode(IrSensorMode.RemoteControl)
             return this.getNumber(NumberFormat.UInt8LE, this.channel)

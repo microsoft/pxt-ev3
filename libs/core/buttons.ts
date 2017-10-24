@@ -89,7 +89,7 @@ namespace input {
         //% parts="brick"
         //% blockNamespace=input
         //% weight=81 blockGap=8
-        //% group="Brick buttons"
+        //% group="Brick"
         isPressed() {
             return this._isPressed
         }
@@ -104,7 +104,7 @@ namespace input {
         //% parts="brick"
         //% blockNamespace=input
         //% weight=80 blockGap=8
-        //% group="Brick buttons"
+        //% group="Brick"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -122,7 +122,7 @@ namespace input {
         //% parts="brick"
         //% blockNamespace=input
         //% weight=99 blockGap=8
-        //% group="Brick buttons"
+        //% group="Brick"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
@@ -176,35 +176,36 @@ namespace input {
 
     initBtns() // always ON as it handles ESCAPE button
 
+
+    /**
+     * Enter button on the EV3 Brick.
+     */
+    //% whenUsed block="brick button enter" weight=95 fixedInstance
+    export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
+
     /**
      * Left button on the EV3 Brick.
      */
-    //% whenUsed block="button left" weight=95 fixedInstance
+    //% whenUsed block="brick button left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
      * Right button on the EV3 Brick.
      */
-    //% whenUsed block="button right" weight=94 fixedInstance
+    //% whenUsed block="brick button right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
      * Up button on the EV3 Brick.
      */
-    //% whenUsed block="button up" weight=95 fixedInstance
+    //% whenUsed block="brick button up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
      * Down button on the EV3 Brick.
      */
-    //% whenUsed block="button down" weight=95 fixedInstance
+    //% whenUsed block="brick button down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
-
-    /**
-     * Enter button on the EV3 Brick.
-     */
-    //% whenUsed block="button enter" weight=95 fixedInstance
-    export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 }
 
 
@@ -233,7 +234,7 @@ namespace output {
      * @param pattern the lights pattern to use.
      */
     //% blockId=setLights block="set status light %pattern=led_pattern"
-    //% weight=100 group="Lights"
+    //% weight=100 group="Brick"
     export function setStatusLight(pattern: number): void {
         if (currPattern === pattern)
             return
