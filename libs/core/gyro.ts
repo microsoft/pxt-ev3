@@ -5,7 +5,7 @@ const enum GyroSensorMode {
 }
 
 namespace input {
-    //% fixedInstances
+    //% fixedInstance
     export class GyroSensor extends internal.UartSensor {
         constructor(port: number) {
             super(port)
