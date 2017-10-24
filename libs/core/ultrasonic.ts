@@ -12,15 +12,15 @@ namespace input {
 
         /**
          * Gets the distance from the sonar in millimeters
-         * @param sonar the ultrasonic sensor
+         * @param sensor the ultrasonic sensor port
          */
         //% help=input/ultrasonic/distance
-        //% block="%sonar|distance"
+        //% block="%sensor|distance"
         //% blockId=sonarGetDistance
         //% parts="ultrasonic"
         //% blockNamespace=input
         //% weight=65 blockGap=8   
-        //% group="Sonar"     
+        //% group="Ultrasonic sensor"     
         distance() {
             // it supposedly also has an inch mode, but we stick to mm
             this._setMode(0)
@@ -28,15 +28,15 @@ namespace input {
         }
     }
 
-    //% fixedInstance whenUsed block="ultrasonic 1"
+    //% fixedInstance whenUsed block="ultrasonic sensor 1"
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
 
-    //% fixedInstance whenUsed block="ultrasonic 1"
+    //% fixedInstance whenUsed block="ultrasonic sensor 1"
     export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
 
-    //% fixedInstance whenUsed block="ultrasonic 1"
+    //% fixedInstance whenUsed block="ultrasonic sensor 1"
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
 
-    //% fixedInstance whenUsed block="ultrasonic 1"
+    //% fixedInstance whenUsed block="ultrasonic sensor 1"
     export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 }
