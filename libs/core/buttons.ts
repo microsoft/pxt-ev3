@@ -41,8 +41,6 @@ const enum LightsPattern {
 const enum ButtonEvent {
     //% block="click"
     Click = 1,
-    //% block="long click"
-    LongClick = 2,
     //% block="up"
     Up = 3,
     //% block="down"
@@ -76,7 +74,8 @@ namespace input {
             } else {
                 control.raiseEvent(this._id, ButtonEvent.Up)
                 let delta = control.millis() - this.downTime
-                control.raiseEvent(this._id, delta > 500 ? ButtonEvent.LongClick : ButtonEvent.Click)
+                control.raiseEvent(this._id, ButtonEvent.Click)
+                //control.raiseEvent(this._id, delta > 500 ? ButtonEvent.LongClick : ButtonEvent.Click)
             }
         }
 
@@ -131,7 +130,7 @@ namespace input {
         //% button.fieldEditor="gridpicker"
         //% button.fieldOptions.width=220
         //% button.fieldOptions.columns=3
-        //% weight=99
+        //% weight=99 blockGap=8
         //% group="Buttons"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
