@@ -5,7 +5,7 @@ const enum GyroSensorMode {
 }
 
 namespace input {
-    //% fixedInstance
+    //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
         constructor(port: number) {
             super(port)
@@ -28,7 +28,8 @@ namespace input {
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=input
-        //% weight=65 blockGap=8        
+        //% weight=65 blockGap=8
+        //% group="Gyroscope"
         angle() {
             this.setMode(GyroSensorMode.Angle)
             return this.getNumber(NumberFormat.Int16LE, 0)
@@ -44,21 +45,22 @@ namespace input {
         //% parts="gyroscope"
         //% blockNamespace=input
         //% weight=65 blockGap=8        
+        //% group="Gyroscope"
         rate() {
             this.setMode(GyroSensorMode.Rate)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
     }
 
-    //% whenUsed
+    //% fixedInstance whenUsed block="gyroscope 1"
     export const gyro1: GyroSensor = new GyroSensor(1)
 
-    //% whenUsed
+    //% fixedInstance whenUsed block="gyroscope 2"
     export const gyro2: GyroSensor = new GyroSensor(2)
 
-    //% whenUsed
+    //% fixedInstance whenUsed block="gyroscope 3"
     export const gyro3: GyroSensor = new GyroSensor(3)
 
-    //% whenUsed
+    //% fixedInstance whenUsed block="gyroscope 4"
     export const gyro4: GyroSensor = new GyroSensor(4)
 }

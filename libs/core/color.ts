@@ -45,7 +45,8 @@ namespace input {
         //% parts="colorsensor"
         //% blockNamespace=input
         //% weight=65 blockGap=8
-        getAmbientLight() {
+        //% group="Color Sensor"
+        ambientLight() {
             this.setMode(ColorSensorMode.Ambient)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -60,7 +61,8 @@ namespace input {
         //% parts="colorsensor"
         //% blockNamespace=input
         //% weight=64 blockGap=8
-        getReflectedLight(): number {
+        //% group="Color Sensor"
+        reflectedLight(): number {
             this.setMode(ColorSensorMode.Reflect)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -75,7 +77,8 @@ namespace input {
         //% parts="colorsensor"
         //% blockNamespace=input
         //% weight=66 blockGap=8
-        getColor(): ColorSensorColor {
+        //% group="Color Sensor"
+        color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
