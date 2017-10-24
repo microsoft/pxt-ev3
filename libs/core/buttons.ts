@@ -86,13 +86,10 @@ namespace input {
         //% help=input/button/is-pressed
         //% block="%button|is pressed"
         //% blockId=buttonIsPressed
-        //% parts="buttonpair"
+        //% parts="brick"
         //% blockNamespace=input
-        //% button.fieldEditor="gridpicker"
-        //% button.fieldOptions.width=220
-        //% button.fieldOptions.columns=3
         //% weight=81 blockGap=8
-        //% group="Buttons"
+        //% group="Brick buttons"
         isPressed() {
             return this._isPressed
         }
@@ -104,13 +101,10 @@ namespace input {
         //% help=input/button/was-pressed
         //% block="%button|was pressed"
         //% blockId=buttonWasPressed
-        //% parts="buttonpair"
+        //% parts="brick"
         //% blockNamespace=input
-        //% button.fieldEditor="gridpicker"
-        //% button.fieldOptions.width=220
-        //% button.fieldOptions.columns=3
         //% weight=80 blockGap=8
-        //% group="Buttons"
+        //% group="Brick buttons"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -125,13 +119,10 @@ namespace input {
          */
         //% help=input/button/on-event
         //% blockId=buttonEvent block="on %button|%event"
-        //% parts="buttonpair"
+        //% parts="brick"
         //% blockNamespace=input
-        //% button.fieldEditor="gridpicker"
-        //% button.fieldOptions.width=220
-        //% button.fieldOptions.columns=3
         //% weight=99 blockGap=8
-        //% group="Buttons"
+        //% group="Brick buttons"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
@@ -186,31 +177,31 @@ namespace input {
     initBtns() // always ON as it handles ESCAPE button
 
     /**
-     * Left button.
+     * Left button on the EV3 Brick.
      */
     //% whenUsed block="button left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
-     * Right button.
+     * Right button on the EV3 Brick.
      */
     //% whenUsed block="button right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
-     * Up button.
+     * Up button on the EV3 Brick.
      */
     //% whenUsed block="button up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
-     * Down button.
+     * Down button on the EV3 Brick.
      */
     //% whenUsed block="button down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
 
     /**
-     * Enter button.
+     * Enter button on the EV3 Brick.
      */
     //% whenUsed block="button enter" weight=95 fixedInstance
     export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
