@@ -27,30 +27,27 @@ namespace input.internal {
     let analogMM: MMap
     let uartMM: MMap
     let devcon: Buffer
-    let sensors: SensorInfo[]
-    let autoSensors: Sensor[]
+    let sensorInfos: SensorInfo[]
 
     class SensorInfo {
         port: number
         sensor: Sensor
+        sensors: Sensor[]
         connType: number
         devType: number
-        manual: boolean
 
         constructor(p: number) {
             this.port = p
             this.connType = DAL.CONN_NONE
             this.devType = DAL.DEVICE_TYPE_NONE
-            this.sensor = null
-            this.manual = false
+            this.sensors = []
         }
     }
 
     function init() {
-        if (sensors) return
-        sensors = []
-        for (let i = 0; i < DAL.NUM_INPUTS; ++i) sensors.push(new SensorInfo(i))
-        autoSensors = []
+        if (sensorInfos) return
+        sensorInfos = []
+        for (let i = 0; i < DAL.NUM_INPUTS; ++i) sensorInfos.push(new SensorInfo(i))
         devcon = output.createBuffer(DevConOff.Size)
 
         analogMM = control.mmap("/dev/lms_analog", AnalogOff.Size, 0)
@@ -64,7 +61,7 @@ namespace input.internal {
             loops.pause(500)
         })
 
-        for (let info_ of sensors) {
+        for (let info_ of sensorInfos) {
             let info = info_
             unsafePollForChanges(50, () => {
                 if (info.sensor) return info.sensor._query()
@@ -90,7 +87,7 @@ namespace input.internal {
         let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0
 
-        for (let info of sensors) {
+        for (let info of sensorInfos) {
             let newConn = conns[info.port]
             if (newConn == info.connType)
                 continue
@@ -117,77 +114,42 @@ namespace input.internal {
         if (numChanged == 0)
             return
 
-        let autos = sensors.filter(s => !s.manual)
-
-        // first free up disconnected sensors
-        for (let info of autos) {
-            if (info.sensor && info.devType == DAL.DEVICE_TYPE_NONE)
-                info.sensor._setPort(0)
-        }
-
-        for (let info of autos) {
-            if (!info.sensor && info.devType != DAL.DEVICE_TYPE_NONE) {
-                let found = false
-                for (let s of autoSensors) {
-                    if (s.getPort() == 0 && s._deviceType() == info.devType) {
-                        s._setPort(info.port + 1)
-                        found = true
-                        break
-                    }
+        for (let si of sensorInfos) {
+            if (si.sensor && si.sensor._deviceType() != si.devType) {
+                si.sensor = null
+            }
+            if (si.devType != DAL.DEVICE_TYPE_NONE) {
+                si.sensor = si.sensors.filter(s => s._deviceType() == si.devType)[0] || null
+                if (si.sensor == null) {
+                    control.dmesg(`sensor not found for type=${si.devType} at ${si.port}`)
+                } else {
+                    control.dmesg(`sensor connected type=${si.devType} at ${si.port}`)
+                    si.sensor._activated()
                 }
-                if (!found)
-                    control.dmesg(`sensor not found for type=${info.devType} at ${info.port}`)
             }
         }
     }
 
     export class Sensor extends control.Component {
-        protected port: number
+        protected port: number // this is 0-based
 
-        constructor() {
+        constructor(port_: number) {
             super()
+            if (!(1 <= port_ && port_ <= DAL.NUM_INPUTS))
+                control.panic(120)
+            this.port = port_ - 1
             init()
-            this.port = -1
-            let tp = this._deviceType()
-            if (autoSensors.filter(s => s._deviceType() == tp).length == 0) {
-                autoSensors.push(this)
-            }
         }
 
-        // 0 - disable, 1-4 port number
-        _setPort(port: number, manual = false) {
-            port = Math.clamp(0, 4, port | 0) - 1;
-            if (port == this.port) return
-            this.port = port
-            control.dmesg(`sensor set port ${port} on devtype=${this._deviceType()}`)
-            for (let i = 0; i < sensors.length; ++i) {
-                if (i != this.port && sensors[i].sensor == this) {
-                    sensors[i].sensor = null
-                    sensors[i].manual = false
-                }
-            }
-            if (this.port >= 0) {
-                let prev = sensors[this.port].sensor
-                if (prev && prev != this)
-                    prev._setPort(0)
-                sensors[this.port].sensor = this
-                sensors[this.port].manual = manual
-            }
-            this._portUpdated()
-        }
+        _activated() { }
 
-        protected _portUpdated() { }
-
-        setPort(port: number) {
-            this._setPort(port, true)
-        }
-
+        // 1-based
         getPort() {
             return this.port + 1
         }
 
-        isManual() {
-            return this.port >= 0 && sensors[this.port].manual
+        isActive() {
+            return sensorInfos[this.port].sensor == this
         }
 
         _query() {
@@ -203,12 +165,12 @@ namespace input.internal {
     }
 
     export class AnalogSensor extends Sensor {
-        constructor() {
-            super()
+        constructor(port: number) {
+            super(port)
         }
 
         _readPin6() {
-            if (this.port < 0) return 0
+            if (!this.isActive()) return 0
             return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this.port)
         }
     }
@@ -216,32 +178,26 @@ namespace input.internal {
 
 
     export class UartSensor extends Sensor {
-        protected mode: number
-        protected realmode: number
+        protected mode: number // the mode user asked for
+        protected realmode: number // the mode the hardware is in
 
-        constructor() {
-            super()
+        constructor(port: number) {
+            super(port)
             this.mode = 0
             this.realmode = -1
         }
 
-        protected _portUpdated() {
-            this.realmode = -1
-            if (this.port >= 0) {
-                if (this.isManual()) {
-                    uartReset(this.port)
-                } else {
-                    this.realmode = 0
-                }
-                this._setMode(this.mode)
-            }
+        _activated() {
+            this.realmode = 0
+            // uartReset(this.port) // TODO is it ever needed?
+            this._setMode(this.mode)
         }
 
         protected _setMode(m: number) {
             //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
             let v = m | 0
             this.mode = v
-            if (this.port < 0) return
+            if (!this.isActive()) return
             if (this.realmode != this.mode) {
                 this.realmode = v
                 setUartMode(this.port, v)
@@ -249,10 +205,12 @@ namespace input.internal {
         }
 
         getBytes(): Buffer {
-            return getUartBytes(this.port)
+            return getUartBytes(this.isActive() ? this.port : -1)
         }
 
         getNumber(fmt: NumberFormat, off: number) {
+            if (!this.isActive())
+                return 0
             return getUartNumber(fmt, off, this.port)
         }
     }

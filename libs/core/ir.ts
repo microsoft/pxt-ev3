@@ -40,29 +40,46 @@ namespace input {
         }
     }
 
-    export class IrSensor extends internal.UartSensor {
-        private channel: IrRemoteChannel
-        private buttons: Button[];
+    let buttons: Button[]
 
-        constructor() {
-            super()
-            this.channel = IrRemoteChannel.Ch0
-            this.buttons = []
-            // otherwise button events won't work
-            this.mode = IrSensorMode.RemoteControl
+    function create(ir: IrSensor) {
+        // it's created by referencing it
+    }
+
+    export function irButton(id: IrRemoteButton) {
+        if (buttons == null) {
+            buttons = []
             for (let i = 0; i < 5; ++i) {
-                this.buttons.push(new Button())
+                buttons.push(new Button())
             }
+
+            // make sure sensors are up
+            create(ir1)
+            create(ir2)
+            create(ir3)
+            create(ir4)
         }
 
-        button(id: IrRemoteButton) {
-            let num = -1
-            while (id) {
-                id >>= 1;
-                num++;
-            }
-            num = Math.clamp(0, this.buttons.length - 1, num)
-            return this.buttons[num]
+        let num = -1
+        while (id) {
+            id >>= 1;
+            num++;
+        }
+        num = Math.clamp(0, buttons.length - 1, num)
+        return buttons[num]
+    }
+
+    //% fixedInstance
+    export class IrSensor extends internal.UartSensor {
+        private channel: IrRemoteChannel
+
+        constructor(port: number) {
+            super(port)
+            this.channel = IrRemoteChannel.Ch0
+            irButton(0) // make sure buttons array is initalized
+
+            // and set the mode, as otherwise button events won't work
+            this.mode = IrSensorMode.RemoteControl
         }
 
         _query() {
@@ -72,9 +89,9 @@ namespace input {
         }
 
         _update(prev: number, curr: number) {
-            for (let i = 0; i < this.buttons.length; ++i) {
+            for (let i = 0; i < buttons.length; ++i) {
                 let v = !!(curr & (1 << i))
-                this.buttons[i].update(v)
+                buttons[i].update(v)
             }
         }
 
@@ -92,16 +109,39 @@ namespace input {
             this._setMode(m)
         }
 
-        getDistance() {
+        /**
+         * Get the distance measured by the infrared sensor.
+         * @param ir the infrared sensor
+         */
+        //% help=input/infrared/distance
+        //% block="%infrared|distance"
+        //% blockId=infraredGetDistance
+        //% parts="infrared"
+        //% blockNamespace=input
+        //% weight=65 blockGap=8   
+        //% group="Infrared Sensor"     
+        distance() {
             this.setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
-        getRemoteCommand() {
+        /**
+         * Get the remote commandreceived the infrared sensor.
+         * @param ir the infrared sensor
+         */
+        //% help=input/infrared/remote-command
+        //% block="%infrared|remote command"
+        //% blockId=infraredGetRemoteCommand
+        //% parts="infrared"
+        //% blockNamespace=input
+        //% weight=65 blockGap=8        
+        //% group="Infrared Sensor"     
+        remoteCommand() {
             this.setMode(IrSensorMode.RemoteControl)
             return this.getNumber(NumberFormat.UInt8LE, this.channel)
         }
 
+        // TODO
         getDirectionAndDistance() {
             this.setMode(IrSensorMode.Seek)
             return this.getNumber(NumberFormat.UInt16LE, this.channel * 2)
@@ -109,35 +149,44 @@ namespace input {
     }
 
     //% whenUsed
-    export const ir: IrSensor = new IrSensor()
+    export const ir1: IrSensor = new IrSensor(1)
+
+    //% whenUsed
+    export const ir2: IrSensor = new IrSensor(2)
+
+    //% whenUsed
+    export const ir3: IrSensor = new IrSensor(3)
+
+    //% whenUsed
+    export const ir4: IrSensor = new IrSensor(4)
 
     /**
      * Remote top-left button.
      */
     //% whenUsed block="remote top-left" weight=95 fixedInstance
-    export const remoteTopLeft = ir.button(IrRemoteButton.TopLeft)
+    export const remoteTopLeft = irButton(IrRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
     //% whenUsed block="remote top-right" weight=95 fixedInstance
-    export const remoteTopRight = ir.button(IrRemoteButton.TopRight)
+    export const remoteTopRight = irButton(IrRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
     //% whenUsed block="remote bottom-left" weight=95 fixedInstance
-    export const remoteBottomLeft = ir.button(IrRemoteButton.BottomLeft)
+    export const remoteBottomLeft = irButton(IrRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
     //% whenUsed block="remote bottom-right" weight=95 fixedInstance
-    export const remoteBottomRight = ir.button(IrRemoteButton.BottomRight)
+    export const remoteBottomRight = irButton(IrRemoteButton.BottomRight)
 
     /**
      * Remote beacon (center) button.
      */
     //% whenUsed block="remote center" weight=95 fixedInstance
-    export const remoteCenter = ir.button(IrRemoteButton.CenterBeacon)
+    export const remoteCenter = irButton(IrRemoteButton.CenterBeacon)
 }

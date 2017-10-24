@@ -4,7 +4,7 @@ namespace input {
 }
 
 //% color="#8AC044" weight=90 icon="\uf185"
-//% groups='["Lights", "Screen", "Motors"]'
+//% groups='["Motors", "Brick"]'
 namespace output {
 }
 

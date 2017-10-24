@@ -4,34 +4,34 @@
  */
 const enum LightsPattern {
     //% block=Off enumval=0
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Off = 0,
     //% block=Green enumval=1
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Green = 1,
     //% block=Red enumval=2
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Red = 2,
     //% block=Orange enumval=3
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     Orange = 3,
     //% block="Flashing Green" enumval=4
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     GreenFlash = 4,
     //% block="Flashing Red" enumval=5
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     RedFlash = 5,
     //% block="Flashing Orange" enumval=6
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     OrangeFlash = 6,
     //% block="Pulsing Green" enumval=7
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     GreenPulse = 7,
     //% block="Pulsing Red" enumval=8
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     RedPulse = 8,
     //% block="Pulsing Orange" enumval=9
-    //% blockIdentity=output.getPattern
+    //% blockIdentity=output.pattern
     OrangePulse = 9,
 }
 
@@ -41,8 +41,6 @@ const enum LightsPattern {
 const enum ButtonEvent {
     //% block="click"
     Click = 1,
-    //% block="long click"
-    LongClick = 2,
     //% block="up"
     Up = 3,
     //% block="down"
@@ -76,7 +74,8 @@ namespace input {
             } else {
                 control.raiseEvent(this._id, ButtonEvent.Up)
                 let delta = control.millis() - this.downTime
-                control.raiseEvent(this._id, delta > 500 ? ButtonEvent.LongClick : ButtonEvent.Click)
+                control.raiseEvent(this._id, ButtonEvent.Click)
+                //control.raiseEvent(this._id, delta > 500 ? ButtonEvent.LongClick : ButtonEvent.Click)
             }
         }
 
@@ -87,12 +86,10 @@ namespace input {
         //% help=input/button/is-pressed
         //% block="%button|is pressed"
         //% blockId=buttonIsPressed
-        //% parts="buttonpair"
+        //% parts="brick"
         //% blockNamespace=input
-        //% button.fieldEditor="gridpicker"
-        //% button.fieldOptions.width=220
-        //% button.fieldOptions.columns=3
         //% weight=81 blockGap=8
+        //% group="Brick"
         isPressed() {
             return this._isPressed
         }
@@ -104,12 +101,10 @@ namespace input {
         //% help=input/button/was-pressed
         //% block="%button|was pressed"
         //% blockId=buttonWasPressed
-        //% parts="buttonpair"
+        //% parts="brick"
         //% blockNamespace=input
-        //% button.fieldEditor="gridpicker"
-        //% button.fieldOptions.width=220
-        //% button.fieldOptions.columns=3
         //% weight=80 blockGap=8
+        //% group="Brick"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -124,12 +119,10 @@ namespace input {
          */
         //% help=input/button/on-event
         //% blockId=buttonEvent block="on %button|%event"
-        //% parts="buttonpair"
+        //% parts="brick"
         //% blockNamespace=input
-        //% button.fieldEditor="gridpicker"
-        //% button.fieldOptions.width=220
-        //% button.fieldOptions.columns=3
-        //% weight=99
+        //% weight=99 blockGap=8
+        //% group="Brick"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
@@ -183,35 +176,36 @@ namespace input {
 
     initBtns() // always ON as it handles ESCAPE button
 
+
     /**
-     * Left button.
+     * Enter button on the EV3 Brick.
      */
-    //% whenUsed block="button left" weight=95 fixedInstance
+    //% whenUsed block="brick button enter" weight=95 fixedInstance
+    export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
+
+    /**
+     * Left button on the EV3 Brick.
+     */
+    //% whenUsed block="brick button left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
-     * Right button.
+     * Right button on the EV3 Brick.
      */
-    //% whenUsed block="button right" weight=94 fixedInstance
+    //% whenUsed block="brick button right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
-     * Up button.
+     * Up button on the EV3 Brick.
      */
-    //% whenUsed block="button up" weight=95 fixedInstance
+    //% whenUsed block="brick button up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
-     * Down button.
+     * Down button on the EV3 Brick.
      */
-    //% whenUsed block="button down" weight=95 fixedInstance
+    //% whenUsed block="brick button down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
-
-    /**
-     * Enter button.
-     */
-    //% whenUsed block="button enter" weight=95 fixedInstance
-    export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 }
 
 
@@ -240,8 +234,8 @@ namespace output {
      * @param pattern the lights pattern to use.
      */
     //% blockId=setLights block="set status light %pattern=led_pattern"
-    //% weight=100 group="Lights"
-    export function setLights(pattern: number): void {
+    //% weight=100 group="Brick"
+    export function setStatusLight(pattern: number): void {
         if (currPattern === pattern)
             return
         currPattern = pattern
@@ -258,7 +252,7 @@ namespace output {
     //% blockId=led_pattern block="%pattern"
     //% shim=TD_ID colorSecondary="#6e9a36"
     //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
-    export function getPattern(pattern: LightsPattern): number {
+    export function pattern(pattern: LightsPattern): number {
         return pattern;
     }
 }

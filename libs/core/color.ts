@@ -23,8 +23,8 @@ namespace input {
 
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
-        constructor() {
-            super()
+        constructor(port: number) {
+            super(port)
         }
 
         _deviceType() {
@@ -45,7 +45,8 @@ namespace input {
         //% parts="colorsensor"
         //% blockNamespace=input
         //% weight=65 blockGap=8
-        getAmbientLight() {
+        //% group="Color Sensor"
+        ambientLight() {
             this.setMode(ColorSensorMode.Ambient)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -60,7 +61,8 @@ namespace input {
         //% parts="colorsensor"
         //% blockNamespace=input
         //% weight=64 blockGap=8
-        getReflectedLight(): number {
+        //% group="Color Sensor"
+        reflectedLight(): number {
             this.setMode(ColorSensorMode.Reflect)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -75,12 +77,22 @@ namespace input {
         //% parts="colorsensor"
         //% blockNamespace=input
         //% weight=66 blockGap=8
-        getColor(): ColorSensorColor {
+        //% group="Color Sensor"
+        color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
     }
 
-    //% whenUsed block="color sensor" weight=95 fixedInstance
-    export const color: ColorSensor = new ColorSensor()
+    //% whenUsed block="color sensor 3" weight=95 fixedInstance
+    export const color3: ColorSensor = new ColorSensor(3)
+    
+    //% whenUsed block="color sensor 1" weight=95 fixedInstance
+    export const color1: ColorSensor = new ColorSensor(1)
+
+    //% whenUsed block="color sensor 2" weight=95 fixedInstance
+    export const color2: ColorSensor = new ColorSensor(2)
+
+    //% whenUsed block="color sensor 4" weight=95 fixedInstance
+    export const color4: ColorSensor = new ColorSensor(4)
 }
