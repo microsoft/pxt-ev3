@@ -35,7 +35,7 @@ namespace output {
         if (!pwmMM) control.fail("no PWM file")
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
 
-        outputStopAll()
+        resetMotors()
 
         let buf = output.createBuffer(1)
         buf[0] = DAL.opProgramStart
@@ -59,10 +59,8 @@ namespace output {
         return b
     }
 
-    function outputStopAll() {
-        const b = mkCmd(Output.ALL, DAL.opOutputStop, 1)
-        b.setNumber(NumberFormat.UInt8LE, 2, 0)
-        writePWM(b)
+    function resetMotors() {
+        reset(Output.ALL)
     }    
 
     //% fixedInstances
