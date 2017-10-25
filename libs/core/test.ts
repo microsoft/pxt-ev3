@@ -31,7 +31,7 @@ input.buttonUp.onEvent(ButtonEvent.Click, () => {
 
 let num = 0
 
-input.touchSensor1.onEvent(ButtonEvent.Click, () => {
+input.touchSensor1.onEvent(TouchSensorEvent.Bumped, () => {
     screen.print("Click!  " + num, 10, 60)
     num++
 })
