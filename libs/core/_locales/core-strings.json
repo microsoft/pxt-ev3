@@ -75,6 +75,7 @@
   "output.setStatusLight|block": "set status light %pattern=led_pattern",
   "output|block": "output",
   "screen.print|block": "print %text| at x: %x| y: %y",
+  "screen.setPixel|block": "set pixel %on| at x: %x| y: %y",
   "screen|block": "screen",
   "serial|block": "serial",
   "{id:category}Control": "Control",

@@ -78,13 +78,21 @@ namespace screen {
         }
     }
 
-    export function setPixel(x: number, y: number, mode = Draw.Normal) {
+    /**
+     * Sets a pixel on or off
+     * @param on a value indicating if the pixel should be on or off
+     * @param x the starting position's x coordinate, eg: 0
+     * @param y the starting position's x coordinate, eg: 0
+     */
+    //% blockId=screen_setpixel block="set pixel %on| at x: %x| y: %y"
+    //% weight=98 group="Brick" blockNamespace=output
+    //% x.min=0 x.max=178 y.min=0 y.max=128 on.fieldEditor=toggleonoff
+    export function setPixel(on: boolean, x: number, y: number) {
         x |= 0
         y |= 0
         if (0 <= x && x < DAL.LCD_WIDTH && 0 <= y && y < DAL.LCD_HEIGHT)
-            _setPixel(x, y, mode)
+            _setPixel(x, y, on ? Draw.Normal : Draw.Clear)
     }
-    
 
     /**
      * Show text on the screen.
