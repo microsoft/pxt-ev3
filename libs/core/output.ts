@@ -1,8 +1,13 @@
 enum Output {
+    //% block="A"
     A = 0x01,
+    //% block="B"
     B = 0x02,
+    //% block="C"
     C = 0x04,
+    //% block="D"
     D = 0x08,
+    //% block="All"
     ALL = 0x0f
 }
 
@@ -15,7 +20,6 @@ enum OutputType {
 namespace output {
     let pwmMM: MMap
     let motorMM: MMap
-    let currentSpeed: number[] = []
 
     const enum MotorDataOff {
         TachoCounts = 0, // int32
@@ -31,19 +35,13 @@ namespace output {
         if (!pwmMM) control.fail("no PWM file")
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
 
-        stop(Output.ALL)
-
-        currentSpeed[Output.A] = -1;
-        currentSpeed[Output.B] = -1;
-        currentSpeed[Output.C] = -1;
-        currentSpeed[Output.D] = -1;
-        currentSpeed[Output.ALL] = -1;
+        outputStopAll()
 
         let buf = output.createBuffer(1)
         buf[0] = DAL.opProgramStart
         writePWM(buf)
     }
-
+    
     function writePWM(buf: Buffer): void {
         init()
         pwmMM.write(buf)
@@ -55,81 +53,118 @@ namespace output {
     }
 
     function mkCmd(out: Output, cmd: number, addSize: number) {
-        let b = createBuffer(2 + addSize)
+        const b = createBuffer(2 + addSize)
         b.setNumber(NumberFormat.UInt8LE, 0, cmd)
         b.setNumber(NumberFormat.UInt8LE, 1, out)
         return b
     }
 
-    /**
-     * Turn a motor on for a specified number of milliseconds.
-     * @param out the output connection that the motor is connected to
-     * @param ms the number of milliseconds to turn the motor on, eg: 500
-     * @param useBrake whether or not to use the brake, defaults to false
-     */
-    //% blockId=output_turn block="turn motor %out| on for %ms=timePicker|milliseconds"
-    //% weight=100 group="Motors"
-    export function turn(out: Output, ms: number, useBrake = false) {
-        // TODO: use current power / speed configuration
-        output.step(out, {
-            speed: 100,
-            step1: 0,
-            step2: ms,
-            step3: 0,
-            useSteps: false,
-            useBrake: useBrake
-        })
-    }
+    function outputStopAll() {
+        const b = mkCmd(Output.ALL, DAL.opOutputStop, 1)
+        b.setNumber(NumberFormat.UInt8LE, 2, 0)
+        writePWM(b)
+    }    
 
-
-    /**
-     * Switch the motor on or off.
-     * @param out the output connection that the motor is connected to
-     * @param on 1 to turn the motor on, 0 to turn it off
-     */
-    //% blockId=outputMotorPowerOnOff block="power motor %out|%on"
-    //% weight=90 group="Motors"
-    //% on.fieldEditor="toggleonoff"
-    export function powerMotor(out: Output, on: boolean, useBrake = false) {
-        if (on) {
-            output.start(out);
-        } else {
-            output.stop(out, useBrake);
+    //% fixedInstances
+    export class Motor extends control.Component {
+        port: Output;
+        constructor(port: Output) {
+            super();
+            this.port = port;
         }
+
+        /**
+         * Power off the motor.
+         * @param motor the motor to turn off
+         */
+        //% blockId=outputMotorOf block="%motor|OFF then brake %brake"
+        //% brake.fieldEditor=toggleonoff
+        //% weight=100 group="Motors" blockGap=8
+        off(brake = false) {
+            const b = mkCmd(this.port, DAL.opOutputStop, 1)
+            b.setNumber(NumberFormat.UInt8LE, 2, brake ? 1 : 0)
+            writePWM(b)
+        }
+
+        /**
+         * Power on the motor.
+         * @param motor the motor to turn on
+         * @param power the motor power level from ``-100`` to ``100``, eg: 50
+         */
+        //% blockId=outputMotorOn block="%motor|ON at power %power"
+        //% power.min=-100 power.max=100 
+        //% weight=99 group="Motors" blockGap=8
+        on(power: number = 50) {
+            this.setPower(power);
+            const b = mkCmd(this.port, DAL.opOutputStart, 0)
+            writePWM(b);                
+        }
+
+        /**
+         * Power on the motor for a specified number of milliseconds.
+         * @param motor the motor to turn on
+         * @param power the motor power level from ``-100`` to ``100``, eg: 50
+         * @param ms the number of milliseconds to turn the motor on, eg: 500
+         * @param brake whether or not to use the brake
+         */
+        //% blockId=outputMotorOnForTime block="%motor|ON at power %power|for %ms=timePicker|ms then brake %brake"
+        //% power.min=-100 power.max=100 
+        //% brake.fieldEditor=toggleonoff
+        //% weight=98 group="Motors" blockGap=8
+        onForTime(power: number, ms: number, brake = false) {
+            step(this.port, {
+                speed: power,
+                step1: 0,
+                step2: ms,
+                step3: 0,
+                useSteps: false,
+                useBrake: brake
+            })
+        }
+
+        /**
+         * Sets the motor power level from ``-100`` to ``100``.
+         * @param motor the output connection that the motor is connected to
+         * @param power the desired speed to use. eg: 50
+         */
+        //% blockId=motorSetPower block="%motor|set power to %speed"
+        //% weight=60 group="Motors"
+        //% speed.min=-100 speed.max=100
+        setPower(power: number) {
+            const b = mkCmd(this.port, DAL.opOutputPower, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
+            writePWM(b)
+        }
+
+        /**
+         * Gets motor actual speed.
+         * @param motor the port which connects to the motor
+         */
+        //% blockId=motorSpeed block="%motor|speed"
+        //% weight=50 group="Motors" blockGap=8
+        speed() {
+            return getMotorData(this.port).actualSpeed;
+        }        
     }
 
-    /**
-     * Turn motor off.
-     * @param out the output connection that the motor is connected to
-     */
-    //% blockId=output_stop block="turn motor %out|off"
-    //% weight=90 group="Motors"
-    //% deprecated=1
-    export function stop(out: Output, useBrake = false) {
-        let b = mkCmd(out, DAL.opOutputStop, 1)
-        b.setNumber(NumberFormat.UInt8LE, 2, useBrake ? 1 : 0)
-        writePWM(b)
-    }
+    //% whenUsed fixedInstance block="motor B"
+    export const motorB = new Motor(Output.B);
 
-    /**
-     * Turn motor on.
-     * @param out the output connection that the motor is connected to
-     */
-    //% blockId=output_start block="turn motor %out|on"
-    //% weight=95 group="Motors"
-    //% deprecated=1
-    export function start(out: Output) {
-        if (currentSpeed[out] == -1) setSpeed(out, 50)
-        let b = mkCmd(out, DAL.opOutputStart, 0)
-        writePWM(b)
-    }
+    //% whenUsed fixedInstance block="motor C"
+    export const motorC = new Motor(Output.C);
 
-    export function reset(out: Output) {
+    //% whenUsed fixedInstance block="motor A"
+    export const motorA = new Motor(Output.A);
+
+    //% whenUsed fixedInstance block="motor D"
+    export const motorD = new Motor(Output.D);
+
+    function reset(out: Output) {
         let b = mkCmd(out, DAL.opOutputReset, 0)
         writePWM(b)
     }
 
-    export function clearCount(out: Output) {
+    function clearCount(out: Output) {
         let b = mkCmd(out, DAL.opOutputClearCount, 0)
         writePWM(b)
         for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
@@ -147,14 +182,14 @@ namespace output {
         return 0
     }
 
-    export interface MotorData {
+    interface MotorData {
         actualSpeed: number; // -100..+100
         tachoCount: number;
         count: number;
     }
 
     // only a single output at a time
-    export function getMotorData(out: Output): MotorData {
+    function getMotorData(out: Output): MotorData {
         let buf = motorMM.slice(outOffset(out), MotorDataOff.Size)
         return {
             actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed),
@@ -163,52 +198,13 @@ namespace output {
         }
     }
 
-    /**
-     * Get motor speed.
-     * @param out the output connection that the motor is connected to
-     */
-    //% blockId=output_getCurrentSpeed block="motor %out|speed"
-    //% weight=70 group="Motors"
-    export function getCurrentSpeed(out: Output) {
-        return getMotorData(out).actualSpeed;
-    }
-
-    /**
-     * Set motor speed.
-     * @param out the output connection that the motor is connected to
-     * @param speed the desired speed to use. eg: 100
-     */
-    //% blockId=output_setSpeed block="set motor %out| speed to %speed"
-    //% weight=81 group="Motors"
-    //% speed.min=-100 speed.max=100
-    export function setSpeed(out: Output, speed: number) {
-        currentSpeed[out] = speed;
-        let b = mkCmd(out, DAL.opOutputSpeed, 1)
-        b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, speed))
-        writePWM(b)
-    }
-
-    /**
-     * Set motor power.
-     * @param out the output connection that the motor is connected to
-     * @param power the desired power to use. eg: 100
-     */
-    //% blockId=output_setPower block="set motor %out| power to %power"
-    //% weight=80 group="Motors"
-    //% power.min=-100 power.max=100
-    export function setPower(out: Output, power: number) {
-        let b = mkCmd(out, DAL.opOutputPower, 1)
-        b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
-        writePWM(b)
-    }
-
-    export function setPolarity(out: Output, polarity: number) {
+    function setPolarity(out: Output, polarity: number) {
         let b = mkCmd(out, DAL.opOutputPolarity, 1)
         b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-1, 1, polarity))
         writePWM(b)
     }
 
-    export interface StepOptions {
+    interface StepOptions {
         power?: number;
         speed?: number; // either speed or power has to be present
         step1: number;
@@ -218,7 +214,7 @@ namespace output {
         useBrake?: boolean;
     }
 
-    export function step(out: Output, opts: StepOptions) {
+    function step(out: Output, opts: StepOptions) {
         let op = opts.useSteps ? DAL.opOutputStepSpeed : DAL.opOutputTimeSpeed
         let speed = opts.speed
         if (speed == null) {
