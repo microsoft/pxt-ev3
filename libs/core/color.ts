@@ -31,11 +31,8 @@ namespace input {
 
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
-        polling: boolean;
-
         constructor(port: number) {
             super(port)
-            this.polling = false;
         }
 
         _deviceType() {
@@ -46,15 +43,14 @@ namespace input {
             this._setMode(m)
         }
 
-        _initPolling() {
-            if (!this.polling) {
-                input.internal.unsafePollForChanges(
-                    50, 
-                    () => this.color(),
-                    (prev, curr) => {
-                        control.raiseEvent(this._id, curr);
-                    })    
-            }
+        _query() {
+            if (this.mode == ColorSensorMode.Color)
+                return this.getNumber(NumberFormat.UInt8LE, 0)
+            return 0
+        }
+
+        _update(prev: number, curr: number) {
+            control.raiseEvent(this._id, curr);
         }
 
         /**
@@ -70,8 +66,10 @@ namespace input {
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
-            this._initPolling();
             control.onEvent(this._id, <number>color, handler);
+            this.setMode(ColorSensorMode.Color)
+            if (this.color() == color)
+                control.runInBackground(handler)
         }
 
         /**
