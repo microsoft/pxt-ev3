@@ -9,13 +9,21 @@ const enum ColorSensorMode {
 }
 
 const enum ColorSensorColor {
+    //% block="none"
     None,
+    //% block="black"
     Black,
+    //% block="blue"
     Blue,
+    //% block="green"
     Green,
+    //% block="yellow"
     Yellow,
+    //% block="red"
     Red,
+    //% block="white"
     White,
+    //% block="brown"
     Brown,
 }
 
@@ -23,8 +31,11 @@ namespace input {
 
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
+        polling: boolean;
+
         constructor(port: number) {
             super(port)
+            this.polling = false;
         }
 
         _deviceType() {
@@ -33,6 +44,34 @@ namespace input {
 
         setMode(m: ColorSensorMode) {
             this._setMode(m)
+        }
+
+        _initPolling() {
+            if (!this.polling) {
+                input.internal.unsafePollForChanges(
+                    50, 
+                    () => this.color(),
+                    (prev, curr) => {
+                        control.raiseEvent(this._id, curr);
+                    })    
+            }
+        }
+
+        /**
+         * Registers code to run when the given color is detected
+         * @param color the color to dtect
+         * @param handler the code to run when detected
+         */
+        //% help=input/color/on-color-detected
+        //% block="on %sensor|detected %color"
+        //% blockId=colorOnColorDetected
+        //% parts="colorsensor"
+        //% blockNamespace=input
+        //% weight=100 blockGap=8
+        //% group="Color Sensor"
+        onColorDetected(color: ColorSensorColor, handler: () => void) {
+            this._initPolling();
+            control.onEvent(this._id, <number>color, handler);
         }
 
         /**
