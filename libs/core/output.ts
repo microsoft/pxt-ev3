@@ -113,13 +113,14 @@ namespace output {
         //% weight=98 group="Motors" blockGap=8
         onForTime(power: number, ms: number, brake = false) {
             step(this.port, {
-                speed: power,
+                power,
                 step1: 0,
                 step2: ms,
                 step3: 0,
                 useSteps: false,
                 useBrake: brake
             })
+            loops.pause(ms);
         }
 
         /**
