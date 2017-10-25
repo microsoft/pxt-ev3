@@ -4,8 +4,8 @@
  * Touch sensor interactions
  */
 const enum TouchSensorEvent {
-    //% block="touched"
-    Touched = 4,
+    //% block="pressed"
+    Pressed = 4,
     //% block="bumped"
     Bumped = 1,
     //% block="released"
