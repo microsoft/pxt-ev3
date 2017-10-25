@@ -1,6 +1,6 @@
 # LEGO Mindstorms EV3 target for PXT
 
-[![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_pink/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_pink/job/master/job/pxt-ev3_Push/)
+[![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_rainbow/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/job/pxt-ev3_Push/)
 
 This repo contains the editor target hosted at https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
 
