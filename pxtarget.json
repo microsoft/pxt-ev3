@@ -90,10 +90,6 @@
                 "path": "/about"
             },
             {
-                "name": "Examples",
-                "path": "#projects:Examples"
-            },
-            {
                 "name": "Blocks",
                 "path": "/blocks"
             },
@@ -110,12 +106,12 @@
                 "path": "https://www.lego.com/en-us/mindstorms/products/mindstorms-ev3-31313"
             }
         ],
-        "useStartPage": true,
+        "showHomeScreen": true,
+        "homeScreenHero": "./static/hero.png",
         "invertedMenu": false,
         "invertedMonaco": false,
         "monacoToolbox": true,
         "invertedToolbox": true,
-        "exampleGallery": "examples",
         "hasAudio": true,
         "usbHelp": [],
         "extendEditor": true,
