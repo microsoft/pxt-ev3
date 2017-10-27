@@ -35,6 +35,13 @@ These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (455
   "url":"/maker/intruder-detector",
   "cardType": "example",
   "imageUrl": "/static/maker/intruder-detector.png"
+},
+{
+  "name": "Puppet",
+  "description": "Build an automated puppet",
+  "url":"/maker/puppet",
+  "cardType": "example",
+  "imageUrl": "/static/maker/puppet.png"
 }
 ]
 ```
