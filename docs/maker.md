@@ -21,6 +21,20 @@ These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (455
   "url":"/maker/sound-of-color",
   "cardType": "example",
   "imageUrl": "/static/maker/sound-of-color.png"
+},
+{
+  "name": "Security Gadget",
+  "description": "Raise the alarm when your brick is lifted!",
+  "url":"/maker/security-gadget",
+  "cardType": "example",
+  "imageUrl": "/static/maker/security-gadget.png"
+},
+{
+  "name": "Intruder Detector",
+  "description": "Raise the alarm when an intruder sneaks in",
+  "url":"/maker/intruder-detector",
+  "cardType": "example",
+  "imageUrl": "/static/maker/intruder-detector.png"
 }
 ]
 ```
