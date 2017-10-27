@@ -54,10 +54,10 @@ namespace input {
             }
 
             // make sure sensors are up
-            create(infrared1)
-            create(infrared2)
-            create(infrared3)
-            create(infrared4)
+            create(infraredSensor1)
+            create(infraredSensor2)
+            create(infraredSensor3)
+            create(infraredSensor4)
         }
 
         let num = -1
@@ -68,30 +68,43 @@ namespace input {
         num = Math.clamp(0, buttons.length - 1, num)
         return buttons[num]
     }
-
+        
     //% fixedInstances
     export class InfraredSensor extends internal.UartSensor {
-        private channel: IrRemoteChannel
+        private channel: IrRemoteChannel;
+        private proximityThreshold: number;
 
         constructor(port: number) {
             super(port)
             this.channel = IrRemoteChannel.Ch0
+            this.proximityThreshold = 10;
             irButton(0) // make sure buttons array is initalized
 
             // and set the mode, as otherwise button events won't work
-            this.mode = IrSensorMode.RemoteControl
+            this.mode = IrSensorMode.RemoteControl;
         }
 
         _query() {
             if (this.mode == IrSensorMode.RemoteControl)
-                return mapButton(this.getNumber(NumberFormat.UInt8LE, this.channel))
+                return mapButton(this.getNumber(NumberFormat.UInt8LE, this.channel));
+            else if (this.mode == IrSensorMode.Proximity) {
+                const d = this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
+                return d < this.proximityThreshold ? PromixityEvent.ObjectNear
+                    : d > this.proximityThreshold + 5 ? PromixityEvent.ObjectDetected
+                        : 0;
+            }
             return 0
         }
 
         _update(prev: number, curr: number) {
-            for (let i = 0; i < buttons.length; ++i) {
-                let v = !!(curr & (1 << i))
-                buttons[i].update(v)
+            if (this.mode == IrSensorMode.RemoteControl) {
+                for (let i = 0; i < buttons.length; ++i) {
+                    let v = !!(curr & (1 << i))
+                    buttons[i].update(v)
+                }
+            } else {
+                if (curr)
+                    control.raiseEvent(this._id, curr);
             }
         }
 
@@ -102,13 +115,33 @@ namespace input {
         setRemoteChannel(c: IrRemoteChannel) {
             c = Math.clamp(0, 3, c | 0)
             this.channel = c
-            this.setMode(IrSensorMode.RemoteControl)
+            this._setMode(IrSensorMode.RemoteControl)
         }
 
-        setMode(m: IrSensorMode) {
+        _setMode(m: IrSensorMode) {
             this._setMode(m)
         }
 
+        /**
+         * Registers code to run when an object is getting near
+         * @param distance the proximity, eg: 10
+         * @param handler the code to run when detected
+         */
+        //% help=input/infrared/on-object-near
+        //% block="on %sensor|object within %distance"
+        //% blockId=infraredOnObjectNear
+        //% parts="infraredsensor"
+        //% blockNamespace=input
+        //% weight=100 blockGap=8
+        //% distance.min=1 distance.max=95
+        //% group="Infrared Sensor"
+        onObjectNear(distance: number, handler: () => void) {
+            this.proximityThreshold = Math.max(1, Math.min(95, distance));
+            control.onEvent(this._id, PromixityEvent.ObjectNear, handler);
+            if (this.proximity() == PromixityEvent.ObjectNear)
+                control.runInBackground(handler);
+        }
+        
         /**
          * Get the promixity measured by the infrared sensor, from ``0`` (close) to ``100`` (far)
          * @param ir the infrared sensor
@@ -121,7 +154,7 @@ namespace input {
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
         proximity() {
-            this.setMode(IrSensorMode.Proximity)
+            this._setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
@@ -137,28 +170,28 @@ namespace input {
         //% weight=65 blockGap=8        
         //% group="Infrared Sensor"     
         remoteCommand() {
-            this.setMode(IrSensorMode.RemoteControl)
+            this._setMode(IrSensorMode.RemoteControl)
             return this.getNumber(NumberFormat.UInt8LE, this.channel)
         }
 
         // TODO
         getDirectionAndDistance() {
-            this.setMode(IrSensorMode.Seek)
+            this._setMode(IrSensorMode.Seek)
             return this.getNumber(NumberFormat.UInt16LE, this.channel * 2)
         }
     }
 
-    //% fixedInstance whenUsed
-    export const infrared1: InfraredSensor = new InfraredSensor(1)
+    //% fixedInstance whenUsed block="infrared sensor 1"
+    export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
 
-    //% fixedInstance whenUsed
-    export const infrared2: InfraredSensor = new InfraredSensor(2)
+    //% fixedInstance whenUsed block="infrared sensor 2"
+    export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
 
-    //% fixedInstance whenUsed
-    export const infrared3: InfraredSensor = new InfraredSensor(3)
+    //% fixedInstance whenUsed block="infrared sensor 3"
+    export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
 
-    //% fixedInstance whenUsed
-    export const infrared4: InfraredSensor = new InfraredSensor(4)
+    //% fixedInstance whenUsed block="infrared sensor 4"
+    export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
     /**
      * Remote top-left button.

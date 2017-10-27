@@ -1,5 +1,7 @@
-enum UltrasonicEvent {
-    ObjectClose = 1,
+const enum PromixityEvent {
+    //% block="object near"
+    ObjectNear = 1,
+    //% block="object detected"
     ObjectDetected = 2
 }
 
@@ -7,11 +9,11 @@ namespace input {
 
     //% fixedInstances
     export class UltraSonicSensor extends internal.UartSensor {
-        private threshold: number;
+        private promixityThreshold: number;
 
         constructor(port: number) {
             super(port)
-            this.threshold = 10;
+            this.promixityThreshold = 10;
         }
 
         _deviceType() {
@@ -20,8 +22,8 @@ namespace input {
 
         _query(): number {
             const d = this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;            
-            return d < this.threshold ? UltrasonicEvent.ObjectClose
-                : d > this.threshold + 5 ? UltrasonicEvent.ObjectDetected
+            return d < this.promixityThreshold ? PromixityEvent.ObjectNear
+                : d > this.promixityThreshold + 5 ? PromixityEvent.ObjectDetected
                 : 0;
         }
 
@@ -35,18 +37,18 @@ namespace input {
          * @param distance the distance in centimeters when an object is close, eg: 10
          * @param handler the code to run when detected
          */
-        //% help=input/ultrasonic/on-object
+        //% help=input/ultrasonic/on-object-near
         //% block="on %sensor|object within %distance|cm"
         //% blockId=ultrasonicOnObjectClose
-        //% parts="ultrasonicsensor"
+        //% parts="infraredsensor"
         //% blockNamespace=input
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
-        onObject(distance: number, handler: () => void) {
-            this.threshold = Math.max(1, Math.min(95, distance));
-            control.onEvent(this._id, UltrasonicEvent.ObjectClose, handler);
-            this._setMode(0)
-            if (this._query() == UltrasonicEvent.ObjectClose)
+        //% distance.min=1 distance.max=250
+        onObjectNear(distance: number, handler: () => void) {
+            this.promixityThreshold = Math.max(1, Math.min(95, distance));
+            control.onEvent(this._id, PromixityEvent.ObjectNear, handler);
+            if (this.distance() == PromixityEvent.ObjectNear)
                 control.runInBackground(handler);
         }
 
