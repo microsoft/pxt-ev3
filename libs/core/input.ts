@@ -119,7 +119,8 @@ namespace input.internal {
                 si.sensor = null
             }
             if (si.devType != DAL.DEVICE_TYPE_NONE) {
-                si.sensor = si.sensors.filter(s => s._deviceType() == si.devType)[0] || null
+                // TODO figure out compiler problem when '|| null' is added here!
+                si.sensor = si.sensors.filter(s => s._deviceType() == si.devType)[0]
                 if (si.sensor == null) {
                     control.dmesg(`sensor not found for type=${si.devType} at ${si.port}`)
                 } else {
@@ -139,6 +140,7 @@ namespace input.internal {
                 control.panic(120)
             this.port = port_ - 1
             init()
+            sensorInfos[this.port].sensors.push(this)
         }
 
         _activated() { }
