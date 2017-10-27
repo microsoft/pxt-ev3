@@ -177,7 +177,7 @@ namespace input {
             this._setMode(IrSensorMode.RemoteControl)
         }
 
-        _setMode(m: IrSensorMode) {
+        setMode(m: IrSensorMode) {
             this._setMode(m)
         }
 
