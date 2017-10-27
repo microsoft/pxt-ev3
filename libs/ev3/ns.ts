@@ -5,7 +5,7 @@ namespace input {
 
 //% color="#8AC044" weight=90 icon="\uf185"
 //% groups='["Motors", "Brick"]'
-namespace output {
+namespace motors {
 }
 
 //% color="#DF5014" weight=80

@@ -226,7 +226,7 @@ namespace control {
     }
 }
 
-namespace output {
+namespace motors {
     let currPattern: LightsPattern
 
     /**
