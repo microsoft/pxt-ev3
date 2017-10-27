@@ -28,7 +28,7 @@ namespace input {
         }
 
         _update(prev: number, curr: number) {
-            this.button.update(curr > 0)
+            this.button._update(curr > 0)
         }
 
         _deviceType() {

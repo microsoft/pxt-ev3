@@ -65,7 +65,7 @@ namespace input {
         }
 
         //% hidden
-        update(curr: boolean) {
+        _update(curr: boolean) {
             if (this._isPressed == curr) return
             this._isPressed = curr
             if (curr) {
@@ -112,7 +112,7 @@ namespace input {
         }
 
         /**
-         * Do something when a button or sensor is clicked, double clicked, etc...
+         * Do something when a button or sensor is clicked, up or down.
          * @param button the button that needs to be clicked or used
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
@@ -159,7 +159,7 @@ namespace input {
             if (curr & DAL.BUTTON_ID_ESCAPE)
                 control.reset()
             for (let b of buttons)
-                b.update(!!(curr & b.mask))
+                b._update(!!(curr & b.mask))
         })
         control.dmesg("runtime started, " + control.deviceFirmwareVersion())
     }
