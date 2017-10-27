@@ -42,7 +42,7 @@ namespace input {
 
     let buttons: Button[]
 
-    function create(ir: IrSensor) {
+    function create(ir: InfraredSensor) {
         // it's created by referencing it
     }
 
@@ -54,10 +54,10 @@ namespace input {
             }
 
             // make sure sensors are up
-            create(ir1)
-            create(ir2)
-            create(ir3)
-            create(ir4)
+            create(infrared1)
+            create(infrared2)
+            create(infrared3)
+            create(infrared4)
         }
 
         let num = -1
@@ -69,8 +69,8 @@ namespace input {
         return buttons[num]
     }
 
-    //% fixedInstance
-    export class IrSensor extends internal.UartSensor {
+    //% fixedInstances
+    export class InfraredSensor extends internal.UartSensor {
         private channel: IrRemoteChannel
 
         constructor(port: number) {
@@ -110,17 +110,17 @@ namespace input {
         }
 
         /**
-         * Get the distance measured by the infrared sensor.
+         * Get the promixity measured by the infrared sensor, from ``0`` (close) to ``100`` (far)
          * @param ir the infrared sensor
          */
-        //% help=input/infrared/distance
-        //% block="%infrared|distance"
-        //% blockId=infraredGetDistance
+        //% help=input/infrared/proximity
+        //% block="%infrared|proximity"
+        //% blockId=infraredGetProximity
         //% parts="infrared"
         //% blockNamespace=input
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
-        distance() {
+        proximity() {
             this.setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -148,17 +148,17 @@ namespace input {
         }
     }
 
-    //% whenUsed
-    export const ir1: IrSensor = new IrSensor(1)
+    //% fixedInstance whenUsed
+    export const infrared1: InfraredSensor = new InfraredSensor(1)
 
-    //% whenUsed
-    export const ir2: IrSensor = new IrSensor(2)
+    //% fixedInstance whenUsed
+    export const infrared2: InfraredSensor = new InfraredSensor(2)
 
-    //% whenUsed
-    export const ir3: IrSensor = new IrSensor(3)
+    //% fixedInstance whenUsed
+    export const infrared3: InfraredSensor = new InfraredSensor(3)
 
-    //% whenUsed
-    export const ir4: IrSensor = new IrSensor(4)
+    //% fixedInstance whenUsed
+    export const infrared4: InfraredSensor = new InfraredSensor(4)
 
     /**
      * Remote top-left button.
