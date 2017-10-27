@@ -31,5 +31,4 @@ videos/**
 lib/
 .vscode/
 bin
-out.wav
-
+scripts/out.*

@@ -37,7 +37,7 @@ wavHd.writeInt32LE(datasize, 40)
 
 const wav = Buffer.concat([wavHd, rsf.slice(8)])
 
-console.log("writing out.wav")
+console.log("writing out.wav; " + samplerate + "Hz")
 fs.writeFileSync("out.wav", wav)
 
 if (require("os").platform() == "darwin")
