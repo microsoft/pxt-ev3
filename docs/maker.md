@@ -14,6 +14,13 @@ These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (455
   "url":"/maker/sound-machine",
   "cardType": "example",
   "imageUrl": "/static/maker/sound-machine.png"
+},
+{
+  "name": "Sound Of Color",
+  "description": "Play different sounds based on the color",
+  "url":"/maker/sound-of-color",
+  "cardType": "example",
+  "imageUrl": "/static/maker/sound-of-color.png"
 }
 ]
 ```
