@@ -43,7 +43,7 @@ namespace input {
         //% blockNamespace=input
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
-        onObjectNear(distance: number, handler: () => void) {
+        onObjectNear(handler: () => void) {
             control.onEvent(this._id, PromixityEvent.ObjectNear, handler);
             if (this.distance() == PromixityEvent.ObjectNear)
                 control.runInBackground(handler);

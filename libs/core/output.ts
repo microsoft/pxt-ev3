@@ -41,7 +41,7 @@ namespace output {
         buf[0] = DAL.opProgramStart
         writePWM(buf)
     }
-    
+
     function writePWM(buf: Buffer): void {
         init()
         pwmMM.write(buf)
@@ -61,64 +61,48 @@ namespace output {
 
     function resetMotors() {
         reset(Output.ALL)
-    }    
+    }
+
+    /**
+     * Stops all motors
+     */
+    //% blockId=motorStopAll block="stop all motors"
+    //% weight=10 group="Motors" blockGap=8
+    export function stopAllMotors() {
+        const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
+        writePWM(b)
+    }
 
     //% fixedInstances
     export class Motor extends control.Component {
-        port: Output;
-        constructor(port: Output) {
+        private port: Output;
+        private large: boolean;
+        private brake: boolean;
+
+        constructor(port: Output, large: boolean) {
             super();
             this.port = port;
+            this.large = large;
+            this.brake = false;
         }
 
         /**
-         * Power off the motor.
-         * @param motor the motor to turn off
-         */
-        //% blockId=outputMotorOf block="%motor|OFF then brake %brake"
-        //% brake.fieldEditor=toggleonoff
-        //% weight=100 group="Motors" blockGap=8
-        off(brake = false) {
-            const b = mkCmd(this.port, DAL.opOutputStop, 1)
-            b.setNumber(NumberFormat.UInt8LE, 2, brake ? 1 : 0)
-            writePWM(b)
-        }
-
-        /**
-         * Power on the motor.
+         * Power on or off the motor.
          * @param motor the motor to turn on
          * @param power the motor power level from ``-100`` to ``100``, eg: 50
          */
-        //% blockId=outputMotorOn block="%motor|ON at power %power"
-        //% power.min=-100 power.max=100 
+        //% blockId=outputMotorOn block="%motor|%onOrOff"
+        //% onOrOff.fieldEditor=toggleonoff
         //% weight=99 group="Motors" blockGap=8
-        on(power: number = 50) {
-            this.setPower(power);
-            const b = mkCmd(this.port, DAL.opOutputStart, 0)
-            writePWM(b);                
-        }
-
-        /**
-         * Power on the motor for a specified number of milliseconds.
-         * @param motor the motor to turn on
-         * @param power the motor power level from ``-100`` to ``100``, eg: 50
-         * @param ms the number of milliseconds to turn the motor on, eg: 500
-         * @param brake whether or not to use the brake
-         */
-        //% blockId=outputMotorOnForTime block="%motor|ON at power %power|for %ms=timePicker|ms then brake %brake"
-        //% power.min=-100 power.max=100 
-        //% brake.fieldEditor=toggleonoff
-        //% weight=98 group="Motors" blockGap=8
-        onForTime(power: number, ms: number, brake = false) {
-            step(this.port, {
-                power,
-                step1: 0,
-                step2: ms,
-                step3: 0,
-                useSteps: false,
-                useBrake: brake
-            })
-            loops.pause(ms);
+        on(onOrOff: boolean = true) {
+            if (onOrOff) {
+                const b = mkCmd(this.port, DAL.opOutputStart, 0)
+                writePWM(b);
+            } else {
+                const b = mkCmd(this.port, DAL.opOutputStop, 1)
+                b.setNumber(NumberFormat.UInt8LE, 2, this.brake ? 1 : 0)
+                writePWM(b)
+            }
         }
 
         /**
@@ -127,11 +111,34 @@ namespace output {
          * @param power the desired speed to use. eg: 50
          */
         //% blockId=motorSetPower block="%motor|set power to %speed"
-        //% weight=60 group="Motors"
+        //% weight=62 group="Motors" blockGap=8
         //% speed.min=-100 speed.max=100
         setPower(power: number) {
             const b = mkCmd(this.port, DAL.opOutputPower, 1)
             b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
+            writePWM(b)
+        }
+
+        /**
+         * Sets the automatic brake on or off when the motor is off
+         * @param brake a value indicating if the motor should break when off
+         */
+        //% blockId=outputMotorSetBrakeMode block="%motor|set brake %brake"
+        //% brake.fieldEditor=toggleonoff
+        //% weight=60 group="Motors" blockGap=8
+        setBrake(brake: boolean) {
+            this.brake = brake;
+        }
+
+        /** 
+         * Reverses the motor polarity
+        */
+        //% blockId=motorSetReversed block="%motor|set reversed %reversed"
+        //% reversed.fieldEditor=toggleonoff
+        //% weight=59 group="Motors"
+        setReversed(reversed: boolean) {
+            const b = mkCmd(this.port, DAL.opOutputPolarity, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, reversed ? -1 : 1);
             writePWM(b)
         }
 
@@ -141,36 +148,78 @@ namespace output {
          */
         //% blockId=motorSpeed block="%motor|speed"
         //% weight=50 group="Motors" blockGap=8
-        speed() {
+        speed(): number {
             return getMotorData(this.port).actualSpeed;
-        }        
+        }
+
+        /**
+         * Gets motor step count.
+         * @param motor the port which connects to the motor
+         */
+        //% blockId=motorCount block="%motor|count"
+        //% weight=49 group="Motors" blockGap=8
+        count(): number {
+            return getMotorData(this.port).count;
+        }
+
+        /**
+         * Gets motor tacho count.
+         * @param motor the port which connects to the motor
+         */
+        //% blockId=motorTachoCount block="%motor|tacho count"
+        //% weight=48 group="Motors"
+        tachoCount(): number {
+            return getMotorData(this.port).tachoCount;
+        }
+
+        /**
+         * Clears the motor count
+         */
+        clearCount() {
+            const b = mkCmd(this.port, DAL.opOutputClearCount, 0)
+            writePWM(b)
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                if (this.port & (1 << i)) {
+                    motorMM.setNumber(NumberFormat.Int32LE, i * MotorDataOff.Size + MotorDataOff.TachoSensor, 0)
+                }
+            }
+        }
+
+        /**
+         * Resets the motor.
+         */
+        reset() {
+            reset(this.port);
+        }
     }
 
-    //% whenUsed fixedInstance block="motor B"
-    export const motorB = new Motor(Output.B);
+    //% whenUsed fixedInstance block="large motor A"
+    export const largeMotorA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="motor C"
-    export const motorC = new Motor(Output.C);
+    //% whenUsed fixedInstance block="large motor B"
+    export const largeMotorB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="motor A"
-    export const motorA = new Motor(Output.A);
+    //% whenUsed fixedInstance block="large motor C"
+    export const largeMotorC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="motor D"
-    export const motorD = new Motor(Output.D);
+    //% whenUsed fixedInstance block="large motor D"
+    export const largeMotorD = new Motor(Output.D, true);
+
+    //% whenUsed fixedInstance block="medium motor A"
+    export const mediumMotorA = new Motor(Output.A, false);
+
+    //% whenUsed fixedInstance block="medium motor B"
+    export const mediumMotorB = new Motor(Output.B, false);
+
+    //% whenUsed fixedInstance block="medium motor C"
+    export const mediumMotorC = new Motor(Output.C, false);
+
+    //% whenUsed fixedInstance block="medium motor D"
+    export const mediumMotorD = new Motor(Output.D, false);
 
     function reset(out: Output) {
         let b = mkCmd(out, DAL.opOutputReset, 0)
         writePWM(b)
-    }
-
-    function clearCount(out: Output) {
-        let b = mkCmd(out, DAL.opOutputClearCount, 0)
-        writePWM(b)
-        for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
-            if (out & (1 << i)) {
-                motorMM.setNumber(NumberFormat.Int32LE, i * MotorDataOff.Size + MotorDataOff.TachoSensor, 0)
-            }
-        }
     }
 
     function outOffset(out: Output) {
@@ -195,12 +244,6 @@ namespace output {
             tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts),
             count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor),
         }
-    }
-
-    function setPolarity(out: Output, polarity: number) {
-        let b = mkCmd(out, DAL.opOutputPolarity, 1)
-        b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-1, 1, polarity))
-        writePWM(b)
     }
 
     interface StepOptions {
