@@ -65,78 +65,34 @@ namespace output {
 
     //% fixedInstances
     export class Motor extends control.Component {
-        port: Output;
-        large: boolean;
+        private port: Output;
+        private large: boolean;
+        private brake: boolean;
+
         constructor(port: Output, large: boolean) {
             super();
             this.port = port;
             this.large = large;
+            this.brake = false;
         }
 
         /**
-         * Power off the motor.
-         * @param motor the motor to turn off
-         */
-        //% blockId=outputMotorOf block="%motor|OFF then brake %brake"
-        //% brake.fieldEditor=toggleonoff
-        //% weight=100 group="Motors" blockGap=8
-        off(brake = false) {
-            const b = mkCmd(this.port, DAL.opOutputStop, 1)
-            b.setNumber(NumberFormat.UInt8LE, 2, brake ? 1 : 0)
-            writePWM(b)
-        }
-
-        /**
-         * Power on the motor.
+         * Power on or off the motor.
          * @param motor the motor to turn on
          * @param power the motor power level from ``-100`` to ``100``, eg: 50
          */
-        //% blockId=outputMotorOn block="%motor|ON at power %power"
-        //% power.min=-100 power.max=100 
+        //% blockId=outputMotorOn block="%motor|%onOrOff"
         //% weight=99 group="Motors" blockGap=8
-        on(power: number = 50) {
-            this.setPower(power);
-            const b = mkCmd(this.port, DAL.opOutputStart, 0)
-            writePWM(b);
-        }
-
-        /**
-         * Powers on the motor for a specified number of milliseconds.
-         * @param motor the motor to turn on
-         * @param power the motor power level from ``-100`` to ``100``, eg: 50
-         * @param milliseconds the number of milliseconds to turn the motor on, eg: 500
-         * @param brake whether or not to use the brake
-         */
-        //% blockId=outputMotorOnForTime block="%motor|ON at power %power|for %milliseconds=timePicker|ms then brake %brake"
-        //% power.min=-100 power.max=100 
-        //% brake.fieldEditor=toggleonoff
-        //% weight=98 group="Motors" blockGap=8
-        onForTime(power: number, milliseconds: number, brake = false) {
-            step(this.port, {
-                power,
-                step1: 0,
-                step2: milliseconds,
-                step3: 0,
-                useSteps: false,
-                useBrake: brake
-            })
-            loops.pause(milliseconds);
-        }
-
-        /**
-         * Powers on the motor for a specified number of milliseconds.
-         * @param motor the motor to turn on
-         * @param power the motor power level from ``-100`` to ``100``, eg: 50
-         * @param degrees the number of degrees to turn, eg: 90
-         * @param brake whether or not to use the brake
-         */
-        //% blockId=outputMotorOnForAngle block="%motor|ON at power %power|for %degrees|deg then brake %brake"
-        //% power.min=-100 power.max=100
-        //% degrees.min=-360 degrees.max=360        
-        //% brake.fieldEditor=toggleonoff
-        //% weight=97 group="Motors" blockGap=8
-        onForAngle(power: number, degrees: number, brake = false) {
-            // TODO
+        //% onOrOff.fieldEditor=toggleonoff
+        on(onOrOff: boolean = true) {
+            if (onOrOff) {
+                const b = mkCmd(this.port, DAL.opOutputStart, 0)
+                writePWM(b);    
+            } else {
+                const b = mkCmd(this.port, DAL.opOutputStop, 1)
+                b.setNumber(NumberFormat.UInt8LE, 2, this.brake ? 1 : 0)
+                writePWM(b)                    
+            }
         }
 
         /**
@@ -145,12 +101,23 @@ namespace output {
          * @param power the desired speed to use. eg: 50
          */
         //% blockId=motorSetPower block="%motor|set power to %speed"
-        //% weight=60 group="Motors"
+        //% weight=60 group="Motors" blockGap=8
         //% speed.min=-100 speed.max=100
         setPower(power: number) {
             const b = mkCmd(this.port, DAL.opOutputPower, 1)
             b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
             writePWM(b)
+        }
+
+        /**
+         * Sets the automatic brake on or off when the motor is off
+         * @param brake a value indicating if the motor should break when off
+         */
+        //% blockId=outputMotorSetBrakeMode block="%motor|set brake %brake"
+        //% brake.fieldEditor=toggleonoff
+        //% weight=60 group="Motors"
+        setBrake(brake: boolean) {
+            this.brake = brake;
         }
 
         /**
