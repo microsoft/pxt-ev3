@@ -40,17 +40,17 @@ namespace input {
         }
     }
 
-    let buttons: Button[]
+    let buttons: RemoteInfraredBeaconButton[]
 
     function create(ir: InfraredSensor) {
         // it's created by referencing it
     }
 
-    export function irButton(id: IrRemoteButton) {
+    export function irButton(id: IrRemoteButton): RemoteInfraredBeaconButton {
         if (buttons == null) {
             buttons = []
             for (let i = 0; i < 5; ++i) {
-                buttons.push(new Button())
+                buttons.push(new RemoteInfraredBeaconButton(new Button()))
             }
 
             // make sure sensors are up
@@ -67,6 +67,65 @@ namespace input {
         }
         num = Math.clamp(0, buttons.length - 1, num)
         return buttons[num]
+    }
+
+    //% fixedInstances
+    export class RemoteInfraredBeaconButton extends control.Component {
+        private button: Button;
+        constructor(button: Button) {
+            super();
+            this.button = button;
+        }
+
+        _update(curr: boolean) {
+            this.button._update(curr);
+        }
+
+        /**
+         * Check if a remote button is currently pressed or not.
+         * @param button the remote button to query the request
+         */
+        //% help=input/remote-infrared-beacon/is-pressed
+        //% block="%button|is pressed"
+        //% blockId=remoteButtonIsPressed
+        //% parts="remote"
+        //% blockNamespace=input
+        //% weight=81 blockGap=8
+        //% group="Remote Infrared Beacon"
+        isPressed() {
+            return this.button.isPressed();
+        }
+
+        /**
+         * See if the remote button was pressed again since the last time you checked.
+         * @param button the remote button to query the request
+         */
+        //% help=input/remote-infrared-beacon/was-pressed
+        //% block="%button|was pressed"
+        //% blockId=remotebuttonWasPressed
+        //% parts="remote"
+        //% blockNamespace=input
+        //% weight=80 blockGap=8
+        //% group="Remote Infrared Beacon"
+        wasPressed() {
+            return this.button.wasPressed();
+        }
+
+        /**
+         * Do something when a button or sensor is clicked, up or down
+         * @param button the button that needs to be clicked or used
+         * @param event the kind of button gesture that needs to be detected
+         * @param body code to run when the event is raised
+         */
+        //% help=input/remote-infrared-beacon/on-event
+        //% blockId=remotebuttonEvent block="on %button|%event"
+        //% parts="remote"
+        //% blockNamespace=input
+        //% weight=99 blockGap=8
+        //% group="Remote Infrared Beacon"
+        onEvent(ev: ButtonEvent, body: () => void) {
+            this.button.onEvent(ev, body);
+        }
     }
         
     //% fixedInstances
@@ -100,7 +159,7 @@ namespace input {
             if (this.mode == IrSensorMode.RemoteControl) {
                 for (let i = 0; i < buttons.length; ++i) {
                     let v = !!(curr & (1 << i))
-                    buttons[i].update(v)
+                    buttons[i]._update(v)
                 }
             } else {
                 if (curr)
@@ -194,33 +253,34 @@ namespace input {
     //% fixedInstance whenUsed block="infrared sensor 4"
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
-    /**
-     * Remote top-left button.
-     */
-    //% whenUsed block="remote top-left" weight=95 fixedInstance
-    export const remoteTopLeft = irButton(IrRemoteButton.TopLeft)
-
-    /**
-     * Remote top-right button.
-     */
-    //% whenUsed block="remote top-right" weight=95 fixedInstance
-    export const remoteTopRight = irButton(IrRemoteButton.TopRight)
-
-    /**
-     * Remote bottom-left button.
-     */
-    //% whenUsed block="remote bottom-left" weight=95 fixedInstance
-    export const remoteBottomLeft = irButton(IrRemoteButton.BottomLeft)
-
-    /**
-     * Remote bottom-right button.
-     */
-    //% whenUsed block="remote bottom-right" weight=95 fixedInstance
-    export const remoteBottomRight = irButton(IrRemoteButton.BottomRight)
 
     /**
      * Remote beacon (center) button.
      */
-    //% whenUsed block="remote center" weight=95 fixedInstance
-    export const remoteCenter = irButton(IrRemoteButton.CenterBeacon)
+    //% whenUsed block="remote button center" weight=95 fixedInstance
+    export const remoteButtonCenter = irButton(IrRemoteButton.CenterBeacon)
+    
+    /**
+     * Remote top-left button.
+     */
+    //% whenUsed block="remote button top-left" weight=95 fixedInstance
+    export const remoteButtonTopLeft = irButton(IrRemoteButton.TopLeft)
+
+    /**
+     * Remote top-right button.
+     */
+    //% whenUsed block="remote button top-right" weight=95 fixedInstance
+    export const remoteButtonTopRight = irButton(IrRemoteButton.TopRight)
+
+    /**
+     * Remote bottom-left button.
+     */
+    //% whenUsed block="remote button bottom-left" weight=95 fixedInstance
+    export const remoteButtonBottomLeft = irButton(IrRemoteButton.BottomLeft)
+
+    /**
+     * Remote bottom-right button.
+     */
+    //% whenUsed block="remote button bottom-right" weight=95 fixedInstance
+    export const remoteButtonBottomRight = irButton(IrRemoteButton.BottomRight)
 }

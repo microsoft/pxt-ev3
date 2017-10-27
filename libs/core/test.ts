@@ -36,12 +36,12 @@ input.touchSensor1.onEvent(TouchSensorEvent.Bumped, () => {
     num++
 })
 
-input.remoteTopLeft.onEvent(ButtonEvent.Click, () => {
+input.remoteButtonTopLeft.onEvent(ButtonEvent.Click, () => {
     screen.print("TOPLEFT " + num, 10, 60)
     num++
 })
 
-input.remoteTopRight.onEvent(ButtonEvent.Down, () => {
+input.remoteButtonTopRight.onEvent(ButtonEvent.Down, () => {
     screen.print("TOPRIGH " + num, 10, 60)
     num++
 })
