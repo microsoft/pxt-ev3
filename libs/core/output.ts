@@ -41,7 +41,7 @@ namespace output {
         buf[0] = DAL.opProgramStart
         writePWM(buf)
     }
-    
+
     function writePWM(buf: Buffer): void {
         init()
         pwmMM.write(buf)
@@ -61,14 +61,16 @@ namespace output {
 
     function resetMotors() {
         reset(Output.ALL)
-    }    
+    }
 
     //% fixedInstances
     export class Motor extends control.Component {
         port: Output;
-        constructor(port: Output) {
+        large: boolean;
+        constructor(port: Output, large: boolean) {
             super();
             this.port = port;
+            this.large = large;
         }
 
         /**
@@ -95,30 +97,46 @@ namespace output {
         on(power: number = 50) {
             this.setPower(power);
             const b = mkCmd(this.port, DAL.opOutputStart, 0)
-            writePWM(b);                
+            writePWM(b);
         }
 
         /**
-         * Power on the motor for a specified number of milliseconds.
+         * Powers on the motor for a specified number of milliseconds.
          * @param motor the motor to turn on
          * @param power the motor power level from ``-100`` to ``100``, eg: 50
-         * @param ms the number of milliseconds to turn the motor on, eg: 500
+         * @param milliseconds the number of milliseconds to turn the motor on, eg: 500
          * @param brake whether or not to use the brake
          */
-        //% blockId=outputMotorOnForTime block="%motor|ON at power %power|for %ms=timePicker|ms then brake %brake"
+        //% blockId=outputMotorOnForTime block="%motor|ON at power %power|for %milliseconds=timePicker|ms then brake %brake"
         //% power.min=-100 power.max=100 
         //% brake.fieldEditor=toggleonoff
         //% weight=98 group="Motors" blockGap=8
-        onForTime(power: number, ms: number, brake = false) {
+        onForTime(power: number, milliseconds: number, brake = false) {
             step(this.port, {
                 power,
                 step1: 0,
-                step2: ms,
+                step2: milliseconds,
                 step3: 0,
                 useSteps: false,
                 useBrake: brake
             })
-            loops.pause(ms);
+            loops.pause(milliseconds);
+        }
+
+        /**
+         * Powers on the motor for a specified number of milliseconds.
+         * @param motor the motor to turn on
+         * @param power the motor power level from ``-100`` to ``100``, eg: 50
+         * @param degrees the number of degrees to turn, eg: 90
+         * @param brake whether or not to use the brake
+         */
+        //% blockId=outputMotorOnForAngle block="%motor|ON at power %power|for %degrees|deg then brake %brake"
+        //% power.min=-100 power.max=100
+        //% degrees.min=-360 degrees.max=360        
+        //% brake.fieldEditor=toggleonoff
+        //% weight=97 group="Motors" blockGap=8
+        onForAngle(power: number, degrees: number, brake = false) {
+            // TODO
         }
 
         /**
@@ -143,20 +161,32 @@ namespace output {
         //% weight=50 group="Motors" blockGap=8
         speed() {
             return getMotorData(this.port).actualSpeed;
-        }        
+        }
     }
 
-    //% whenUsed fixedInstance block="motor B"
-    export const motorB = new Motor(Output.B);
+    //% whenUsed fixedInstance block="large motor A"
+    export const largeMotorA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="motor C"
-    export const motorC = new Motor(Output.C);
+    //% whenUsed fixedInstance block="large motor B"
+    export const largeMotorB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="motor A"
-    export const motorA = new Motor(Output.A);
+    //% whenUsed fixedInstance block="large motor C"
+    export const largeMotorC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="motor D"
-    export const motorD = new Motor(Output.D);
+    //% whenUsed fixedInstance block="large motor D"
+    export const largeMotorD = new Motor(Output.D, true);
+
+    //% whenUsed fixedInstance block="medium motor A"
+    export const mediumMotorA = new Motor(Output.A, false);
+
+    //% whenUsed fixedInstance block="medium motor B"
+    export const mediumMotorB = new Motor(Output.B, false);
+
+    //% whenUsed fixedInstance block="medium motor C"
+    export const mediumMotorC = new Motor(Output.C, false);
+
+    //% whenUsed fixedInstance block="medium motor D"
+    export const mediumMotorD = new Motor(Output.D, false);
 
     function reset(out: Output) {
         let b = mkCmd(out, DAL.opOutputReset, 0)
