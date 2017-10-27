@@ -123,23 +123,24 @@ namespace input {
         }
 
         /**
-         * Registers code to run when an object is getting near
-         * @param distance the proximity, eg: 10
+         * Registers code to run when an object is getting near.
          * @param handler the code to run when detected
          */
         //% help=input/infrared/on-object-near
-        //% block="on %sensor|object within %distance"
+        //% block="on %sensor|object near"
         //% blockId=infraredOnObjectNear
         //% parts="infraredsensor"
         //% blockNamespace=input
         //% weight=100 blockGap=8
-        //% distance.min=1 distance.max=95
         //% group="Infrared Sensor"
-        onObjectNear(distance: number, handler: () => void) {
-            this.proximityThreshold = Math.max(1, Math.min(95, distance));
+        onObjectNear(handler: () => void) {
             control.onEvent(this._id, PromixityEvent.ObjectNear, handler);
             if (this.proximity() == PromixityEvent.ObjectNear)
                 control.runInBackground(handler);
+        }
+
+        setObjectNearThreshold(distance: number) {
+            this.proximityThreshold = Math.max(1, Math.min(95, distance));
         }
         
         /**

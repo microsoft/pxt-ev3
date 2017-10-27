@@ -34,22 +34,23 @@ namespace input {
 
         /**
          * Registers code to run when the given color is close
-         * @param distance the distance in centimeters when an object is close, eg: 10
          * @param handler the code to run when detected
          */
         //% help=input/ultrasonic/on-object-near
-        //% block="on %sensor|object within %distance|cm"
+        //% block="on %sensor|object near"
         //% blockId=ultrasonicOnObjectClose
         //% parts="infraredsensor"
         //% blockNamespace=input
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
-        //% distance.min=1 distance.max=250
         onObjectNear(distance: number, handler: () => void) {
-            this.promixityThreshold = Math.max(1, Math.min(95, distance));
             control.onEvent(this._id, PromixityEvent.ObjectNear, handler);
             if (this.distance() == PromixityEvent.ObjectNear)
                 control.runInBackground(handler);
+        }
+
+        setObjectNearThreshold(distance: number) {
+            this.promixityThreshold = Math.max(1, Math.min(250, distance));
         }
 
         /**
