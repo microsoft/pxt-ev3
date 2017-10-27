@@ -44,6 +44,7 @@
   "input.TouchSensor.isTouched|block": "%sensor|is touched",
   "input.TouchSensor.onEvent|block": "on %sensor|%event",
   "input.UltraSonicSensor.distance|block": "%sensor|distance",
+  "input.UltraSonicSensor.onObject|block": "on %sensor|object within %distance|cm",
   "input.buttonDown|block": "brick button down",
   "input.buttonEnter|block": "brick button enter",
   "input.buttonLeft|block": "brick button left",

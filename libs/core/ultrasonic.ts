@@ -1,13 +1,53 @@
+enum UltrasonicEvent {
+    ObjectClose = 1,
+    ObjectDetected = 2
+}
+
 namespace input {
 
     //% fixedInstances
     export class UltraSonicSensor extends internal.UartSensor {
+        private threshold: number;
+
         constructor(port: number) {
             super(port)
+            this.threshold = 10;
         }
 
         _deviceType() {
             return DAL.DEVICE_TYPE_ULTRASONIC
+        }
+
+        _query(): number {
+            const d = this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;            
+            return d < this.threshold ? UltrasonicEvent.ObjectClose
+                : d > this.threshold + 5 ? UltrasonicEvent.ObjectDetected
+                : 0;
+        }
+
+        _update(prev: number, curr: number) {
+            if (curr) 
+                control.raiseEvent(this._id, curr);
+        }
+
+        /**
+         * Registers code to run when the given color is close
+         * @param distance the distance in centimeters when an object is close, eg: 10
+         * @param handler the code to run when detected
+         */
+        //% help=input/ultrasonic/on-object
+        //% block="on %sensor|object within %distance|cm"
+        //% blockId=ultrasonicOnObjectClose
+        //% parts="ultrasonicsensor"
+        //% blockNamespace=input
+        //% weight=100 blockGap=8
+        //% group="Ultrasonic Sensor"
+        onObject(distance: number, handler: () => void) {
+            this.threshold = Math.max(1, Math.min(95, distance));
+            control.onEvent(this._id, UltrasonicEvent.ObjectClose, handler);
+            this._setMode(0)
+            if (this._query() == UltrasonicEvent.ObjectClose)
+                control.runInBackground(handler);
         }
 
         /**
@@ -24,7 +64,7 @@ namespace input {
         distance() {
             // it supposedly also has an inch mode, but we stick to mm
             this._setMode(0)
-            return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff
+            return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
         }
     }
 
