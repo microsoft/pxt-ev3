@@ -9,13 +9,21 @@ const enum ColorSensorMode {
 }
 
 const enum ColorSensorColor {
+    //% block="none"
     None,
+    //% block="black"
     Black,
+    //% block="blue"
     Blue,
+    //% block="green"
     Green,
+    //% block="yellow"
     Yellow,
+    //% block="red"
     Red,
+    //% block="white"
     White,
+    //% block="brown"
     Brown,
 }
 
@@ -33,6 +41,35 @@ namespace input {
 
         setMode(m: ColorSensorMode) {
             this._setMode(m)
+        }
+
+        _query() {
+            if (this.mode == ColorSensorMode.Color)
+                return this.getNumber(NumberFormat.UInt8LE, 0)
+            return 0
+        }
+
+        _update(prev: number, curr: number) {
+            control.raiseEvent(this._id, curr);
+        }
+
+        /**
+         * Registers code to run when the given color is detected
+         * @param color the color to dtect
+         * @param handler the code to run when detected
+         */
+        //% help=input/color/on-color-detected
+        //% block="on %sensor|detected %color"
+        //% blockId=colorOnColorDetected
+        //% parts="colorsensor"
+        //% blockNamespace=input
+        //% weight=100 blockGap=8
+        //% group="Color Sensor"
+        onColorDetected(color: ColorSensorColor, handler: () => void) {
+            control.onEvent(this._id, <number>color, handler);
+            this.setMode(ColorSensorMode.Color)
+            if (this.color() == color)
+                control.runInBackground(handler)
         }
 
         /**
