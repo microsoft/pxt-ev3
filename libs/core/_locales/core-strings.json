@@ -116,6 +116,7 @@
   "{id:category}Sensors": "Sensors",
   "{id:category}Serial": "Serial",
   "{id:group}Brick": "Brick",
+  "{id:group}Buttons": "Buttons",
   "{id:group}Color Sensor": "Color Sensor",
   "{id:group}Gyro Sensor": "Gyro Sensor",
   "{id:group}Infrared Sensor": "Infrared Sensor",

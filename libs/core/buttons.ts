@@ -89,7 +89,7 @@ namespace brick {
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=81 blockGap=8
-        //% group="Brick"
+        //% group="Buttons"
         isPressed() {
             return this._isPressed
         }
@@ -104,7 +104,7 @@ namespace brick {
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=80 blockGap=8
-        //% group="Brick"
+        //% group="Buttons"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -122,7 +122,7 @@ namespace brick {
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=99 blockGap=8
-        //% group="Brick"
+        //% group="Buttons"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
