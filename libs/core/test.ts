@@ -6,42 +6,42 @@ motors.setStatusLight(LightsPattern.Orange)
 
 screen.drawIcon(100, 50, screen.doubleIcon(screen.heart), Draw.Double | Draw.Transparent)
 
-input.buttonEnter.onEvent(ButtonEvent.Click, () => {
+sensors.buttonEnter.onEvent(ButtonEvent.Click, () => {
     screen.clear()
 })
 
-input.buttonLeft.onEvent(ButtonEvent.Click, () => {
+sensors.buttonLeft.onEvent(ButtonEvent.Click, () => {
     screen.drawRect(10, 70, 20, 10, Draw.Fill)
     motors.setStatusLight(LightsPattern.Red)
     screen.setFont(screen.microbitFont())
 })
 
-input.buttonRight.onEvent(ButtonEvent.Click, () => {
+sensors.buttonRight.onEvent(ButtonEvent.Click, () => {
     screen.print("Right!", 10, 60)
 })
 
-input.buttonDown.onEvent(ButtonEvent.Click, () => {
+sensors.buttonDown.onEvent(ButtonEvent.Click, () => {
     screen.print("Down! ", 10, 60)
 })
 
-input.buttonUp.onEvent(ButtonEvent.Click, () => {
+sensors.buttonUp.onEvent(ButtonEvent.Click, () => {
     screen.print("Up!  ", 10, 60)
 })
 
 
 let num = 0
 
-input.touchSensor1.onEvent(TouchSensorEvent.Bumped, () => {
+sensors.touchSensor1.onEvent(TouchSensorEvent.Bumped, () => {
     screen.print("Click!  " + num, 10, 60)
     num++
 })
 
-input.remoteButtonTopLeft.onEvent(ButtonEvent.Click, () => {
+sensors.remoteButtonTopLeft.onEvent(ButtonEvent.Click, () => {
     screen.print("TOPLEFT " + num, 10, 60)
     num++
 })
 
-input.remoteButtonTopRight.onEvent(ButtonEvent.Down, () => {
+sensors.remoteButtonTopRight.onEvent(ButtonEvent.Down, () => {
     screen.print("TOPRIGH " + num, 10, 60)
     num++
 })

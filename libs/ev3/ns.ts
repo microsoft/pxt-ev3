@@ -1,6 +1,10 @@
 
-//% color="#D42878"
-namespace input {
+//% color="#D42878" weight=100
+namespace brick {
+}
+
+//% color="#D42878" weight=95
+namespace sensors {
 }
 
 //% color="#8AC044" weight=90 icon="\uf185"

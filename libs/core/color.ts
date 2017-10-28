@@ -27,7 +27,7 @@ const enum ColorSensorColor {
     Brown,
 }
 
-namespace input {
+namespace sensors {
 
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
@@ -62,7 +62,7 @@ namespace input {
         //% block="on %sensor|detected %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
@@ -80,7 +80,7 @@ namespace input {
         //% block="%color| ambient light"
         //% blockId=colorGetAmbient
         //% parts="colorsensor"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=65 blockGap=8
         //% group="Color Sensor"
         ambientLight() {
@@ -96,7 +96,7 @@ namespace input {
         //% block="%color| reflected light"
         //% blockId=colorGetReflected
         //% parts="colorsensor"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=64 blockGap=8
         //% group="Color Sensor"
         reflectedLight(): number {
@@ -112,7 +112,7 @@ namespace input {
         //% block="%color| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=66 blockGap=8
         //% group="Color Sensor"
         color(): ColorSensorColor {

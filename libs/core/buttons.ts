@@ -47,7 +47,7 @@ const enum ButtonEvent {
     Down = 4,
 }
 
-namespace input {
+namespace brick {
     /**
      * Generic button class, for device buttons and sensors.
      */
@@ -87,7 +87,7 @@ namespace input {
         //% block="%button|is pressed"
         //% blockId=buttonIsPressed
         //% parts="brick"
-        //% blockNamespace=input
+        //% blockNamespace=brick
         //% weight=81 blockGap=8
         //% group="Brick"
         isPressed() {
@@ -102,7 +102,7 @@ namespace input {
         //% block="%button|was pressed"
         //% blockId=buttonWasPressed
         //% parts="brick"
-        //% blockNamespace=input
+        //% blockNamespace=brick
         //% weight=80 blockGap=8
         //% group="Brick"
         wasPressed() {
@@ -120,7 +120,7 @@ namespace input {
         //% help=input/button/on-event
         //% blockId=buttonEvent block="on %button|%event"
         //% parts="brick"
-        //% blockNamespace=input
+        //% blockNamespace=brick
         //% weight=99 blockGap=8
         //% group="Brick"
         onEvent(ev: ButtonEvent, body: () => void) {
@@ -129,7 +129,7 @@ namespace input {
     }
 }
 
-namespace input {
+namespace brick {
     let btnsMM: MMap
     let buttons: DevButton[]
 
@@ -155,7 +155,7 @@ namespace input {
         btnsMM = control.mmap("/dev/lms_ui", DAL.NUM_BUTTONS, 0)
         if (!btnsMM) control.fail("no buttons?")
         buttons = []
-        input.internal.unsafePollForChanges(50, readButtons, (prev, curr) => {
+        sensors.internal.unsafePollForChanges(50, readButtons, (prev, curr) => {
             if (curr & DAL.BUTTON_ID_ESCAPE)
                 control.reset()
             for (let b of buttons)
@@ -180,31 +180,31 @@ namespace input {
     /**
      * Enter button on the EV3 Brick.
      */
-    //% whenUsed block="brick button enter" weight=95 fixedInstance
+    //% whenUsed block="button enter" weight=95 fixedInstance
     export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 
     /**
      * Left button on the EV3 Brick.
      */
-    //% whenUsed block="brick button left" weight=95 fixedInstance
+    //% whenUsed block="button left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
      * Right button on the EV3 Brick.
      */
-    //% whenUsed block="brick button right" weight=94 fixedInstance
+    //% whenUsed block="button right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
      * Up button on the EV3 Brick.
      */
-    //% whenUsed block="brick button up" weight=95 fixedInstance
+    //% whenUsed block="button up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
      * Down button on the EV3 Brick.
      */
-    //% whenUsed block="brick button down" weight=95 fixedInstance
+    //% whenUsed block="button down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
 }
 
@@ -215,7 +215,7 @@ namespace control {
      */
     export function deviceFirmwareVersion(): string {
         let buf = output.createBuffer(6)
-        input.internal.getBtnsMM().read(buf)
+        brick.internal.getBtnsMM().read(buf)
         let r = ""
         for (let i = 0; i < buf.length; ++i) {
             let c = buf[i]
@@ -226,7 +226,7 @@ namespace control {
     }
 }
 
-namespace motors {
+namespace brick {
     let currPattern: LightsPattern
 
     /**
@@ -234,14 +234,14 @@ namespace motors {
      * @param pattern the lights pattern to use.
      */
     //% blockId=setLights block="set status light %pattern=led_pattern"
-    //% weight=100 group="Brick"
+    //% weight=100 group="Light"
     export function setStatusLight(pattern: number): void {
         if (currPattern === pattern)
             return
         currPattern = pattern
         let cmd = output.createBuffer(2)
         cmd[0] = pattern + 48
-        input.internal.getBtnsMM().write(cmd)
+        brick.internal.getBtnsMM().write(cmd)
     }
 
 
@@ -250,7 +250,7 @@ namespace motors {
      * @param pattern the lights pattern to use. eg: LightsPattern.Green
      */
     //% blockId=led_pattern block="%pattern"
-    //% shim=TD_ID colorSecondary="#6e9a36"
+    //% shim=TD_ID colorSecondary="#6e9a36" group="Light"
     //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
     export function pattern(pattern: LightsPattern): number {
         return pattern;
