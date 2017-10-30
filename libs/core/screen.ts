@@ -112,10 +112,10 @@ namespace brick {
         let byteWidth = (currFont.charWidth + 7) >> 3
         let charSize = byteWidth * currFont.charHeight
         let imgBuf = output.createBuffer(2 + charSize)
-        let img = screen.imageOf(imgBuf)
         let double = (mode & Draw.Quad) ? 4 : (mode & Draw.Double) ? 2 : 1
         imgBuf[0] = 0xf0
         imgBuf[1] = currFont.charWidth
+        let img = screen.imageOf(imgBuf)
         while (cp < text.length) {
             let ch = text.charCodeAt(cp++)
             if (ch == 10) {

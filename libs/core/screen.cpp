@@ -239,7 +239,7 @@ extern "C" void drawPanic(int code) {
 }
 
 bool isValidImage(Buffer buf) {
-    return buf->length >= 3 && buf->data[0] == 0xf0;
+    return buf != NULL && buf->length >= 3 && buf->data[0] == 0xf0;
 }
 
 /** Makes an image bound to a buffer. */
