@@ -12,15 +12,15 @@ const enum TouchSensorEvent {
     Released = 3,
 }
 
-namespace input {
+namespace sensors {
 
     //% fixedInstances
     export class TouchSensor extends internal.AnalogSensor {
-        private button: Button;
+        private button: brick.Button;
 
         constructor(port: number) {
             super(port)
-            this.button = new Button();
+            this.button = new brick.Button();
         }
 
         _query() {
@@ -43,7 +43,7 @@ namespace input {
         //% block="%sensor|is touched"
         //% blockId=touchIsTouched
         //% parts="touch"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isTouched() {
@@ -59,7 +59,7 @@ namespace input {
         //% help=input/touch/on-event
         //% blockId=touchEvent block="on %sensor|%event"
         //% parts="touch"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Touch Sensor"
         onEvent(ev: TouchSensorEvent, body: () => void) {

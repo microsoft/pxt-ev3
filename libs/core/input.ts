@@ -1,4 +1,4 @@
-namespace input.internal {
+namespace sensors.internal {
     //% shim=pxt::unsafePollForChanges
     export function unsafePollForChanges(
         periodMs: number,

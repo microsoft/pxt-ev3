@@ -4,7 +4,7 @@ const enum GyroSensorMode {
     Rate = 1,
 }
 
-namespace input {
+namespace sensors {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
         constructor(port: number) {
@@ -27,7 +27,7 @@ namespace input {
         //% block="%sensor|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=65 blockGap=8
         //% group="Gyro Sensor"
         angle() {
@@ -43,7 +43,7 @@ namespace input {
         //% block="%sensor|rotation rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Gyro Sensor"
         rate() {

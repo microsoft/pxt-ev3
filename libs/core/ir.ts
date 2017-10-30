@@ -21,7 +21,7 @@ const enum IrRemoteButton {
     BottomRight = 0x10,
 }
 
-namespace input {
+namespace sensors {
     function mapButton(v: number) {
         switch (v) {
             case 0: return IrRemoteButton.None
@@ -50,7 +50,7 @@ namespace input {
         if (buttons == null) {
             buttons = []
             for (let i = 0; i < 5; ++i) {
-                buttons.push(new RemoteInfraredBeaconButton(new Button()))
+                buttons.push(new RemoteInfraredBeaconButton(new brick.Button()))
             }
 
             // make sure sensors are up
@@ -71,8 +71,8 @@ namespace input {
 
     //% fixedInstances
     export class RemoteInfraredBeaconButton extends control.Component {
-        private button: Button;
-        constructor(button: Button) {
+        private button: brick.Button;
+        constructor(button: brick.Button) {
             super();
             this.button = button;
         }
@@ -89,7 +89,7 @@ namespace input {
         //% block="%button|is pressed"
         //% blockId=remoteButtonIsPressed
         //% parts="remote"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=81 blockGap=8
         //% group="Remote Infrared Beacon"
         isPressed() {
@@ -104,7 +104,7 @@ namespace input {
         //% block="%button|was pressed"
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=80 blockGap=8
         //% group="Remote Infrared Beacon"
         wasPressed() {
@@ -120,7 +120,7 @@ namespace input {
         //% help=input/remote-infrared-beacon/on-event
         //% blockId=remotebuttonEvent block="on %button|%event"
         //% parts="remote"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Remote Infrared Beacon"
         onEvent(ev: ButtonEvent, body: () => void) {
@@ -189,7 +189,7 @@ namespace input {
         //% block="on %sensor|object near"
         //% blockId=infraredOnObjectNear
         //% parts="infraredsensor"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
         onObjectNear(handler: () => void) {
@@ -210,7 +210,7 @@ namespace input {
         //% block="%infrared|proximity"
         //% blockId=infraredGetProximity
         //% parts="infrared"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
         proximity() {
@@ -226,7 +226,7 @@ namespace input {
         //% block="%infrared|remote command"
         //% blockId=infraredGetRemoteCommand
         //% parts="infrared"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Infrared Sensor"     
         remoteCommand() {

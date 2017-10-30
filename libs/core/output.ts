@@ -17,7 +17,7 @@ enum OutputType {
     MiniTacho = 8,
 }
 
-namespace output {
+namespace motors {
     let pwmMM: MMap
     let motorMM: MMap
 
@@ -53,7 +53,7 @@ namespace output {
     }
 
     function mkCmd(out: Output, cmd: number, addSize: number) {
-        const b = createBuffer(2 + addSize)
+        const b = output.createBuffer(2 + addSize)
         b.setNumber(NumberFormat.UInt8LE, 0, cmd)
         b.setNumber(NumberFormat.UInt8LE, 1, out)
         return b
