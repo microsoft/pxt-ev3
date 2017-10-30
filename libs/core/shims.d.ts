@@ -72,6 +72,12 @@ declare namespace serial {
 }
 declare namespace screen {
 
+    /** Decompresses a 1-bit gray scale PNG image to icon format. */
+    //% shim=screen::unpackPNG
+    function unpackPNG(png: Buffer): Buffer;
+}
+declare namespace screen {
+
     /** Double size of an icon. */
     //% shim=screen::doubleIcon
     function doubleIcon(buf: Buffer): Buffer;

@@ -85,6 +85,7 @@
   "screen.setPixel|param|on": "a value indicating if the pixel should be on or off",
   "screen.setPixel|param|x": "the starting position's x coordinate, eg: 0",
   "screen.setPixel|param|y": "the starting position's x coordinate, eg: 0",
+  "screen.unpackPNG": "Decompresses a 1-bit gray scale PNG image to icon format.",
   "serial": "Reading and writing data over a serial connection.",
   "serial.writeDmesg": "Send DMESG debug buffer over serial."
 }

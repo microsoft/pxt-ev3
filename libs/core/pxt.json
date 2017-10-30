@@ -11,6 +11,7 @@
         "mmap.cpp",
         "control.cpp",
         "buttons.ts",
+        "png.cpp",
         "screen.cpp",
         "screen.ts",
         "output.cpp",
