@@ -107,6 +107,7 @@
   "serial|block": "serial",
   "{id:category}Control": "Control",
   "{id:category}Image": "Image",
+  "{id:category}Images": "Images",
   "{id:category}Input": "Input",
   "{id:category}MMap": "MMap",
   "{id:category}Output": "Output",

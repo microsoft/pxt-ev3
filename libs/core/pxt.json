@@ -26,6 +26,8 @@
         "shims.d.ts",
         "enums.d.ts",
         "dal.d.ts",
+        "images.ts",
+        "images.jres",
         "ns.ts"
     ],
     "testFiles": [
