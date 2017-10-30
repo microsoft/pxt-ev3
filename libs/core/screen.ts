@@ -27,7 +27,7 @@ namespace screen {
         currFont = f
     }
 
-    export const heart = hex`f007 367f7f3e1c08`
+    export const heart = iconOf(hex`f007 367f7f3e1c08`)
 
     export function defaultFont(): Font {
         return {
@@ -112,6 +112,7 @@ namespace screen {
         let byteWidth = (currFont.charWidth + 7) >> 3
         let charSize = byteWidth * currFont.charHeight
         let iconBuf = output.createBuffer(2 + charSize)
+        let icon = iconOf(iconBuf)
         let double = (mode & Draw.Quad) ? 4 : (mode & Draw.Double) ? 2 : 1
         iconBuf[0] = 0xf0
         iconBuf[1] = currFont.charWidth
@@ -127,7 +128,7 @@ namespace screen {
                 iconBuf.fill(0, 2)
             else
                 iconBuf.write(2, currFont.data.slice(idx, charSize))
-            drawIcon(x, y, iconBuf, mode)
+            icon.draw(x, y, mode)
             x += double * currFont.charWidth
         }
     }

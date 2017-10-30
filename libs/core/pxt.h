@@ -27,6 +27,9 @@ class MMap : public RefObject {
 
 extern volatile bool paniced;
 
+// Buffer and Icon share representation.
+typedef Buffer Icon;
+
 }
 
 #define DEVICE_EVT_ANY 0

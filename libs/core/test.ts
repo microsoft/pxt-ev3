@@ -4,7 +4,7 @@ screen.print("PXT!", 10, 30, Draw.Quad)
 screen.drawRect(40, 40, 20, 10, Draw.Fill)
 output.setStatusLight(LightsPattern.Orange)
 
-screen.drawIcon(100, 50, screen.doubleIcon(screen.heart), Draw.Double | Draw.Transparent)
+screen.heart.doubled().draw(100, 50, Draw.Double | Draw.Transparent)
 
 input.buttonEnter.onEvent(ButtonEvent.Click, () => {
     screen.clear()

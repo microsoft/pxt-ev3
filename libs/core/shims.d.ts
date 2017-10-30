@@ -78,17 +78,36 @@ declare namespace screen {
 }
 declare namespace screen {
 
-    /** Double size of an icon. */
-    //% shim=screen::doubleIcon
-    function doubleIcon(buf: Buffer): Buffer;
-
-    /** Draw an icon on the screen. */
-    //% shim=screen::drawIcon
-    function drawIcon(x: int32, y: int32, buf: Buffer, mode: Draw): void;
-
     /** Clear screen and reset font to normal. */
     //% shim=screen::clear
     function clear(): void;
+
+    /** Makes an icon bound to a buffer. */
+    //% shim=screen::iconOf
+    function iconOf(buf: Buffer): Icon;
+}
+
+
+declare interface Icon {
+    /** Returns the underlaying Buffer object. */
+    //% property shim=IconMethods::buffer
+    buffer: Buffer;
+
+    /** Returns the width of an icon. */
+    //% property shim=IconMethods::width
+    width: int32;
+
+    /** Returns the height of an icon. */
+    //% property shim=IconMethods::height
+    height: int32;
+
+    /** Double size of an icon. */
+    //% shim=IconMethods::doubled
+    doubled(): Icon;
+
+    /** Draw an icon on the screen. */
+    //% shim=IconMethods::draw
+    draw(x: int32, y: int32, mode: Draw): void;
 }
 declare namespace output {
 
