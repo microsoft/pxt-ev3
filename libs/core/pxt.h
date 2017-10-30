@@ -27,8 +27,9 @@ class MMap : public RefObject {
 
 extern volatile bool paniced;
 
-// Buffer and Image share representation.
+// Buffer, Sound, and Image share representation.
 typedef Buffer Image;
+typedef Buffer Sound;
 
 }
 

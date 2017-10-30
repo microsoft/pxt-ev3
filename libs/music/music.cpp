@@ -6,7 +6,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
 #define NOTE_PAUSE 20
 
 namespace music {
@@ -51,8 +50,7 @@ static void _stopSound() {
     writeDev(&cmd, sizeof(cmd));
 }
 
-static void _playTone(uint16_t frequency, uint16_t duration, uint8_t volume)
-{
+static void _playTone(uint16_t frequency, uint16_t duration, uint8_t volume) {
     ToneCmd cmd;
     cmd.cmd = SOUND_CMD_TONE;
     cmd.vol = volume;
@@ -90,4 +88,31 @@ void playTone(int frequency, int ms) {
     }
     sleep_ms(1);
 }
+
+
+/** Makes a sound bound to a buffer in WAV format. */
+//%
+Sound fromWAV(Buffer buf) {
+    incrRC(buf);
+    return buf;
+}
+
+}
+
+//% fixedInstances
+namespace SoundMethods {
+
+/** Returns the underlaying Buffer object. */
+//% property
+Buffer buffer(Sound snd) {
+    incrRC(snd);
+    return snd;
+}
+
+/** Play sound with given volume. */
+//% promise
+void play(Sound snd, int volume) {
+    // TODO
+}
+
 }
