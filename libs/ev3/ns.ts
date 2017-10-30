@@ -1,5 +1,5 @@
 
-//% color="#D42878" weight=100
+//% color="#00A5C8" weight=100
 //% groups='["Light", "Buttons", "Screen"]'
 namespace brick {
 }
