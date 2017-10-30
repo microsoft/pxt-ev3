@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Integer">
+  <Point Value="0" ImageSuffix="_WaitForCompletion" Name="WaitForCompletion" />
+  <Point Value="1" ImageSuffix="_PlayOnce" Name="PlayOnce" />
+  <Point Value="2" ImageSuffix="_Repeat" Name="Repeat" />
+</Definition>

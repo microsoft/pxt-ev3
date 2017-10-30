@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Integer">
+    <Point Value="0" Name="Green" ImageSuffix="_Green"/>
+    <Point Value="1" Name="Orange" ImageSuffix="_Orange"/>
+    <Point Value="2" Name="Red" ImageSuffix="_Red"/>
+</Definition>

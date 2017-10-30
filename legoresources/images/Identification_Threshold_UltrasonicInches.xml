@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Integer" TerminalName="Comparison" ImageNameBase="Identification_Threshold">
+  <Point Value="0">
+    <Definition Type="Double">
+      <Range Start="-Infinity" StartInclusive="True" End="5.5" EndInclusive="False" ImageSuffix="_Equal_-2"/>
+      <Range Start="5.5" StartInclusive="True" End="36.5" EndInclusive="False" ImageSuffix="_Equal_-1"/>
+      <Range Start="36.5" StartInclusive="True" End="62.5" EndInclusive="False" ImageSuffix="_Equal_0"/>
+      <Range Start="62.5" StartInclusive="True" End="95.5" EndInclusive="False" ImageSuffix="_Equal_+1"/>
+      <Range Start="95.5" StartInclusive="True" End="Infinity" EndInclusive="True" ImageSuffix="_Equal_+2"/>
+      <Default ImageSuffix="_Equal_0"/>
+    </Definition>
+  </Point>
+  <Point Value="1">
+    <Definition Type="Double">
+      <Range Start="-Infinity" StartInclusive="True" End="5.5" EndInclusive="False" ImageSuffix="_NotEqual_-2"/>
+      <Range Start="5.5" StartInclusive="True" End="36.5" EndInclusive="False" ImageSuffix="_NotEqual_-1"/>
+      <Range Start="36.5" StartInclusive="True" End="62.5" EndInclusive="False" ImageSuffix="_NotEqual_0"/>
+      <Range Start="62.5" StartInclusive="True" End="95.5" EndInclusive="False" ImageSuffix="_NotEqual_+1"/>
+      <Range Start="95.5" StartInclusive="True" End="Infinity" EndInclusive="True" ImageSuffix="_NotEqual_+2"/>
+      <Default ImageSuffix="_NotEqual_0"/>
+    </Definition>
+  </Point>
+  <Range Start="2" StartInclusive="True" End="3" EndInclusive="True">
+    <Definition Type="Double">
+      <Range Start="-Infinity" StartInclusive="True" End="5.5" EndInclusive="False" ImageSuffix="_Greater_-2"/>
+      <Range Start="5.5" StartInclusive="True" End="36.5" EndInclusive="False" ImageSuffix="_Greater_-1"/>
+      <Range Start="36.5" StartInclusive="True" End="62.5" EndInclusive="False" ImageSuffix="_Greater_0"/>
+      <Range Start="62.5" StartInclusive="True" End="95.5" EndInclusive="False" ImageSuffix="_Greater_+1"/>
+      <Range Start="95.5" StartInclusive="True" End="Infinity" EndInclusive="True" ImageSuffix="_Greater_+2"/>
+      <Default ImageSuffix="_Greater_0"/>
+    </Definition>
+  </Range>
+  <Range Start="4" StartInclusive="True" End="5" EndInclusive="True">
+    <Definition Type="Double">
+      <Range Start="-Infinity" StartInclusive="True" End="5.5" EndInclusive="False" ImageSuffix="_Less_-2"/>
+      <Range Start="5.5" StartInclusive="True" End="36.5" EndInclusive="False" ImageSuffix="_Less_-1"/>
+      <Range Start="36.5" StartInclusive="True" End="62.5" EndInclusive="False" ImageSuffix="_Less_0"/>
+      <Range Start="62.5" StartInclusive="True" End="95.5" EndInclusive="False" ImageSuffix="_Less_+1"/>
+      <Range Start="95.5" StartInclusive="True" End="Infinity" EndInclusive="True" ImageSuffix="_Less_+2"/>
+      <Default ImageSuffix="_Less_0"/>
+    </Definition>
+  </Range>
+</Definition>

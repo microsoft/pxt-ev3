@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Double">
+    <Range Start="-Infinity" StartInclusive="True" End="0" EndInclusive="True" ImageSuffix="_0"/>
+    <Range Start="0" StartInclusive="False" End="25" EndInclusive="True" ImageSuffix="_25"/>
+    <Range Start="25" StartInclusive="False" End="50" EndInclusive="True" ImageSuffix="_50"/>
+    <Range Start="50" StartInclusive="False" End="75" EndInclusive="True" ImageSuffix="_75"/>
+    <Range Start="75" StartInclusive="False" End="Infinity" EndInclusive="True" ImageSuffix="_100"/>
+</Definition>

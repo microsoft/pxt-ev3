@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Integer">
+  <Point Value="0" Name="Button0" ImageSuffix="" />
+  <Point Value="1" Name="Button1" ImageSuffix="" />
+  <Point Value="2" Name="Button2" ImageSuffix="" />
+  <Point Value="3" Name="Button3" ImageSuffix="" />
+</Definition>

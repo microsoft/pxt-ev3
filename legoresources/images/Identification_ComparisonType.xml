@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Integer">
+  <Point Value="0" Name="Equal" ImageSuffix="_Equal"/>
+  <Point Value="1" Name="NotEqual" ImageSuffix="_NotEqual"/>
+  <Point Value="2" Name="Greater" ImageSuffix="_GreaterThan"/>
+  <Point Value="3" Name="GreaterEqual" ImageSuffix="_GreaterEqual"/>
+  <Point Value="4" Name="Less" ImageSuffix="_LessThan"/>
+  <Point Value="5" Name="LessEqual" ImageSuffix="_LessEqual"/>
+</Definition>

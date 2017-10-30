@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Integer">
+  <Point Value="1" Name="Channel1" ImageSuffix="_1" />
+  <Point Value="2" Name="Channel2" ImageSuffix="_2" />
+  <Point Value="3" Name="Channel3" ImageSuffix="_3" />
+  <Point Value="4" Name="Channel4" ImageSuffix="_4" />
+</Definition>

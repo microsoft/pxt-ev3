@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Boolean">
+    <Point Value="True" ImageSuffix="_True" IgnoreImageInAdorner="True"/>
+    <Point Value="False" ImageSuffix="_False" IgnoreImageInAdorner="True"/>
+</Definition>

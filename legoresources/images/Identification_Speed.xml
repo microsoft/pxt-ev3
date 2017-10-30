@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Double">
+    <Range Start="-Infinity" StartInclusive="True" End="-85" EndInclusive="False" ImageSuffix="_Minus100"/>
+    <Range Start="-85" StartInclusive="True" End="-65" EndInclusive="False" ImageSuffix="_Minus75"/>
+    <Range Start="-65" StartInclusive="True" End="-35" EndInclusive="False" ImageSuffix="_Minus50"/>
+    <Range Start="-35" StartInclusive="True" End="-10" EndInclusive="False" ImageSuffix="_Minus25"/>
+    <Range Start="-10" StartInclusive="True" End="10" EndInclusive="False" ImageSuffix="_0"/>
+    <Range Start="10" StartInclusive="True" End="35" EndInclusive="False" ImageSuffix="_Plus25"/>
+    <Range Start="35" StartInclusive="True" End="65" EndInclusive="False" ImageSuffix="_Plus50"/>
+    <Range Start="65" StartInclusive="True" End="85" EndInclusive="False" ImageSuffix="_Plus75"/>
+    <Range Start="85" StartInclusive="True" End="Infinity" EndInclusive="True" ImageSuffix="_Plus100"/>
+</Definition>

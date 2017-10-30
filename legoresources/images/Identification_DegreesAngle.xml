@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definition Type="Double">
+    <Range Start="-Infinity" StartInclusive="True" End="-314" EndInclusive="False" ImageSuffix="_Minus360"/>
+    <Range Start="-337" StartInclusive="True" End="-292" EndInclusive="False" ImageSuffix="_Minus315"/>
+    <Range Start="-292" StartInclusive="True" End="-247" EndInclusive="False" ImageSuffix="_Minus270"/>
+    <Range Start="-247" StartInclusive="True" End="-202" EndInclusive="False" ImageSuffix="_Minus225"/>
+    <Range Start="-202" StartInclusive="True" End="-157" EndInclusive="False" ImageSuffix="_Minus180"/>
+    <Range Start="-157" StartInclusive="True" End="-112" EndInclusive="False" ImageSuffix="_Minus135"/>
+    <Range Start="-112" StartInclusive="True" End="-67" EndInclusive="False" ImageSuffix="_Minus90"/>
+    <Range Start="-67" StartInclusive="True" End="-22" EndInclusive="False" ImageSuffix="_Minus45"/>
+    <Range Start="-22" StartInclusive="True" End="0" EndInclusive="False" ImageSuffix="_0"/>
+    <Point Value="0" ImageSuffix="_0"/>
+    <Range Start="0" StartInclusive="False" End="22" EndInclusive="True" ImageSuffix="_0"/>
+    <Range Start="22" StartInclusive="False" End="67" EndInclusive="True" ImageSuffix="_Plus45"/>
+    <Range Start="67" StartInclusive="False" End="112" EndInclusive="True" ImageSuffix="_Plus90"/>
+    <Range Start="112" StartInclusive="False" End="157" EndInclusive="True" ImageSuffix="_Plus135"/>
+    <Range Start="157" StartInclusive="False" End="202" EndInclusive="True" ImageSuffix="_Plus180"/>
+    <Range Start="202" StartInclusive="False" End="247" EndInclusive="True" ImageSuffix="_Plus225"/>
+    <Range Start="247" StartInclusive="False" End="292" EndInclusive="True" ImageSuffix="_Plus270"/>
+    <Range Start="292" StartInclusive="False" End="337" EndInclusive="True" ImageSuffix="_Plus315"/>
+    <Range Start="314" StartInclusive="False" End="Infinity" EndInclusive="True" ImageSuffix="_Plus360"/>
+</Definition>
