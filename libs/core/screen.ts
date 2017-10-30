@@ -85,7 +85,7 @@ namespace brick {
      * @param y the starting position's x coordinate, eg: 0
      */
     //% blockId=screen_setpixel block="set pixel %on| at x: %x| y: %y"
-    //% weight=98 group="Brick"
+    //% weight=98 group="Screen"
     //% x.min=0 x.max=178 y.min=0 y.max=128 on.fieldEditor=toggleonoff
     export function setPixel(on: boolean, x: number, y: number) {
         x |= 0
@@ -101,7 +101,7 @@ namespace brick {
      * @param y the starting position's x coordinate, eg: 0
      */
     //% blockId=screen_print block="print %text| at x: %x| y: %y"
-    //% weight=99 group="Brick" inlineInputMode="inline"
+    //% weight=99 group="Screen" inlineInputMode="inline" blockGap=8
     //% x.min=0 x.max=178 y.min=0 y.max=128
     export function print(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0

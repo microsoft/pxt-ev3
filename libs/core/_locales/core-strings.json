@@ -115,7 +115,6 @@
   "{id:category}Screen": "Screen",
   "{id:category}Sensors": "Sensors",
   "{id:category}Serial": "Serial",
-  "{id:group}Brick": "Brick",
   "{id:group}Buttons": "Buttons",
   "{id:group}Color Sensor": "Color Sensor",
   "{id:group}Gyro Sensor": "Gyro Sensor",
@@ -123,6 +122,7 @@
   "{id:group}Light": "Light",
   "{id:group}Motors": "Motors",
   "{id:group}Remote Infrared Beacon": "Remote Infrared Beacon",
+  "{id:group}Screen": "Screen",
   "{id:group}Touch Sensor": "Touch Sensor",
   "{id:group}Ultrasonic Sensor": "Ultrasonic Sensor"
 }

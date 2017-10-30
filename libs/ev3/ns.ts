@@ -1,5 +1,6 @@
 
 //% color="#D42878" weight=100
+//% groups='["Light", "Buttons", "Screen"]'
 namespace brick {
 }
 
@@ -8,7 +9,6 @@ namespace sensors {
 }
 
 //% color="#8AC044" weight=90 icon="\uf185"
-//% groups='["Motors", "Brick"]'
 namespace motors {
 }
 
