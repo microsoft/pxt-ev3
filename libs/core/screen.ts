@@ -27,7 +27,7 @@ namespace brick {
         currFont = f
     }
 
-    export const heart = imageOf(hex`f007 367f7f3e1c08`)
+    export const heart = screen.imageOf(hex`f007 367f7f3e1c08`)
 
     export function defaultFont(): Font {
         return {
@@ -112,7 +112,7 @@ namespace brick {
         let byteWidth = (currFont.charWidth + 7) >> 3
         let charSize = byteWidth * currFont.charHeight
         let imgBuf = output.createBuffer(2 + charSize)
-        let img = imageOf(imgBuf)
+        let img = screen.imageOf(imgBuf)
         let double = (mode & Draw.Quad) ? 4 : (mode & Draw.Double) ? 2 : 1
         imgBuf[0] = 0xf0
         imgBuf[1] = currFont.charWidth
