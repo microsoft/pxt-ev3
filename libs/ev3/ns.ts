@@ -4,12 +4,13 @@
 namespace brick {
 }
 
-//% color="#D42878" weight=95
-namespace sensors {
+
+//% color="#8AC044" weight=95 icon="\uf185"
+namespace motors {
 }
 
-//% color="#8AC044" weight=90 icon="\uf185"
-namespace motors {
+//% color="#D42878" weight=90
+namespace sensors {
 }
 
 //% color="#DF5014" weight=80
