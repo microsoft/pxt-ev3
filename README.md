@@ -4,6 +4,8 @@
 
 This repo contains the editor target hosted at https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
 
+Issue tracker: https://src.education.lego.com/groups/ev3-makecode
+
 ## Local Dev setup
 
 These instructions assume familiarity with dev tools and languages.
