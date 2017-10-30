@@ -1,4 +1,4 @@
-namespace screen {
+namespace brick {
     //% shim=screen::_setPixel
     function _setPixel(p0: uint32, p1: uint32, mode: Draw): void { }
 
@@ -85,7 +85,7 @@ namespace screen {
      * @param y the starting position's x coordinate, eg: 0
      */
     //% blockId=screen_setpixel block="set pixel %on| at x: %x| y: %y"
-    //% weight=98 group="Brick" blockNamespace=output
+    //% weight=98 group="Screen"
     //% x.min=0 x.max=178 y.min=0 y.max=128 on.fieldEditor=toggleonoff
     export function setPixel(on: boolean, x: number, y: number) {
         x |= 0
@@ -101,7 +101,7 @@ namespace screen {
      * @param y the starting position's x coordinate, eg: 0
      */
     //% blockId=screen_print block="print %text| at x: %x| y: %y"
-    //% weight=99 group="Brick" blockNamespace=output inlineInputMode="inline"
+    //% weight=99 group="Screen" inlineInputMode="inline" blockGap=8
     //% x.min=0 x.max=178 y.min=0 y.max=128
     export function print(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0
@@ -127,7 +127,7 @@ namespace screen {
                 iconBuf.fill(0, 2)
             else
                 iconBuf.write(2, currFont.data.slice(idx, charSize))
-            drawIcon(x, y, iconBuf, mode)
+            screen.drawIcon(x, y, iconBuf, mode)
             x += double * currFont.charWidth
         }
     }

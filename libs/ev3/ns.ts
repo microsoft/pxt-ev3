@@ -1,11 +1,16 @@
 
-//% color="#D42878"
-namespace input {
+//% color="#00A5C8" weight=100
+//% groups='["Light", "Buttons", "Screen"]'
+namespace brick {
 }
 
-//% color="#8AC044" weight=90 icon="\uf185"
-//% groups='["Motors", "Brick"]'
-namespace output {
+
+//% color="#8AC044" weight=95 icon="\uf185"
+namespace motors {
+}
+
+//% color="#D42878" weight=90
+namespace sensors {
 }
 
 //% color="#DF5014" weight=80

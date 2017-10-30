@@ -5,7 +5,7 @@ const enum PromixityEvent {
     ObjectDetected = 2
 }
 
-namespace input {
+namespace sensors {
 
     //% fixedInstances
     export class UltraSonicSensor extends internal.UartSensor {
@@ -40,7 +40,7 @@ namespace input {
         //% block="on %sensor|object near"
         //% blockId=ultrasonicOnObjectClose
         //% parts="infraredsensor"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
         onObjectNear(handler: () => void) {
@@ -61,7 +61,7 @@ namespace input {
         //% block="%sensor|distance"
         //% blockId=sonarGetDistance
         //% parts="ultrasonic"
-        //% blockNamespace=input
+        //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Ultrasonic Sensor"     
         distance() {
