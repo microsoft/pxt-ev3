@@ -7,6 +7,8 @@ namespace pxt {
 void raiseEvent(int id, int event);
 int allocateNotifyEvent();
 void sleep_core_us(uint64_t us);
+void startUser();
+void stopUser();
 
 class Button;
 typedef Button *Button_;

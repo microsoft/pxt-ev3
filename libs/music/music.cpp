@@ -119,6 +119,7 @@ void playSample(Buffer buf) {
         pthread_detach(pid);
     }
 
+    stopUser();
     pthread_mutex_lock(&pumpMutex);
     *lmsSoundMMap = 1; // BUSY
     uint8_t cmd[] = {SOUND_CMD_PLAY, (uint8_t)((currVolume / 33) + 1)};
@@ -130,6 +131,7 @@ void playSample(Buffer buf) {
     pumpMusic();
     pthread_cond_wait(&sampleDone, &pumpMutex);
     pthread_mutex_unlock(&pumpMutex);
+    startUser();
 }
 
 /**

@@ -269,11 +269,13 @@ void waitForEvent(int source, int value) {
             pthread_mutex_lock(&eventMutex);
             t->waitSource = source;
             t->waitValue = value;
+            stopUser();
             // spourious wake ups may occur they say
             while (t->waitSource) {
                 pthread_cond_wait(&t->waitCond, &eventMutex);
             }
             pthread_mutex_unlock(&eventMutex);
+            startUser();
             return;
         }
     }
