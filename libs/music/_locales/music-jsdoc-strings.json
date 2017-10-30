@@ -1,6 +1,6 @@
 {
   "Sound.buffer": "Returns the underlaying Buffer object.",
-  "Sound.play": "Play sound with given volume.",
+  "Sound.play": "Play sound.",
   "music": "Generation of music tones.",
   "music.beat": "Return the duration of a beat in milliseconds (the beat fraction).",
   "music.beat|param|fraction": "the fraction of the current whole note, eg: BeatFraction.Half",

@@ -38,9 +38,9 @@ declare interface Sound {
     //% property shim=SoundMethods::buffer
     buffer: Buffer;
 
-    /** Play sound with given volume. */
+    /** Play sound. */
     //% promise shim=SoundMethods::play
-    play(volume: int32): void;
+    play(): void;
 }
 
 // Auto-generated. Do not edit. Really.
