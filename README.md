@@ -4,6 +4,8 @@
 
 This repo contains the editor target hosted at https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
 
+Issue tracker: https://src.education.lego.com/groups/ev3-makecode
+
 ## Local Dev setup
 
 These instructions assume familiarity with dev tools and languages.
@@ -14,7 +16,7 @@ These instructions assume familiarity with dev tools and languages.
 
 In a common folder,
 
-* clone https://github.com/Microsoft/pxt to ``pxt`` folder (currently, build against `freshcoat` branch)
+* clone https://github.com/Microsoft/pxt to ``pxt`` folder
 * clone https://github.com/Microsoft/pxt-common-packages to ``pxt-common-packages`` folder
 * clone https://github.com/Microsoft/pxt-ev3 to ``pxt-ev3`` folder
 * go to ``pxt`` and run
