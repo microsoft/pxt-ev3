@@ -90,36 +90,172 @@ namespace pxsim.screen {
         screenState.blitLineCore(XX(xw), y, YY(xw), buf, mode)
     }
 
+    export function isValidImage(buf: RefBuffer) {
+        return buf.data.length >= 3 && buf.data[0] == 0xf0;
+    }
+
+    export function PIX2BYTES(x: number) {
+        return ((x + 7) >> 3)
+    }
+    export function clear(): void {
+        const screenState = (board() as DalBoard).screenState;
+        screenState.clear()
+    }
+
+    export function dump() {
+        // No need for this one.
+    }
+
+    export function imageOf(buf: RefBuffer) {
+        return incr(buf)
+    }
+}
+
+namespace pxsim.screen {
+    function DMESG(msg: string) {
+        control.dmesg(msg)
+    }
+    const NULL: RefBuffer = null;
+    function revbits(v: number) {
+        v = (v & 0xf0) >> 4 | (v & 0x0f) << 4;
+        v = (v & 0xcc) >> 2 | (v & 0x33) << 2;
+        v = (v & 0xaa) >> 1 | (v & 0x55) << 1;
+        return v;
+    }
+
+    export function unpackPNG(png: RefBuffer) {
+        function memcmp(off: number, mark: string) {
+            for (let i = 0; i < mark.length; ++i) {
+                if (mark.charCodeAt(i) != png.data[off + i])
+                    return 1
+            }
+            return 0
+        }
+        function readInt(off: number) {
+            return ((png.data[off] << 24) | (png.data[off + 1] << 16) |
+                (png.data[off + 2] << 8) | (png.data[off + 3])) >>> 0
+        }
+        if (!png) {
+            DMESG("PNG: Missing image");
+            return NULL;
+        }
+        if (png.data.length < 45) {
+            DMESG("PNG: File too small");
+            return NULL;
+        }
+
+        if (memcmp(0, "\x89PNG\r\n\x1A\n") != 0) {
+            DMESG("PNG: Invalid header");
+            return NULL;
+        }
+
+        if (memcmp(12, "IHDR") != 0) {
+            DMESG("PNG: missing IHDR");
+            return NULL;
+        }
+
+        const lenIHDR = readInt(8);
+        const width = readInt(16);
+        const height = readInt(20);
+        const lenIDAT = readInt(33);
+        const sizeOfHD = 41;
+
+        if (lenIHDR != 13) {
+            DMESG("PNG: bad IHDR len");
+            return NULL;
+        }
+        if (memcmp(24, "\x01\x00\x00\x00\x00") != 0) {
+            DMESG("PNG: not 1-bit grayscale");
+            return NULL;
+        }
+        if (memcmp(37, "IDAT") != 0) {
+            DMESG("PNG: missing IDAT");
+            return NULL;
+        }
+        if (lenIDAT + sizeOfHD >= png.data.length) {
+            DMESG("PNG: buffer too short");
+            return NULL;
+        }
+        if (width > 300 || height > 300) {
+            DMESG("PNG: too big");
+            return NULL;
+        }
+
+        const byteW = (width + 7) >> 3;
+        const sz = (byteW + 1) * height;
+        const tmp = new Uint8Array(sz + 1);
+        // uncompress doesn't take the zlib header, hence + 2
+        const two = tinf.uncompress(png.data.slice(sizeOfHD + 2, sizeOfHD + lenIDAT), tmp);
+        if (two.length != sz) {
+            DMESG("PNG: invalid compressed size");
+            return NULL;
+        }
+
+        const res = output.createBuffer(2 + byteW * height);
+        res.data[0] = 0xf0;
+        res.data[1] = width;
+        let dst = 2
+        let src = 0
+        let lastMask = (1 << (width & 7)) - 1;
+        if (lastMask == 0)
+            lastMask = 0xff;
+        for (let i = 0; i < height; ++i) {
+            if (two[src++] != 0) {
+                DMESG("PNG: unsupported filter");
+                decr(res);
+                return NULL;
+            }
+            for (let j = 0; j < byteW; ++j) {
+                res.data[dst] = ~revbits(two[src++]);
+                if (j == byteW - 1) {
+                    res.data[dst] &= lastMask;
+                }
+                dst++;
+            }
+        }
+        return res;
+    }
+}
+
+namespace pxsim.ImageMethods {
     const bitdouble = [
         0x00, 0x03, 0x0c, 0x0f, 0x30, 0x33, 0x3c, 0x3f, 0xc0, 0xc3, 0xcc, 0xcf, 0xf0, 0xf3, 0xfc, 0xff,
     ]
 
-    export function isValidIcon(buf: RefBuffer) {
-        return buf.data.length >= 3 && buf.data[0] == 0xf0;
+    export function buffer(buf: RefBuffer) {
+        return incr(buf)
     }
 
-    function PIX2BYTES(x: number) {
-        return ((x + 7) >> 3)
+    export function width(buf: RefBuffer) {
+        if (!screen.isValidImage(buf)) return 0
+        return buf.data[1]
     }
 
-    export function drawIcon(x: number, y: number, buf: RefBuffer, mode: Draw): void {
+    export function height(buf: RefBuffer) {
+        if (!screen.isValidImage(buf)) return 0
+        const bw = screen.PIX2BYTES(buf.data[1]);
+        const h = ((buf.data.length - 2) / bw) | 0;
+        return h
+    }
+
+    export function draw(buf: RefBuffer, x: number, y: number, mode: Draw): void {
         const screenState = (board() as DalBoard).screenState;
 
-        if (!isValidIcon(buf))
+        if (!screen.isValidImage(buf))
             return;
 
         if (mode & (Draw.Double | Draw.Quad)) {
-            buf = doubleIcon(buf);
+            buf = doubled(buf);
             if (mode & Draw.Quad) {
                 let pbuf = buf;
-                buf = doubleIcon(buf);
+                buf = doubled(buf);
                 decr(pbuf);
             }
         }
 
         let pixwidth = buf.data[1];
         let ptr = 2;
-        const bytewidth = PIX2BYTES(pixwidth);
+        const bytewidth = screen.PIX2BYTES(pixwidth);
         pixwidth = Math.min(pixwidth, visuals.SCREEN_WIDTH);
         while (ptr + bytewidth <= buf.data.length) {
             if (mode & (Draw.Clear | Draw.Xor | Draw.Transparent)) {
@@ -132,24 +268,19 @@ namespace pxsim.screen {
             ptr += bytewidth;
         }
 
-        if (mode & Draw.Double)
+        if (mode & (Draw.Double | Draw.Quad))
             decr(buf);
     }
 
-    export function clear(): void {
-        const screenState = (board() as DalBoard).screenState;
-        screenState.clear()
-    }
-
-    export function doubleIcon(buf: RefBuffer): RefBuffer {
-        if (!isValidIcon(buf))
+    export function doubled(buf: RefBuffer): RefBuffer {
+        if (!screen.isValidImage(buf))
             return null;
         const w = buf.data[1];
         if (w > 126)
             return null;
-        const bw = PIX2BYTES(w);
+        const bw = screen.PIX2BYTES(w);
         const h = ((buf.data.length - 2) / bw) | 0;
-        const bw2 = PIX2BYTES(w * 2);
+        const bw2 = screen.PIX2BYTES(w * 2);
         const out = pins.createBuffer(2 + bw2 * h * 2)
         out.data[0] = 0xf0;
         out.data[1] = w * 2;
@@ -169,7 +300,5 @@ namespace pxsim.screen {
         return out;
     }
 
-    export function dump() {
-        // do we need it?
-    }
+
 }
