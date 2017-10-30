@@ -9,7 +9,6 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 
-
 #define NOTE_PAUSE 20
 
 namespace music {
@@ -18,7 +17,6 @@ uint8_t currVolume = 2;
 uint8_t *lmsSoundMMap;
 
 int writeDev(void *data, int size) {
-    DMESG("write dev %d", size);
     int fd = open("/dev/lms_sound", O_WRONLY);
     int res = write(fd, data, size);
     close(fd);
@@ -77,8 +75,7 @@ static void pumpMusic() {
     if (currentSample == NULL) {
         if (samplePtr > 0 && *lmsSoundMMap == 0) {
             samplePtr = 0;
-        DMESG("END");
-        pthread_cond_broadcast(&sampleDone);
+            pthread_cond_broadcast(&sampleDone);
         }
         return;
     }
@@ -87,7 +84,6 @@ static void pumpMusic() {
     buf[0] = SOUND_CMD_SERVICE;
     int len = min((int)sizeof(buf) - 1, currentSample->length - samplePtr);
     if (len == 0) {
-        DMESG("EOF");
         decrRC(currentSample);
         currentSample = NULL;
         return;
@@ -112,8 +108,7 @@ static void *pumpMusicThread(void *dummy) {
 void playSample(Buffer buf) {
     if (lmsSoundMMap == NULL) {
         int fd = open("/dev/lms_sound", O_RDWR);
-        lmsSoundMMap = (uint8_t*) mmap(NULL, 1, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-        DMESG("sound map: %p", lmsSoundMMap);
+        lmsSoundMMap = (uint8_t *)mmap(NULL, 1, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         close(fd);
     }
 
@@ -189,5 +184,4 @@ Buffer buffer(Sound snd) {
 void play(Sound snd) {
     music::playSample(snd);
 }
-
 }
