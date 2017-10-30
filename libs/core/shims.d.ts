@@ -72,9 +72,9 @@ declare namespace serial {
 }
 declare namespace screen {
 
-    /** Decompresses a 1-bit gray scale PNG image to icon format. */
+    /** Decompresses a 1-bit gray scale PNG image to image format. */
     //% shim=screen::unpackPNG
-    function unpackPNG(png: Buffer): Buffer;
+    function unpackPNG(png: Buffer): Image;
 }
 declare namespace screen {
 
@@ -82,31 +82,33 @@ declare namespace screen {
     //% shim=screen::clear
     function clear(): void;
 
-    /** Makes an icon bound to a buffer. */
-    //% shim=screen::iconOf
-    function iconOf(buf: Buffer): Icon;
+    /** Makes an image bound to a buffer. */
+    //% shim=screen::imageOf
+    function imageOf(buf: Buffer): Image;
 }
 
 
-declare interface Icon {
+
+    //% fixedInstances
+declare interface Image {
     /** Returns the underlaying Buffer object. */
-    //% property shim=IconMethods::buffer
+    //% property shim=ImageMethods::buffer
     buffer: Buffer;
 
-    /** Returns the width of an icon. */
-    //% property shim=IconMethods::width
+    /** Returns the width of an image. */
+    //% property shim=ImageMethods::width
     width: int32;
 
-    /** Returns the height of an icon. */
-    //% property shim=IconMethods::height
+    /** Returns the height of an image. */
+    //% property shim=ImageMethods::height
     height: int32;
 
-    /** Double size of an icon. */
-    //% shim=IconMethods::doubled
-    doubled(): Icon;
+    /** Double size of an image. */
+    //% shim=ImageMethods::doubled
+    doubled(): Image;
 
-    /** Draw an icon on the screen. */
-    //% shim=IconMethods::draw
+    /** Draw an image on the screen. */
+    //% shim=ImageMethods::draw
     draw(x: int32, y: int32, mode: Draw): void;
 }
 declare namespace output {

@@ -33,9 +33,9 @@ static uint8_t revbits(uint8_t v) {
     return v;
 }
 
-/** Decompresses a 1-bit gray scale PNG image to icon format. */
+/** Decompresses a 1-bit gray scale PNG image to image format. */
 //%
-Buffer unpackPNG(Buffer png) {
+Image unpackPNG(Buffer png) {
     if (!png) {
         DMESG("PNG: Missing image");
         return NULL;

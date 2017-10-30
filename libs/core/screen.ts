@@ -27,7 +27,7 @@ namespace screen {
         currFont = f
     }
 
-    export const heart = iconOf(hex`f007 367f7f3e1c08`)
+    export const heart = imageOf(hex`f007 367f7f3e1c08`)
 
     export function defaultFont(): Font {
         return {
@@ -111,11 +111,11 @@ namespace screen {
         let cp = 0
         let byteWidth = (currFont.charWidth + 7) >> 3
         let charSize = byteWidth * currFont.charHeight
-        let iconBuf = output.createBuffer(2 + charSize)
-        let icon = iconOf(iconBuf)
+        let imgBuf = output.createBuffer(2 + charSize)
+        let img = imageOf(imgBuf)
         let double = (mode & Draw.Quad) ? 4 : (mode & Draw.Double) ? 2 : 1
-        iconBuf[0] = 0xf0
-        iconBuf[1] = currFont.charWidth
+        imgBuf[0] = 0xf0
+        imgBuf[1] = currFont.charWidth
         while (cp < text.length) {
             let ch = text.charCodeAt(cp++)
             if (ch == 10) {
@@ -124,11 +124,11 @@ namespace screen {
             }
             if (ch < 32) continue
             let idx = (ch - currFont.firstChar) * charSize
-            if (idx < 0 || idx + iconBuf.length - 1 > currFont.data.length)
-                iconBuf.fill(0, 2)
+            if (idx < 0 || idx + imgBuf.length - 1 > currFont.data.length)
+                imgBuf.fill(0, 2)
             else
-                iconBuf.write(2, currFont.data.slice(idx, charSize))
-            icon.draw(x, y, mode)
+                imgBuf.write(2, currFont.data.slice(idx, charSize))
+            img.draw(x, y, mode)
             x += double * currFont.charWidth
         }
     }

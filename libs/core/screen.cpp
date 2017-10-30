@@ -238,14 +238,14 @@ extern "C" void drawPanic(int code) {
     close(fd);
 }
 
-bool isValidIcon(Buffer buf) {
+bool isValidImage(Buffer buf) {
     return buf->length >= 3 && buf->data[0] == 0xf0;
 }
 
-/** Makes an icon bound to a buffer. */
+/** Makes an image bound to a buffer. */
 //%
-Icon iconOf(Buffer buf) {
-    if (!isValidIcon(buf))
+Image imageOf(Buffer buf) {
+    if (!isValidImage(buf))
         return NULL;
     incrRC(buf);
     return buf;
@@ -259,7 +259,7 @@ void screen_init() {
 }
 
 //% fixedInstances
-namespace IconMethods {
+namespace ImageMethods {
 
 using namespace screen;
 
@@ -274,32 +274,32 @@ static uint8_t ones[] = {
 
 /** Returns the underlaying Buffer object. */
 //% property
-Buffer buffer(Icon ic) {
+Buffer buffer(Image ic) {
     incrRC(ic);
     return ic;
 }
 
-/** Returns the width of an icon. */
+/** Returns the width of an image. */
 //% property
-int width(Icon ic) {
-    if (!isValidIcon(ic))
+int width(Image ic) {
+    if (!isValidImage(ic))
         return 0;
     return ic->data[1];
 }
 
-/** Returns the height of an icon. */
+/** Returns the height of an image. */
 //% property
-int height(Icon ic) {
-    if (!isValidIcon(ic))
+int height(Image ic) {
+    if (!isValidImage(ic))
         return 0;
     int bw = PIX2BYTES(ic->data[1]);
     return (ic->length - 2) / bw;
 }
 
-/** Double size of an icon. */
+/** Double size of an image. */
 //%
-Icon doubled(Icon buf) {
-    if (!isValidIcon(buf))
+Image doubled(Image buf) {
+    if (!isValidImage(buf))
         return NULL;
     int w = buf->data[1];
     if (w > 126)
@@ -326,10 +326,10 @@ Icon doubled(Icon buf) {
     return out;
 }
 
-/** Draw an icon on the screen. */
+/** Draw an image on the screen. */
 //%
-void draw(Icon buf, int x, int y, Draw mode) {
-    if (!isValidIcon(buf))
+void draw(Image buf, int x, int y, Draw mode) {
+    if (!isValidImage(buf))
         return;
     if (mode & (Draw::Double | Draw::Quad)) {
         buf = doubled(buf);
