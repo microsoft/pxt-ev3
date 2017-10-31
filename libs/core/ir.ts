@@ -21,6 +21,13 @@ const enum IrRemoteButton {
     BottomRight = 0x10,
 }
 
+const enum InfraredSensorEvent {
+    //% block="object near"
+    ObjectNear = 1,
+    //% block="object detected"
+    ObjectDetected = 2
+}
+
 namespace sensors {
     function mapButton(v: number) {
         switch (v) {
@@ -148,8 +155,8 @@ namespace sensors {
                 return mapButton(this.getNumber(NumberFormat.UInt8LE, this.channel));
             else if (this.mode == IrSensorMode.Proximity) {
                 const d = this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
-                return d < this.proximityThreshold ? PromixityEvent.ObjectNear
-                    : d > this.proximityThreshold + 5 ? PromixityEvent.ObjectDetected
+                return d < this.proximityThreshold ? UltrasonicSensorEvent.ObjectNear
+                    : d > this.proximityThreshold + 5 ? UltrasonicSensorEvent.ObjectDetected
                         : 0;
             }
             return 0
@@ -185,21 +192,31 @@ namespace sensors {
          * Registers code to run when an object is getting near.
          * @param handler the code to run when detected
          */
-        //% help=input/infrared/on-object-near
-        //% block="on %sensor|object near"
-        //% blockId=infraredOnObjectNear
+        //% help=input/infrared/on
+        //% block="on %sensor|%event"
+        //% blockId=infraredOn
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
-        onObjectNear(handler: () => void) {
-            control.onEvent(this._id, PromixityEvent.ObjectNear, handler);
-            if (this.proximity() == PromixityEvent.ObjectNear)
+        on(event: InfraredSensorEvent, handler: () => void) {
+            control.onEvent(this._id, InfraredSensorEvent.ObjectNear, handler);
+            if ( this.proximity() == InfraredSensorEvent.ObjectNear)
                 control.runInBackground(handler);
         }
 
-        setObjectNearThreshold(distance: number) {
-            this.proximityThreshold = Math.max(1, Math.min(95, distance));
+        /**
+         * Waits for the event to occur
+         */
+        //% help=input/ultrasonic/wait
+        //% block="wait %sensor|for %event"
+        //% blockId=ultrasonicWait
+        //% parts="infraredsensor"
+        //% blockNamespace=sensors
+        //% weight=99 blockGap=8
+        //% group="Ultrasonic Sensor"        
+        wait(event: InfraredSensorEvent) {
+            // TODO
         }
         
         /**
