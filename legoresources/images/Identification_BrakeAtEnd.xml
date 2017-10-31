@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Definition Type="Boolean">
-    <Point Value="True" Name="Brake" ImageSuffix="_Brake"/>
-    <Point Value="False" Name="Coast" ImageSuffix="_Coast"/>
-</Definition>

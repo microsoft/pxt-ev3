@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Definition Type="Integer">
-  <Point Value="0" Name="Released" ImageSuffix="_Released" />
-  <Point Value="1" Name="Pushed" ImageSuffix="_Pressed" />
-  <Point Value="2" Name="Bumped" ImageSuffix="_Bumped" />
-</Definition>

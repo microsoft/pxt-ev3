@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Definition Type="Integer">
-  <Point Value="1" Name="Left" ImageSuffix="ID_1" />
-  <Point Value="2" Name="Center" ImageSuffix="ID_2" />
-  <Point Value="3" Name="Right" ImageSuffix="ID_3" />
-  <Point Value="4" Name="Up" ImageSuffix="ID_4" />
-  <Point Value="5" Name="Down" ImageSuffix="ID_5" />
-</Definition>

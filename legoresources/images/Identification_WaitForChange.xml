@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Definition Type="Integer">
-    <Point Value="0" Name="Up" ImageSuffix="_Up"/>
-    <Point Value="1" Name="Down" ImageSuffix="_Down"/>
-    <Point Value="2" Name="Both" ImageSuffix="_Both"/>
-</Definition>

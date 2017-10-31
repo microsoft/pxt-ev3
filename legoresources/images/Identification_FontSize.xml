@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Definition Type="Integer">
-    <Point Value="0" Name="0" ImageSuffix="_0"/>
-    <Point Value="1" Name="1" ImageSuffix="_1"/>
-    <Point Value="2" Name="2" ImageSuffix="_2"/>
-</Definition>
