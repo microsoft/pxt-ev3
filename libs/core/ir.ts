@@ -210,7 +210,7 @@ namespace sensors {
          */
         //% help=input/ultrasonic/wait
         //% block="wait %sensor|for %event"
-        //% blockId=ultrasonicWait
+        //% blockId=infraredwait
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
