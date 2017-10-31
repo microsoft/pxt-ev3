@@ -87,43 +87,66 @@ namespace motors {
         }
 
         /**
-         * Power on or off the motor.
-         * @param motor the motor to turn on
-         * @param power the motor power level from ``-100`` to ``100``, eg: 50
+         * Sets the motor power level from ``-100`` to ``100``.
+         * @param motor the output connection that the motor is connected to
+         * @param power the power from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=outputMotorOn block="%motor|%onOrOff"
-        //% onOrOff.fieldEditor=toggleonoff
+        //% blockId=motorSetPower block="power %motor|to %power|%"
         //% weight=99 group="Motors" blockGap=8
-        on(onOrOff: boolean = true) {
-            if (onOrOff) {
+        //% power.min=-100 power.max=100
+        power(power: number) {
+            power = Math.clamp(-100, 100, power >> 0);
+
+            const b = mkCmd(this.port, DAL.opOutputPower, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, power)
+            writePWM(b)
+            if (power) {
                 const b = mkCmd(this.port, DAL.opOutputStart, 0)
                 writePWM(b);
             } else {
-                const b = mkCmd(this.port, DAL.opOutputStop, 1)
-                b.setNumber(NumberFormat.UInt8LE, 2, this.brake ? 1 : 0)
-                writePWM(b)
+                this.stop();
             }
         }
 
         /**
-         * Sets the motor power level from ``-100`` to ``100``.
-         * @param motor the output connection that the motor is connected to
-         * @param power the desired speed to use. eg: 50
+         * Moves the motor by a number of degrees
+         * @param degrees the angle to turn the motor
+         * @param angle the degrees to rotate, eg: 360
+         * @param power the power from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorSetPower block="%motor|set power to %speed"
-        //% weight=62 group="Motors" blockGap=8
-        //% speed.min=-100 speed.max=100
-        setPower(power: number) {
-            const b = mkCmd(this.port, DAL.opOutputPower, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, Math.clamp(-100, 100, power))
-            writePWM(b)
+        //% blockId=motorMove block="move %motor|by %angle|degrees at %power|%"
+        //% weight=98 group="Motors" blockGap=8
+        //% power.min=-100 power.max=100
+        move(angle: number, power: number) {
+            angle = angle >> 0;
+            power = Math.clamp(-100, 100, power >> 0);
+
+            step(this.port, {
+                speed: power,
+                step1: 0,
+                step2: angle,
+                step3: 0,
+                useSteps: true,
+                useBrake: this.brake
+            })
         }
+
+        /**
+         * Stops the motor
+         */
+        //% blockId=motorStop block="stop %motor"
+        //% weight=97 group="Motors"
+        stop() {
+            const b = mkCmd(this.port, DAL.opOutputStop, 1)
+            b.setNumber(NumberFormat.UInt8LE, 2, this.brake ? 1 : 0)
+            writePWM(b);
+    }
 
         /**
          * Sets the automatic brake on or off when the motor is off
          * @param brake a value indicating if the motor should break when off
          */
-        //% blockId=outputMotorSetBrakeMode block="%motor|set brake %brake"
+        //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake"
         //% brake.fieldEditor=toggleonoff
         //% weight=60 group="Motors" blockGap=8
         setBrake(brake: boolean) {
@@ -133,7 +156,7 @@ namespace motors {
         /** 
          * Reverses the motor polarity
         */
-        //% blockId=motorSetReversed block="%motor|set reversed %reversed"
+        //% blockId=motorSetReversed block="set %motor|reversed %reversed"
         //% reversed.fieldEditor=toggleonoff
         //% weight=59 group="Motors"
         setReversed(reversed: boolean) {
@@ -147,7 +170,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorSpeed block="%motor|speed"
-        //% weight=50 group="Motors" blockGap=8
+        //% weight=72 group="Motors" blockGap=8
         speed(): number {
             return getMotorData(this.port).actualSpeed;
         }
@@ -157,7 +180,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorCount block="%motor|count"
-        //% weight=49 group="Motors" blockGap=8
+        //% weight=71 group="Motors" blockGap=8
         count(): number {
             return getMotorData(this.port).count;
         }
@@ -167,7 +190,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorTachoCount block="%motor|tacho count"
-        //% weight=48 group="Motors"
+        //% weight=70 group="Motors"
         tachoCount(): number {
             return getMotorData(this.port).tachoCount;
         }
