@@ -114,6 +114,8 @@
   "serial|block": "serial",
   "{id:category}Brick": "Brick",
   "{id:category}Control": "Control",
+  "{id:category}Image": "Image",
+  "{id:category}Images": "Images",
   "{id:category}MMap": "MMap",
   "{id:category}Motors": "Motors",
   "{id:category}Output": "Output",

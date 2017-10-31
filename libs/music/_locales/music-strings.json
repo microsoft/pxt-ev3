@@ -42,5 +42,7 @@
   "music.stopAllSounds|block": "stop all sounds",
   "music.tempo|block": "tempo (bpm)",
   "music|block": "music",
-  "{id:category}Music": "Music"
+  "{id:category}Music": "Music",
+  "{id:category}Sound": "Sound",
+  "{id:category}Sounds": "Sounds"
 }

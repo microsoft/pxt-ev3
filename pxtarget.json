@@ -62,7 +62,7 @@
     },
     "compileService": {
         "buildEngine": "dockermake",
-        "dockerImage": "pext/ev3",
+        "dockerImage": "pext/ev3:zlib",
         "serviceId": "ev3"
     },
     "appTheme": {

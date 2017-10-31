@@ -7,6 +7,8 @@ namespace pxt {
 void raiseEvent(int id, int event);
 int allocateNotifyEvent();
 void sleep_core_us(uint64_t us);
+void startUser();
+void stopUser();
 
 class Button;
 typedef Button *Button_;
@@ -26,6 +28,10 @@ class MMap : public RefObject {
 };
 
 extern volatile bool paniced;
+
+// Buffer, Sound, and Image share representation.
+typedef Buffer Image;
+typedef Buffer Sound;
 
 }
 

@@ -137,18 +137,34 @@ function compressImg(fn) {
 
 let sz = 0
 let bf
-let out = {}
+let out = {
+    "*": {
+        namespace: "images",
+        dataEncoding: "base64",
+        mimeType: "image/png"
+    }
+}
+let ts = "namespace images {\n"
+
 for (let i = 2; i < process.argv.length; ++i) {
     let fn = process.argv[i]
     let m = /([^\/]+\/[^/]+)\.rgf$/.exec(fn)
     let bn = m[1]
     bf = compressImg(fn)
-    out[bn] = "data:image/png;base64," + bf.toString("base64")
+    bn = bn.replace(/\//g, " ")
+        .toLowerCase()
+        .replace(/(\d)\s+/g, (f, n) => n)
+        .replace(/\s+(.)/g, (f, l) => l.toUpperCase())
+    out[bn] = bf.toString("base64")
     sz += bf.length
+    ts += `    //% fixedInstance jres\n`
+    ts += `    export const ${bn} = screen.unpackPNG(hex\`\`);\n`
 }
+ts += `}\n`
 
 console.log("total " + sz)
 fs.writeFileSync("out.json", JSON.stringify(out, null, 4))
+fs.writeFileSync("out.ts", ts)
 fs.writeFileSync("out.png", bf)
 
 //if (require("os").platform() == "darwin")

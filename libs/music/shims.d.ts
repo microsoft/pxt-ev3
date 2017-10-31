@@ -24,6 +24,23 @@ declare namespace music {
     //% blockNamespace=music
     //% weight=76 blockGap=8 shim=music::playTone
     function playTone(frequency: int32, ms: int32): void;
+
+    /** Makes a sound bound to a buffer in WAV format. */
+    //% shim=music::fromWAV
+    function fromWAV(buf: Buffer): Sound;
+}
+
+
+
+    //% fixedInstances
+declare interface Sound {
+    /** Returns the underlaying Buffer object. */
+    //% property shim=SoundMethods::buffer
+    buffer: Buffer;
+
+    /** Play sound. */
+    //% promise shim=SoundMethods::play
+    play(): void;
 }
 
 // Auto-generated. Do not edit. Really.

@@ -20,7 +20,7 @@ DEPS = $(PXT_HEADERS) package.json Makefile Makefile.inc
 all: $(EXE)
 
 $(EXE): $(PXT_OBJS)
-	$(LD) -o $(EXE) $(LDFLAGS) -Wl,-Map,$(EXE:.elf=.map) $(PXT_OBJS) $(LIBSTDCPP) -lm -lpthread $(NPM_LIBS)
+	$(LD) -o $(EXE) $(LDFLAGS) -Wl,-Map,$(EXE:.elf=.map) $(PXT_OBJS) $(LIBSTDCPP) -lm -lpthread -lz $(NPM_LIBS)
 	cp $(EXE) $(EXE:.elf=.full)
 	$(PREF)strip $(EXE)
 	node -p 'require("fs").readFileSync("$(EXE)").toString("hex")' > $(HEX)

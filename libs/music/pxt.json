@@ -8,6 +8,8 @@
         "shims.d.ts",
         "melodies.ts",
         "music.ts",
+        "sounds.jres",
+        "sounds.ts",
         "ns.ts"
     ],
     "testFiles": [

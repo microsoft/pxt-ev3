@@ -27,7 +27,7 @@ namespace brick {
         currFont = f
     }
 
-    export const heart = hex`f007 367f7f3e1c08`
+    export const heart = screen.imageOf(hex`f007 367f7f3e1c08`)
 
     export function defaultFont(): Font {
         return {
@@ -111,10 +111,11 @@ namespace brick {
         let cp = 0
         let byteWidth = (currFont.charWidth + 7) >> 3
         let charSize = byteWidth * currFont.charHeight
-        let iconBuf = output.createBuffer(2 + charSize)
+        let imgBuf = output.createBuffer(2 + charSize)
         let double = (mode & Draw.Quad) ? 4 : (mode & Draw.Double) ? 2 : 1
-        iconBuf[0] = 0xf0
-        iconBuf[1] = currFont.charWidth
+        imgBuf[0] = 0xf0
+        imgBuf[1] = currFont.charWidth
+        let img = screen.imageOf(imgBuf)
         while (cp < text.length) {
             let ch = text.charCodeAt(cp++)
             if (ch == 10) {
@@ -123,11 +124,11 @@ namespace brick {
             }
             if (ch < 32) continue
             let idx = (ch - currFont.firstChar) * charSize
-            if (idx < 0 || idx + iconBuf.length - 1 > currFont.data.length)
-                iconBuf.fill(0, 2)
+            if (idx < 0 || idx + imgBuf.length - 1 > currFont.data.length)
+                imgBuf.fill(0, 2)
             else
-                iconBuf.write(2, currFont.data.slice(idx, charSize))
-            screen.drawIcon(x, y, iconBuf, mode)
+                imgBuf.write(2, currFont.data.slice(idx, charSize))
+            img.draw(x, y, mode)
             x += double * currFont.charWidth
         }
     }

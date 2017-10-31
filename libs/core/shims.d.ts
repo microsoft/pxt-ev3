@@ -72,17 +72,44 @@ declare namespace serial {
 }
 declare namespace screen {
 
-    /** Double size of an icon. */
-    //% shim=screen::doubleIcon
-    function doubleIcon(buf: Buffer): Buffer;
-
-    /** Draw an icon on the screen. */
-    //% shim=screen::drawIcon
-    function drawIcon(x: int32, y: int32, buf: Buffer, mode: Draw): void;
+    /** Decompresses a 1-bit gray scale PNG image to image format. */
+    //% shim=screen::unpackPNG
+    function unpackPNG(png: Buffer): Image;
+}
+declare namespace screen {
 
     /** Clear screen and reset font to normal. */
     //% shim=screen::clear
     function clear(): void;
+
+    /** Makes an image bound to a buffer. */
+    //% shim=screen::imageOf
+    function imageOf(buf: Buffer): Image;
+}
+
+
+
+    //% fixedInstances
+declare interface Image {
+    /** Returns the underlaying Buffer object. */
+    //% property shim=ImageMethods::buffer
+    buffer: Buffer;
+
+    /** Returns the width of an image. */
+    //% property shim=ImageMethods::width
+    width: int32;
+
+    /** Returns the height of an image. */
+    //% property shim=ImageMethods::height
+    height: int32;
+
+    /** Double size of an image. */
+    //% shim=ImageMethods::doubled
+    doubled(): Image;
+
+    /** Draw an image on the screen. */
+    //% shim=ImageMethods::draw
+    draw(x: int32, y: int32, mode: Draw): void;
 }
 declare namespace output {
 
