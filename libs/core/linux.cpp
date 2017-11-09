@@ -352,7 +352,8 @@ void raiseEvent(int id, int event) {
     pthread_mutex_unlock(&eventMutex);
 }
 
-void registerWithDal(int id, int event, Action a) {
+void registerWithDal(int id, int event, Action a, int flags) {
+    // TODO support flags
     setBinding(id, event, a);
 }
 
