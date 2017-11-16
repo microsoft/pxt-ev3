@@ -193,7 +193,7 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=input/infrared/on
-        //% block="on %sensor|%event"
+        //% block="on `icons.infraredSensor` %sensor|%event"
         //% blockId=infraredOn
         //% parts="infraredsensor"
         //% blockNamespace=sensors
@@ -209,7 +209,7 @@ namespace sensors {
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="wait %sensor|for %event"
+        //% block="wait `icons.infraredSensor` %sensor|for %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
         //% blockNamespace=sensors
@@ -224,7 +224,7 @@ namespace sensors {
          * @param ir the infrared sensor
          */
         //% help=input/infrared/proximity
-        //% block="%infrared|proximity"
+        //% block="`icons.infraredSensor` %infrared|proximity"
         //% blockId=infraredGetProximity
         //% parts="infrared"
         //% blockNamespace=sensors
@@ -240,7 +240,7 @@ namespace sensors {
          * @param ir the infrared sensor
          */
         //% help=input/infrared/remote-command
-        //% block="%infrared|remote command"
+        //% block="`icons.infraredSensor` %infrared|remote command"
         //% blockId=infraredGetRemoteCommand
         //% parts="infrared"
         //% blockNamespace=sensors
@@ -258,16 +258,16 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="`icons.infraredSensor` 1"
+    //% fixedInstance whenUsed block="1"
     export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
 
-    //% fixedInstance whenUsed block="`icons.infraredSensor` 2"
+    //% fixedInstance whenUsed block="2"
     export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
 
-    //% fixedInstance whenUsed block="`icons.infraredSensor` 3"
+    //% fixedInstance whenUsed block="3"
     export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
 
-    //% fixedInstance whenUsed block="`icons.infraredSensor` 4"
+    //% fixedInstance whenUsed block="4"
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
 

@@ -216,28 +216,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="`icons.motorLarge` A"
+    //% whenUsed fixedInstance block="large A"
     export const largeMotorA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="`icons.motorLarge` B"
+    //% whenUsed fixedInstance block="large B"
     export const largeMotorB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="`icons.motorLarge` C"
+    //% whenUsed fixedInstance block="large C"
     export const largeMotorC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="`icons.motorLarge` D"
+    //% whenUsed fixedInstance block="large D"
     export const largeMotorD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="`icons.motorMedium` A"
+    //% whenUsed fixedInstance block="medium A"
     export const mediumMotorA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="`icons.motorMedium` B"
+    //% whenUsed fixedInstance block="medium B"
     export const mediumMotorB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="`icons.motorMedium` C"
+    //% whenUsed fixedInstance block="medium C"
     export const mediumMotorC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="`icons.motorMedium` D"
+    //% whenUsed fixedInstance block="medium D"
     export const mediumMotorD = new Motor(Output.D, false);
 
     function reset(out: Output) {
