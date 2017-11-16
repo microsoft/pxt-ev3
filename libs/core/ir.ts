@@ -93,7 +93,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/is-pressed
-        //% block="%button|is pressed"
+        //% block="`icons.remoteButton` %button|is pressed"
         //% blockId=remoteButtonIsPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -108,7 +108,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/was-pressed
-        //% block="%button|was pressed"
+        //% block="`icons.remoteButton` %button|was pressed"
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -125,7 +125,7 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=input/remote-infrared-beacon/on-event
-        //% blockId=remotebuttonEvent block="on %button|%event"
+        //% blockId=remotebuttonEvent block="on `icons.remoteButton` %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
@@ -274,30 +274,30 @@ namespace sensors {
     /**
      * Remote beacon (center) button.
      */
-    //% whenUsed block="remote button center" weight=95 fixedInstance
+    //% whenUsed block="center" weight=95 fixedInstance
     export const remoteButtonCenter = irButton(IrRemoteButton.CenterBeacon)
     
     /**
      * Remote top-left button.
      */
-    //% whenUsed block="remote button top-left" weight=95 fixedInstance
+    //% whenUsed block="top-left" weight=95 fixedInstance
     export const remoteButtonTopLeft = irButton(IrRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
-    //% whenUsed block="remote button top-right" weight=95 fixedInstance
+    //% whenUsed block="top-right" weight=95 fixedInstance
     export const remoteButtonTopRight = irButton(IrRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
-    //% whenUsed block="remote button bottom-left" weight=95 fixedInstance
+    //% whenUsed block="bottom-left" weight=95 fixedInstance
     export const remoteButtonBottomLeft = irButton(IrRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
-    //% whenUsed block="remote button bottom-right" weight=95 fixedInstance
+    //% whenUsed block="bottom-right" weight=95 fixedInstance
     export const remoteButtonBottomRight = irButton(IrRemoteButton.BottomRight)
 }
