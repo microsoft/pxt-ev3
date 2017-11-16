@@ -67,12 +67,12 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="touch sensor 1" weight=95 fixedInstance
+    //% whenUsed block="`icons.touchSensor` 1" weight=95 fixedInstance
     export const touchSensor1: TouchSensor = new TouchSensor(1)
-    //% whenUsed block="touch sensor 2" weight=95 fixedInstance
+    //% whenUsed block="`icons.touchSensor` 2" weight=95 fixedInstance
     export const touchSensor2: TouchSensor = new TouchSensor(2)
-    //% whenUsed block="touch sensor 3" weight=95 fixedInstance
+    //% whenUsed block="`icons.touchSensor` 3" weight=95 fixedInstance
     export const touchSensor3: TouchSensor = new TouchSensor(3)
-    //% whenUsed block="touch sensor 4" weight=95 fixedInstance
+    //% whenUsed block="`icons.touchSensor` 4" weight=95 fixedInstance
     export const touchSensor4: TouchSensor = new TouchSensor(4)
 }

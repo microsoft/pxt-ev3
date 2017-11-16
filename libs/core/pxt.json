@@ -28,6 +28,7 @@
         "dal.d.ts",
         "images.ts",
         "images.jres",
+        "icons.jres",
         "ns.ts"
     ],
     "testFiles": [

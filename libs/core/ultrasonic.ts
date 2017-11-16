@@ -85,16 +85,16 @@ namespace sensors {
             return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
         }
     }
-
-    //% fixedInstance whenUsed block="ultrasonic sensor 4"
-    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
     
-    //% fixedInstance whenUsed block="ultrasonic sensor 1"
+    //% fixedInstance whenUsed block="`icons.ultrasonicSensor` 1"
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
+    
+    //% fixedInstance whenUsed block="`icons.ultrasonicSensor` 4"
+    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 
-    //% fixedInstance whenUsed block="ultrasonic sensor 2"
+    //% fixedInstance whenUsed block="`icons.ultrasonicSensor` 2"
     export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
 
-    //% fixedInstance whenUsed block="ultrasonic sensor 3"
+    //% fixedInstance whenUsed block="`icons.ultrasonicSensor` 3"
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
 }

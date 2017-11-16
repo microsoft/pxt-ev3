@@ -214,7 +214,7 @@ namespace sensors {
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
-        //% group="Ultrasonic Sensor"        
+        //% group="Infrared Sensor"
         wait(event: InfraredSensorEvent) {
             // TODO
         }
@@ -258,16 +258,16 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="infrared sensor 1"
+    //% fixedInstance whenUsed block="`icons.infraredSensor` 1"
     export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
 
-    //% fixedInstance whenUsed block="infrared sensor 2"
+    //% fixedInstance whenUsed block="`icons.infraredSensor` 2"
     export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
 
-    //% fixedInstance whenUsed block="infrared sensor 3"
+    //% fixedInstance whenUsed block="`icons.infraredSensor` 3"
     export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
 
-    //% fixedInstance whenUsed block="infrared sensor 4"
+    //% fixedInstance whenUsed block="`icons.infraredSensor` 4"
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
 
