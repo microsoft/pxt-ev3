@@ -44,6 +44,7 @@
   "brick.print|block": "`icons.brickDisplay` print %text| at x: %x| y: %y",
   "brick.setPixel|block": "`icons.brickDisplay` set pixel %on| at x: %x| y: %y",
   "brick.setStatusLight|block": "set `icons.brickButtons` to %pattern=led_pattern",
+  "brick.showImage|block": "show image %image=scren_image_picker",
   "brick|block": "brick",
   "control.raiseEvent|block": "raise event|from %src|with value %value",
   "control|block": "control",
