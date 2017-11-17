@@ -9,6 +9,13 @@ eval("if (typeof process === 'object' && process + '' === '[object process]') px
 namespace pxt.editor {
     import UF2 = pxtc.UF2;
 
+    export let ev3: Ev3Wrapper
+
+    export function debug() {
+        return initAsync()
+            .then(w => w.downloadFileAsync("/tmp/dmesg.txt", v => console.log(pxt.Util.uint8ArrayToString(v))))
+    }
+
     // this comes from aux/pxt.lms
     const rbfTemplate = `
 4c45474f580000006d000100000000001c000000000000000e000000821b038405018130813e8053
@@ -19,6 +26,7 @@ namespace pxt.editor {
         return pxt.HF2.mkPacketIOAsync()
             .then(h => {
                 let w = new Ev3Wrapper(h)
+                ev3 = w
                 return w.reconnectAsync(true)
                     .then(() => w)
             })

@@ -252,6 +252,13 @@ namespace pxt.editor {
             return loop()
         }
 
+
+        downloadFileAsync(path: string, cb: (d: Uint8Array) => void) {
+            return this.lock.enqueue("file", () =>
+                    this.streamFileOnceAsync(path, cb))
+        }
+        
+
         private initAsync() {
             return Promise.resolve()
         }
