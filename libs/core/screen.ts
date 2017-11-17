@@ -133,6 +133,32 @@ namespace brick {
         }
     }
 
+    /**
+     * Shows an image on screen
+     * @param image image to draw
+     */
+    //% blockId=screen_show_image block="show image %image=scren_image_picker"
+    //% weight=95 group="Screen" blockGap=8
+    export function showImage(image: Image, delay: number = 400) {
+        if (!image) return;
+        image.draw(0, 0, Draw.Normal);
+        delay = Math.max(0, delay);
+        loops.pause(delay);
+    }
+
+    /**
+     * An image
+     * @param image the image
+     */
+    //% blockId=scren_image_picker block="%image" shim=TD_ID
+    //% image.fieldEditor="imagedropdown"
+    //% image.fieldOptions.columns=8
+    //% block.fieldOptions.hasSearchBar=true
+    //% group="Screen" weight=0 blockHidden=1
+    export function _imagePicker(image: Image): Image {
+        return image;
+    }
+    
     export function drawRect(x: number, y: number, w: number, h: number, mode = Draw.Normal) {
         x |= 0;
         y |= 0;
