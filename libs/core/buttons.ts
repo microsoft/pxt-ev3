@@ -84,7 +84,7 @@ namespace brick {
          * @param button the button to query the request
          */
         //% help=input/button/is-pressed
-        //% block="%button|is pressed"
+        //% block="`icons.brickButtons` %button|is pressed"
         //% blockId=buttonIsPressed
         //% parts="brick"
         //% blockNamespace=brick
@@ -99,7 +99,7 @@ namespace brick {
          * @param button the button to query the request
          */
         //% help=input/button/was-pressed
-        //% block="%button|was pressed"
+        //% block="`icons.brickButtons` %button|was pressed"
         //% blockId=buttonWasPressed
         //% parts="brick"
         //% blockNamespace=brick
@@ -118,7 +118,7 @@ namespace brick {
          * @param body code to run when the event is raised
          */
         //% help=input/button/on-event
-        //% blockId=buttonEvent block="on %button|%event"
+        //% blockId=buttonEvent block="on `icons.brickButtons` %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=99 blockGap=8
@@ -180,31 +180,31 @@ namespace brick {
     /**
      * Enter button on the EV3 Brick.
      */
-    //% whenUsed block="button enter" weight=95 fixedInstance
+    //% whenUsed block="enter" weight=95 fixedInstance
     export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 
     /**
      * Left button on the EV3 Brick.
      */
-    //% whenUsed block="button left" weight=95 fixedInstance
+    //% whenUsed block="left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
      * Right button on the EV3 Brick.
      */
-    //% whenUsed block="button right" weight=94 fixedInstance
+    //% whenUsed block="right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
      * Up button on the EV3 Brick.
      */
-    //% whenUsed block="button up" weight=95 fixedInstance
+    //% whenUsed block="up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
      * Down button on the EV3 Brick.
      */
-    //% whenUsed block="button down" weight=95 fixedInstance
+    //% whenUsed block="down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
 }
 
@@ -233,7 +233,7 @@ namespace brick {
      * Set lights.
      * @param pattern the lights pattern to use.
      */
-    //% blockId=setLights block="set status light %pattern=led_pattern"
+    //% blockId=setLights block="set `icons.brickButtons` to %pattern=led_pattern"
     //% weight=100 group="Light"
     export function setStatusLight(pattern: number): void {
         if (currPattern === pattern)

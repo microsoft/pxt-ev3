@@ -93,7 +93,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/is-pressed
-        //% block="`icons.remoteButton` %button|is pressed"
+        //% block="`icons.infraredSensor` %button|is pressed"
         //% blockId=remoteButtonIsPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -108,7 +108,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/was-pressed
-        //% block="`icons.remoteButton` %button|was pressed"
+        //% block="`icons.infraredSensor` %button|was pressed"
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -125,7 +125,7 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=input/remote-infrared-beacon/on-event
-        //% blockId=remotebuttonEvent block="on `icons.remoteButton` %button|%event"
+        //% blockId=remotebuttonEvent block="on `icons.infraredSensor` %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
