@@ -24,7 +24,7 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=input/gyro/angle
-        //% block="%sensor|angle"
+        //% block="`icons.gyroSensor` %sensor|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
@@ -40,7 +40,7 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=input/gyro/rate
-        //% block="%sensor|rotation rate"
+        //% block="`icons.gyroSensor` %sensor|rotation rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
@@ -51,16 +51,16 @@ namespace sensors {
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
     }
-
-    //% fixedInstance whenUsed block="gyro sensor 2"
-    export const gyro2: GyroSensor = new GyroSensor(2)
     
-    //% fixedInstance whenUsed block="gyro sensor 1"
+    //% fixedInstance whenUsed block="1"
     export const gyro1: GyroSensor = new GyroSensor(1)
 
-    //% fixedInstance whenUsed block="gyro sensor 3"
+    //% fixedInstance whenUsed block="2" weight=95
+    export const gyro2: GyroSensor = new GyroSensor(2)
+    
+    //% fixedInstance whenUsed block="3"
     export const gyro3: GyroSensor = new GyroSensor(3)
 
-    //% fixedInstance whenUsed block="gyro sensor 4"
+    //% fixedInstance whenUsed block="4"
     export const gyro4: GyroSensor = new GyroSensor(4)
 }

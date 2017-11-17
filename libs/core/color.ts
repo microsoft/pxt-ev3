@@ -59,7 +59,7 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=input/color/on-color-detected
-        //% block="on %sensor|detected %color"
+        //% block="on `icons.colorSensor` %sensor|detected %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -77,7 +77,7 @@ namespace sensors {
          * @param color the color sensor to query the request
          */
         //% help=input/color/ambient-light
-        //% block="%color| ambient light"
+        //% block="`icons.colorSensor` %color| ambient light"
         //% blockId=colorGetAmbient
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -93,7 +93,7 @@ namespace sensors {
          * @param color the color sensor to query the request
          */
         //% help=input/color/refelected-light
-        //% block="%color| reflected light"
+        //% block="`icons.colorSensor` %color| reflected light"
         //% blockId=colorGetReflected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -109,7 +109,7 @@ namespace sensors {
          * @param color the color sensor to query the request
          */
         //% help=input/color/color
-        //% block="%color| color"
+        //% block="`icons.colorSensor` %color| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -121,15 +121,15 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="color sensor 3" weight=95 fixedInstance
+    //% whenUsed block="1" weight=95 fixedInstance
+    export const color1: ColorSensor = new ColorSensor(1)
+    
+    //% whenUsed block="3" weight=90 fixedInstance
     export const color3: ColorSensor = new ColorSensor(3)
     
-    //% whenUsed block="color sensor 1" weight=95 fixedInstance
-    export const color1: ColorSensor = new ColorSensor(1)
-
-    //% whenUsed block="color sensor 2" weight=95 fixedInstance
+    //% whenUsed block="2" weight=90 fixedInstance
     export const color2: ColorSensor = new ColorSensor(2)
 
-    //% whenUsed block="color sensor 4" weight=95 fixedInstance
+    //% whenUsed block="4" weight=90 fixedInstance
     export const color4: ColorSensor = new ColorSensor(4)
 }

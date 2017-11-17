@@ -66,7 +66,7 @@ namespace motors {
     /**
      * Stops all motors
      */
-    //% blockId=motorStopAll block="stop all motors"
+    //% blockId=motorStopAll block="stop all `icons.motorLarge`"
     //% weight=10 group="Motors" blockGap=8
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
@@ -91,7 +91,7 @@ namespace motors {
          * @param motor the output connection that the motor is connected to
          * @param power the power from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorSetPower block="power %motor|to %power|%"
+        //% blockId=motorSetPower block="power `icons.motorLarge` %motor|to %power|%"
         //% weight=99 group="Motors" blockGap=8
         //% power.min=-100 power.max=100
         power(power: number) {
@@ -114,7 +114,7 @@ namespace motors {
          * @param angle the degrees to rotate, eg: 360
          * @param power the power from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorMove block="move %motor|by %angle|degrees at %power|%"
+        //% blockId=motorMove block="move `icons.motorLarge` %motor|by %angle|degrees at %power|%"
         //% weight=98 group="Motors" blockGap=8
         //% power.min=-100 power.max=100
         move(angle: number, power: number) {
@@ -134,7 +134,7 @@ namespace motors {
         /**
          * Stops the motor
          */
-        //% blockId=motorStop block="stop %motor"
+        //% blockId=motorStop block="stop `icons.motorLarge` %motor"
         //% weight=97 group="Motors"
         stop() {
             const b = mkCmd(this.port, DAL.opOutputStop, 1)
@@ -146,7 +146,7 @@ namespace motors {
          * Sets the automatic brake on or off when the motor is off
          * @param brake a value indicating if the motor should break when off
          */
-        //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake"
+        //% blockId=outputMotorSetBrakeMode block="set `icons.motorLarge` %motor|brake %brake"
         //% brake.fieldEditor=toggleonoff
         //% weight=60 group="Motors" blockGap=8
         setBrake(brake: boolean) {
@@ -156,7 +156,7 @@ namespace motors {
         /** 
          * Reverses the motor polarity
         */
-        //% blockId=motorSetReversed block="set %motor|reversed %reversed"
+        //% blockId=motorSetReversed block="set `icons.motorLarge` %motor|reversed %reversed"
         //% reversed.fieldEditor=toggleonoff
         //% weight=59 group="Motors"
         setReversed(reversed: boolean) {
@@ -169,7 +169,7 @@ namespace motors {
          * Gets motor actual speed.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorSpeed block="%motor|speed"
+        //% blockId=motorSpeed block="`icons.motorLarge` %motor|speed"
         //% weight=72 group="Motors" blockGap=8
         speed(): number {
             return getMotorData(this.port).actualSpeed;
@@ -179,7 +179,7 @@ namespace motors {
          * Gets motor step count.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorCount block="%motor|count"
+        //% blockId=motorCount block="`icons.motorLarge` %motor|count"
         //% weight=71 group="Motors" blockGap=8
         count(): number {
             return getMotorData(this.port).count;
@@ -189,7 +189,7 @@ namespace motors {
          * Gets motor tacho count.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorTachoCount block="%motor|tacho count"
+        //% blockId=motorTachoCount block="`icons.motorLarge` %motor|tacho count"
         //% weight=70 group="Motors"
         tachoCount(): number {
             return getMotorData(this.port).tachoCount;
@@ -216,28 +216,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motor A"
+    //% whenUsed fixedInstance block="large A"
     export const largeMotorA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large motor B"
+    //% whenUsed fixedInstance block="large B"
     export const largeMotorB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large motor C"
+    //% whenUsed fixedInstance block="large C"
     export const largeMotorC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large motor D"
+    //% whenUsed fixedInstance block="large D"
     export const largeMotorD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium motor A"
+    //% whenUsed fixedInstance block="medium A"
     export const mediumMotorA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium motor B"
+    //% whenUsed fixedInstance block="medium B"
     export const mediumMotorB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium motor C"
+    //% whenUsed fixedInstance block="medium C"
     export const mediumMotorC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium motor D"
+    //% whenUsed fixedInstance block="medium D"
     export const mediumMotorD = new Motor(Output.D, false);
 
     function reset(out: Output) {

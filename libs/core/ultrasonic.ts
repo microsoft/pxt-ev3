@@ -41,9 +41,9 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=input/ultrasonic/on
-        //% block="on %sensor|%event"
         //% blockId=ultrasonicOn
-        //% parts="infraredsensor"
+        //% block="on `icons.ultrasonicSensor` %sensor|%event"
+        //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
@@ -58,9 +58,9 @@ namespace sensors {
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="wait %sensor|for %event"
+        //% block="wait `icons.ultrasonicSensor` %sensor|for %event"
         //% blockId=ultrasonicWait
-        //% parts="infraredsensor"
+        //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"        
@@ -73,9 +73,9 @@ namespace sensors {
          * @param sensor the ultrasonic sensor port
          */
         //% help=input/ultrasonic/distance
-        //% block="%sensor|distance"
+        //% block="`icons.ultrasonicSensor` %sensor|distance"
         //% blockId=sonarGetDistance
-        //% parts="ultrasonic"
+        //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Ultrasonic Sensor"     
@@ -85,16 +85,16 @@ namespace sensors {
             return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
         }
     }
-
-    //% fixedInstance whenUsed block="ultrasonic sensor 4"
-    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
     
-    //% fixedInstance whenUsed block="ultrasonic sensor 1"
+    //% fixedInstance whenUsed block="1"
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
+    
+    //% fixedInstance whenUsed block="4"
+    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 
-    //% fixedInstance whenUsed block="ultrasonic sensor 2"
+    //% fixedInstance whenUsed block="2"
     export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
 
-    //% fixedInstance whenUsed block="ultrasonic sensor 3"
+    //% fixedInstance whenUsed block="3"
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
 }
