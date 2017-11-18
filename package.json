@@ -1,6 +1,6 @@
 {
   "name": "pxt-ev3",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "LEGO Mindstorms EV3 for Microsoft MakeCode",
   "private": true,
   "keywords": [
