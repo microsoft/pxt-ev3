@@ -8,7 +8,7 @@ namespace music {
     //% shim=TD_ID color="#FFFFFF" colorSecondary="#FFFFFF"
     //% note.fieldEditor="note" note.defl="262"
     //% note.fieldOptions.editorColour="#FF1493" note.fieldOptions.decompileLiterals=true
-    //% note.fieldOptions.minNote=131 note.fieldOptions.maxNote=277
+    //% note.fieldOptions.minNote=40 note.fieldOptions.maxNote=51
     //% useEnumVal=1
     //% weight=10 blockGap=8
     export function noteFrequency(name: Note): number {
