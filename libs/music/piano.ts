@@ -12,6 +12,7 @@ namespace music {
     //% useEnumVal=1
     //% weight=10 blockGap=8
     export function noteFrequency(name: Note): number {
+        //TODO fill in actual min/max note values
         return name;
     }
 }
