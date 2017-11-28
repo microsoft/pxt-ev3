@@ -68,6 +68,7 @@ namespace brick {
         _update(curr: boolean) {
             if (this._isPressed == curr) return
             this._isPressed = curr
+            if (curr) this._wasPressed = true;
             if (curr) {
                 this.downTime = control.millis()
                 control.raiseEvent(this._id, ButtonEvent.Down)
