@@ -143,7 +143,8 @@ namespace brick {
         if (!image) return;
         image.draw(0, 0, Draw.Normal);
         delay = Math.max(0, delay);
-        loops.pause(delay);
+        if (delay > 0)
+            loops.pause(delay);
     }
 
     /**
