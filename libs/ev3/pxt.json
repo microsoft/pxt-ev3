@@ -8,7 +8,8 @@
     "dependencies": {
         "base": "file:../base",
         "core": "file:../core",
-        "music": "file:../music"
+        "music": "file:../music",
+        "touch-sensor": "file:../touch-sensor"
     },
     "public": true
 }
