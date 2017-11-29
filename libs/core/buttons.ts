@@ -68,15 +68,15 @@ namespace brick {
         _update(curr: boolean) {
             if (this._isPressed == curr) return
             this._isPressed = curr
-            if (curr) this._wasPressed = true;
             if (curr) {
+                this._wasPressed = true;
                 this.downTime = control.millis()
                 control.raiseEvent(this._id, ButtonEvent.Down)
             } else {
                 control.raiseEvent(this._id, ButtonEvent.Up)
-                let delta = control.millis() - this.downTime
-                control.raiseEvent(this._id, ButtonEvent.Click)
-                //control.raiseEvent(this._id, delta > 500 ? ButtonEvent.LongClick : ButtonEvent.Click)
+                const delta = control.millis() - this.downTime;
+                if (delta < 500)
+                    control.raiseEvent(this._id, ButtonEvent.Click)
             }
         }
 

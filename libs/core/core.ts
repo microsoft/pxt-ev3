@@ -10,7 +10,7 @@ namespace control {
             this._id = id
         }
 
-        getId() {
+        id() {
             return this._id;
         }
     }
