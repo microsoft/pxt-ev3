@@ -180,7 +180,7 @@ void init() {
     mappedFrameBuffer = (uint8_t *)mmap(NULL, FB_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     DMESG("map %p", mappedFrameBuffer);
     if (mappedFrameBuffer == MAP_FAILED) {
-        target_panic(111);
+        target_panic(903);
     }
     clear();
 

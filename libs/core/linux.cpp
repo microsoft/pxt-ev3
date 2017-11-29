@@ -6,7 +6,6 @@
 #include <time.h>
 #include <cstdarg>
 #include <pthread.h>
-#include <assert.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <signal.h>
@@ -14,6 +13,8 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <fcntl.h>
+
+#define THREAD_DBG(...)
 
 void *operator new(size_t size) {
     return malloc(size);
@@ -229,6 +230,8 @@ static void runAct(Thread *thr) {
     disposeThread(thr);
 }
 
+static void mainThread(Thread *) {}
+
 void setupThread(Action a, TValue arg = 0, void (*runner)(Thread *) = NULL, TValue d0 = 0,
                  TValue d1 = 0) {
     if (runner == NULL)
@@ -242,8 +245,13 @@ void setupThread(Action a, TValue arg = 0, void (*runner)(Thread *) = NULL, TVal
     thr->data0 = incr(d0);
     thr->data1 = incr(d1);
     pthread_cond_init(&thr->waitCond, NULL);
-    pthread_create(&thr->pid, NULL, (void *(*)(void *))runner, thr);
-    pthread_detach(thr->pid);
+    if (runner == mainThread) {
+        thr->pid = pthread_self();
+    } else {
+        pthread_create(&thr->pid, NULL, (void *(*)(void *))runner, thr);
+        THREAD_DBG("setup thread: %p (pid %p)", thr, thr->pid);
+        pthread_detach(thr->pid);
+    }
 }
 
 void runInBackground(Action a) {
@@ -263,8 +271,10 @@ void runForever(Action a) {
 }
 
 void waitForEvent(int source, int value) {
+    THREAD_DBG("waitForEv: %d %d", source, value);
     auto self = pthread_self();
     for (auto t = allThreads; t; t = t->next) {
+        THREAD_DBG("t: %p", t);
         if (t->pid == self) {
             pthread_mutex_lock(&eventMutex);
             t->waitSource = source;
@@ -279,7 +289,8 @@ void waitForEvent(int source, int value) {
             return;
         }
     }
-    assert(0);
+    DMESG("current thread not registered!");
+    target_panic(901);
 }
 
 static void dispatchEvent(Event &e) {
@@ -342,7 +353,8 @@ void raiseEvent(int id, int event) {
     auto e = mkEvent(id, event);
     pthread_mutex_lock(&eventMutex);
     if (eventTail == NULL) {
-        assert(eventHead == NULL);
+        if (eventHead != NULL)
+            target_panic(902);
         eventHead = eventTail = e;
     } else {
         eventTail->next = e;
@@ -467,6 +479,7 @@ void initRuntime() {
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
+    setupThread(0, 0, mainThread);
     target_init();
     screen_init();
     startUser();
@@ -508,4 +521,4 @@ void dmesg(const char *format, ...) {
     fflush(dmesgFile);
     fdatasync(fileno(dmesgFile));
 }
-}
+} // namespace pxt
