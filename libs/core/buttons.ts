@@ -4,34 +4,34 @@
  */
 const enum LightsPattern {
     //% block=Off enumval=0
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     Off = 0,
     //% block=Green enumval=1
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     Green = 1,
     //% block=Red enumval=2
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     Red = 2,
     //% block=Orange enumval=3
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     Orange = 3,
     //% block="Flashing Green" enumval=4
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     GreenFlash = 4,
     //% block="Flashing Red" enumval=5
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     RedFlash = 5,
     //% block="Flashing Orange" enumval=6
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     OrangeFlash = 6,
     //% block="Pulsing Green" enumval=7
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     GreenPulse = 7,
     //% block="Pulsing Red" enumval=8
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     RedPulse = 8,
     //% block="Pulsing Orange" enumval=9
-    //% blockIdentity=output.pattern
+    //% blockIdentity=brick.lightPattern
     OrangePulse = 9,
 }
 
@@ -69,13 +69,14 @@ namespace brick {
             if (this._isPressed == curr) return
             this._isPressed = curr
             if (curr) {
+                this._wasPressed = true;
                 this.downTime = control.millis()
                 control.raiseEvent(this._id, ButtonEvent.Down)
             } else {
                 control.raiseEvent(this._id, ButtonEvent.Up)
-                let delta = control.millis() - this.downTime
-                control.raiseEvent(this._id, ButtonEvent.Click)
-                //control.raiseEvent(this._id, delta > 500 ? ButtonEvent.LongClick : ButtonEvent.Click)
+                const delta = control.millis() - this.downTime;
+                if (delta < 500)
+                    control.raiseEvent(this._id, ButtonEvent.Click)
             }
         }
 
@@ -252,7 +253,7 @@ namespace brick {
     //% blockId=led_pattern block="%pattern"
     //% shim=TD_ID colorSecondary="#6e9a36" group="Light"
     //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
-    export function pattern(pattern: LightsPattern): number {
+    export function lightPattern(pattern: LightsPattern): number {
         return pattern;
     }
 }

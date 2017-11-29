@@ -41,7 +41,7 @@ namespace sensors {
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
          */
-        //% help=input/touch/on-event
+        //% help=input/touch-sensor/on-event
         //% blockId=touchEvent block="on `icons.touchSensor` %sensor|%event"
         //% parts="touch"
         //% blockNamespace=sensors
@@ -55,15 +55,30 @@ namespace sensors {
          * Check if touch sensor is touched.
          * @param sensor the port to query the request
          */
-        //% help=input/touch/is-touched
-        //% block="`icons.touchSensor` %sensor|is touched"
-        //% blockId=touchIsTouched
+        //% help=input/touch-sensor/is-pressed
+        //% block="`icons.touchSensor` %sensor|is pressed"
+        //% blockId=touchIsPressed
         //% parts="touch"
         //% blockNamespace=sensors
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
-        isTouched() {
+        isPressed() {
             return this.button.isPressed();
+        }
+
+        /**
+         * Check if touch sensor is touched since it was last checked.
+         * @param sensor the port to query the request
+         */
+        //% help=input/touch-sensor/was-pressed
+        //% block="`icons.touchSensor` %sensor|was pressed"
+        //% blockId=touchWasPressed
+        //% parts="touch"
+        //% blockNamespace=sensors
+        //% weight=81 blockGap=8
+        //% group="Touch Sensor"
+        wasPressed() {
+            return this.button.wasPressed();
         }
     }
 

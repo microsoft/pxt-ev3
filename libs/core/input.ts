@@ -132,26 +132,26 @@ namespace sensors.internal {
     }
 
     export class Sensor extends control.Component {
-        protected port: number // this is 0-based
+        protected _port: number // this is 0-based
 
         constructor(port_: number) {
             super()
             if (!(1 <= port_ && port_ <= DAL.NUM_INPUTS))
                 control.panic(120)
-            this.port = port_ - 1
+            this._port = port_ - 1
             init()
-            sensorInfos[this.port].sensors.push(this)
+            sensorInfos[this._port].sensors.push(this)
         }
 
         _activated() { }
 
         // 1-based
-        getPort() {
-            return this.port + 1
+        port() {
+            return this._port + 1
         }
 
         isActive() {
-            return sensorInfos[this.port].sensor == this
+            return sensorInfos[this._port].sensor == this
         }
 
         _query() {
@@ -173,7 +173,7 @@ namespace sensors.internal {
 
         _readPin6() {
             if (!this.isActive()) return 0
-            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this.port)
+            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port)
         }
     }
 
@@ -202,18 +202,18 @@ namespace sensors.internal {
             if (!this.isActive()) return
             if (this.realmode != this.mode) {
                 this.realmode = v
-                setUartMode(this.port, v)
+                setUartMode(this._port, v)
             }
         }
 
         getBytes(): Buffer {
-            return getUartBytes(this.isActive() ? this.port : -1)
+            return getUartBytes(this.isActive() ? this._port : -1)
         }
 
         getNumber(fmt: NumberFormat, off: number) {
             if (!this.isActive())
                 return 0
-            return getUartNumber(fmt, off, this.port)
+            return getUartNumber(fmt, off, this._port)
         }
     }
 

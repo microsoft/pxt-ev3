@@ -10,6 +10,7 @@
         "libs/base",
         "libs/core",
         "libs/music",
+        "libs/touch-sensor",
         "libs/ev3"
     ],
     "simulator": {
