@@ -8,7 +8,7 @@
         "shims.d.ts",
         "melodies.ts",
         "music.ts",
-        "piano.ts",
+        "music_overrides.ts",
         "sounds.jres",
         "sounds.ts",
         "ns.ts"
