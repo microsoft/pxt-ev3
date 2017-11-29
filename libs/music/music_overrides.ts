@@ -31,7 +31,7 @@ namespace music {
             case Sounds.BaDing:
                 return 'b5:1 e6:3';
             case Sounds.Wawawawaa:
-                return 'e4:3 r:1 d#3:3 r:1 d3:4 r:1 c#3:8';
+                return 'e4:3 r:1 d#:3 r:1 d:4 r:1 c#:8';
             case Sounds.JumpUp:
                 return 'c5:1 d e f g';
             case Sounds.JumpDown:
