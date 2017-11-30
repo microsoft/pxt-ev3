@@ -30,7 +30,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8
         //% group="Gyro Sensor"
-        angle() {
+        angle(): number {
             this.setMode(GyroSensorMode.Angle)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }
@@ -46,7 +46,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Gyro Sensor"
-        rate() {
+        rate(): number {
             this.setMode(GyroSensorMode.Rate)
             return this.getNumber(NumberFormat.Int16LE, 0)
         }

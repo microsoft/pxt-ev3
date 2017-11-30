@@ -12,7 +12,8 @@
         "color-sensor": "file:../color-sensor",
         "touch-sensor": "file:../touch-sensor",
         "ultrasonic-sensor": "file:../ultrasonic-sensor",
-        "infrared-sensor": "file:../infrared-sensor"
+        "infrared-sensor": "file:../infrared-sensor",
+        "gyro-sensor": "file:../gyro-sensor"
     },
     "public": true
 }
