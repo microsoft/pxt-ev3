@@ -172,14 +172,14 @@ namespace sensors {
     }
 
     //% whenUsed block="1" weight=95 fixedInstance
-    export const colorSensor1: ColorSensor = new ColorSensor(1)
+    export const color1: ColorSensor = new ColorSensor(1)
     
     //% whenUsed block="3" weight=90 fixedInstance
-    export const colorSensor3: ColorSensor = new ColorSensor(3)
+    export const color3: ColorSensor = new ColorSensor(3)
     
     //% whenUsed block="2" weight=90 fixedInstance
-    export const colorSensor2: ColorSensor = new ColorSensor(2)
+    export const color2: ColorSensor = new ColorSensor(2)
 
     //% whenUsed block="4" weight=90 fixedInstance
-    export const colorSensor4: ColorSensor = new ColorSensor(4)
+    export const color4: ColorSensor = new ColorSensor(4)
 }

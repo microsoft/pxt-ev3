@@ -10,7 +10,8 @@
         "core": "file:../core",
         "music": "file:../music",
         "color-sensor": "file:../color-sensor",
-        "touch-sensor": "file:../touch-sensor"
+        "touch-sensor": "file:../touch-sensor",
+        "ultrasonic-sensor": "file:../ultrasonic-sensor"
     },
     "public": true
 }

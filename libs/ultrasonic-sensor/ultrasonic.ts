@@ -1,20 +1,22 @@
-const enum UltrasonicSensorEvent {
-    //% block="object near"
-    ObjectNear = 1,
+enum UltrasonicSensorEvent {
     //% block="object detected"
-    ObjectDetected = 2
+    ObjectDetected = 10,
+    //% block="object near"
+    ObjectNear = sensors.internal.ThresholdState.Low,
+    //% block="object far"
+    ObjectFar = sensors.internal.ThresholdState.High
 }
 
 namespace sensors {
 
     //% fixedInstances
     export class UltraSonicSensor extends internal.UartSensor {
-        private promixityThreshold: number;
+        private promixityThreshold: sensors.internal.ThresholdDetector;
         private movementThreshold: number;
 
         constructor(port: number) {
             super(port)
-            this.promixityThreshold = 10;
+            this.promixityThreshold = new sensors.internal.ThresholdDetector(this.id(), 0, 255, 10, 100); // range is 0..255cm
             this.movementThreshold = 1;
         }
 
@@ -28,12 +30,11 @@ namespace sensors {
 
         _update(prev: number, curr: number) {
             // is there an object near?
-            if (prev >= this.promixityThreshold && curr < this.promixityThreshold)
-                control.raiseEvent(this._id, UltrasonicSensorEvent.ObjectNear); // TODO proper HI-LO sensor
+            this.promixityThreshold.setLevel(curr);
 
             // did something change?
             if (Math.abs(prev - curr) > this.movementThreshold)
-                control.raiseEvent(this._id, UltrasonicSensorEvent.ObjectDetected); // TODO debouncing
+                control.raiseEvent(this._id, UltrasonicSensorEvent.ObjectDetected);
         }
 
         /**
@@ -47,25 +48,22 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
-        on(event: UltrasonicSensorEvent, handler: () => void) {
+        onEvent(event: UltrasonicSensorEvent, handler: () => void) {
             control.onEvent(this._id, event, handler);
-            if (event == UltrasonicSensorEvent.ObjectNear 
-                && this.distance() < this.promixityThreshold)
-                control.runInBackground(handler);
         }
 
         /**
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="wait `icons.ultrasonicSensor` %sensor|for %event"
+        //% block="wait `icons.ultrasonicSensor` %sensor|until %event"
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"        
-        wait(event: UltrasonicSensorEvent) {
-            // TODO
+        waitUntil(event: UltrasonicSensorEvent) {
+            control.waitForEvent(this._id, event);
         }
 
         /**
@@ -79,10 +77,10 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Ultrasonic Sensor"     
-        distance() {
+        distance(): number {
             // it supposedly also has an inch mode, but we stick to cm
             this._setMode(0)
-            return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
+            return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff; // range is 0..255
         }
     }
     

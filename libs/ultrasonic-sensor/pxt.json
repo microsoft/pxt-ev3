@@ -1,0 +1,15 @@
+{
+    "name": "ultrasonic-sensor",
+    "description": "Ultrasonic Sensor support",
+    "files": [
+        "README.md",
+        "ultrasonic.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "dependencies": {
+            "core": "file:../core"
+    }
+}

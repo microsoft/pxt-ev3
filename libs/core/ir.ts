@@ -209,14 +209,14 @@ namespace sensors {
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="wait `icons.infraredSensor` %sensor|for %event"
+        //% block="wait `icons.infraredSensor` %sensor|until %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
-        wait(event: InfraredSensorEvent) {
-            // TODO
+        waitUntil(event: InfraredSensorEvent) {
+            control.waitForEvent(this._id, event);
         }
         
         /**
