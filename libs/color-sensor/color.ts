@@ -59,6 +59,10 @@ namespace sensors {
             this.thresholdDetector = new sensors.internal.ThresholdDetector(this.id());
         }
 
+        _colorEventValue(value: number) {
+            return 0xff00 | value;
+        }
+
         _deviceType() {
             return DAL.DEVICE_TYPE_COLOR
         }
@@ -82,7 +86,7 @@ namespace sensors {
 
         _update(prev: number, curr: number) {
             if (this.mode == ColorSensorMode.Color)
-                control.raiseEvent(this._id, curr);
+                control.raiseEvent(this._id, this._colorEventValue(curr));
             else
                 this.thresholdDetector.setLevel(curr);
         }
@@ -100,10 +104,11 @@ namespace sensors {
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
-            control.onEvent(this._id, <number>color, handler);
+            const v = this._colorEventValue(<number>color);
+            control.onEvent(this._id, v, handler);
             this.setMode(ColorSensorMode.Color)
             if (this.color() == color)
-                control.raiseEvent(this._id, <number>color);
+                control.raiseEvent(this._id, v);
         }
 
         /**
@@ -134,7 +139,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=89 blockGap=8
         //% group="Color Sensor"
-        onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) { 
+        onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
             control.onEvent(this._id, <number>condition, handler);
             this.setMode(<ColorSensorMode><number>mode)
         }
