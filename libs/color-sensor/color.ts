@@ -39,8 +39,15 @@ namespace sensors {
             return DAL.DEVICE_TYPE_COLOR
         }
 
-        setMode(m: ColorSensorMode) {
+        setColorMode(m: ColorSensorMode) {
             this._setMode(m)
+        }
+
+        /**
+         * Gets the current color mode
+         */
+        colorMode() { 
+            return <ColorSensorMode>this.mode;
         }
 
         _query() {
@@ -50,16 +57,17 @@ namespace sensors {
         }
 
         _update(prev: number, curr: number) {
-            control.raiseEvent(this._id, curr);
+            if (this.mode == ColorSensorMode.Color)
+                control.raiseEvent(this._id, curr);
         }
 
         /**
          * Registers code to run when the given color is detected
-         * @param color the color to dtect
+         * @param color the color to detect, eg: ColorSensorColor.Blue
          * @param handler the code to run when detected
          */
         //% help=input/color/on-color-detected
-        //% block="on `icons.colorSensor` %sensor|detected %color"
+        //% block="on `icons.colorSensor` %sensor|detected color %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -67,9 +75,9 @@ namespace sensors {
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
             control.onEvent(this._id, <number>color, handler);
-            this.setMode(ColorSensorMode.Color)
+            this.setColorMode(ColorSensorMode.Color)
             if (this.color() == color)
-                control.runInBackground(handler)
+                control.raiseEvent(this._id, <number>color);
         }
 
         /**
@@ -84,7 +92,7 @@ namespace sensors {
         //% weight=65 blockGap=8
         //% group="Color Sensor"
         ambientLight() {
-            this.setMode(ColorSensorMode.Ambient)
+            this.setColorMode(ColorSensorMode.Ambient)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
@@ -100,7 +108,7 @@ namespace sensors {
         //% weight=64 blockGap=8
         //% group="Color Sensor"
         reflectedLight(): number {
-            this.setMode(ColorSensorMode.Reflect)
+            this.setColorMode(ColorSensorMode.Reflect)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
@@ -116,7 +124,7 @@ namespace sensors {
         //% weight=66 blockGap=8
         //% group="Color Sensor"
         color(): ColorSensorColor {
-            this.setMode(ColorSensorMode.Color)
+            this.setColorMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
     }

@@ -1,0 +1,20 @@
+{
+  "ColorSensorColor.Black|block": "black",
+  "ColorSensorColor.Blue|block": "blue",
+  "ColorSensorColor.Brown|block": "brown",
+  "ColorSensorColor.Green|block": "green",
+  "ColorSensorColor.None|block": "none",
+  "ColorSensorColor.Red|block": "red",
+  "ColorSensorColor.White|block": "white",
+  "ColorSensorColor.Yellow|block": "yellow",
+  "sensors.ColorSensor.ambientLight|block": "`icons.colorSensor` %color| ambient light",
+  "sensors.ColorSensor.color|block": "`icons.colorSensor` %color| color",
+  "sensors.ColorSensor.onColorDetected|block": "on `icons.colorSensor` %sensor|detected color %color",
+  "sensors.ColorSensor.reflectedLight|block": "`icons.colorSensor` %color| reflected light",
+  "sensors.color1|block": "1",
+  "sensors.color2|block": "2",
+  "sensors.color3|block": "3",
+  "sensors.color4|block": "4",
+  "{id:category}Sensors": "Sensors",
+  "{id:group}Color Sensor": "Color Sensor"
+}

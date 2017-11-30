@@ -1,0 +1,9 @@
+{
+  "sensors.ColorSensor.ambientLight": "Get current ambient light value from the color sensor.",
+  "sensors.ColorSensor.color": "Get the current color from the color sensor.",
+  "sensors.ColorSensor.colorMode": "Gets the current color mode",
+  "sensors.ColorSensor.onColorDetected": "Registers code to run when the given color is detected",
+  "sensors.ColorSensor.onColorDetected|param|color": "the color to detect, eg: ColorSensorColor.Blue",
+  "sensors.ColorSensor.onColorDetected|param|handler": "the code to run when detected",
+  "sensors.ColorSensor.reflectedLight": "Get current reflected light value from the color sensor."
+}
