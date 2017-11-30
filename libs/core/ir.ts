@@ -155,8 +155,8 @@ namespace sensors {
                 return mapButton(this.getNumber(NumberFormat.UInt8LE, this.channel));
             else if (this.mode == IrSensorMode.Proximity) {
                 const d = this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
-                return d < this.proximityThreshold ? UltrasonicSensorEvent.ObjectNear
-                    : d > this.proximityThreshold + 5 ? UltrasonicSensorEvent.ObjectDetected
+                return d < this.proximityThreshold ? InfraredSensorEvent.ObjectNear
+                    : d > this.proximityThreshold + 5 ? InfraredSensorEvent.ObjectDetected
                         : 0;
             }
             return 0
