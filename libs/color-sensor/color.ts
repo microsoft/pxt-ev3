@@ -11,6 +11,13 @@ const enum ColorSensorMode {
     ColorCal = 5,
 }
 
+enum LightIntensityMode {
+    //% block="reflected light"
+    Reflected = ColorSensorMode.ReflectedLightIntensity,
+    //% block="ambient light"
+    Ambient = ColorSensorMode.AmbientLightIntensity
+}
+
 const enum ColorSensorColor {
     //% block="none"
     None,
@@ -30,6 +37,13 @@ const enum ColorSensorColor {
     Brown,
 }
 
+enum LightCondition {
+    //% block="dark"
+    Dark = sensors.internal.ThresholdState.Low,
+    //$ block="bright"
+    Bright = sensors.internal.ThresholdState.High
+}
+
 namespace sensors {
 
     /**
@@ -38,15 +52,18 @@ namespace sensors {
      */
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
+        thresholdDetector: sensors.internal.ThresholdDetector;
+
         constructor(port: number) {
             super(port)
+            this.thresholdDetector = new sensors.internal.ThresholdDetector(this.id());
         }
 
         _deviceType() {
             return DAL.DEVICE_TYPE_COLOR
         }
 
-        setColorMode(m: ColorSensorMode) {
+        setMode(m: ColorSensorMode) {
             this._setMode(m)
         }
 
@@ -66,6 +83,8 @@ namespace sensors {
         _update(prev: number, curr: number) {
             if (this.mode == ColorSensorMode.Color)
                 control.raiseEvent(this._id, curr);
+            else
+                this.thresholdDetector.setLevel(curr);
         }
 
         /**
@@ -82,7 +101,7 @@ namespace sensors {
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
             control.onEvent(this._id, <number>color, handler);
-            this.setColorMode(ColorSensorMode.Color)
+            this.setMode(ColorSensorMode.Color)
             if (this.color() == color)
                 control.raiseEvent(this._id, <number>color);
         }
@@ -96,43 +115,54 @@ namespace sensors {
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% weight=66 blockGap=8
+        //% weight=99
         //% group="Color Sensor"
         color(): ColorSensorColor {
-            this.setColorMode(ColorSensorMode.Color)
+            this.setMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
         /**
-         * Measures the ambient light value from 0 (darkest) to 100 (brightest).
-         * @param color the color sensor port
+         * Registers code to run when the ambient light changes.
+         * @param condition the light condition
+         * @param handler the code to run when detected
          */
-        //% help=sensors/color-sensor/ambient-light
-        //% block="`icons.colorSensor` %color| ambient light"
-        //% blockId=colorGetAmbient
+        //% help=sensors/color-sensor/on-light-changed
+        //% block="on `icons.colorSensor` %sensor|%mode|%condition"
+        //% blockId=colorOnLightChanged
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8
+        //% weight=89 blockGap=8
         //% group="Color Sensor"
+        onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) { 
+            control.onEvent(this._id, <number>condition, handler);
+            this.setMode(ColorSensorMode.AmbientLightIntensity)
+        }
+
+        /**
+         * Measures the ambient or reflected light value from 0 (darkest) to 100 (brightest).
+         * @param color the color sensor port
+         */
+        //% help=sensors/color-sensor/light
+        //% block="`icons.colorSensor` %color|%mode"
+        //% blockId=colorLight
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% weight=88
+        //% group="Color Sensor"
+        light(mode: LightIntensityMode) {
+            this.setMode(<ColorSensorMode><number>mode)
+            return this.getNumber(NumberFormat.UInt8LE, 0)
+        }
+
+        //%
         ambientLight() {
-            this.setColorMode(ColorSensorMode.AmbientLightIntensity)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
+            return this.light(LightIntensityMode.Ambient);
         }
 
-        /**
-         * Measures the reflected light value from 0 (darkest) to 100 (brightest).
-         * @param color the color sensor port
-         */
-        //% help=sensors/color-sensor/reflected-light
-        //% block="`icons.colorSensor` %color| reflected light"
-        //% blockId=colorGetReflected
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% weight=64 blockGap=8
-        //% group="Color Sensor"
-        reflectedLight(): number {
-            this.setColorMode(ColorSensorMode.ReflectedLightIntensity)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
+        //%
+        reflectedLight() {
+            return this.light(LightIntensityMode.Reflected);
         }
     }
 
