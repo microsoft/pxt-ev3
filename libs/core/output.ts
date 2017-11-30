@@ -97,7 +97,8 @@ namespace motors {
         power(power: number) {
             power = Math.clamp(-100, 100, power >> 0);
 
-            const b = mkCmd(this.port, DAL.opOutputPower, 1)
+            // per LEGO: call it power, use speed
+            const b = mkCmd(this.port, DAL.opOutputSpeed, 1)
             b.setNumber(NumberFormat.Int8LE, 2, power)
             writePWM(b)
             if (power) {
