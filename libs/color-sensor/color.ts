@@ -1,7 +1,10 @@
 const enum ColorSensorMode {
     None = -1,
-    Reflect = 0,
-    Ambient = 1,
+    //% block="reflected light intensity"
+    ReflectedLightIntensity = 0,
+    //% block="ambient light intensity"
+    AmbientLightIntensity = 1,
+    //% block="color"
     Color = 2,
     RefRaw = 3,
     RgbRaw = 4,
@@ -29,6 +32,10 @@ const enum ColorSensorColor {
 
 namespace sensors {
 
+    /**
+     * The color sensor is a digital sensor that can detect the color or intensity
+     * of light that enters the small window on the face of the sensor.
+     */
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
         constructor(port: number) {
@@ -62,11 +69,11 @@ namespace sensors {
         }
 
         /**
-         * Registers code to run when the given color is detected
+         * Registers code to run when the given color is detected.
          * @param color the color to detect, eg: ColorSensorColor.Blue
          * @param handler the code to run when detected
          */
-        //% help=input/color/on-color-detected
+        //% help=sensors/color-sensor/on-color-detected
         //% block="on `icons.colorSensor` %sensor|detected color %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
@@ -81,42 +88,10 @@ namespace sensors {
         }
 
         /**
-         * Get current ambient light value from the color sensor.
-         * @param color the color sensor to query the request
-         */
-        //% help=input/color/ambient-light
-        //% block="`icons.colorSensor` %color| ambient light"
-        //% blockId=colorGetAmbient
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% weight=65 blockGap=8
-        //% group="Color Sensor"
-        ambientLight() {
-            this.setColorMode(ColorSensorMode.Ambient)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
-        }
-
-        /**
-         * Get current reflected light value from the color sensor.
-         * @param color the color sensor to query the request
-         */
-        //% help=input/color/refelected-light
-        //% block="`icons.colorSensor` %color| reflected light"
-        //% blockId=colorGetReflected
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% weight=64 blockGap=8
-        //% group="Color Sensor"
-        reflectedLight(): number {
-            this.setColorMode(ColorSensorMode.Reflect)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
-        }
-
-        /**
          * Get the current color from the color sensor.
          * @param color the color sensor to query the request
          */
-        //% help=input/color/color
+        //% help=sensors/color-sensor/color
         //% block="`icons.colorSensor` %color| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
@@ -127,17 +102,49 @@ namespace sensors {
             this.setColorMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
+
+        /**
+         * Get current ambient light value from the color sensor.
+         * @param color the color sensor to query the request
+         */
+        //% help=sensors/color-sensor/ambient-light
+        //% block="`icons.colorSensor` %color| ambient light"
+        //% blockId=colorGetAmbient
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% weight=65 blockGap=8
+        //% group="Color Sensor"
+        ambientLight() {
+            this.setColorMode(ColorSensorMode.AmbientLightIntensity)
+            return this.getNumber(NumberFormat.UInt8LE, 0)
+        }
+
+        /**
+         * Get current reflected light value from the color sensor.
+         * @param color the color sensor to query the request
+         */
+        //% help=sensors/color-sensor/reflected-light
+        //% block="`icons.colorSensor` %color| reflected light"
+        //% blockId=colorGetReflected
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% weight=64 blockGap=8
+        //% group="Color Sensor"
+        reflectedLight(): number {
+            this.setColorMode(ColorSensorMode.ReflectedLightIntensity)
+            return this.getNumber(NumberFormat.UInt8LE, 0)
+        }
     }
 
     //% whenUsed block="1" weight=95 fixedInstance
-    export const color1: ColorSensor = new ColorSensor(1)
+    export const colorSensor1: ColorSensor = new ColorSensor(1)
     
     //% whenUsed block="3" weight=90 fixedInstance
-    export const color3: ColorSensor = new ColorSensor(3)
+    export const colorSensor3: ColorSensor = new ColorSensor(3)
     
     //% whenUsed block="2" weight=90 fixedInstance
-    export const color2: ColorSensor = new ColorSensor(2)
+    export const colorSensor2: ColorSensor = new ColorSensor(2)
 
     //% whenUsed block="4" weight=90 fixedInstance
-    export const color4: ColorSensor = new ColorSensor(4)
+    export const colorSensor4: ColorSensor = new ColorSensor(4)
 }
