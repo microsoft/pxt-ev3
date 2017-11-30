@@ -9,6 +9,7 @@
         "base": "file:../base",
         "core": "file:../core",
         "music": "file:../music",
+        "color-sensor": "file:../color-sensor",
         "touch-sensor": "file:../touch-sensor"
     },
     "public": true

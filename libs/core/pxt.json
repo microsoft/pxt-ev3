@@ -19,7 +19,6 @@
         "core.ts",
         "input.ts",
         "ir.ts",
-        "color.ts",
         "gyro.ts",
         "ultrasonic.ts",
         "shims.d.ts",
