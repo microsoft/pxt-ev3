@@ -1,3 +1,3 @@
-# Touch sensor
+# Ultrasonic sensor
 
-The library to interact with the Touch Sensor.
+The library to interact with the Ultrasonic Sensor.

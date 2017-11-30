@@ -1,0 +1,15 @@
+{
+    "name": "infrared-sensor",
+    "description": "Infrared Sensor support",
+    "files": [
+        "README.md",
+        "ir.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "dependencies": {
+            "core": "file:../core"
+    }
+}

@@ -199,10 +199,8 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
-        on(event: InfraredSensorEvent, handler: () => void) {
+        onEvent(event: InfraredSensorEvent, handler: () => void) {
             control.onEvent(this._id, InfraredSensorEvent.ObjectNear, handler);
-            if ( this.proximity() == InfraredSensorEvent.ObjectNear)
-                control.runInBackground(handler);
         }
 
         /**
@@ -230,7 +228,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
-        proximity() {
+        proximity(): number {
             this._setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -246,7 +244,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Infrared Sensor"     
-        remoteCommand() {
+        remoteCommand(): number {
             this._setMode(IrSensorMode.RemoteControl)
             return this.getNumber(NumberFormat.UInt8LE, this.channel)
         }

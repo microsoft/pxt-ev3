@@ -18,7 +18,6 @@
         "output.ts",
         "core.ts",
         "input.ts",
-        "ir.ts",
         "gyro.ts",
         "shims.d.ts",
         "enums.d.ts",

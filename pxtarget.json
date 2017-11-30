@@ -13,6 +13,7 @@
         "libs/color-sensor",
         "libs/touch-sensor",
         "libs/ultrasonic-sensor",
+        "libs/infrared-sensor",
         "libs/ev3"
     ],
     "simulator": {
