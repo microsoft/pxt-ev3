@@ -1,0 +1,4 @@
+{
+  "sensors.GyroSensor.angle": "Get the current angle from the gyroscope.",
+  "sensors.GyroSensor.rate": "Get the current rotation rate from the gyroscope."
+}
