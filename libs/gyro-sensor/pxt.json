@@ -1,6 +1,6 @@
 {
     "name": "gyro-sensor",
-    "description": "Gyroscope support",
+    "description": "Gyro Sensor support",
     "files": [
         "README.md",
         "gyro.ts"

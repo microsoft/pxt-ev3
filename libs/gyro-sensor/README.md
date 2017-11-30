@@ -1,3 +1,3 @@
-# Gyroscope
+# Gyro Sensor
 
-The library to interact with the Gyroscope.
+The library to interact with the Gyro Sensor.
