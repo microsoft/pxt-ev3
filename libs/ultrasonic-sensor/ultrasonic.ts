@@ -56,7 +56,7 @@ namespace sensors {
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="wait `icons.ultrasonicSensor` %sensor|until %event"
+        //% block="wait until `icons.ultrasonicSensor` %sensor| %event"
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
