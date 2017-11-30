@@ -18,6 +18,8 @@
   "brick.Button.isPressed": "Check if button is currently pressed or not.",
   "brick.Button.onEvent": "Do something when a button or sensor is clicked, up or down.",
   "brick.Button.onEvent|param|body": "code to run when the event is raised",
+  "brick.Button.waitUntil": "Waits until the event is raised",
+  "brick.Button.waitUntil|param|ev": "the event to wait for",
   "brick.Button.wasPressed": "See if the button was pressed again since the last time you checked.",
   "brick._imagePicker": "An image",
   "brick._imagePicker|param|image": "the image",
