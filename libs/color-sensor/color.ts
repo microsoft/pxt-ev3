@@ -136,7 +136,7 @@ namespace sensors {
         //% group="Color Sensor"
         onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) { 
             control.onEvent(this._id, <number>condition, handler);
-            this.setMode(ColorSensorMode.AmbientLightIntensity)
+            this.setMode(<ColorSensorMode><number>mode)
         }
 
         /**
