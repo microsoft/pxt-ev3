@@ -134,16 +134,16 @@ namespace sensors {
             this.button.onEvent(ev, body);
         }
     }
-        
+
     //% fixedInstances
     export class InfraredSensor extends internal.UartSensor {
         private channel: IrRemoteChannel;
-        private proximityThreshold: number;
+        private proximityThreshold: sensors.internal.ThresholdDetector;
 
         constructor(port: number) {
             super(port)
             this.channel = IrRemoteChannel.Ch0
-            this.proximityThreshold = 10;
+            this.proximityThreshold = new sensors.internal.ThresholdDetector(this._id, 0, 100, 10, 90);
             irButton(0) // make sure buttons array is initalized
 
             // and set the mode, as otherwise button events won't work
@@ -154,10 +154,7 @@ namespace sensors {
             if (this.mode == IrSensorMode.RemoteControl)
                 return mapButton(this.getNumber(NumberFormat.UInt8LE, this.channel));
             else if (this.mode == IrSensorMode.Proximity) {
-                const d = this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
-                return d < this.proximityThreshold ? UltrasonicSensorEvent.ObjectNear
-                    : d > this.proximityThreshold + 5 ? UltrasonicSensorEvent.ObjectDetected
-                        : 0;
+                return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
             }
             return 0
         }
@@ -168,9 +165,8 @@ namespace sensors {
                     let v = !!(curr & (1 << i))
                     buttons[i]._update(v)
                 }
-            } else {
-                if (curr)
-                    control.raiseEvent(this._id, curr);
+            } else if (this.mode == IrSensorMode.Proximity) {
+                this.proximityThreshold.setLevel(curr);
             }
         }
 
@@ -181,7 +177,7 @@ namespace sensors {
         setRemoteChannel(c: IrRemoteChannel) {
             c = Math.clamp(0, 3, c | 0)
             this.channel = c
-            this._setMode(IrSensorMode.RemoteControl)
+            this.setMode(IrSensorMode.RemoteControl)
         }
 
         setMode(m: IrSensorMode) {
@@ -199,26 +195,24 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
-        on(event: InfraredSensorEvent, handler: () => void) {
-            control.onEvent(this._id, InfraredSensorEvent.ObjectNear, handler);
-            if ( this.proximity() == InfraredSensorEvent.ObjectNear)
-                control.runInBackground(handler);
+        onEvent(event: InfraredSensorEvent, handler: () => void) {
+            control.onEvent(this._id, event, handler);
         }
 
         /**
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="wait `icons.infraredSensor` %sensor|for %event"
+        //% block="wait until `icons.infraredSensor` %sensor| %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
-        wait(event: InfraredSensorEvent) {
-            // TODO
+        waitUntil(event: InfraredSensorEvent) {
+            control.waitForEvent(this._id, event);
         }
-        
+
         /**
          * Get the promixity measured by the infrared sensor, from ``0`` (close) to ``100`` (far)
          * @param ir the infrared sensor
@@ -230,7 +224,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
-        proximity() {
+        proximity(): number {
             this._setMode(IrSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -246,7 +240,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Infrared Sensor"     
-        remoteCommand() {
+        remoteCommand(): number {
             this._setMode(IrSensorMode.RemoteControl)
             return this.getNumber(NumberFormat.UInt8LE, this.channel)
         }
@@ -276,7 +270,7 @@ namespace sensors {
      */
     //% whenUsed block="center" weight=95 fixedInstance
     export const remoteButtonCenter = irButton(IrRemoteButton.CenterBeacon)
-    
+
     /**
      * Remote top-left button.
      */

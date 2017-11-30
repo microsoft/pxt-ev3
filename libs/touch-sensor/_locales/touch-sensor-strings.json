@@ -4,6 +4,7 @@
   "TouchSensorEvent.Released|block": "released",
   "sensors.TouchSensor.isPressed|block": "`icons.touchSensor` %sensor|is pressed",
   "sensors.TouchSensor.onEvent|block": "on `icons.touchSensor` %sensor|%event",
+  "sensors.TouchSensor.waitUntil|block": "wait until `icons.touchSensor` %sensor|%event",
   "sensors.TouchSensor.wasPressed|block": "`icons.touchSensor` %sensor|was pressed",
   "sensors.touchSensor1|block": "1",
   "sensors.touchSensor2|block": "2",

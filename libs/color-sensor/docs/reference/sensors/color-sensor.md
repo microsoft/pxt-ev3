@@ -1,11 +1,11 @@
 # Color Sensor
 
 ```cards
-sensors.colorSensor1.onColorDetected(ColorSensorColor.Blue, function () {
+sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
 })
-sensors.colorSensor1.color();
-sensors.colorSensor1.ambientLight();
-sensors.colorSensor1.reflectedLight();
+sensors.color1.color();
+sensors.color1.ambientLight();
+sensors.color1.reflectedLight();
 ```
 
 ## See Also

@@ -1,0 +1,14 @@
+{
+  "UltrasonicSensorEvent.ObjectDetected|block": "object detected",
+  "UltrasonicSensorEvent.ObjectFar|block": "object far",
+  "UltrasonicSensorEvent.ObjectNear|block": "object near",
+  "sensors.UltraSonicSensor.distance|block": "`icons.ultrasonicSensor` %sensor|distance",
+  "sensors.UltraSonicSensor.onEvent|block": "on `icons.ultrasonicSensor` %sensor|%event",
+  "sensors.UltraSonicSensor.waitUntil|block": "wait until `icons.ultrasonicSensor` %sensor| %event",
+  "sensors.ultrasonic1|block": "1",
+  "sensors.ultrasonic2|block": "2",
+  "sensors.ultrasonic3|block": "3",
+  "sensors.ultrasonic4|block": "4",
+  "{id:category}Sensors": "Sensors",
+  "{id:group}Ultrasonic Sensor": "Ultrasonic Sensor"
+}

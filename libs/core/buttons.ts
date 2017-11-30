@@ -127,6 +127,20 @@ namespace brick {
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
+
+        /**
+         * Waits until the event is raised
+         * @param ev the event to wait for
+         */
+        //% help=input/button/wait-until
+        //% blockId=buttonWaitUntil block="wait until `icons.brickButtons` %button|%event"
+        //% parts="brick"
+        //% blockNamespace=brick
+        //% weight=98 blockGap=8
+        //% group="Buttons"
+        waitUntil(ev: ButtonEvent) {
+            control.waitForEvent(this._id, ev);
+        }
     }
 }
 

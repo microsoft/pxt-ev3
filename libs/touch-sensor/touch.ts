@@ -52,6 +52,21 @@ namespace sensors {
         }
 
         /**
+         * Wait until the touch sensor is touched
+         * @param sensor the touch sensor that needs to be clicked or used
+         * @param event the kind of button gesture that needs to be detected
+         */
+        //% help=input/touch-sensor/wait-until
+        //% blockId=touchWaitUntil block="wait until `icons.touchSensor` %sensor|%event"
+        //% parts="touch"
+        //% blockNamespace=sensors
+        //% weight=98 blockGap=8
+        //% group="Touch Sensor"
+        waitUntil(ev: TouchSensorEvent) {
+            this.button.waitUntil(<ButtonEvent><number>ev);
+        }
+
+        /**
          * Check if touch sensor is touched.
          * @param sensor the port to query the request
          */

@@ -1,7 +1,7 @@
 # On Color Detected
 
 ```sig
-sensors.colorSensor1.onColorDetected(ColorSensorColor.Blue, function () { })
+sensors.color1.onColorDetected(ColorSensorColor.Blue, function () { })
 ```
 
 # Parameters
@@ -10,7 +10,7 @@ sensors.colorSensor1.onColorDetected(ColorSensorColor.Blue, function () { })
 
 
 ```blocks
-sensors.colorSensor1.onColorDetected(ColorSensorColor.Blue, function () {
+sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
     brick.showImage(images.expressionsSick)
 })
 ```
