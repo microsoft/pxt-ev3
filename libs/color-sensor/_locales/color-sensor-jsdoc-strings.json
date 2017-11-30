@@ -1,10 +1,10 @@
 {
   "sensors.ColorSensor": "The color sensor is a digital sensor that can detect the color or intensity\nof light that enters the small window on the face of the sensor.",
-  "sensors.ColorSensor.ambientLight": "Get current ambient light value from the color sensor.",
+  "sensors.ColorSensor.ambientLight": "Measures the ambient light value from 0 (darkest) to 100 (brightest).",
   "sensors.ColorSensor.color": "Get the current color from the color sensor.",
   "sensors.ColorSensor.colorMode": "Gets the current color mode",
   "sensors.ColorSensor.onColorDetected": "Registers code to run when the given color is detected.",
   "sensors.ColorSensor.onColorDetected|param|color": "the color to detect, eg: ColorSensorColor.Blue",
   "sensors.ColorSensor.onColorDetected|param|handler": "the code to run when detected",
-  "sensors.ColorSensor.reflectedLight": "Get current reflected light value from the color sensor."
+  "sensors.ColorSensor.reflectedLight": "Measures the reflected light value from 0 (darkest) to 100 (brightest)."
 }

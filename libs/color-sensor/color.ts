@@ -104,8 +104,8 @@ namespace sensors {
         }
 
         /**
-         * Get current ambient light value from the color sensor.
-         * @param color the color sensor to query the request
+         * Measures the ambient light value from 0 (darkest) to 100 (brightest).
+         * @param color the color sensor port
          */
         //% help=sensors/color-sensor/ambient-light
         //% block="`icons.colorSensor` %color| ambient light"
@@ -120,8 +120,8 @@ namespace sensors {
         }
 
         /**
-         * Get current reflected light value from the color sensor.
-         * @param color the color sensor to query the request
+         * Measures the reflected light value from 0 (darkest) to 100 (brightest).
+         * @param color the color sensor port
          */
         //% help=sensors/color-sensor/reflected-light
         //% block="`icons.colorSensor` %color| reflected light"
