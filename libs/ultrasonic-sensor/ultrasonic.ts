@@ -67,7 +67,7 @@ namespace sensors {
         }
 
         /**
-         * Gets the distance from the sonar in millimeters
+         * Gets the distance from the sonar in centimeters
          * @param sensor the ultrasonic sensor port
          */
         //% help=input/ultrasonic/distance
