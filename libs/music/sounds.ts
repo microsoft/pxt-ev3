@@ -260,9 +260,9 @@ namespace music {
      * Plays a sound
      * @param sound the sound to play
      */
-    //% blockId=music_play_sound_until_done block="play sound %sound|until done"
+    //% blockId=music_play_sound_effect_until_done block="play sound effect %sound|until done"
     //% weight=98
-    export function playSoundUntilDone(sound: Sound) {
+    export function playSoundEffectUntilDone(sound: Sound) {
         if (!sound) return;
         sound.play();
     }
@@ -281,9 +281,9 @@ namespace music {
      * Start playing a sound and don't wait for it to finish.
      * @param sound the sound to play
      */
-    //% blockId=music_play_sound block="play sound %sound"
+    //% blockId=music_play_sound_effect block="play sound effect %sound"
     //% weight=99
-    export function playSound(sound: Sound) {
+    export function playSoundEffect(sound: Sound) {
         control.runInBackground(() => sound.play());
     }
 }
