@@ -284,6 +284,7 @@ namespace music {
     //% blockId=music_play_sound_effect block="play sound effect %sound"
     //% weight=99
     export function playSoundEffect(sound: Sound) {
+        if (!sound) return;
         control.runInBackground(() => sound.play());
     }
 }
