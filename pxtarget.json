@@ -89,6 +89,8 @@
         "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
         "githubUrl": "https://github.com/Microsoft/pxt-ev3",
         "boardName": "LEGO Mindstorms EV3 Brick",
+        "selectLanguage": true,
+        "highContrast": true,
         "docMenu": [
             {
                 "name": "About",
