@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="2330.575 6196.231 83.275 34.887">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f2f2f2;
+      }
+
+      .cls-2 {
+        fill: #292929;
+      }
+
+      .cls-3 {
+        stroke: rgba(242,242,242,0.5);
+        stroke-width: 0.25px;
+      }
+
+      .cls-4 {
+        fill: #931f1f;
+      }
+
+      .cls-5 {
+        fill: #9d761f;
+      }
+
+      .cls-6 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-7 {
+        stroke: none;
+      }
+
+      .cls-8 {
+        fill: none;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <ellipse id="guld" class="cls-1" cx="6.977" cy="6.977" rx="6.977" ry="6.977"/>
+    </clipPath>
+  </defs>
+  <g id="ultra_sonic" data-name="ultra sonic" transform="translate(1222 5554)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" class="cls-2" width="43.382" height="31.247" transform="translate(1131.024 643.596)"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="25.331" height="17.595" transform="translate(1138.609 650.573)"/>
+    <g id="eye1" transform="translate(1108.575 642.231)">
+      <g id="sort" class="cls-3" transform="translate(0 0)">
+        <ellipse class="cls-7" cx="17.444" cy="17.444" rx="17.444" ry="17.444"/>
+        <ellipse class="cls-8" cx="17.444" cy="17.444" rx="17.319" ry="17.319"/>
+      </g>
+      <ellipse id="rød" class="cls-4" cx="10.77" cy="10.77" rx="10.77" ry="10.77" transform="translate(6.674 6.674)"/>
+      <ellipse id="guld-3" data-name="guld" class="cls-5" cx="8.039" cy="8.039" rx="8.039" ry="8.039" transform="translate(9.404 9.404)"/>
+      <ellipse id="guld-4" data-name="guld" class="cls-1" cx="6.977" cy="6.977" rx="6.977" ry="6.977" transform="translate(10.466 10.466)"/>
+      <g id="Group_5" data-name="Group 5" transform="translate(10.466 10.466)">
+        <g id="Mask_Group_8" data-name="Mask Group 8" class="cls-6">
+          <g id="Group_17" data-name="Group 17" transform="translate(-7.148 3.21) rotate(-30)">
+            <rect id="Rectangle_84" data-name="Rectangle 84" class="cls-5" width="0.607" height="22.791" transform="translate(2.048 0)"/>
+            <rect id="Rectangle_91" data-name="Rectangle 91" class="cls-5" width="0.607" height="22.507" transform="translate(0 20.098) rotate(-90)"/>
+            <rect id="Rectangle_85" data-name="Rectangle 85" class="cls-5" width="0.607" height="22.791" transform="translate(4.93 0)"/>
+            <rect id="Rectangle_97" data-name="Rectangle 97" class="cls-5" width="0.607" height="22.507" transform="translate(0 17.216) rotate(-90)"/>
+            <rect id="Rectangle_86" data-name="Rectangle 86" class="cls-5" width="0.607" height="22.791" transform="translate(7.812 0)"/>
+            <rect id="Rectangle_96" data-name="Rectangle 96" class="cls-5" width="0.607" height="22.507" transform="translate(0 14.334) rotate(-90)"/>
+            <rect id="Rectangle_87" data-name="Rectangle 87" class="cls-5" width="0.607" height="22.791" transform="translate(10.694 0)"/>
+            <rect id="Rectangle_95" data-name="Rectangle 95" class="cls-5" width="0.607" height="22.507" transform="translate(0 11.452) rotate(-90)"/>
+            <rect id="Rectangle_88" data-name="Rectangle 88" class="cls-5" width="0.607" height="22.791" transform="translate(13.576 0)"/>
+            <rect id="Rectangle_94" data-name="Rectangle 94" class="cls-5" width="0.607" height="22.507" transform="translate(0 8.57) rotate(-90)"/>
+            <rect id="Rectangle_89" data-name="Rectangle 89" class="cls-5" width="0.607" height="22.791" transform="translate(16.458 0)"/>
+            <rect id="Rectangle_93" data-name="Rectangle 93" class="cls-5" width="0.607" height="22.507" transform="translate(0 5.688) rotate(-90)"/>
+            <rect id="Rectangle_90" data-name="Rectangle 90" class="cls-5" width="0.607" height="22.791" transform="translate(19.34 0)"/>
+            <rect id="Rectangle_92" data-name="Rectangle 92" class="cls-5" width="0.607" height="22.507" transform="translate(0 2.806) rotate(-90)"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g id="eye2" transform="translate(1156.962 642.231)">
+      <g id="sort-2" data-name="sort" class="cls-3" transform="translate(0 0)">
+        <ellipse class="cls-7" cx="17.444" cy="17.444" rx="17.444" ry="17.444"/>
+        <ellipse class="cls-8" cx="17.444" cy="17.444" rx="17.319" ry="17.319"/>
+      </g>
+      <ellipse id="rød-2" data-name="rød" class="cls-4" cx="10.77" cy="10.77" rx="10.77" ry="10.77" transform="translate(6.674 6.674)"/>
+      <ellipse id="guld-5" data-name="guld" class="cls-5" cx="8.039" cy="8.039" rx="8.039" ry="8.039" transform="translate(9.404 9.404)"/>
+      <ellipse id="guld-6" data-name="guld" class="cls-1" cx="6.977" cy="6.977" rx="6.977" ry="6.977" transform="translate(10.466 10.466)"/>
+      <g id="Group_18" data-name="Group 18" transform="translate(10.466 10.466)">
+        <g id="Mask_Group_8-2" data-name="Mask Group 8" class="cls-6">
+          <g id="Group_17-2" data-name="Group 17" transform="translate(-7.148 3.21) rotate(-30)">
+            <rect id="Rectangle_84-2" data-name="Rectangle 84" class="cls-5" width="0.607" height="22.791" transform="translate(2.048 0)"/>
+            <rect id="Rectangle_91-2" data-name="Rectangle 91" class="cls-5" width="0.607" height="22.507" transform="translate(0 20.098) rotate(-90)"/>
+            <rect id="Rectangle_85-2" data-name="Rectangle 85" class="cls-5" width="0.607" height="22.791" transform="translate(4.93 0)"/>
+            <rect id="Rectangle_97-2" data-name="Rectangle 97" class="cls-5" width="0.607" height="22.507" transform="translate(0 17.216) rotate(-90)"/>
+            <rect id="Rectangle_86-2" data-name="Rectangle 86" class="cls-5" width="0.607" height="22.791" transform="translate(7.812 0)"/>
+            <rect id="Rectangle_96-2" data-name="Rectangle 96" class="cls-5" width="0.607" height="22.507" transform="translate(0 14.334) rotate(-90)"/>
+            <rect id="Rectangle_87-2" data-name="Rectangle 87" class="cls-5" width="0.607" height="22.791" transform="translate(10.694 0)"/>
+            <rect id="Rectangle_95-2" data-name="Rectangle 95" class="cls-5" width="0.607" height="22.507" transform="translate(0 11.452) rotate(-90)"/>
+            <rect id="Rectangle_88-2" data-name="Rectangle 88" class="cls-5" width="0.607" height="22.791" transform="translate(13.576 0)"/>
+            <rect id="Rectangle_94-2" data-name="Rectangle 94" class="cls-5" width="0.607" height="22.507" transform="translate(0 8.57) rotate(-90)"/>
+            <rect id="Rectangle_89-2" data-name="Rectangle 89" class="cls-5" width="0.607" height="22.791" transform="translate(16.458 0)"/>
+            <rect id="Rectangle_93-2" data-name="Rectangle 93" class="cls-5" width="0.607" height="22.507" transform="translate(0 5.688) rotate(-90)"/>
+            <rect id="Rectangle_90-2" data-name="Rectangle 90" class="cls-5" width="0.607" height="22.791" transform="translate(19.34 0)"/>
+            <rect id="Rectangle_92-2" data-name="Rectangle 92" class="cls-5" width="0.607" height="22.507" transform="translate(0 2.806) rotate(-90)"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
