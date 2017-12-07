@@ -45,6 +45,8 @@ namespace sensors {
         //% blockId=ultrasonicOn
         //% block="on `icons.ultrasonicSensor` %sensor|%event"
         //% parts="ultrasonicsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
@@ -59,6 +61,8 @@ namespace sensors {
         //% block="wait until `icons.ultrasonicSensor` %sensor| %event"
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"        
@@ -74,6 +78,8 @@ namespace sensors {
         //% block="`icons.ultrasonicSensor` %sensor|distance"
         //% blockId=sonarGetDistance
         //% parts="ultrasonicsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Ultrasonic Sensor"     
@@ -84,15 +90,15 @@ namespace sensors {
         }
     }
     
-    //% fixedInstance whenUsed block="1"
+    //% fixedInstance whenUsed block="1" jres=icons.port1
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
     
-    //% fixedInstance whenUsed block="4"
+    //% fixedInstance whenUsed block="4" jres=icons.port4
     export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 
-    //% fixedInstance whenUsed block="2"
+    //% fixedInstance whenUsed block="2" jres=icons.port2
     export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
 
-    //% fixedInstance whenUsed block="3"
+    //% fixedInstance whenUsed block="3" jres=icons.port3
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
 }

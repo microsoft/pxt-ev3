@@ -192,6 +192,8 @@ namespace sensors {
         //% block="on `icons.infraredSensor` %sensor|%event"
         //% blockId=infraredOn
         //% parts="infraredsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
@@ -206,6 +208,8 @@ namespace sensors {
         //% block="wait until `icons.infraredSensor` %sensor| %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
@@ -215,12 +219,14 @@ namespace sensors {
 
         /**
          * Get the promixity measured by the infrared sensor, from ``0`` (close) to ``100`` (far)
-         * @param ir the infrared sensor
+         * @param sensor the infrared sensor
          */
         //% help=input/infrared/proximity
-        //% block="`icons.infraredSensor` %infrared|proximity"
+        //% block="`icons.infraredSensor` %sensor|proximity"
         //% blockId=infraredGetProximity
         //% parts="infrared"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
@@ -231,12 +237,14 @@ namespace sensors {
 
         /**
          * Get the remote commandreceived the infrared sensor.
-         * @param ir the infrared sensor
+         * @param sensor the infrared sensor
          */
         //% help=input/infrared/remote-command
-        //% block="`icons.infraredSensor` %infrared|remote command"
+        //% block="`icons.infraredSensor` %sensor|remote command"
         //% blockId=infraredGetRemoteCommand
         //% parts="infrared"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Infrared Sensor"     
@@ -252,16 +260,16 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="1"
+    //% fixedInstance whenUsed block="1" jres=icons.port1
     export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
 
-    //% fixedInstance whenUsed block="2"
+    //% fixedInstance whenUsed block="2" jres=icons.port2
     export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
 
-    //% fixedInstance whenUsed block="3"
+    //% fixedInstance whenUsed block="3" jres=icons.port3
     export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
 
-    //% fixedInstance whenUsed block="4"
+    //% fixedInstance whenUsed block="4" jres=icons.port4
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
 

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="1323.372 8463.761 30.979 30.979">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #a8a9a8;
+      }
+
+      .cls-3 {
+        fill: #3c3c3c;
+      }
+
+      .cls-4 {
+        fill: #b72b1c;
+        stroke: #8b1104;
+        stroke-width: 0.25px;
+      }
+
+      .cls-5 {
+        stroke: none;
+      }
+
+      .cls-6 {
+        fill: none;
+      }
+
+      .cls-7 {
+        filter: url(#Union_1);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" y1="0.919" x2="0.5" y2="1.077" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a8a9a8"/>
+      <stop offset="1" stop-color="#545554"/>
+    </linearGradient>
+    <filter id="Union_1" x="1323.372" y="8463.761" width="30.979" height="30.979" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.375" result="blur"/>
+      <feFlood flood-opacity="0.322"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="icn_block_medium_motor" transform="translate(666.315 8209.204)">
+    <g id="Group_4" data-name="Group 4" transform="translate(658.182 255.683)">
+      <path id="Path_1" data-name="Path 1" class="cls-1" d="M2.383-.287H27.768A1.534,1.534,0,0,1,29.44,1V27.258c0,.654-.714,1.185-1.673,1.185H2.383c-.959,0-1.673-.531-1.673-1.185V1A1.534,1.534,0,0,1,2.383-.287Z" transform="translate(-0.711 0.287)"/>
+    </g>
+    <g id="Group_7" data-name="Group 7" transform="translate(686.912 255.683) rotate(90)">
+      <g class="cls-7" transform="matrix(0, -1, 1, 0, -8464.89, 1353.23)">
+        <path id="Union_1-2" data-name="Union 1" class="cls-2" d="M13.822,28.729a4.048,4.048,0,0,1-4.048-4.048V18.955H4.048A4.048,4.048,0,0,1,0,14.908V13.822A4.048,4.048,0,0,1,4.048,9.774H9.774V4.048A4.048,4.048,0,0,1,13.822,0h1.086a4.048,4.048,0,0,1,4.048,4.048V9.774h5.726a4.048,4.048,0,0,1,4.048,4.048v1.086a4.048,4.048,0,0,1-4.048,4.048H18.955v5.726a4.048,4.048,0,0,1-4.048,4.048Z" transform="translate(1353.23 8464.89) rotate(90)"/>
+      </g>
+      <ellipse id="Ellipse_1" data-name="Ellipse 1" class="cls-3" cx="3.159" cy="3.159" rx="3.159" ry="3.159" transform="translate(11.255 0.987)"/>
+      <ellipse id="Ellipse_2" data-name="Ellipse 2" class="cls-3" cx="3.159" cy="3.159" rx="3.159" ry="3.159" transform="translate(11.255 21.424)"/>
+      <ellipse id="Ellipse_1-2" data-name="Ellipse 1" class="cls-3" cx="3.159" cy="3.159" rx="3.159" ry="3.159" transform="translate(0.987 17.475) rotate(-90)"/>
+      <ellipse id="Ellipse_2-2" data-name="Ellipse 2" class="cls-3" cx="3.159" cy="3.159" rx="3.159" ry="3.159" transform="translate(21.424 17.475) rotate(-90)"/>
+    </g>
+    <g id="Ellipse_4" data-name="Ellipse 4" class="cls-4" transform="translate(668.3 265.702)">
+      <ellipse class="cls-5" cx="4.395" cy="4.395" rx="4.395" ry="4.395"/>
+      <ellipse class="cls-6" cx="4.395" cy="4.395" rx="4.27" ry="4.27"/>
+    </g>
+    <path id="Hole" d="M5605.5,961.821s-.035.664-.5.67-.952,0-.952,0a1.541,1.541,0,0,0-.3,1.1c0,.824.232,1.045.232,1.045h1.06a.42.42,0,0,1,.454.454v1.085a2.528,2.528,0,0,0,1.149.187,4.2,4.2,0,0,0,1.091-.187v-1.085a.475.475,0,0,1,.478-.454,6.978,6.978,0,0,0,.94-.091s.257-.243.282-1.062-.23-1.07-.23-1.07h-1.1a.417.417,0,0,1-.5-.441,7.426,7.426,0,0,1,0-1.07,3.135,3.135,0,0,0-2.113,0C5605.488,961.354,5605.5,961.821,5605.5,961.821Z" transform="translate(-4933.915 -693.478)"/>
+  </g>
+</svg>

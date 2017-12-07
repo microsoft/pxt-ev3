@@ -100,6 +100,8 @@ namespace sensors {
         //% block="on `icons.colorSensor` %sensor|detected color %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Color Sensor"
@@ -113,12 +115,14 @@ namespace sensors {
 
         /**
          * Get the current color from the color sensor.
-         * @param color the color sensor to query the request
+         * @param sensor the color sensor to query the request
          */
         //% help=sensors/color-sensor/color
-        //% block="`icons.colorSensor` %color| color"
+        //% block="`icons.colorSensor` %sensor| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=99
         //% group="Color Sensor"
@@ -136,6 +140,8 @@ namespace sensors {
         //% block="on `icons.colorSensor` %sensor|%mode|%condition"
         //% blockId=colorOnLightChanged
         //% parts="colorsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=89 blockGap=8
         //% group="Color Sensor"
@@ -146,12 +152,14 @@ namespace sensors {
 
         /**
          * Measures the ambient or reflected light value from 0 (darkest) to 100 (brightest).
-         * @param color the color sensor port
+         * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
-        //% block="`icons.colorSensor` %color|%mode"
+        //% block="`icons.colorSensor` %sensor|%mode"
         //% blockId=colorLight
         //% parts="colorsensor"
+        //% sensor.fieldEditor="imagedropdown"
+        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=88
         //% group="Color Sensor"
@@ -171,15 +179,15 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="1" weight=95 fixedInstance
+    //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
     export const color1: ColorSensor = new ColorSensor(1)
     
-    //% whenUsed block="3" weight=90 fixedInstance
+    //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
     export const color3: ColorSensor = new ColorSensor(3)
     
-    //% whenUsed block="2" weight=90 fixedInstance
+    //% whenUsed block="2" weight=90 fixedInstance jres=icons.port2
     export const color2: ColorSensor = new ColorSensor(2)
 
-    //% whenUsed block="4" weight=90 fixedInstance
+    //% whenUsed block="4" weight=90 fixedInstance jres=icons.port4
     export const color4: ColorSensor = new ColorSensor(4)
 }

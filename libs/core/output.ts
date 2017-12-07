@@ -87,21 +87,21 @@ namespace motors {
         }
 
         /**
-         * Sets the motor power level from ``-100`` to ``100``.
+         * Sets the motor speed level from ``-100`` to ``100``.
          * @param motor the output connection that the motor is connected to
-         * @param power the power from ``100`` full forward to ``-100`` full backward, eg: 50
+         * @param speed the power from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorSetPower block="power `icons.motorLarge` %motor|to %power|%"
+        //% blockId=motorSetSpeed block="set speed `icons.motorLarge` %motor|to %speed|%"
         //% weight=99 group="Motors" blockGap=8
         //% power.min=-100 power.max=100
-        power(power: number) {
-            power = Math.clamp(-100, 100, power >> 0);
+        setSpeed(speed: number) {
+            speed = Math.clamp(-100, 100, speed >> 0);
 
             // per LEGO: call it power, use speed
             const b = mkCmd(this.port, DAL.opOutputSpeed, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, power)
+            b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
-            if (power) {
+            if (speed) {
                 const b = mkCmd(this.port, DAL.opOutputStart, 0)
                 writePWM(b);
             } else {
@@ -141,7 +141,7 @@ namespace motors {
             const b = mkCmd(this.port, DAL.opOutputStop, 1)
             b.setNumber(NumberFormat.UInt8LE, 2, this.brake ? 1 : 0)
             writePWM(b);
-    }
+        }
 
         /**
          * Sets the automatic brake on or off when the motor is off
