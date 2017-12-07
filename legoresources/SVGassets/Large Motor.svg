@@ -13,7 +13,10 @@
    sodipodi:docname="Large Motor.svg"
    width="153.634"
    height="153.634"
-   inkscape:version="0.92.1 r15371">
+   inkscape:version="0.92.1 r15371"
+   inkscape:export-filename="C:\gh\pxt-ev3\libs\core\jres\icons\motorLarge-icon.png"
+   inkscape:export-xdpi="74.983398"
+   inkscape:export-ydpi="74.983398">
   <metadata
      id="metadata7028">
     <rdf:RDF>
@@ -35,8 +38,8 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1137"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
      id="namedview7026"
      showgrid="false"
      inkscape:zoom="1.5361183"
