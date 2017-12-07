@@ -1,6 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="1925.358 6183.438 36.101 33.371">
-  <defs>
-    <style>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="1925.358 6183.438 36.101 36.101003"
+   version="1.1"
+   id="svg41"
+   sodipodi:docname="Color Sensor.svg"
+   inkscape:export-filename="C:\gh\pxt-ev3\libs\core\jres\icons\colorSensor-icon.png"
+   inkscape:export-xdpi="319.10471"
+   inkscape:export-ydpi="319.10471"
+   width="36.101002"
+   height="36.101002"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata45">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     id="namedview43"
+     showgrid="false"
+     inkscape:zoom="7.072009"
+     inkscape:cx="18.050501"
+     inkscape:cy="16.685499"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg41" />
+  <defs
+     id="defs22">
+    <style
+       id="style2">
       .cls-1 {
         fill: #a8a9a8;
       }
@@ -25,39 +77,168 @@
         filter: url(#Path_1);
       }
     </style>
-    <clipPath id="clip-path">
-      <path id="Union_5" data-name="Union 5" class="cls-1" d="M3.907,33.37c-1.069,0-1.935-.617-1.935-1.377V27.606H.758A.758.758,0,0,1,0,26.848V7.129a.758.758,0,0,1,.758-.758H1.972V1.377C1.972.617,2.838,0,3.907,0H32.194c1.069,0,1.935.617,1.935,1.377V6.371h1.213a.758.758,0,0,1,.759.758V26.848a.758.758,0,0,1-.759.758H34.129v4.387c0,.761-.867,1.377-1.935,1.377Z"/>
+    <clipPath
+       id="clip-path">
+      <path
+         id="Union_5"
+         data-name="Union 5"
+         class="cls-1"
+         d="m 3.907,33.37 c -1.069,0 -1.935,-0.617 -1.935,-1.377 V 27.606 H 0.758 A 0.758,0.758 0 0 1 0,26.848 V 7.129 A 0.758,0.758 0 0 1 0.758,6.371 H 1.972 V 1.377 C 1.972,0.617 2.838,0 3.907,0 h 28.287 c 1.069,0 1.935,0.617 1.935,1.377 v 4.994 h 1.213 a 0.758,0.758 0 0 1 0.759,0.758 v 19.719 a 0.758,0.758 0 0 1 -0.759,0.758 h -1.213 v 4.387 c 0,0.761 -0.867,1.377 -1.935,1.377 z"
+         inkscape:connector-curvature="0"
+         style="fill:#a8a9a8" />
     </clipPath>
-    <linearGradient id="linear-gradient" x1="0.5" y1="0.901" x2="0.5" y2="1.068" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#a8a9a8"/>
-      <stop offset="1" stop-color="#545554"/>
+    <linearGradient
+       id="linear-gradient"
+       x1="16.378942"
+       y1="29.514856"
+       x2="16.378942"
+       y2="34.98542"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.98165674,1.018686)">
+      <stop
+         offset="0"
+         stop-color="#a8a9a8"
+         id="stop6" />
+      <stop
+         offset="1"
+         stop-color="#545554"
+         id="stop8" />
     </linearGradient>
-    <filter id="Path_1" x="1918.33" y="6177.438" width="50.157" height="51.371" filterUnits="userSpaceOnUse">
-      <feOffset dy="3" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feFlood flood-opacity="0.502"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
+    <filter
+       id="Path_1"
+       x="1918.33"
+       y="6177.438"
+       width="50.157001"
+       height="51.370998"
+       filterUnits="userSpaceOnUse">
+      <feOffset
+         dy="3"
+         input="SourceAlpha"
+         id="feOffset11" />
+      <feGaussianBlur
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur13" />
+      <feFlood
+         flood-opacity="0.502"
+         id="feFlood15" />
+      <feComposite
+         operator="in"
+         in2="blur"
+         id="feComposite17"
+         result="result1" />
+      <feComposite
+         in="SourceGraphic"
+         in2="result1"
+         id="feComposite19" />
     </filter>
   </defs>
-  <g id="Color_Sensor" data-name="Color Sensor" transform="translate(1346 5554)">
-    <g id="Mask_Group_5" data-name="Mask Group 5" class="cls-2" transform="translate(579.358 629.439)">
-      <g id="Group_4" data-name="Group 4" transform="translate(0)">
-        <g id="Group_2" data-name="Group 2">
-          <path id="Path_28" data-name="Path 28" class="cls-1" d="M.758,0H35.342A.758.758,0,0,1,36.1.758V20.477a.758.758,0,0,1-.758.758H.758A.758.758,0,0,1,0,20.477V.758A.758.758,0,0,1,.758,0Z" transform="translate(0 6.371)"/>
-          <g class="cls-6" transform="matrix(1, 0, 0, 1, -1925.36, -6183.44)">
-            <path id="Path_1-2" data-name="Path 1" class="cls-3" d="M1.935,0H30.222c1.069,0,1.935.617,1.935,1.377V31.993c0,.761-.866,1.377-1.935,1.377H1.935C.866,33.371,0,32.754,0,31.993V1.377C0,.617.866,0,1.935,0Z" transform="translate(1927.33 6183.44)"/>
+  <g
+     id="Color_Sensor"
+     data-name="Color Sensor"
+     transform="translate(1346,5555.3645)">
+    <g
+       id="Mask_Group_5"
+       data-name="Mask Group 5"
+       class="cls-2"
+       transform="translate(579.358,629.439)"
+       clip-path="url(#clip-path)">
+      <g
+         id="Group_4"
+         data-name="Group 4">
+        <g
+           id="Group_2"
+           data-name="Group 2">
+          <path
+             id="Path_28"
+             data-name="Path 28"
+             class="cls-1"
+             d="M 0.758,0 H 35.342 A 0.758,0.758 0 0 1 36.1,0.758 v 19.719 a 0.758,0.758 0 0 1 -0.758,0.758 H 0.758 A 0.758,0.758 0 0 1 0,20.477 V 0.758 A 0.758,0.758 0 0 1 0.758,0 Z"
+             transform="translate(0,6.371)"
+             inkscape:connector-curvature="0"
+             style="fill:#a8a9a8" />
+          <g
+             class="cls-6"
+             transform="translate(-1925.36,-6183.44)"
+             id="g26"
+             style="filter:url(#Path_1)">
+            <path
+               id="Path_1-2"
+               data-name="Path 1"
+               class="cls-3"
+               d="m 1.935,0 h 28.287 c 1.069,0 1.935,0.617 1.935,1.377 v 30.616 c 0,0.761 -0.866,1.377 -1.935,1.377 H 1.935 C 0.866,33.371 0,32.754 0,31.993 V 1.377 C 0,0.617 0.866,0 1.935,0 Z"
+               transform="translate(1927.33,6183.44)"
+               inkscape:connector-curvature="0"
+               style="fill:url(#linear-gradient)" />
           </g>
-          <rect id="Rectangle_2" data-name="Rectangle 2" width="0.758" height="6.067" transform="translate(34.584 9.404)"/>
-          <rect id="Rectangle_5" data-name="Rectangle 5" width="0.758" height="6.067" transform="translate(0.91 9.404)"/>
-          <rect id="Rectangle_3" data-name="Rectangle 3" width="0.758" height="6.067" transform="translate(34.584 18.05)"/>
-          <rect id="Rectangle_4" data-name="Rectangle 4" width="0.758" height="6.067" transform="translate(0.91 18.05)"/>
+          <rect
+             id="Rectangle_2"
+             data-name="Rectangle 2"
+             width="0.75800002"
+             height="6.0669999"
+             transform="translate(34.584,9.404)"
+             x="0"
+             y="0" />
+          <rect
+             id="Rectangle_5"
+             data-name="Rectangle 5"
+             width="0.75800002"
+             height="6.0669999"
+             transform="translate(0.91,9.404)"
+             x="0"
+             y="0" />
+          <rect
+             id="Rectangle_3"
+             data-name="Rectangle 3"
+             width="0.75800002"
+             height="6.0669999"
+             transform="translate(34.584,18.05)"
+             x="0"
+             y="0" />
+          <rect
+             id="Rectangle_4"
+             data-name="Rectangle 4"
+             width="0.75800002"
+             height="6.0669999"
+             transform="translate(0.91,18.05)"
+             x="0"
+             y="0" />
         </g>
-        <path id="Union_1" data-name="Union 1" class="cls-4" d="M2.579,17.747a7,7,0,0,1,.16-1.494,9.556,9.556,0,1,1,13.634,0A6.978,6.978,0,1,1,2.579,17.747Z" transform="translate(8.494 4.096)"/>
-        <path id="Union_2" data-name="Union 2" d="M2.67,16.308a5.374,5.374,0,0,1,.372-1.971,8.039,8.039,0,1,1,10.022-.022A5.388,5.388,0,1,1,2.67,16.308Z" transform="translate(10.011 5.534)"/>
-        <g id="Group_3" data-name="Group 3" transform="translate(14.41 10.163)">
-          <ellipse id="Ellipse_5" data-name="Ellipse 5" class="cls-5" cx="3.64" cy="3.64" rx="3.64" ry="3.64"/>
-          <ellipse id="Ellipse_6" data-name="Ellipse 6" class="cls-5" cx="1.972" cy="1.972" rx="1.972" ry="1.972" transform="translate(1.669 9.556)"/>
+        <path
+           id="Union_1"
+           data-name="Union 1"
+           class="cls-4"
+           d="m 2.579,17.747 a 7,7 0 0 1 0.16,-1.494 9.556,9.556 0 1 1 13.634,0 6.978,6.978 0 1 1 -13.794,1.494 z"
+           transform="translate(8.494,4.096)"
+           inkscape:connector-curvature="0"
+           style="fill:#b72b1c" />
+        <path
+           id="Union_2"
+           data-name="Union 2"
+           d="M 2.67,16.308 A 5.374,5.374 0 0 1 3.042,14.337 8.039,8.039 0 1 1 13.064,14.315 5.388,5.388 0 1 1 2.67,16.308 Z"
+           transform="translate(10.011,5.534)"
+           inkscape:connector-curvature="0" />
+        <g
+           id="Group_3"
+           data-name="Group 3"
+           transform="translate(14.41,10.163)">
+          <circle
+             id="Ellipse_5"
+             data-name="Ellipse 5"
+             class="cls-5"
+             cx="3.6400001"
+             cy="3.6400001"
+             r="3.6400001"
+             style="fill:#f2f2f2" />
+          <circle
+             id="Ellipse_6"
+             data-name="Ellipse 6"
+             class="cls-5"
+             cx="1.972"
+             cy="1.972"
+             transform="translate(1.669,9.556)"
+             r="1.972"
+             style="fill:#f2f2f2" />
         </g>
       </g>
     </g>

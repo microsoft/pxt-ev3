@@ -1,6 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="1719.858 6177.276 47.14 47.14">
-  <defs>
-    <style>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="1719.858 6177.276 47.14 47.14"
+   version="1.1"
+   id="svg7610"
+   sodipodi:docname="Medium Motor.svg"
+   inkscape:export-filename="C:\gh\pxt-ev3\libs\core\jres\icons\motorMedium-icon.png"
+   inkscape:export-xdpi="244.37845"
+   inkscape:export-ydpi="244.37845"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata7614">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     id="namedview7612"
+     showgrid="false"
+     inkscape:zoom="5.0063641"
+     inkscape:cx="23.57"
+     inkscape:cy="23.57"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7610" />
+  <defs
+     id="defs7591">
+    <style
+       id="style7573">
       .cls-1 {
         fill: url(#linear-gradient);
       }
@@ -31,35 +81,140 @@
         filter: url(#Union_1);
       }
     </style>
-    <linearGradient id="linear-gradient" x1="0.5" y1="0.919" x2="0.5" y2="1.077" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#a8a9a8"/>
-      <stop offset="1" stop-color="#545554"/>
+    <linearGradient
+       id="linear-gradient"
+       x1="0.5"
+       y1="0.919"
+       x2="0.5"
+       y2="1.077"
+       gradientUnits="objectBoundingBox">
+      <stop
+         offset="0"
+         stop-color="#a8a9a8"
+         id="stop7575" />
+      <stop
+         offset="1"
+         stop-color="#545554"
+         id="stop7577" />
     </linearGradient>
-    <filter id="Union_1" x="1719.858" y="6177.276" width="47.14" height="47.14" filterUnits="userSpaceOnUse">
-      <feOffset input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="0.5" result="blur"/>
-      <feFlood flood-opacity="0.322"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
+    <filter
+       id="Union_1"
+       x="1719.858"
+       y="6177.276"
+       width="47.14"
+       height="47.14"
+       filterUnits="userSpaceOnUse">
+      <feOffset
+         input="SourceAlpha"
+         id="feOffset7580" />
+      <feGaussianBlur
+         stdDeviation="0.5"
+         result="blur"
+         id="feGaussianBlur7582" />
+      <feFlood
+         flood-opacity="0.322"
+         id="feFlood7584" />
+      <feComposite
+         operator="in"
+         in2="blur"
+         id="feComposite7586"
+         result="result1" />
+      <feComposite
+         in="SourceGraphic"
+         in2="result1"
+         id="feComposite7588" />
     </filter>
   </defs>
-  <g id="Medium_Motor" data-name="Medium Motor" transform="translate(1346 5554)">
-    <g id="Group_4" data-name="Group 4" transform="translate(375.358 624.776)">
-      <path id="Path_1" data-name="Path 1" class="cls-1" d="M3.281-.287h39a2.357,2.357,0,0,1,2.57,1.972V42.033c0,1-1.1,1.82-2.57,1.82h-39c-1.473,0-2.57-.815-2.57-1.82V1.685A2.357,2.357,0,0,1,3.281-.287Z" transform="translate(-0.711 0.287)"/>
+  <g
+     id="Medium_Motor"
+     data-name="Medium Motor"
+     transform="translate(1346 5554)">
+    <g
+       id="Group_4"
+       data-name="Group 4"
+       transform="translate(375.358 624.776)">
+      <path
+         id="Path_1"
+         data-name="Path 1"
+         class="cls-1"
+         d="M3.281-.287h39a2.357,2.357,0,0,1,2.57,1.972V42.033c0,1-1.1,1.82-2.57,1.82h-39c-1.473,0-2.57-.815-2.57-1.82V1.685A2.357,2.357,0,0,1,3.281-.287Z"
+         transform="translate(-0.711 0.287)" />
     </g>
-    <g id="Group_7" data-name="Group 7" transform="translate(419.498 624.776) rotate(90)">
-      <g class="cls-7" transform="matrix(0, -1, 1, 0, -6178.78, 1765.5)">
-        <path id="Union_1-2" data-name="Union 1" class="cls-2" d="M21.236,44.14a6.219,6.219,0,0,1-6.219-6.219v-8.8h-8.8A6.219,6.219,0,0,1,0,22.9V21.236a6.219,6.219,0,0,1,6.219-6.219h8.8v-8.8A6.219,6.219,0,0,1,21.236,0H22.9a6.219,6.219,0,0,1,6.219,6.219v8.8h8.8a6.219,6.219,0,0,1,6.219,6.219V22.9a6.219,6.219,0,0,1-6.219,6.219h-8.8v8.8A6.219,6.219,0,0,1,22.9,44.14Z" transform="translate(1765.5 6178.78) rotate(90)"/>
+    <g
+       id="Group_7"
+       data-name="Group 7"
+       transform="translate(419.498 624.776) rotate(90)">
+      <g
+         class="cls-7"
+         transform="matrix(0, -1, 1, 0, -6178.78, 1765.5)"
+         id="g7596">
+        <path
+           id="Union_1-2"
+           data-name="Union 1"
+           class="cls-2"
+           d="M21.236,44.14a6.219,6.219,0,0,1-6.219-6.219v-8.8h-8.8A6.219,6.219,0,0,1,0,22.9V21.236a6.219,6.219,0,0,1,6.219-6.219h8.8v-8.8A6.219,6.219,0,0,1,21.236,0H22.9a6.219,6.219,0,0,1,6.219,6.219v8.8h8.8a6.219,6.219,0,0,1,6.219,6.219V22.9a6.219,6.219,0,0,1-6.219,6.219h-8.8v8.8A6.219,6.219,0,0,1,22.9,44.14Z"
+           transform="translate(1765.5 6178.78) rotate(90)" />
       </g>
-      <ellipse id="Ellipse_1" data-name="Ellipse 1" class="cls-3" cx="4.854" cy="4.854" rx="4.854" ry="4.854" transform="translate(17.292 1.517)"/>
-      <ellipse id="Ellipse_2" data-name="Ellipse 2" class="cls-3" cx="4.854" cy="4.854" rx="4.854" ry="4.854" transform="translate(17.292 32.915)"/>
-      <ellipse id="Ellipse_1-2" data-name="Ellipse 1" class="cls-3" cx="4.854" cy="4.854" rx="4.854" ry="4.854" transform="translate(1.517 26.848) rotate(-90)"/>
-      <ellipse id="Ellipse_2-2" data-name="Ellipse 2" class="cls-3" cx="4.854" cy="4.854" rx="4.854" ry="4.854" transform="translate(32.915 26.848) rotate(-90)"/>
+      <ellipse
+         id="Ellipse_1"
+         data-name="Ellipse 1"
+         class="cls-3"
+         cx="4.854"
+         cy="4.854"
+         rx="4.854"
+         ry="4.854"
+         transform="translate(17.292 1.517)" />
+      <ellipse
+         id="Ellipse_2"
+         data-name="Ellipse 2"
+         class="cls-3"
+         cx="4.854"
+         cy="4.854"
+         rx="4.854"
+         ry="4.854"
+         transform="translate(17.292 32.915)" />
+      <ellipse
+         id="Ellipse_1-2"
+         data-name="Ellipse 1"
+         class="cls-3"
+         cx="4.854"
+         cy="4.854"
+         rx="4.854"
+         ry="4.854"
+         transform="translate(1.517 26.848) rotate(-90)" />
+      <ellipse
+         id="Ellipse_2-2"
+         data-name="Ellipse 2"
+         class="cls-3"
+         cx="4.854"
+         cy="4.854"
+         rx="4.854"
+         ry="4.854"
+         transform="translate(32.915 26.848) rotate(-90)" />
     </g>
-    <g id="Ellipse_4" data-name="Ellipse 4" class="cls-4" transform="translate(390.903 640.17)">
-      <ellipse class="cls-5" cx="6.752" cy="6.752" rx="6.752" ry="6.752"/>
-      <ellipse class="cls-6" cx="6.752" cy="6.752" rx="6.627" ry="6.627"/>
+    <g
+       id="Ellipse_4"
+       data-name="Ellipse 4"
+       class="cls-4"
+       transform="translate(390.903 640.17)">
+      <ellipse
+         class="cls-5"
+         cx="6.752"
+         cy="6.752"
+         rx="6.752"
+         ry="6.752"
+         id="ellipse7603" />
+      <ellipse
+         class="cls-6"
+         cx="6.752"
+         cy="6.752"
+         rx="6.627"
+         ry="6.627"
+         id="ellipse7605" />
     </g>
-    <path id="Hole" d="M5606.437,962.413s-.054,1.021-.769,1.029-1.461,0-1.461,0a2.363,2.363,0,0,0-.455,1.691c0,1.266.357,1.6.357,1.6h1.628a.645.645,0,0,1,.7.7V969.1a3.882,3.882,0,0,0,1.766.287,6.459,6.459,0,0,0,1.676-.287v-1.667a.73.73,0,0,1,.734-.7,10.674,10.674,0,0,0,1.444-.14s.4-.374.434-1.632-.353-1.644-.353-1.644h-1.693a.641.641,0,0,1-.762-.678,11.41,11.41,0,0,1,0-1.643,4.815,4.815,0,0,0-3.246,0C5606.42,961.694,5606.437,962.413,5606.437,962.413Z" transform="translate(-5210.486 -318.186)"/>
+    <path
+       id="Hole"
+       d="M5606.437,962.413s-.054,1.021-.769,1.029-1.461,0-1.461,0a2.363,2.363,0,0,0-.455,1.691c0,1.266.357,1.6.357,1.6h1.628a.645.645,0,0,1,.7.7V969.1a3.882,3.882,0,0,0,1.766.287,6.459,6.459,0,0,0,1.676-.287v-1.667a.73.73,0,0,1,.734-.7,10.674,10.674,0,0,0,1.444-.14s.4-.374.434-1.632-.353-1.644-.353-1.644h-1.693a.641.641,0,0,1-.762-.678,11.41,11.41,0,0,1,0-1.643,4.815,4.815,0,0,0-3.246,0C5606.42,961.694,5606.437,962.413,5606.437,962.413Z"
+       transform="translate(-5210.486 -318.186)" />
   </g>
 </svg>
