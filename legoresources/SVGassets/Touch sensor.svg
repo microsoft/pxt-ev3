@@ -14,7 +14,10 @@
    sodipodi:docname="Touch sensor.svg"
    width="36.101002"
    height="36.101002"
-   inkscape:version="0.92.1 r15371">
+   inkscape:version="0.92.1 r15371"
+   inkscape:export-filename="C:\gh\pxt-ev3\libs\core\jres\icons\touchSensor-icon.png"
+   inkscape:export-xdpi="319.10471"
+   inkscape:export-ydpi="319.10471">
   <metadata
      id="metadata4576">
     <rdf:RDF>
@@ -36,8 +39,8 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1137"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
      id="namedview4574"
      showgrid="false"
      inkscape:zoom="7.0722208"

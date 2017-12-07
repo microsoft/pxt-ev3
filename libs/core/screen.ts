@@ -154,7 +154,7 @@ namespace brick {
     //% blockId=scren_image_picker block="%image" shim=TD_ID
     //% image.fieldEditor="imagedropdown"
     //% image.fieldOptions.columns=6
-    //% block.fieldOptions.hasSearchBar=true
+    //% image.fieldOptions.hasSearchBar=true
     //% group="Screen" weight=0 blockHidden=1
     export function _imagePicker(image: Image): Image {
         return image;
