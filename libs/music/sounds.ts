@@ -256,15 +256,17 @@ namespace sounds {
 }
 
 namespace music {
+    let numSoundsPlaying = 0;
+    let soundsLimit = 3;
+
     /**
      * Plays a sound
      * @param sound the sound to play
      */
-    //% blockId=music_play_sound_effect block="play %sound"
+    //% blockId=music_play_sound_effect_until_done block="play sound effect %sound|until done"
     //% weight=98
-    export function playSoundEffect(sound: Sound) {
+    export function playSoundEffectUntilDone(sound: Sound) {
         if (!sound) return;
-
         sound.play();
     }
 
@@ -276,5 +278,17 @@ namespace music {
     //% weight=0 blockHidden=1
     export function _soundPicker(sound: Sound): Sound {
         return sound;
+    }
+
+    /**
+     * Start playing a sound and don't wait for it to finish.
+     * @param sound the sound to play
+     */
+    //% blockId=music_play_sound_effect block="play sound effect %sound"
+    //% weight=99
+    export function playSoundEffect(sound: Sound) {
+        if (!sound || numSoundsPlaying >= soundsLimit) return;
+        numSoundsPlaying++;
+        control.runInBackground(() => {sound.play(); numSoundsPlaying--;});
     }
 }
