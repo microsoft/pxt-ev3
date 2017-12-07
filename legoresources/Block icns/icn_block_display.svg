@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="1299.627 9145.076 41.445 32.779">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #3c3c3c;
+      }
+
+      .cls-3 {
+        fill: #a0b5a6;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" y1="0.924" x2="0.5" y2="0.948" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a8a9a8"/>
+      <stop offset="1" stop-color="gray"/>
+    </linearGradient>
+  </defs>
+  <g id="icn_block_display" transform="translate(666.315 8209.204)">
+    <path id="Path_91" data-name="Path 91" class="cls-1" d="M.816,0H40.629a.816.816,0,0,1,.816.816V31.963a.816.816,0,0,1-.816.816H.816A.816.816,0,0,1,0,31.963V.816A.816.816,0,0,1,.816,0Z" transform="translate(633.313 935.874)"/>
+    <path id="Path_92" data-name="Path 92" class="cls-2" d="M1.57,0H32.4a1.57,1.57,0,0,1,1.57,1.57V18.9a1.57,1.57,0,0,1-1.57,1.57H1.57A1.57,1.57,0,0,1,0,18.9V1.57A1.57,1.57,0,0,1,1.57,0Z" transform="translate(637.08 940.207)"/>
+    <path id="Path_93" data-name="Path 93" class="cls-3" d="M1.13,0H27.316a1.13,1.13,0,0,1,1.13,1.13v16.7a1.13,1.13,0,0,1-1.13,1.13H1.13A1.13,1.13,0,0,1,0,17.834V1.13A1.13,1.13,0,0,1,1.13,0Z" transform="translate(639.906 941.023)"/>
+  </g>
+</svg>
