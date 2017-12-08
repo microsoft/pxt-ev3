@@ -22,7 +22,7 @@ namespace pxsim.SoundMethods {
     }
 
     export function play(buf: RefBuffer, volume: number) {
-        if (numSoundsPlaying >= soundsLimit) {
+        if (!buf || numSoundsPlaying >= soundsLimit) {
             return Promise.resolve();
         }
         return new Promise<void>(resolve => {
