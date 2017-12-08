@@ -257,7 +257,11 @@ namespace sounds {
 
 namespace music {
     let numSoundsPlaying = 0;
+<<<<<<< Updated upstream
     let soundsLimit = 3;
+=======
+    const soundsLimit = 1;
+>>>>>>> Stashed changes
 
     /**
      * Plays a sound
