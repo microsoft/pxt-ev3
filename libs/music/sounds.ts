@@ -257,7 +257,7 @@ namespace sounds {
 
 namespace music {
     let numSoundsPlaying = 0;
-    let soundsLimit = 3;
+    const soundsLimit = 1;
 
     /**
      * Plays a sound
