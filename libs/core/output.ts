@@ -7,6 +7,8 @@ enum Output {
     C = 0x04,
     //% block="D"
     D = 0x08,
+    //% block="B+C"
+    BC = 0x06,
     //% block="All"
     ALL = 0x0f
 }
@@ -75,7 +77,7 @@ namespace motors {
 
     //% fixedInstances
     export class Motor extends control.Component {
-        public port: Output;
+        private port: Output;
         private large: boolean;
         private brake: boolean;
 
@@ -102,8 +104,7 @@ namespace motors {
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
             if (speed) {
-                const b = mkCmd(this.port, DAL.opOutputStart, 0)
-                writePWM(b);
+                start(this.port);
             } else {
                 this.stop();
             }
@@ -241,6 +242,28 @@ namespace motors {
     //% whenUsed fixedInstance block="medium D"
     export const mediumMotorD = new Motor(Output.D, false);
 
+
+    /**
+     * Synchronizes this motor with another motor.
+     * @param motor the controlled motor, eg: motors.largeB
+     * @param other the motor that will control this motor, eg: motors.largeC
+     * @param turnRatio the ratio of the master power applied to this motor, eg: 100
+     * @param speed the power applied to the motor, eg: 50
+     */
+    //% blockId=motorSync block="set sync speed B+C with %turnRatio|turn ratio at %speed|% speed"
+    //% turnRatio.min=-200 turnRatio.max=200 
+    //% speed.min=-100 speed.max=100
+    export function setSyncSpeed(turnRatio: number, speed: number) {
+        syncMotors(Output.BC, {
+            useSteps: true,
+            speed: speed,
+            turnRatio: turnRatio,
+            stepsOrTime: 0,
+            useBrake: false
+        })
+        start(Output.BC);
+    }
+
     function reset(out: Output) {
         let b = mkCmd(out, DAL.opOutputReset, 0)
         writePWM(b)
@@ -301,6 +324,11 @@ namespace motors {
         step3: number;
         useSteps?: boolean; // otherwise use milliseconds
         useBrake?: boolean;
+    }
+
+    function start(out: Output) {
+        const b = mkCmd(out, DAL.opOutputStart, 0)
+        writePWM(b);
     }
 
     function step(out: Output, opts: StepOptions) {
