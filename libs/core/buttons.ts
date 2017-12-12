@@ -132,7 +132,7 @@ namespace brick {
          * Waits until the event is raised
          * @param ev the event to wait for
          */
-        //% help=input/button/wait-until
+        //% help=input/button/pause-until
         //% blockId=buttonWaitUntil block="pause until `icons.brickButtons` %button|%event"
         //% parts="brick"
         //% blockNamespace=brick

@@ -58,7 +58,7 @@ namespace sensors {
          * @param sensor the touch sensor that needs to be clicked or used
          * @param event the kind of button gesture that needs to be detected
          */
-        //% help=input/touch-sensor/wait-until
+        //% help=input/touch-sensor/pause-until
         //% blockId=touchWaitUntil block="pause until `icons.touchSensor` %sensor|%event"
         //% parts="touch"
         //% sensor.fieldEditor="imagedropdown"
