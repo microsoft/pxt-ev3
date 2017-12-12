@@ -63,7 +63,7 @@
         "listsBlocks": true,
         "functionBlocks": true,
         "onStartNamespace": "loops",
-        "onStartColor": "#0F841C",
+        "onStartColor": "#58AB41",
         "pauseUntilBlock": {
             "category": "loops"
         }
