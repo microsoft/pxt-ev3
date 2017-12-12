@@ -17,8 +17,7 @@
         "control.cpp",
         "control.ts",
         "serial.cpp",
-        "serial.ts",
-        "loops.ts"
+        "serial.ts"
     ],
     "testFiles": [
         "test.ts"

@@ -139,8 +139,8 @@
    Editor
 --------------------*/
 
-@blocklyToolboxColor: #FED30D;
-@trashIconColor: @primaryColor;
+@blocklyToolboxColor: #FAC80A;
+@trashIconColor: white;
 
 
 /*-------------------

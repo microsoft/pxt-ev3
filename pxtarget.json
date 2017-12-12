@@ -63,7 +63,10 @@
         "listsBlocks": true,
         "functionBlocks": true,
         "onStartNamespace": "loops",
-        "onStartColor": "#0F841C"
+        "onStartColor": "#0F841C",
+        "pauseUntilBlock": {
+            "category": "loops"
+        }
     },
     "compileService": {
         "buildEngine": "dockermake",
@@ -122,12 +125,12 @@
         "blocklyOptions": {
         },
         "blockColors": {
-            "loops": "#0F841C",
-            "logic": "#3979B9",
-            "math": "#8A83BA",
-            "variables": "#D4000D",
+            "loops": "#58AB41",
+            "logic": "#1E5AA8",
+            "math": "#9DC3F7",
+            "variables": "#B40000",
             "text": "#F0890A",
-            "advanced": "#7A8284",
+            "advanced": "#969696",
             "functions": "#064597",
             "arrays": "#890058"
         },
