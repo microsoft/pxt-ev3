@@ -1,19 +1,19 @@
 
-//% color="#00A5C8" weight=100
+//% color="#68C3E2" weight=100
 //% groups='["Light", "Buttons", "Screen"]'
 namespace brick {
 }
 
 
-//% color="#D42878" weight=95
+//% color="#C8509B" weight=95
 namespace sensors {
 }
 
-//% color="#8AC044" weight=90 icon="\uf185"
+//% color="#A5CA18" weight=90 icon="\uf185"
 namespace motors {
 }
 
-//% color="#DF5014" weight=80
+//% color="#D67923" weight=80
 namespace music {
 
 }
@@ -33,12 +33,12 @@ namespace serial {
 
 }
 
-//% color="#0F841C"
+//% color="#58AB41"
 namespace loops {
 
 }
 
-//% color="#4c97ff"
+//% color="#1E5AA8"
 namespace light {
 
 }
