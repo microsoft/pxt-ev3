@@ -75,7 +75,7 @@ namespace motors {
 
     //% fixedInstances
     export class Motor extends control.Component {
-        private port: Output;
+        public port: Output;
         private large: boolean;
         private brake: boolean;
 
@@ -268,6 +268,29 @@ namespace motors {
             tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts),
             count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor),
         }
+    }
+
+    interface SyncOptions {
+        useSteps?: boolean;
+        speed: number;
+        turnRatio: number;
+        stepsOrTime: number;
+        useBrake?: boolean;
+    }
+
+    function syncMotors(out: Output, opts: SyncOptions) {
+        const cmd = opts.useSteps ? DAL.opOutputStepSync : DAL.opOutputTimeSync;
+        const b = mkCmd(out, cmd, 11);
+        const speed = Math.clamp(-100, 100, opts.speed);
+        const turnRatio = Math.clamp(-200, 200, opts.turnRatio);
+
+        b.setNumber(NumberFormat.Int8LE, 2, speed)
+        // note that b[3] is padding
+        b.setNumber(NumberFormat.Int16LE, 4 + 4 * 0, turnRatio)
+        // b[6], b[7] is padding
+        b.setNumber(NumberFormat.Int32LE, 4 + 4 * 1, opts.stepsOrTime || 0)
+        b.setNumber(NumberFormat.Int8LE, 4 + 4 * 2, opts.useBrake ? 1 : 0)
+        writePWM(b)
     }
 
     interface StepOptions {
