@@ -133,12 +133,12 @@ namespace brick {
          * @param ev the event to wait for
          */
         //% help=input/button/wait-until
-        //% blockId=buttonWaitUntil block="wait until `icons.brickButtons` %button|%event"
+        //% blockId=buttonWaitUntil block="pause until `icons.brickButtons` %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=98 blockGap=8
         //% group="Buttons"
-        waitUntil(ev: ButtonEvent) {
+        pauseUntil(ev: ButtonEvent) {
             control.waitForEvent(this._id, ev);
         }
     }

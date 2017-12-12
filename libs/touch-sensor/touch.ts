@@ -59,15 +59,15 @@ namespace sensors {
          * @param event the kind of button gesture that needs to be detected
          */
         //% help=input/touch-sensor/wait-until
-        //% blockId=touchWaitUntil block="wait until `icons.touchSensor` %sensor|%event"
+        //% blockId=touchWaitUntil block="pause until `icons.touchSensor` %sensor|%event"
         //% parts="touch"
         //% sensor.fieldEditor="imagedropdown"
         //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=98 blockGap=8
         //% group="Touch Sensor"
-        waitUntil(ev: TouchSensorEvent) {
-            this.button.waitUntil(<ButtonEvent><number>ev);
+        pauseUntil(ev: TouchSensorEvent) {
+            this.button.pauseUntil(<ButtonEvent><number>ev);
         }
 
         /**
