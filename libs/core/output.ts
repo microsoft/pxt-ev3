@@ -34,6 +34,7 @@ namespace motors {
         pwmMM = control.mmap("/dev/lms_pwm", 0, 0)
         if (!pwmMM) control.fail("no PWM file")
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
+        if (!motorMM) control.fail("no motor file")
 
         resetMotors()
 
@@ -262,6 +263,7 @@ namespace motors {
 
     // only a single output at a time
     function getMotorData(out: Output): MotorData {
+        init()
         let buf = motorMM.slice(outOffset(out), MotorDataOff.Size)
         return {
             actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed),
