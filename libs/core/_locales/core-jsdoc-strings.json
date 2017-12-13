@@ -54,7 +54,6 @@
   "motors.Motor.count": "Gets motor step count.",
   "motors.Motor.move": "Moves the motor by a number of degrees",
   "motors.Motor.move|param|angle": "the degrees to rotate, eg: 360",
-  "motors.Motor.move|param|power": "the power from ``100`` full forward to ``-100`` full backward, eg: 50",
   "motors.Motor.reset": "Resets the motor.",
   "motors.Motor.setBrake": "Sets the automatic brake on or off when the motor is off",
   "motors.Motor.setBrake|param|brake": "a value indicating if the motor should break when off",
