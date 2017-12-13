@@ -3,6 +3,8 @@
 
 #include "pxtbase.h"
 
+void *xmalloc(size_t sz);
+
 namespace pxt {
 void raiseEvent(int id, int event);
 int allocateNotifyEvent();
