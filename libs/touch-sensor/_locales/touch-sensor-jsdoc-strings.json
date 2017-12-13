@@ -3,6 +3,6 @@
   "sensors.TouchSensor.isPressed": "Check if touch sensor is touched.",
   "sensors.TouchSensor.onEvent": "Do something when a touch sensor is touched...",
   "sensors.TouchSensor.onEvent|param|body": "code to run when the event is raised",
-  "sensors.TouchSensor.waitUntil": "Wait until the touch sensor is touched",
+  "sensors.TouchSensor.pauseUntil": "Wait until the touch sensor is touched",
   "sensors.TouchSensor.wasPressed": "Check if touch sensor is touched since it was last checked."
 }

@@ -2,5 +2,5 @@
   "sensors.UltraSonicSensor.distance": "Gets the distance from the sonar in centimeters",
   "sensors.UltraSonicSensor.onEvent": "Registers code to run when the given color is close",
   "sensors.UltraSonicSensor.onEvent|param|handler": "the code to run when detected",
-  "sensors.UltraSonicSensor.waitUntil": "Waits for the event to occur"
+  "sensors.UltraSonicSensor.pauseUntil": "Waits for the event to occur"
 }

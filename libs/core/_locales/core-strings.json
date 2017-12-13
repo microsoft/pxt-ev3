@@ -19,7 +19,7 @@
   "Output.D|block": "D",
   "brick.Button.isPressed|block": "`icons.brickButtons` %button|is pressed",
   "brick.Button.onEvent|block": "on `icons.brickButtons` %button|%event",
-  "brick.Button.waitUntil|block": "wait until `icons.brickButtons` %button|%event",
+  "brick.Button.pauseUntil|block": "pause until `icons.brickButtons` %button|%event",
   "brick.Button.wasPressed|block": "`icons.brickButtons` %button|was pressed",
   "brick._imagePicker|block": "%image",
   "brick.buttonDown|block": "down",
