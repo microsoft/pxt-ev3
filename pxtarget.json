@@ -137,5 +137,6 @@
         "monacoColors": {
             "editor.background": "#ecf6ff"
         }
-    }
+    },
+    "ignoreDocsErrors": true
 }
