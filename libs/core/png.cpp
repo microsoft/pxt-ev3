@@ -88,7 +88,7 @@ Image unpackPNG(Buffer png) {
     uint32_t byteW = (hd.width + 7) >> 3;
     uint32_t expSize = (byteW + 1) * hd.height;
     unsigned long sz = expSize;
-    uint8_t *tmp = (uint8_t *)malloc(sz);
+    uint8_t *tmp = (uint8_t *)xmalloc(sz);
     int code = uncompress(tmp, &sz, png->data + sizeof(hd), hd.lenIDAT);
     if (code != 0) {
         DMESG("PNG: zlib failed: %d", code);
