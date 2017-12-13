@@ -1,50 +1,35 @@
 screen.clear()
-screen.print("PXT!", 10, 30, Draw.Quad)
+brick.print("PXT!", 10, 30, Draw.Quad)
 
-screen.drawRect(40, 40, 20, 10, Draw.Fill)
-motors.setStatusLight(LightsPattern.Orange)
+brick.drawRect(40, 40, 20, 10, Draw.Fill)
+brick.setStatusLight(LightsPattern.Orange)
 
-screen.heart.doubled().draw(100, 50, Draw.Double | Draw.Transparent)
+brick.heart.doubled().draw(100, 50, Draw.Double | Draw.Transparent)
 
-sensors.buttonEnter.onEvent(ButtonEvent.Click, () => {
+brick.buttonEnter.onEvent(ButtonEvent.Click, () => {
     screen.clear()
 })
 
-sensors.buttonLeft.onEvent(ButtonEvent.Click, () => {
-    screen.drawRect(10, 70, 20, 10, Draw.Fill)
-    motors.setStatusLight(LightsPattern.Red)
-    screen.setFont(screen.microbitFont())
+brick.buttonLeft.onEvent(ButtonEvent.Click, () => {
+    brick.drawRect(10, 70, 20, 10, Draw.Fill)
+    brick.setStatusLight(LightsPattern.Red)
+    brick.setFont(brick.microbitFont())
 })
 
-sensors.buttonRight.onEvent(ButtonEvent.Click, () => {
-    screen.print("Right!", 10, 60)
+brick.buttonRight.onEvent(ButtonEvent.Click, () => {
+    brick.print("Right!", 10, 60)
 })
 
-sensors.buttonDown.onEvent(ButtonEvent.Click, () => {
-    screen.print("Down! ", 10, 60)
+brick.buttonDown.onEvent(ButtonEvent.Click, () => {
+    brick.print("Down! ", 10, 60)
 })
 
-sensors.buttonUp.onEvent(ButtonEvent.Click, () => {
-    screen.print("Up!  ", 10, 60)
+brick.buttonUp.onEvent(ButtonEvent.Click, () => {
+    brick.print("Up!  ", 10, 60)
 })
 
 
 let num = 0
-
-sensors.touchSensor1.onEvent(TouchSensorEvent.Bumped, () => {
-    screen.print("Click!  " + num, 10, 60)
-    num++
-})
-
-sensors.remoteButtonTopLeft.onEvent(ButtonEvent.Click, () => {
-    screen.print("TOPLEFT " + num, 10, 60)
-    num++
-})
-
-sensors.remoteButtonTopRight.onEvent(ButtonEvent.Down, () => {
-    screen.print("TOPRIGH " + num, 10, 60)
-    num++
-})
 
 loops.forever(() => {
     serial.writeDmesg()

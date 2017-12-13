@@ -93,7 +93,7 @@ namespace motors {
          */
         //% blockId=motorSetSpeed block="set speed `icons.motorLarge` %motor|to %speed|%"
         //% weight=99 group="Motors" blockGap=8
-        //% power.min=-100 power.max=100
+        //% speed.min=-100 speed.max=100
         setSpeed(speed: number) {
             speed = Math.clamp(-100, 100, speed >> 0);
 
@@ -113,11 +113,11 @@ namespace motors {
          * Moves the motor by a number of degrees
          * @param degrees the angle to turn the motor
          * @param angle the degrees to rotate, eg: 360
-         * @param power the power from ``100`` full forward to ``-100`` full backward, eg: 50
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorMove block="move `icons.motorLarge` %motor|by %angle|degrees at %power|%"
+        //% blockId=motorMove block="move `icons.motorLarge` %motor|by %angle|degrees at %speed|%"
         //% weight=98 group="Motors" blockGap=8
-        //% power.min=-100 power.max=100
+        //% speed.min=-100 speed.max=100
         move(angle: number, power: number) {
             angle = angle >> 0;
             power = Math.clamp(-100, 100, power >> 0);
