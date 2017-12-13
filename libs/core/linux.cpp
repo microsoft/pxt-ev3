@@ -13,14 +13,35 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <malloc.h>
 
 #define THREAD_DBG(...)
 
+#define MALLOC_LIMIT (8 * 1024 * 1024)
+#define MALLOC_CHECK_PERIOD (1024 * 1024)
+
+void *xmalloc(size_t sz) {
+    static size_t allocBytes = 0;
+    allocBytes += sz;
+    if (allocBytes >= MALLOC_CHECK_PERIOD) {
+        allocBytes = 0;
+        auto info = mallinfo();
+        DMESG("malloc used: %d kb", info.uordblks / 1024);
+        if (info.uordblks > MALLOC_LIMIT) {
+            target_panic(904);
+        }
+    }
+    auto r = malloc(sz);
+    if (r == NULL)
+        target_panic(905); // shouldn't happen
+    return r;
+}
+
 void *operator new(size_t size) {
-    return malloc(size);
+    return xmalloc(size);
 }
 void *operator new[](size_t size) {
-    return malloc(size);
+    return xmalloc(size);
 }
 
 void operator delete(void *p) {
