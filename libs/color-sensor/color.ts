@@ -106,9 +106,9 @@ namespace sensors {
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
+            this.setMode(ColorSensorMode.Color)
             const v = this._colorEventValue(<number>color);
             control.onEvent(this._id, v, handler);
-            this.setMode(ColorSensorMode.Color)
             if (this.color() == color)
                 control.raiseEvent(this._id, v);
         }
