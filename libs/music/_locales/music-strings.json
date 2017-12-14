@@ -31,6 +31,7 @@
   "music.ringTone|block": "ring tone|at %note=device_note",
   "music.setTempo|block": "set tempo to %value|(bpm)",
   "music.setVolume|block": "set volume %volume",
+  "music.stopSounds|block": "stop all sounds",
   "music.tempo|block": "tempo (bpm)",
   "music|block": "music",
   "sounds.animalsCatPurr|block": "Animals cat purr",
