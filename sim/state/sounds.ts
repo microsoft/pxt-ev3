@@ -43,9 +43,12 @@ namespace pxsim.SoundMethods {
     }
 
     export function stop() {
-        if (audio) {
-            audio.pause();
-        }
+        return new Promise<void>(resolve => {
+            if (audio) {
+                audio.pause();
+                numSoundsPlaying--;
+            }
+        })
     }
 
 }
