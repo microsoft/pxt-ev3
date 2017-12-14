@@ -68,7 +68,7 @@
   "motors.Motor.tachoCount": "Gets motor tacho count.",
   "motors.Motor.turn": "Turns the motor and the follower motor by a number of rotations",
   "motors.Motor.turn|param|speed": "the speed from ``100`` full forward to ``-100`` full backward, eg: 50",
-  "motors.Motor.turn|param|turnRatio": "the ratio of power sent to the follower motor, from -200 to 200",
+  "motors.Motor.turn|param|turnRatio": "the ratio of power sent to the follower motor, from ``-200`` to ``200``",
   "motors.Motor.turn|param|unit": "the meaning of the value",
   "motors.Motor.turn|param|value": "the move quantity, eg: 2",
   "motors.stopAllMotors": "Stops all motors",

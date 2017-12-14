@@ -312,7 +312,7 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         * @param turnRatio the ratio of power sent to the follower motor, from -200 to 200
+         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``
          */
         //% blockId=motorTurn block="turn `icons.motorLarge` %motor|by %value|%unit|at %speed|% turn %turnRadio"
         //% weight=9 blockGap=8
