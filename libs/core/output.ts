@@ -313,15 +313,38 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``
+         * @param steering the ratio of power sent to the follower motor, from ``-100`` to ``100``
          */
-        //% blockId=motorTurn block="turn `icons.motorLarge` %motor|by %value|%unit|at %speed|% turn %turnRadio"
+        //% blockId=motorTurn block="move steering `icons.motorLarge` %motor|at %speed|%|steer %turnRadio|%|by %value|%unit"
         //% weight=9 blockGap=8
-        //% turnRatio.min=-200 turnRatio=200
+        //% steering.min=-100 steering=100
         //% inlineInputMode=inline
-        turn(value: number, unit: MoveUnit, speed: number, turnRatio: number) {
-            this.output(value, unit, speed, turnRatio);
-        }        
+        moveSteering(steering: number, speed: number, value: number, unit: MoveUnit) {
+            this.output(value, unit, speed, steering + 100);
+        }    
+        
+        /**
+         * The Move Tank block can make a robot drive forward, backward, turn, or stop. 
+         * Use the Move Tank block for robot vehicles that have two Large Motors, 
+         * with one motor driving the left side of the vehicle and the other the right side. 
+         * You can make the two motors go at different speeds or in different directions 
+         * to make your robot turn.
+         * @param value the amount of movement, eg: 2
+         * @param unit 
+         * @param speedLeft the speed on the left motor, eg: 50
+         * @param speedRight the speed on the right motor, eg: 50
+         */
+        //% blockId=motorTank block="move tank `icons.motorLarge` %motor|left %speedLeft|%|right %speedRight|%|by %value|%unit"
+        //% weight=9 blockGap=8
+        //% speedLeft.min=-100 speedLeft=100
+        //% speedRight.min=-100 speedRight=100
+        //% inlineInputMode=inline
+        moveTank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
+            speedLeft = Math.clamp(speedLeft >> 0, -100, 100);
+            speedRight = Math.clamp(speedRight >> 0, -100, 100);
+            const steering =(speedRight * 100 / speedLeft) >> 0;
+            this.moveSteering(speedLeft, steering, value, unit);
+        }
     }
 
     //% whenUsed fixedInstance block="large A"
