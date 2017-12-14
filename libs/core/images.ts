@@ -1,260 +1,260 @@
 namespace images {
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsBigSmile = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsHeartLarge = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsHeartSmall = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsMouth1open = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsMouth1shut = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsMouth2open = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsMouth2shut = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsSad = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsSick = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsSmile = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsSwearing = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsTalking = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsWink = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const expressionsZzz = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesAngry = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesAwake = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesBlackEye = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesBottomLeft = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesBottomRight = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesCrazy1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesCrazy2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesDisappointed = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesDizzy = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesDown = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesEvil = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesHurt = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesKnockedOut = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesLove = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesMiddleLeft = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesMiddleRight = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesNeutral = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesNuclear = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesPinchLeft = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesPinchMiddle = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesPinchRight = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesSleeping = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesTear = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesTiredLeft = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesTiredMiddle = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesTiredRight = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesToxic = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesUp = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const eyesWinking = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationAccept = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationBackward = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationDecline = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationForward = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationLeft = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationNoGo = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationQuestionMark = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationRight = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationStop1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationStop2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationThumbsDown = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationThumbsUp = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const informationWarning = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoColorSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoEv3icon = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoEv3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoGyroSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoIrBeacon = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoIrSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoLego = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoLargeMotor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoMindstorms = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoMediumMotor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoSoundSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoTempSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoTouchSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const legoUsSensor = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsBomb = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsBoom = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsFire = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsFlowers = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsForest = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsLightOff = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsLightOn = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsLightning = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsNight = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsPirate = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsSnow = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const objectsTarget = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressBar0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressBar1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressBar2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressBar3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressBar4 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDial0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDial1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDial2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDial3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDial4 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDots0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDots1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDots2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressDots3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressHourglass0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressHourglass1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressHourglass2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressTimer0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressTimer1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressTimer2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressTimer3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressTimer4 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressWaterLevel0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressWaterLevel1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressWaterLevel2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const progressWaterLevel3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemAccept1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemAccept2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemAlert = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemBox = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemBusy0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemBusy1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemDecline1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemDecline2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemDotEmpty = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemDotFull = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemEv3small = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemPlay = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider0 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider1 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider2 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider3 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider4 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider5 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider6 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider7 = screen.unpackPNG(hex``);
-    //% fixedInstance jres
+    //% fixedInstance jres blockIdentity=brick._imagePicker
     export const systemSlider8 = screen.unpackPNG(hex``);
 }
