@@ -78,8 +78,8 @@ namespace motors {
     /**
      * Stops all motors
      */
-    //% blockId=motorStopAll block="stop all `icons.motorLarge`"
-    //% weight=10 blockGap=8
+    //% blockId=motorStopAll block="stop all motors"
+    //% weight=19
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b)
@@ -272,6 +272,7 @@ namespace motors {
         /**
          * Clears the motor count
          */
+        //%
         clearCount() {
             this.__init();
             const b = mkCmd(this._port, DAL.opOutputClearCount, 0)
@@ -287,12 +288,12 @@ namespace motors {
          * Resets the motor and clears any synchronization
          */
         //% blockId=motorReset block="reset `icons.motorLarge` %motor"
-        //% weight=1
+        //% weight=20
         reset() {
             this.__init();
             reset(this._port);
             delete this._follower;
-        }
+        }        
 
         /**
          * Synchronizes a follower motor to this motor
@@ -317,6 +318,7 @@ namespace motors {
         //% blockId=motorTurn block="turn `icons.motorLarge` %motor|by %value|%unit|at %speed|% turn %turnRadio"
         //% weight=9 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
+        //% inlineInputMode=inline
         turn(value: number, unit: MoveUnit, speed: number, turnRatio: number) {
             this.output(value, unit, speed, turnRatio);
         }        

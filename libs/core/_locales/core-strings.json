@@ -57,7 +57,7 @@
   "motors.mediumMotorB|block": "medium B",
   "motors.mediumMotorC|block": "medium C",
   "motors.mediumMotorD|block": "medium D",
-  "motors.stopAllMotors|block": "stop all `icons.motorLarge`",
+  "motors.stopAllMotors|block": "stop all motors",
   "motors|block": "motors",
   "output|block": "output",
   "screen|block": "screen",
