@@ -91,7 +91,6 @@ namespace motors {
         private _large: boolean;
 
         private _initialized: boolean;
-        private _speed: number;
         private _brake: boolean;
         private _follower: Motor; // 
 
@@ -100,7 +99,6 @@ namespace motors {
             this._port = port;
             this._large = large;
             this._brake = false;
-            this._speed = 50;
         }
 
         private __init() {
@@ -113,18 +111,21 @@ namespace motors {
         }
 
         /**
-         * Turns the motor on or off at the current speed
-         * @param on true if the motor should be on
+         * Sets the speed of the motor.
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorPower block="power `icons.motorLarge` %motor|%on"
+        //% blockId=motorPower block="set speed of `icons.motorLarge` %motor|to %speed|%"
         //% on.fieldEditor=toggleonoff
         //% weight=99 blockGap=8
-        power(on: boolean) {
-            if (!this._speed || !on) { // always stop
+        //% speed.min=-100 speed.max=100
+        setSpeed(speed: number) {
+            this.__init();
+            speed = Math.clamp(-100, 100, speed >> 0);
+            if (!speed) { // always stop
                 this.stop();
             } else {
-                if (this._follower) this.setSpeedSync(this._speed);
-                else this.setSpeedSingle(this._speed);
+                if (this._follower) this.setSpeedSync(speed);
+                else this.setSpeedSingle(speed);
             }
         }
 
@@ -149,21 +150,21 @@ namespace motors {
          * @param unit the meaning of the value
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorMove block="move `icons.motorLarge` %motor|for %value|%unit"
+        //% blockId=motorMove block="move `icons.motorLarge` %motor|for %value|%unit|at %speed|%"
         //% weight=98
         //% speed.min=-100 speed.max=100    
-        move(value: number, unit: MoveUnit) {
-            this.output(value, unit, 0);
+        move(value: number, unit: MoveUnit, speed: number) {
+            this.output(value, unit, speed, 0);
         }
             
-        private output(value: number, unit: MoveUnit, turnRatio: number) {
+        private output(value: number, unit: MoveUnit, speed: number, turnRatio: number) {
             this.__init();
-            if (!this._speed) {
+            speed = Math.clamp(-100, 100, speed >> 0);
+            if (!speed) {
                 this.stop();
                 return;
             }
             turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
-
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -185,7 +186,7 @@ namespace motors {
                 syncMotors(this._port | this._follower._port, {
                     useSteps: useSteps,
                     stepsOrTime: stepsOrTime,
-                    speed: this._speed,
+                    speed: speed,
                     turnRatio: turnRatio,
                     useBrake: this._brake
                 })
@@ -195,7 +196,7 @@ namespace motors {
                     step1: 0,
                     step2: stepsOrTime,
                     step3: 0,
-                    speed: this._speed,
+                    speed: speed,
                     useBrake: this._brake
                 })
             }
@@ -218,6 +219,7 @@ namespace motors {
         //% brake.fieldEditor=toggleonoff
         //% weight=60 blockGap=8
         setBrake(brake: boolean) {
+            this.__init();
             this._brake = brake;
         }
 
@@ -312,11 +314,11 @@ namespace motors {
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param turnRatio the ratio of power sent to the follower motor, from -200 to 200
          */
-        //% blockId=motorTurn block="turn `icons.motorLarge` %motor|by %value|%unit|turn %turnRadio"
+        //% blockId=motorTurn block="turn `icons.motorLarge` %motor|by %value|%unit|at %speed|% turn %turnRadio"
         //% weight=9 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
-        turn(value: number, unit: MoveUnit, turnRatio: number) {
-            this.output(value, unit, turnRatio);
+        turn(value: number, unit: MoveUnit, speed: number, turnRatio: number) {
+            this.output(value, unit, speed, turnRatio);
         }        
     }
 
