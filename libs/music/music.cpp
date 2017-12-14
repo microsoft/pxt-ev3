@@ -168,10 +168,13 @@ void playTone(int frequency, int ms) {
 */
 //% help=music/stop-sound
 //% blockId=music_stop_sounds block="stop all sounds"
-//% parts="headphone" async
+//% parts="headphone"
 //% blockNamespace=music
 //% weight=76 blockGap=8
 void stopSounds() {
+    if (currentSample) {
+        samplePtr = currentSample->length;
+    }
     _stopSound();
 }
 

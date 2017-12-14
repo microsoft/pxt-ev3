@@ -43,7 +43,9 @@ namespace pxsim.SoundMethods {
     }
 
     export function stop() {
-        audio.pause();
+        if (audio) {
+            audio.pause();
+        }
     }
 
 }
