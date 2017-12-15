@@ -221,10 +221,6 @@ int current_time_ms() {
     return currTime() - startTime;
 }
 
-int getSerialNumber() {
-    return 42; // TODO
-}
-
 void disposeThread(Thread *t) {
     if (allThreads == t) {
         allThreads = t->next;
