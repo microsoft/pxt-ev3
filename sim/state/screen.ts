@@ -30,6 +30,7 @@ namespace pxsim {
         clear() {
             for (let i = 0; i < this.points.length; ++i)
                 this.points[i] = 0;
+            this.shouldUpdate = true;
         }
 
         blitLineCore(x: number, y: number, w: number, buf: RefBuffer, mode: Draw, offset = 0) {

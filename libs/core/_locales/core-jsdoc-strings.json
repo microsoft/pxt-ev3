@@ -28,6 +28,7 @@
   "brick.buttonLeft": "Left button on the EV3 Brick.",
   "brick.buttonRight": "Right button on the EV3 Brick.",
   "brick.buttonUp": "Up button on the EV3 Brick.",
+  "brick.clearScreen": "Clears the screen",
   "brick.lightPattern": "Pattern block.",
   "brick.lightPattern|param|pattern": "the lights pattern to use. eg: LightsPattern.Green",
   "brick.print": "Show text on the screen.",
