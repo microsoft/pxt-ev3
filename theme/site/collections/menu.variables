@@ -3,3 +3,5 @@
 *******************************/
 
 @invertedItemTextColor: @white;
+
+@border: none;

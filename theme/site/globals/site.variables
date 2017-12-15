@@ -22,7 +22,7 @@
 
 /* Lego colors */
 @red: @brightRed;
-@blue: #00a5c8; /*#008ad2;*/
+@blue: #1AA5C6; /*#008ad2;*/
 @yellow: #fccd00;
 @orange: #fa7f2a;
 @green: @brightYellowishGreen;
@@ -92,11 +92,13 @@
          PXT Overrides
 *******************************/
 
+/*@loaderImageUrl: "../docs/static/MC-LEGO-loader-eyes.gif";*/
+
 /*-------------------
    Menu
 --------------------*/
 
-@mainMenuBackground: #f4f7f9;
+@mainMenuBackground: #ffffff;
 @mainMenuInvertedBackground: @yellow;
 @mainMenuTutorialBackground: @orange;
 
@@ -117,7 +119,7 @@
 
 @simulatorBackground: #fcfbfa;
 @editorToolsBackground: #fcfbfa;
-@blocklySvgColor: #ecf6ff;
+@blocklySvgColor: #ecf6fe;
 
 @homeScreenBackground: #EAEEEF;
 
