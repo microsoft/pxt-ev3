@@ -3,7 +3,8 @@
     "description": "The EV3 library",
     "files": [
         "README.md",
-        "ns.ts"
+        "ns.ts",
+        "startup.ts"
     ],
     "dependencies": {
         "base": "file:../base",
