@@ -27,11 +27,11 @@ struct hci_dev_list_req {
 
 
 static uint32_t bt_addr() {
-    uint32_t res = 0;
+    uint32_t res = -1;
 
     int fd = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
     if (fd < 0) {
-        DMESG("Can't open HCI socket");
+        DMESG("BT_ADDR: can't open HCI socket");
         return res;
     }
 
@@ -39,7 +39,7 @@ static uint32_t bt_addr() {
     dl.dev_num = 1;
 
     if (ioctl(fd, HCIGETDEVLIST, (void *)&dl) < 0) {
-        DMESG("Failed to get HCI device list");
+        DMESG("BT_ADDR: can't get HCI device list");
         goto done;
     }
 
@@ -47,7 +47,7 @@ static uint32_t bt_addr() {
     di.dev_id = dl.dev_req[0].dev_id;
 
     if (ioctl(fd, HCIGETDEVINFO, (void *)&di) < 0) {
-        DMESG("Failed to get HCI device list");
+        DMESG("BT_ADDR: can't get HCI device info");
         goto done;
     }
 
