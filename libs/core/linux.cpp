@@ -397,6 +397,10 @@ static void runPoller(Thread *thr) {
     // note that this is run without the user mutex held - it should not modify any state!
     TValue prev = pxt::runAction0(query);
 
+    startUser();
+    pxt::runAction2(thr->act, prev, prev);
+    stopUser();
+
     while (true) {
         sleep_core_us(us);
         if (paniced)

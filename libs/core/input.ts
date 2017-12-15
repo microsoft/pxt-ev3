@@ -13,6 +13,7 @@ namespace sensors.internal {
 
         control.runInBackground(() => {
             let prev = query()
+            changeHandler(prev, prev)
             while (true) {
                 loops.pause(periodMs)
                 let curr = query()
@@ -183,7 +184,7 @@ namespace sensors.internal {
         Low = 3,
     }
 
-    export class ThresholdDetector {        
+    export class ThresholdDetector {
         public id: number;
         private min: number;
         private max: number;
