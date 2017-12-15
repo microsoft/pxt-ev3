@@ -182,11 +182,11 @@ namespace sensors {
     //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
     export const color1: ColorSensor = new ColorSensor(1)
     
-    //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
-    export const color3: ColorSensor = new ColorSensor(3)
-    
     //% whenUsed block="2" weight=90 fixedInstance jres=icons.port2
     export const color2: ColorSensor = new ColorSensor(2)
+
+    //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
+    export const color3: ColorSensor = new ColorSensor(3)
 
     //% whenUsed block="4" weight=90 fixedInstance jres=icons.port4
     export const color4: ColorSensor = new ColorSensor(4)
