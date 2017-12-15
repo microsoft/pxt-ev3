@@ -4,7 +4,7 @@ namespace pxsim.music {
         return incr(buf)
     }
 
-    export function stopSounds() {
+    export function stopAllSounds() {
         SoundMethods.stop()
     }
 }

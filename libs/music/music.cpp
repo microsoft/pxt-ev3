@@ -166,12 +166,12 @@ void playTone(int frequency, int ms) {
 /**
 * Play a tone through the speaker for some amount of time.
 */
-//% help=music/stop-sound
-//% blockId=music_stop_sounds block="stop all sounds"
+//% help=music/stop-all-sounds
+//% blockId=music_stop_all_sounds block="stop all sounds"
 //% parts="headphone"
 //% blockNamespace=music
 //% weight=76 blockGap=8
-void stopSounds() {
+void stopAllSounds() {
     if (currentSample) {
         samplePtr = currentSample->length;
     }
