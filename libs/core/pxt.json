@@ -10,6 +10,7 @@
         "linux.cpp",
         "mmap.cpp",
         "control.cpp",
+        "serialnumber.cpp",
         "buttons.ts",
         "png.cpp",
         "screen.cpp",
