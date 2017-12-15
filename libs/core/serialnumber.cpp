@@ -4,27 +4,26 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#define BTPROTO_HCI	1
-#define HCIGETDEVLIST	_IOR('H', 210, int)
-#define HCIGETDEVINFO	_IOR('H', 211, int)
+#define BTPROTO_HCI 1
+#define HCIGETDEVLIST _IOR('H', 210, int)
+#define HCIGETDEVINFO _IOR('H', 211, int)
 
 struct hci_dev_info {
-	uint16_t dev_id;
-	char  name[8];
-	uint8_t bdaddr[6];
+    uint16_t dev_id;
+    char name[8];
+    uint8_t bdaddr[6];
     uint32_t padding[32];
 };
 
 struct hci_dev_req {
-	uint16_t  dev_id;
-	uint32_t  dev_opt;
+    uint16_t dev_id;
+    uint32_t dev_opt;
 };
 
 struct hci_dev_list_req {
-	uint16_t  dev_num;
-	hci_dev_req dev_req[2];
+    uint16_t dev_num;
+    hci_dev_req dev_req[2];
 };
-
 
 static uint32_t bt_addr() {
     uint32_t res = -1;
