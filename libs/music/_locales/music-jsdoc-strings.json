@@ -26,6 +26,6 @@
   "music.setTempo|param|bpm": "The new tempo in beats per minute, eg: 120",
   "music.setVolume": "Set the output volume of the sound synthesizer.",
   "music.setVolume|param|volume": "the volume 0...256, eg: 128",
-  "music.stopSounds": "Play a tone through the speaker for some amount of time.",
+  "music.stopAllSounds": "Play a tone through the speaker for some amount of time.",
   "music.tempo": "Return the tempo in beats per minute (bpm).\nTempo is the speed (bpm = beats per minute) at which notes play. The larger the tempo value, the faster the notes will play."
 }

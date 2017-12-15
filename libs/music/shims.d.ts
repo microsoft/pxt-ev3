@@ -28,12 +28,12 @@ declare namespace music {
     /**
      * Play a tone through the speaker for some amount of time.
      */
-    //% help=music/stop-sound
-    //% blockId=music_stop_sounds block="stop all sounds"
+    //% help=music/stop-all-sounds
+    //% blockId=music_stop_all_sounds block="stop all sounds"
     //% parts="headphone"
     //% blockNamespace=music
-    //% weight=76 blockGap=8 shim=music::stopSounds
-    function stopSounds(): void;
+    //% weight=76 blockGap=8 shim=music::stopAllSounds
+    function stopAllSounds(): void;
 
     /** Makes a sound bound to a buffer in WAV format. */
     //% shim=music::fromWAV
