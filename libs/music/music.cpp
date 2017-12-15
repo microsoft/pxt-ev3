@@ -163,6 +163,21 @@ void playTone(int frequency, int ms) {
     sleep_ms(1);
 }
 
+/**
+* Play a tone through the speaker for some amount of time.
+*/
+//% help=music/stop-all-sounds
+//% blockId=music_stop_all_sounds block="stop all sounds"
+//% parts="headphone"
+//% blockNamespace=music
+//% weight=76 blockGap=8
+void stopAllSounds() {
+    if (currentSample) {
+        samplePtr = currentSample->length;
+    }
+    _stopSound();
+}
+
 /** Makes a sound bound to a buffer in WAV format. */
 //%
 Sound fromWAV(Buffer buf) {

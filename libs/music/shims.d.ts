@@ -25,6 +25,16 @@ declare namespace music {
     //% weight=76 blockGap=8 shim=music::playTone
     function playTone(frequency: int32, ms: int32): void;
 
+    /**
+     * Play a tone through the speaker for some amount of time.
+     */
+    //% help=music/stop-all-sounds
+    //% blockId=music_stop_all_sounds block="stop all sounds"
+    //% parts="headphone"
+    //% blockNamespace=music
+    //% weight=76 blockGap=8 shim=music::stopAllSounds
+    function stopAllSounds(): void;
+
     /** Makes a sound bound to a buffer in WAV format. */
     //% shim=music::fromWAV
     function fromWAV(buf: Buffer): Sound;
