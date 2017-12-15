@@ -4,3 +4,5 @@
 
 @invertedItemTextColor: @primaryColor;
 @transparentInvertedColor: @primaryColor;
+
+@borderRadius: 0px;
