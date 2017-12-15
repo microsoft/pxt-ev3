@@ -5,11 +5,13 @@ namespace brick {
 }
 
 
-//% color="#C8509B" weight=95
+//% color="#C8509B" weight=95 icon="\uf192"
+//% groups='["Ultrasonic Sensor", "Touch Sensor", "Color Sensor", "Infrared Sensor", "Remote Infrared Beacon", "Gyro Sensor"]'
 namespace sensors {
 }
 
 //% color="#A5CA18" weight=90 icon="\uf185"
+//% groups='["Motion", "Sensors", "Chassis"]'
 namespace motors {
 }
 
