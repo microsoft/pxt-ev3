@@ -513,9 +513,9 @@ namespace motors {
         writePWM(b);
     }
 
-    function stop(out: Output) {
+    function stop(out: Output, brake: boolean) {
         const b = mkCmd(out, DAL.opOutputStop, 1)
-        b.setNumber(NumberFormat.UInt8LE, 2, this._brake ? 1 : 0)
+        b.setNumber(NumberFormat.UInt8LE, 2, brake ? 1 : 0)
         writePWM(b);
     }
 
