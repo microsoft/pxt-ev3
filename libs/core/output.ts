@@ -200,7 +200,7 @@ namespace motors {
          */
         private stop() {
             this.__init();
-            stop(this._port);
+            stop(this._port, this._brake);
         }
 
         /**
@@ -340,7 +340,7 @@ namespace motors {
         setSpeed(speed: number) {
             speed = Math.clamp(speed >> 0, -100, 100);
             if (!speed) {
-                stop(this._ports);
+                stop(this._ports, this._brake);
                 return;
             }
             syncMotors(this._ports, {
@@ -377,7 +377,7 @@ namespace motors {
         moveSteering(steering: number, speed: number, value: number, unit: MoveUnit) {
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
-                stop(this._ports);
+                stop(this._ports, this._brake);
                 return;
             }
 
