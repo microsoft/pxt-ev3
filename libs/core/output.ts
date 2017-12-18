@@ -242,6 +242,9 @@ namespace motors {
             const b = mkCmd(this._port, DAL.opOutputSpeed, 1)
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
+            if (speed) {
+                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))    
+            }
         }
 
         private __move(steps: boolean, stepsOrTime: number, speed: number) {
