@@ -144,9 +144,9 @@ namespace motors {
         setReversed(reversed: boolean) {
             this.__init();
             const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, reversed ? -1 : 1);
+            b.setNumber(NumberFormat.Int8LE, 2, reversed ? 0 : 1);
             writePWM(b)
-        }        
+        }
 
         /**
          * Stops the motor(s).
@@ -242,7 +242,7 @@ namespace motors {
             if (!this._initialized) {
                 this._initialized = true;
                 // specify motor size on this port            
-                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
+                const b = mkCmd(outOffset(this._port), DAL.opOutputSetType, 1)
                 b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
                 writePWM(b)
             }
@@ -352,9 +352,13 @@ namespace motors {
         protected __init() {
             if (!this._initialized) {
                 this._initialized = true;
-                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
-                b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
-                writePWM(b)
+                for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                    if (this._port & (1 << i)) {
+                        const b = mkCmd(outOffset(1 << i), DAL.opOutputSetType, 1)
+                        b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
+                        writePWM(b)        
+                    }
+                }
             }
         }
 
@@ -389,6 +393,7 @@ namespace motors {
         //% inlineInputMode=inline
         //% group="Chassis"
         steer(steering: number, speed: number, value: number, unit: MoveUnit) {
+            this.__init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
                 stop(this._port, this._brake);
