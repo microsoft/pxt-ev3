@@ -68,6 +68,7 @@
   "motors|block": "motors",
   "output|block": "output",
   "screen|block": "screen",
+  "sensors|block": "sensors",
   "serial|block": "serial",
   "{id:category}Brick": "Brick",
   "{id:category}Control": "Control",

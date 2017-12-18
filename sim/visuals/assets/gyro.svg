@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37 62.5">
+  <defs>
+    <clipPath id="clip-path" transform="translate(-11.5 1.52)">
+      <path d="M21.71,61a8.91,8.91,0,0,1-2-.46H15.49a2,2,0,0,1-2-2h0V54h-.76a.76.76,0,0,1-.76-.76V7a.76.76,0,0,1,.76-.76h.76V2a2,2,0,0,1,2-2H28.14V.61h3.42V0H44.31a2,2,0,0,1,2,2h0V6.22h.91A.76.76,0,0,1,48,7h0V53.24a.76.76,0,0,1-.76.76h-.91v4.55a2,2,0,0,1-2,2H40.17c-.18.3-1.91.46-2.23.46Z" style="fill: none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="-438.91" y1="1403.05" x2="-438.91" y2="1402.05" gradientTransform="matrix(32.76, 0, 0, -5.01, 14410.48, 7079.21)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#3e3e3e"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-468.07" y1="2985.3" x2="-468.07" y2="2984.3" gradientTransform="matrix(20.61, 0, 0, -2.03, 9674.72, 6104.84)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="gray"/>
+    </linearGradient>
+  </defs>
+  <title>gyro</title>
+  <g style="isolation: isolate">
+    <g id="svg5788">
+      <g id="gyro">
+        <g id="gyro_total" data-name="gyro total">
+          <g style="clip-path: url(#clip-path)">
+            <g id="gyro_mask_total" data-name="gyro mask total">
+              <g id="gyro_box" data-name="gyro box">
+                <path id="gyro_sides" data-name="gyro sides" d="M12.76,6.22H47.19A.76.76,0,0,1,48,7V53.24a.76.76,0,0,1-.76.76H12.76a.76.76,0,0,1-.76-.76V7A.76.76,0,0,1,12.76,6.22Z" transform="translate(-11.5 1.52)" style="fill: #a8aaa8"/>
+                <rect id="gyro_grey_behind" data-name="gyro grey behind" x="15.52" y="2.13" width="5.76" height="15.77" style="fill: #9a9a9a"/>
+                <g>
+                  <image width="37" height="51" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAA0CAYAAADmI0o+AAAACXBIWXMAAAsSAAALEgHS3X78AAABDklEQVRYR+2ZwU3DQBBF36DcSBHcU0DKohZqoKZwJmkh5jwcNg62iRHfHkEO/0mWbXn99TyytKudyEzukU1/ERFb4AnYzo6epwPeM7OrytkARETQwp6BHRDz734jgQPwEhFv1OQcrhWjfeEO2KMHwleFSnKGYtCC+kNhOn51zsNPo/4Ti6lYTMViKhZTsZhKpdjS+fEm00l8Kf2Kgst5yVpsRIXYcC33ATxe7ldVrkIMxhWDlVJQJwYFMkMqf/5SLKZiMRWLqVhMxWIqFlOxmIrFVCymYjEVi6lYTMViKvcmdm2eTjdVcvjwjzkDJ1rPciTW0fqFULxz80uOwCtwzMyMvvW8sjNbQUeTOgN8AqpBM7JNqq/cAAAAAElFTkSuQmCC" style="opacity: 0.30000000000000004;mix-blend-mode: multiply"/>
+                  <path id="gyro_grey_large-2" data-name="gyro grey large-2" d="M15.49,0H28.15V16l3.42-.26V0H44.31a2,2,0,0,1,2,2h0V45.81a2,2,0,0,1-2,2H15.49a2,2,0,0,1-2-2h0V2a2,2,0,0,1,2-2Z" transform="translate(-11.5 1.52)" style="fill: #a8aaa8"/>
+                </g>
+                <g id="gyro_white" data-name="gyro white">
+                  <g id="gyro_white-2" data-name="gyro white-2">
+                    <path id="gyro_white_2" data-name="gyro white 2" d="M14.73,29.58H45.07a1.21,1.21,0,0,1,1.21,1.21h0V58.55a2,2,0,0,1-2,2H15.49a2,2,0,0,1-2-2h0V30.79A1.21,1.21,0,0,1,14.73,29.58Z" transform="translate(-11.5 1.52)" style="fill: #f1f1f1"/>
+                    <path id="gyro_white_1" data-name="gyro white 1" d="M13.52,55.52H46.28v3a2,2,0,0,1-2,2H15.49a2,2,0,0,1-2-2h0Z" transform="translate(-11.5 1.52)" style="opacity: 0.600000023841858;isolation: isolate;fill: url(#linear-gradient)"/>
+                  </g>
+                  <g id="gyro_white_small" data-name="gyro white small">
+                    <path d="M37.94,60.85H21.71a7.84,7.84,0,0,1-1.26-.24,3.14,3.14,0,0,1-1-.38l1.25-1a1.8,1.8,0,0,1,1.05-.36H37.94a1,1,0,0,1,.6.33l.16.15L40,60.49a2.47,2.47,0,0,1-.93.25A11.33,11.33,0,0,1,37.94,60.85Z" transform="translate(-11.5 1.52)" style="fill: url(#linear-gradient-2)"/>
+                    <path d="M37.94,60.73a9,9,0,0,0,1.85-.27L38.62,59.4l-.17-.14c-.18-.17-.34-.31-.51-.31H21.71a1.68,1.68,0,0,0-1,.34l-1.11.93a8.7,8.7,0,0,0,2.08.51H37.94m0,.25H21.71c-.34,0-2.46-.44-2.46-.78l1.33-1.1a1.88,1.88,0,0,1,1.13-.4H37.94c.33,0,.57.29.84.51l1.4,1.26C40.18,60.81,38.27,61,37.94,61Z" transform="translate(-11.5 1.52)" style="fill: #9a9a9a"/>
+                  </g>
+                </g>
+                <g id="gyro_red_elements" data-name="gyro red elements">
+                  <circle id="gyro_reddot" data-name="gyro reddot" cx="18.4" cy="18.97" r="3.03" style="fill: #d42715"/>
+                  <path id="gyro_arrow_2" data-name="gyro arrow 2" d="M21.92,23.36s-3.9-5.13-.76-10.77a9.59,9.59,0,0,0,.91.45c.65.37.74-.3.61-.75l-1.21-3.8-3.8,1.07a1.2,1.2,0,0,0-.45.15c-.2.12-.37.4,0,.61l1.06.6s-4.53,6.65,1.06,14.26C20.94,24,21.92,23.36,21.92,23.36Z" transform="translate(-11.5 1.52)" style="fill: #d42715"/>
+                  <path id="gyro_arrow1" data-name="gyro arrow1" d="M37.84,23.36s3.9-5.13.76-10.77a9.59,9.59,0,0,1-.91.45c-.64.37-.74-.3-.6-.75l1.21-3.8,3.79,1.07a1.31,1.31,0,0,1,.46.15c.2.12.36.4,0,.61l-1.07.6S46,17.57,40.42,25.18C38.83,24,37.84,23.36,37.84,23.36Z" transform="translate(-11.5 1.52)" style="fill: #d42715"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

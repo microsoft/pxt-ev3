@@ -79,7 +79,9 @@ namespace sensors {
         }
 
         _query() {
-            if (this.mode == ColorSensorMode.Color)
+            if (this.mode == ColorSensorMode.Color
+                || this.mode == ColorSensorMode.AmbientLightIntensity
+                || this.mode == ColorSensorMode.ReflectedLightIntensity)
                 return this.getNumber(NumberFormat.UInt8LE, 0)
             return 0
         }

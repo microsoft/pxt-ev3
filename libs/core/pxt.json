@@ -18,6 +18,7 @@
         "output.cpp",
         "output.ts",
         "core.ts",
+        "input.cpp",
         "input.ts",
         "shims.d.ts",
         "enums.d.ts",

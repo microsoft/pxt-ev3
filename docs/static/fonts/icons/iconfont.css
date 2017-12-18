@@ -1,0 +1,30 @@
+@font-face {
+	font-family: "iconfont";
+	src: url("iconfont.eot?e05611aaee246c1da118a83eaf515de9?#iefix") format("embedded-opentype"),
+url("iconfont.woff2?e05611aaee246c1da118a83eaf515de9") format("woff2"),
+url("iconfont.woff?e05611aaee246c1da118a83eaf515de9") format("woff");
+}
+
+.icon {
+	line-height: 1;
+}
+
+.icon:before {
+	font-family: iconfont !important;
+	font-style: normal;
+	font-weight: normal !important;
+	vertical-align: top;
+}
+
+.icon-ultrasonic:before {
+	content: "\f101";
+}
+.icon-color:before {
+	content: "\f102";
+}
+.icon-touch:before {
+	content: "\f103";
+}
+.icon-gyro:before {
+	content: "\f104";
+}

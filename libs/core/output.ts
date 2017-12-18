@@ -250,6 +250,11 @@ namespace motors {
         constructor(port: Output, large: boolean) {
             super(port, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
             this._large = large;
+            this.markUsed();
+        }
+
+        markUsed() {
+            motors.__motorUsed(this._port, this._large);
         }
 
         private __init() {
@@ -348,6 +353,11 @@ namespace motors {
 
         constructor(ports: Output) {
             super(ports, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
+            this.markUsed();
+        }
+
+        markUsed() {
+            motors.__motorUsed(this._port, true);
         }
 
         private __init() {
