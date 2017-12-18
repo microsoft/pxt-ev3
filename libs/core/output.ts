@@ -292,27 +292,15 @@ namespace motors {
         }
 
         /**
-         * Gets motor step count.
+         * Gets motor ration angle.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorCount block="`icons.motorLarge` %motor|count"
-        //% weight=71 blockGap=8
-        //% group="Sensors"
-        count(): number {
-            this.init();
-            return getMotorData(this._port).count;
-        }
-
-        /**
-         * Gets motor tacho count.
-         * @param motor the port which connects to the motor
-         */
-        //% blockId=motorTachoCount block="`icons.motorLarge` %motor|tacho count"
+        //% blockId=motorTachoCount block="`icons.motorLarge` %motor|angle"
         //% weight=70
         //% group="Sensors"
-        tachoCount(): number {
+        angle(): number {
             this.init();
-            return getMotorData(this._port).tachoCount;
+            return getMotorData(this._port).count;
         }
 
         /**
