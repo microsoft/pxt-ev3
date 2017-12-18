@@ -55,7 +55,6 @@
   "motors.Motor.move|param|speed": "the speed from ``100`` full forward to ``-100`` full backward, eg: 50",
   "motors.Motor.move|param|unit": "the meaning of the value",
   "motors.Motor.move|param|value": "the move quantity, eg: 2",
-  "motors.Motor.port": "Gets the port where this motor is connected",
   "motors.Motor.reset": "Resets the motor(s).",
   "motors.Motor.setBrake": "Sets the automatic brake on or off when the motor is off",
   "motors.Motor.setBrake|param|brake": "a value indicating if the motor should break when off",

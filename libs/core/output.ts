@@ -96,30 +96,30 @@ namespace motors {
     export class Motor extends control.Component {
         protected _port: Output;
         protected _brake: boolean;
-        
-        constructor(port: Output) {
+        private _initialized: boolean;
+        private _init: () => void;
+        private _setSpeed: (speed: number) => void;
+        private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
+
+        constructor(port: Output, init: () => void, setSpeed: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
             super();
             this._port = port;
             this._brake = false;
+            this._initialized = false;
+            this._init = init;
+            this._setSpeed = setSpeed;
+            this._move = move;
         }
 
         /**
          * Lazy initialization code
-         */        
-        protected __init() {
-
-        }
-
-        /**
-         * Gets the port where this motor is connected
          */
-        //%
-        //% group="Motion"
-        port(): Output {
-            this.__init();
-            return this._port;
+        protected init() {
+            if (!this._initialized) {
+                this._initialized = true;
+                this._init();
+            }
         }
-
 
         /**
          * Sets the automatic brake on or off when the motor is off
@@ -130,9 +130,9 @@ namespace motors {
         //% weight=60 blockGap=8
         //% group="Motion"
         setBrake(brake: boolean) {
-            this.__init();
+            this.init();
             this._brake = brake;
-        }     
+        }
 
         /** 
          * Reverses the motor polarity
@@ -142,18 +142,18 @@ namespace motors {
         //% weight=59
         //% group="Motion"
         setReversed(reversed: boolean) {
-            this.__init();
+            this.init();
             const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, reversed ? -1 : 1);
+            b.setNumber(NumberFormat.Int8LE, 2, reversed ? 0 : 1);
             writePWM(b)
-        }        
+        }
 
         /**
          * Stops the motor(s).
          */
         //%
         stop() {
-            this.__init();
+            this.init();
             stop(this._port, this._brake);
         }
 
@@ -162,7 +162,7 @@ namespace motors {
          */
         //%
         reset() {
-            this.__init();
+            this.init();
             reset(this._port);
         }
 
@@ -176,17 +176,14 @@ namespace motors {
         //% speed.min=-100 speed.max=100
         //% group="Motion"
         setSpeed(speed: number) {
-            this.__init();
+            this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) // always stop
                 this.stop();
             else
-                this.__setSpeed(speed);
+                this._setSpeed(speed);
         }
 
-        protected __setSpeed(speed: number) {
-        }      
-        
         /**
          * Moves the motor by a number of rotations, degress or seconds
          * @param value the move quantity, eg: 2
@@ -198,7 +195,7 @@ namespace motors {
         //% speed.min=-100 speed.max=100    
         //% group="Motion"
         move(value: number, unit: MoveUnit, speed: number) {
-            this.__init();
+            this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
                 this.stop();
@@ -221,20 +218,16 @@ namespace motors {
                     break;
             }
 
-            this.__move(useSteps, stepsOrTime, speed);
+            this._move(useSteps, stepsOrTime, speed);
         }
-
-        protected __move(steps: boolean, stepsOrTime: number, speed: number) {
-        }                
     }
-        
+
     //% fixedInstances
     export class SingleMotor extends Motor {
         private _large: boolean;
-        private _initialized: boolean;
 
         constructor(port: Output, large: boolean) {
-            super(port);
+            super(port, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
             this._large = large;
             this.markUsed();
         }
@@ -243,23 +236,23 @@ namespace motors {
             motors.__motorUsed(this._port, this._large);
         }
 
-        protected __init() {
-            if (!this._initialized) {
-                this._initialized = true;
-                // specify motor size on this port            
-                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
-                b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
-                writePWM(b)
-            }
-        }
-
-        protected __setSpeed(speed: number) {
-            const b = mkCmd(this._port, DAL.opOutputSpeed, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, speed)
+        private __init() {
+            // specify motor size on this port            
+            const b = mkCmd(outOffset(this._port), DAL.opOutputSetType, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
             writePWM(b)
         }
 
-        protected __move(steps: boolean, stepsOrTime: number, speed: number) {
+        private __setSpeed(speed: number) {
+            const b = mkCmd(this._port, DAL.opOutputSpeed, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, speed)
+            writePWM(b)
+            if (speed) {
+                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))    
+            }
+        }
+
+        private __move(steps: boolean, stepsOrTime: number, speed: number) {
             step(this._port, {
                 useSteps: steps,
                 step1: 0,
@@ -278,7 +271,7 @@ namespace motors {
         //% weight=72 blockGap=8
         //% group="Sensors"
         speed(): number {
-            this.__init();
+            this.init();
             return getMotorData(this._port).actualSpeed;
         }
 
@@ -290,7 +283,7 @@ namespace motors {
         //% weight=71 blockGap=8
         //% group="Sensors"
         count(): number {
-            this.__init();
+            this.init();
             return getMotorData(this._port).count;
         }
 
@@ -302,7 +295,7 @@ namespace motors {
         //% weight=70
         //% group="Sensors"
         tachoCount(): number {
-            this.__init();
+            this.init();
             return getMotorData(this._port).tachoCount;
         }
 
@@ -311,7 +304,7 @@ namespace motors {
          */
         //% group="Motion"
         clearCount() {
-            this.__init();
+            this.init();
             const b = mkCmd(this._port, DAL.opOutputClearCount, 0)
             writePWM(b)
             for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
@@ -348,10 +341,9 @@ namespace motors {
 
     //% fixedInstances
     export class SynchedMotorPair extends Motor {
-        private _initialized: boolean;
-        
+
         constructor(ports: Output) {
-            super(ports);
+            super(ports, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
             this.markUsed();
         }
 
@@ -359,16 +351,17 @@ namespace motors {
             motors.__motorUsed(this._port, true);
         }
 
-        protected __init() {
-            if (!this._initialized) {
-                this._initialized = true;
-                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
-                b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
-                writePWM(b)
+        private __init() {
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                if (this._port & (1 << i)) {
+                    const b = mkCmd(outOffset(1 << i), DAL.opOutputSetType, 1)
+                    b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
+                    writePWM(b)
+                }
             }
         }
 
-        protected __setSpeed(speed: number) {
+        private __setSpeed(speed: number) {
             syncMotors(this._port, {
                 speed: speed,
                 turnRatio: 0,
@@ -376,7 +369,7 @@ namespace motors {
             })
         }
 
-        protected __move(steps: boolean, stepsOrTime: number, speed: number) {
+        private __move(steps: boolean, stepsOrTime: number, speed: number) {
             syncMotors(this._port, {
                 useSteps: steps,
                 speed: speed,
@@ -384,7 +377,7 @@ namespace motors {
                 stepsOrTime: stepsOrTime,
                 useBrake: this._brake
             });
-        }        
+        }
 
         /**
          * Turns the motor and the follower motor by a number of rotations
@@ -399,6 +392,7 @@ namespace motors {
         //% inlineInputMode=inline
         //% group="Chassis"
         steer(steering: number, speed: number, value: number, unit: MoveUnit) {
+            this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
                 stop(this._port, this._brake);
