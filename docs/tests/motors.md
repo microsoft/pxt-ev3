@@ -6,6 +6,7 @@ let tachoC = 0;
 function assert(name: string, condition: boolean) {
     if (!condition) {
         errors.push(name)
+        brick.print("error:" + name, 0, 60)
     }
 }
 
@@ -24,6 +25,8 @@ function test(name: string, f: () => void, check?: () => void) {
     motors.largeC.clearCount()
     motors.largeB.setBrake(false)
     motors.largeC.setBrake(false)
+    motors.largeB.setReversed(false);
+    motors.largeC.setReversed(false);
     loops.pause(500);
     tachoB = motors.largeB.angle()
     tachoC = motors.largeC.angle()
@@ -33,9 +36,6 @@ function test(name: string, f: () => void, check?: () => void) {
     state("C", motors.largeC, 2)
     f();
     loops.pause(3000);
-    motors.largeB.setReversed(false);
-    motors.largeC.setReversed(false);
-    motors.mediumA.setReversed(false);
     state("B", motors.largeB, 3)
     state("C", motors.largeC, 4)
     if (check)
@@ -43,6 +43,15 @@ function test(name: string, f: () => void, check?: () => void) {
     motors.stopAllMotors();
     loops.pause(1000);
 }
+
+brick.buttonLeft.onEvent(ButtonEvent.Click, function () {
+    test("lgBC set speed 25", () => {
+        motors.largeBC.setSpeed(25)
+    }, () => {
+        assertClose("speedB", 25, motors.largeB.speed());
+        assertClose("speedC", 25, motors.largeC.speed());
+    });
+})
 
 brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
     test("lgB set speed 10", () => {
@@ -81,4 +90,5 @@ brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
     for (const error of errors)
         brick.print(`error: ${error}`, 0, l++ * 12)
 })
+
 ```
