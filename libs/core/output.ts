@@ -238,7 +238,7 @@ namespace motors {
          */
         //% blockId=motorPauseUntilRead block="%motor|pause until ready"
         //% group="Motion"
-        pauseUntilReady(timeOut: number = -1) {
+        pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
         }
     }
