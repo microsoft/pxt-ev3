@@ -144,9 +144,9 @@ namespace motors {
         setReversed(reversed: boolean) {
             this.__init();
             const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, reversed ? -1 : 1);
+            b.setNumber(NumberFormat.Int8LE, 2, reversed ? 0 : 1);
             writePWM(b)
-        }        
+        }
 
         /**
          * Stops the motor(s).
