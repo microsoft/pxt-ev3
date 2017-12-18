@@ -65,9 +65,9 @@ namespace motors {
         pwmMM.write(buf)
     }
 
-    function readPWM(buf: Buffer): void {
+    function readPWM(buf: Buffer): number {
         init()
-        pwmMM.read(buf);
+        return pwmMM.read(buf);
     }
 
     function mkCmd(out: Output, cmd: number, addSize: number) {
@@ -219,6 +219,18 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
+        }
+
+        /**
+         * Pauses the execution until the previous command finished.
+         * @param timeOut optional maximum pausing time in milliseconds
+         */
+        pauseUntilReady(timeOut: number = -1) {
+            pauseUntil(() => {
+                const r = readPWM(mkCmd(this._port, DAL.opOutputTest, 0))
+                // 0 = ready, 1 = busy
+                return r == 0;
+            }, timeOut);
         }
     }
 
