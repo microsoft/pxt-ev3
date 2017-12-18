@@ -398,7 +398,7 @@ namespace pxsim.visuals {
             let state = ev3board().screenState;
 
             const bBox = this.layoutView.getBrick().getScreenBBox();
-            if (bBox.width == 0) return;
+            if (!bBox || bBox.width == 0) return;
 
             const scale = bBox.width / SCREEN_WIDTH;
             this.screenScaledWidth = bBox.width;
