@@ -94,26 +94,20 @@ namespace motors {
 
     //% fixedInstances
     export class Motor extends control.Component {
-        private _port: Output;
-        private _large: boolean;
-
-        private _initialized: boolean;
-        private _brake: boolean;
-
-        constructor(port: Output, large: boolean) {
+        protected _port: Output;
+        protected _brake: boolean;
+        
+        constructor(port: Output) {
             super();
             this._port = port;
-            this._large = large;
             this._brake = false;
         }
 
-        private __init() {
-            if (!this._initialized) {
-                // specify motor size on this port            
-                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
-                b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
-                writePWM(b)
-            }
+        /**
+         * Lazy initialization code
+         */        
+        protected __init() {
+
         }
 
         /**
@@ -122,7 +116,54 @@ namespace motors {
         //%
         //% group="Motion"
         port(): Output {
+            this.__init();
             return this._port;
+        }
+
+
+        /**
+         * Sets the automatic brake on or off when the motor is off
+         * @param brake a value indicating if the motor should break when off
+         */
+        //% blockId=outputMotorSetBrakeMode block="set `icons.motorLarge` %motor|brake %brake"
+        //% brake.fieldEditor=toggleonoff
+        //% weight=60 blockGap=8
+        //% group="Motion"
+        setBrake(brake: boolean) {
+            this.__init();
+            this._brake = brake;
+        }     
+
+        /** 
+         * Reverses the motor polarity
+        */
+        //% blockId=motorSetReversed block="set `icons.motorLarge` %motor|reversed %reversed"
+        //% reversed.fieldEditor=toggleonoff
+        //% weight=59
+        //% group="Motion"
+        setReversed(reversed: boolean) {
+            this.__init();
+            const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, reversed ? -1 : 1);
+            writePWM(b)
+        }        
+
+        /**
+         * Stops the motor(s).
+         */
+        //%
+        stop() {
+            this.__init();
+            stop(this._port, this._brake);
+        }
+
+        /**
+         * Resets the motor(s).
+         */
+        //%
+        reset() {
+            this.__init();
+            reset(this._port);
         }
 
         /**
@@ -137,15 +178,15 @@ namespace motors {
         setSpeed(speed: number) {
             this.__init();
             speed = Math.clamp(-100, 100, speed >> 0);
-            if (!speed) { // always stop
+            if (!speed) // always stop
                 this.stop();
-            } else {
-                const b = mkCmd(this._port, DAL.opOutputSpeed, 1)
-                b.setNumber(NumberFormat.Int8LE, 2, speed)
-                writePWM(b)
-            }
+            else
+                this.__setSpeed(speed);
         }
 
+        protected __setSpeed(speed: number) {
+        }      
+        
         /**
          * Moves the motor by a number of rotations, degress or seconds
          * @param value the move quantity, eg: 2
@@ -157,17 +198,12 @@ namespace motors {
         //% speed.min=-100 speed.max=100    
         //% group="Motion"
         move(value: number, unit: MoveUnit, speed: number) {
-            this.output(value, unit, speed, 0);
-        }
-
-        private output(value: number, unit: MoveUnit, speed: number, turnRatio: number) {
             this.__init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
                 this.stop();
                 return;
             }
-            turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -185,49 +221,48 @@ namespace motors {
                     break;
             }
 
+            this.__move(useSteps, stepsOrTime, speed);
+        }
+
+        protected __move(steps: boolean, stepsOrTime: number, speed: number) {
+        }                
+    }
+        
+    //% fixedInstances
+    export class SingleMotor extends Motor {
+        private _large: boolean;
+        private _initialized: boolean;
+
+        constructor(port: Output, large: boolean) {
+            super(port);
+            this._large = large;
+        }
+
+        protected __init() {
+            if (!this._initialized) {
+                this._initialized = true;
+                // specify motor size on this port            
+                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
+                b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
+                writePWM(b)
+            }
+        }
+
+        protected __setSpeed(speed: number) {
+            const b = mkCmd(this._port, DAL.opOutputSpeed, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, speed)
+            writePWM(b)
+        }
+
+        protected __move(steps: boolean, stepsOrTime: number, speed: number) {
             step(this._port, {
-                useSteps: useSteps,
+                useSteps: steps,
                 step1: 0,
                 step2: stepsOrTime,
                 step3: 0,
                 speed: speed,
                 useBrake: this._brake
             })
-        }
-
-        /**
-         * Stops the motor
-         */
-        private stop() {
-            this.__init();
-            stop(this._port, this._brake);
-        }
-
-        /**
-         * Sets the automatic brake on or off when the motor is off
-         * @param brake a value indicating if the motor should break when off
-         */
-        //% blockId=outputMotorSetBrakeMode block="set `icons.motorLarge` %motor|brake %brake"
-        //% brake.fieldEditor=toggleonoff
-        //% weight=60 blockGap=8
-        //% group="Motion"
-        setBrake(brake: boolean) {
-            this.__init();
-            this._brake = brake;
-        }
-
-        /** 
-         * Reverses the motor polarity
-        */
-        //% blockId=motorSetReversed block="set `icons.motorLarge` %motor|reversed %reversed"
-        //% reversed.fieldEditor=toggleonoff
-        //% weight=59
-        //% group="Motion"
-        setReversed(reversed: boolean) {
-            this.__init();
-            const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, reversed ? -1 : 1);
-            writePWM(b)
         }
 
         /**
@@ -280,104 +315,83 @@ namespace motors {
                 }
             }
         }
-
-        /**
-         * Resets the motor.
-         */
-        //% blockId=motorReset block="reset `icons.motorLarge` %motor"
-        //% weight=20
-        //% group="Motion"
-        reset() {
-            this.__init();
-            reset(this._port);
-        }
     }
 
     //% whenUsed fixedInstance block="large A"
-    export const largeA = new Motor(Output.A, true);
+    export const largeA = new SingleMotor(Output.A, true);
 
     //% whenUsed fixedInstance block="large B"
-    export const largeB = new Motor(Output.B, true);
+    export const largeB = new SingleMotor(Output.B, true);
 
     //% whenUsed fixedInstance block="large C"
-    export const largeC = new Motor(Output.C, true);
+    export const largeC = new SingleMotor(Output.C, true);
 
     //% whenUsed fixedInstance block="large D"
-    export const largeD = new Motor(Output.D, true);
+    export const largeD = new SingleMotor(Output.D, true);
 
     //% whenUsed fixedInstance block="medium A"
-    export const mediumA = new Motor(Output.A, false);
+    export const mediumA = new SingleMotor(Output.A, false);
 
     //% whenUsed fixedInstance block="medium B"
-    export const mediumB = new Motor(Output.B, false);
+    export const mediumB = new SingleMotor(Output.B, false);
 
     //% whenUsed fixedInstance block="medium C"
-    export const mediumC = new Motor(Output.C, false);
+    export const mediumC = new SingleMotor(Output.C, false);
 
     //% whenUsed fixedInstance block="medium D"
-    export const mediumD = new Motor(Output.D, false);
+    export const mediumD = new SingleMotor(Output.D, false);
 
     //% fixedInstances
-    export class SynchedMotorPair extends control.Component {
-        private _ports: Output;
-        private _brake: boolean;
-
+    export class SynchedMotorPair extends Motor {
+        private _initialized: boolean;
+        
         constructor(ports: Output) {
-            super();
-            this._ports = ports;
-            this._brake = false;
+            super(ports);
         }
 
-        /**
-         * Sets the speed of the motor.
-         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         */
-        //% blockId=motorPairSetSpeed block="set speed of `icons.motorLarge` %motor|to %speed|%"
-        //% on.fieldEditor=toggleonoff
-        //% weight=99 blockGap=8
-        //% speed.min=-100 speed.max=100
-        //% group="Chassis"
-        setSpeed(speed: number) {
-            speed = Math.clamp(speed >> 0, -100, 100);
-            if (!speed) {
-                stop(this._ports, this._brake);
-                return;
+        protected __init() {
+            if (!this._initialized) {
+                this._initialized = true;
+                const b = mkCmd(this._port, DAL.opOutputSetType, 1)
+                b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
+                writePWM(b)
             }
-            syncMotors(this._ports, {
+        }
+
+        protected __setSpeed(speed: number) {
+            syncMotors(this._port, {
                 speed: speed,
                 turnRatio: 0,
                 useBrake: !!this._brake
             })
         }
 
-        /**
-         * Sets the automatic brake on or off when the motor is off
-         * @param brake a value indicating if the motor should break when off
-         */
-        //% blockId=motorPairSetBrakeMode block="set `icons.motorLarge` %chassis|brake %brake"
-        //% brake.fieldEditor=toggleonoff
-        //% weight=60 blockGap=8
-        //% group="Chassis"
-        setBrake(brake: boolean) {
-            this._brake = brake;
-        }
+        protected __move(steps: boolean, stepsOrTime: number, speed: number) {
+            syncMotors(this._port, {
+                useSteps: steps,
+                speed: speed,
+                turnRatio: 100, // same speed
+                stepsOrTime: stepsOrTime,
+                useBrake: this._brake
+            });
+        }        
 
         /**
          * Turns the motor and the follower motor by a number of rotations
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
-         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param steering the ratio of power sent to the follower motor, from ``-100`` to ``100``
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorPairTurn block="move steering %chassis|at %speed|%|steer %turnRadio|%|by %value|%unit"
+        //% blockId=motorPairTurn block="steer %chassis|%steering|%|at speed %speed|%|by %value|%unit"
         //% weight=9 blockGap=8
         //% steering.min=-100 steering=100
         //% inlineInputMode=inline
         //% group="Chassis"
-        moveSteering(steering: number, speed: number, value: number, unit: MoveUnit) {
+        steer(steering: number, speed: number, value: number, unit: MoveUnit) {
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
-                stop(this._ports, this._brake);
+                stop(this._port, this._brake);
                 return;
             }
 
@@ -399,7 +413,7 @@ namespace motors {
                     break;
             }
 
-            syncMotors(this._ports, {
+            syncMotors(this._port, {
                 useSteps: useSteps,
                 speed: speed,
                 turnRatio: turnRatio,
@@ -419,17 +433,17 @@ namespace motors {
          * @param speedLeft the speed on the left motor, eg: 50
          * @param speedRight the speed on the right motor, eg: 50
          */
-        //% blockId=motorPairTank block="move tank %chassis|left %speedLeft|%|right %speedRight|%|by %value|%unit"
+        //% blockId=motorPairTank block="tank %chassis|left %speedLeft|%|right %speedRight|%|by %value|%unit"
         //% weight=9 blockGap=8
         //% speedLeft.min=-100 speedLeft=100
         //% speedRight.min=-100 speedRight=100
         //% inlineInputMode=inline
         //% group="Chassis"
-        moveTank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
+        tank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
             speedLeft = Math.clamp(speedLeft >> 0, -100, 100);
             speedRight = Math.clamp(speedRight >> 0, -100, 100);
             const steering = (speedRight * 100 / speedLeft) >> 0;
-            this.moveSteering(speedLeft, steering, value, unit);
+            this.steer(speedLeft, steering, value, unit);
         }
     }
 
