@@ -30,8 +30,8 @@ enum MoveUnit {
     Rotations,
     //% block="degrees"
     Degrees,
-    //% block="seconds"
-    Seconds
+    //% block="milliseconds"
+    MilliSeconds
 }
 
 namespace motors {
