@@ -30,8 +30,8 @@ enum MoveUnit {
     Rotations,
     //% block="degrees"
     Degrees,
-    //% block="seconds"
-    Seconds
+    //% block="milliseconds"
+    MilliSeconds
 }
 
 namespace motors {
@@ -65,9 +65,9 @@ namespace motors {
         pwmMM.write(buf)
     }
 
-    function readPWM(buf: Buffer): void {
+    function readPWM(buf: Buffer): number {
         init()
-        pwmMM.read(buf);
+        return pwmMM.read(buf);
     }
 
     function mkCmd(out: Output, cmd: number, addSize: number) {
@@ -220,6 +220,27 @@ namespace motors {
 
             this._move(useSteps, stepsOrTime, speed);
         }
+
+        /**
+         * Returns a value indicating if the motor is still running a previous command.
+         */
+        //%
+        isReady(): boolean {
+            this.init();
+            const r = readPWM(mkCmd(this._port, DAL.opOutputTest, 0))
+            // 0 = ready, 1 = busy
+            return r == 0;
+        }
+
+        /**
+         * Pauses the execution until the previous command finished.
+         * @param timeOut optional maximum pausing time in milliseconds
+         */
+        //% blockId=motorPauseUntilRead block="%motor|pause until ready"
+        //% group="Motion"
+        pauseUntilReady(timeOut: number = -1) {
+            pauseUntil(() => this.isReady(), timeOut);
+        }
     }
 
     //% fixedInstances
@@ -248,7 +269,7 @@ namespace motors {
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
             if (speed) {
-                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))    
+                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))
             }
         }
 
@@ -276,27 +297,15 @@ namespace motors {
         }
 
         /**
-         * Gets motor step count.
+         * Gets motor ration angle.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorCount block="`icons.motorLarge` %motor|count"
-        //% weight=71 blockGap=8
-        //% group="Sensors"
-        count(): number {
-            this.init();
-            return getMotorData(this._port).count;
-        }
-
-        /**
-         * Gets motor tacho count.
-         * @param motor the port which connects to the motor
-         */
-        //% blockId=motorTachoCount block="`icons.motorLarge` %motor|tacho count"
+        //% blockId=motorTachoCount block="`icons.motorLarge` %motor|angle"
         //% weight=70
         //% group="Sensors"
-        tachoCount(): number {
+        angle(): number {
             this.init();
-            return getMotorData(this._port).tachoCount;
+            return getMotorData(this._port).count;
         }
 
         /**
