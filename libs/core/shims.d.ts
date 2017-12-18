@@ -120,5 +120,21 @@ declare namespace output {
     //% shim=output::createBuffer
     function createBuffer(size: int32): Buffer;
 }
+declare namespace motors {
+
+    /**
+     *  Mark a motor as used
+     */
+    //% shim=motors::__motorUsed
+    function __motorUsed(port: int32, large: boolean): void;
+}
+declare namespace sensors {
+
+    /**
+     *  Mark a sensor as used
+     */
+    //% shim=sensors::__sensorUsed
+    function __sensorUsed(port: int32, type: int32): void;
+}
 
 // Auto-generated. Do not edit. Really.

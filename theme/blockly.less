@@ -4,6 +4,20 @@
 
 @import 'blockly-core';
 
+/* Toolbox icons */
+
+/* Fonts for toolbox icons */
+@font-face {
+    font-family: 'legoIcons';
+    src: data-uri("../docs/static/fonts/icons/iconfont.woff2");
+}
+
+.blocklyFlyoutLabel:not(.blocklyFlyoutHeading) .blocklyFlyoutLabelIcon {
+    font-family: 'legoIcons';
+    fill: white;
+    font-size: 1.7rem;
+}
+
 /* Toolbox padding */
 .blocklyToolboxDiv, .monacoToolboxDiv {
     padding: 0.5rem;

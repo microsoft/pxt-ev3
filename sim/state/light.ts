@@ -12,7 +12,7 @@ namespace pxsim {
 namespace pxsim.output {
 
     export function setLights(pattern: number) {
-        const lightState = (board() as DalBoard).lightState;
+        const lightState = ev3board().getBrickNode().lightState;
         lightState.lightPattern = pattern;
         runtime.queueDisplayUpdate();
     }

@@ -1,0 +1,29 @@
+
+
+namespace pxsim.visuals {
+
+    export class CloseIconControl extends ControlView<PortNode> {
+        private closeGroup: SVGGElement;
+
+        getInnerView() {
+            this.closeGroup = svg.elt("g") as SVGGElement;
+            this.closeGroup.style.cursor = 'pointer';
+            const circleCloseWrapper = pxsim.svg.child(this.closeGroup, "g");
+            pxsim.svg.child(circleCloseWrapper, "circle", { 'cx': "16", 'cy': "16", 'r': "16", 'style': "fill: #fff" });
+            pxsim.svg.child(circleCloseWrapper, "circle", { 'cx': "16", 'cy': "16", 'r': "15", 'style': "fill: none;stroke: #a8aaa8;stroke-width: 2px" });
+            pxsim.svg.child(this.closeGroup, "rect", { 'x': "10", 'y': "16", 'width': "18", 'height': "2", 'transform': "translate(-9.46 17.41) rotate(-45)", 'style': "fill: #a8aaa8" });
+            pxsim.svg.child(this.closeGroup, "rect", { 'x': "18", 'y': "8", 'width': "2", 'height': "18", 'transform': "translate(-9.46 17.41) rotate(-45)", 'style': "fill: #a8aaa8" });
+
+            return this.closeGroup;
+        }
+
+        public getInnerHeight() {
+            return 32;
+        }
+
+        public getInnerWidth() {
+            return 32;
+        }
+    }
+
+}

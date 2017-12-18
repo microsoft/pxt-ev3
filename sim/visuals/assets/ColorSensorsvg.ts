@@ -1,0 +1,34 @@
+namespace pxsim {
+    export const COLOR_SENSOR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 33.22 34">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-448.15" y1="475.99" x2="-448.15" y2="475.83" gradientTransform="matrix(32.16, 0, 0, -33.37, 14429.08, 15914.64)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a8aaa8"/>
+      <stop offset="1" stop-color="#535453"/>
+    </linearGradient>
+  </defs>
+  <title>Color Sensor</title>
+  <g style="isolation: isolate">
+    <g id="svg41">
+      <g id="color_box" data-name="color box">
+        <g id="color_grey" data-name="color grey">
+          <path id="color_sideboxes" data-name="color sideboxes" d="M2.14,9.19H34a.7.7,0,0,1,.7.7V28a.7.7,0,0,1-.7.7H2.14a.7.7,0,0,1-.7-.7V9.89A.7.7,0,0,1,2.14,9.19Z" transform="translate(-1.44 -1.6)" style="fill: #a8aaa8"/>
+          <g id="color_bigbox-2" data-name="color bigbox-2">
+            <image width="33" height="34" transform="translate(0.06)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAjCAYAAADxG9hnAAAACXBIWXMAAAsSAAALEgHS3X78AAAAzUlEQVRYR+3YMU4DMRBG4W8Q5eYMUEMuw/3ScQDugkTPcoSsa4ZibYjcUMVQ+Ekjj+Tif7YrT2Sm/8BtayIisOCurtemYEXJzIzMFBEL7vGIJ7vMtVnxgje8q09zxAmvOONzQJ1r3gnH9jQLHuw3cmMMB3tewXIZGrVG8p056vS/MkV6pkjPFOmZIj1TpGeK9EyRninSM0V6pkjPFOmZIj2XIn81n0h+RAo+sNWNUbXV3NI+4Sueaz9iJNFouWu0iVFEHIwb0jQK1szcvgDqy2NNnOFs5AAAAABJRU5ErkJggg==" style="opacity: 0.30000000000000004;mix-blend-mode: multiply"/>
+            <path d="M5,3.33h26c1,0,1.78.57,1.78,1.27V32.77c0,.7-.8,1.27-1.78,1.27H5c-1,0-1.78-.57-1.78-1.27V4.6C3.25,3.9,4.05,3.33,5,3.33Z" transform="translate(-1.44 -1.6)" style="fill: url(#linear-gradient)"/>
+          </g>
+          <rect id="color_side_black_4" data-name="color side black 4" x="31.83" y="10.38" width="0.7" height="5.58"/>
+          <rect id="color_side_black_3" data-name="color side black 3" x="0.84" y="10.38" width="0.7" height="5.58"/>
+          <rect id="color_side_black_2" data-name="color side black 2" x="31.83" y="18.34" width="0.7" height="5.58"/>
+          <rect id="color_side_black1" data-name="color side black1" x="0.84" y="18.34" width="0.7" height="5.58"/>
+        </g>
+        <path id="color_red" data-name="color red" d="M11.63,23.43a6.32,6.32,0,0,1,.15-1.37,8.79,8.79,0,1,1,12.54,0,6.42,6.42,0,1,1-12.55,2.7,6.61,6.61,0,0,1-.15-1.33Z" transform="translate(-1.44 -1.6)" style="fill: #d42715"/>
+        <path id="color_black" data-name="color black" d="M13.11,23.43a4.89,4.89,0,0,1,.34-1.81,7.4,7.4,0,1,1,10.4-1.2,7.32,7.32,0,0,1-1.18,1.18,5,5,0,1,1-9.56,1.83Z" transform="translate(-1.44 -1.6)"/>
+        <g id="color_sensors" data-name="color sensors">
+          <circle id="color_sensor_white_big" data-name="color sensor white big" cx="16.61" cy="14.43" r="3.35" style="fill: #f1f1f1"/>
+          <circle id="color_sensor_white_small" data-name="color sensor white small" cx="16.61" cy="21.69" r="1.81" style="fill: #f1f1f1"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>`;
+}

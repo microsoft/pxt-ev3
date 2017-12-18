@@ -88,6 +88,9 @@
 
 @pageBackground: #fff;
 
+
+@inputPlaceholderColor: lighten(@inputColor, 80);
+
 /*******************************
          PXT Overrides
 *******************************/
@@ -117,8 +120,8 @@
    Background
 --------------------*/
 
-@simulatorBackground: #fcfbfa;
-@editorToolsBackground: #fcfbfa;
+@simulatorBackground: #fff; /*#fcfbfa; */
+@editorToolsBackground: #fff; /*#fcfbfa; */
 @blocklySvgColor: #ecf6fe;
 
 @homeScreenBackground: #EAEEEF;

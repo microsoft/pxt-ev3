@@ -5,3 +5,4 @@
 @invertedItemTextColor: @white;
 
 @border: none;
+@boxShadow: none;
