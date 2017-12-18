@@ -20,7 +20,7 @@
     "simulator": {
         "autoRun": true,
         "streams": true,
-        "aspectRatio": 0.67,
+        "aspectRatio": 0.5,
         "parts": false,
         "enableTrace": true,
         "boardDefinition": {
@@ -136,7 +136,9 @@
         },
         "monacoColors": {
             "editor.background": "#ecf6ff"
-        }
+        },
+        "simAnimationEnter": "horizontal flip in",
+        "simAnimationExit": "horizontal flip out"
     },
     "ignoreDocsErrors": true
 }

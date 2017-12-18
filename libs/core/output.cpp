@@ -20,3 +20,13 @@ void target_init() {
 }
 
 }
+
+namespace motors {
+
+/**
+ *  Mark a motor as used
+ */
+//%
+void __motorUsed(int port, bool large) {
+}
+}

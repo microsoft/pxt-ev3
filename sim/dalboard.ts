@@ -22,17 +22,7 @@ namespace pxsim {
         D13
     }
 
-    export class DalBoard extends CoreBoard implements
-        AccelerometerBoard,
-        CommonBoard,
-        // LightBoard,
-        LightSensorBoard,
-        MicrophoneBoard,
-        MusicBoard,
-        SlideSwitchBoard,
-        TemperatureBoard,
-        InfraredBoard,
-        CapTouchBoard {
+    export class EV3Board extends CoreBoard {
         // state & update logic for component services
         // neopixelState: CommonNeoPixelState;
         buttonState: EV3ButtonState;
@@ -44,80 +34,42 @@ namespace pxsim {
         edgeConnectorState: EdgeConnectorState;
         capacitiveSensorState: CapacitiveSensorState;
         accelerometerState: AccelerometerState;
-        audioState: AudioState;
         touchButtonState: TouchButtonState;
         irState: InfraredState;
-        lightState: EV3LightState;
-        screenState: EV3ScreenState;
 
         view: SVGSVGElement;
+
+        outputState: EV3OutputState;
+        analogState: EV3AnalogState;
+        uartState: EV3UArtState;
+        motorState: EV3MotorState;
+        screenState: EV3ScreenState;
+        audioState: AudioState;
+
+        inputNodes: SensorNode[] = [];
+        brickNode: BrickNode;
+        outputNodes: MotorNode[] = [];
+
+        private motorMap: pxt.Map<number> = {
+            0x01: 0,
+            0x02: 1,
+            0x04: 2,
+            0x08: 3
+        }
 
         constructor() {
             super()
 
             this.bus.setNotify(DAL.DEVICE_ID_NOTIFY, DAL.DEVICE_ID_NOTIFY_ONE);
 
-            //components
+            this.brickNode = new BrickNode();
 
-            this.builtinParts["buttons"] = this.buttonState = new EV3ButtonState();
-            this.builtinParts["light"] = this.lightState = new EV3LightState();
-            this.builtinParts["screen"] = this.screenState = new EV3ScreenState();
-            this.builtinParts["audio"] = this.audioState = new AudioState();
-
-            /*this.builtinParts["neopixel"] = this.neopixelState = new CommonNeoPixelState();
-            this.builtinParts["buttonpair"] = this.buttonState = new CommonButtonState();
-
-            this.builtinParts["switch"] = this.slideSwitchState = new SlideSwitchState();
-            this.builtinParts["lightsensor"] = this.lightSensorState = new AnalogSensorState(DAL.DEVICE_ID_LIGHT_SENSOR, 0, 255);
-            this.builtinParts["thermometer"] = this.thermometerState = new AnalogSensorState(DAL.DEVICE_ID_THERMOMETER, -5, 50);
-            this.builtinParts["soundsensor"] = this.microphoneState = new AnalogSensorState(DAL.DEVICE_ID_TOUCH_SENSOR + 1, 0, 255);
-            this.builtinParts["capacitivesensor"] = this.capacitiveSensorState = new CapacitiveSensorState({
-                0: 0,
-                1: 1,
-                2: 2,
-                3: 3,
-                6: 4,
-                9: 5,
-                10: 6,
-                12: 7
-            });
-
-            this.builtinParts["accelerometer"] = this.accelerometerState = new AccelerometerState(runtime);
-            this.builtinParts["edgeconnector"] = this.edgeConnectorState = new EdgeConnectorState({
-                pins: [
-                    pxsim.CPlayPinName.A0,
-                    pxsim.CPlayPinName.A1,
-                    pxsim.CPlayPinName.A2,
-                    pxsim.CPlayPinName.A3,
-                    pxsim.CPlayPinName.A4,
-                    pxsim.CPlayPinName.A5,
-                    pxsim.CPlayPinName.A6,
-                    pxsim.CPlayPinName.A7,
-                    pxsim.CPlayPinName.A8,
-                    pxsim.CPlayPinName.A9,
-                    pxsim.CPlayPinName.D4,
-                    pxsim.CPlayPinName.D5,
-                    pxsim.CPlayPinName.D6,
-                    pxsim.CPlayPinName.D7,
-                    pxsim.CPlayPinName.D8,
-                    pxsim.CPlayPinName.D13
-                ]
-            });
-            this.builtinParts["microservo"] = this.edgeConnectorState;
-
-            this.builtinVisuals["microservo"] = () => new visuals.MicroServoView();
-            this.builtinPartVisuals["microservo"] = (xy: visuals.Coord) => visuals.mkMicroServoPart(xy);
-            this.touchButtonState = new TouchButtonState([
-                pxsim.CPlayPinName.A1,
-                pxsim.CPlayPinName.A2,
-                pxsim.CPlayPinName.A3,
-                pxsim.CPlayPinName.A4,
-                pxsim.CPlayPinName.A5,
-                pxsim.CPlayPinName.A6,
-                pxsim.CPlayPinName.A7
-            ]);
-
-            this.builtinParts["ir"] = this.irState = new InfraredState();*/
+            this.outputState = new EV3OutputState();
+            this.analogState = new EV3AnalogState();
+            this.uartState = new EV3UArtState();
+            this.motorState = new EV3MotorState();
+            this.screenState = new EV3ScreenState();
+            this.audioState = new AudioState();
         }
 
         receiveMessage(msg: SimulatorMessage) {
@@ -182,16 +134,54 @@ namespace pxsim {
         getDefaultPitchPin() {
             return this.edgeConnectorState.getPin(CPlayPinName.D6);
         }
+
+        getBrickNode() {
+            return this.brickNode;
+        }
+
+        getMotor(port: number, large?: boolean): MotorNode[] {
+            if (port == 0xFF) return this.getMotors(); // Return all motors
+            const motorPort = this.motorMap[port];
+            if (this.outputNodes[motorPort] == undefined) {
+                this.outputNodes[motorPort] = large ?
+                    new LargeMotorNode(motorPort) : new MediumMotorNode(motorPort);
+            }
+            return [this.outputNodes[motorPort]];
+        }
+
+        getMotors() {
+            return this.outputNodes;
+        }
+
+        getSensor(port: number, type: number): SensorNode {
+            if (this.inputNodes[port] == undefined) {
+                switch (type) {
+                    case DAL.DEVICE_TYPE_GYRO: this.inputNodes[port] = new GyroSensorNode(port); break;
+                    case DAL.DEVICE_TYPE_COLOR: this.inputNodes[port] = new ColorSensorNode(port); break;
+                    case DAL.DEVICE_TYPE_TOUCH: this.inputNodes[port] = new TouchSensorNode(port); break;
+                    case DAL.DEVICE_TYPE_ULTRASONIC: this.inputNodes[port] = new UltrasonicSensorNode(port); break;
+                }
+            }
+            return this.inputNodes[port];
+        }
+
+        getInputNodes() {
+            return this.inputNodes;
+        }
     }
 
     export function initRuntimeWithDalBoard() {
         U.assert(!runtime.board);
-        let b = new DalBoard();
+        let b = new EV3Board();
         runtime.board = b;
         runtime.postError = (e) => {
             // TODO
             runtime.updateDisplay();
         }
+    }
+
+    export function ev3board(): EV3Board {
+        return runtime.board as EV3Board;
     }
 
     if (!pxsim.initCurrentRuntime) {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1"
+	 id="svg41" inkscape:export-filename="C:\gh\pxt-ev3\libs\core\jres\icons\colorSensor-icon.png" inkscape:export-xdpi="319.10471" inkscape:export-ydpi="319.10471" inkscape:version="0.91 r13725" sodipodi:docname="ultrasonic.svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20"
+	 style="enable-background:new 0 0 20 20;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<sodipodi:namedview  bordercolor="#666666" borderopacity="1" gridtolerance="10" guidetolerance="10" id="namedview43" inkscape:current-layer="svg41" inkscape:cx="8.3705223" inkscape:cy="14.117717" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-height="1005" inkscape:window-maximized="1" inkscape:window-width="1676" inkscape:window-x="4" inkscape:window-y="1" inkscape:zoom="10.001331" objecttolerance="10" pagecolor="#d51c1c" showgrid="false">
+	</sodipodi:namedview>
+<g id="WH-ultrasonic_1_" transform="matrix(0.45168588,0,0,0.45168588,1570.3489,3840.7479)">
+	<g id="Group_56_1_">
+		<path id="Subtraction_10_1_" inkscape:connector-curvature="0" class="st0" d="M-3447-8473.3h-15.1c2.7-1.7,4.3-4.7,4.3-7.9
+			c0-1.8-0.5-3.5-1.4-5s-2.2-2.6-3.7-3.4h16.8c-1.5,0.8-2.8,1.9-3.7,3.4s-1.4,3.2-1.4,5C-3451.3-8478-3449.7-8475-3447-8473.3
+			L-3447-8473.3L-3447-8473.3z"/>
+	</g>
+	<path id="Subtraction_8_1_" inkscape:connector-curvature="0" class="st0" d="M-3467.1-8472.1c-5,0-9.1-4.1-9.1-9.1
+		s4.1-9.1,9.1-9.1s9.1,4.1,9.1,9.1C-3458.1-8476.2-3462.1-8472.1-3467.1-8472.1z M-3467.1-8484.8c-2,0-3.6,1.6-3.6,3.6
+		s1.6,3.6,3.6,3.6s3.6-1.6,3.6-3.6S-3465.1-8484.8-3467.1-8484.8z"/>
+	<path id="Subtraction_9_1_" inkscape:connector-curvature="0" class="st0" d="M-3441.9-8472.1c-5,0-9.1-4.1-9.1-9.1
+		s4.1-9.1,9.1-9.1s9.1,4.1,9.1,9.1C-3432.9-8476.2-3436.9-8472.1-3441.9-8472.1z M-3441.9-8484.8c-2,0-3.6,1.6-3.6,3.6
+		s1.6,3.6,3.6,3.6s3.6-1.6,3.6-3.6S-3439.9-8484.8-3441.9-8484.8z"/>
+</g>
+</svg>

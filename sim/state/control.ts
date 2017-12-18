@@ -63,7 +63,6 @@ namespace pxsim.MMapMethods {
 
     export function write(m: MMap, data: Buffer): number {
         return m.impl.write(data)
-
     }
 
     export function read(m: MMap, data: Buffer): number {

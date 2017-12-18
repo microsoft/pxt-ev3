@@ -7,7 +7,6 @@ namespace pxsim {
 
 
     export class EV3ScreenState {
-        shouldUpdate: boolean;
         points: Uint8Array;
         constructor() {
             this.points = new Uint8Array(visuals.SCREEN_WIDTH * visuals.SCREEN_HEIGHT)
@@ -24,13 +23,13 @@ namespace pxsim {
 
         setPixel(x: number, y: number, v: number) {
             this.applyMode(OFF(x, y), v)
-            this.shouldUpdate = true;
+            runtime.queueDisplayUpdate();
         }
 
         clear() {
             for (let i = 0; i < this.points.length; ++i)
                 this.points[i] = 0;
-            this.shouldUpdate = true;
+            runtime.queueDisplayUpdate();
         }
 
         blitLineCore(x: number, y: number, w: number, buf: RefBuffer, mode: Draw, offset = 0) {
@@ -59,7 +58,7 @@ namespace pxsim {
                 }
             }
 
-            this.shouldUpdate = true;
+            runtime.queueDisplayUpdate();
         }
 
         clearLine(x: number, y: number, w: number) {
@@ -82,12 +81,12 @@ namespace pxsim.screen {
     function YY(v: number) { return v >> 16 }
 
     export function _setPixel(x: number, y: number, mode: Draw) {
-        const screenState = (board() as DalBoard).screenState;
+        const screenState = ev3board().screenState;
         screenState.setPixel(x, y, mode);
     }
 
     export function _blitLine(xw: number, y: number, buf: RefBuffer, mode: Draw) {
-        const screenState = (board() as DalBoard).screenState;
+        const screenState = ev3board().screenState;
         screenState.blitLineCore(XX(xw), y, YY(xw), buf, mode)
     }
 
@@ -99,7 +98,7 @@ namespace pxsim.screen {
         return ((x + 7) >> 3)
     }
     export function clear(): void {
-        const screenState = (board() as DalBoard).screenState;
+        const screenState = ev3board().screenState;
         screenState.clear()
     }
 
@@ -240,7 +239,7 @@ namespace pxsim.ImageMethods {
     }
 
     export function draw(buf: RefBuffer, x: number, y: number, mode: Draw): void {
-        const screenState = (board() as DalBoard).screenState;
+        const screenState = ev3board().screenState;
 
         if (!screen.isValidImage(buf))
             return;

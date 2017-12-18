@@ -142,6 +142,11 @@ namespace sensors.internal {
             this._port = port_ - 1
             init()
             sensorInfos[this._port].sensors.push(this)
+            this.markUsed();
+        }
+
+        markUsed() {
+            sensors.__sensorUsed(this._port, this._deviceType());
         }
 
         _activated() { }
