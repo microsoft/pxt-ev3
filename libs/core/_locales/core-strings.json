@@ -44,6 +44,7 @@
   "control.raiseEvent|block": "raise event|from %src|with value %value",
   "control|block": "control",
   "motors.Motor.move|block": "move `icons.motorLarge` %motor|for %value|%unit|at %speed|%",
+  "motors.Motor.pauseUntilReady|block": "%motor|pause until ready",
   "motors.Motor.setBrake|block": "set `icons.motorLarge` %motor|brake %brake",
   "motors.Motor.setReversed|block": "set `icons.motorLarge` %motor|reversed %reversed",
   "motors.Motor.setSpeed|block": "set speed of `icons.motorLarge` %motor|to %speed|%",

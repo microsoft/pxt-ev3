@@ -51,6 +51,7 @@
   "control.raiseEvent": "Announce that an event happened to registered handlers.",
   "control.raiseEvent|param|src": "ID of the Component that generated the event",
   "control.raiseEvent|param|value": "Component specific code indicating the cause of the event.",
+  "motors.Motor.isReady": "Returns a value indicating if the motor is still running a previous command.",
   "motors.Motor.move": "Moves the motor by a number of rotations, degress or seconds",
   "motors.Motor.move|param|speed": "the speed from ``100`` full forward to ``-100`` full backward, eg: 50",
   "motors.Motor.move|param|unit": "the meaning of the value",

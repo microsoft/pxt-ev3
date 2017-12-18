@@ -222,15 +222,24 @@ namespace motors {
         }
 
         /**
+         * Returns a value indicating if the motor is still running a previous command.
+         */
+        //%
+        isReady(): boolean {
+            this.init();
+            const r = readPWM(mkCmd(this._port, DAL.opOutputTest, 0))
+            // 0 = ready, 1 = busy
+            return r == 0;
+        }
+
+        /**
          * Pauses the execution until the previous command finished.
          * @param timeOut optional maximum pausing time in milliseconds
          */
+        //% blockId=motorPauseUntilRead block="%motor|pause until ready"
+        //% group="Motion"
         pauseUntilReady(timeOut: number = -1) {
-            pauseUntil(() => {
-                const r = readPWM(mkCmd(this._port, DAL.opOutputTest, 0))
-                // 0 = ready, 1 = busy
-                return r == 0;
-            }, timeOut);
+            pauseUntil(() => this.isReady(), timeOut);
         }
     }
 
@@ -255,7 +264,7 @@ namespace motors {
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
             if (speed) {
-                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))    
+                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))
             }
         }
 
