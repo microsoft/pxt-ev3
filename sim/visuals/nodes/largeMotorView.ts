@@ -18,36 +18,10 @@ namespace pxsim.visuals {
             if (this.lastMotorAnimationId) cancelAnimationFrame(this.lastMotorAnimationId);
 
             if (!speed) return;
-            this.playMotorAnimation(motorState);
+            this.setMotorAngle(motorState.getAngle());
         }
 
-        private playMotorAnimation(state: MotorNode) {
-            // Max medium motor RPM is 170 according to http://www.cs.scranton.edu/~bi/2015s-html/cs358/EV3-Motor-Guide.docx
-            const rotationsPerMinute = 170; // 170 rpm at speed 100
-            const rotationsPerSecond = rotationsPerMinute / 60;
-            const fps = MOTOR_ROTATION_FPS;
-            const rotationsPerFrame = rotationsPerSecond / fps;
-            let now;
-            let then = Date.now();
-            let interval = 1000 / fps;
-            let delta;
-            let that = this;
-            function draw() {
-                that.lastMotorAnimationId = requestAnimationFrame(draw);
-                now = Date.now();
-                delta = now - then;
-                if (delta > interval) {
-                    then = now - (delta % interval);
-                    that.playMotorAnimationStep(state.angle);
-                    const rotations = state.getSpeed() / 100 * rotationsPerFrame;
-                    const angle = rotations * 360;
-                    state.angle += angle;
-                }
-            }
-            draw();
-        }
-
-        private playMotorAnimationStep(angle: number) {
+        private setMotorAngle(angle: number) {
             const holeEl = this.content.getElementById(this.normalizeId(LargeMotorView.ROTATING_ECLIPSE_ID))
             const width = 34;
             const height = 34;

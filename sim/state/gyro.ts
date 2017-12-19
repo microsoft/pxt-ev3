@@ -22,20 +22,14 @@ namespace pxsim {
         setAngle(angle: number) {
             if (this.angle != angle) {
                 this.angle = angle;
-                this.changed = true;
-                this.valueChanged = true;
-
-                runtime.queueDisplayUpdate();
+                this.setChangedState();
             }
         }
 
         setRate(rate: number) {
             if (this.rate != rate) {
                 this.rate = rate;
-                this.changed = true;
-                this.valueChanged = true;
-
-                runtime.queueDisplayUpdate();
+                this.setChangedState();
             }
         }
 

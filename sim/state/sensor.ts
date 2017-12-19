@@ -43,6 +43,11 @@ namespace pxsim {
             this.valueChanged = false;
             return res;
         }
+
+        setChangedState() {
+            this.changed = true;
+            this.valueChanged = false;
+        }
     }
 
     export class AnalogSensorNode extends SensorNode {
