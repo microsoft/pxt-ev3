@@ -140,6 +140,12 @@ namespace pxsim.visuals {
                 this.board.updateSubscribers.push(() => this.updateState());
                 this.updateState();
             }
+
+            Runtime.messagePosted = (msg) => {
+                switch (msg.type || "") {
+                    case "status": if ((msg as pxsim.SimulatorStateMessage).state == "killed") this.kill(); break;
+                }
+            }
         }
 
         public getView(): SVGAndSize<SVGSVGElement> {
@@ -350,6 +356,10 @@ namespace pxsim.visuals {
             this.screenCanvasTemp.style.display = 'none';
         }
 
+        private kill() {
+            if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
+        }
+
         private lastAnimationId: number;
         public updateState() {
             if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
@@ -372,7 +382,7 @@ namespace pxsim.visuals {
         }
 
         private updateStateStep() {
-            console.log("update state step");
+            const selected = this.layoutView.getSelected();
             const inputNodes = ev3board().getInputNodes();
             inputNodes.forEach((node, index) => {
                 if (!node.didChange()) return;
@@ -398,7 +408,6 @@ namespace pxsim.visuals {
                 }
             });
 
-            const selected = this.layoutView.getSelected();
             if (selected && (selected.getId() !== this.selectedNode || selected.getPort() !== this.selectedPort)) {
                 this.selectedNode = selected.getId();
                 this.selectedPort = selected.getPort();
@@ -409,16 +418,17 @@ namespace pxsim.visuals {
                     this.controlGroup.addView(control);
                 }
                 this.closeIconView.setVisible(true);
+                this.resize();
             } else if (!selected) {
                 this.controlGroup.clear();
                 this.controlView = undefined;
                 this.selectedNode = undefined;
                 this.selectedPort = undefined;
                 this.closeIconView.setVisible(false);
+                this.resize();
             }
 
             this.updateScreenStep();
-            //this.resize();
         }
 
         private updateScreenStep() {

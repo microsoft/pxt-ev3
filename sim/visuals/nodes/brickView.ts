@@ -35,10 +35,6 @@ namespace pxsim.visuals {
             return false;
         }
 
-        public shouldUpdateState() {
-            return true;
-        }
-
         public updateState() {
             this.updateLight();
         }

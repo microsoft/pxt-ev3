@@ -61,10 +61,6 @@ namespace pxsim.visuals {
             }
         }
 
-        public shouldUpdateState() {
-            return true;
-        }
-
         public updateState() {
         }
 
@@ -179,22 +175,7 @@ namespace pxsim.visuals {
         public setSelected(selected: boolean) { }
 
         protected getView() {
-            if (!this.rendered) {
-                this.subscribe();
-            }
             return super.getView();
-        }
-
-        protected onBoardStateChanged() {
-            // To be implemented by sub class
-        }
-
-        protected subscribe() {
-            board().updateSubscribers.push(() => {
-                if (this.state.didChange()) {
-                    this.onBoardStateChanged();
-                }
-            });
         }
     }
 

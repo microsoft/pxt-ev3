@@ -78,7 +78,7 @@ namespace pxsim.visuals {
             return this.getInnerHeight() * 0.6;
         }
 
-        onBoardStateChanged() {
+        updateState() {
             if (!this.isVisible) {
                 return;
             }
@@ -91,7 +91,6 @@ namespace pxsim.visuals {
         onComponentVisible() {
             super.onComponentVisible();
             this.isVisible = true;
-            this.onBoardStateChanged();
         }
 
         onComponentHidden() {
