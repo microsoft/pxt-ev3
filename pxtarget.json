@@ -53,8 +53,10 @@
     "serial": {
       "vendorId": "0x0694",
       "productId": "0x0005",
-      "rawHID": true
-    },
+      "rawHID": true,
+      "useEditor": true,
+      "log": true
+  },
     "runtime": {
         "mathBlocks": true,
         "loopsBlocks": true,

@@ -23,15 +23,11 @@ namespace tests {
             // clear state
             this.reset();
 
-            console.log(`${this.name}`)
+            console.log(`# ${this.name}`)
             this.handler()
 
             // ensure clean state after test
             this.reset();
-
-            // report on errors
-            if (this.errors.length > 0)
-                console.log(` X ${this.name}`)
         }
     }
 
@@ -75,7 +71,7 @@ namespace tests {
     //% blockId=testAssert block="assert %message|%condition"
     export function assert(message: string, condition: boolean) {
         if (!condition) {
-            console.log(`! ${message || ''}`)
+            console.log(` X ${message || ''}`)
             if (_currentTest)
                 _currentTest.errors.push(message);
         }
