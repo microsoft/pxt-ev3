@@ -223,8 +223,8 @@ namespace brick {
         for(let i = 0; i < datas.length; ++i) {
             const x = i * 52;
             const data = datas[i];
-            print(`${data.actualSpeed}%`, x, 0)
-            print(`${data.count}>`, x, brick.LINE_HEIGHT)
+            print(`${data.actualSpeed}%`, x, brick.LINE_HEIGHT)
+            print(`${data.count}>`, x, 2 * brick.LINE_HEIGHT)
         }
 
         // sensors
@@ -232,7 +232,7 @@ namespace brick {
         for(let i =0; i < sis.length; ++i) {
             const si = sis[i];
             const x = (si.port() - 1) * 52;
-            print(`${si._query()}`, x, 8 * brick.LINE_HEIGHT)
+            print(`${si._query()}`, x, 9 * brick.LINE_HEIGHT)
         }
     }
 }
