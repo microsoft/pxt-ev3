@@ -1,94 +1,47 @@
 ```typescript
-let errors: string[] = [];
-let tachoB = 0;
-let tachoC = 0;
-
-function assert(name: string, condition: boolean) {
-    if (!condition) {
-        errors.push(name)
-        brick.print("error:" + name, 0, 60)
-    }
-}
-
-function assertClose(name: string, expected: number, actual: number, tolerance = 5) {
-    const diff = Math.abs(expected - actual);
-    assert(name + ` ${expected}vs${actual}`, diff < tolerance);
-}
-
-function state(name: string, motor: motors.SingleMotor, line: number) {
-    brick.print(`${name}: ${motor.speed()}%,${motor.angle()}deg`, 0, 12 * line)
-}
-
-function test(name: string, f: () => void, check?: () => void) {
-    motors.stopAllMotors();
-    motors.largeB.clearCount()
-    motors.largeC.clearCount()
-    motors.largeB.setBrake(false)
-    motors.largeC.setBrake(false)
-    motors.largeB.setReversed(false);
-    motors.largeC.setReversed(false);
-    loops.pause(500);
-    tachoB = motors.largeB.angle()
-    tachoC = motors.largeC.angle()
-    brick.clearScreen()
-    brick.print(name, 0, 0)
-    state("B", motors.largeB, 1)
-    state("C", motors.largeC, 2)
-    f();
-    loops.pause(3000);
-    state("B", motors.largeB, 3)
-    state("C", motors.largeC, 4)
-    if (check)
-        check()
-    motors.stopAllMotors();
-    loops.pause(1000);
-}
-
-brick.buttonLeft.onEvent(ButtonEvent.Click, function () {
-    test("lgBC set speed 25", () => {
-        motors.largeBC.setSpeed(25)
-    }, () => {
-        assertClose("speedB", 25, motors.largeB.speed());
-        assertClose("speedC", 25, motors.largeC.speed());
-    });
+tests.test("lgB set speed 10", () => {
+    motors.largeB.setSpeed(10);
+    loops.pause(100)
+    tests.assertClose("speedB", 10, motors.largeB.speed(), 2)
+});
+tests.test("lgB set speed 25 (reversed)", () => {
+    motors.largeB.setReversed(true)
+    motors.largeB.setSpeed(25)
+    loops.pause(100)
+    tests.assertClose("speedB", -25, motors.largeB.speed(), 2)
+});
+tests.test("lgBC set speed 5", () => {
+    motors.largeBC.setSpeed(5)
+    loops.pause(100)
+    tests.assertClose("speedB", 5, motors.largeB.speed(), 1);
+    tests.assertClose("speedC", 5, motors.largeC.speed(), 1);
+});
+tests.test("lgBC steer 50% 2x", () => {
+    motors.largeBC.setBrake(true)
+    motors.largeBC.steer(50, 50, 1, MoveUnit.Rotations)
+    loops.pause(1000)
+    tests.assertClose("largeB", 360, motors.largeB.angle(), 5)
+    motors.largeBC.setBrake(false)
 })
-
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
-    test("lgB set speed 10", () => {
-        motors.largeB.setSpeed(10)
-    }, () => assertClose("speedB", 10, motors.largeB.speed()));
-    test("lgB set speed 25 (reversed)", () => {
-        motors.largeB.setReversed(true)
-        motors.largeB.setSpeed(25)
-    }, () => assertClose("speedB", -25, motors.largeB.speed()));
-    test("lgBC set speed 5", () => {
-        motors.largeBC.setSpeed(5)
-    }, () => {
-        assertClose("speedB", 5, motors.largeB.speed());
-        assertClose("speedC", 5, motors.largeC.speed());
-    });
-    test("lgBC steer 50% 2x", () => {
-        motors.largeBC.setBrake(true)
-        motors.largeBC.steer(50, 50, 2, MoveUnit.Rotations)
-    }, () => assertClose("largeB", 720, motors.largeB.angle()));
-    test("lgBC steer 50% 500deg", () => {
-        motors.largeBC.setBrake(true)
-        motors.largeBC.steer(50, 50, 500, MoveUnit.Degrees)
-    }, () => assertClose("largeB", 500, motors.largeB.angle()));
-    test("lgBC steer 50% 2s", () => {
-        motors.largeBC.setBrake(true)
-        motors.largeBC.steer(50, 50, 2000, MoveUnit.MilliSeconds)
-    })
-    test("lgBC tank 50% 720deg", () => {
-        motors.largeBC.setBrake(true)
-        motors.largeBC.tank(50, 50, 720, MoveUnit.Degrees)
-    }, () => assertClose("largeB", 720, motors.largeB.angle()));
-
-    brick.clearScreen()
-    brick.print(`${errors.length} errors`, 0, 0)
-    let l = 1;
-    for (const error of errors)
-        brick.print(`error: ${error}`, 0, l++ * 12)
+tests.test("lgBC steer 50% 500deg", () => {
+    motors.largeBC.setBrake(true)
+    motors.largeBC.steer(50, 50, 135, MoveUnit.Degrees)
+    loops.pause(1000)
+    tests.assertClose("largeB", 135, motors.largeB.angle(), 5)
+});
+tests.test("lgBC steer 50% 2s", () => {
+    motors.largeBC.setBrake(true)
+    motors.largeBC.steer(50, 50, 500, MoveUnit.MilliSeconds)
+    loops.pause(1000)
 })
+tests.test("lgBC tank 50% 720deg", () => {
+    motors.largeBC.setBrake(true)
+    motors.largeBC.tank(50, 50, 180, MoveUnit.Degrees)
+    loops.pause(1000)
+    tests.assertClose("largeB", 180, motors.largeB.angle(), 5)
+});
+```
 
+```package
+tests
 ```

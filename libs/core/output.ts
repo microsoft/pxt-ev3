@@ -53,32 +53,45 @@ namespace motors {
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
         if (!motorMM) control.fail("no motor file")
 
-        resetMotors()
+        resetAllMotors()
 
-        let buf = output.createBuffer(1)
+        const buf = output.createBuffer(1)
         buf[0] = DAL.opProgramStart
         writePWM(buf)
     }
-
-    function writePWM(buf: Buffer): void {
+    
+    /**
+     * Sends a command to the motors device
+     * @param buf the command buffer
+     */
+    //%
+    export function writePWM(buf: Buffer): void {
         init()
         pwmMM.write(buf)
     }
 
-    function readPWM(buf: Buffer): number {
+    /**
+     * Sends and receives a message from the motors device
+     * @param buf message buffer
+     */
+    //%
+    export function readPWM(buf: Buffer): number {
         init()
         return pwmMM.read(buf);
     }
 
-    function mkCmd(out: Output, cmd: number, addSize: number) {
+    /**
+     * Allocates a message buffer
+     * @param out ports
+     * @param cmd command id
+     * @param addSize required additional bytes
+     */
+    //%
+    export function mkCmd(out: Output, cmd: number, addSize: number) {
         const b = output.createBuffer(2 + addSize)
         b.setNumber(NumberFormat.UInt8LE, 0, cmd)
         b.setNumber(NumberFormat.UInt8LE, 1, out)
         return b
-    }
-
-    function resetMotors() {
-        reset(Output.ALL)
     }
 
     /**
@@ -90,6 +103,14 @@ namespace motors {
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b)
+    }
+
+    /**
+     * Resets all motors
+     */
+    //% group="Motion"
+    export function resetAllMotors() {
+        reset(Output.ALL)
     }
 
     //% fixedInstances
