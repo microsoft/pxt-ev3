@@ -1,10 +1,10 @@
 {
-  "sensors.GyroSensor.angle|block": "`icons.gyroSensor` %sensor|angle",
-  "sensors.GyroSensor.rate|block": "`icons.gyroSensor` %sensor|rotation rate",
-  "sensors.gyro1|block": "1",
-  "sensors.gyro2|block": "2",
-  "sensors.gyro3|block": "3",
-  "sensors.gyro4|block": "4",
+  "sensors.GyroSensor.angle|block": "%sensor|angle",
+  "sensors.GyroSensor.rate|block": "%sensor|rotation rate",
+  "sensors.gyro1|block": "gyro 1",
+  "sensors.gyro2|block": "gyro 2",
+  "sensors.gyro3|block": "gyro 3",
+  "sensors.gyro4|block": "gyro 4",
   "{id:category}Sensors": "Sensors",
   "{id:group}Gyro Sensor": "Gyro Sensor"
 }

@@ -24,11 +24,9 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=input/gyro/angle
-        //% block="`icons.gyroSensor` %sensor|angle"
+        //% block="%sensor|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8
         //% group="Gyro Sensor"
@@ -42,11 +40,9 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=input/gyro/rate
-        //% block="`icons.gyroSensor` %sensor|rotation rate"
+        //% block="%sensor|rotation rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Gyro Sensor"
@@ -56,15 +52,15 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="1" jres=icons.port1
+    //% fixedInstance whenUsed block="gyro 1" jres=icons.port1
     export const gyro1: GyroSensor = new GyroSensor(1)
 
-    //% fixedInstance whenUsed block="2" weight=95 jres=icons.port2
+    //% fixedInstance whenUsed block="gyro 2" weight=95 jres=icons.port2
     export const gyro2: GyroSensor = new GyroSensor(2)
 
-    //% fixedInstance whenUsed block="3" jres=icons.port3
+    //% fixedInstance whenUsed block="gyro 3" jres=icons.port3
     export const gyro3: GyroSensor = new GyroSensor(3)
 
-    //% fixedInstance whenUsed block="4" jres=icons.port4
+    //% fixedInstance whenUsed block="gyro 4" jres=icons.port4
     export const gyro4: GyroSensor = new GyroSensor(4)
 }

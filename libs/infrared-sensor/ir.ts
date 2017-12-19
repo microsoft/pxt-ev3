@@ -93,7 +93,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/is-pressed
-        //% block="`icons.infraredSensor` %button|is pressed"
+        //% block="%button|is pressed"
         //% blockId=remoteButtonIsPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -108,7 +108,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/was-pressed
-        //% block="`icons.infraredSensor` %button|was pressed"
+        //% block="%button|was pressed"
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -125,7 +125,7 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=input/remote-infrared-beacon/on-event
-        //% blockId=remotebuttonEvent block="on `icons.infraredSensor` %button|%event"
+        //% blockId=remotebuttonEvent block="on %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
@@ -189,11 +189,9 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=input/infrared/on
-        //% block="on `icons.infraredSensor` %sensor|%event"
+        //% block="on %sensor|%event"
         //% blockId=infraredOn
         //% parts="infraredsensor"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
@@ -205,11 +203,9 @@ namespace sensors {
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="pause until `icons.infraredSensor` %sensor| %event"
+        //% block="pause until %sensor| %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
@@ -222,11 +218,9 @@ namespace sensors {
          * @param sensor the infrared sensor
          */
         //% help=input/infrared/proximity
-        //% block="`icons.infraredSensor` %sensor|proximity"
+        //% block="%sensor|proximity"
         //% blockId=infraredGetProximity
         //% parts="infrared"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8   
         //% group="Infrared Sensor"     
@@ -240,11 +234,9 @@ namespace sensors {
          * @param sensor the infrared sensor
          */
         //% help=input/infrared/remote-command
-        //% block="`icons.infraredSensor` %sensor|remote command"
+        //% block="%sensor|remote command"
         //% blockId=infraredGetRemoteCommand
         //% parts="infrared"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=65 blockGap=8        
         //% group="Infrared Sensor"     
@@ -260,16 +252,16 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="1" jres=icons.port1
+    //% fixedInstance whenUsed block="infrared 1" jres=icons.port1
     export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
 
-    //% fixedInstance whenUsed block="2" jres=icons.port2
+    //% fixedInstance whenUsed block="infrared 2" jres=icons.port2
     export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
 
-    //% fixedInstance whenUsed block="3" jres=icons.port3
+    //% fixedInstance whenUsed block="infrared 3" jres=icons.port3
     export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
 
-    //% fixedInstance whenUsed block="4" jres=icons.port4
+    //% fixedInstance whenUsed block="infrared 4" jres=icons.port4
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
 

@@ -159,7 +159,7 @@ namespace motors {
          * Sets the automatic brake on or off when the motor is off
          * @param brake a value indicating if the motor should break when off
          */
-        //% blockId=outputMotorSetBrakeMode block="set `icons.motorLarge` %motor|brake %brake"
+        //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake"
         //% brake.fieldEditor=toggleonoff
         //% weight=60 blockGap=8
         //% group="Motion"
@@ -171,7 +171,7 @@ namespace motors {
         /** 
          * Reverses the motor polarity
         */
-        //% blockId=motorSetReversed block="set `icons.motorLarge` %motor|reversed %reversed"
+        //% blockId=motorSetReversed block="set %motor|reversed %reversed"
         //% reversed.fieldEditor=toggleonoff
         //% weight=59
         //% group="Motion"
@@ -204,7 +204,7 @@ namespace motors {
          * Sets the speed of the motor.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorSetSpeed block="set speed of `icons.motorLarge` %motor|to %speed|%"
+        //% blockId=motorSetSpeed block="set speed of %motor|to %speed|%"
         //% on.fieldEditor=toggleonoff
         //% weight=99 blockGap=8
         //% speed.min=-100 speed.max=100
@@ -224,7 +224,7 @@ namespace motors {
          * @param unit the meaning of the value
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorMove block="move `icons.motorLarge` %motor|for %value|%unit|at %speed|%"
+        //% blockId=motorMove block="move %motor|for %value|%unit|at %speed|%"
         //% weight=98 blockGap=8
         //% speed.min=-100 speed.max=100    
         //% group="Motion"
@@ -322,7 +322,7 @@ namespace motors {
          * Gets motor actual speed.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorSpeed block="`icons.motorLarge` %motor|speed"
+        //% blockId=motorSpeed block="%motor|speed"
         //% weight=72 blockGap=8
         //% group="Sensors"
         speed(): number {
@@ -334,7 +334,7 @@ namespace motors {
          * Gets motor ration angle.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorTachoCount block="`icons.motorLarge` %motor|angle"
+        //% blockId=motorTachoCount block="%motor|angle"
         //% weight=70
         //% group="Sensors"
         angle(): number {
