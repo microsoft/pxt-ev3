@@ -4,7 +4,7 @@ namespace pxsim {
     export class UltrasonicSensorNode extends UartSensorNode {
         id = NodeType.UltrasonicSensor;
 
-        private distance: number = 50;
+        private distance: number = 127; // in cm
 
         constructor(port: number) {
             super(port);
@@ -25,7 +25,7 @@ namespace pxsim {
         }
 
         getValue() {
-            return this.distance;
+            return this.distance * 10; // convert to 0.1 cm
         }
     }
 }

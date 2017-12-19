@@ -83,8 +83,8 @@ namespace pxsim.visuals {
                 return;
             }
             const node = this.state;
-            const percentage = node.getValue();
-            const y = this.getContentHeight() * percentage / 100;
+            const percentage = node.getValue() / 10; /* convert back to cm */
+            const y = this.getContentHeight() * percentage / this.getMax();
             this.slider.setAttribute("transform", `translate(0, ${y - DistanceSliderControl.SLIDER_HANDLE_HEIGHT / 2})`);
         }
 
@@ -104,7 +104,15 @@ namespace pxsim.visuals {
             let t = Math.max(0, Math.min(1, (this.getTopPadding() + height + this.top / this.scaleFactor - cur.y / this.scaleFactor) / height))
 
             const state = this.state;
-            state.setDistance((1 - t) * (100));
+            state.setDistance((1 - t) * (this.getMax()));
+        }
+
+        private getMin() {
+            return 0;
+        }
+
+        private getMax() {
+            return 255;
         }
 
         private getGradientDefinition(): LinearGradientDefinition {
