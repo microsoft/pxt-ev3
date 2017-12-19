@@ -36,6 +36,7 @@
   "brick.buttonUp|block": "up",
   "brick.clearScreen|block": "`icons.brickDisplay` clear screen",
   "brick.lightPattern|block": "%pattern",
+  "brick.printPorts|block": "print ports",
   "brick.print|block": "`icons.brickDisplay` print %text| at x: %x| y: %y",
   "brick.setPixel|block": "`icons.brickDisplay` set pixel %on| at x: %x| y: %y",
   "brick.setStatusLight|block": "set `icons.brickButtons` to %pattern=led_pattern",
