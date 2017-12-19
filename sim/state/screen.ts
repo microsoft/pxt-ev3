@@ -7,6 +7,7 @@ namespace pxsim {
 
 
     export class EV3ScreenState {
+        changed: boolean
         points: Uint8Array;
         constructor() {
             this.points = new Uint8Array(visuals.SCREEN_WIDTH * visuals.SCREEN_HEIGHT)
@@ -23,13 +24,13 @@ namespace pxsim {
 
         setPixel(x: number, y: number, v: number) {
             this.applyMode(OFF(x, y), v)
-            runtime.queueDisplayUpdate();
+            this.changed = true;
         }
 
         clear() {
             for (let i = 0; i < this.points.length; ++i)
                 this.points[i] = 0;
-            runtime.queueDisplayUpdate();
+            this.changed = true;
         }
 
         blitLineCore(x: number, y: number, w: number, buf: RefBuffer, mode: Draw, offset = 0) {
@@ -58,7 +59,7 @@ namespace pxsim {
                 }
             }
 
-            runtime.queueDisplayUpdate();
+            this.changed = true;
         }
 
         clearLine(x: number, y: number, w: number) {
@@ -71,6 +72,12 @@ namespace pxsim {
                 }
                 off++
             }
+        }
+
+        didChange() {
+            const res = this.changed;
+            this.changed = false;
+            return res;
         }
     }
 }

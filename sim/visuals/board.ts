@@ -136,6 +136,10 @@ namespace pxsim.visuals {
                 this.board.updateSubscribers.push(() => this.updateState());
                 this.updateState();
             }
+            let that = this;
+             window.setInterval(function(){		
+                 that.updateScreen();
+             }, 30);
         }
 
         public getView(): SVGAndSize<SVGSVGElement> {
@@ -169,7 +173,6 @@ namespace pxsim.visuals {
 
         public updateState() {
             this.updateVisibleNodes();
-            this.updateScreen();
         }
 
         private updateVisibleNodes() {
@@ -396,6 +399,7 @@ namespace pxsim.visuals {
 
         private updateScreen() {
             let state = ev3board().screenState;
+            if (!state.didChange()) return;
 
             const bBox = this.layoutView.getBrick().getScreenBBox();
             if (!bBox || bBox.width == 0) return;
