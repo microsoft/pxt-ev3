@@ -112,7 +112,7 @@ namespace pxsim.visuals {
         }
 
         private getMax() {
-            return 255;
+            return 250; //cm
         }
 
         private getGradientDefinition(): LinearGradientDefinition {
