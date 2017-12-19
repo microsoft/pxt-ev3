@@ -75,9 +75,9 @@ namespace motors {
      * @param buf message buffer
      */
     //%
-    export function readPWM(buf: Buffer): number {
+    export function readPWM(buf: Buffer): void {
         init()
-        return pwmMM.read(buf);
+        pwmMM.read(buf);
     }
 
     /**
@@ -261,9 +261,16 @@ namespace motors {
         //%
         isReady(): boolean {
             this.init();
-            const r = readPWM(mkCmd(this._port, DAL.opOutputTest, 0))
-            // 0 = ready, 1 = busy
-            return r == 0;
+            const buf = mkCmd(this._port, DAL.opOutputTest, 2);
+            readPWM(buf)
+            const flags = buf.getNumber(NumberFormat.UInt8LE, 2);
+            // TODO: FIX with ~ support
+            for(let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const flag = 1 << i;
+                if ((this._port & flag) && (flags & flag))
+                    return false;
+            }
+            return true;
         }
 
         /**
@@ -529,8 +536,8 @@ namespace motors {
     export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {
-        let b = mkCmd(out, DAL.opOutputReset, 0)
-        writePWM(b)
+        writePWM(mkCmd(out, DAL.opOutputReset, 0))
+        writePWM(mkCmd(out, DAL.opOutputClearCount, 0))
     }
 
     function outOffset(out: Output) {

@@ -67,8 +67,8 @@ namespace console.screen {
         if (!lines) {
             lines = [];
             console.addListener(log);
-            brick.buttonUp.onEvent(ButtonEvent.Click, () => scroll(1))
-            brick.buttonDown.onEvent(ButtonEvent.Click, () => scroll(-1))                
+            brick.buttonUp.onEvent(ButtonEvent.Click, () => scroll(-1))
+            brick.buttonDown.onEvent(ButtonEvent.Click, () => scroll(1))                
         }
     }
 

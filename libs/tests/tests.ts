@@ -23,8 +23,11 @@ namespace tests {
             // clear state
             this.reset();
 
-            console.log(`# ${this.name}`)
+            console.log(`> ${this.name}`)
             this.handler()
+
+            if (this.errors.length)
+                console.log('')
 
             // ensure clean state after test
             this.reset();
@@ -39,13 +42,15 @@ namespace tests {
 
         const start = control.millis();
         console.sendToScreen();
-        console.log(`${_tests.length} tests`)
+        console.log(`${_tests.length} tests found`)
+        console.log(` `)
         for (let i = 0; i < _tests.length; ++i) {
             const t = _currentTest = _tests[i];
             t.run();
             _currentTest = undefined;
         }
-        console.log(`${_tests.map(t => t.errors.length).reduce((p, c) => p + c, 0)} X, ${Math.ceil((control.millis() - start) / 1000)}s`)
+        console.log(` `)
+        console.log(`${_tests.length} tests, ${_tests.map(t => t.errors.length).reduce((p, c) => p + c, 0)} errs in ${Math.ceil((control.millis() - start) / 1000)}s`)
     }
 
     /**
@@ -71,7 +76,7 @@ namespace tests {
     //% blockId=testAssert block="assert %message|%condition"
     export function assert(message: string, condition: boolean) {
         if (!condition) {
-            console.log(` X ${message || ''}`)
+            console.log(`!!! ${message || ''}`)
             if (_currentTest)
                 _currentTest.errors.push(message);
         }
