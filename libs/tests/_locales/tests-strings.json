@@ -1,0 +1,6 @@
+{
+  "tests.assert|block": "assert %message|%condition",
+  "tests.test|block": "test %name",
+  "tests|block": "tests",
+  "{id:category}Tests": "Tests"
+}
