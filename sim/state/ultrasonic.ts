@@ -17,10 +17,7 @@ namespace pxsim {
         setDistance(distance: number) {
             if (this.distance != distance) {
                 this.distance = distance;
-                this.changed = true;
-                this.valueChanged = true;
-
-                runtime.queueDisplayUpdate();
+                this.setChangedState();
             }
         }
 

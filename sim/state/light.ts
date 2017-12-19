@@ -12,8 +12,9 @@ namespace pxsim {
 namespace pxsim.output {
 
     export function setLights(pattern: number) {
-        const lightState = ev3board().getBrickNode().lightState;
+        const brickState = ev3board().getBrickNode();
+        const lightState = brickState.lightState;
         lightState.lightPattern = pattern;
-        runtime.queueDisplayUpdate();
+        brickState.setChangedState();
     }
 }

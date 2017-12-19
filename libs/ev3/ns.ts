@@ -24,7 +24,7 @@ namespace music {
 
 }
 
-//% color="#48150C"
+//% color="#5F3109"
 namespace control {
 
 }

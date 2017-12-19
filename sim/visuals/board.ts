@@ -1,5 +1,9 @@
 /// <reference path="./layoutView.ts" />
 
+namespace pxsim {
+    export const GAME_LOOP_FPS = 32;
+}
+
 namespace pxsim.visuals {
 
     const EV3_STYLE = `
@@ -136,10 +140,6 @@ namespace pxsim.visuals {
                 this.board.updateSubscribers.push(() => this.updateState());
                 this.updateState();
             }
-            let that = this;
-             window.setInterval(function(){		
-                 that.updateScreen();
-             }, 30);
         }
 
         public getView(): SVGAndSize<SVGSVGElement> {
@@ -171,53 +171,6 @@ namespace pxsim.visuals {
             this.layoutView.updateTheme(theme);
         }
 
-        public updateState() {
-            this.updateVisibleNodes();
-        }
-
-        private updateVisibleNodes() {
-            const inputNodes = ev3board().getInputNodes();
-            inputNodes.forEach((node, index) => {
-                const view = this.getDisplayViewForNode(node.id, index);
-                if (view) {
-                    this.layoutView.setInput(index, view);
-                    view.updateState();
-                }
-            });
-
-            this.getDisplayViewForNode(ev3board().getBrickNode().id, -1).updateState();
-
-            const outputNodes = ev3board().getMotors();
-            outputNodes.forEach((node, index) => {
-                const view = this.getDisplayViewForNode(node.id, index);
-                if (view) {
-                    this.layoutView.setOutput(index, view);
-                    view.updateState();
-                }
-            });
-
-            const selected = this.layoutView.getSelected();
-            if (selected && (selected.getId() !== this.selectedNode || selected.getPort() !== this.selectedPort)) {
-                this.selectedNode = selected.getId();
-                this.selectedPort = selected.getPort();
-                this.controlGroup.clear();
-                const control = this.getControlForNode(this.selectedNode, selected.getPort());
-                if (control) {
-                    this.controlView = control;
-                    this.controlGroup.addView(control);
-                }
-                this.closeIconView.setVisible(true);
-            } else if (!selected) {
-                this.controlGroup.clear();
-                this.controlView = undefined;
-                this.selectedNode = undefined;
-                this.selectedPort = undefined;
-                this.closeIconView.setVisible(false);
-            }
-
-            this.resize();
-        }
-
         public resize() {
             const bounds = this.element.getBoundingClientRect();
             this.width = bounds.width;
@@ -245,7 +198,7 @@ namespace pxsim.visuals {
                 this.controlView.translate(controlCoords.x, controlCoords.y);
             }
 
-            this.updateScreen();
+            //this.updateScreen();
         }
 
         private getControlForNode(id: NodeType, port: number) {
@@ -358,7 +311,7 @@ namespace pxsim.visuals {
             this.closeIconView.setVisible(false);
 
             this.resize();
-            this.updateState();
+            //this.updateState();
 
             // Add Screen canvas to board
             this.buildScreenCanvas();
@@ -397,7 +350,78 @@ namespace pxsim.visuals {
             this.screenCanvasTemp.style.display = 'none';
         }
 
-        private updateScreen() {
+        private lastAnimationId: number;
+        public updateState() {
+            if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
+            const fps = GAME_LOOP_FPS;
+            let now;
+            let then = Date.now();
+            let interval = 1000 / fps;
+            let delta;
+            let that = this;
+            function loop() {
+                that.lastAnimationId = requestAnimationFrame(loop);
+                now = Date.now();
+                delta = now - then;
+                if (delta > interval) {
+                    then = now - (delta % interval);
+                    that.updateStateStep();
+                }
+            }
+            loop();
+        }
+
+        private updateStateStep() {
+            console.log("update state step");
+            const inputNodes = ev3board().getInputNodes();
+            inputNodes.forEach((node, index) => {
+                if (!node.didChange()) return;
+                const view = this.getDisplayViewForNode(node.id, index);
+                if (view) {
+                    this.layoutView.setInput(index, view);
+                    view.updateState();
+                }
+            });
+
+            const brickNode = ev3board().getBrickNode();
+            if (brickNode.didChange()) {
+                this.getDisplayViewForNode(ev3board().getBrickNode().id, -1).updateState();
+            }
+
+            const outputNodes = ev3board().getMotors();
+            outputNodes.forEach((node, index) => {
+                if (!node.didChange()) return;
+                const view = this.getDisplayViewForNode(node.id, index);
+                if (view) {
+                    this.layoutView.setOutput(index, view);
+                    view.updateState();
+                }
+            });
+
+            const selected = this.layoutView.getSelected();
+            if (selected && (selected.getId() !== this.selectedNode || selected.getPort() !== this.selectedPort)) {
+                this.selectedNode = selected.getId();
+                this.selectedPort = selected.getPort();
+                this.controlGroup.clear();
+                const control = this.getControlForNode(this.selectedNode, selected.getPort());
+                if (control) {
+                    this.controlView = control;
+                    this.controlGroup.addView(control);
+                }
+                this.closeIconView.setVisible(true);
+            } else if (!selected) {
+                this.controlGroup.clear();
+                this.controlView = undefined;
+                this.selectedNode = undefined;
+                this.selectedPort = undefined;
+                this.closeIconView.setVisible(false);
+            }
+
+            this.updateScreenStep();
+            //this.resize();
+        }
+
+        private updateScreenStep() {
             let state = ev3board().screenState;
             if (!state.didChange()) return;
 

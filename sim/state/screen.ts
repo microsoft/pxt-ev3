@@ -7,7 +7,7 @@ namespace pxsim {
 
 
     export class EV3ScreenState {
-        changed: boolean
+        changed: boolean = true;
         points: Uint8Array;
         constructor() {
             this.points = new Uint8Array(visuals.SCREEN_WIDTH * visuals.SCREEN_HEIGHT)

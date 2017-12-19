@@ -10,7 +10,7 @@
 @emSize      : 14px;
 @fontSize    : 13px;
 
-@primaryColor: @red;
+@primaryColor: @blue;
 @secondaryColor: @yellow;
 
 @teal:#08415C;
@@ -88,6 +88,8 @@
 
 @pageBackground: #fff;
 
+@positiveColor: @blue;
+@defaultBorderRadius: 0px;
 
 @inputPlaceholderColor: lighten(@inputColor, 80);
 

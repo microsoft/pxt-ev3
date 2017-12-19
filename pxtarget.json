@@ -132,10 +132,10 @@
             "logic": "#1E5AA8",
             "math": "#9DC3F7",
             "variables": "#B40000",
-            "text": "#F0890A",
+            "text": "#FCAC00",
             "advanced": "#969696",
-            "functions": "#064597",
-            "arrays": "#890058"
+            "functions": "#19325A",
+            "arrays": "#901F76"
         },
         "monacoColors": {
             "editor.background": "#ecf6ff"

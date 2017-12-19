@@ -32,5 +32,9 @@ namespace pxsim {
             this.changed = false;
             return res;
         }
+
+        setChangedState() {
+            this.changed = true;
+        }
     }
 }

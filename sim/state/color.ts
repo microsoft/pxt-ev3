@@ -34,9 +34,6 @@ namespace pxsim {
             this.color = color;
             this.changed = true;
             this.valueChanged = true;
-
-            runtime.queueDisplayUpdate();
-
         }
 
         getValue() {
