@@ -166,6 +166,23 @@ namespace sensors {
         }
 
         /**
+         * Waits for the given color to be detected
+         * @param color the color to detect
+         */
+        //% help=sensors/color-sensor/pause-for-light
+        //% block="pause %sensor|for %mode|light %condition"
+        //% blockId=colorPauseForLight
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% weight=88 blockGap=8
+        //% group="Color Sensor"
+        pauseForLight(mode: LightIntensityMode, condition: LightCondition) {
+            this.setMode(<ColorSensorMode><number>mode)
+            if (this.thresholdDetector.state != <number>condition)
+                control.waitForEvent(this._id, <number>condition)
+        }
+
+        /**
          * Measures the ambient or reflected light value from 0 (darkest) to 100 (brightest).
          * @param sensor the color sensor port
          */
@@ -174,7 +191,7 @@ namespace sensors {
         //% blockId=colorLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% weight=88
+        //% weight=87
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.setMode(<ColorSensorMode><number>mode)
