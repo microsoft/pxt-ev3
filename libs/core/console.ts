@@ -66,7 +66,7 @@ namespace console.screen {
     export function attach() {
         if (!lines) {
             lines = [];
-            console.addListener(console.screen.log);
+            console.addListener(log);
             brick.buttonUp.onEvent(ButtonEvent.Click, () => scroll(1))
             brick.buttonDown.onEvent(ButtonEvent.Click, () => scroll(-1))                
         }
