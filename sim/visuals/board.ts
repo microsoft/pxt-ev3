@@ -400,12 +400,12 @@ namespace pxsim.visuals {
             const bBox = this.layoutView.getBrick().getScreenBBox();
             if (!bBox || bBox.width == 0) return;
 
-            const scale = bBox.width / SCREEN_WIDTH;
-            this.screenScaledWidth = bBox.width;
+            const scale = (bBox.width - 4) / SCREEN_WIDTH;
+            this.screenScaledWidth = (bBox.width - 4);
             this.screenScaledHeight = this.screenScaledWidth / SCREEN_WIDTH * SCREEN_HEIGHT;
 
-            this.screenCanvas.style.top = `${bBox.top}px`;
-            this.screenCanvas.style.left = `${bBox.left}px`;
+            this.screenCanvas.style.top = `${bBox.top + 2}px`;
+            this.screenCanvas.style.left = `${bBox.left + 2}px`;
             this.screenCanvas.width = this.screenScaledWidth;
             this.screenCanvas.height = this.screenScaledHeight;
 
