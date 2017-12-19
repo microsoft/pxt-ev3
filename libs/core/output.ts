@@ -59,7 +59,7 @@ namespace motors {
         buf[0] = DAL.opProgramStart
         writePWM(buf)
     }
-    
+
     /**
      * Sends a command to the motors device
      * @param buf the command buffer
@@ -94,6 +94,17 @@ namespace motors {
         return b
     }
 
+    function outputToName(out: Output): string {
+        let r = "";
+        for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+            if (out & (1 << i)) {
+                if (r.length > 0) r += "+";
+                r += "ABCD"[i];
+            }
+        }
+        return r;
+    }
+
     /**
      * Stops all motors
      */
@@ -114,8 +125,9 @@ namespace motors {
     }
 
     //% fixedInstances
-    export class Motor extends control.Component {
+    export class MotorBase extends control.Component {
         protected _port: Output;
+        protected _portName: string;
         protected _brake: boolean;
         private _initialized: boolean;
         private _init: () => void;
@@ -125,6 +137,7 @@ namespace motors {
         constructor(port: Output, init: () => void, setSpeed: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
             super();
             this._port = port;
+            this._portName = outputToName(this._port);
             this._brake = false;
             this._initialized = false;
             this._init = init;
@@ -265,7 +278,7 @@ namespace motors {
     }
 
     //% fixedInstances
-    export class SingleMotor extends Motor {
+    export class Motor extends MotorBase {
         private _large: boolean;
 
         constructor(port: Output, large: boolean) {
@@ -343,34 +356,42 @@ namespace motors {
                 }
             }
         }
+
+        /**
+         * Returns the status of the motor
+         */
+        //%
+        toString(): string {
+            return `${this._large ? "" : "M"}${this._portName} ${this.speed()}% ${this.angle()}>`;
+        }
     }
 
     //% whenUsed fixedInstance block="large A"
-    export const largeA = new SingleMotor(Output.A, true);
+    export const largeA = new Motor(Output.A, true);
 
     //% whenUsed fixedInstance block="large B"
-    export const largeB = new SingleMotor(Output.B, true);
+    export const largeB = new Motor(Output.B, true);
 
     //% whenUsed fixedInstance block="large C"
-    export const largeC = new SingleMotor(Output.C, true);
+    export const largeC = new Motor(Output.C, true);
 
     //% whenUsed fixedInstance block="large D"
-    export const largeD = new SingleMotor(Output.D, true);
+    export const largeD = new Motor(Output.D, true);
 
     //% whenUsed fixedInstance block="medium A"
-    export const mediumA = new SingleMotor(Output.A, false);
+    export const mediumA = new Motor(Output.A, false);
 
     //% whenUsed fixedInstance block="medium B"
-    export const mediumB = new SingleMotor(Output.B, false);
+    export const mediumB = new Motor(Output.B, false);
 
     //% whenUsed fixedInstance block="medium C"
-    export const mediumC = new SingleMotor(Output.C, false);
+    export const mediumC = new Motor(Output.C, false);
 
     //% whenUsed fixedInstance block="medium D"
-    export const mediumD = new SingleMotor(Output.D, false);
+    export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
-    export class SynchedMotorPair extends Motor {
+    export class SynchedMotorPair extends MotorBase {
 
         constructor(ports: Output) {
             super(ports, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
@@ -478,6 +499,20 @@ namespace motors {
             speedRight = Math.clamp(speedRight >> 0, -100, 100);
             const steering = (speedRight * 100 / speedLeft) >> 0;
             this.steer(speedLeft, steering, value, unit);
+        }
+
+        /**
+         * Returns the name(s) of the motor
+         */
+        //%
+        toString(): string {
+            let r = outputToName(this._port);
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                if (this._port & (1 << i)) {
+                    r += ` ${getMotorData(1 << i).actualSpeed}%`
+                }
+            }
+            return r;
         }
     }
 
