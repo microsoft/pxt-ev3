@@ -1,4 +1,6 @@
 namespace brick {
+    export const LINE_HEIGHT = 12;
+
     //% shim=screen::_setPixel
     function _setPixel(p0: uint32, p1: uint32, mode: Draw): void { }
 
@@ -208,5 +210,29 @@ namespace brick {
             setLineCore(x, x1, y, mode);
     }
 
+    /**
+     * Prints the port states on the screen
+     */
+    //% blockId=brickPrintPorts block="print ports"
+    //% weight=1 group="Screen"
+    export function printPorts() {
+        clearScreen();
 
+        // motors
+        const datas = motors.getAllMotorData();
+        for(let i = 0; i < datas.length; ++i) {
+            const x = i * 52;
+            const data = datas[i];
+            print(`${data.actualSpeed}%`, x, brick.LINE_HEIGHT)
+            print(`${data.count}>`, x, 2 * brick.LINE_HEIGHT)
+        }
+
+        // sensors
+        const sis = sensors.internal.getActiveSensors();
+        for(let i =0; i < sis.length; ++i) {
+            const si = sis[i];
+            const x = (si.port() - 1) * 52;
+            print(`${si._query()}`, x, 9 * brick.LINE_HEIGHT)
+        }
+    }
 }

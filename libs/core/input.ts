@@ -74,6 +74,11 @@ namespace sensors.internal {
 
     }
 
+    export function getActiveSensors(): Sensor[] {
+        init();
+        return sensorInfos.filter(si => si.sensor && si.sensor.isActive()).map(si => si.sensor);
+    }
+
     function readUartInfo(port: number, mode: number) {
         let buf = output.createBuffer(UartCtlOff.Size)
         buf[UartCtlOff.Port] = port

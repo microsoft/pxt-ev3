@@ -548,7 +548,7 @@ namespace motors {
         return 0
     }
 
-    interface MotorData {
+    export interface MotorData {
         actualSpeed: number; // -100..+100
         tachoCount: number;
         count: number;
@@ -557,12 +557,17 @@ namespace motors {
     // only a single output at a time
     function getMotorData(out: Output): MotorData {
         init()
-        let buf = motorMM.slice(outOffset(out), MotorDataOff.Size)
+        const buf = motorMM.slice(outOffset(out), MotorDataOff.Size)
         return {
             actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed),
             tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts),
             count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor),
         }
+    }
+
+    export function getAllMotorData(): MotorData[] {
+        init();
+        return [Output.A, Output.B, Output.C, Output.D].map(out => getMotorData(out));
     }
 
     interface SyncOptions {

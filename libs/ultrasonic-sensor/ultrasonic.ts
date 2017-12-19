@@ -25,7 +25,7 @@ namespace sensors {
         }
 
         _query(): number {
-            return (this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff) * 0.1; // range is 0..2550, in 0.1 cm increments.
+            return ((this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff) / 10) >> 0; // range is 0..2550, in 0.1 cm increments.
         }
 
         _update(prev: number, curr: number) {
@@ -80,7 +80,7 @@ namespace sensors {
         distance(): number {
             // it supposedly also has an inch mode, but we stick to cm
             this._setMode(0)
-            return (this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff) * 0.1; // range is 0..2550, in 0.1 cm increments.
+            return this._query();
         }
     }
     

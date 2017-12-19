@@ -59,7 +59,6 @@ namespace console {
 namespace console.screen {
     const maxLines = 100;
     const screenLines = 8;
-    const lineHeight = 12;
     let lines: string[];
     let scrollPosition = 0;
 
@@ -78,7 +77,7 @@ namespace console.screen {
         for (let i = 0; i < screenLines; ++i) {
             const line = lines[i + scrollPosition];
             if (line)
-                brick.print(line, 0, 4 + i * lineHeight)
+                brick.print(line, 0, 4 + i * brick.LINE_HEIGHT)
         }
     }
 
