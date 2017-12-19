@@ -42,10 +42,8 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=input/touch-sensor/on-event
-        //% blockId=touchEvent block="on `icons.touchSensor` %sensor|%event"
+        //% blockId=touchEvent block="on %sensor|%event"
         //% parts="touch"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Touch Sensor"
@@ -59,10 +57,8 @@ namespace sensors {
          * @param event the kind of button gesture that needs to be detected
          */
         //% help=input/touch-sensor/pause-until
-        //% blockId=touchWaitUntil block="pause until `icons.touchSensor` %sensor|%event"
+        //% blockId=touchWaitUntil block="pause until %sensor|%event"
         //% parts="touch"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=98 blockGap=8
         //% group="Touch Sensor"
@@ -75,11 +71,9 @@ namespace sensors {
          * @param sensor the port to query the request
          */
         //% help=input/touch-sensor/is-pressed
-        //% block="`icons.touchSensor` %sensor|is pressed"
+        //% block="%sensor|is pressed"
         //% blockId=touchIsPressed
         //% parts="touch"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
@@ -92,11 +86,9 @@ namespace sensors {
          * @param sensor the port to query the request
          */
         //% help=input/touch-sensor/was-pressed
-        //% block="`icons.touchSensor` %sensor|was pressed"
+        //% block="%sensor|was pressed"
         //% blockId=touchWasPressed
         //% parts="touch"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
@@ -105,12 +97,12 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
+    //% whenUsed block="touch 1" weight=95 fixedInstance jres=icons.port1
     export const touchSensor1: TouchSensor = new TouchSensor(1)
-    //% whenUsed block="2" weight=95 fixedInstance jres=icons.port2
+    //% whenUsed block="touch 2" weight=95 fixedInstance jres=icons.port2
     export const touchSensor2: TouchSensor = new TouchSensor(2)
-    //% whenUsed block="3" weight=95 fixedInstance jres=icons.port3
+    //% whenUsed block="touch 3" weight=95 fixedInstance jres=icons.port3
     export const touchSensor3: TouchSensor = new TouchSensor(3)
-    //% whenUsed block="4" weight=95 fixedInstance jres=icons.port4
+    //% whenUsed block="touch 4" weight=95 fixedInstance jres=icons.port4
     export const touchSensor4: TouchSensor = new TouchSensor(4)
 }

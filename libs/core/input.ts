@@ -196,7 +196,7 @@ namespace sensors.internal {
         private lowThreshold: number;
         private highThreshold: number;
         private level: number;
-        private state: ThresholdState;
+        public state: ThresholdState;
 
         constructor(id: number, min = 0, max = 100, lowThreshold = 20, highThreshold = 80) {
             this.id = id;

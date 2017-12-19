@@ -8,5 +8,8 @@
   "sensors.ColorSensor.onColorDetected|param|handler": "the code to run when detected",
   "sensors.ColorSensor.onLightChanged": "Registers code to run when the ambient light changes.",
   "sensors.ColorSensor.onLightChanged|param|condition": "the light condition",
-  "sensors.ColorSensor.onLightChanged|param|handler": "the code to run when detected"
+  "sensors.ColorSensor.onLightChanged|param|handler": "the code to run when detected",
+  "sensors.ColorSensor.pauseForColor": "Waits for the given color to be detected",
+  "sensors.ColorSensor.pauseForColor|param|color": "the color to detect",
+  "sensors.ColorSensor.pauseForLight": "Waits for the given color to be detected"
 }

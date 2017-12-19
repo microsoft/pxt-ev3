@@ -74,7 +74,7 @@ namespace sensors {
         /**
          * Gets the current color mode
          */
-        colorMode() { 
+        colorMode() {
             return <ColorSensorMode>this.mode;
         }
 
@@ -99,11 +99,9 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-color-detected
-        //% block="on `icons.colorSensor` %sensor|detected color %color"
+        //% block="on %sensor|detected color %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Color Sensor"
@@ -116,15 +114,32 @@ namespace sensors {
         }
 
         /**
+         * Waits for the given color to be detected
+         * @param color the color to detect
+         */
+        //% help=sensors/color-sensor/pause-for-color
+        //% block="pause %sensor|for color %color"
+        //% blockId=colorPauseForColorDetected
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% weight=99 blockGap=8
+        //% group="Color Sensor"
+        pauseForColor(color: ColorSensorColor) {
+            this.setMode(ColorSensorMode.Color);
+            if (this.color() != color) {
+                const v = this._colorEventValue(<number>color);
+                control.waitForEvent(this._id, v);
+            }
+        }
+
+        /**
          * Get the current color from the color sensor.
          * @param sensor the color sensor to query the request
          */
         //% help=sensors/color-sensor/color
-        //% block="`icons.colorSensor` %sensor| color"
+        //% block="%sensor| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=99
         //% group="Color Sensor"
@@ -139,17 +154,32 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-light-changed
-        //% block="on `icons.colorSensor` %sensor|%mode|%condition"
+        //% block="on %sensor|%mode|%condition"
         //% blockId=colorOnLightChanged
         //% parts="colorsensor"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
         //% weight=89 blockGap=8
         //% group="Color Sensor"
         onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
-            control.onEvent(this._id, <number>condition, handler);
             this.setMode(<ColorSensorMode><number>mode)
+            control.onEvent(this._id, <number>condition, handler);
+        }
+
+        /**
+         * Waits for the given color to be detected
+         * @param color the color to detect
+         */
+        //% help=sensors/color-sensor/pause-for-light
+        //% block="pause %sensor|for %mode|light %condition"
+        //% blockId=colorPauseForLight
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% weight=88 blockGap=8
+        //% group="Color Sensor"
+        pauseForLight(mode: LightIntensityMode, condition: LightCondition) {
+            this.setMode(<ColorSensorMode><number>mode)
+            if (this.thresholdDetector.state != <number>condition)
+                control.waitForEvent(this._id, <number>condition)
         }
 
         /**
@@ -157,13 +187,11 @@ namespace sensors {
          * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
-        //% block="`icons.colorSensor` %sensor|%mode"
+        //% block="%sensor|%mode"
         //% blockId=colorLight
         //% parts="colorsensor"
-        //% sensor.fieldEditor="imagedropdown"
-        //% sensor.fieldOptions.columns=4
         //% blockNamespace=sensors
-        //% weight=88
+        //% weight=87
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.setMode(<ColorSensorMode><number>mode)
@@ -181,15 +209,15 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
+    //% whenUsed block="color 1" weight=95 fixedInstance jres=icons.port1
     export const color1: ColorSensor = new ColorSensor(1)
-    
-    //% whenUsed block="2" weight=90 fixedInstance jres=icons.port2
+
+    //% whenUsed block="color 2" weight=90 fixedInstance jres=icons.port2
     export const color2: ColorSensor = new ColorSensor(2)
 
-    //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
+    //% whenUsed block="color 3" weight=90 fixedInstance jres=icons.port3
     export const color3: ColorSensor = new ColorSensor(3)
 
-    //% whenUsed block="4" weight=90 fixedInstance jres=icons.port4
+    //% whenUsed block="color 4" weight=90 fixedInstance jres=icons.port4
     export const color4: ColorSensor = new ColorSensor(4)
 }
