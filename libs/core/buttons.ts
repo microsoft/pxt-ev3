@@ -85,7 +85,7 @@ namespace brick {
          * @param button the button to query the request
          */
         //% help=input/button/is-pressed
-        //% block="`icons.brickButtons` %button|is pressed"
+        //% block="%button|is pressed"
         //% blockId=buttonIsPressed
         //% parts="brick"
         //% blockNamespace=brick
@@ -100,7 +100,7 @@ namespace brick {
          * @param button the button to query the request
          */
         //% help=input/button/was-pressed
-        //% block="`icons.brickButtons` %button|was pressed"
+        //% block="%button|was pressed"
         //% blockId=buttonWasPressed
         //% parts="brick"
         //% blockNamespace=brick
@@ -119,7 +119,7 @@ namespace brick {
          * @param body code to run when the event is raised
          */
         //% help=input/button/on-event
-        //% blockId=buttonEvent block="on `icons.brickButtons` %button|%event"
+        //% blockId=buttonEvent block="on %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=99 blockGap=8
@@ -133,7 +133,7 @@ namespace brick {
          * @param ev the event to wait for
          */
         //% help=input/button/pause-until
-        //% blockId=buttonWaitUntil block="pause until `icons.brickButtons` %button|%event"
+        //% blockId=buttonWaitUntil block="pause until %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=98 blockGap=8
@@ -248,9 +248,9 @@ namespace brick {
      * Set lights.
      * @param pattern the lights pattern to use.
      */
-    //% blockId=setLights block="set `icons.brickButtons` to %pattern=led_pattern"
-    //% weight=100 group="Light"
-    export function setStatusLight(pattern: number): void {
+    //% blockId=setLights block="set light to %pattern=led_pattern"
+    //% weight=100 group="Buttons"
+    export function setLight(pattern: number): void {
         if (currPattern === pattern)
             return
         currPattern = pattern

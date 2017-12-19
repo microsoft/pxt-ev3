@@ -1,6 +1,6 @@
 
 //% color="#68C3E2" weight=100
-//% groups='["Light", "Buttons", "Screen"]'
+//% groups='["Buttons", "Screen"]'
 //% labelLineWidth=0
 namespace brick {
 }
