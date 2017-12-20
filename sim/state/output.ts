@@ -37,7 +37,7 @@ namespace pxsim {
                         case DAL.opOutputStepSpeed: {
                             // step speed
                             const port = buf.data[1];
-                            const speed = buf.data[2];
+                            const speed = buf.data[2] << 24 >> 24; // signed byte
                             // note that b[3] is padding
                             const step1 = buf.data[4];
                             const step2 = buf.data[5]; // angle
@@ -59,7 +59,7 @@ namespace pxsim {
                         case DAL.opOutputSpeed: {
                             // setSpeed
                             const port = buf.data[1];
-                            const speed = buf.data[2];
+                            const speed = buf.data[2] << 24 >> 24; // signed byte
                             const motors = ev3board().getMotor(port);
                             motors.forEach(motor => motor.setSpeed(speed));
                             return 2;

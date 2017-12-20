@@ -15,11 +15,19 @@ namespace pxsim {
             MMapMethods.register("/dev/lms_motor", {
                 data,
                 beforeMemRead: () => {
+                    const outputs = ev3board().outputNodes;
                     console.log("motor before read");
                     for (let port = 0; port < DAL.NUM_OUTPUTS; ++port) {
-                        data[MotorDataOff.TachoCounts * port] = 0; // Tacho count
-                        data[MotorDataOff.Speed * port] = 50; // Speed
-                        data[MotorDataOff.TachoSensor * port] = 0; // Count
+                        const output = outputs[port];
+                        const speed = output ? Math.round(outputs[port].getSpeed()) : 0;
+                        const angle = output ? Math.round(outputs[port].getAngle()) : 0;
+                        const tsi = MotorDataOff.TachoSensor + port * MotorDataOff.Size;
+                        data[MotorDataOff.TachoCounts + port * MotorDataOff.Size] = 0; // Tacho count
+                        data[MotorDataOff.Speed + port * MotorDataOff.Size] = speed; // Speed
+                        data[tsi] = angle & 0xff; // Count
+                        data[tsi + 1] = (angle >> 8) & 0xff; // Count
+                        data[tsi + 2] = (angle >> 16) & 0xff; // Count
+                        data[tsi + 3] = (angle >> 24) & 0xff; // Count
                     }
                 },
                 read: buf => {
