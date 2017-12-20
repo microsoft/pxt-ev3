@@ -14,8 +14,7 @@ namespace pxsim {
 
         public setPressed(pressed: boolean) {
             this.pressed.push(pressed);
-            this.changed = true;
-            this.valueChanged = true;
+            this.setChangedState();
         }
 
         public isPressed() {

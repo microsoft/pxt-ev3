@@ -29,11 +29,12 @@ namespace pxsim {
         getDeviceType() {
             return DAL.DEVICE_TYPE_COLOR;
         }
-        
+
         setColor(color: number) {
-            this.color = color;
-            this.changed = true;
-            this.valueChanged = true;
+            if (this.color != color) {
+                this.color = color;
+                this.setChangedState();
+            }
         }
 
         getValue() {

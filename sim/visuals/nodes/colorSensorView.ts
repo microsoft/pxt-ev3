@@ -12,5 +12,9 @@ namespace pxsim.visuals {
         public getPaddingRatio() {
             return 1 / 8;
         }
+
+        public updateState() {
+            // TODO: show different color modes
+        }
     }
 }
