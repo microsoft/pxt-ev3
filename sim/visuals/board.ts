@@ -383,6 +383,7 @@ namespace pxsim.visuals {
 
         private updateStateStep(elapsed: number) {
             const selected = this.layoutView.getSelected();
+            let selectedChanged = false;
             const inputNodes = ev3board().getInputNodes();
             inputNodes.forEach((node, index) => {
                 node.updateState(elapsed);
@@ -391,6 +392,7 @@ namespace pxsim.visuals {
                 if (view) {
                     this.layoutView.setInput(index, view);
                     view.updateState();
+                    if (selected == view) selectedChanged = true;
                 }
             });
 
@@ -407,6 +409,7 @@ namespace pxsim.visuals {
                 if (view) {
                     this.layoutView.setOutput(index, view);
                     view.updateState();
+                    if (selected == view) selectedChanged = true;
                 }
             });
 
@@ -428,6 +431,10 @@ namespace pxsim.visuals {
                 this.selectedPort = undefined;
                 this.closeIconView.setVisible(false);
                 this.resize();
+            }
+
+            if (selectedChanged && selected) {
+                this.controlView.updateState();
             }
 
             this.updateScreenStep();
