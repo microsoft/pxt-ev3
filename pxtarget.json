@@ -115,7 +115,7 @@
                 "path": "/reference"
             }
         ],
-        "showHomeScreen": false,
+        "showHomeScreen": true,
         "homeScreenHero": "./static/hero.png",
         "invertedMenu": false,
         "invertedMonaco": false,
