@@ -5,13 +5,15 @@ namespace pxsim {
 
         protected angle: number = 0;
 
+        private rotationsPerMilliSecond: number;
         private speed: number;
         private large: boolean;
         private rotation: number;
         private polarity: boolean;
 
-        constructor(port: number) {
+        constructor(port: number, rpm: number) {
             super(port);
+            this.rotationsPerMilliSecond = rpm / 60000;
         }
 
         setSpeed(speed: number) {
@@ -19,7 +21,6 @@ namespace pxsim {
                 this.speed = speed;
                 this.changed = true;
                 this.setChangedState();
-                this.playMotorAnimation();
             }
         }
 
@@ -58,40 +59,21 @@ namespace pxsim {
             return this.angle;
         }
 
-        protected abstract playMotorAnimation(): void;
+        updateState(elapsed: number) {
+            const rotations = this.getSpeed() / 100 * this.rotationsPerMilliSecond * elapsed;
+            const angle = rotations * 360;
+            if (angle) {
+                this.angle += angle;
+                this.setChangedState();
+            }
+        }
     }
 
     export class MediumMotorNode extends MotorNode {
         id = NodeType.MediumMotor;
 
         constructor(port: number) {
-            super(port);
-        }
-
-        protected lastMotorAnimationId: number;
-        protected playMotorAnimation() {
-            // Max medium motor RPM is 250 according to http://www.cs.scranton.edu/~bi/2015s-html/cs358/EV3-Motor-Guide.docx
-            const rotationsPerMinute = 250; // 250 rpm at speed 100
-            const rotationsPerSecond = rotationsPerMinute / 60;
-            const fps = GAME_LOOP_FPS;
-            const rotationsPerFrame = rotationsPerSecond / fps;
-            let now;
-            let then = Date.now();
-            let interval = 1000 / fps;
-            let delta;
-            let that = this;
-            function draw() {
-                that.lastMotorAnimationId = requestAnimationFrame(draw);
-                now = Date.now();
-                delta = now - then;
-                if (delta > interval) {
-                    then = now - (delta % interval);
-                    const rotations = that.getSpeed() / 100 * rotationsPerFrame;
-                    const angle = rotations * 360;
-                    that.angle += angle;
-                }
-            }
-            draw();
+            super(port, 250);
         }
     }
 
@@ -99,33 +81,7 @@ namespace pxsim {
         id = NodeType.LargeMotor;
 
         constructor(port: number) {
-            super(port);
-        }
-
-        protected lastMotorAnimationId: number;
-        protected playMotorAnimation() {
-            // Max medium motor RPM is 170 according to http://www.cs.scranton.edu/~bi/2015s-html/cs358/EV3-Motor-Guide.docx
-            const rotationsPerMinute = 170; // 170 rpm at speed 100
-            const rotationsPerSecond = rotationsPerMinute / 60;
-            const fps = GAME_LOOP_FPS;
-            const rotationsPerFrame = rotationsPerSecond / fps;
-            let now;
-            let then = Date.now();
-            let interval = 1000 / fps;
-            let delta;
-            let that = this;
-            function draw() {
-                that.lastMotorAnimationId = requestAnimationFrame(draw);
-                now = Date.now();
-                delta = now - then;
-                if (delta > interval) {
-                    then = now - (delta % interval);
-                    const rotations = that.getSpeed() / 100 * rotationsPerFrame;
-                    const angle = rotations * 360;
-                    that.angle += angle;
-                }
-            }
-            draw();
+            super(port, 170);
         }
     }
 }

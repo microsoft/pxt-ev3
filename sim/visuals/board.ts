@@ -375,16 +375,17 @@ namespace pxsim.visuals {
                 delta = now - then;
                 if (delta > interval) {
                     then = now - (delta % interval);
-                    that.updateStateStep();
+                    that.updateStateStep(delta);
                 }
             }
             loop();
         }
 
-        private updateStateStep() {
+        private updateStateStep(elapsed: number) {
             const selected = this.layoutView.getSelected();
             const inputNodes = ev3board().getInputNodes();
             inputNodes.forEach((node, index) => {
+                node.updateState(elapsed);
                 if (!node.didChange()) return;
                 const view = this.getDisplayViewForNode(node.id, index);
                 if (view) {
@@ -400,6 +401,7 @@ namespace pxsim.visuals {
 
             const outputNodes = ev3board().getMotors();
             outputNodes.forEach((node, index) => {
+                node.updateState(elapsed);
                 if (!node.didChange()) return;
                 const view = this.getDisplayViewForNode(node.id, index);
                 if (view) {

@@ -36,5 +36,13 @@ namespace pxsim {
         setChangedState() {
             this.changed = true;
         }
+
+        /**
+         * Updates any internal state according to the elapsed time since the last call to `updateState`
+         * @param elapsed
+         */
+        updateState(elapsed: number) {
+
+        }
     }
 }
