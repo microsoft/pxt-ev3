@@ -11,8 +11,6 @@ namespace pxsim.visuals {
         private hasPreviousAngle: boolean;
         private previousAngle: number;
 
-        private lastMotorAnimationId: any;
-
         constructor(port: number) {
             super(MEDIUM_MOTOR_SVG, "medium-motor", NodeType.MediumMotor, port);
         }
@@ -25,7 +23,6 @@ namespace pxsim.visuals {
             const motorState = ev3board().getMotors()[this.port];
             if (!motorState) return;
             const speed = motorState.getSpeed();
-            if (this.lastMotorAnimationId) cancelAnimationFrame(this.lastMotorAnimationId);
 
             if (!speed) return;
             this.setMotorAngle(motorState.getAngle());
