@@ -430,7 +430,6 @@ namespace pxsim.visuals {
                 this.selectedNode = undefined;
                 this.selectedPort = undefined;
                 this.closeIconView.setVisible(false);
-                this.resize();
             }
 
             if (selectedChanged && selected) {
