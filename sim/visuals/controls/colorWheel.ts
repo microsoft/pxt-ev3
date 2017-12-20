@@ -18,7 +18,7 @@ namespace pxsim.visuals {
             svg.setGradientColors(this.colorGradient, "black", "white");
 
             const circle = pxsim.svg.child(this.group, "g");
-            const circle2 = pxsim.svg.child(circle, "circle",
+            const innerCircle = pxsim.svg.child(circle, "circle",
                 {cursor: '-webkit-grab',
                 fill: `url(#${gc})`,
                 r: 17,
@@ -62,7 +62,7 @@ namespace pxsim.visuals {
         }
 
         private setColor(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
-            let width = 87.5;
+            const width = CONTROL_WIDTH;
             let cur = svg.cursorPoint(pt, parent, ev);
             let t = Math.max(0, Math.min(1, (width + this.left / this.scaleFactor - cur.x / this.scaleFactor) / width));
             const state = this.state;
