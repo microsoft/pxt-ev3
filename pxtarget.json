@@ -9,6 +9,7 @@
     "bundleddirs": [
         "libs/base",
         "libs/core",
+        "libs/storage",
         "libs/music",
         "libs/color-sensor",
         "libs/touch-sensor",
