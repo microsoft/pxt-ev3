@@ -34,7 +34,10 @@ namespace pxsim {
                             motors.forEach(motor => motor.reset());
                             return 2;
                         }
-                        case DAL.opOutputStepSpeed: {
+                        case DAL.opOutputStepPower:
+                        case DAL.opOutputStepPower:
+                        case DAL.opOutputTimePower:
+                        case DAL.opOutputTimeSpeed: {
                             // step speed
                             const port = buf.data[1];
                             const speed = buf.data[2] << 24 >> 24; // signed byte
@@ -45,7 +48,7 @@ namespace pxsim {
                             const brake = buf.data[7];
                             //console.log(buf);
                             const motors = ev3board().getMotor(port);
-                            motors.forEach(motor => motor.stepSpeed(speed, step2, brake === 1));
+                            motors.forEach(motor => motor.setSpeedCmd(cmd, [speed, step1, step2, step3, brake]));
                             return 2;
                         }
                         case DAL.opOutputStop: {
@@ -61,7 +64,7 @@ namespace pxsim {
                             const port = buf.data[1];
                             const speed = buf.data[2] << 24 >> 24; // signed byte
                             const motors = ev3board().getMotor(port);
-                            motors.forEach(motor => motor.setSpeed(speed));
+                            motors.forEach(motor => motor.setSpeedCmd(cmd, [speed]));
                             return 2;
                         }
                         case DAL.opOutputStart: {

@@ -142,10 +142,8 @@ namespace pxsim {
         getMotor(port: number, large?: boolean): MotorNode[] {
             if (port == 0xFF) return this.getMotors(); // Return all motors
             const motorPort = this.motorMap[port];
-            if (this.outputNodes[motorPort] == undefined) {
-                this.outputNodes[motorPort] = large ?
-                    new LargeMotorNode(motorPort) : new MediumMotorNode(motorPort);
-            }
+            if (!this.outputNodes[motorPort])
+                this.outputNodes[motorPort] = new MotorNode(motorPort, large);
             return [this.outputNodes[motorPort]];
         }
 
@@ -154,7 +152,7 @@ namespace pxsim {
         }
 
         getSensor(port: number, type: number): SensorNode {
-            if (this.inputNodes[port] == undefined) {
+            if (!this.inputNodes[port]) {
                 switch (type) {
                     case DAL.DEVICE_TYPE_GYRO: this.inputNodes[port] = new GyroSensorNode(port); break;
                     case DAL.DEVICE_TYPE_COLOR: this.inputNodes[port] = new ColorSensorNode(port); break;
