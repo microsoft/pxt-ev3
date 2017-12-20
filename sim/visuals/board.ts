@@ -374,7 +374,7 @@ namespace pxsim.visuals {
                 now = Date.now();
                 delta = now - then;
                 if (delta > interval) {
-                    then = now - (delta % interval);
+                    then = now;
                     that.updateStateStep(delta);
                 }
             }
