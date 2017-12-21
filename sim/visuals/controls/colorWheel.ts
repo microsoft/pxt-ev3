@@ -24,7 +24,8 @@ namespace pxsim.visuals {
                 r: 17,
                 cx: 13,
                 cy: 20,
-                stroke: 'black'
+                stroke: 'black',
+                'stroke-width': 2
             });
 
             let pt = parent.createSVGPoint();
