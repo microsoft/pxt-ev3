@@ -9,7 +9,7 @@
 /* Fonts for toolbox icons */
 @font-face {
     font-family: 'legoIcons';
-    src: data-uri("../docs/static/fonts/icons/iconfont.woff") format('woff');
+    src: data-uri("../docs/static/fonts/icons/iconfont.woff2");
 }
 
 .blocklyFlyoutLabel:not(.blocklyFlyoutHeading) .blocklyFlyoutLabelIcon {
@@ -135,5 +135,13 @@ span.blocklyTreeIcon.blocklyTreeIconaddpackage::before {
 
 .download-button .icon.download.icon-and-text::before {
     content: "\f116"
+}
+
+.button.approve.positive .checkmark.icon::before {
+    content: "\f115"
+}
+
+.button.approve.cancel .cancel.icon::before {
+    content: "\f114"
 }
 
