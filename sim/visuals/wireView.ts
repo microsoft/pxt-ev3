@@ -1,11 +1,10 @@
-/// <reference path="./nodes/staticView.ts" />
+/// <reference path="./nodes/moduleView.ts" />
 
 namespace pxsim.visuals {
 
     export class WireView extends View implements LayoutElement {
         private wire: SVGSVGElement;
         private path: SVGPathElement;
-        private selected: boolean;
         private hasDimensions: boolean;
 
         protected startX: number;
@@ -30,13 +29,13 @@ namespace pxsim.visuals {
             this.updatePath();
         }
 
-        buildDom(width: number): SVGElement {
+        buildDom(): SVGElement {
             this.wire = svg.elt("svg", { height: "100%", width: "100%" }) as SVGSVGElement;
             this.path = pxsim.svg.child(this.wire, "path", {
                 'd': '',
                 'fill': 'transparent',
                 'stroke': '#5A5A5A',
-                'stroke-width': '3px'
+                'stroke-width': '2px'
             }) as SVGPathElement;
             this.setSelected(true);
             return this.wire;
@@ -45,8 +44,8 @@ namespace pxsim.visuals {
         updatePath() {
             if (!this.hasDimensions) return;
             const height = this.endY - this.startY;
-            const quarterHeight = height / 4;
-            const middleHeight = this.port == 1 || this.port == 2 ? quarterHeight : quarterHeight * 2;
+            const thirdHeight = height / 3;
+            const middleHeight = this.port == 1 || this.port == 2 ? thirdHeight : thirdHeight * 2;
             let d = `M${this.startX} ${this.startY}`;
             d += ` L${this.startX} ${this.startY + middleHeight}`;
             d += ` L${this.endX} ${this.startY + middleHeight}`;
@@ -79,7 +78,7 @@ namespace pxsim.visuals {
         }
 
         public setSelected(selected: boolean) {
-            this.selected = selected;
+            super.setSelected(selected);
             this.updateOpacity();
         }
 

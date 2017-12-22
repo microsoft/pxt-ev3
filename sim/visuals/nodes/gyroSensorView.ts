@@ -1,7 +1,7 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
-    export class GyroSensorView extends StaticModuleView implements LayoutElement {
+    export class GyroSensorView extends ModuleView implements LayoutElement {
 
         constructor(port: number) {
             super(GYRO_SVG, "gyro", NodeType.GyroSensor, port);

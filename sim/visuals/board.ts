@@ -99,15 +99,8 @@ namespace pxsim.visuals {
 
         private layoutView: LayoutView;
 
-        private controlGroup: ViewContainer;
-        private selectedNode: NodeType;
-        private selectedPort: number;
-        private controlView: View;
         private cachedControlNodes: { [index: string]: View[] } = {};
         private cachedDisplayViews: { [index: string]: LayoutElement[] } = {};
-
-        private closeGroup: ViewContainer;
-        private closeIconView: View;
 
         private screenCanvas: HTMLCanvasElement;
         private screenCanvasCtx: CanvasRenderingContext2D;
@@ -143,7 +136,12 @@ namespace pxsim.visuals {
 
             Runtime.messagePosted = (msg) => {
                 switch (msg.type || "") {
-                    case "status": if ((msg as pxsim.SimulatorStateMessage).state == "killed") this.kill(); break;
+                    case "status": {
+                        const state = (msg as pxsim.SimulatorStateMessage).state;
+                        if (state == "killed") this.kill();
+                        if (state == "running") this.begin();
+                        break;
+                    }
                 }
             }
         }
@@ -175,36 +173,6 @@ namespace pxsim.visuals {
         public updateTheme() {
             let theme = this.props.theme;
             this.layoutView.updateTheme(theme);
-        }
-
-        public resize() {
-            const bounds = this.element.getBoundingClientRect();
-            this.width = bounds.width;
-            this.height = bounds.height;
-            this.layoutView.layout(bounds.width, bounds.height);
-
-            if (this.selectedNode) {
-                const scale = this.width / this.closeIconView.getInnerWidth() / 10;
-                // Translate close icon
-                this.closeIconView.scale(Math.max(0, Math.min(1, scale)));
-                const closeIconWidth = this.closeIconView.getWidth();
-                const closeIconHeight = this.closeIconView.getHeight();
-                const closeCoords = this.layoutView.getCloseIconCoords(closeIconWidth, closeIconHeight);
-                this.closeIconView.translate(closeCoords.x, closeCoords.y);
-            }
-
-            if (this.controlView) {
-                const h = this.controlView.getInnerHeight();
-                const w = this.controlView.getInnerWidth();
-                const bh = this.layoutView.getModuleBounds().height - this.closeIconView.getHeight();
-                const bw = this.layoutView.getModuleBounds().width - (this.width * MODULE_INNER_PADDING_RATIO * 2);
-                this.controlView.scale(Math.min(bh / h, bw / w), false);
-
-                const controlCoords = this.layoutView.getSelectedCoords();
-                this.controlView.translate(controlCoords.x, controlCoords.y);
-            }
-
-            //this.updateScreen();
         }
 
         private getControlForNode(id: NodeType, port: number) {
@@ -285,6 +253,10 @@ namespace pxsim.visuals {
             return undefined;
         }
 
+        private getCloseIconView() {
+            return new CloseIconControl(this.element, this.defs, new PortNode(-1), -1);
+        }
+
         private buildDom() {
             this.wrapper = document.createElement('div');
             this.wrapper.style.display = 'inline';
@@ -299,25 +271,10 @@ namespace pxsim.visuals {
             this.layoutView = new LayoutView();
             this.layoutView.inject(this.element);
 
-            this.controlGroup = new ViewContainer();
-            this.controlGroup.inject(this.element);
-
-            this.closeGroup = new ViewContainer();
-            this.closeGroup.inject(this.element);
-
             // Add EV3 module element
             this.layoutView.setBrick(new BrickView(-1));
 
-            this.closeIconView = new CloseIconControl(this.element, this.defs, new PortNode(-1), -1);
-            this.closeIconView.registerClick(() => {
-                this.layoutView.clearSelected();
-                this.updateState();
-            })
-            this.closeGroup.addView(this.closeIconView);
-            this.closeIconView.setVisible(false);
-
             this.resize();
-            //this.updateState();
 
             // Add Screen canvas to board
             this.buildScreenCanvas();
@@ -329,6 +286,22 @@ namespace pxsim.visuals {
             window.addEventListener("resize", e => {
                 this.resize();
             });
+
+            setTimeout(() => {
+                this.resize();
+            }, 200);
+        }
+
+        public resize() {
+            if (!this.element) return;
+            const bounds = this.element.getBoundingClientRect();
+            this.width = bounds.width;
+            this.height = bounds.height;
+            this.layoutView.layout(bounds.width, bounds.height);
+
+            this.updateState();
+            let state = ev3board().screenState;
+            this.updateScreenStep(state);
         }
 
         private buildScreenCanvas() {
@@ -357,12 +330,27 @@ namespace pxsim.visuals {
         }
 
         private kill() {
-            if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
+            this.running = false;
+            if (this.lastAnimationIds.length > 0) {
+                this.lastAnimationIds.forEach(animationId => {
+                    cancelAnimationFrame(animationId);
+                })
+            }
         }
 
-        private lastAnimationId: number;
+        private begin() {
+            this.running = true;
+        }
+
+        private running: boolean = false;
+        private lastAnimationIds: number[] = [];
         public updateState() {
-            if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
+            if (this.lastAnimationIds.length > 0) {
+                this.lastAnimationIds.forEach(animationId => {
+                    cancelAnimationFrame(animationId);
+                })
+            }
+            if (!this.running) return;
             const fps = GAME_LOOP_FPS;
             let now;
             let then = Date.now();
@@ -370,7 +358,8 @@ namespace pxsim.visuals {
             let delta;
             let that = this;
             function loop() {
-                that.lastAnimationId = requestAnimationFrame(loop);
+                const animationId = requestAnimationFrame(loop);
+                that.lastAnimationIds.push(animationId);
                 now = Date.now();
                 delta = now - then;
                 if (delta > interval) {
@@ -382,67 +371,46 @@ namespace pxsim.visuals {
         }
 
         private updateStateStep(elapsed: number) {
-            const selected = this.layoutView.getSelected();
-            let selectedChanged = false;
             const inputNodes = ev3board().getInputNodes();
             inputNodes.forEach((node, index) => {
                 node.updateState(elapsed);
-                if (!node.didChange()) return;
                 const view = this.getDisplayViewForNode(node.id, index);
+                if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    this.layoutView.setInput(index, view);
+                    const control = view.getSelected() ? this.getControlForNode(node.id, index) : undefined;
+                    const closeIcon = control ? this.getCloseIconView() : undefined;
+                    this.layoutView.setInput(index, view, control, closeIcon);
                     view.updateState();
-                    if (selected == view) selectedChanged = true;
+                    if (control) control.updateState();
                 }
             });
 
             const brickNode = ev3board().getBrickNode();
             if (brickNode.didChange()) {
-                this.getDisplayViewForNode(ev3board().getBrickNode().id, -1).updateState();
+                this.getDisplayViewForNode(brickNode.id, -1).updateState();
             }
 
             const outputNodes = ev3board().getMotors();
             outputNodes.forEach((node, index) => {
                 node.updateState(elapsed);
-                if (!node.didChange()) return;
                 const view = this.getDisplayViewForNode(node.id, index);
+                if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    this.layoutView.setOutput(index, view);
+                    const control = view.getSelected() ? this.getControlForNode(node.id, index) : undefined;
+                    const closeIcon = control ? this.getCloseIconView() : undefined;
+                    this.layoutView.setOutput(index, view, control, closeIcon);
                     view.updateState();
-                    if (selected == view) selectedChanged = true;
+                    if (control) control.updateState();
                 }
             });
 
-            if (selected && (selected.getId() !== this.selectedNode || selected.getPort() !== this.selectedPort)) {
-                this.selectedNode = selected.getId();
-                this.selectedPort = selected.getPort();
-                this.controlGroup.clear();
-                const control = this.getControlForNode(this.selectedNode, selected.getPort());
-                if (control) {
-                    this.controlView = control;
-                    this.controlGroup.addView(control);
-                }
-                this.closeIconView.setVisible(true);
-                this.resize();
-            } else if (!selected) {
-                this.controlGroup.clear();
-                this.controlView = undefined;
-                this.selectedNode = undefined;
-                this.selectedPort = undefined;
-                this.closeIconView.setVisible(false);
+            let state = ev3board().screenState;
+            if (!state.didChange()) {
+                this.updateScreenStep(state);
             }
-
-            if (selectedChanged && selected) {
-                this.controlView.updateState();
-            }
-
-            this.updateScreenStep();
         }
 
-        private updateScreenStep() {
-            let state = ev3board().screenState;
-            if (!state.didChange()) return;
-
+        private updateScreenStep(state: EV3ScreenState) {
             const bBox = this.layoutView.getBrick().getScreenBBox();
             if (!bBox || bBox.width == 0) return;
 

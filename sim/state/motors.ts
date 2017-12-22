@@ -48,6 +48,7 @@ namespace pxsim {
 
         stop() {
             // TODO: implement
+            this.setSpeed(0);
         }
 
         start() {

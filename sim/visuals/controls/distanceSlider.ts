@@ -100,7 +100,8 @@ namespace pxsim.visuals {
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
             const height = this.getContentHeight(); //DistanceSliderControl.SLIDER_HEIGHT;
-            let t = Math.max(0, Math.min(1, (this.getTopPadding() + height + this.top / this.scaleFactor - cur.y / this.scaleFactor) / height))
+            const bBox = this.content.getBoundingClientRect();
+            let t = Math.max(0, Math.min(1, (this.getTopPadding() + height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height))
 
             const state = this.state;
             state.setDistance((1 - t) * (this.getMax()));
