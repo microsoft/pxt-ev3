@@ -83,7 +83,8 @@ namespace pxsim.visuals {
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
             const width = CONTROL_WIDTH; //DistanceSliderControl.SLIDER_HEIGHT;
-            let t = Math.max(0, Math.min(1, (width + this.left / this.scaleFactor - cur.x / this.scaleFactor) / width))
+            const bBox = this.content.getBoundingClientRect();
+            let t = Math.max(0, Math.min(1, (width + bBox.left / this.scaleFactor - cur.x / this.scaleFactor) / width))
 
             const state = this.state;
             state.setAngle((1 - t) * (100));

@@ -1,10 +1,10 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
 
     export const MOTOR_ROTATION_FPS = 32;
 
-    export class MediumMotorView extends StaticModuleView implements LayoutElement {
+    export class MediumMotorView extends ModuleView implements LayoutElement {
 
         private static ROTATING_ECLIPSE_ID = "Hole";
 
@@ -16,7 +16,7 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 10;
+            return 1 / 5;
         }
 
         updateState() {

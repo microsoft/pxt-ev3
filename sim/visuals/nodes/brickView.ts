@@ -1,8 +1,8 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
 
-    export class BrickView extends StaticModuleView implements LayoutElement {
+    export class BrickView extends ModuleView implements LayoutElement {
 
         private static EV3_SCREEN_ID = "ev3_screen";
         private static EV3_LIGHT_ID = "btn_color";
@@ -41,9 +41,9 @@ namespace pxsim.visuals {
 
         public updateThemeCore() {
             let theme = this.theme;
-            svg.fill(this.buttons[0], theme.buttonUps[0]);
-            svg.fill(this.buttons[1], theme.buttonUps[1]);
-            svg.fill(this.buttons[2], theme.buttonUps[2]);
+            // svg.fill(this.buttons[0], theme.buttonUps[0]);
+            // svg.fill(this.buttons[1], theme.buttonUps[1]);
+            // svg.fill(this.buttons[2], theme.buttonUps[2]);
         }
 
         private lastLightPattern: number = -1;

@@ -7,7 +7,7 @@ namespace pxsim.visuals {
 
         getInnerView() {
             this.group = svg.elt("g") as SVGGElement;
-            this.group.setAttribute("transform", `translate(17, ${35 + this.getHeight() / 4}) scale(5)`)
+            this.group.setAttribute("transform", `translate(17, ${20 + this.getHeight() / 4}) scale(5)`)
 
             const colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'grey'];
             const colors = ['#f12a21', '#ffd01b', '#006db3', '#00934b', '#000', '#6c2d00'];

@@ -23,20 +23,6 @@ namespace pxsim {
     }
 
     export class EV3Board extends CoreBoard {
-        // state & update logic for component services
-        // neopixelState: CommonNeoPixelState;
-        buttonState: EV3ButtonState;
-        slideSwitchState: SlideSwitchState;
-        lightSensorState: AnalogSensorState;
-        thermometerState: AnalogSensorState;
-        thermometerUnitState: number;
-        microphoneState: AnalogSensorState;
-        edgeConnectorState: EdgeConnectorState;
-        capacitiveSensorState: CapacitiveSensorState;
-        accelerometerState: AccelerometerState;
-        touchButtonState: TouchButtonState;
-        irState: InfraredState;
-
         view: SVGSVGElement;
 
         outputState: EV3OutputState;
@@ -86,11 +72,6 @@ namespace pxsim {
                     // TODO
                     break;
                 }
-                case "irpacket": {
-                    let ev = <SimulatorInfraredPacketMessage>msg;
-                    this.irState.receive(new RefBuffer(ev.packet));
-                    break;
-                }
             }
         }
 
@@ -120,19 +101,14 @@ namespace pxsim {
             document.body.innerHTML = ""; // clear children
             document.body.appendChild(this.view = viewHost.getView() as SVGSVGElement);
 
+            this.inputNodes = [];
+            this.outputNodes = [];
+
             return Promise.resolve();
         }
 
         screenshot(): string {
             return svg.toDataUri(new XMLSerializer().serializeToString(this.view));
-        }
-
-        //defaultNeopixelPin() {
-        //    return this.edgeConnectorState.getPin(CPlayPinName.D8);
-        //}
-
-        getDefaultPitchPin() {
-            return this.edgeConnectorState.getPin(CPlayPinName.D6);
         }
 
         getBrickNode() {

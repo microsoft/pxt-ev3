@@ -10,7 +10,7 @@ namespace pxsim.visuals {
         getInnerView(parent: SVGSVGElement) {
             this.defs = <SVGDefsElement>svg.child(this.element, "defs", {});
             this.group = svg.elt("g") as SVGGElement;
-            this.group.setAttribute("transform", `translate(12, ${this.getHeight() / 2 - 15}) scale(2.5)`)
+            this.group.setAttribute("transform", `translate(12, ${this.getHeight() / 2 - 15}) scale(2)`)
 
             let gc = "gradient-color";
             this.colorGradient = svg.linearGradient(this.defs, gc, true);
