@@ -139,9 +139,7 @@
         },
         "monacoColors": {
             "editor.background": "#ecf6ff"
-        },
-        "simAnimationEnter": "horizontal flip in",
-        "simAnimationExit": "horizontal flip out"
+        }
     },
     "ignoreDocsErrors": true
 }
