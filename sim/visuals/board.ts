@@ -286,18 +286,13 @@ namespace pxsim.visuals {
             window.addEventListener("resize", e => {
                 this.resize();
             });
-
-            setTimeout(() => {
-                this.resize();
-            }, 200);
         }
 
         public resize() {
             if (!this.element) return;
-            const bounds = this.element.getBoundingClientRect();
-            this.width = bounds.width;
-            this.height = bounds.height;
-            this.layoutView.layout(bounds.width, bounds.height);
+            this.width = document.body.offsetWidth;
+            this.height = document.body.offsetHeight;
+            this.layoutView.layout(this.width, this.height);
 
             this.updateState();
             let state = ev3board().screenState;
@@ -340,6 +335,7 @@ namespace pxsim.visuals {
 
         private begin() {
             this.running = true;
+            this.updateState();
         }
 
         private running: boolean = false;
@@ -405,7 +401,7 @@ namespace pxsim.visuals {
             });
 
             let state = ev3board().screenState;
-            if (!state.didChange()) {
+            if (state.didChange()) {
                 this.updateScreenStep(state);
             }
         }

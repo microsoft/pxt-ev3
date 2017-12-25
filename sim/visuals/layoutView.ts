@@ -3,9 +3,6 @@
 /// <reference path="./nodes/portView.ts" />
 
 namespace pxsim.visuals {
-    export const DEFAULT_WIDTH = 350;
-    export const DEFAULT_HEIGHT = 700;
-
     export const BRICK_HEIGHT_RATIO = 1 / 3;
     export const MODULE_AND_WIRING_HEIGHT_RATIO = 1 / 3; // For inputs and outputs
 
@@ -220,8 +217,10 @@ namespace pxsim.visuals {
 
             this.offsets = [];
 
-            const contentWidth = this.width || DEFAULT_WIDTH;
-            const contentHeight = this.height || DEFAULT_HEIGHT;
+            const contentWidth = this.width;
+            if (!contentWidth) return;
+            const contentHeight = this.height;
+            if (!contentHeight) return;
 
             const moduleHeight = this.getModuleHeight();
 
@@ -337,16 +336,16 @@ namespace pxsim.visuals {
         }
 
         public getBrickHeight() {
-            return (this.height || DEFAULT_HEIGHT) * BRICK_HEIGHT_RATIO;
+            return this.height * BRICK_HEIGHT_RATIO;
         }
 
         public getWiringHeight() {
-            return (this.height || DEFAULT_HEIGHT) * WIRING_HEIGHT_RATIO;
+            return this.height * WIRING_HEIGHT_RATIO;
         }
 
         public getModuleBounds() {
             return {
-                width: (this.width || DEFAULT_WIDTH) / 4,
+                width: this.width / 4,
                 height: this.getModuleHeight()
             }
         }
@@ -360,7 +359,7 @@ namespace pxsim.visuals {
         }
 
         public getModuleHeight() {
-            return (this.height || DEFAULT_HEIGHT) * MODULE_HEIGHT_RATIO;
+            return this.height * MODULE_HEIGHT_RATIO;
         }
     }
 }
