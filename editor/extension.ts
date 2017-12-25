@@ -142,7 +142,11 @@ namespace pxt.editor {
     initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
         pxt.debug('loading pxt-ev3 target extensions...')
         const res: pxt.editor.ExtensionResult = {
-            deployCoreAsync,
+            fieldEditors: [{
+                selector: "ports",
+                editor: FieldPorts
+            }],
+            deployCoreAsync
         };
         initAsync().catch(e => {
             // probably no HID - we'll try this again upon deployment

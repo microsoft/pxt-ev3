@@ -46,6 +46,7 @@ namespace sensors {
         //% block="on %sensor|%event"
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
         onEvent(event: UltrasonicSensorEvent, handler: () => void) {
@@ -60,6 +61,7 @@ namespace sensors {
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"        
         pauseUntil(event: UltrasonicSensorEvent) {
@@ -75,6 +77,7 @@ namespace sensors {
         //% blockId=sonarGetDistance
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=65 blockGap=8   
         //% group="Ultrasonic Sensor"     
         distance(): number {

@@ -28,6 +28,7 @@ namespace sensors {
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=65 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
@@ -44,6 +45,7 @@ namespace sensors {
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=65 blockGap=8        
         //% group="Gyro Sensor"
         rate(): number {

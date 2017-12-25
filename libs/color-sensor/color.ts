@@ -110,6 +110,7 @@ namespace sensors {
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
@@ -129,6 +130,7 @@ namespace sensors {
         //% blockId=colorPauseForColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Color Sensor"
         pauseForColor(color: ColorSensorColor) {
@@ -148,6 +150,7 @@ namespace sensors {
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=99
         //% group="Color Sensor"
         color(): ColorSensorColor {
@@ -165,6 +168,7 @@ namespace sensors {
         //% blockId=colorOnLightChanged
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=89 blockGap=8
         //% group="Color Sensor"
         onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
@@ -181,6 +185,7 @@ namespace sensors {
         //% blockId=colorPauseForLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=88 blockGap=8
         //% group="Color Sensor"
         pauseForLight(mode: LightIntensityMode, condition: LightCondition) {
@@ -198,6 +203,7 @@ namespace sensors {
         //% blockId=colorLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=87
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
