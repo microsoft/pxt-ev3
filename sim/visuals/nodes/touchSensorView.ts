@@ -1,7 +1,7 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
-    export class TouchSensorView extends StaticModuleView implements LayoutElement {
+    export class TouchSensorView extends ModuleView implements LayoutElement {
 
         private static RECT_ID = ["touch_gradient4", "touch_gradient3", "touch_gradient2", "touch_gradient1"];
         private static TOUCH_GRADIENT_UNPRESSED = ["linear-gradient-2", "linear-gradient-3", "linear-gradient-4", "linear-gradient-5"];
@@ -17,7 +17,7 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 10;
+            return 1 / 4;
         }
 
         public hasClick() {

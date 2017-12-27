@@ -88,7 +88,7 @@ namespace pxsim {
                     const inputNodes = ev3board().getInputNodes();
                     for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                         const node = inputNodes[port];
-                        if (node) {
+                        if (node && node.isUart()) {
                             // Actual
                             const index = 0; //UartOff.Actual + port * 2;
                             util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index, Math.floor(node.getValue()))

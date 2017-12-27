@@ -1,7 +1,7 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
-    export class LargeMotorView extends StaticModuleView implements LayoutElement {
+    export class LargeMotorView extends ModuleView implements LayoutElement {
 
         private static ROTATING_ECLIPSE_ID = "1eb2ae58-2419-47d4-86bf-4f26a7f0cf61";
 

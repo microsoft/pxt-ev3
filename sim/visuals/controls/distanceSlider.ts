@@ -9,18 +9,16 @@ namespace pxsim.visuals {
 
         private static SLIDER_HANDLE_HEIGHT = 31;
 
-        private isVisible = false;
-
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
             let gid = "gradient-slider-" + this.getId();
             this.group = svg.elt("g") as SVGGElement;
             this.gradient = createGradient(gid, this.getGradientDefinition());
-            this.gradient.setAttribute('x1', '-438.37');
-            this.gradient.setAttribute('y1', '419.43');
-            this.gradient.setAttribute('x2', '-438.37');
-            this.gradient.setAttribute('y2', '418.43');
-            this.gradient.setAttribute('gradientTransform', 'matrix(50, 0, 0, -110, 21949.45, 46137.67)');
-            this.gradient.setAttribute('gradientUnits', 'userSpaceOnUse');
+            this.gradient.setAttribute('x1', '0%');
+            this.gradient.setAttribute('y1', '0%');
+            this.gradient.setAttribute('x2', '0%');
+            this.gradient.setAttribute('y2', '100%');
+            // this.gradient.setAttribute('gradientTransform', 'matrix(50, 0, 0, -110, 21949.45, 46137.67)');
+            // this.gradient.setAttribute('gradientUnits', 'userSpaceOnUse');
             globalDefs.appendChild(this.gradient);
 
             this.group = svg.elt("g") as SVGGElement;
@@ -79,7 +77,7 @@ namespace pxsim.visuals {
         }
 
         updateState() {
-            if (!this.isVisible) {
+            if (!this.visible) {
                 return;
             }
             const node = this.state;
@@ -88,19 +86,11 @@ namespace pxsim.visuals {
             this.slider.setAttribute("transform", `translate(0, ${y - DistanceSliderControl.SLIDER_HANDLE_HEIGHT / 2})`);
         }
 
-        onComponentVisible() {
-            super.onComponentVisible();
-            this.isVisible = true;
-        }
-
-        onComponentHidden() {
-            this.isVisible = false;
-        }
-
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
             const height = this.getContentHeight(); //DistanceSliderControl.SLIDER_HEIGHT;
-            let t = Math.max(0, Math.min(1, (this.getTopPadding() + height + this.top / this.scaleFactor - cur.y / this.scaleFactor) / height))
+            const bBox = this.content.getBoundingClientRect();
+            let t = Math.max(0, Math.min(1, (this.getTopPadding() + height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height))
 
             const state = this.state;
             state.setDistance((1 - t) * (this.getMax()));
@@ -118,7 +108,7 @@ namespace pxsim.visuals {
             return {
                 stops: [
                     { offset: 0, color: '#626262' },
-                    { offset: 1, color: "#ddd" }
+                    { offset: 100, color: "#ddd" }
                 ]
             };
         }
