@@ -35,7 +35,7 @@ namespace pxsim {
                             return 2;
                         }
                         case DAL.opOutputStepPower:
-                        case DAL.opOutputStepPower:
+                        case DAL.opOutputStepSpeed:
                         case DAL.opOutputTimePower:
                         case DAL.opOutputTimeSpeed: {
                             // step speed
