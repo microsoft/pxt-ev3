@@ -68,6 +68,7 @@ namespace pxsim {
                 case DAL.opOutputSpeed:
                 case DAL.opOutputPower:
                     // assume power == speed
+                    // TODO: PID
                     this.speed = this.speedCmdValues[0];
                     break;
                 case DAL.opOutputTimeSpeed:
