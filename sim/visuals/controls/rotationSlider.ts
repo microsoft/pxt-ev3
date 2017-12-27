@@ -6,8 +6,6 @@ namespace pxsim.visuals {
         private group: SVGGElement;
         private slider: SVGGElement;
 
-        private isVisible = false;
-
         private static SLIDER_WIDTH = 70;
         private static SLIDER_HEIGHT = 78;
 
@@ -61,7 +59,7 @@ namespace pxsim.visuals {
         }
 
         updateState() {
-            if (!this.isVisible) {
+            if (!this.visible) {
                 return;
             }
             const node = this.state;
@@ -69,15 +67,6 @@ namespace pxsim.visuals {
             const x = RotationSliderControl.SLIDER_WIDTH * percentage / 100;
             const y = Math.abs((percentage - 50) / 50) * 10;
             this.slider.setAttribute("transform", `translate(${x}, ${y})`);
-        }
-
-        onComponentVisible() {
-            super.onComponentVisible();
-            this.isVisible = true;
-        }
-
-        onComponentHidden() {
-            this.isVisible = false;
         }
 
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
