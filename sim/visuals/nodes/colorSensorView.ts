@@ -10,7 +10,7 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 6;
+            return 1 / 4;
         }
 
         public updateState() {

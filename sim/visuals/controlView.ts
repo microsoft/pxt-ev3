@@ -12,6 +12,7 @@ namespace pxsim.visuals {
 
         constructor(protected parent: SVGSVGElement, protected globalDefs: SVGDefsElement, protected state: T, protected port: number) {
             super(state);
+
         }
 
         getInnerWidth(): number {
@@ -57,7 +58,6 @@ namespace pxsim.visuals {
         }
 
         onComponentVisible() {
-
         }
     }
 }

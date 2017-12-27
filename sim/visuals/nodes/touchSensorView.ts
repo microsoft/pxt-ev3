@@ -17,7 +17,7 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 10;
+            return 1 / 4;
         }
 
         public hasClick() {
