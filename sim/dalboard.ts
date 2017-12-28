@@ -115,12 +115,29 @@ namespace pxsim {
             return this.brickNode;
         }
 
+        motorUsed(port:number, large: boolean) {
+            for(let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    if (!this.outputNodes[motorPort])
+                        this.outputNodes[motorPort] = new MotorNode(motorPort, large);
+                }    
+            }            
+        }
+
         getMotor(port: number, large?: boolean): MotorNode[] {
-            if (port == 0xFF) return this.getMotors(); // Return all motors
-            const motorPort = this.motorMap[port];
-            if (!this.outputNodes[motorPort])
-                this.outputNodes[motorPort] = new MotorNode(motorPort, large);
-            return [this.outputNodes[motorPort]];
+            const r = [];
+            for(let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    const outputNode = this.outputNodes[motorPort];
+                    if (outputNode)
+                        r.push(outputNode);
+                }    
+            }
+            return r;
         }
 
         getMotors() {

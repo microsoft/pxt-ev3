@@ -8,8 +8,8 @@ namespace pxsim {
         private angle: number = 0;
         private tacho: number = 0;
         private speed: number = 0;
+        private polarity: number = 1; // -1, 1 or -1
 
-        private polarity: boolean;
         private started: boolean;
         private speedCmd: DAL;
         private speedCmdValues: number[];
@@ -22,7 +22,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return this.speed;
+            return this.speed * (this.polarity  == 0 ? -1 : 1);
         }
 
         getAngle() {
@@ -42,12 +42,18 @@ namespace pxsim {
 
         setLarge(large: boolean) {
             this.id = large ? NodeType.LargeMotor : NodeType.MediumMotor;
+            // large 170 rpm  (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
             this.rotationsPerMilliSecond = (large ? 170 : 250) / 60000;
         }
 
         setPolarity(polarity: number) {
             // Either 1 or 255 (reverse)
-            this.polarity = polarity === 255;
+            /*
+                -1 : Motor will run backward  
+                0 : Motor will run opposite direction  
+                1 : Motor will run forward             
+            */
+            this.polarity = polarity;
         }
 
         reset() {
@@ -68,6 +74,18 @@ namespace pxsim {
         }
 
         updateState(elapsed: number) {
+            console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
+            const interval = Math.min(20, elapsed);
+            let t = 0;
+            while(t < elapsed) {
+                let dt = interval;
+                if (t + dt > elapsed) dt = elapsed - t;
+                this.updateStateStep(dt);
+                t += dt;
+            }
+        }
+
+        private updateStateStep(elapsed: number) {
             // compute new speed
             switch (this.speedCmd) {
                 case DAL.opOutputSpeed:
@@ -99,12 +117,13 @@ namespace pxsim {
                         if (brake) this.speed = 0;
                         this.clearSpeedCmd();
                     }
+                    this.speed = Math.round(this.speed); // integer only
                     break;
             }
 
             // compute delta angle
-            const rotations = this.speed / 100 * this.rotationsPerMilliSecond * elapsed;
-            const deltaAngle = rotations * 360;
+            const rotations = this.getSpeed() / 100 * this.rotationsPerMilliSecond * elapsed;
+            const deltaAngle = Math.round(rotations * 360);
             if (deltaAngle) {
                 this.angle += deltaAngle;
                 this.tacho += Math.abs(deltaAngle);
@@ -113,9 +132,9 @@ namespace pxsim {
 
             // if the motor was stopped or there are no speed commands,
             // let it coast to speed 0
-            if (this.speed && (!this.started || !this.speedCmd)) {
+            if (this.speed && !(this.started || this.speedCmd)) {
                 // decay speed 5% per tick
-                this.speed = Math.max(0, Math.abs(this.speed) - 5) * Math.sign(this.speed);
+                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * Math.sign(this.speed));
             }
         }
     }

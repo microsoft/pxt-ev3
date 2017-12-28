@@ -358,14 +358,14 @@ namespace pxsim.visuals {
             if (!this.running) return;
             const fps = GAME_LOOP_FPS;
             let now;
-            let then = Date.now();
+            let then = pxsim.U.now();
             let interval = 1000 / fps;
             let delta;
             let that = this;
             function loop() {
                 const animationId = requestAnimationFrame(loop);
                 that.lastAnimationIds.push(animationId);
-                now = Date.now();
+                now = pxsim.U.now();
                 delta = now - then;
                 if (delta > interval) {
                     then = now;
