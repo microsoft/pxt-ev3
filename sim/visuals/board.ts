@@ -212,9 +212,9 @@ namespace pxsim.visuals {
                 }
                 case NodeType.MediumMotor:
                 case NodeType.LargeMotor: {
-                    // const state = ev3board().getMotor(port)[0];
-                    // view = new MotorInputControl(this.element, this.defs, state, port);
-                    // break;
+                    const state = ev3board().getMotors()[port];
+                    view = new MotorReporterControl(this.element, this.defs, state, port);
+                    break;
                 }
             }
 
