@@ -94,6 +94,9 @@ namespace pxsim {
                             motors.forEach(motor => motor.setLarge(large));
                             return 2;
                         }
+                        default:
+                            console.warn('unknown cmd: ' + cmd);
+                            break;
                     }
 
                     console.log("pwm write");
