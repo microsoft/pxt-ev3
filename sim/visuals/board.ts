@@ -43,10 +43,11 @@ namespace pxsim.visuals {
             font-size:30px;
         }
         .sim-text.number {
-            font-family: Lato, Work Sans, PT Serif, Source Serif Pro;
+            font-family: Courier, Lato, Work Sans, PT Serif, Source Serif Pro;
+            font-weight: bold;
         }
         .sim-text.inverted {
-            fill:#000;
+            fill:#5A5A5A;
         }
 
         /* Color Grid */

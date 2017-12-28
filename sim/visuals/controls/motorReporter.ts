@@ -12,10 +12,20 @@ namespace pxsim.visuals {
         getInnerView() {
             this.group = svg.elt("g") as SVGGElement;
 
-            const outerCircle = pxsim.svg.child(this.group, "circle", { 'stroke-dasharray': '565.48', 'stroke-dashoffset': '0', 'cx': 100, 'cy': 100, 'r': '90', 'style': `fill:transparent; transition: stroke-dashoffset 1s linear;`, 'stroke': '#a8aaa8', 'stroke-width': '1rem' }) as SVGCircleElement;
-            this.circleBar = pxsim.svg.child(this.group, "circle", { 'stroke-dasharray': '565.48', 'stroke-dashoffset': '0', 'cx': 100, 'cy': 100, 'r': '90', 'style': `fill:transparent; transition: stroke-dashoffset 1s linear;`, 'stroke': '#f12a21', 'stroke-width': '1rem' }) as SVGCircleElement;
+            const outerCircle = pxsim.svg.child(this.group, "circle", { 
+                'stroke-dasharray': '565.48', 'stroke-dashoffset': '0', 
+                'cx': 100, 'cy': 100, 'r': '90', 'style': `fill:transparent; transition: stroke-dashoffset 1s linear;`,
+                'stroke': '#a8aaa8', 'stroke-width': '1rem' }) as SVGCircleElement;
+            this.circleBar = pxsim.svg.child(this.group, "circle", { 
+                'stroke-dasharray': '565.48', 'stroke-dashoffset': '0', 
+                'cx': 100, 'cy': 100, 'r': '90', 'style': `fill:transparent; transition: stroke-dashoffset 1s linear;`,
+                'stroke': '#f12a21', 'stroke-width': '1rem' }) as SVGCircleElement;
 
-            this.reporter = pxsim.svg.child(this.group, "text", { 'x': this.getWidth() / 2, 'y': this.getHeight() / 2, 'text-anchor': 'middle', 'style': 'font-size: 50px', 'class': 'sim-text inverted number' }) as SVGTextElement;
+            this.reporter = pxsim.svg.child(this.group, "text", { 
+                'x': this.getWidth() / 2, 'y': this.getHeight() / 2, 
+                'text-anchor': 'middle', 'alignment-baseline': 'middle',
+                'style': 'font-size: 50px', 
+                'class': 'sim-text inverted number' }) as SVGTextElement;
 
             return this.group;
         }
