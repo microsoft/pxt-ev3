@@ -34,6 +34,11 @@ namespace pxsim {
                             motors.forEach(motor => motor.reset());
                             return 2;
                         }
+                        case DAL.opOutputClearCount:
+                            const port = buf.data[1];
+                            const motors = ev3board().getMotor(port);
+                            motors.forEach(motor => motor.clearCount());
+                            break;
                         case DAL.opOutputStepPower:
                         case DAL.opOutputStepSpeed:
                         case DAL.opOutputTimePower:

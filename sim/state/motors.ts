@@ -54,6 +54,11 @@ namespace pxsim {
             // not sure what reset does...
         }
 
+        clearCount() {
+            this.tacho = 0;
+            this.angle = 0;
+        }
+
         stop() {
             this.started = false;
         }
