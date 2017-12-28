@@ -75,6 +75,17 @@ namespace pxsim {
 
         updateState(elapsed: number) {
             console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
+            const interval = Math.min(20, elapsed);
+            let t = 0;
+            while(t < elapsed) {
+                let dt = interval;
+                if (t + dt > elapsed) dt = elapsed - t;
+                this.updateStateStep(dt);
+                t += dt;
+            }
+        }
+
+        private updateStateStep(elapsed: number) {
             // compute new speed
             switch (this.speedCmd) {
                 case DAL.opOutputSpeed:
