@@ -21,8 +21,6 @@
   "brick.Button.pauseUntil": "Waits until the event is raised",
   "brick.Button.pauseUntil|param|ev": "the event to wait for",
   "brick.Button.wasPressed": "See if the button was pressed again since the last time you checked.",
-  "brick._imagePicker": "An image",
-  "brick._imagePicker|param|image": "the image",
   "brick.buttonDown": "Down button on the EV3 Brick.",
   "brick.buttonEnter": "Enter button on the EV3 Brick.",
   "brick.buttonLeft": "Left button on the EV3 Brick.",
