@@ -19,8 +19,8 @@ namespace pxsim {
                     // console.log("motor before read");
                     for (let port = 0; port < DAL.NUM_OUTPUTS; ++port) {
                         const output = outputs[port];
-                        const speed = output ? Math.round(outputs[port].getSpeed()) : 0;
-                        const angle = output ? Math.round(outputs[port].getAngle()) : 0;
+                        const speed = output ? outputs[port].getSpeed() : 0;
+                        const angle = output ? outputs[port].getAngle() : 0;
                         const tci = MotorDataOff.TachoCounts + port * MotorDataOff.Size;
                         const tsi = MotorDataOff.TachoSensor + port * MotorDataOff.Size;
                         data[tci] = data[tci + 1] = data[tci + 2] = data[tci + 3] = 0; // Tacho count
