@@ -222,6 +222,20 @@ namespace pxsim.visuals {
             const contentHeight = this.height;
             if (!contentHeight) return;
 
+            const noConnections = this.outputs.concat(this.inputs).filter(m => m.getId() != NodeType.Port).length == 0;
+
+            if (noConnections) {
+                // No connections render the entire board
+                this.brick.resize(contentWidth, contentHeight);
+                this.brick.translate(0, 0);
+
+                // Hide all other connections
+                this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
+                return;
+            } else {
+                this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
+            }
+
             const moduleHeight = this.getModuleHeight();
 
             const brickHeight = this.getBrickHeight();
