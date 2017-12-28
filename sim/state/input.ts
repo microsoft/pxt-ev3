@@ -3,7 +3,7 @@ namespace pxsim.motors {
 
     export function __motorUsed(port: number, large: boolean) {
         console.log("MOTOR INIT " + port);
-        const motors = ev3board().getMotor(port, large);
+        const motors = ev3board().motorUsed(port, large);
         runtime.queueDisplayUpdate();
     }
 }

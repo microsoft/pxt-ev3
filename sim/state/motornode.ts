@@ -42,6 +42,7 @@ namespace pxsim {
 
         setLarge(large: boolean) {
             this.id = large ? NodeType.LargeMotor : NodeType.MediumMotor;
+            // large 170 rpm  (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
             this.rotationsPerMilliSecond = (large ? 170 : 250) / 60000;
         }
 
@@ -73,6 +74,7 @@ namespace pxsim {
         }
 
         updateState(elapsed: number) {
+            console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
             // compute new speed
             switch (this.speedCmd) {
                 case DAL.opOutputSpeed:
@@ -110,7 +112,7 @@ namespace pxsim {
 
             // compute delta angle
             const rotations = this.getSpeed() / 100 * this.rotationsPerMilliSecond * elapsed;
-            const deltaAngle = rotations * 360;
+            const deltaAngle = Math.round(rotations * 360);
             if (deltaAngle) {
                 this.angle += deltaAngle;
                 this.tacho += Math.abs(deltaAngle);
@@ -119,9 +121,9 @@ namespace pxsim {
 
             // if the motor was stopped or there are no speed commands,
             // let it coast to speed 0
-            if (this.speed && (!this.started || !this.speedCmd)) {
+            if (this.speed && !(this.started || this.speedCmd)) {
                 // decay speed 5% per tick
-                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 5) * Math.sign(this.speed));
+                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * Math.sign(this.speed));
             }
         }
     }
