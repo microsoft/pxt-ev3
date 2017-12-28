@@ -42,8 +42,7 @@ namespace pxsim.visuals {
 
         private updateSpeed(speed: number) {
             let c = Math.PI * (90 * 2);
-            if (speed < 0) speed = 100 - speed;
-
+            speed = Math.abs(speed);
             let pct = ((100 - speed) / 100) * c;
             this.circleBar.setAttribute('stroke-dashoffset', `${pct}`);
         }
