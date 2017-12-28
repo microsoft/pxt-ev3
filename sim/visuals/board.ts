@@ -33,10 +33,17 @@ namespace pxsim.visuals {
             font-family:"Lucida Console", Monaco, monospace;
             font-size:8px;
             fill:#fff;
-            pointer-events: none; user-select: none;
+            pointer-events: none;
+            user-select: none;
         }
         .sim-text.small {
             font-size:6px;
+        }
+        .sim-text.large {
+            font-size:30px;
+        }
+        .sim-text.number {
+            font-family: Lato, Work Sans, PT Serif, Source Serif Pro;
         }
         .sim-text.inverted {
             fill:#000;
