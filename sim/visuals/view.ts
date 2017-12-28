@@ -219,7 +219,6 @@ namespace pxsim.visuals {
             this.changed = false;
             return res;
         }
-
     }
 
     export abstract class SimView<T extends BaseNode> extends View implements LayoutElement {
