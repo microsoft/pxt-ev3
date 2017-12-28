@@ -27,8 +27,8 @@ namespace pxsim.visuals {
             this.group = svg.elt("g") as SVGGElement;
 
             const reporterGroup = pxsim.svg.child(this.group, "g");
-            reporterGroup.setAttribute("transform", `translate(31, 42)`);
-            this.reporter = pxsim.svg.child(reporterGroup, "text", { 'x': 0, 'y': '0', 'class': 'sim-text number large inverted' }) as SVGTextElement;
+            reporterGroup.setAttribute("transform", `translate(${this.getWidth() / 2}, 42)`);
+            this.reporter = pxsim.svg.child(reporterGroup, "text", { 'text-anchor': 'middle', 'x': 0, 'y': '0', 'class': 'sim-text number large inverted' }) as SVGTextElement;
 
             const sliderGroup = pxsim.svg.child(this.group, "g");
             sliderGroup.setAttribute("transform", `translate(${this.getWidth() / 2 - this.getSliderWidth() / 2}, ${this.getReporterHeight()})`)
@@ -60,12 +60,15 @@ namespace pxsim.visuals {
             }, ev => {
                 captured = true;
                 if ((ev as MouseEvent).clientY != undefined) {
+                    dragSurface.setAttribute('cursor', '-webkit-grabbing');
                     this.updateSliderValue(pt, parent, ev as MouseEvent);
                 }
             }, () => {
                 captured = false;
+                dragSurface.setAttribute('cursor', '-webkit-grab');
             }, () => {
                 captured = false;
+                dragSurface.setAttribute('cursor', '-webkit-grab');
             })
 
             return this.group;

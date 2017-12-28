@@ -73,8 +73,17 @@ namespace pxsim {
             this.started = true;
         }
 
+        isInput() {
+            // TODO: figure out if a motor is in an input or output state
+            return true;
+        }
+
+        setSpeedAsInput(speed: number) {
+            this.speed = speed;
+        }
+
         updateState(elapsed: number) {
-            console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
+            //console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
             const interval = Math.min(20, elapsed);
             let t = 0;
             while(t < elapsed) {
