@@ -340,6 +340,28 @@ namespace pxsim.visuals {
                     cancelAnimationFrame(animationId);
                 })
             }
+            // Save previous inputs for the next cycle
+            EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
+            EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);
+        }
+
+        private static previousSelectedInputs: number[];
+        private static previousSeletedOutputs: number[];
+
+        private static isPreviousInputSelected(index: number, id: number) {
+            if (EV3View.previousSelectedInputs && EV3View.previousSelectedInputs[index] == id) {
+                EV3View.previousSelectedInputs[index] = undefined;
+                return true;
+            }
+            return false;
+        }
+
+        private static isPreviousOutputSelected(index: number, id: number) {
+            if (EV3View.previousSeletedOutputs && EV3View.previousSeletedOutputs[index] == id) {
+                EV3View.previousSeletedOutputs[index] = undefined;
+                return true;
+            }
+            return false;
         }
 
         private begin() {
@@ -382,7 +404,9 @@ namespace pxsim.visuals {
                 const view = this.getDisplayViewForNode(node.id, index);
                 if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    const control = view.getSelected() ? this.getControlForNode(node.id, index) : undefined;
+                    const isSelected = EV3View.isPreviousInputSelected(index, node.id) || view.getSelected();
+                    if (isSelected && !view.getSelected()) view.setSelected(true);
+                    const control = isSelected ? this.getControlForNode(node.id, index) : undefined;
                     const closeIcon = control ? this.getCloseIconView() : undefined;
                     this.layoutView.setInput(index, view, control, closeIcon);
                     view.updateState();
@@ -401,7 +425,9 @@ namespace pxsim.visuals {
                 const view = this.getDisplayViewForNode(node.id, index);
                 if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    const control = view.getSelected() ? this.getControlForNode(node.id, index) : undefined;
+                    const isSelected = EV3View.isPreviousOutputSelected(index, node.id) || view.getSelected();
+                    if (isSelected && !view.getSelected()) view.setSelected(true);
+                    const control = isSelected ? this.getControlForNode(node.id, index) : undefined;
                     const closeIcon = control ? this.getCloseIconView() : undefined;
                     this.layoutView.setOutput(index, view, control, closeIcon);
                     view.updateState();

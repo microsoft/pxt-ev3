@@ -20,6 +20,7 @@ namespace pxsim.visuals {
         }
 
         updateState() {
+            super.updateState();
             const motorState = ev3board().getMotors()[this.port];
             if (!motorState) return;
             const speed = motorState.getSpeed();
