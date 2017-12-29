@@ -67,8 +67,9 @@ namespace pxsim.visuals {
         .sim-motor-btn {
             cursor: pointer;
         }
-        .sim-motor-btn:hover {
-            fill: gray !important;
+        .sim-motor-btn:hover .btn {
+            stroke-width: 2px;
+            stroke: black !important;
         }
     `;
 

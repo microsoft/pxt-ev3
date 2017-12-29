@@ -45,12 +45,16 @@ namespace pxsim.visuals {
             pxsim.svg.child(handleInner, "circle", { 'cx': 0, 'cy': 0, 'r': 29.5, 'style': 'fill: none;stroke: #b32e29' });
 
             // Add move buttons
-            const moveBtnRadius = 40;
-            const leftMoveG = pxsim.svg.child(this.group, 'g');
+            const leftMoveG = pxsim.svg.child(this.group, 'g', {'class': 'sim-motor-btn', 'transform': `translate(${1}, ${sliderHeight - 2}) scale(2.5)`});
             const leftMove = pxsim.svg.child(leftMoveG, 'circle', {
-                'cx': moveBtnRadius, 'cy': sliderHeight + moveBtnRadius,
-                'r': moveBtnRadius, 'style': 'fill: #a8aaa8', 'class': 'sim-motor-btn'
+                'cx': 16, 'cy': 16, 'r': 16, 'style': 'fill: #a8aaa8', 'class': 'btn'
             });
+            const semiCircleLeft = pxsim.svg.child(leftMoveG, 'g');
+            pxsim.svg.child(semiCircleLeft, 'circle', { 'cx': 16, 'cy': 16, 'r': 9, 'style': 'fill: none'});
+            pxsim.svg.child(semiCircleLeft, 'circle', { 'cx': 16, 'cy': 16, 'r': 8, 'style': 'fill: none;stroke: #fff;stroke-width: 2px'});
+            pxsim.svg.child(leftMoveG, 'path', {'d': 'M501,382.33l-6.62-2.28-2.28,6.62,6.62,2.28Z', 'transform': 'translate(-472 -368)', 'fill': '#a8aaa8'});
+            pxsim.svg.child(leftMoveG, 'path', {'d': 'M497.93,377.62c-.57,2.09-1.14,4.11-1.71,6.18l-6.06-2Z', 'transform': 'translate(-472 -368)', 'fill': '#fff'});
+
             let leftMoveFrame: number;
             touchEvents(leftMove, ev => {
                 // move
@@ -69,11 +73,16 @@ namespace pxsim.visuals {
                 if (leftMoveFrame) cancelAnimationFrame(leftMoveFrame);
             })
 
-            const rightMoveG = pxsim.svg.child(this.group, 'g');
+            const rightMoveG = pxsim.svg.child(this.group, 'g', {'class': 'sim-motor-btn', 'transform': `translate(${42}, ${sliderHeight - 2}) scale(2.5)`});
             const rightMove = pxsim.svg.child(rightMoveG, 'circle', {
-                'cx': this.getWidth() - moveBtnRadius, 'cy': sliderHeight + moveBtnRadius,
-                'r': moveBtnRadius, 'style': 'fill: #a8aaa8', 'class': 'sim-motor-btn'
+                'cx': 67, 'cy': 16, 'r': 16, 'style': 'fill: #a8aaa8', 'class': 'btn'
             });
+            const semiCircleRight = pxsim.svg.child(rightMoveG, 'g');
+            pxsim.svg.child(semiCircleRight, 'circle', { 'cx': 67, 'cy': 17, 'r': 9, 'style': 'fill: none'});
+            pxsim.svg.child(semiCircleRight, 'circle', { 'cx': 67, 'cy': 17, 'r': 8, 'style': 'fill: none;stroke: #fff;stroke-width: 2px'});
+            pxsim.svg.child(rightMoveG, 'rect', {'x': 527, 'y': 380, 'width': 7, 'height': 7, 'transform': 'translate(-567.95 -174.39) rotate(-19)', 'style': 'fill: #a8aaa8'});
+            pxsim.svg.child(rightMoveG, 'path', {'d': 'M529.08,376.63c.57,2.09,1.14,4.11,1.7,6.18l6.06-2Z', 'transform': 'translate(-472 -368)', 'fill': '#fff'});
+
             let rightMoveFrame: number;
             touchEvents(rightMove, ev => {
                 // move
