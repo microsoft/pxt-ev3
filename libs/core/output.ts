@@ -14,7 +14,7 @@ enum Output {
     //% block="C+D"
     CD = Output.C | Output.D,
     //% block="A+D"
-    AD = Output.B | Output.C,
+    AD = Output.A | Output.D,
     //% block="All"
     ALL = 0x0f
 }
