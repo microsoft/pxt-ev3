@@ -404,8 +404,8 @@ namespace motors {
 
         constructor(ports: Output) {
             super(ports, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
-            this.wheelRadius = 2;
-            this.baseLength = 10;
+            this.wheelRadius = 3;
+            this.baseLength = 12;
             this.markUsed();
         }
 
