@@ -68,7 +68,7 @@ namespace sensors.internal {
                 if (info.sensor) return info.sensor._query()
                 return 0
             }, (prev, curr) => {
-                if (info.sensor && curr != null) info.sensor._update(prev, curr)
+                if (info.sensor) info.sensor._update(prev, curr)
             })
         }
 
@@ -214,6 +214,7 @@ namespace sensors.internal {
         }
 
         public setLevel(level: number) {
+            if (this == null) return
             this.level = this.clampValue(level);
 
             if (this.level >= this.highThreshold) {
