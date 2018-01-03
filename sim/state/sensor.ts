@@ -5,6 +5,7 @@ namespace pxsim {
 
         protected mode: number;
         protected valueChanged: boolean;
+        protected modeChanged: boolean;
 
         constructor(port: number) {
             super(port);
@@ -24,6 +25,8 @@ namespace pxsim {
 
         setMode(mode: number) {
             this.mode = mode;
+            this.changed = true;
+            this.modeChanged = true;
         }
 
         getMode() {
@@ -41,6 +44,12 @@ namespace pxsim {
         valueChange() {
             const res = this.valueChanged;
             this.valueChanged = false;
+            return res;
+        }
+
+        modeChange() {
+            const res = this.modeChanged;
+            this.modeChanged = false;
             return res;
         }
 
