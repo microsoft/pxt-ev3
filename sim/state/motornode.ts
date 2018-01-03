@@ -148,7 +148,9 @@ namespace pxsim {
                     if (dstep < stepsOrTime)
                         this.speed = speed;
                     else {
-                        if (brake) this.speed = 0;
+                        // 0 is special case, run infinite
+                        if (!stepsOrTime) this.speed = speed;
+                        else if (brake) this.speed = 0;
                         this.clearSpeedCmd();
                     }
                     // send synched motor state
