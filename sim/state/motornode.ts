@@ -15,6 +15,7 @@ namespace pxsim {
         private speedCmdValues: number[];
         private speedCmdTacho: number;
         private speedCmdTime: number;
+        private _synchedMotor: MotorNode; // non-null if master motor
 
         constructor(port: number, large: boolean) {
             super(port);
@@ -22,11 +23,16 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return this.speed * (this.polarity  == 0 ? -1 : 1);
+            return this.speed * (this.polarity == 0 ? -1 : 1);
         }
 
         getAngle() {
             return this.angle;
+        }
+
+        // returns the slave motor if any
+        getSynchedMotor() {
+            return this._synchedMotor;
         }
 
         setSpeedCmd(cmd: DAL, values: number[]) {
@@ -34,10 +40,17 @@ namespace pxsim {
             this.speedCmdValues = values;
             this.speedCmdTacho = this.angle;
             this.speedCmdTime = pxsim.U.now();
+            delete this._synchedMotor;
+        }
+
+        setSyncCmd(motor: MotorNode, cmd: DAL, values: number[]) {
+            this.setSpeedCmd(cmd, values);
+            this._synchedMotor = motor;
         }
 
         clearSpeedCmd() {
             delete this.speedCmd;
+            delete this._synchedMotor;
         }
 
         setLarge(large: boolean) {
@@ -77,7 +90,7 @@ namespace pxsim {
             console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
             const interval = Math.min(20, elapsed);
             let t = 0;
-            while(t < elapsed) {
+            while (t < elapsed) {
                 let dt = interval;
                 if (t + dt > elapsed) dt = elapsed - t;
                 this.updateStateStep(dt);
@@ -97,14 +110,14 @@ namespace pxsim {
                 case DAL.opOutputTimeSpeed:
                 case DAL.opOutputTimePower:
                 case DAL.opOutputStepPower:
-                case DAL.opOutputStepSpeed:
+                case DAL.opOutputStepSpeed: {
                     // ramp up, run, ramp down, <brake> using time
                     const speed = this.speedCmdValues[0];
                     const step1 = this.speedCmdValues[1];
                     const step2 = this.speedCmdValues[2];
                     const step3 = this.speedCmdValues[3];
                     const brake = this.speedCmdValues[4];
-                    const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed) 
+                    const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed)
                         ? pxsim.U.now() - this.speedCmdTime
                         : this.tacho - this.speedCmdTacho;
                     if (dstep < step1) // rampup
@@ -117,9 +130,33 @@ namespace pxsim {
                         if (brake) this.speed = 0;
                         this.clearSpeedCmd();
                     }
-                    this.speed = Math.round(this.speed); // integer only
                     break;
+                }
+                case DAL.opOutputStepSync:
+                case DAL.opOutputTimeSync: {
+                    if (!this._synchedMotor) // handled in other motor code
+                        break;
+
+                    const otherMotor = this._synchedMotor;
+                    const speed = this.speedCmdValues[0];
+                    const turnRatio = this.speedCmdValues[1];
+                    const stepsOrTime = this.speedCmdValues[2];
+                    const brake = this.speedCmdValues[3];
+                    const dstep = this.speedCmd == DAL.opOutputTimeSync
+                        ? pxsim.U.now() - this.speedCmdTime
+                        : this.tacho - this.speedCmdTacho;
+                    if (dstep < stepsOrTime)
+                        this.speed = speed;
+                    else {
+                        if (brake) this.speed = 0;
+                        this.clearSpeedCmd();
+                    }
+                    // send synched motor state
+                    otherMotor.speed = Math.floor(this.speed * turnRatio / 100);                 
+                    break;
+                }
             }
+            this.speed = Math.round(this.speed); // integer only
 
             // compute delta angle
             const rotations = this.getSpeed() / 100 * this.rotationsPerMilliSecond * elapsed;

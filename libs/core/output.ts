@@ -14,7 +14,7 @@ enum Output {
     //% block="C+D"
     CD = Output.C | Output.D,
     //% block="A+D"
-    AD = Output.B | Output.C,
+    AD = Output.A | Output.D,
     //% block="All"
     ALL = 0x0f
 }
@@ -439,17 +439,17 @@ namespace motors {
 
         /**
          * Turns the motor and the follower motor by a number of rotations
+         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 100
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
-         * @param steering the ratio of power sent to the follower motor, from ``-100`` to ``100``
-         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorPairTurn block="steer %chassis|%steering|%|at speed %speed|%|by %value|%unit"
+        //% blockId=motorPairTurn block="steer %chassis|%turnRatio|%|at speed %speed|%|by %value|%unit"
         //% weight=9 blockGap=8
-        //% steering.min=-100 steering=100
+        //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
         //% group="Chassis"
-        steer(steering: number, speed: number, value: number, unit: MoveUnit) {
+        steer(turnRatio: number, speed: number, value: number, unit: MoveUnit) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
@@ -457,7 +457,7 @@ namespace motors {
                 return;
             }
 
-            const turnRatio = Math.clamp(-200, 200, steering + 100 >> 0);
+            turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -470,7 +470,7 @@ namespace motors {
                     useSteps = true;
                     break;
                 default:
-                    stepsOrTime = value;
+                    stepsOrTime = value >> 0;
                     useSteps = false;
                     break;
             }
@@ -502,10 +502,10 @@ namespace motors {
         //% inlineInputMode=inline
         //% group="Chassis"
         tank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
-            speedLeft = Math.clamp(speedLeft >> 0, -100, 100);
-            speedRight = Math.clamp(speedRight >> 0, -100, 100);
-            const steering = (speedRight * 100 / speedLeft) >> 0;
-            this.steer(speedLeft, steering, value, unit);
+            speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
+            speedRight = Math.clamp(-100, 100, speedRight >> 0);
+            const turnRatio = speedLeft == 0 ? 0 : speedRight / speedLeft * 100;
+            this.steer(turnRatio, speedLeft, value, unit);
         }
 
         /**

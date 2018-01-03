@@ -56,6 +56,25 @@ namespace pxsim {
                             motors.forEach(motor => motor.setSpeedCmd(cmd, [speed, step1, step2, step3, brake]));
                             return 2;
                         }
+                        case DAL.opOutputStepSync:
+                        case DAL.opOutputTimeSync: {
+                            const port = buf.data[1];
+                            const speed = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, 2); // signed byte
+                            // note that b[3] is padding
+                            const turnRatio = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int16LE, 4);
+                            // b[6], b[7] is padding
+                            const stepsOrTime = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int32LE, 8);
+                            const brake = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, 12);
+
+                            const motors = ev3board().getMotor(port);
+                            for (const motor of motors) {
+                                const otherMotor = motors.filter(m => m.port != motor.port)[0];
+                                motor.setSyncCmd(
+                                    motor.port < otherMotor.port ? otherMotor : undefined,
+                                    cmd, [speed, turnRatio, stepsOrTime, brake]);
+                            }
+                            return 2;
+                        }
                         case DAL.opOutputStop: {
                             // stop
                             const port = buf.data[1];
