@@ -54,7 +54,7 @@
   "motors.MotorBase.setBrake|block": "set %motor|brake %brake",
   "motors.MotorBase.setReversed|block": "set %motor|reversed %reversed",
   "motors.MotorBase.setSpeed|block": "set speed of %motor|to %speed|%",
-  "motors.SynchedMotorPair.steer|block": "steer %chassis|%steering|%|at speed %speed|%|by %value|%unit",
+  "motors.SynchedMotorPair.steer|block": "steer %chassis|%turnRatio|%|at speed %speed|%|by %value|%unit",
   "motors.SynchedMotorPair.tank|block": "tank %chassis|left %speedLeft|%|right %speedRight|%|by %value|%unit",
   "motors.largeAB|block": "large A+B",
   "motors.largeAD|block": "large A+D",

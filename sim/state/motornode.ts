@@ -30,6 +30,11 @@ namespace pxsim {
             return this.angle;
         }
 
+        // returns the slave motor if any
+        getSynchedMotor() {
+            return this._synchedMotor;
+        }
+
         setSpeedCmd(cmd: DAL, values: number[]) {
             this.speedCmd = cmd;
             this.speedCmdValues = values;

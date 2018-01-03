@@ -65,13 +65,13 @@ namespace pxsim {
                             // b[6], b[7] is padding
                             const stepsOrTime = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int32LE, 8);
                             const brake = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, 12);
-                            
+
                             const motors = ev3board().getMotor(port);
                             for (const motor of motors) {
-                                const otherMotor = motors.filter(m => m.port != motor.port)[0];                               
-                                motors.forEach(motor => motor.setSyncCmd(
-                                    otherMotor.port < motor.port ? otherMotor : undefined,
-                                    cmd, [speed, turnRatio, stepsOrTime, brake]));
+                                const otherMotor = motors.filter(m => m.port != motor.port)[0];
+                                motor.setSyncCmd(
+                                    motor.port < otherMotor.port ? otherMotor : undefined,
+                                    cmd, [speed, turnRatio, stepsOrTime, brake]);
                             }
                             return 2;
                         }
