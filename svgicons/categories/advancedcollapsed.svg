@@ -6,18 +6,5 @@
 	.st0{fill:#FFFFFF;}
 </style>
 <title>color</title>
-<g id="menu_icn_advanced_closed" transform="translate(-9594 10075)">
-	<g id="Line_9_1_">
-		
-			<rect x="9600.7" y="-10067" transform="matrix(0.7071 -0.7071 0.7071 0.7071 9926.6836 3842.5476)" class="st0" width="2" height="11.3"/>
-	</g>
-	<g id="Line_10_1_">
-		
-			<rect x="9603" y="-10062.3" transform="matrix(0.7071 -0.7071 0.7071 0.7071 9928.7334 3847.4973)" class="st0" width="11.3" height="2"/>
-	</g>
-	<g id="menu_icn_advanced_closed-2">
-		
-			<rect x="9604.7" y="-10057.6" transform="matrix(0.7071 -0.7071 0.7071 0.7071 9924.7324 3846.2527)" class="st0" width="1" height="1"/>
-	</g>
-</g>
+<polygon class="st0" points="22.8,6.8 20.8,4.9 11.5,14.2 2.2,4.9 0.2,6.8 10.5,17.1 10.5,17.1 11.5,18.1 11.8,17.8 11.8,17.8 "/>
 </svg>

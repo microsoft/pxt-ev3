@@ -153,12 +153,6 @@ namespace pxsim.visuals {
             this.contentGroup = svg.elt("g") as SVGGElement;
             this.scrollGroup = svg.child(this.contentGroup, "g") as SVGGElement;
 
-            // Inject all view containers
-            for (let i = 0; i < 4; i++) {
-                this.inputContainers[i].inject(this.scrollGroup);
-                this.outputContainers[i].inject(this.scrollGroup);
-            }
-
             this.inputs = [];
             this.outputs = [];
             this.inputControls = [];
@@ -170,6 +164,12 @@ namespace pxsim.visuals {
             }
             for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                 this.inputWires[port].inject(this.scrollGroup);
+            }
+
+            // Inject all view containers
+            for (let i = 0; i < 4; i++) {
+                this.inputContainers[i].inject(this.scrollGroup);
+                this.outputContainers[i].inject(this.scrollGroup);
             }
 
             // Inject all ports
@@ -222,6 +222,20 @@ namespace pxsim.visuals {
             const contentHeight = this.height;
             if (!contentHeight) return;
 
+            const noConnections = this.outputs.concat(this.inputs).filter(m => m.getId() != NodeType.Port).length == 0;
+
+            if (noConnections) {
+                // No connections render the entire board
+                this.brick.resize(contentWidth, contentHeight);
+                this.brick.translate(0, 0);
+
+                // Hide all other connections
+                this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
+                return;
+            } else {
+                this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
+            }
+
             const moduleHeight = this.getModuleHeight();
 
             const brickHeight = this.getBrickHeight();
@@ -267,7 +281,7 @@ namespace pxsim.visuals {
             currentY = moduleHeight;
 
             const wireBrickSpacing = brickWidth / 5;
-            const wiringYPadding = 0;
+            const wiringYPadding = 5;
             let wireStartX = 0;
             let wireEndX = brickPadding + wireBrickSpacing;
             let wireEndY = currentY + this.getWiringHeight() + wiringYPadding;

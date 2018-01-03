@@ -137,6 +137,15 @@
             "functions": "#19325A",
             "arrays": "#901F76"
         },
+        "blockIcons": {
+            "loops": "\uf10b",
+            "logic": "\uf10a",
+            "math": "\uf10c",
+            "variables": "\uf111",
+            "text": "\uf110",
+            "functions": "\uf108",
+            "arrays": "\uf109"
+        },
         "monacoColors": {
             "editor.background": "#ecf6ff"
         }

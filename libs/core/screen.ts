@@ -80,15 +80,6 @@ namespace brick {
         }
     }
 
-    /**
-     * Sets a pixel on or off
-     * @param on a value indicating if the pixel should be on or off
-     * @param x the starting position's x coordinate, eg: 0
-     * @param y the starting position's x coordinate, eg: 0
-     */
-    //% blockId=screen_setpixel block="set pixel %on| at x: %x| y: %y"
-    //% weight=98 group="Screen"
-    //% x.min=0 x.max=178 y.min=0 y.max=128 on.fieldEditor=toggleonoff
     export function setPixel(on: boolean, x: number, y: number) {
         x |= 0
         y |= 0
@@ -97,14 +88,20 @@ namespace brick {
     }
 
     /**
-     * Show text on the screen.
+     * Show text on the screen at a specific line.
      * @param text the text to print on the screen, eg: "Hello world"
-     * @param x the starting position's x coordinate, eg: 0
-     * @param y the starting position's x coordinate, eg: 0
+     * @param line the line number to print the text at, eg: 0
      */
-    //% blockId=screen_print block="print %text| at x: %x| y: %y"
-    //% weight=99 group="Screen" inlineInputMode="inline" blockGap=8
-    //% x.min=0 x.max=178 y.min=0 y.max=128
+    //% blockId=screen_print block="print %text| at line %line"
+    //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=0 line.max=9
+    export function printLine(text: string, line: number) {
+        const NUM_LINES = 9;
+        const offset = 5;
+        const y = offset + (Math.clamp(0, NUM_LINES, line) / (NUM_LINES + 2)) * DAL.LCD_HEIGHT;
+        brick.print(text, offset, y);
+    }
+
     export function print(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0
         y |= 0
@@ -140,7 +137,7 @@ namespace brick {
      * @param image image to draw
      */
     //% blockId=screen_show_image block="show image %image=screen_image_picker"
-    //% weight=95 group="Screen" blockGap=8
+    //% weight=100 group="Screen" blockGap=8
     export function showImage(image: Image, delay: number = 400) {
         if (!image) return;
         image.draw(0, 0, Draw.Normal);
@@ -158,7 +155,7 @@ namespace brick {
     //% image.fieldOptions.columns=6
     //% image.fieldOptions.hasSearchBar=true
     //% group="Screen" weight=0 blockHidden=1
-    export function _imagePicker(image: Image): Image {
+    export function __imagePicker(image: Image): Image {
         return image;
     }
 
@@ -166,7 +163,7 @@ namespace brick {
      * Clears the screen
      */
     //% blockId=screen_clear_screen block="clear screen"
-    //% weight=94 group="Screen" blockGap=8
+    //% weight=90 group="Screen"
     export function clearScreen() {
         screen.clear();
     }
@@ -221,10 +218,14 @@ namespace brick {
         // motors
         const datas = motors.getAllMotorData();
         for(let i = 0; i < datas.length; ++i) {
-            const x = i * 52;
             const data = datas[i];
+            if (!data.actualSpeed && !data.count) continue;
+            const x = i * 52;
             print(`${data.actualSpeed}%`, x, brick.LINE_HEIGHT)
             print(`${data.count}>`, x, 2 * brick.LINE_HEIGHT)
+
+            console.logValue(`speed.` + "ABCD"[i], data.actualSpeed);
+            console.logValue(`angle.` + "ABCD"[i], data.count);
         }
 
         // sensors
@@ -232,7 +233,10 @@ namespace brick {
         for(let i =0; i < sis.length; ++i) {
             const si = sis[i];
             const x = (si.port() - 1) * 52;
-            print(`${si._query()}`, x, 9 * brick.LINE_HEIGHT)
+            const v = si._query();
+            print(`${v}`, x, 9 * brick.LINE_HEIGHT)
+
+            console.logValue(`sensor.` + si.port(), v);
         }
     }
 }

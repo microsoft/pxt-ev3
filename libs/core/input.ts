@@ -214,6 +214,7 @@ namespace sensors.internal {
         }
 
         public setLevel(level: number) {
+            if (this == null) return
             this.level = this.clampValue(level);
 
             if (this.level >= this.highThreshold) {

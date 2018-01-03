@@ -6,7 +6,7 @@ namespace pxsim.visuals {
 
     export class MediumMotorView extends ModuleView implements LayoutElement {
 
-        private static ROTATING_ECLIPSE_ID = "Hole";
+        private static ROTATING_ECLIPSE_ID = "medmotor_Hole";
 
         private hasPreviousAngle: boolean;
         private previousAngle: number;
@@ -20,6 +20,7 @@ namespace pxsim.visuals {
         }
 
         updateState() {
+            super.updateState();
             const motorState = ev3board().getMotors()[this.port];
             if (!motorState) return;
             const speed = motorState.getSpeed();
@@ -30,9 +31,9 @@ namespace pxsim.visuals {
 
         private setMotorAngle(angle: number) {
             const holeEl = this.content.getElementById(this.normalizeId(MediumMotorView.ROTATING_ECLIPSE_ID))
-            const width = 47.9;
-            const height = 47.2;
-            const transform = `translate(-1.5 -1.49) rotate(${angle} ${width / 2} ${height / 2})`;
+            const width = 44.45;
+            const height = 44.45;
+            const transform = `translate(2 1.84) rotate(${angle} ${width / 2} ${height / 2})`;
             holeEl.setAttribute("transform", transform);
         }
     }

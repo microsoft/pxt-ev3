@@ -115,14 +115,29 @@ namespace pxsim {
             return this.brickNode;
         }
 
+        motorUsed(port:number, large: boolean) {
+            for(let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    if (!this.outputNodes[motorPort])
+                        this.outputNodes[motorPort] = new MotorNode(motorPort, large);
+                }    
+            }            
+        }
+
         getMotor(port: number, large?: boolean): MotorNode[] {
-            if (port == 0xFF) return this.getMotors(); // Return all motors
-            const motorPort = this.motorMap[port];
-            if (this.outputNodes[motorPort] == undefined) {
-                this.outputNodes[motorPort] = large ?
-                    new LargeMotorNode(motorPort) : new MediumMotorNode(motorPort);
+            const r = [];
+            for(let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    const outputNode = this.outputNodes[motorPort];
+                    if (outputNode)
+                        r.push(outputNode);
+                }    
             }
-            return [this.outputNodes[motorPort]];
+            return r;
         }
 
         getMotors() {
@@ -130,7 +145,7 @@ namespace pxsim {
         }
 
         getSensor(port: number, type: number): SensorNode {
-            if (this.inputNodes[port] == undefined) {
+            if (!this.inputNodes[port]) {
                 switch (type) {
                     case DAL.DEVICE_TYPE_GYRO: this.inputNodes[port] = new GyroSensorNode(port); break;
                     case DAL.DEVICE_TYPE_COLOR: this.inputNodes[port] = new ColorSensorNode(port); break;

@@ -5,6 +5,8 @@ namespace pxsim.visuals {
     export const CONTROL_WIDTH = 87.5;
     export const CONTROL_HEIGHT = 175;
 
+    export const CONTROL_TEXT_COLOR = '#000';
+
     export abstract class ControlView<T extends BaseNode> extends SimView<T> implements LayoutElement {
         protected content: SVGSVGElement;
 
@@ -12,6 +14,7 @@ namespace pxsim.visuals {
 
         constructor(protected parent: SVGSVGElement, protected globalDefs: SVGDefsElement, protected state: T, protected port: number) {
             super(state);
+
         }
 
         getInnerWidth(): number {
@@ -35,7 +38,7 @@ namespace pxsim.visuals {
         }
 
         buildDom(): SVGElement {
-            this.content = svg.elt("svg", { viewBox: `0 0 ${this.getInnerWidth()} ${this.getInnerHeight()}`}) as SVGSVGElement;
+            this.content = svg.elt("svg", { viewBox: `0 0 ${this.getInnerWidth()} ${this.getInnerHeight()}` }) as SVGSVGElement;
             this.content.appendChild(this.getInnerView(this.parent, this.globalDefs));
             return this.content;
         }
@@ -51,13 +54,22 @@ namespace pxsim.visuals {
                 const currentHeight = this.getInnerHeight();
                 const newHeight = currentHeight / currentWidth * width;
                 const newWidth = currentWidth / currentHeight * height;
-                this.content.setAttribute('width', `${width}`);
-                this.content.setAttribute('height', `${newHeight}`);
+                if (newHeight > height) {
+                    // scale width instead
+                    this.content.setAttribute('width', `${newWidth}`);
+                    this.content.setAttribute('height', `${height}`);
+                    // translate to the middle (width)
+                    this.translate(width / 2 - newWidth / 2, 0);
+                } else {
+                    this.content.setAttribute('width', `${width}`);
+                    this.content.setAttribute('height', `${newHeight}`);
+                    // translate to the middle (height)
+                    this.translate(0, height / 2 - newHeight / 2);
+                }
             }
         }
 
         onComponentVisible() {
-
         }
     }
 }

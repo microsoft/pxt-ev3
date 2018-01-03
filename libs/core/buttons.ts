@@ -66,6 +66,7 @@ namespace brick {
 
         //% hidden
         _update(curr: boolean) {
+            if (this == null) return
             if (this._isPressed == curr) return
             this._isPressed = curr
             if (curr) {
@@ -104,7 +105,7 @@ namespace brick {
         //% blockId=buttonWasPressed
         //% parts="brick"
         //% blockNamespace=brick
-        //% weight=80 blockGap=8
+        //% weight=80
         //% group="Buttons"
         wasPressed() {
             const r = this._wasPressed

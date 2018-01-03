@@ -35,7 +35,7 @@ namespace pxsim.visuals {
                 'd': '',
                 'fill': 'transparent',
                 'stroke': '#5A5A5A',
-                'stroke-width': '2px'
+                'stroke-width': '3px'
             }) as SVGPathElement;
             this.setSelected(true);
             return this.wire;

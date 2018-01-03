@@ -33,13 +33,21 @@ namespace pxsim.visuals {
             font-family:"Lucida Console", Monaco, monospace;
             font-size:8px;
             fill:#fff;
-            pointer-events: none; user-select: none;
+            pointer-events: none;
+            user-select: none;
         }
         .sim-text.small {
             font-size:6px;
         }
+        .sim-text.large {
+            font-size:30px;
+        }
+        .sim-text.number {
+            font-family: Courier, Lato, Work Sans, PT Serif, Source Serif Pro;
+            font-weight: bold;
+        }
         .sim-text.inverted {
-            fill:#000;
+            fill:#5A5A5A;
         }
 
         /* Color Grid */
@@ -175,8 +183,8 @@ namespace pxsim.visuals {
             this.layoutView.updateTheme(theme);
         }
 
-        private getControlForNode(id: NodeType, port: number) {
-            if (this.cachedControlNodes[id] && this.cachedControlNodes[id][port]) {
+        private getControlForNode(id: NodeType, port: number, useCache = true) {
+            if (useCache && this.cachedControlNodes[id] && this.cachedControlNodes[id][port]) {
                 return this.cachedControlNodes[id][port];
             }
 
@@ -205,9 +213,10 @@ namespace pxsim.visuals {
                 }
                 case NodeType.MediumMotor:
                 case NodeType.LargeMotor: {
-                    // const state = ev3board().getMotor(port)[0];
-                    // view = new MotorInputControl(this.element, this.defs, state, port);
-                    // break;
+                    // TODO: figure out if the motor is in "input" or "output" mode
+                    const state = ev3board().getMotors()[port];
+                    view = new MotorReporterControl(this.element, this.defs, state, port);
+                    break;
                 }
             }
 
@@ -331,6 +340,28 @@ namespace pxsim.visuals {
                     cancelAnimationFrame(animationId);
                 })
             }
+            // Save previous inputs for the next cycle
+            EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
+            EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);
+        }
+
+        private static previousSelectedInputs: number[];
+        private static previousSeletedOutputs: number[];
+
+        private static isPreviousInputSelected(index: number, id: number) {
+            if (EV3View.previousSelectedInputs && EV3View.previousSelectedInputs[index] == id) {
+                EV3View.previousSelectedInputs[index] = undefined;
+                return true;
+            }
+            return false;
+        }
+
+        private static isPreviousOutputSelected(index: number, id: number) {
+            if (EV3View.previousSeletedOutputs && EV3View.previousSeletedOutputs[index] == id) {
+                EV3View.previousSeletedOutputs[index] = undefined;
+                return true;
+            }
+            return false;
         }
 
         private begin() {
@@ -349,14 +380,14 @@ namespace pxsim.visuals {
             if (!this.running) return;
             const fps = GAME_LOOP_FPS;
             let now;
-            let then = Date.now();
+            let then = pxsim.U.now();
             let interval = 1000 / fps;
             let delta;
             let that = this;
             function loop() {
                 const animationId = requestAnimationFrame(loop);
                 that.lastAnimationIds.push(animationId);
-                now = Date.now();
+                now = pxsim.U.now();
                 delta = now - then;
                 if (delta > interval) {
                     then = now;
@@ -373,7 +404,9 @@ namespace pxsim.visuals {
                 const view = this.getDisplayViewForNode(node.id, index);
                 if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    const control = view.getSelected() ? this.getControlForNode(node.id, index) : undefined;
+                    const isSelected = EV3View.isPreviousInputSelected(index, node.id) || view.getSelected();
+                    if (isSelected && !view.getSelected()) view.setSelected(true);
+                    const control = isSelected ? this.getControlForNode(node.id, index, !node.modeChange()) : undefined;
                     const closeIcon = control ? this.getCloseIconView() : undefined;
                     this.layoutView.setInput(index, view, control, closeIcon);
                     view.updateState();
@@ -392,7 +425,9 @@ namespace pxsim.visuals {
                 const view = this.getDisplayViewForNode(node.id, index);
                 if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    const control = view.getSelected() ? this.getControlForNode(node.id, index) : undefined;
+                    const isSelected = EV3View.isPreviousOutputSelected(index, node.id) || view.getSelected();
+                    if (isSelected && !view.getSelected()) view.setSelected(true);
+                    const control = isSelected ? this.getControlForNode(node.id, index) : undefined;
                     const closeIcon = control ? this.getCloseIconView() : undefined;
                     this.layoutView.setOutput(index, view, control, closeIcon);
                     view.updateState();
