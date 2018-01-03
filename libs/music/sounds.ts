@@ -264,7 +264,7 @@ namespace music {
      * @param sound the sound to play
      */
     //% blockId=music_play_sound_effect_until_done block="play sound effect %sound|until done"
-    //% weight=98
+    //% weight=98 blockGap=8
     export function playSoundEffectUntilDone(sound: Sound) {
         if (!sound) return;
         sound.play();
@@ -276,7 +276,7 @@ namespace music {
      */
     //% blockId=music_sound_picker block="%sound" shim=TD_ID
     //% weight=0 blockHidden=1
-    export function _soundPicker(sound: Sound): Sound {
+    export function __soundPicker(sound: Sound): Sound {
         return sound;
     }
 
@@ -285,7 +285,7 @@ namespace music {
      * @param sound the sound to play
      */
     //% blockId=music_play_sound_effect block="play sound effect %sound"
-    //% weight=99
+    //% weight=99 blockGap=8
     export function playSoundEffect(sound: Sound) {
         if (!sound || numSoundsPlaying >= soundsLimit) return;
         numSoundsPlaying++;

@@ -20,7 +20,6 @@
   "Note.GSharp|block": "G#",
   "SoundOutputDestination.Pin|block": "pin",
   "SoundOutputDestination.Speaker|block": "speaker",
-  "music._soundPicker|block": "%sound",
   "music.beat|block": "%fraction|beat",
   "music.changeTempoBy|block": "change tempo by %value|(bpm)",
   "music.noteFrequency|block": "%note",
