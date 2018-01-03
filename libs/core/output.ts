@@ -522,21 +522,21 @@ namespace motors {
          * @param value the amount of movement, eg: 2
          * @param unit 
          */
-        //% blockId=motorDrive block="drive %chassis|at %speed|%|turning %rotationSpeed|deg/s|for %value|%unit"
+        //% blockId=motorDrive block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s|for %value|%unit"
         //% inlineInputMode=inline
         //% group="Chassis"
         //% weight=8 blockGap=8
         drive(speed: number, rotationSpeed: number, value: number, unit: MoveUnit) {
             this.init();
 
-            speed = Math.clamp(-100, 100, speed);            
             // speed is expressed in %
             const R = this.wheelRadius; // cm
             const L = this.baseLength; // cm
             const PI = 3.14;
             const maxw = 170 / 60 * 2 * PI; // rad / s
             const maxv = maxw * R; // cm / s
-            const v = speed / 100 * maxv; // cm / s
+            // speed is cm / s
+            const v = speed; // cm / s
             const w = rotationSpeed / 360 * 2 * PI; // rad / s
 
             const vr = (2 * v + w * L) / (2 * R); // rad / s
