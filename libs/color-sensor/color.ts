@@ -56,6 +56,7 @@ namespace sensors {
 
         constructor(port: number) {
             super(port)
+            this._setMode(ColorSensorMode.None);
             this.thresholdDetector = new sensors.internal.ThresholdDetector(this.id());
         }
 
