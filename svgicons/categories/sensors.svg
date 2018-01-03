@@ -3,15 +3,12 @@
 <svg version="1.1" id="svg41" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 23 23" style="enable-background:new 0 0 23 23;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;}
-	.st1{fill:#FFFFFF;}
+	.st0{fill:none;stroke:#FFFFFF;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;}
 </style>
 <title>color</title>
 <g>
-	<path class="st0" d="M11.5,4.5c-3.9,0-7,3.1-7,7s3.1,7,7,7s7-3.1,7-7S15.4,4.5,11.5,4.5z M11.5,15.5c-2.2,0-4-1.8-4-4s1.8-4,4-4
-		s4,1.8,4,4S13.7,15.5,11.5,15.5z"/>
-	<path class="st1" d="M11.5,1.5c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S17,1.5,11.5,1.5z M11.5,18.5c-3.9,0-7-3.1-7-7
-		s3.1-7,7-7s7,3.1,7,7S15.4,18.5,11.5,18.5z"/>
-	<circle class="st1" cx="11.5" cy="11.5" r="4"/>
+	<circle class="st0" cx="11.5" cy="11.5" r="10"/>
+	<circle class="st0" cx="11.5" cy="11.5" r="7"/>
+	<circle class="st0" cx="11.5" cy="11.5" r="4"/>
 </g>
 </svg>
