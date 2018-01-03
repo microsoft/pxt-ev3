@@ -66,6 +66,7 @@ namespace brick {
 
         //% hidden
         _update(curr: boolean) {
+            if (curr === null) return
             if (this._isPressed == curr) return
             this._isPressed = curr
             if (curr) {
