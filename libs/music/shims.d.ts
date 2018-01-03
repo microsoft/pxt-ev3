@@ -32,7 +32,7 @@ declare namespace music {
     //% blockId=music_stop_all_sounds block="stop all sounds"
     //% parts="headphone"
     //% blockNamespace=music
-    //% weight=76 blockGap=8 shim=music::stopAllSounds
+    //% weight=97 shim=music::stopAllSounds
     function stopAllSounds(): void;
 
     /** Makes a sound bound to a buffer in WAV format. */

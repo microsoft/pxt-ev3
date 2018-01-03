@@ -75,7 +75,7 @@ namespace sensors {
         //% blockId=touchIsPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% weight=81 blockGap=8
+        //% weight=81
         //% group="Touch Sensor"
         isPressed() {
             return this.button.isPressed();

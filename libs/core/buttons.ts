@@ -105,7 +105,7 @@ namespace brick {
         //% blockId=buttonWasPressed
         //% parts="brick"
         //% blockNamespace=brick
-        //% weight=80 blockGap=8
+        //% weight=80
         //% group="Buttons"
         wasPressed() {
             const r = this._wasPressed

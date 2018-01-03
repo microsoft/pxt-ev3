@@ -75,7 +75,7 @@ namespace sensors {
         //% blockId=sonarGetDistance
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8   
+        //% weight=65
         //% group="Ultrasonic Sensor"     
         distance(): number {
             // it supposedly also has an inch mode, but we stick to cm

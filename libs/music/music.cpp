@@ -170,7 +170,7 @@ void playTone(int frequency, int ms) {
 //% blockId=music_stop_all_sounds block="stop all sounds"
 //% parts="headphone"
 //% blockNamespace=music
-//% weight=76 blockGap=8
+//% weight=97
 void stopAllSounds() {
     if (currentSample) {
         samplePtr = currentSample->length;

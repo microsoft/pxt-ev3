@@ -112,7 +112,7 @@ namespace sensors {
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
         //% blockNamespace=sensors
-        //% weight=80 blockGap=8
+        //% weight=80
         //% group="Remote Infrared Beacon"
         wasPressed() {
             return this.button.wasPressed();
@@ -238,7 +238,7 @@ namespace sensors {
         //% blockId=infraredGetRemoteCommand
         //% parts="infrared"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8        
+        //% weight=65       
         //% group="Infrared Sensor"     
         remoteCommand(): number {
             this._setMode(IrSensorMode.RemoteControl)
