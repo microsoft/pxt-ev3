@@ -399,9 +399,13 @@ namespace motors {
 
     //% fixedInstances
     export class SynchedMotorPair extends MotorBase {
+        private wheelRadius: number;
+        private baseLength: number;
 
         constructor(ports: Output) {
             super(ports, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
+            this.wheelRadius = 2;
+            this.baseLength = 10;
             this.markUsed();
         }
 
@@ -444,7 +448,7 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorPairTurn block="steer %chassis|%turnRatio|%|at speed %speed|%|by %value|%unit"
+        //% blockId=motorPairTurn block="steer %chassis|%turnRatio|%|at speed %speed|%|for %value|%unit"
         //% weight=9 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
@@ -495,13 +499,15 @@ namespace motors {
          * @param speedLeft the speed on the left motor, eg: 50
          * @param speedRight the speed on the right motor, eg: 50
          */
-        //% blockId=motorPairTank block="tank %chassis|left %speedLeft|%|right %speedRight|%|by %value|%unit"
+        //% blockId=motorPairTank block="tank %chassis|left %speedLeft|%|right %speedRight|%|for %value|%unit"
         //% weight=9 blockGap=8
         //% speedLeft.min=-100 speedLeft=100
         //% speedRight.min=-100 speedRight=100
         //% inlineInputMode=inline
         //% group="Chassis"
         tank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
+            this.init();
+
             speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
             speedRight = Math.clamp(-100, 100, speedRight >> 0);
             const turnRatio = speedLeft == 0 ? 0 : speedRight / speedLeft * 100;
@@ -509,10 +515,57 @@ namespace motors {
         }
 
         /**
+         * Makes a differential drive robot move with a given speed (%) and rotation rate (deg/s)
+         * using a unicycle model.
+         * @param speed speed of the center point between motors
+         * @param rotationSpeed rotation of the robot around the center point
+         * @param value the amount of movement, eg: 2
+         * @param unit 
+         */
+        //% blockId=motorDrive block="drive %chassis|at %speed|%|turning %rotationSpeed|deg/s|for %value|%unit"
+        //% inlineInputMode=inline
+        //% group="Chassis"
+        //% weight=8 blockGap=8
+        drive(speed: number, rotationSpeed: number, value: number, unit: MoveUnit) {
+            this.init();
+
+            speed = Math.clamp(-100, 100, speed);            
+            // speed is expressed in %
+            const R = this.wheelRadius; // cm
+            const L = this.baseLength; // cm
+            const PI = 3.14;
+            const maxw = 170 / 60 * 2 * PI; // rad / s
+            const maxv = maxw * R; // cm / s
+            const v = speed / 100 * maxv; // cm / s
+            const w = rotationSpeed / 360 * 2 * PI; // rad / s
+
+            const vr = (2 * v + w * L) / (2 * R); // rad / s
+            const vl = (2 * v - w * L) / (2 * R); // rad / s
+
+            const sr = vr / maxw * 100; // % 
+            const sl = vl / maxw * 100; // %
+
+            this.tank(sr, sl, value, unit)
+        }        
+
+        /**
+         * Sets the wheels radius and base length of a directional drive robot
+         * @param wheelRadius 
+         * @param baseLength 
+         */
+        //%
+        setDimensions(wheelRadius: number, baseLength: number): void {
+            this.wheelRadius = wheelRadius;
+            this.baseLength = baseLength;
+        }
+
+        /**
          * Returns the name(s) of the motor
          */
         //%
         toString(): string {
+            this.init();
+
             let r = outputToName(this._port);
             for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
