@@ -1,8 +1,8 @@
 @font-face {
 	font-family: "iconfont";
-	src: url("iconfont.eot?0110b30728d5ee42bbc746ff7b3c5a79?#iefix") format("embedded-opentype"),
-url("iconfont.woff2?0110b30728d5ee42bbc746ff7b3c5a79") format("woff2"),
-url("iconfont.woff?0110b30728d5ee42bbc746ff7b3c5a79") format("woff");
+	src: url("iconfont.eot?85962023e1141ed4156344d036c50fe8?#iefix") format("embedded-opentype"),
+url("iconfont.woff2?85962023e1141ed4156344d036c50fe8") format("woff2"),
+url("iconfont.woff?85962023e1141ed4156344d036c50fe8") format("woff");
 }
 
 .icon {
@@ -78,4 +78,10 @@ url("iconfont.woff?0110b30728d5ee42bbc746ff7b3c5a79") format("woff");
 }
 .icon-save:before {
 	content: "\f115";
+}
+.icon-advancedcollapsed:before {
+	content: "\f116";
+}
+.icon-advancedexpanded:before {
+	content: "\f117";
 }

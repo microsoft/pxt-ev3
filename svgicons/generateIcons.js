@@ -22,7 +22,9 @@ webfontsGenerator({
     "./icons/cancel.svg",
     "./icons/check.svg",
     "./icons/download.svg",
-    "./icons/save.svg"
+    "./icons/save.svg",
+    "./categories/advancedcollapsed.svg",
+    "./categories/advancedexpanded.svg"
   ],
   dest: '../docs/static/fonts/icons/',
   round: 10
