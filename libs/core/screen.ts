@@ -92,7 +92,7 @@ namespace brick {
      * @param text the text to print on the screen, eg: "Hello world"
      * @param line the line number to print the text at, eg: 0
      */
-    //% blockId=screen_print block="print %text| at line: %line"
+    //% blockId=screen_print block="print %text| at line %line"
     //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=0 line.max=9
     export function printLine(text: string, line: number) {
