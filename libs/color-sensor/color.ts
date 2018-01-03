@@ -56,6 +56,7 @@ namespace sensors {
 
         constructor(port: number) {
             super(port)
+            this._setMode(ColorSensorMode.None);
             this.thresholdDetector = new sensors.internal.ThresholdDetector(this.id());
         }
 
@@ -94,7 +95,6 @@ namespace sensors {
         }
 
         _update(prev: number, curr: number) {
-            if (curr == null) return;
             if (this.mode == ColorSensorMode.Color)
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
