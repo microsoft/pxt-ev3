@@ -19,12 +19,12 @@ namespace sensors {
 namespace motors {
 }
 
-//% color="#D67923" weight=80
+//% color="#D67923" weight=80 icon="\uf10e"
 namespace music {
 
 }
 
-//% color="#5F3109"
+//% color="#5F3109" icon="\uf107"
 namespace control {
 
 }
