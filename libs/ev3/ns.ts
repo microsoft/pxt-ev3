@@ -1,19 +1,19 @@
 
-//% color="#68C3E2" weight=100 icon="\uf108"
+//% color="#68C3E2" weight=100 icon="\uf106"
 //% groups='["Buttons", "Screen"]'
 //% labelLineWidth=0
 namespace brick {
 }
 
 
-//% color="#C8509B" weight=95 icon="\uf111"
+//% color="#C8509B" weight=95 icon="\uf10f"
 //% labelLineWidth=0
 //% groups='["Ultrasonic Sensor", "Touch Sensor", "Color Sensor", "Infrared Sensor", "Remote Infrared Beacon", "Gyro Sensor"]'
 //% groupIcons='["\uf101","\uf103","\uf102","","","\uf104"]'
 namespace sensors {
 }
 
-//% color="#A5CA18" weight=90 icon="\uf10f"
+//% color="#A5CA18" weight=90 icon="\uf10d"
 //% groups='["Motion", "Sensors", "Chassis"]'
 //% labelLineWidth=0
 namespace motors {

@@ -6,8 +6,6 @@ namespace pxsim.visuals {
         private group: SVGGElement;
         private slider: SVGGElement;
 
-        private isVisible = false;
-
         private static SLIDER_WIDTH = 70;
         private static SLIDER_HEIGHT = 78;
 
@@ -61,7 +59,7 @@ namespace pxsim.visuals {
         }
 
         updateState() {
-            if (!this.isVisible) {
+            if (!this.visible) {
                 return;
             }
             const node = this.state;
@@ -71,19 +69,11 @@ namespace pxsim.visuals {
             this.slider.setAttribute("transform", `translate(${x}, ${y})`);
         }
 
-        onComponentVisible() {
-            super.onComponentVisible();
-            this.isVisible = true;
-        }
-
-        onComponentHidden() {
-            this.isVisible = false;
-        }
-
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
             const width = CONTROL_WIDTH; //DistanceSliderControl.SLIDER_HEIGHT;
-            let t = Math.max(0, Math.min(1, (width + this.left / this.scaleFactor - cur.x / this.scaleFactor) / width))
+            const bBox = this.content.getBoundingClientRect();
+            let t = Math.max(0, Math.min(1, (width + bBox.left / this.scaleFactor - cur.x / this.scaleFactor) / width))
 
             const state = this.state;
             state.setAngle((1 - t) * (100));

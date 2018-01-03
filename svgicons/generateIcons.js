@@ -7,8 +7,6 @@ webfontsGenerator({
     "./touch.svg",
     "./gyro.svg",
     "./categories/addpackage.svg",
-    "./categories/advancedcollapsed.svg",
-    "./categories/advancedexpanded.svg",
     "./categories/brick.svg",
     "./categories/controls.svg",
     "./categories/functions.svg",

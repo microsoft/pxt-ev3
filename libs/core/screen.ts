@@ -158,7 +158,7 @@ namespace brick {
     //% image.fieldOptions.columns=6
     //% image.fieldOptions.hasSearchBar=true
     //% group="Screen" weight=0 blockHidden=1
-    export function _imagePicker(image: Image): Image {
+    export function __imagePicker(image: Image): Image {
         return image;
     }
 

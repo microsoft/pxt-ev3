@@ -1,8 +1,8 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
 
-    export class PortView extends StaticModuleView implements LayoutElement {
+    export class PortView extends ModuleView implements LayoutElement {
 
         constructor(port: NodeType, private label: string) {
             super(PORT_SVG, "port", NodeType.Port, port);

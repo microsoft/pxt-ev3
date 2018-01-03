@@ -1,10 +1,11 @@
 namespace pxsim.visuals {
 
-    export class StaticModuleView extends View implements LayoutElement {
+    export class ModuleView extends View implements LayoutElement {
         protected content: SVGSVGElement;
 
         protected controlShown: boolean;
-        protected selected: boolean;
+
+        protected opacity: number;
 
         constructor(protected xml: string, protected prefix: string, protected id: NodeType, protected port: NodeType) {
             super();
@@ -45,9 +46,8 @@ namespace pxsim.visuals {
             return 0.5;
         }
 
-        protected buildDom(width: number): SVGElement {
+        protected buildDom(): SVGElement {
             this.content = svg.parseString(this.xml);
-            this.updateDimensions(width);
             this.buildDomCore();
             this.attachEvents();
             if (this.hasClick())
@@ -82,15 +82,17 @@ namespace pxsim.visuals {
         public attachEvents() {
         }
 
-        public resize(width: number) {
-            this.updateDimensions(width);
+        public resize(width: number, height: number) {
+            super.resize(width, height);
+            this.updateDimensions(width, height);
         }
 
-        private updateDimensions(width: number) {
+        private updateDimensions(width: number, height: number) {
             if (this.content) {
                 const currentWidth = this.getInnerWidth();
                 const currentHeight = this.getInnerHeight();
                 const newHeight = currentHeight / currentWidth * width;
+                const newWidth = currentWidth / currentHeight * height;
                 this.content.setAttribute('width', `${width}`);
                 this.content.setAttribute('height', `${newHeight}`);
             }
@@ -101,23 +103,28 @@ namespace pxsim.visuals {
         }
 
         public setSelected(selected: boolean) {
-            this.selected = selected;
+            super.setSelected(selected);
+            this.updateOpacity();
+        }
+
+        public updateState() {
             this.updateOpacity();
         }
 
         protected updateOpacity() {
             if (this.rendered) {
-                const opacity = this.selected ? "0.5" : "1";
-                if (this.hasClick()) {
-                    this.setOpacity(opacity);
+                const opacity = this.selected ? 0.2 : 1;
+                if (this.hasClick() && this.opacity != opacity) {
+                    this.opacity = opacity;
+                    this.setOpacity(this.opacity);
                     if (this.selected) this.content.style.cursor = "";
                     else this.content.style.cursor = "pointer";
                 }
             }
         }
 
-        protected setOpacity(opacity: string) {
-            this.element.setAttribute("opacity", opacity);
+        protected setOpacity(opacity: number) {
+            this.element.setAttribute("opacity", `${opacity}`);
         }
     }
 }

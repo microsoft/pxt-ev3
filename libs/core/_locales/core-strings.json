@@ -28,7 +28,6 @@
   "brick.Button.onEvent|block": "on %button|%event",
   "brick.Button.pauseUntil|block": "pause until %button|%event",
   "brick.Button.wasPressed|block": "%button|was pressed",
-  "brick._imagePicker|block": "%image",
   "brick.buttonDown|block": "down",
   "brick.buttonEnter|block": "enter",
   "brick.buttonLeft|block": "left",

@@ -3,14 +3,19 @@ namespace pxsim.visuals {
         protected element: SVGGElement;
         protected rendered = false;
         protected visible = false;
+        protected selected: boolean;
         protected width: number = 0;
+        protected height: number = 0;
         protected left: number = 0;
         protected top: number = 0;
         protected scaleFactor: number = 1;
 
+        private changed: boolean;
+        private hover: boolean = false;
+
         protected theme: IBoardTheme;
 
-        protected abstract buildDom(width: number): SVGElement;
+        protected abstract buildDom(): SVGElement;
         public abstract getInnerWidth(): number;
         public abstract getInnerHeight(): number;
 
@@ -83,9 +88,26 @@ namespace pxsim.visuals {
         }
 
         private onClickHandler: (ev: any) => void;
-        public registerClick(handler: (ev: any) => void) {
+        public registerClick(handler: (ev: any) => void, zoom?: boolean) {
             this.onClickHandler = handler;
-            this.getView().addEventListener(pointerEvents.up, this.onClickHandler);
+            if (zoom) {
+                this.getView().addEventListener(pointerEvents.up, (ev: any) => {
+                    if (!this.getSelected()) {
+                        this.onClickHandler(ev);
+                        this.setHover(false);
+                    }
+                });
+                this.getView().addEventListener(pointerEvents.move, () => {
+                    if (!this.getSelected()) {
+                        this.setHover(true);
+                    }
+                });
+                this.getView().addEventListener(pointerEvents.leave, () => {
+                    this.setHover(false);
+                });
+            } else {
+                this.getView().addEventListener(pointerEvents.up, this.onClickHandler);
+            }
         }
 
         public dispose() {
@@ -98,7 +120,7 @@ namespace pxsim.visuals {
                 this.element = svg.elt("g") as SVGGElement;
                 View.track(this);
 
-                const content = this.buildDom(this.width);
+                const content = this.buildDom();
                 if (content) {
                     this.element.appendChild(content);
                 }
@@ -108,16 +130,30 @@ namespace pxsim.visuals {
             return this.element;
         }
 
-        public resize(width: number) {
+        public resize(width: number, height: number) {
             this.width = width;
+            this.height = height;
         }
 
         private updateTransform() {
             if (this.rendered) {
-                let transform = `translate(${this.left} ${this.top})`;
+                let left = this.left;
+                let top = this.top;
+                let scaleFactor = this.scaleFactor;
+                if (this.hover) {
+                    const hoverScaleFactor = scaleFactor + 0.05;
+                    // Scale around center of module 
+                    const centerX = this.getWidth() / 2;
+                    const centerY = this.getHeight() / 2;
+                    left = left - centerX * (hoverScaleFactor - 1);
+                    top = top - centerY * (hoverScaleFactor - 1);
+                    scaleFactor = hoverScaleFactor;
+                }
 
-                if (this.scaleFactor !== 1) {
-                    transform += ` scale(${this.scaleFactor})`;
+                let transform = `translate(${left} ${top})`;
+
+                if (scaleFactor !== 1) {
+                    transform += ` scale(${scaleFactor})`;
                 }
 
                 this.element.setAttribute("transform", transform);
@@ -148,6 +184,40 @@ namespace pxsim.visuals {
                 view.element.parentNode.removeChild(view.element);
                 delete View.allViews[id];
             }
+        }
+
+        ///////// HOVERED STATE /////////////
+
+        public getHover() {
+            return this.hover;
+        }
+
+        public setHover(hover: boolean) {
+            if (this.hover != hover) {
+                this.hover = hover;
+                this.updateTransform();
+            }
+        }
+
+        ///////// SELECTED STATE /////////////
+
+        public getSelected() {
+            return this.selected;
+        }
+
+        public setSelected(selected: boolean) {
+            this.selected = selected;
+            this.setChangedState();
+        }
+
+        protected setChangedState() {
+            this.changed = true;
+        }
+
+        public didChange() {
+            const res = this.changed;
+            this.changed = false;
+            return res;
         }
     }
 
@@ -222,7 +292,7 @@ namespace pxsim.visuals {
             });
         }
 
-        protected buildDom(width: number): SVGElement {
+        protected buildDom(): SVGElement {
             return undefined;
         }
     }
