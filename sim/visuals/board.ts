@@ -183,8 +183,8 @@ namespace pxsim.visuals {
             this.layoutView.updateTheme(theme);
         }
 
-        private getControlForNode(id: NodeType, port: number) {
-            if (this.cachedControlNodes[id] && this.cachedControlNodes[id][port]) {
+        private getControlForNode(id: NodeType, port: number, useCache = true) {
+            if (useCache && this.cachedControlNodes[id] && this.cachedControlNodes[id][port]) {
                 return this.cachedControlNodes[id][port];
             }
 
@@ -406,7 +406,7 @@ namespace pxsim.visuals {
                 if (view) {
                     const isSelected = EV3View.isPreviousInputSelected(index, node.id) || view.getSelected();
                     if (isSelected && !view.getSelected()) view.setSelected(true);
-                    const control = isSelected ? this.getControlForNode(node.id, index) : undefined;
+                    const control = isSelected ? this.getControlForNode(node.id, index, !node.modeChange()) : undefined;
                     const closeIcon = control ? this.getCloseIconView() : undefined;
                     this.layoutView.setInput(index, view, control, closeIcon);
                     view.updateState();
