@@ -502,9 +502,9 @@ namespace motors {
         //% inlineInputMode=inline
         //% group="Chassis"
         tank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
-            speedLeft = Math.clamp(speedLeft, -100, 100);
-            speedRight = Math.clamp(speedRight, -100, 100);
-            const turnRatio = speedRight / speedLeft * 100;
+            speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
+            speedRight = Math.clamp(-100, 100, speedRight >> 0);
+            const turnRatio = speedLeft == 0 ? 0 : speedRight / speedLeft * 100;
             this.steer(turnRatio, speedLeft, value, unit);
         }
 
