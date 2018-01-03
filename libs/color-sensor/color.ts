@@ -94,6 +94,7 @@ namespace sensors {
         }
 
         _update(prev: number, curr: number) {
+            if (curr == null) return;
             if (this.mode == ColorSensorMode.Color)
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
