@@ -443,12 +443,12 @@ namespace motors {
 
         /**
          * Turns the motor and the follower motor by a number of rotations
-         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 100
+         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 0
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorPairTurn block="steer %chassis turn|%turnRatio|%|at speed %speed|%|for %value|%unit"
+        //% blockId=motorPairTurn block="steer %chassis turn by|%turnRatio|at speed %speed|%|for %value|%unit"
         //% weight=9 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
@@ -510,8 +510,12 @@ namespace motors {
 
             speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
             speedRight = Math.clamp(-100, 100, speedRight >> 0);
-            const turnRatio = speedLeft == 0 ? 0 : speedRight / speedLeft * 100;
-            this.steer(turnRatio, speedLeft, value, unit);
+
+            const speed = Math.abs(speedLeft) > Math.abs(speedRight) ? speedLeft : speedRight;
+            const turnRatio = speedLeft == speed
+                ? (100 - speedRight / speedLeft * 100)
+                : (speedLeft / speedRight * 100 - 100);
+            this.steer(turnRatio, speed, value, unit);
         }
 
         /**

@@ -83,7 +83,7 @@
   "motors.SynchedMotorPair.setDimensions|param|wheelRadius": "@param baseLength ",
   "motors.SynchedMotorPair.steer": "Turns the motor and the follower motor by a number of rotations",
   "motors.SynchedMotorPair.steer|param|speed": "the speed from ``100`` full forward to ``-100`` full backward, eg: 50",
-  "motors.SynchedMotorPair.steer|param|turnRatio": "the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 100",
+  "motors.SynchedMotorPair.steer|param|turnRatio": "the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 0",
   "motors.SynchedMotorPair.steer|param|unit": "the meaning of the value",
   "motors.SynchedMotorPair.steer|param|value": "the move quantity, eg: 2",
   "motors.SynchedMotorPair.tank": "The Move Tank block can make a robot drive forward, backward, turn, or stop. \nUse the Move Tank block for robot vehicles that have two Large Motors, \nwith one motor driving the left side of the vehicle and the other the right side. \nYou can make the two motors go at different speeds or in different directions \nto make your robot turn.",
