@@ -9,15 +9,7 @@
 <title>color</title>
 <g id="menu_icn_expansions" transform="translate(-9596 11554)">
 	<circle id="Ellipse_34" class="st0" cx="9607.5" cy="-11542" r="9"/>
-	<g id="Rectangle_253_1_" transform="translate(527 574)">
-		<rect x="9079.5" y="-12122" class="st0" width="2" height="12"/>
-		<rect x="9080" y="-12121.5" class="st1" width="1" height="11"/>
-	</g>
-	<g id="Rectangle_254_1_" transform="translate(522 581) rotate(-90)">
-		
-			<rect x="12117" y="9084.5" transform="matrix(-2.535182e-06 -1 1 -2.535182e-06 3037.5305 21208.5234)" class="st0" width="12" height="2"/>
-		
-			<rect x="12117.5" y="9085" transform="matrix(-2.535182e-06 -1 1 -2.535182e-06 3037.5305 21208.5234)" class="st1" width="11" height="1"/>
-	</g>
+	<polygon class="st1" points="9613.5,-11543 9608.5,-11543 9608.5,-11548 9606.5,-11548 9606.5,-11543 9601.5,-11543 9601.5,-11541 
+		9606.5,-11541 9606.5,-11536 9608.5,-11536 9608.5,-11541 9613.5,-11541 	"/>
 </g>
 </svg>
