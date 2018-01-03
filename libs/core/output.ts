@@ -448,7 +448,7 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorPairTurn block="steer %chassis|%turnRatio|%|at speed %speed|%|for %value|%unit"
+        //% blockId=motorPairTurn block="steer %chassis turn|%turnRatio|%|at speed %speed|%|for %value|%unit"
         //% weight=9 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline

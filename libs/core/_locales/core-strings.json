@@ -55,7 +55,7 @@
   "motors.MotorBase.setReversed|block": "set %motor|reversed %reversed",
   "motors.MotorBase.setSpeed|block": "set speed of %motor|to %speed|%",
   "motors.SynchedMotorPair.drive|block": "drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s|for %value|%unit",
-  "motors.SynchedMotorPair.steer|block": "steer %chassis|%turnRatio|%|at speed %speed|%|for %value|%unit",
+  "motors.SynchedMotorPair.steer|block": "steer %chassis turn|%turnRatio|%|at speed %speed|%|for %value|%unit",
   "motors.SynchedMotorPair.tank|block": "tank %chassis|left %speedLeft|%|right %speedRight|%|for %value|%unit",
   "motors.largeAB|block": "large A+B",
   "motors.largeAD|block": "large A+D",

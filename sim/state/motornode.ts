@@ -153,7 +153,8 @@ namespace pxsim {
                     }
                     // send synched motor state
                     otherMotor.speed = Math.floor(this.speed * turnRatio / 100);    
-                    otherMotor.clearSpeedCmd();             
+                    if (!this._synchedMotor)
+                        otherMotor.clearSpeedCmd();             
                     break;
                 }
             }
