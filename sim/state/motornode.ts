@@ -145,18 +145,17 @@ namespace pxsim {
                     const dstep = this.speedCmd == DAL.opOutputTimeSync
                         ? pxsim.U.now() - this.speedCmdTime
                         : this.tacho - this.speedCmdTacho;
-                    if (dstep < stepsOrTime)
+                    // 0 is special case, run infinite
+                    if (!stepsOrTime || dstep < stepsOrTime)
                         this.speed = speed;
                     else {
-                        // 0 is special case, run infinite
-                        if (!stepsOrTime) this.speed = speed;
-                        else if (brake) this.speed = 0;
+                        if (brake) this.speed = 0;
                         this.clearSpeedCmd();
                     }
                     // send synched motor state
-                    otherMotor.speed = Math.floor(this.speed * turnRatio / 100);    
+                    otherMotor.speed = Math.floor(this.speed * turnRatio / 100);
                     if (!this._synchedMotor)
-                        otherMotor.clearSpeedCmd();             
+                        otherMotor.clearSpeedCmd();
                     break;
                 }
             }
