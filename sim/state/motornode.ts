@@ -80,6 +80,7 @@ namespace pxsim {
 
         stop() {
             this.started = false;
+            this.clearSpeedCmd();
         }
 
         start() {
