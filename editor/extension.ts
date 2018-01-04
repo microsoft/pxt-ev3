@@ -3,6 +3,7 @@
 
 import { deployCoreAsync, initAsync } from "./deploy";
 import { FieldPorts } from "./field_ports";
+import { FieldImages } from "./field_images";
 
 pxt.editor.initExtensionsAsync = function(opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
@@ -11,6 +12,9 @@ pxt.editor.initExtensionsAsync = function(opts: pxt.editor.ExtensionOptions): Pr
         fieldEditors: [{
             selector: "ports",
             editor: FieldPorts
+        }, {
+            selector: "images",
+            editor: FieldImages
         }],
         deployCoreAsync
     };
