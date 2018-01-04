@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "noImplicitReturns": true,
-        "declaration": true,
-        "out": "../built/editor.js",
+        "module": "commonjs",
+        "outDir": "../built/editor",
         "rootDir": ".",
         "newLine": "LF",
-        "sourceMap": false
+        "sourceMap": false,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true
     }
 }
