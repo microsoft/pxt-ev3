@@ -1,0 +1,9 @@
+{
+  "behaviors": "Behavior drive blocks",
+  "behaviors.BehaviorManager": "A manager for behaviors",
+  "behaviors.BehaviorManager.add": "Adds a new behavior to the behavior manager",
+  "behaviors.BehaviorManager.add|param|behavior": "the behavior to add",
+  "behaviors.BehaviorManager.start": "Starts the behavior control loop",
+  "behaviors.BehaviorManager.stop": "Stops the execution loop",
+  "behaviors.avoidCrash": "A behavior that stops all motors if the sensor distance get too short"
+}

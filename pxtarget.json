@@ -16,7 +16,8 @@
         "libs/infrared-sensor",
         "libs/gyro-sensor",
         "libs/ev3",
-        "libs/tests"
+        "libs/tests",
+        "libs/behaviors"
     ],
     "simulator": {
         "autoRun": true,

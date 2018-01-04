@@ -343,7 +343,7 @@ namespace motors {
          * Gets motor angle.
          * @param motor the port which connects to the motor
          */
-        //% blockId=motorTachoCount block="%motor|angle"
+        //% blockId=motorAngle block="%motor|angle"
         //% weight=70
         //% group="Sensors"
         angle(): number {
