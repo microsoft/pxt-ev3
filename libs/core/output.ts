@@ -445,7 +445,7 @@ namespace motors {
         private __setSpeed(speed: number) {
             syncMotors(this._port, {
                 speed: speed,
-                turnRatio: 0,
+                turnRatio: 100, // same speed
                 useBrake: !!this._brake
             })
         }
