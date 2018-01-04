@@ -3,24 +3,6 @@
 /// <reference path="../built/common-sim.d.ts"/>
 
 namespace pxsim {
-    export enum CPlayPinName {
-        A0,
-        A1,
-        A2,
-        A3,
-        A4,
-        A5,
-        A6,
-        A7,
-        A8,
-        A9,
-        D4,
-        D5,
-        D6,
-        D7,
-        D8,
-        D13
-    }
 
     export class EV3Board extends CoreBoard {
         view: SVGSVGElement;

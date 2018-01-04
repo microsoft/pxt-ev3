@@ -88,7 +88,7 @@ namespace pxsim {
         }
 
         updateState(elapsed: number) {
-            console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
+            //console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
             const interval = Math.min(20, elapsed);
             let t = 0;
             while (t < elapsed) {
