@@ -266,8 +266,10 @@ namespace music {
     //% blockId=music_play_sound_effect_until_done block="play sound effect %sound|until done"
     //% weight=98 blockGap=8
     export function playSoundEffectUntilDone(sound: Sound) {
-        if (!sound) return;
+        if (!sound || numSoundsPlaying >= soundsLimit) return;
+        numSoundsPlaying++;
         sound.play();
+        numSoundsPlaying--;
     }
 
     /**
