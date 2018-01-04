@@ -19,12 +19,13 @@ webfontsGenerator({
     "./categories/sensors.svg",
     "./categories/text.svg",
     "./categories/variables.svg",
+    "./categories/advancedcollapsed.svg",
+    "./categories/advancedexpanded.svg",
     "./icons/cancel.svg",
     "./icons/check.svg",
     "./icons/download.svg",
     "./icons/save.svg",
-    "./categories/advancedcollapsed.svg",
-    "./categories/advancedexpanded.svg"
+    "./icons/blocks.svg"
   ],
   dest: '../docs/static/fonts/icons/',
   round: 10
