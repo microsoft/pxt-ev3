@@ -1,8 +1,8 @@
 @font-face {
 	font-family: "iconfont";
-	src: url("iconfont.eot?0e26c61e9bbbc4168f76255eca2448a6?#iefix") format("embedded-opentype"),
-url("iconfont.woff2?0e26c61e9bbbc4168f76255eca2448a6") format("woff2"),
-url("iconfont.woff?0e26c61e9bbbc4168f76255eca2448a6") format("woff");
+	src: url("iconfont.eot?efa64a2368d48451c10a24a5f99b98a1?#iefix") format("embedded-opentype"),
+url("iconfont.woff2?efa64a2368d48451c10a24a5f99b98a1") format("woff2"),
+url("iconfont.woff?efa64a2368d48451c10a24a5f99b98a1") format("woff");
 }
 
 .icon {
@@ -67,21 +67,24 @@ url("iconfont.woff?0e26c61e9bbbc4168f76255eca2448a6") format("woff");
 .icon-variables:before {
 	content: "\f111";
 }
-.icon-cancel:before {
+.icon-advancedcollapsed:before {
 	content: "\f112";
 }
-.icon-check:before {
+.icon-advancedexpanded:before {
 	content: "\f113";
 }
-.icon-download:before {
+.icon-cancel:before {
 	content: "\f114";
 }
-.icon-save:before {
+.icon-check:before {
 	content: "\f115";
 }
-.icon-advancedcollapsed:before {
+.icon-download:before {
 	content: "\f116";
 }
-.icon-advancedexpanded:before {
+.icon-save:before {
 	content: "\f117";
+}
+.icon-blocks:before {
+	content: "\f118";
 }
