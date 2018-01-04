@@ -17,7 +17,7 @@ namespace pxsim.visuals {
             if (!motorState) return;
 
             const syncedMotor = motorState.getSynchedMotor();
-            if ((syncedMotor != undefined || this.syncedMotor != undefined) && syncedMotor != this.syncedMotor) {
+            if ((syncedMotor || this.syncedMotor) && syncedMotor != this.syncedMotor) {
                 this.syncedMotor = syncedMotor;
                 this.showSyncedLabel(motorState, syncedMotor);
             }
