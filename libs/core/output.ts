@@ -109,7 +109,7 @@ namespace motors {
      * Stops all motors
      */
     //% blockId=motorStopAll block="stop all motors"
-    //% weight=97
+    //% weight=5
     //% group="Motion"
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
@@ -258,7 +258,7 @@ namespace motors {
         /**
          * Returns a value indicating if the motor is still running a previous command.
          */
-        //%
+        //% group="Sensors"
         isReady(): boolean {
             this.init();
             const buf = mkCmd(this._port, DAL.opOutputTest, 2);
@@ -278,6 +278,7 @@ namespace motors {
          * @param timeOut optional maximum pausing time in milliseconds
          */
         //% blockId=motorPauseUntilRead block="%motor|pause until ready"
+        //% weight=97
         //% group="Motion"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
@@ -330,7 +331,8 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorSpeed block="%motor|speed"
-        //% weight=72 blockGap=8
+        //% weight=72 
+        //% blockGap=8
         //% group="Sensors"
         speed(): number {
             this.init();
@@ -338,7 +340,7 @@ namespace motors {
         }
 
         /**
-         * Gets motor ration angle.
+         * Gets motor angle.
          * @param motor the port which connects to the motor
          */
         //% blockId=motorTachoCount block="%motor|angle"
@@ -349,11 +351,28 @@ namespace motors {
             return getMotorData(this._port).count;
         }
 
+
+        /**
+         * Gets motor tachometer count.
+         * @param motor the port which connects to the motor
+         */
+        //% blockId=motorTachoCount block="%motor|tacho"
+        //% weight=69
+        //% blockGap=8
+        //% group="Sensors"
+        tacho(): number {
+            this.init();
+            return getMotorData(this._port).tachoCount;
+        }
+
         /**
          * Clears the motor count
          */
-        //% group="Motion"
-        clearCount() {
+        //% blockId=motorClearCount block="%motor|clear counts"
+        //% weight=68
+        //% blockGap=8
+        //% group="Sensors"
+        clearCounts() {
             this.init();
             const b = mkCmd(this._port, DAL.opOutputClearCount, 0)
             writePWM(b)
