@@ -1,5 +1,5 @@
 namespace behaviors {
-    class AvoidCrashBehavior extends behaviors.Behavior {
+    export class AvoidCrashBehavior extends behaviors.Behavior {
         private ultrasonic: sensors.UltraSonicSensor;
         constructor(ultrasonic: sensors.UltraSonicSensor) {
             super();
@@ -10,7 +10,7 @@ namespace behaviors {
             return this.ultrasonic.distance() < 5;
         }
 
-        run() {
+        run(): void {
             motors.stopAllMotors();
             this.active = false;
         }

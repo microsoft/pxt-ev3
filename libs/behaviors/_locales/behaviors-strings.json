@@ -1,4 +1,5 @@
 {
+  "behaviors.addBehavior|block": "add behavior %behavior",
   "behaviors.avoidCrash|block": "avoid crash using %ultrasonic",
   "behaviors|block": "behaviors",
   "{id:category}Behaviors": "Behaviors"
