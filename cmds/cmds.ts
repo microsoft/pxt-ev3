@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 
-require("./editor")
+require("./editor/deploy")
 
 declare namespace pxt.editor {
     function deployCoreAsync(resp: pxtc.CompileResult, disconnect?: boolean): Promise<void>;
