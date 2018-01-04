@@ -4,12 +4,7 @@
 	 viewBox="0 0 23 23" style="enable-background:new 0 0 23 23;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
-	.st1{fill:none;stroke:#717171;}
 </style>
 <title>color</title>
-<g id="menu_icn_expansions" transform="translate(-9596 11554)">
-	<circle id="Ellipse_34" class="st0" cx="9607.5" cy="-11542" r="9"/>
-	<polygon class="st1" points="9613.5,-11543 9608.5,-11543 9608.5,-11548 9606.5,-11548 9606.5,-11543 9601.5,-11543 9601.5,-11541 
-		9606.5,-11541 9606.5,-11536 9608.5,-11536 9608.5,-11541 9613.5,-11541 	"/>
-</g>
+<path class="st0" d="M11.5,2.5c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S16.5,2.5,11.5,2.5z M17.5,12.5h-5v5h-2v-5h-5v-2h5v-5h2v5h5V12.5z"/>
 </svg>
