@@ -70,7 +70,7 @@ namespace pxsim {
                             for (const motor of motors) {
                                 const otherMotor = motors.filter(m => m.port != motor.port)[0];
                                 motor.setSyncCmd(
-                                    motor.port < otherMotor.port ? otherMotor : undefined,
+                                    otherMotor,
                                     cmd, [speed, turnRatio, stepsOrTime, brake]);
                             }
                             return 2;

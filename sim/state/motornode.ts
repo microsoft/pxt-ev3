@@ -15,7 +15,7 @@ namespace pxsim {
         private speedCmdValues: number[];
         private speedCmdTacho: number;
         private speedCmdTime: number;
-        private _synchedMotor: MotorNode; // non-null if master motor
+        private _synchedMotor: MotorNode; // non-null if synchronized
 
         constructor(port: number, large: boolean) {
             super(port);
@@ -50,6 +50,7 @@ namespace pxsim {
 
         clearSpeedCmd() {
             delete this.speedCmd;
+            delete this.speedCmdValues;
             delete this._synchedMotor;
         }
 
@@ -135,10 +136,10 @@ namespace pxsim {
                 }
                 case DAL.opOutputStepSync:
                 case DAL.opOutputTimeSync: {
-                    if (!this._synchedMotor) // handled in other motor code
+                    const otherMotor = this._synchedMotor;
+                    if (otherMotor.port < this.port) // handled in other motor code
                         break;
 
-                    const otherMotor = this._synchedMotor;
                     const speed = this.speedCmdValues[0];
                     const turnRatio = this.speedCmdValues[1];
                     const stepsOrTime = this.speedCmdValues[2];
