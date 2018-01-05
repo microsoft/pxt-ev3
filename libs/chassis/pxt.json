@@ -3,7 +3,7 @@
     "description": "Chassis robot support",
     "files": [
         "README.md",
-        "chassi.ts"
+        "chassis.ts"
     ],
     "testFiles": [
         "test.ts"

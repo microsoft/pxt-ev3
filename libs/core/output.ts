@@ -204,7 +204,7 @@ namespace motors {
          * Sets the speed of the motor.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorSetSpeed block="set speed of %motor|to %speed|%"
+        //% blockId=motorSetSpeed block="set %motor|speed to %speed|%"
         //% on.fieldEditor=toggleonoff
         //% weight=99 blockGap=8
         //% speed.min=-100 speed.max=100
@@ -219,16 +219,16 @@ namespace motors {
         }
 
         /**
-         * Moves the motor by a number of rotations, degress or seconds
+         * Sets the motor speed for limited time or distance
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
-         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorMove block="move %motor|for %value|%unit|at %speed|%"
+        //% blockId=motorMove block="set %motor|speed to %speed|%|for %value|%unit"
         //% weight=98 blockGap=8
         //% speed.min=-100 speed.max=100    
         //% group="Motion"
-        move(value: number, unit: MoveUnit, speed: number) {
+        setSpeedFor(speed: number, value: number, unit: MoveUnit) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
@@ -333,7 +333,7 @@ namespace motors {
         //% blockId=motorSpeed block="%motor|speed"
         //% weight=72 
         //% blockGap=8
-        //% group="Sensors"
+        //% group="Counters"
         speed(): number {
             this.init();
             return getMotorData(this._port).actualSpeed;
@@ -345,7 +345,8 @@ namespace motors {
          */
         //% blockId=motorAngle block="%motor|angle"
         //% weight=70
-        //% group="Sensors"
+        //% blockGap=8
+        //% group="Counters"
         angle(): number {
             this.init();
             return getMotorData(this._port).count;
@@ -359,7 +360,7 @@ namespace motors {
         //% blockId=motorTachoCount block="%motor|tacho"
         //% weight=69
         //% blockGap=8
-        //% group="Sensors"
+        //% group="Counters"
         tacho(): number {
             this.init();
             return getMotorData(this._port).tachoCount;
@@ -371,7 +372,7 @@ namespace motors {
         //% blockId=motorClearCount block="%motor|clear counts"
         //% weight=68
         //% blockGap=8
-        //% group="Sensors"
+        //% group="Counters"
         clearCounts() {
             this.init();
             const b = mkCmd(this._port, DAL.opOutputClearCount, 0)
@@ -456,24 +457,41 @@ namespace motors {
             });
         }
 
+
         /**
          * The Move Tank block can make a robot drive forward, backward, turn, or stop. 
          * Use the Move Tank block for robot vehicles that have two Large Motors, 
          * with one motor driving the left side of the vehicle and the other the right side. 
          * You can make the two motors go at different speeds or in different directions 
          * to make your robot turn.
-         * @param value the amount of movement, eg: 2
-         * @param unit 
          * @param speedLeft the speed on the left motor, eg: 50
          * @param speedRight the speed on the right motor, eg: 50
          */
-        //% blockId=motorPairTank block="tank %chassis|left %speedLeft|%|right %speedRight|%|for %value|%unit"
-        //% weight=9 blockGap=8
+        //% blockId=motorPairTank block="tank %motors|%speedLeft|%|%speedRight|%"
+        //% weight=20 blockGap=8
+        //% group="Sync Motion"
+        tank(speedLeft: number, speedRight: number) {
+            this.tankFor(speedLeft, speedRight, 0, MoveUnit.Degrees);
+        }
+
+        /**
+         * The Move Tank block can make a robot drive forward, backward, turn, or stop. 
+         * Use the Move Tank block for robot vehicles that have two Large Motors, 
+         * with one motor driving the left side of the vehicle and the other the right side. 
+         * You can make the two motors go at different speeds or in different directions 
+         * to make your robot turn.
+         * @param speedLeft the speed on the left motor, eg: 50
+         * @param speedRight the speed on the right motor, eg: 50
+         * @param value the amount of movement, eg: 2
+         * @param unit the unit of the value
+         */
+        //% blockId=motorPairTankFor block="tank %motors|%speedLeft|%|%speedRight|%|for %value|%unit"
+        //% weight=19
         //% speedLeft.min=-100 speedLeft=100
         //% speedRight.min=-100 speedRight=100
         //% inlineInputMode=inline
-        //% group="Chassis"
-        tank(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
+        //% group="Sync Motion"
+        tankFor(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
             this.init();
 
             speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
@@ -483,8 +501,10 @@ namespace motors {
             const turnRatio = speedLeft == speed
                 ? (100 - speedRight / speedLeft * 100)
                 : (speedLeft / speedRight * 100 - 100);
-            this.steer(turnRatio, speed, value, unit);
+
+            this.steerFor(turnRatio, speed, value, unit);
         }
+
         
         /**
          * Turns the motor and the follower motor by a number of rotations
@@ -493,12 +513,28 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorPairTurn block="steer %chassis turn by|%turnRatio|at speed %speed|%|for %value|%unit"
+        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio|speed %speed|%"
+        //% weight=7 blockGap=8
+        //% turnRatio.min=-200 turnRatio=200
+        //% inlineInputMode=inline
+        //% group="Sync Motion"
+        steer(turnRatio: number, speed: number) {
+            this.steer(turnRatio, speed);
+        }
+
+        /**
+         * Turns the motor and the follower motor by a number of rotations
+         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 0
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
+         * @param value the move quantity, eg: 2
+         * @param unit the meaning of the value
+         */
+        //% blockId=motorPairSteerFor block="steer %chassis|turn ratio %turnRatio|speed %speed|%|for %value|%unit"
         //% weight=6 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
-        //% group="Chassis"
-        steer(turnRatio: number, speed: number, value: number, unit: MoveUnit) {
+        //% group="Sync Motion"
+        steerFor(turnRatio: number, speed: number, value: number, unit: MoveUnit) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {

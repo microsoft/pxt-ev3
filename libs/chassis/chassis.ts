@@ -1,8 +1,16 @@
+enum ChassisProperty {
+    //% block="wheel radius (cm)"
+    WheelRadius,
+    //% block="base length (cm)"
+    BaseLength
+}
+
 namespace chassis {
     /**
      * A differential drive robot
      */
-    export class Robot {
+    //% fixedInstances
+    export class Chassis {
         // the motor pair
         public motors: motors.SynchedMotorPair;
         // the radius of the wheel (cm)
@@ -21,14 +29,26 @@ namespace chassis {
          * using a unicycle model.
          * @param speed speed of the center point between motors, eg: 10
          * @param rotationSpeed rotation of the robot around the center point, eg: 30
+         */
+        //% blockId=motorDrive block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s"
+        //% inlineInputMode=inline
+        //% weight=99 blockGap=8
+        drive(speed: number, rotationSpeed: number) {
+            this.driveFor(speed, rotationSpeed, 0, MoveUnit.Degrees);
+        }
+
+        /**
+         * Makes a differential drive robot move with a given speed (cm/s) and rotation rate (deg/s)
+         * using a unicycle model.
+         * @param speed speed of the center point between motors, eg: 10
+         * @param rotationSpeed rotation of the robot around the center point, eg: 30
          * @param value the amount of movement, eg: 2
          * @param unit 
          */
-        //% blockId=motorDrive block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s|for %value|%unit"
+        //% blockId=motorDriveFor block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s|for %value|%unit"
         //% inlineInputMode=inline
-        //% group="Chassis"
-        //% weight=8 blockGap=8
-        drive(speed: number, rotationSpeed: number, value: number, unit: MoveUnit) {
+        //% weight=95 blockGap=8
+        driveFor(speed: number, rotationSpeed: number, value: number, unit: MoveUnit) {
             // speed is expressed in %
             const R = this.wheelRadius; // cm
             const L = this.baseLength; // cm
@@ -45,7 +65,26 @@ namespace chassis {
             const sr = vr / maxw * 100; // % 
             const sl = vl / maxw * 100; // %
 
-            this.motors.tank(sr, sl, value, unit)
-        }    
+            this.motors.tankFor(sr, sl, value, unit)
+        }
+
+        /**
+         * Sets a property of the robot
+         * @param property the property to set
+         * @param value  the value to set
+         */
+        //% blockId=chassisSetProperty block="set %chassis|%property|to %value"
+        //% weight=10
+        setProperty(property: ChassisProperty, value: number) {
+            switch (property) {
+                case ChassisProperty.WheelRadius:
+                    this.wheelRadius = Math.max(0.1, value); break;
+                case ChassisProperty.BaseLength:
+                    this.baseLength = Math.max(0.1, value); break;
+            }
+        }
     }
+
+    //% fixedInstance whenUsed
+    export const chassis = new Chassis();
 }

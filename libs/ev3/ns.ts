@@ -14,9 +14,14 @@ namespace sensors {
 }
 
 //% color="#A5CA18" weight=90 icon="\uf10d"
-//% groups='["Motion", "Sensors", "Chassis"]'
+//% groups='["Motion", "Counters", "Sync Motion"]'
 //% labelLineWidth=0
 namespace motors {
+}
+
+//% labelLineWidth=0
+namespace chassis {
+
 }
 
 //% labelLineWidth=0
