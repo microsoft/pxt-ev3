@@ -92,10 +92,10 @@ namespace brick {
      * @param text the text to print on the screen, eg: "Hello world"
      * @param line the line number to print the text at, eg: 0
      */
-    //% blockId=screen_print block="print %text| at line %line"
+    //% blockId=screen_print block="print at line %line|%text"
     //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=0 line.max=9
-    export function printLine(text: string, line: number) {
+    export function printLine(line: number, text: string) {
         const NUM_LINES = 9;
         const offset = 5;
         const y = offset + (Math.clamp(0, NUM_LINES, line) / (NUM_LINES + 2)) * DAL.LCD_HEIGHT;
@@ -223,9 +223,6 @@ namespace brick {
             const x = i * 52;
             print(`${data.actualSpeed}%`, x, brick.LINE_HEIGHT)
             print(`${data.count}>`, x, 2 * brick.LINE_HEIGHT)
-
-            console.logValue(`speed.` + "ABCD"[i], data.actualSpeed);
-            console.logValue(`angle.` + "ABCD"[i], data.count);
         }
 
         // sensors
@@ -235,8 +232,6 @@ namespace brick {
             const x = (si.port() - 1) * 52;
             const v = si._query();
             print(`${v}`, x, 9 * brick.LINE_HEIGHT)
-
-            console.logValue(`sensor.` + si.port(), v);
         }
     }
 }
