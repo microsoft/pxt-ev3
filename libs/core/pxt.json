@@ -16,6 +16,7 @@
         "png.cpp",
         "screen.cpp",
         "screen.ts",
+        "battery.ts",
         "output.cpp",
         "output.ts",
         "core.ts",

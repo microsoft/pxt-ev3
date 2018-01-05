@@ -89,6 +89,14 @@ namespace sensors.internal {
         //serial.writeLine("UART " + port + " / " + mode + " - " + info)
     }
 
+    export function getBatteryInfo(): { temp: number; current: number } {
+        init();
+        return {
+            temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
+            current: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent)
+        }
+    }
+
     function detectDevices() {
         let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0
