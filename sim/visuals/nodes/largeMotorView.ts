@@ -19,7 +19,11 @@ namespace pxsim.visuals {
             const syncedMotor = motorState.getSynchedMotor();
             if ((syncedMotor || this.syncedMotor) && syncedMotor != this.syncedMotor) {
                 this.syncedMotor = syncedMotor;
-                this.showSyncedLabel(motorState, syncedMotor);
+                if (this.syncedMotor) {
+                    this.showSyncedLabel(motorState, syncedMotor);
+                } else if (this.syncedLabelG) {
+                    this.syncedLabelG.parentNode.removeChild(this.syncedLabelG);
+                }
             }
         }
 
