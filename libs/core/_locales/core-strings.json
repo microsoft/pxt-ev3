@@ -28,6 +28,7 @@
   "brick.Button.onEvent|block": "on %button|%event",
   "brick.Button.pauseUntil|block": "pause until %button|%event",
   "brick.Button.wasPressed|block": "%button|was pressed",
+  "brick.batteryLevel|block": "battery level",
   "brick.buttonDown|block": "down",
   "brick.buttonEnter|block": "enter",
   "brick.buttonLeft|block": "left",
@@ -89,6 +90,7 @@
   "{id:group}Buttons": "Buttons",
   "{id:group}Chassis": "Chassis",
   "{id:group}Light": "Light",
+  "{id:group}More": "More",
   "{id:group}Motion": "Motion",
   "{id:group}Screen": "Screen",
   "{id:group}Sensors": "Sensors"
