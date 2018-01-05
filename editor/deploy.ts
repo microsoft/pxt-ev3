@@ -29,7 +29,8 @@ export function initAsync() {
 
     let canHID = false
     if (pxt.U.isNodeJS) {
-        canHID = true
+        // doesn't seem to work ATM
+        canHID = false
     } else {
         const forceHexDownload = /forceHexDownload/i.test(window.location.href);
         if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
