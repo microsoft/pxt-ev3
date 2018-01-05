@@ -309,6 +309,10 @@ namespace sensors.internal {
                 return 0
             return getUartNumber(fmt, off, this._port)
         }
+
+        protected reset() {
+            if (this.isActive()) uartReset(this._port);
+        }
     }
 
     function uartReset(port: number) {
