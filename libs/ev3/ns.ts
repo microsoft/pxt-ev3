@@ -52,3 +52,7 @@ namespace loops {
 namespace light {
 
 }
+
+namespace Math {
+    export const PI = 3.14159265358979323846;
+}
