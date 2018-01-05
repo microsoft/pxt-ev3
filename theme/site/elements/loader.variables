@@ -1,3 +1,19 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+@loaderBackImageUrl: "../docs/static/loader_back.svg";
+@loaderBackImage: data-uri(@loaderBackImageUrl);
+
+@loaderImageUrl: "../docs/static/loader_front.svg";
+@loaderImage: data-uri(@loaderImageUrl);
+
+@loaderSpeed: 2s;
+
+@loaderStartPoint: 0px;
+@loaderMiddlePoint: 14px;
+@loaderEndPoint: 28px;
+
+@loaderAnimation: loader-pxt-ev3;
+
+@large   : 200px;
