@@ -74,6 +74,7 @@ namespace chassis {
          * @param value  the value to set
          */
         //% blockId=chassisSetProperty block="set %chassis|%property|to %value"
+        //% blockGap=8
         //% weight=10
         setProperty(property: ChassisProperty, value: number) {
             switch (property) {
@@ -82,6 +83,16 @@ namespace chassis {
                 case ChassisProperty.BaseLength:
                     this.baseLength = Math.max(0.1, value); break;
             }
+        }
+
+        /**
+         * Sets the motors used by the chassis, default is B+C
+         * @param motors 
+         */
+        //% blockId=chassisSetMotors block="set %chassis|motors to %motors"
+        //% weight=10
+        setMotors(motors: motors.SynchedMotorPair) {
+            this.motors = motors;
         }
     }
 
