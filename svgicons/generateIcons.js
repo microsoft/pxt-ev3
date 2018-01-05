@@ -19,6 +19,7 @@ webfontsGenerator({
     "./categories/sensors.svg",
     "./categories/text.svg",
     "./categories/variables.svg",
+    "./categories/console.svg",
     "./categories/advancedcollapsed.svg",
     "./categories/advancedexpanded.svg",
     "./icons/cancel.svg",
