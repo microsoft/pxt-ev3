@@ -176,8 +176,15 @@ namespace pxsim {
             // let it coast to speed 0
             if (this.speed && !(this.started || this.speedCmd)) {
                 // decay speed 5% per tick
-                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * Math.sign(this.speed));
+                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * sign(this.speed));
             }
         }
+    }
+}
+
+namespace pxsim {
+    // A re-implementation of Math.sign (since IE11 doesn't support it)
+    export function sign(num: number) {
+        return num ? num < 0 ? -1 : 1 : 0;
     }
 }

@@ -5,7 +5,7 @@ import { deployCoreAsync, initAsync } from "./deploy";
 import { FieldPorts } from "./field_ports";
 import { FieldImages } from "./field_images";
 
-pxt.editor.initExtensionsAsync = function(opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
+pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
     updateBlocklyShape();
     const res: pxt.editor.ExtensionResult = {
@@ -110,6 +110,20 @@ function updateBlocklyShape() {
     (Blockly.BlockSvg as any).INNER_BOTTOM_LEFT_CORNER =
         'l ' + 0 + ',' + (Blockly.BlockSvg as any).CORNER_RADIUS * 2 +
         'l ' + (Blockly.BlockSvg as any).CORNER_RADIUS + ',' + 0;
+
+    /**
+     * Corner radius of the flyout background.
+     * @type {number}
+     * @const
+     */
+    (Blockly as any).Flyout.prototype.CORNER_RADIUS = 0;
+
+    /**
+     * Margin around the edges of the blocks in the flyout.
+     * @type {number}
+     * @const
+     */
+    (Blockly as any).Flyout.prototype.MARGIN = 8;
 
 }
 
