@@ -270,13 +270,7 @@ namespace motors {
             const buf = mkCmd(this._port, DAL.opOutputTest, 2);
             readPWM(buf)
             const flags = buf.getNumber(NumberFormat.UInt8LE, 2);
-            // TODO: FIX with ~ support
-            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
-                const flag = 1 << i;
-                if ((this._port & flag) && (flags & flag))
-                    return false;
-            }
-            return true;
+            return (~flags & this._port) == this._port;
         }
 
         /**
@@ -448,7 +442,7 @@ namespace motors {
         private __setSpeed(speed: number) {
             syncMotors(this._port, {
                 speed: speed,
-                turnRatio: 100, // same speed
+                turnRatio: 0, // same speed
                 useBrake: !!this._brake
             })
         }
@@ -457,7 +451,7 @@ namespace motors {
             syncMotors(this._port, {
                 useSteps: steps,
                 speed: speed,
-                turnRatio: 100, // same speed
+                turnRatio: 0, // same speed
                 stepsOrTime: stepsOrTime,
                 useBrake: this._brake
             });
