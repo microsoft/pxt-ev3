@@ -15,13 +15,28 @@
   "cardType": "example"
 }, {
   "name": "Three Point Turn",
-  "description": "Activity 1",
+  "description": "Activity 2",
   "url":"/coding/three-point-turn-2",
   "cardType": "example"
 }, {
   "name": "Three Point Turn",
-  "description": "Activity 1",
+  "description": "Activity 3",
   "url":"/coding/three-point-turn-3",
+  "cardType": "example"
+}, {
+  "name": "Reversing the robot",
+  "description": "Activity 1",
+  "url":"/coding/reversing-the-robot-1",
+  "cardType": "example"
+}, {
+  "name": "Reversing the robot",
+  "description": "Activity 2",
+  "url":"/coding/reversing-the-robot-2",
+  "cardType": "example"
+}, {
+  "name": "Reversing the robot",
+  "description": "Activity 3",
+  "url":"/coding/reversing-the-robot-3",
   "cardType": "example"
 }    
 ]
