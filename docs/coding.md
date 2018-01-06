@@ -132,3 +132,24 @@
   "cardType": "example"
 }]
 ```
+
+## Cruise Control
+
+```codecard
+[{
+  "name": "Cruise Control",
+  "description": "Activity 1",
+  "url":"/coding/cruise-control-1",
+  "cardType": "example"
+}, {
+  "name": "Cruise Control",
+  "description": "Activity 2",
+  "url":"/coding/cruise-control-2",
+  "cardType": "example"
+}, {
+  "name": "Cruise Control",
+  "description": "Activity 3",
+  "url":"/coding/cruise-control-3",
+  "cardType": "example"
+}]
+```
