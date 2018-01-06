@@ -4,7 +4,7 @@
 
 * [Download Curriculum Materials](https://education.lego.com/en-us/downloads/mindstorms-ev3)
 
-## Activites
+## Three Point Turn
 
 ```codecard
 [
@@ -23,7 +23,13 @@
   "description": "Activity 3",
   "url":"/coding/three-point-turn-3",
   "cardType": "example"
-}, {
+}]
+```
+
+## Reversing the robot
+
+```codecard
+[{
   "name": "Reversing the robot",
   "description": "Activity 1",
   "url":"/coding/reversing-the-robot-1",
@@ -37,6 +43,27 @@
   "name": "Reversing the robot",
   "description": "Activity 3",
   "url":"/coding/reversing-the-robot-3",
+  "cardType": "example"
+}]
+```
+
+## Light the way
+
+```codecard
+[{
+  "name": "Light the way",
+  "description": "Activity 1",
+  "url":"/coding/light-the-way-1",
+  "cardType": "example"
+}, {
+  "name": "Light the way",
+  "description": "Activity 2",
+  "url":"/coding/light-the-way-2",
+  "cardType": "example"
+}, {
+  "name": "Light the way",
+  "description": "Activity 3",
+  "url":"/coding/light-the-way-3",
   "cardType": "example"
 }    
 ]

@@ -102,11 +102,11 @@ namespace sensors {
     }
 
     //% whenUsed block="touch 1" weight=95 fixedInstance jres=icons.port1
-    export const touchSensor1: TouchSensor = new TouchSensor(1)
+    export const touch1: TouchSensor = new TouchSensor(1)
     //% whenUsed block="touch 2" weight=95 fixedInstance jres=icons.port2
-    export const touchSensor2: TouchSensor = new TouchSensor(2)
+    export const touch2: TouchSensor = new TouchSensor(2)
     //% whenUsed block="touch 3" weight=95 fixedInstance jres=icons.port3
-    export const touchSensor3: TouchSensor = new TouchSensor(3)
+    export const touch3: TouchSensor = new TouchSensor(3)
     //% whenUsed block="touch 4" weight=95 fixedInstance jres=icons.port4
-    export const touchSensor4: TouchSensor = new TouchSensor(4)
+    export const touch4: TouchSensor = new TouchSensor(4)
 }
