@@ -90,3 +90,25 @@
 }
 ]
 ```
+
+## Reverse Bepper
+
+```codecard
+[{
+  "name": "Reverse Beeper",
+  "description": "Activity 1",
+  "url":"/coding/reverse-beeper-1",
+  "cardType": "example"
+}, {
+  "name": "Reverse Beeper",
+  "description": "Activity 2",
+  "url":"/coding/reverse-beeper-2",
+  "cardType": "example"
+}, {
+  "name": "Reverse Beeper",
+  "description": "Activity 3",
+  "url":"/coding/reverse-beeper-3",
+  "cardType": "example"
+}
+]
+```
