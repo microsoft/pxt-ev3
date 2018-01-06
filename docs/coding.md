@@ -153,3 +153,18 @@
   "cardType": "example"
 }]
 ```
+
+## Roaming
+
+```codecard
+[{
+  "name": "Roaming 1",
+  "description": "Activity 1",
+  "url":"/coding/roaming-1",
+  "cardType": "example"
+}, {
+  "name": "Roaming 2",
+  "description": "Activity 2",
+  "url":"/coding/roaming-2",
+  "cardType": "example"
+}, {
