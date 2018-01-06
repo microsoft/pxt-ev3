@@ -22,6 +22,10 @@ namespace pxsim {
             this.setLarge(large);
         }
 
+        isReady() {
+            return !this.speedCmd;
+        }
+
         getSpeed() {
             return this.speed * (this.polarity == 0 ? -1 : 1);
         }
@@ -154,8 +158,21 @@ namespace pxsim {
                         if (brake) this.speed = 0;
                         this.clearSpeedCmd();
                     }
-                    // send synched motor state
-                    otherMotor.speed = Math.floor(this.speed * turnRatio / 100);
+
+                    // turn ratio is a bit weird to interpret
+                    // see https://communities.theiet.org/blogs/698/1706
+                    if (turnRatio < 0) {
+                        otherMotor.speed = speed;
+                        this.speed *= (100 + turnRatio) / 100;
+                    } else {
+                        otherMotor.speed = this.speed * (100 - turnRatio) / 100;
+                    }
+
+                    // clamp
+                    this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
+                    otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));;
+
+                    // stop other motor if needed
                     if (!this._synchedMotor)
                         otherMotor.clearSpeedCmd();
                     break;
