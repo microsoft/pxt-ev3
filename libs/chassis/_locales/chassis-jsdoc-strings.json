@@ -1,0 +1,14 @@
+{
+  "chassis.Chassis": "A differential drive robot",
+  "chassis.Chassis.drive": "Makes a differential drive robot move with a given speed (cm/s) and rotation rate (deg/s)\nusing a unicycle model.",
+  "chassis.Chassis.driveFor": "Makes a differential drive robot move with a given speed (cm/s) and rotation rate (deg/s)\nusing a unicycle model.",
+  "chassis.Chassis.driveFor|param|rotationSpeed": "rotation of the robot around the center point, eg: 30",
+  "chassis.Chassis.driveFor|param|speed": "speed of the center point between motors, eg: 10",
+  "chassis.Chassis.driveFor|param|value": "the amount of movement, eg: 2",
+  "chassis.Chassis.drive|param|rotationSpeed": "rotation of the robot around the center point, eg: 30",
+  "chassis.Chassis.drive|param|speed": "speed of the center point between motors, eg: 10",
+  "chassis.Chassis.setMotors": "Sets the motors used by the chassis, default is B+C",
+  "chassis.Chassis.setProperty": "Sets a property of the robot",
+  "chassis.Chassis.setProperty|param|property": "the property to set",
+  "chassis.Chassis.setProperty|param|value": "the value to set"
+}

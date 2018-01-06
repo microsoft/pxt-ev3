@@ -15,6 +15,7 @@
         "libs/ultrasonic-sensor",
         "libs/infrared-sensor",
         "libs/gyro-sensor",
+        "libs/chassis",
         "libs/ev3",
         "libs/tests",
         "libs/behaviors"
