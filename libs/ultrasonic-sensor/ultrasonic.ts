@@ -86,6 +86,9 @@ namespace sensors {
             return this._query();
         }
     }
+  
+    //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4
+    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
     
     //% fixedInstance whenUsed block="ultrasonic 1" jres=icons.port1
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
@@ -95,7 +98,4 @@ namespace sensors {
 
     //% fixedInstance whenUsed block="ultrasonic 3" jres=icons.port3
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
-  
-    //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4
-    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 }
