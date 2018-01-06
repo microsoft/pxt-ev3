@@ -206,10 +206,9 @@ namespace motors {
          * Sets the speed of the motor.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          */
-        //% blockId=motorSetSpeed block="set %motor|speed to %speed|%"
+        //% blockId=motorSetSpeed block="set %motor|speed to %speed=motorSpeedPicker|%"
         //% on.fieldEditor=toggleonoff
         //% weight=99 blockGap=8
-        //% speed.min=-100 speed.max=100
         //% group="Motion"
         setSpeed(speed: number) {
             this.init();
@@ -226,9 +225,8 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorMove block="set %motor|speed to %speed|%|for %value|%unit"
+        //% blockId=motorMove block="set %motor|speed to %speed=motorSpeedPicker|%|for %value|%unit"
         //% weight=98 blockGap=8
-        //% speed.min=-100 speed.max=100    
         //% group="Motion"
         setSpeedFor(speed: number, value: number, unit: MoveUnit) {
             this.init();
