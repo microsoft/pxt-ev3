@@ -68,3 +68,25 @@
 }    
 ]
 ```
+
+## Traffic Lights
+
+```codecard
+[{
+  "name": "Traffic Lights",
+  "description": "Activity 1",
+  "url":"/coding/traffic-lights-1",
+  "cardType": "example"
+}, {
+  "name": "Traffic Lights",
+  "description": "Activity 2",
+  "url":"/coding/traffic-lights-2",
+  "cardType": "example"
+}, {
+  "name": "Traffic Lights",
+  "description": "Activity 3",
+  "url":"/coding/traffic-lights-3",
+  "cardType": "example"
+}
+]
+```
