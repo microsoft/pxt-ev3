@@ -30,6 +30,8 @@ enum MoveUnit {
     Rotations,
     //% block="degrees"
     Degrees,
+    //% block="seconds"
+    Seconds,
     //% block="milliseconds"
     MilliSeconds
 }
@@ -246,6 +248,10 @@ namespace motors {
                     stepsOrTime = value >> 0;
                     useSteps = true;
                     break;
+                case MoveUnit.Seconds:
+                    stepsOrTime = (value * 1000) >> 0;
+                    useSteps = false;
+                    break;
                 default:
                     stepsOrTime = value;
                     useSteps = false;
@@ -265,7 +271,7 @@ namespace motors {
             readPWM(buf)
             const flags = buf.getNumber(NumberFormat.UInt8LE, 2);
             // TODO: FIX with ~ support
-            for(let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 const flag = 1 << i;
                 if ((this._port & flag) && (flags & flag))
                     return false;
@@ -505,7 +511,7 @@ namespace motors {
             this.steerFor(turnRatio, speed, value, unit);
         }
 
-        
+
         /**
          * Turns the motor and the follower motor by a number of rotations
          * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 0
@@ -554,6 +560,10 @@ namespace motors {
                     stepsOrTime = value >> 0;
                     useSteps = true;
                     break;
+                case MoveUnit.Seconds:
+                    stepsOrTime = (value * 1000) >> 0;
+                    useSteps = false;
+                    break;
                 default:
                     stepsOrTime = value >> 0;
                     useSteps = false;
@@ -567,7 +577,7 @@ namespace motors {
                 stepsOrTime: stepsOrTime,
                 useBrake: this._brake
             });
-        }        
+        }
 
         /**
          * Returns the name(s) of the motor

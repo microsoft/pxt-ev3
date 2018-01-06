@@ -15,6 +15,7 @@
   "MoveUnit.Degrees|block": "degrees",
   "MoveUnit.MilliSeconds|block": "milliseconds",
   "MoveUnit.Rotations|block": "rotations",
+  "MoveUnit.Seconds|block": "seconds",
   "Output.AB|block": "A+B",
   "Output.AD|block": "A+D",
   "Output.ALL|block": "All",
