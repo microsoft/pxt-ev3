@@ -77,16 +77,20 @@ export class FieldSpeed extends Blockly.FieldSlider implements Blockly.FieldCust
     setReadout_(readout: Element, value: string) {
         this.updateSpeed(parseFloat(value));
         // Update reporter
-        this.reporter.textContent = `${value}`;
+        this.reporter.textContent = `${value}%`;
     }
 
     private updateSpeed(speed: number) {
-        speed = Math.abs(speed);
-        speed = speed / 100 * 50;
-        speed += 50;
+        let sign = this.sign(speed);
+        speed = (Math.abs(speed) / 100 * 50) + 50;
+        if (sign == -1) speed = 50 - speed;
         let c = Math.PI * (90 * 2);
         let pct = ((100 - speed) / 100) * c;
         this.circleBar.setAttribute('stroke-dashoffset', `${pct}`);
     }
 
+    // A re-implementation of Math.sign (since IE11 doesn't support it)
+    private sign(num: number) {
+        return num ? num < 0 ? -1 : 1 : 0;
+    }
 }
