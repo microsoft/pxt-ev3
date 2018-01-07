@@ -93,7 +93,8 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
             button.setAttribute('id', ':' + i); // For aria-activedescendant
             button.setAttribute('role', 'menuitem');
             button.setAttribute('cursor', 'pointer');
-            (button as any).title = content.alt;
+            const title = pxsim.svg.child(button, 'title');
+            title.textContent = content;
 
             Blockly.bindEvent_(button, 'click', this, this.buttonClick_);
             Blockly.bindEvent_(button, 'mouseup', this, this.buttonClick_);
