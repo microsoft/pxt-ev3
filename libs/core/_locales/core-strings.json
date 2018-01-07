@@ -37,7 +37,7 @@
   "brick.buttonUp|block": "up",
   "brick.clearScreen|block": "clear screen",
   "brick.lightPattern|block": "%pattern",
-  "brick.printLine|block": "print %text| at line %line",
+  "brick.printLine|block": "print at line %line|%text",
   "brick.printPorts|block": "print ports",
   "brick.setLight|block": "set light to %pattern=led_pattern",
   "brick.showImage|block": "show image %image=screen_image_picker",
