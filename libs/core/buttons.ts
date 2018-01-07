@@ -92,6 +92,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=81 blockGap=8
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         isPressed() {
             return this._isPressed
         }
@@ -107,6 +108,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=80
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -125,6 +127,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=99 blockGap=8
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
@@ -139,6 +142,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=98 blockGap=8
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         pauseUntil(ev: ButtonEvent) {
             control.waitForEvent(this._id, ev);
         }
