@@ -5,6 +5,7 @@ import { deployCoreAsync, initAsync } from "./deploy";
 import { FieldPorts } from "./field_ports";
 import { FieldImages } from "./field_images";
 import {FieldSpeed} from "./field_speed";
+import { FieldBrickButtons } from "./field_brickbuttons";
 
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
@@ -19,6 +20,9 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
         }, {
             selector: "speed",
             editor: FieldSpeed
+        }, {
+            selector: "brickbuttons",
+            editor: FieldBrickButtons
         }],
         deployCoreAsync
     };
