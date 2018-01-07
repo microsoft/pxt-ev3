@@ -182,7 +182,7 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-light
-        //% block="pause %sensor|for %mode|light %condition"
+        //% block="pause %sensor|for %mode|%condition"
         //% blockId=colorPauseForLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
