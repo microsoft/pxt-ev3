@@ -49,7 +49,7 @@ namespace behaviors {
      * @param motors 
      * @param speed the desired speed, eg: 50
      */
-    //% blockId=behaviorsDriveForward block="drive %motors|forward at %speed|%"
+    //% blockId=behaviorsDriveForward block="drive %motors|forward at %speed=motorSpeedPicker|%"
     export function driveForward(motors: motors.MotorBase, speed: number): behaviors.Behavior {
         return new DriveForwardBehavior(motors, speed);
     }

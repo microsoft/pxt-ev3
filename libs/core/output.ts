@@ -465,7 +465,7 @@ namespace motors {
          * @param speedLeft the speed on the left motor, eg: 50
          * @param speedRight the speed on the right motor, eg: 50
          */
-        //% blockId=motorPairTank block="tank %motors|%speedLeft|%|%speedRight|%"
+        //% blockId=motorPairTank block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%"
         //% weight=20 blockGap=8
         //% group="Sync Motion"
         tank(speedLeft: number, speedRight: number) {
@@ -483,7 +483,7 @@ namespace motors {
          * @param value the amount of movement, eg: 2
          * @param unit the unit of the value
          */
-        //% blockId=motorPairTankFor block="tank %motors|%speedLeft|%|%speedRight|%|for %value|%unit"
+        //% blockId=motorPairTankFor block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%|for %value|%unit"
         //% weight=19
         //% speedLeft.min=-100 speedLeft=100
         //% speedRight.min=-100 speedRight=100
@@ -511,7 +511,7 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio|speed %speed|%"
+        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%"
         //% weight=7 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
@@ -527,7 +527,7 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorPairSteerFor block="steer %chassis|turn ratio %turnRatio|speed %speed|%|for %value|%unit"
+        //% blockId=motorPairSteerFor block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%|for %value|%unit"
         //% weight=6 blockGap=8
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline

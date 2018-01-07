@@ -1,7 +1,7 @@
 {
   "behaviors.addBehavior|block": "add behavior %behavior",
   "behaviors.avoidCrash|block": "avoid crash using %ultrasonic",
-  "behaviors.driveForward|block": "drive %motors|forward at %speed|%",
+  "behaviors.driveForward|block": "drive %motors|forward at %speed=motorSpeedPicker|%",
   "behaviors|block": "behaviors",
   "{id:category}Behaviors": "Behaviors"
 }
