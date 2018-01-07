@@ -225,7 +225,7 @@ namespace motors {
          * @param value the move quantity, eg: 2
          * @param unit the meaning of the value
          */
-        //% blockId=motorMove block="set %motor|speed to %speed=motorSpeedPicker|%|for %value|%unit"
+        //% blockId=motorMove block="set %motor|speed to %speed=motorSpeedPicker|%|for %value=motorUnitValuePicker|%unit"
         //% weight=98 blockGap=8
         //% group="Motion"
         setSpeedFor(speed: number, value: number, unit: MoveUnit) {

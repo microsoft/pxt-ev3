@@ -55,7 +55,7 @@
   "motors.MotorBase.pauseUntilReady|block": "%motor|pause until ready",
   "motors.MotorBase.setBrake|block": "set %motor|brake %brake",
   "motors.MotorBase.setReversed|block": "set %motor|reversed %reversed",
-  "motors.MotorBase.setSpeedFor|block": "set %motor|speed to %speed=motorSpeedPicker|%|for %value|%unit",
+  "motors.MotorBase.setSpeedFor|block": "set %motor|speed to %speed=motorSpeedPicker|%|for %value=motorUnitValuePicker|%unit",
   "motors.MotorBase.setSpeed|block": "set %motor|speed to %speed=motorSpeedPicker|%",
   "motors.SynchedMotorPair.steerFor|block": "steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%|for %value|%unit",
   "motors.SynchedMotorPair.steer|block": "steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%",
