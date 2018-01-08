@@ -101,6 +101,7 @@ namespace brick {
     //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=1 line.max=10
     export function showValue(name: string, value: number, line: number) {
+        value = Math.round(value * 1000) / 1000;
         showString((name ? name + ": " : "") + value, line);        
     }
 
