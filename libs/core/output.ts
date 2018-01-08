@@ -112,7 +112,7 @@ namespace motors {
      */
     //% blockId=motorStopAll block="stop all motors"
     //% weight=5
-    //% group="Motion"
+    //% group="Move"
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b)
@@ -121,7 +121,7 @@ namespace motors {
     /**
      * Resets all motors
      */
-    //% group="Motion"
+    //% group="Move"
     export function resetAllMotors() {
         reset(Output.ALL)
     }
@@ -164,7 +164,7 @@ namespace motors {
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake"
         //% brake.fieldEditor=toggleonoff
         //% weight=60 blockGap=8
-        //% group="Motion"
+        //% group="Move"
         setBrake(brake: boolean) {
             this.init();
             this._brake = brake;
@@ -176,7 +176,7 @@ namespace motors {
         //% blockId=motorSetReversed block="set %motor|reversed %reversed"
         //% reversed.fieldEditor=toggleonoff
         //% weight=59
-        //% group="Motion"
+        //% group="Move"
         setReversed(reversed: boolean) {
             this.init();
             const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
@@ -209,7 +209,7 @@ namespace motors {
         //% blockId=motorSetSpeed block="set %motor|speed to %speed=motorSpeedPicker|%"
         //% on.fieldEditor=toggleonoff
         //% weight=99 blockGap=8
-        //% group="Motion"
+        //% group="Move"
         setSpeed(speed: number) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
@@ -227,7 +227,7 @@ namespace motors {
          */
         //% blockId=motorMove block="set %motor|speed to %speed=motorSpeedPicker|%|for %value|%unit"
         //% weight=98 blockGap=8
-        //% group="Motion"
+        //% group="Measured Move"
         setSpeedFor(speed: number, value: number, unit: MoveUnit) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
@@ -276,8 +276,8 @@ namespace motors {
          * @param timeOut optional maximum pausing time in milliseconds
          */
         //% blockId=motorPauseUntilRead block="%motor|pause until ready"
-        //% weight=97
-        //% group="Motion"
+        //% weight=90
+        //% group="Move"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
         }
@@ -466,8 +466,8 @@ namespace motors {
          * @param speedRight the speed on the right motor, eg: 50
          */
         //% blockId=motorPairTank block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%"
-        //% weight=20 blockGap=8
-        //% group="Sync Motion"
+        //% weight=96 blockGap=8
+        //% group="Move"
         tank(speedLeft: number, speedRight: number) {
             this.tankFor(speedLeft, speedRight, 0, MoveUnit.Degrees);
         }
@@ -484,11 +484,9 @@ namespace motors {
          * @param unit the unit of the value
          */
         //% blockId=motorPairTankFor block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%|for %value|%unit"
-        //% weight=19
-        //% speedLeft.min=-100 speedLeft=100
-        //% speedRight.min=-100 speedRight=100
+        //% weight=19 blockGap=8
         //% inlineInputMode=inline
-        //% group="Sync Motion"
+        //% group="Measured Move"
         tankFor(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
             this.init();
 
@@ -512,12 +510,12 @@ namespace motors {
          * @param unit the meaning of the value
          */
         //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%"
-        //% weight=7 blockGap=8
+        //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
-        //% group="Sync Motion"
+        //% group="Move"
         steer(turnRatio: number, speed: number) {
-            this.steer(turnRatio, speed);
+            this.steerFor(turnRatio, speed, 0, MoveUnit.Rotations);
         }
 
         /**
@@ -528,10 +526,10 @@ namespace motors {
          * @param unit the meaning of the value
          */
         //% blockId=motorPairSteerFor block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%|for %value|%unit"
-        //% weight=6 blockGap=8
+        //% weight=6
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
-        //% group="Sync Motion"
+        //% group="Measured Move"
         steerFor(turnRatio: number, speed: number, value: number, unit: MoveUnit) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
