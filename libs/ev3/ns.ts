@@ -14,7 +14,7 @@ namespace sensors {
 }
 
 //% color="#A5CA18" weight=90 icon="\uf10d"
-//% groups='["Move", "Counters", "Measured Move"]'
+//% groups='["Move", "Counters"]'
 //% labelLineWidth=0
 namespace motors {
 }
