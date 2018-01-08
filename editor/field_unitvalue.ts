@@ -37,12 +37,12 @@ export class FieldUnitValue extends Blockly.FieldNumber implements Blockly.Field
             && this.sourceBlock_.parentBlock_.inputList
             && this.sourceBlock_.parentBlock_.inputList.length != 0) {
             this.sourceBlock_.parentBlock_.inputList.forEach((input) => {
-                if (input.name == "unit") {
-                    this.unitInput = input;
-                    if (input.fieldRow.length == 1) {
-                        this.unitValue = input.fieldRow[0].getValue();
+                input.fieldRow.forEach(field => {
+                    if (field.name == "unit") {
+                        this.unitInput = input;
+                        this.unitValue = field.getValue();
                     }
-                }
+                })
             })
             if (this.unitInput && this.unitValue) {
                 if (this.unitValue == "MoveUnit.Degrees") {
