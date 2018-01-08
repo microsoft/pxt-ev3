@@ -58,7 +58,7 @@ namespace brick {
         }
     }
 
-    export function setPixel(on: boolean, x: number, y: number) {
+    function setPixel(on: boolean, x: number, y: number) {
         x |= 0
         y |= 0
         if (0 <= x && x < DAL.LCD_WIDTH && 0 <= y && y < DAL.LCD_HEIGHT)
@@ -140,12 +140,9 @@ namespace brick {
      */
     //% blockId=screen_show_image block="show image %image=screen_image_picker"
     //% weight=100 group="Screen" blockGap=8
-    export function showImage(image: Image, delay: number = 400) {
+    export function showImage(image: Image) {
         if (!image) return;
         image.draw(0, 0, Draw.Normal);
-        delay = Math.max(0, delay);
-        if (delay > 0)
-            loops.pause(delay);
     }
 
     /**
@@ -170,7 +167,7 @@ namespace brick {
         screen.clear();
     }
 
-    export function drawRect(x: number, y: number, w: number, h: number, mode = Draw.Normal) {
+    function drawRect(x: number, y: number, w: number, h: number, mode = Draw.Normal) {
         x |= 0;
         y |= 0;
         w |= 0;
