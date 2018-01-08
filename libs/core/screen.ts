@@ -90,16 +90,40 @@ namespace brick {
     /**
      * Show text on the screen at a specific line.
      * @param text the text to print on the screen, eg: "Hello world"
-     * @param line the line number to print the text at, eg: 0
+     * @param line the line number to print the text at, eg: 1
      */
-    //% blockId=screen_print block="print at line %line|%text"
+    //% blockId=screen_print block="show string %text|at line %line"
     //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
-    //% line.min=0 line.max=9
-    export function printLine(line: number, text: string) {
+    //% line.min=1 line.max=10
+    export function showString(text: string, line: number) {
         const NUM_LINES = 9;
         const offset = 5;
-        const y = offset + (Math.clamp(0, NUM_LINES, line) / (NUM_LINES + 2)) * DAL.LCD_HEIGHT;
+        const y = offset + (Math.clamp(0, NUM_LINES, line - 1) / (NUM_LINES + 2)) * DAL.LCD_HEIGHT;
         brick.print(text, offset, y);
+    }
+
+    /**
+     * Shows a number on the screen
+     * @param value the numeric value
+     * @param line the line number to print the text at, eg: 1
+     */
+    //% blockId=screenShowNumber block="show number %name|at line %line"
+    //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=1 line.max=10
+    export function showNumber(value: number, line: number) {
+        showString("" + value, line);
+    }
+
+    /**
+     * Shows a name, value pair on the screen
+     * @param value the numeric value
+     * @param line the line number to print the text at, eg: 1
+     */
+    //% blockId=screenShowValue block="show value %name|= %text|at line %line"
+    //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=1 line.max=10
+    export function showValue(name: string, value: number, line: number) {
+        showString((name ? name + ": " : "") + value, line);        
     }
 
     export function print(text: string, x: number, y: number, mode = Draw.Normal) {
