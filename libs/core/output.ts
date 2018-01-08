@@ -96,7 +96,7 @@ namespace motors {
         return b
     }
 
-    function outputToName(out: Output): string {
+    export function outputToName(out: Output): string {
         let r = "";
         for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
             if (out & (1 << i)) {
@@ -203,32 +203,15 @@ namespace motors {
         }
 
         /**
-         * Sets the speed of the motor.
-         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         */
-        //% blockId=motorSetSpeed block="set %motor|speed to %speed=motorSpeedPicker|%"
-        //% on.fieldEditor=toggleonoff
-        //% weight=99 blockGap=8
-        //% group="Move"
-        setSpeed(speed: number) {
-            this.init();
-            speed = Math.clamp(-100, 100, speed >> 0);
-            if (!speed) // always stop
-                this.stop();
-            else
-                this._setSpeed(speed);
-        }
-
-        /**
          * Sets the motor speed for limited time or distance
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         * @param value the move quantity, eg: 2
-         * @param unit the meaning of the value
+         * @param value (optional) measured distance or rotation
+         * @param unit (optional) unit of the value
          */
-        //% blockId=motorMove block="set %motor|speed to %speed=motorSpeedPicker|%|for %value|%unit"
-        //% weight=98 blockGap=8
-        //% group="Measured Move"
-        setSpeedFor(speed: number, value: number, unit: MoveUnit) {
+        //% blockId=motorSetSpeed block="set %motor|speed to %speed=motorSpeedPicker|%"
+        //% weight=100 blockGap=8
+        //% group="Move"
+        setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
@@ -455,7 +438,6 @@ namespace motors {
             });
         }
 
-
         /**
          * The Move Tank block can make a robot drive forward, backward, turn, or stop. 
          * Use the Move Tank block for robot vehicles that have two Large Motors, 
@@ -464,30 +446,14 @@ namespace motors {
          * to make your robot turn.
          * @param speedLeft the speed on the left motor, eg: 50
          * @param speedRight the speed on the right motor, eg: 50
+         * @param value (optional) move duration or rotation
+         * @param unit (optional) unit of the value
          */
         //% blockId=motorPairTank block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%"
         //% weight=96 blockGap=8
-        //% group="Move"
-        tank(speedLeft: number, speedRight: number) {
-            this.tankFor(speedLeft, speedRight, 0, MoveUnit.Degrees);
-        }
-
-        /**
-         * The Move Tank block can make a robot drive forward, backward, turn, or stop. 
-         * Use the Move Tank block for robot vehicles that have two Large Motors, 
-         * with one motor driving the left side of the vehicle and the other the right side. 
-         * You can make the two motors go at different speeds or in different directions 
-         * to make your robot turn.
-         * @param speedLeft the speed on the left motor, eg: 50
-         * @param speedRight the speed on the right motor, eg: 50
-         * @param value the amount of movement, eg: 2
-         * @param unit the unit of the value
-         */
-        //% blockId=motorPairTankFor block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%|for %value|%unit"
-        //% weight=19 blockGap=8
         //% inlineInputMode=inline
-        //% group="Measured Move"
-        tankFor(speedLeft: number, speedRight: number, value: number, unit: MoveUnit) {
+        //% group="Move"
+        tank(speedLeft: number, speedRight: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
 
             speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
@@ -498,39 +464,22 @@ namespace motors {
                 ? (100 - speedRight / speedLeft * 100)
                 : (speedLeft / speedRight * 100 - 100);
 
-            this.steerFor(turnRatio, speed, value, unit);
+            this.steer(turnRatio, speed, value, unit);
         }
-
 
         /**
          * Turns the motor and the follower motor by a number of rotations
          * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 0
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         * @param value the move quantity, eg: 2
-         * @param unit the meaning of the value
+         * @param value (optional) move duration or rotation
+         * @param unit (optional) unit of the value
          */
         //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%"
         //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
         //% group="Move"
-        steer(turnRatio: number, speed: number) {
-            this.steerFor(turnRatio, speed, 0, MoveUnit.Rotations);
-        }
-
-        /**
-         * Turns the motor and the follower motor by a number of rotations
-         * @param turnRatio the ratio of power sent to the follower motor, from ``-200`` to ``200``, eg: 0
-         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         * @param value the move quantity, eg: 2
-         * @param unit the meaning of the value
-         */
-        //% blockId=motorPairSteerFor block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%|for %value|%unit"
-        //% weight=6
-        //% turnRatio.min=-200 turnRatio=200
-        //% inlineInputMode=inline
-        //% group="Measured Move"
-        steerFor(turnRatio: number, speed: number, value: number, unit: MoveUnit) {
+        steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
