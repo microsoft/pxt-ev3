@@ -92,9 +92,9 @@
   "{id:group}Buttons": "Buttons",
   "{id:group}Counters": "Counters",
   "{id:group}Light": "Light",
+  "{id:group}Measured Move": "Measured Move",
   "{id:group}More": "More",
-  "{id:group}Motion": "Motion",
+  "{id:group}Move": "Move",
   "{id:group}Screen": "Screen",
-  "{id:group}Sensors": "Sensors",
-  "{id:group}Sync Motion": "Sync Motion"
+  "{id:group}Sensors": "Sensors"
 }
