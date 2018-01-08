@@ -167,4 +167,5 @@
   "description": "Activity 2",
   "url":"/coding/roaming-2",
   "cardType": "example"
-}, {
+}]
+```
