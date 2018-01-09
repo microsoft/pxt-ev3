@@ -140,7 +140,7 @@ namespace matrix {
         /**
          * Clones the matrix
          */
-        dup(): Matrix {
+        clone(): Matrix {
             const r = new Matrix(this._rows, this._cols, this._values.slice(0));
             return r;
         }
@@ -151,7 +151,7 @@ namespace matrix {
         */
         cholesky(): Matrix {
             pre(this._rows == this._cols);
-            const l = this.dup();
+            const l = this.clone();
             const n = this._rows;
             const L = l._values;
 
@@ -165,6 +165,22 @@ namespace matrix {
             }
 
             return l;
+        }
+
+        /**
+         * Renders the matrix to the console
+         */
+        logToConsole(): void {
+            let k = 0;
+            for(let i = 0; i < this._rows; ++i) {
+                let s = ""
+                for(let j = 0; j < this._cols; ++j) {
+                    if (j > 0)
+                     s += " "
+                    s += Math.round((this._values[k++] * 100) / 100);
+                }
+                console.log(s)
+            }
         }
     }
 }
