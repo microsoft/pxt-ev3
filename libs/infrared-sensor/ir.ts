@@ -258,7 +258,7 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=irSetThreshold block="set %condition|to %value"
-        //% group="Threshold"
+        //% group="Threshold" blockGap=8
         setThreshold(condition: InfraredSensorEvent, value: number) {
             if (condition == InfraredSensorEvent.ObjectNear)
                 this.proximityThreshold.setLowThreshold(value)

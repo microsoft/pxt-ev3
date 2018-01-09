@@ -228,7 +228,7 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=colorSetThreshold block="set %condition|to %value"
-        //% group="Threshold"
+        //% group="Threshold" blockGap=8
         setThreshold(condition: LightCondition, value: number) {
             if (condition == LightCondition.Dark)
                 this.thresholdDetector.setLowThreshold(value)

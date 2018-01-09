@@ -93,7 +93,7 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=ultrasonicSetThreshold block="set %condition|to %value"
-        //% group="Threshold"
+        //% group="Threshold" blockGap=8
         setThreshold(condition: UltrasonicSensorEvent, value: number) {            
             switch(condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;
