@@ -5,10 +5,12 @@
   "sensors.UltraSonicSensor.distance|block": "%sensor|distance",
   "sensors.UltraSonicSensor.onEvent|block": "on %sensor|%event",
   "sensors.UltraSonicSensor.pauseUntil|block": "pause until %sensor| %event",
+  "sensors.UltraSonicSensor.setThreshold|block": "set %condition|to %value",
   "sensors.ultrasonic1|block": "ultrasonic 1",
   "sensors.ultrasonic2|block": "ultrasonic 2",
   "sensors.ultrasonic3|block": "ultrasonic 3",
   "sensors.ultrasonic4|block": "ultrasonic 4",
   "{id:category}Sensors": "Sensors",
+  "{id:group}Threshold": "Threshold",
   "{id:group}Ultrasonic Sensor": "Ultrasonic Sensor"
 }
