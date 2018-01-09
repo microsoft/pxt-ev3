@@ -24,6 +24,9 @@ export class FieldPorts extends Blockly.FieldDropdown implements Blockly.FieldCu
         this.width_ = parseInt(options.width) || 300;
     }
 
+    trimOptions_() {
+    }
+
     /**
      * Create a dropdown menu under the text.
      * @private
@@ -42,7 +45,8 @@ export class FieldPorts extends Blockly.FieldDropdown implements Blockly.FieldCu
         // Accessibility properties
         contentDiv.setAttribute('role', 'menu');
         contentDiv.setAttribute('aria-haspopup', 'true');
-        const options = this.getOptions();
+        let options = this.getOptions();
+        options = options.sort();
         for (let i = 0, option: any; option = options[i]; i++) {
             let content = (options[i] as any)[0]; // Human-readable text or image.
             const value = (options[i] as any)[1]; // Language-neutral value.
