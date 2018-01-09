@@ -208,7 +208,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             } else {
                 var imageRotation = -angleDegrees;
             }
-            this.arrowSvg_.setAttribute('transform', 'rotate(' + (imageRotation) + ')');
+            this.arrowSvg_.setAttribute('transform', 'rotate(' + ((imageRotation + 45) / 180 * 360) + ')');
         }
         // this.line_.setAttribute('x2', `${x2}`);
         // this.line_.setAttribute('y2', `${y2}`);
