@@ -12,13 +12,13 @@ namespace matrix {
         private _cols: number;
         private _values: number[];
 
-        constructor(rows: number, cols: number, values: number[] = []) {
+        constructor(rows: number, cols: number, values: number[] = undefined) {
             pre(rows > 0);
             pre(cols > 0);
             this._rows = rows;
             this._cols = cols;
-            this._values = values || [];
             const n = this._rows * this._cols;
+            this._values = values || [];
             // fill gaps
             while (this._values.length < n)
                 this._values.push(0);
@@ -129,12 +129,42 @@ namespace matrix {
         transpose(): Matrix {
             const R = new Matrix(this._cols, this._rows);
             const r: number[] = R._values;
-            for(let i = 0; i < this._rows; ++i) {
-                for(let j = 0; j < this._cols; ++j) {
+            for (let i = 0; i < this._rows; ++i) {
+                for (let j = 0; j < this._cols; ++j) {
                     r[i + j * this._rows] = this._values[i * this._cols + j];
                 }
             }
             return R;
+        }
+
+        /**
+         * Clones the matrix
+         */
+        dup(): Matrix {
+            const r = new Matrix(this._rows, this._cols, this._values.slice(0));
+            return r;
+        }
+
+        /** 
+         * Performs a Cholesky factorized for a symmetric and positive definite
+         * 
+        */
+        cholesky(): Matrix {
+            pre(this._rows == this._cols);
+            const l = this.dup();
+            const n = this._rows;
+            const L = l._values;
+
+            for (let j = 0; j < n; j++) {
+                const jj = L[j * n + j] = Math.sqrt(L[j * n + j]);
+                for (let i = j + 1; i < n; ++i)
+                    L[i * n + j] /= jj;
+                for (let k = j + 1; k < n; k++)
+                    for (let i = k; i < n; i++)
+                        L[i * n + j] -= L[i * n + j] * L[k * n + j];
+            }
+
+            return l;
         }
     }
 }
