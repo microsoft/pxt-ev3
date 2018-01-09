@@ -1,0 +1,15 @@
+{
+    "name": "matrix",
+    "description": "Matrix algebra",
+    "files": [
+        "README.md",
+        "matrix.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "dependencies": {
+            "core": "file:../core"
+    }
+}

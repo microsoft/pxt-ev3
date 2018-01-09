@@ -18,7 +18,8 @@
         "libs/chassis",
         "libs/ev3",
         "libs/tests",
-        "libs/behaviors"
+        "libs/behaviors",
+        "libs/matrix"
     ],
     "simulator": {
         "autoRun": true,
