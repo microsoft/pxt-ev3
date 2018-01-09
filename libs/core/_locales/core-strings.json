@@ -59,7 +59,7 @@
   "motors.MotorBase.setReversed|block": "set %motor|reversed %reversed",
   "motors.MotorBase.setSpeed|block": "set %motor|speed to %speed=motorSpeedPicker|%",
   "motors.MotorBase.stop|block": "%motors|stop",
-  "motors.SynchedMotorPair.steer|block": "steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%",
+  "motors.SynchedMotorPair.steer|block": "steer %chassis|turn ratio %turnRatio=motorTurnRatioPicker|speed %speed=motorSpeedPicker|%",
   "motors.SynchedMotorPair.tank|block": "tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%",
   "motors.largeAB|block": "large A+B",
   "motors.largeAD|block": "large A+D",

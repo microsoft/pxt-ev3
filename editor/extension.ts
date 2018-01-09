@@ -4,10 +4,11 @@
 import { deployCoreAsync, initAsync } from "./deploy";
 import { FieldPorts } from "./field_ports";
 import { FieldImages } from "./field_images";
-import {FieldSpeed} from "./field_speed";
+import { FieldSpeed } from "./field_speed";
 import { FieldBrickButtons } from "./field_brickbuttons";
+import { FieldTurnRatio } from "./field_turnratio";
 
-pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
+pxt.editor.initExtensionsAsync = function(opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
     updateBlocklyShape();
     const res: pxt.editor.ExtensionResult = {
@@ -23,6 +24,9 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
         }, {
             selector: "brickbuttons",
             editor: FieldBrickButtons
+        }, {
+            selector: "turnratio",
+            editor: FieldTurnRatio
         }],
         deployCoreAsync
     };
