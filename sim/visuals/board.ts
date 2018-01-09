@@ -50,6 +50,15 @@ namespace pxsim.visuals {
             fill:#5A5A5A;
         }
 
+        .no-drag, .sim-text, .sim-text-pin {
+            user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
         /* Color Grid */
         .sim-color-grid-circle:hover {
             stroke-width: 0.4;
