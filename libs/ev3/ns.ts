@@ -8,7 +8,7 @@ namespace brick {
 
 //% color="#C8509B" weight=95 icon="\uf10f"
 //% labelLineWidth=0
-//% groups='["Ultrasonic Sensor", "Touch Sensor", "Color Sensor", "Infrared Sensor", "Remote Infrared Beacon", "Gyro Sensor"]'
+//% groups='["Touch Sensor", "Color Sensor", "Ultrasonic Sensor", "Gyro Sensor", "Infrared Sensor", "Remote Infrared Beacon", "Threshold"]'
 //% groupIcons='["\uf101","\uf103","\uf102","","","\uf104"]'
 namespace sensors {
 }

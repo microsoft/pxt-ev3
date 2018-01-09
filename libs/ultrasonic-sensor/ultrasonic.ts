@@ -85,6 +85,22 @@ namespace sensors {
             this._setMode(0)
             return this._query();
         }
+
+
+        /**
+         * Sets a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold
+         */
+        //% blockId=ultrasonicSetThreshold block="set %condition|to %value"
+        //% group="Threshold" blockGap=8
+        setThreshold(condition: UltrasonicSensorEvent, value: number) {            
+            switch(condition) {
+                case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;
+                case UltrasonicSensorEvent.ObjectFar: this.promixityThreshold.setHighThreshold(value); break;
+                case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold = value; break;
+            }
+        }
     }
   
     //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4

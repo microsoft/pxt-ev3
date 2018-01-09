@@ -152,7 +152,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=99
+        //% weight=98
         //% group="Color Sensor"
         color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color)
@@ -220,6 +220,20 @@ namespace sensors {
         //%
         reflectedLight() {
             return this.light(LightIntensityMode.Reflected);
+        }
+
+        /**
+         * Sets a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold
+         */
+        //% blockId=colorSetThreshold block="set %condition|to %value"
+        //% group="Threshold" blockGap=8 weight=90
+        setThreshold(condition: LightCondition, value: number) {
+            if (condition == LightCondition.Dark)
+                this.thresholdDetector.setLowThreshold(value)
+            else
+                this.thresholdDetector.setHighThreshold(value);
         }
     }
 

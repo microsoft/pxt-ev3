@@ -9,5 +9,5 @@ loops.forever(function () {
 })
 motors.largeBC.setSpeed(-20);
 sensors.ultrasonic4.pauseUntil(UltrasonicSensorEvent.ObjectNear);
-motors.stopAllMotors();
+motors.largeBC.stop();
 ```

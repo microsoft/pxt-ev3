@@ -187,7 +187,9 @@ namespace motors {
         /**
          * Stops the motor(s).
          */
-        //%
+        //% weight=6 blockGap=8
+        //% group="Move"
+        //% blockId=motorStop block="%motors|stop"
         stop() {
             this.init();
             stop(this._port, this._brake);
@@ -203,7 +205,7 @@ namespace motors {
         }
 
         /**
-         * Sets the motor speed for limited time or distance
+         * Sets the motor speed for limited time or distance.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param value (optional) measured distance or rotation
          * @param unit (optional) unit of the value

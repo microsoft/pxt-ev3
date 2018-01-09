@@ -14,7 +14,7 @@ function accelerate() {
 }
 function update() {
     brick.clearScreen()
-    brick.printLine("speed: " + speed, 1)
+    brick.showString("speed: " + speed, 1)
     motors.largeBC.setSpeed(speed)
 }
 sensors.touch2.onEvent(TouchSensorEvent.Pressed, function () {

@@ -31,7 +31,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=65 blockGap=8
+        //% weight=64 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
             if (this.calibrating)
@@ -70,7 +70,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=65 blockGap=8        
+        //% weight=50 blockGap=8        
         //% group="Gyro Sensor"
         calibrate(): void {
             if (this.calibrating) return; // already in calibration mode
