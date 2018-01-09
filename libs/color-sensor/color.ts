@@ -221,6 +221,20 @@ namespace sensors {
         reflectedLight() {
             return this.light(LightIntensityMode.Reflected);
         }
+
+        /**
+         * Sets a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold
+         */
+        //% blockId=colorSetThreshold block="set %condition|to %value"
+        //% group="Threshold"
+        setThreshold(condition: LightCondition, value: number) {
+            if (condition == LightCondition.Dark)
+                this.thresholdDetector.setLowThreshold(value)
+            else
+                this.thresholdDetector.setHighThreshold(value);
+        }
     }
 
     //% whenUsed block="color 3" weight=90 fixedInstance jres=icons.port3
