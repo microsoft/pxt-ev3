@@ -34,14 +34,14 @@ namespace pxsim.visuals {
             this.syncedLabelG = pxsim.svg.child(this.element, 'g', {'transform': 'scale(0.5)'}) as SVGGElement;
             pxsim.svg.child(this.syncedLabelG, 'rect', {'rx': 15, 'ry': 15, 'x': 0, 'y': 0, 'width': 84, 'height': 34, 'fill': '#A8A9A8'});
             pxsim.svg.child(this.syncedLabelG, 'circle', {'cx': 17, 'cy': 17, 'r': 15, 'fill': 'white'});
-            const leftLabel = pxsim.svg.child(this.syncedLabelG, 'text', {'transform': 'translate(11, 22)', 'style': 'isolation: isolate;font-size: 16px;fill: #A8A9A8;font-family: ArialMT, Arial'});
+            const leftLabel = pxsim.svg.child(this.syncedLabelG, 'text', {'transform': 'translate(11, 22)', 'class': 'no-drag', 'style': 'isolation: isolate;font-size: 16px;fill: #A8A9A8;font-family: ArialMT, Arial'});
             leftLabel.textContent = a;
 
             pxsim.svg.child(this.syncedLabelG, 'rect', {'rx': 0, 'ry': 0, 'x': 37, 'y': 12, 'width': 10, 'height': 3, 'fill': '#ffffff'});
             pxsim.svg.child(this.syncedLabelG, 'rect', {'rx': 0, 'ry': 0, 'x': 37, 'y': 18, 'width': 10, 'height': 3, 'fill': '#ffffff'});
             
             pxsim.svg.child(this.syncedLabelG, 'circle', {'cx': 67, 'cy': 17, 'r': 15, 'fill': 'white'});
-            const rightLabel = pxsim.svg.child(this.syncedLabelG, 'text', {'transform': 'translate(61, 22)', 'style': 'isolation: isolate;font-size: 16px;fill: #A8A9A8;font-family: ArialMT, Arial'});
+            const rightLabel = pxsim.svg.child(this.syncedLabelG, 'text', {'transform': 'translate(61, 22)', 'class': 'no-drag', 'style': 'isolation: isolate;font-size: 16px;fill: #A8A9A8;font-family: ArialMT, Arial'});
             rightLabel.textContent = b;
         }
 
