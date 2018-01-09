@@ -71,7 +71,7 @@
   "motors.MotorBase.setBrake": "Sets the automatic brake on or off when the motor is off",
   "motors.MotorBase.setBrake|param|brake": "a value indicating if the motor should break when off",
   "motors.MotorBase.setReversed": "Reverses the motor polarity",
-  "motors.MotorBase.setSpeed": "Sets the motor speed for limited time or distance",
+  "motors.MotorBase.setSpeed": "Sets the motor speed for limited time or distance.",
   "motors.MotorBase.setSpeed|param|speed": "the speed from ``100`` full forward to ``-100`` full backward, eg: 50",
   "motors.MotorBase.setSpeed|param|unit": "(optional) unit of the value",
   "motors.MotorBase.setSpeed|param|value": "(optional) measured distance or rotation",
