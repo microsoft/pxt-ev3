@@ -1,0 +1,15 @@
+{
+  "matrix.Matrix": "A 2D matrix",
+  "matrix.Matrix.add": "Returns a new matrix as the sum of both matrices",
+  "matrix.Matrix.cholesky": "Performs a Cholesky factorized for a symmetric and positive definite",
+  "matrix.Matrix.clone": "Clones the matrix",
+  "matrix.Matrix.get": "Gets a value from the matrix",
+  "matrix.Matrix.get|param|row": "@param col ",
+  "matrix.Matrix.identity": "Creates an identity matrix",
+  "matrix.Matrix.logToConsole": "Renders the matrix to the console",
+  "matrix.Matrix.multiply": "Multiplies the current matrix with the other matrix and returns a new matrix",
+  "matrix.Matrix.scale": "Returns a new matrix with scaled values",
+  "matrix.Matrix.set": "Sets a value in the array",
+  "matrix.Matrix.set|param|row": "@param col ",
+  "matrix.Matrix.transpose": "Returns a transposed matrix"
+}
