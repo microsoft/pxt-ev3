@@ -229,15 +229,27 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         // this.line_.setAttribute('y2', `${y2}`);
         this.handle_.setAttribute('transform', 'translate(' + x2 + ',' + y2 + ')');
 
-        let d = '';
-        d += `M ${FieldTurnRatio.HALF} ${FieldTurnRatio.HALF} `;
-        let h = Math.cos(angleRadians) * FieldTurnRatio.RADIUS / 2;
-        var angleDegreesWithOffset = angleDegrees + 2 * Blockly.FieldAngle.OFFSET;
-        var angleRadiansWithOffset = goog.math.toRadians(angleDegreesWithOffset);
-        var hy = Math.cos(angleRadiansWithOffset) * FieldTurnRatio.RADIUS / 2;
-        var hx = Math.cos(angleRadiansWithOffset) * FieldTurnRatio.RADIUS / 2;
-        d += `c 0 ${0} ${hx} ${-Math.abs(hy)} ${FieldTurnRatio.RADIUS * Math.cos(angleRadians)} ${FieldTurnRatio.RADIUS * -Math.sin(angleRadians)}`;
-        this.path_.setAttribute('d', d); //this.describeArc(80, 80, 100, value, value));
+
+        // left wheel
+        {
+            const x = goog.math.clamp(parseFloat(this.getText()), -100, 100) / 100;
+            const theta = x * Math.PI / 2;
+            const cx = FieldTurnRatio.HALF;
+            const cy = FieldTurnRatio.HALF;
+            const gamma = Math.PI - 2 * theta;
+            const r = FieldTurnRatio.RADIUS;
+            const alpha = 0.2 + Math.abs(x) * 0.5;
+            const x1 = 0;
+            const y1 = r * alpha;
+            const y2 = r * Math.sin(Math.PI / 2 - theta);
+            const x2 = r * Math.cos(Math.PI / 2 - theta);
+            const y3 = y2 - r * alpha * Math.cos(2 * theta);
+            const x3 = x2 - r * alpha * Math.sin(2 * theta);
+
+
+            const d = `M ${cx} ${cy} C ${cx} ${cy - y1} ${cx + x3} ${cy - y3} ${cx + x2} ${cy - y2}`;
+            this.path_.setAttribute('d', d);
+        }
     }
 
     setReadout_(readout: Element, value: string) {
