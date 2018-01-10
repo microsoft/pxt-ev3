@@ -96,8 +96,16 @@ namespace pxsim {
             this.started = true;
         }
 
-        setSpeedAsInput(speed: number) {
-            this.speed = speed;
+        manualMotorDown() {
+
+        }
+
+        manualMotorMove(angle: number) {
+
+        }
+
+        manualMotorUp() {
+
         }
 
         updateState(elapsed: number) {
