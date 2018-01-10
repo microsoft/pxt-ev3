@@ -1,7 +1,6 @@
 {
   "ChassisProperty.BaseLength|block": "base length (cm)",
   "ChassisProperty.WheelRadius|block": "wheel radius (cm)",
-  "chassis.Chassis.driveFor|block": "drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s|for %value|%unit",
   "chassis.Chassis.drive|block": "drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s",
   "chassis.Chassis.setMotors|block": "set %chassis|motors to %motors",
   "chassis.Chassis.setProperty|block": "set %chassis|%property|to %value",

@@ -5,7 +5,7 @@
   "sensors.InfraredSensor.pauseUntil|block": "pause until %sensor| %event",
   "sensors.InfraredSensor.proximity|block": "%sensor|proximity",
   "sensors.InfraredSensor.remoteCommand|block": "%sensor|remote command",
-  "sensors.InfraredSensor.setThreshold|block": "set %condition|to %value",
+  "sensors.InfraredSensor.setThreshold|block": "set %sensor|%condition|to %value",
   "sensors.RemoteInfraredBeaconButton.isPressed|block": "%button|is pressed",
   "sensors.RemoteInfraredBeaconButton.onEvent|block": "on %button|%event",
   "sensors.RemoteInfraredBeaconButton.wasPressed|block": "%button|was pressed",
