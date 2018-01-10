@@ -9,7 +9,6 @@ namespace pxsim.visuals {
 
         private reporter: SVGTextElement;
 
-        // private circleBar: SVGCircleElement;
         private dial: SVGGElement;
 
         private static SLIDER_RADIUS = 100;
