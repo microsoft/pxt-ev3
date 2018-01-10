@@ -15,29 +15,51 @@ namespace pxsim {
         private speedCmdValues: number[];
         private speedCmdTacho: number;
         private speedCmdTime: number;
+        private _synchedMotor: MotorNode; // non-null if synchronized
 
         constructor(port: number, large: boolean) {
             super(port);
             this.setLarge(large);
         }
 
+        isReady() {
+            return !this.speedCmd;
+        }
+
         getSpeed() {
-            return this.speed * (this.polarity  == 0 ? -1 : 1);
+            return this.speed * (this.polarity == 0 ? -1 : 1);
         }
 
         getAngle() {
             return this.angle;
         }
 
+        // returns the slave motor if any
+        getSynchedMotor() {
+            return this._synchedMotor;
+        }
+
         setSpeedCmd(cmd: DAL, values: number[]) {
+            if (this.speedCmd != cmd ||
+                JSON.stringify(this.speedCmdValues) != JSON.stringify(values))
+                this.setChangedState();    
+            // new command TODO: values
             this.speedCmd = cmd;
             this.speedCmdValues = values;
             this.speedCmdTacho = this.angle;
             this.speedCmdTime = pxsim.U.now();
+            delete this._synchedMotor;
+        }
+
+        setSyncCmd(motor: MotorNode, cmd: DAL, values: number[]) {
+            this.setSpeedCmd(cmd, values);
+            this._synchedMotor = motor;
         }
 
         clearSpeedCmd() {
             delete this.speedCmd;
+            delete this.speedCmdValues;
+            delete this._synchedMotor;
         }
 
         setLarge(large: boolean) {
@@ -67,6 +89,7 @@ namespace pxsim {
 
         stop() {
             this.started = false;
+            this.clearSpeedCmd();
         }
 
         start() {
@@ -86,7 +109,7 @@ namespace pxsim {
             //console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
             const interval = Math.min(20, elapsed);
             let t = 0;
-            while(t < elapsed) {
+            while (t < elapsed) {
                 let dt = interval;
                 if (t + dt > elapsed) dt = elapsed - t;
                 this.updateStateStep(dt);
@@ -106,14 +129,14 @@ namespace pxsim {
                 case DAL.opOutputTimeSpeed:
                 case DAL.opOutputTimePower:
                 case DAL.opOutputStepPower:
-                case DAL.opOutputStepSpeed:
+                case DAL.opOutputStepSpeed: {
                     // ramp up, run, ramp down, <brake> using time
                     const speed = this.speedCmdValues[0];
                     const step1 = this.speedCmdValues[1];
                     const step2 = this.speedCmdValues[2];
                     const step3 = this.speedCmdValues[3];
                     const brake = this.speedCmdValues[4];
-                    const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed) 
+                    const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed)
                         ? pxsim.U.now() - this.speedCmdTime
                         : this.tacho - this.speedCmdTacho;
                     if (dstep < step1) // rampup
@@ -126,9 +149,49 @@ namespace pxsim {
                         if (brake) this.speed = 0;
                         this.clearSpeedCmd();
                     }
-                    this.speed = Math.round(this.speed); // integer only
                     break;
+                }
+                case DAL.opOutputStepSync:
+                case DAL.opOutputTimeSync: {
+                    const otherMotor = this._synchedMotor;
+                    if (otherMotor.port < this.port) // handled in other motor code
+                        break;
+
+                    const speed = this.speedCmdValues[0];
+                    const turnRatio = this.speedCmdValues[1];
+                    const stepsOrTime = this.speedCmdValues[2];
+                    const brake = this.speedCmdValues[3];
+                    const dstep = this.speedCmd == DAL.opOutputTimeSync
+                        ? pxsim.U.now() - this.speedCmdTime
+                        : this.tacho - this.speedCmdTacho;
+                    // 0 is special case, run infinite
+                    if (!stepsOrTime || dstep < stepsOrTime)
+                        this.speed = speed;
+                    else {
+                        if (brake) this.speed = 0;
+                        this.clearSpeedCmd();
+                    }
+
+                    // turn ratio is a bit weird to interpret
+                    // see https://communities.theiet.org/blogs/698/1706
+                    if (turnRatio < 0) {
+                        otherMotor.speed = speed;
+                        this.speed *= (100 + turnRatio) / 100;
+                    } else {
+                        otherMotor.speed = this.speed * (100 - turnRatio) / 100;
+                    }
+
+                    // clamp
+                    this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
+                    otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));;
+
+                    // stop other motor if needed
+                    if (!this._synchedMotor)
+                        otherMotor.clearSpeedCmd();
+                    break;
+                }
             }
+            this.speed = Math.round(this.speed); // integer only
 
             // compute delta angle
             const rotations = this.getSpeed() / 100 * this.rotationsPerMilliSecond * elapsed;
@@ -143,8 +206,15 @@ namespace pxsim {
             // let it coast to speed 0
             if (this.speed && !(this.started || this.speedCmd)) {
                 // decay speed 5% per tick
-                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * Math.sign(this.speed));
+                this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * sign(this.speed));
             }
         }
+    }
+}
+
+namespace pxsim {
+    // A re-implementation of Math.sign (since IE11 doesn't support it)
+    export function sign(num: number) {
+        return num ? num < 0 ? -1 : 1 : 0;
     }
 }

@@ -10,8 +10,6 @@ namespace pxsim.music {
 }
 
 namespace pxsim.SoundMethods {
-    let numSoundsPlaying = 0;
-    const soundsLimit = 1;
     let audio: HTMLAudioElement;
 
     export function buffer(buf: RefBuffer) {
@@ -27,18 +25,15 @@ namespace pxsim.SoundMethods {
     }
 
     export function play(buf: RefBuffer, volume: number) {
-        if (!buf || numSoundsPlaying >= soundsLimit) {
+        if (!buf) {
             return Promise.resolve();
         }
         return new Promise<void>(resolve => {
             let url = "data:audio/wav;base64," + btoa(uint8ArrayToString(buf.data))
             audio = new Audio(url)
-            audio.onended = () => {
-                resolve();
-                numSoundsPlaying--;
-            }
-            numSoundsPlaying++;
-            audio.play()
+            audio.onended = () => resolve();
+            audio.onpause = () => resolve();
+            audio.play();
         })
     }
 
@@ -46,8 +41,8 @@ namespace pxsim.SoundMethods {
         return new Promise<void>(resolve => {
             if (audio) {
                 audio.pause();
-                numSoundsPlaying--;
             }
+            resolve();
         })
     }
 

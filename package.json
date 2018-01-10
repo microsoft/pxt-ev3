@@ -1,6 +1,6 @@
 {
   "name": "pxt-ev3",
-  "version": "0.0.46",
+  "version": "0.0.58",
   "description": "LEGO Mindstorms EV3 for Microsoft MakeCode",
   "private": true,
   "keywords": [
@@ -44,8 +44,8 @@
     "webfonts-generator": "^0.4.0"
   },
   "dependencies": {
-    "pxt-common-packages": "0.14.13",
-    "pxt-core": "3.0.2"
+    "pxt-common-packages": "0.15.4",
+    "pxt-core": "3.0.8"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"

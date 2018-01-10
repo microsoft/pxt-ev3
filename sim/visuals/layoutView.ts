@@ -173,15 +173,15 @@ namespace pxsim.visuals {
             }
 
             // Inject all ports
-            this.setInput(0, new PortView(0, 'A'));
-            this.setInput(1, new PortView(1, 'B'));
-            this.setInput(2, new PortView(2, 'C'));
-            this.setInput(3, new PortView(3, 'D'));
+            this.setInput(0, new PortView(0, '1'));
+            this.setInput(1, new PortView(1, '2'));
+            this.setInput(2, new PortView(2, '3'));
+            this.setInput(3, new PortView(3, '4'));
 
-            this.setOutput(0, new PortView(0, '1'));
-            this.setOutput(1, new PortView(1, '2'));
-            this.setOutput(2, new PortView(2, '3'));
-            this.setOutput(3, new PortView(3, '4'));
+            this.setOutput(0, new PortView(0, 'A'));
+            this.setOutput(1, new PortView(1, 'B'));
+            this.setOutput(2, new PortView(2, 'C'));
+            this.setOutput(3, new PortView(3, 'D'));
 
             return this.contentGroup;
         }

@@ -4,7 +4,8 @@ namespace pxsim.visuals {
         protected content: SVGSVGElement;
 
         protected controlShown: boolean;
-        protected selected: boolean;
+
+        protected opacity: number;
 
         constructor(protected xml: string, protected prefix: string, protected id: NodeType, protected port: NodeType) {
             super();
@@ -106,19 +107,24 @@ namespace pxsim.visuals {
             this.updateOpacity();
         }
 
+        public updateState() {
+            this.updateOpacity();
+        }
+
         protected updateOpacity() {
             if (this.rendered) {
-                const opacity = this.selected ? "0.2" : "1";
-                if (this.hasClick()) {
-                    this.setOpacity(opacity);
+                const opacity = this.selected ? 0.2 : 1;
+                if (this.hasClick() && this.opacity != opacity) {
+                    this.opacity = opacity;
+                    this.setOpacity(this.opacity);
                     if (this.selected) this.content.style.cursor = "";
                     else this.content.style.cursor = "pointer";
                 }
             }
         }
 
-        protected setOpacity(opacity: string) {
-            this.element.setAttribute("opacity", opacity);
+        protected setOpacity(opacity: number) {
+            this.element.setAttribute("opacity", `${opacity}`);
         }
     }
 }

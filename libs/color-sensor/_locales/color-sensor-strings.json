@@ -18,12 +18,14 @@
   "sensors.ColorSensor.onColorDetected|block": "on %sensor|detected color %color",
   "sensors.ColorSensor.onLightChanged|block": "on %sensor|%mode|%condition",
   "sensors.ColorSensor.pauseForColor|block": "pause %sensor|for color %color",
-  "sensors.ColorSensor.pauseForLight|block": "pause %sensor|for %mode|light %condition",
+  "sensors.ColorSensor.pauseForLight|block": "pause %sensor|for %mode|%condition",
+  "sensors.ColorSensor.setThreshold|block": "set %condition|to %value",
   "sensors.color1|block": "color 1",
   "sensors.color2|block": "color 2",
   "sensors.color3|block": "color 3",
   "sensors.color4|block": "color 4",
   "sensors|block": "sensors",
   "{id:category}Sensors": "Sensors",
-  "{id:group}Color Sensor": "Color Sensor"
+  "{id:group}Color Sensor": "Color Sensor",
+  "{id:group}Threshold": "Threshold"
 }

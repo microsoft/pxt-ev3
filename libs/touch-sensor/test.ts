@@ -1,8 +1,8 @@
-sensors.touchSensor1.onEvent(TouchSensorEvent.Pressed, function () {
+sensors.touch1.onEvent(TouchSensorEvent.Pressed, function () {
 })
-sensors.touchSensor2.onEvent(TouchSensorEvent.Bumped, function () {
+sensors.touch2.onEvent(TouchSensorEvent.Bumped, function () {
 })
-sensors.touchSensor3.onEvent(TouchSensorEvent.Released, function () {
+sensors.touch3.onEvent(TouchSensorEvent.Released, function () {
 })
-sensors.touchSensor4.isPressed();
-sensors.touchSensor4.wasPressed();
+sensors.touch4.isPressed();
+sensors.touch4.wasPressed();

@@ -9,13 +9,20 @@
 /* Fonts for toolbox icons */
 @font-face {
     font-family: 'legoIcons';
-    src: data-uri("../docs/static/fonts/icons/iconfont.woff2");
+    src: data-uri("../docs/static/fonts/icons/iconfont.woff");
 }
 
 .blocklyFlyoutLabel:not(.blocklyFlyoutHeading) .blocklyFlyoutLabelIcon {
-    font-family: 'legoIcons';
     fill: white;
     font-size: 1.7rem;
+}
+
+.blocklyFlyoutLabel .blocklyFlyoutLabelIcon {
+    font-family: 'legoIcons' !important;
+}
+
+span.blocklyTreeIcon {
+    font-family: 'legoIcons' !important;
 }
 
 /* Toolbox padding */
@@ -46,7 +53,6 @@ div.blocklyTreeSeparator {
 /* Blockly Text */
 span.blocklyTreeLabel {
     font-family: @pageFont !important;
-    text-transform: uppercase !important;
     font-size:1rem !important;
     font-weight: bold;
 }
@@ -62,9 +68,96 @@ span.blocklyTreeLabel {
     border-radius: 1rem !important;
 }
 
+
+/* Square shaped corners */
+.blocklyDropDownDiv {
+    border-radius: 0px !important;
+}
+
+.blocklyDropDownArrow.arrowTop {
+    border-top-left-radius: 0px !important;
+}
+
+.blocklyToggleRect {
+    rx: 0 !important;
+    ry: 0 !important;
+}
+
+.blocklyDropDownButton {
+    border-radius: 0px !important;
+}
+
 /* Mobile */
 @media only screen and (max-width: @largestMobileScreen) {
     #blocklyTrashIcon {
         margin: 0.2rem;
     }
+}
+
+span.blocklyTreeIcon.blocklyTreeIconloops::before {
+    content: "\f10b";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconlogic::before {
+    content: "\f10a";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconvariables::before {
+    content: "\f111";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconmath::before {
+    content: "\f10c";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconfunctions {
+    font-family: 'legoIcons' !important;
+}
+span.blocklyTreeIcon.blocklyTreeIconfunctions::before {
+    content: "\f108";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconarrays::before {
+    content: "\f109";
+}
+
+span.blocklyTreeIcon.blocklyTreeIcontext::before {
+    content: "\f110";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconaddpackage::before {
+    content: "\f105";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconadvancedcollapsed::before {
+    content: "\f113";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconadvancedexpanded::before {
+    content: "\f114";
+}
+
+.save-editortools-btn .icon.save:before {
+    font-family: 'legoIcons';
+    content: "\f118";
+}
+
+.download-button .icon.download.icon-and-text:before {
+    font-family: 'legoIcons';
+    content: "\f117";
+}
+
+.button.approve.positive i.icon.checkmark:before {
+    font-family: 'legoIcons';
+    content: "\f116";
+}
+
+.button.approve.cancel i.icon.cancel:before {
+    font-family: 'legoIcons';
+    content: "\f115";
+}
+
+.blocks-menuitem i.icon.blocks:before {
+    font-family: 'legoIcons' !important;
+    content: "\f119" !important;
 }

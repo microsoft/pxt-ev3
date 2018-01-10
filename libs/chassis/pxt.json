@@ -1,0 +1,15 @@
+{
+    "name": "chassis",
+    "description": "Chassis robot support",
+    "files": [
+        "README.md",
+        "chassis.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "dependencies": {
+            "core": "file:../core"
+    }
+}

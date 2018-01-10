@@ -56,6 +56,7 @@ namespace sensors {
 
         constructor(port: number) {
             super(port)
+            this._setMode(ColorSensorMode.None);
             this.thresholdDetector = new sensors.internal.ThresholdDetector(this.id());
         }
 
@@ -110,6 +111,7 @@ namespace sensors {
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
@@ -129,6 +131,7 @@ namespace sensors {
         //% blockId=colorPauseForColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Color Sensor"
         pauseForColor(color: ColorSensorColor) {
@@ -148,7 +151,8 @@ namespace sensors {
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% weight=99
+        //% sensor.fieldEditor="ports"
+        //% weight=98
         //% group="Color Sensor"
         color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color)
@@ -165,6 +169,7 @@ namespace sensors {
         //% blockId=colorOnLightChanged
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=89 blockGap=8
         //% group="Color Sensor"
         onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
@@ -177,10 +182,11 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-light
-        //% block="pause %sensor|for %mode|light %condition"
+        //% block="pause %sensor|for %mode|%condition"
         //% blockId=colorPauseForLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=88 blockGap=8
         //% group="Color Sensor"
         pauseForLight(mode: LightIntensityMode, condition: LightCondition) {
@@ -198,6 +204,7 @@ namespace sensors {
         //% blockId=colorLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=87
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
@@ -214,16 +221,30 @@ namespace sensors {
         reflectedLight() {
             return this.light(LightIntensityMode.Reflected);
         }
+
+        /**
+         * Sets a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold
+         */
+        //% blockId=colorSetThreshold block="set %condition|to %value"
+        //% group="Threshold" blockGap=8 weight=90
+        setThreshold(condition: LightCondition, value: number) {
+            if (condition == LightCondition.Dark)
+                this.thresholdDetector.setLowThreshold(value)
+            else
+                this.thresholdDetector.setHighThreshold(value);
+        }
     }
 
+    //% whenUsed block="color 3" weight=90 fixedInstance jres=icons.port3
+    export const color3: ColorSensor = new ColorSensor(3)
+    
     //% whenUsed block="color 1" weight=95 fixedInstance jres=icons.port1
     export const color1: ColorSensor = new ColorSensor(1)
 
     //% whenUsed block="color 2" weight=90 fixedInstance jres=icons.port2
     export const color2: ColorSensor = new ColorSensor(2)
-
-    //% whenUsed block="color 3" weight=90 fixedInstance jres=icons.port3
-    export const color3: ColorSensor = new ColorSensor(3)
 
     //% whenUsed block="color 4" weight=90 fixedInstance jres=icons.port4
     export const color4: ColorSensor = new ColorSensor(4)
