@@ -226,6 +226,7 @@ namespace motors {
                 this._setSpeed(speed);
                 return;
             }
+            // timed motor moves
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -248,6 +249,8 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
+            // wait till motor is done with this work
+            this.pauseUntilReady();
         }
 
         /**
