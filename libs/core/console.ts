@@ -3,7 +3,7 @@
 /**
  * Reading and writing data to the console output.
  */
-//% weight=12 color=#002050 icon="\uf120"
+//% weight=12 color=#00451A icon="\uf112"
 //% advanced=true
 namespace console {
     type Listener = (text: string) => void;

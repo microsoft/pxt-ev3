@@ -483,7 +483,15 @@ void runLMS() {
     */
 }
 
+void stopMotors() {
+    uint8_t cmd[2] = { 0xA3, 0x0F };
+    int fd = open("/dev/lms_pwm", O_RDWR);
+    write(fd, cmd, 2);
+    close(fd);
+}
+
 extern "C" void target_reset() {
+    stopMotors();
     if (lmsPid)
         runLMS();
     else

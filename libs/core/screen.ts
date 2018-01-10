@@ -58,38 +58,7 @@ namespace brick {
         }
     }
 
-    export function microbitFont() {
-        return {
-            charWidth: 6,
-            charHeight: 5,
-            firstChar: 32,
-            // source https://github.com/lancaster-university/microbit-dal/blob/master/source/core/MicroBitFont.cpp
-            data: hex`
-0000000000 0202020002 0a0a000000 0a1f0a1f0a 0e130e190e 1309041219 0609060916 0202000000 0402020204
-0204040402 000a040a00 00040e0400 0000000402 00000e0000 0000000200 1008040201 0609090906 040604040e
-070806010f 0f08040906 0c0a091f08 1f010f100f 08040e110e 1f08040201 0e110e110e 0e110e0402 0002000200
-0004000402 0804020408 000e000e00 0204080402 0e110c0004 0e11151906 06090f0909 0709070907 0e0101010e
-0709090907 0f0107010f 0f01070101 0e0119110e 09090f0909 0702020207 1f08080906 0905030509 010101010f
-111b151111 1113151911 0609090906 0709070101 060909060c 0709070911 0e01060807 1f04040404 0909090906
-1111110a04 1111151b11 0909060909 110a040404 0f0402010f 0e0202020e 0102040810 0e0808080e 040a000000
-000000001f 0204000000 000e09091e 0101070907 000e01010e 08080e090e 060907010e 0c02070202 0e090e0806
-0101070909 0200020202 0800080806 0105030509 020202020c 001b151111 0007090909 0006090906 0007090701
-000e090e08 000e010101 000c020403 02020e021c 000909091e 0011110a04 001111151b 0009060609 00110a0403
-000f04020f 0c0406040c 0202020202 0302060203 0000061800
-`
-        }
-    }
-
-    /**
-     * Sets a pixel on or off
-     * @param on a value indicating if the pixel should be on or off
-     * @param x the starting position's x coordinate, eg: 0
-     * @param y the starting position's x coordinate, eg: 0
-     */
-    //% blockId=screen_setpixel block="set pixel %on| at x: %x| y: %y"
-    //% weight=98 group="Screen"
-    //% x.min=0 x.max=178 y.min=0 y.max=128 on.fieldEditor=toggleonoff
-    export function setPixel(on: boolean, x: number, y: number) {
+    function setPixel(on: boolean, x: number, y: number) {
         x |= 0
         y |= 0
         if (0 <= x && x < DAL.LCD_WIDTH && 0 <= y && y < DAL.LCD_HEIGHT)
@@ -97,14 +66,45 @@ namespace brick {
     }
 
     /**
-     * Show text on the screen.
+     * Show text on the screen at a specific line.
      * @param text the text to print on the screen, eg: "Hello world"
-     * @param x the starting position's x coordinate, eg: 0
-     * @param y the starting position's x coordinate, eg: 0
+     * @param line the line number to print the text at, eg: 1
      */
-    //% blockId=screen_print block="print %text| at x: %x| y: %y"
-    //% weight=99 group="Screen" inlineInputMode="inline" blockGap=8
-    //% x.min=0 x.max=178 y.min=0 y.max=128
+    //% blockId=screen_print block="show string %text|at line %line"
+    //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=1 line.max=10
+    export function showString(text: string, line: number) {
+        const NUM_LINES = 9;
+        const offset = 5;
+        const y = offset + (Math.clamp(0, NUM_LINES, line - 1) / (NUM_LINES + 2)) * DAL.LCD_HEIGHT;
+        brick.print(text, offset, y);
+    }
+
+    /**
+     * Shows a number on the screen
+     * @param value the numeric value
+     * @param line the line number to print the text at, eg: 1
+     */
+    //% blockId=screenShowNumber block="show number %name|at line %line"
+    //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=1 line.max=10
+    export function showNumber(value: number, line: number) {
+        showString("" + value, line);
+    }
+
+    /**
+     * Shows a name, value pair on the screen
+     * @param value the numeric value
+     * @param line the line number to print the text at, eg: 1
+     */
+    //% blockId=screenShowValue block="show value %name|= %text|at line %line"
+    //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=1 line.max=10
+    export function showValue(name: string, value: number, line: number) {
+        value = Math.round(value * 1000) / 1000;
+        showString((name ? name + ": " : "") + value, line);        
+    }
+
     export function print(text: string, x: number, y: number, mode = Draw.Normal) {
         x |= 0
         y |= 0
@@ -140,13 +140,10 @@ namespace brick {
      * @param image image to draw
      */
     //% blockId=screen_show_image block="show image %image=screen_image_picker"
-    //% weight=95 group="Screen" blockGap=8
-    export function showImage(image: Image, delay: number = 400) {
+    //% weight=100 group="Screen" blockGap=8
+    export function showImage(image: Image) {
         if (!image) return;
         image.draw(0, 0, Draw.Normal);
-        delay = Math.max(0, delay);
-        if (delay > 0)
-            loops.pause(delay);
     }
 
     /**
@@ -154,11 +151,11 @@ namespace brick {
      * @param image the image
      */
     //% blockId=screen_image_picker block="%image" shim=TD_ID
-    //% image.fieldEditor="imagedropdown"
+    //% image.fieldEditor="images"
     //% image.fieldOptions.columns=6
-    //% image.fieldOptions.hasSearchBar=true
+    //% image.fieldOptions.width=600
     //% group="Screen" weight=0 blockHidden=1
-    export function _imagePicker(image: Image): Image {
+    export function __imagePicker(image: Image): Image {
         return image;
     }
 
@@ -166,12 +163,12 @@ namespace brick {
      * Clears the screen
      */
     //% blockId=screen_clear_screen block="clear screen"
-    //% weight=94 group="Screen" blockGap=8
+    //% weight=90 group="Screen"
     export function clearScreen() {
         screen.clear();
     }
 
-    export function drawRect(x: number, y: number, w: number, h: number, mode = Draw.Normal) {
+    function drawRect(x: number, y: number, w: number, h: number, mode = Draw.Normal) {
         x |= 0;
         y |= 0;
         w |= 0;
@@ -216,23 +213,32 @@ namespace brick {
     //% blockId=brickPrintPorts block="print ports"
     //% weight=1 group="Screen"
     export function printPorts() {
+        const col = 44;
         clearScreen();
+
+        function scale(x: number) {
+            if (Math.abs(x) > 1000) return Math.round(x / 100) / 10 + "k";
+            return ("" + (x >> 0));
+        }
 
         // motors
         const datas = motors.getAllMotorData();
         for(let i = 0; i < datas.length; ++i) {
-            const x = i * 52;
             const data = datas[i];
-            print(`${data.actualSpeed}%`, x, brick.LINE_HEIGHT)
-            print(`${data.count}>`, x, 2 * brick.LINE_HEIGHT)
+            if (!data.actualSpeed && !data.count) continue;
+            const x = i * col;
+            print(`${scale(data.actualSpeed)}%`, x, brick.LINE_HEIGHT)
+            print(`${scale(data.count)}>`, x, 2 * brick.LINE_HEIGHT)
+            print(`${scale(data.tachoCount)}|`, x, 3 * brick.LINE_HEIGHT)
         }
 
         // sensors
         const sis = sensors.internal.getActiveSensors();
         for(let i =0; i < sis.length; ++i) {
             const si = sis[i];
-            const x = (si.port() - 1) * 52;
-            print(`${si._query()}`, x, 9 * brick.LINE_HEIGHT)
+            const x = (si.port() - 1) * col;
+            const v = si._query();
+            print(`${scale(v)}`, x, 9 * brick.LINE_HEIGHT)
         }
     }
 }

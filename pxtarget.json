@@ -16,8 +16,10 @@
         "libs/ultrasonic-sensor",
         "libs/infrared-sensor",
         "libs/gyro-sensor",
+        "libs/chassis",
         "libs/ev3",
-        "libs/tests"
+        "libs/tests",
+        "libs/behaviors"
     ],
     "simulator": {
         "autoRun": true,
@@ -95,6 +97,7 @@
         "privacyUrl": "https://go.microsoft.com/fwlink/?LinkId=521839",
         "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
         "githubUrl": "https://github.com/Microsoft/pxt-ev3",
+        "betaUrl": "https://lego.makecode.com/",
         "boardName": "LEGO Mindstorms EV3 Brick",
         "selectLanguage": true,
         "highContrast": true,
@@ -138,11 +141,18 @@
             "functions": "#19325A",
             "arrays": "#901F76"
         },
+        "blockIcons": {
+            "loops": "\uf10b",
+            "logic": "\uf10a",
+            "math": "\uf10c",
+            "variables": "\uf111",
+            "text": "\uf110",
+            "functions": "\uf108",
+            "arrays": "\uf109"
+        },
         "monacoColors": {
             "editor.background": "#ecf6ff"
-        },
-        "simAnimationEnter": "horizontal flip in",
-        "simAnimationExit": "horizontal flip out"
+        }
     },
     "ignoreDocsErrors": true
 }

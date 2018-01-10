@@ -132,7 +132,7 @@
    Full screen
 --------------------*/
 
-@fullscreenBackgroundGradientStart: @blue;
+@fullscreenBackgroundGradientStart: #fff;
 @fullscreenBackgroundGradientEnd: #fff;
 
 /*-------------------
@@ -170,6 +170,6 @@
 --------------------*/
 
 @flyoutLabelColor: white;
-@blocklyFlyoutColor: #282828;
-@blocklyFlyoutColorOpacity: 0.9;
-@monacoFlyoutColor: rgba(40, 40, 40,0.9);
+@blocklyFlyoutColor: #3B3C3D;
+@blocklyFlyoutColorOpacity: 1.0;
+@monacoFlyoutColor: rgba(59, 60, 61, 1.0);

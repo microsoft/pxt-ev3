@@ -17,6 +17,17 @@ namespace pxsim.visuals {
             return this.closeGroup;
         }
 
+
+        buildDom(): SVGElement {
+            this.content = svg.elt("svg", { width: "100%", height: "100%"}) as SVGSVGElement;
+            this.content.appendChild(this.getInnerView());
+            return this.content;
+        }
+
+        public resize(width: number, height: number) {
+            super.resize(width, height);
+        }
+
         public getInnerHeight() {
             return 32;
         }

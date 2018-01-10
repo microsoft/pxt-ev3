@@ -3,12 +3,13 @@
 namespace pxsim {
 
     export enum ColorSensorMode {
+        None = -1,
         Reflected = 0,
         Ambient = 1,
         Colors = 2,
         RefRaw = 3,
         RgbRaw = 4,
-        ColorCal = 5
+        ColorCal = 5,
     }
 
     export enum ThresholdState {
@@ -20,10 +21,11 @@ namespace pxsim {
     export class ColorSensorNode extends UartSensorNode {
         id = NodeType.ColorSensor;
 
-        private color: number;
+        private color: number = 50;
 
         constructor(port: number) {
             super(port);
+            this.mode = -1;
         }
 
         getDeviceType() {
@@ -31,10 +33,8 @@ namespace pxsim {
         }
 
         setColor(color: number) {
-            if (this.color != color) {
-                this.color = color;
-                this.setChangedState();
-            }
+            this.color = color;
+            this.setChangedState();
         }
 
         getValue() {

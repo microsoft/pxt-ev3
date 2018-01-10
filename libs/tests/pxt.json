@@ -1,14 +1,6 @@
 {
-    "name": "tests",
-    "description": "A unit test library",
-    "files": [
-        "README.md",
-        "tests.ts"
-    ],
-    "testFiles": [
-    ],
-    "public": true,
+    "additionalFilePath": "../../node_modules/pxt-common-packages/libs/tests",
     "dependencies": {
-        "core": "file:../core"
+        "core": "file:../ev3"
     }
 }

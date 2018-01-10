@@ -3,40 +3,8 @@
 /// <reference path="../built/common-sim.d.ts"/>
 
 namespace pxsim {
-    export enum CPlayPinName {
-        A0,
-        A1,
-        A2,
-        A3,
-        A4,
-        A5,
-        A6,
-        A7,
-        A8,
-        A9,
-        D4,
-        D5,
-        D6,
-        D7,
-        D8,
-        D13
-    }
 
     export class EV3Board extends CoreBoard {
-        // state & update logic for component services
-        // neopixelState: CommonNeoPixelState;
-        buttonState: EV3ButtonState;
-        slideSwitchState: SlideSwitchState;
-        lightSensorState: AnalogSensorState;
-        thermometerState: AnalogSensorState;
-        thermometerUnitState: number;
-        microphoneState: AnalogSensorState;
-        edgeConnectorState: EdgeConnectorState;
-        capacitiveSensorState: CapacitiveSensorState;
-        accelerometerState: AccelerometerState;
-        touchButtonState: TouchButtonState;
-        irState: InfraredState;
-
         view: SVGSVGElement;
 
         outputState: EV3OutputState;
@@ -50,7 +18,7 @@ namespace pxsim {
         brickNode: BrickNode;
         outputNodes: MotorNode[] = [];
 
-        private motorMap: pxt.Map<number> = {
+        public motorMap: pxt.Map<number> = {
             0x01: 0,
             0x02: 1,
             0x04: 2,
@@ -86,11 +54,6 @@ namespace pxsim {
                     // TODO
                     break;
                 }
-                case "irpacket": {
-                    let ev = <SimulatorInfraredPacketMessage>msg;
-                    this.irState.receive(new RefBuffer(ev.packet));
-                    break;
-                }
             }
         }
 
@@ -120,6 +83,9 @@ namespace pxsim {
             document.body.innerHTML = ""; // clear children
             document.body.appendChild(this.view = viewHost.getView() as SVGSVGElement);
 
+            this.inputNodes = [];
+            this.outputNodes = [];
+
             return Promise.resolve();
         }
 
@@ -127,34 +93,58 @@ namespace pxsim {
             return svg.toDataUri(new XMLSerializer().serializeToString(this.view));
         }
 
-        //defaultNeopixelPin() {
-        //    return this.edgeConnectorState.getPin(CPlayPinName.D8);
-        //}
-
-        getDefaultPitchPin() {
-            return this.edgeConnectorState.getPin(CPlayPinName.D6);
-        }
-
         getBrickNode() {
             return this.brickNode;
         }
 
-        getMotor(port: number, large?: boolean): MotorNode[] {
-            if (port == 0xFF) return this.getMotors(); // Return all motors
-            const motorPort = this.motorMap[port];
-            if (this.outputNodes[motorPort] == undefined) {
-                this.outputNodes[motorPort] = large ?
-                    new LargeMotorNode(motorPort) : new MediumMotorNode(motorPort);
+        motorUsed(port: number, large: boolean) {
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    if (!this.outputNodes[motorPort])
+                        this.outputNodes[motorPort] = new MotorNode(motorPort, large);
+                }
             }
-            return [this.outputNodes[motorPort]];
+        }
+
+        hasMotor(port: number) {
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    const outputNode = this.outputNodes[motorPort];
+                    if (outputNode)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        getMotor(port: number, large?: boolean): MotorNode[] {
+            const r = [];
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                const p = 1 << i;
+                if (port & p) {
+                    const motorPort = this.motorMap[p];
+                    const outputNode = this.outputNodes[motorPort];
+                    if (outputNode)
+                        r.push(outputNode);
+                }
+            }
+            return r;
         }
 
         getMotors() {
             return this.outputNodes;
         }
 
+        hasSensor(port: number) {
+            return !!this.inputNodes[port];
+        }
+
         getSensor(port: number, type: number): SensorNode {
-            if (this.inputNodes[port] == undefined) {
+            if (!this.inputNodes[port]) {
                 switch (type) {
                     case DAL.DEVICE_TYPE_GYRO: this.inputNodes[port] = new GyroSensorNode(port); break;
                     case DAL.DEVICE_TYPE_COLOR: this.inputNodes[port] = new ColorSensorNode(port); break;
@@ -177,6 +167,7 @@ namespace pxsim {
         runtime.postError = (e) => {
             // TODO
             runtime.updateDisplay();
+            console.log('runtime error: ' + e);
         }
     }
 

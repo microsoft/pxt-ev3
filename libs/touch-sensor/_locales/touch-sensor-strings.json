@@ -6,10 +6,10 @@
   "sensors.TouchSensor.onEvent|block": "on %sensor|%event",
   "sensors.TouchSensor.pauseUntil|block": "pause until %sensor|%event",
   "sensors.TouchSensor.wasPressed|block": "%sensor|was pressed",
-  "sensors.touchSensor1|block": "touch 1",
-  "sensors.touchSensor2|block": "touch 2",
-  "sensors.touchSensor3|block": "touch 3",
-  "sensors.touchSensor4|block": "touch 4",
+  "sensors.touch1|block": "touch 1",
+  "sensors.touch2|block": "touch 2",
+  "sensors.touch3|block": "touch 3",
+  "sensors.touch4|block": "touch 4",
   "{id:category}Sensors": "Sensors",
   "{id:group}Touch Sensor": "Touch Sensor"
 }

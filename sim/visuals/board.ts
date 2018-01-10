@@ -33,13 +33,30 @@ namespace pxsim.visuals {
             font-family:"Lucida Console", Monaco, monospace;
             font-size:8px;
             fill:#fff;
-            pointer-events: none; user-select: none;
+            pointer-events: none;
+            user-select: none;
         }
         .sim-text.small {
             font-size:6px;
         }
+        .sim-text.large {
+            font-size:30px;
+        }
+        .sim-text.number {
+            font-family: Courier, Lato, Work Sans, PT Serif, Source Serif Pro;
+            font-weight: bold;
+        }
         .sim-text.inverted {
-            fill:#000;
+            fill:#5A5A5A;
+        }
+
+        .no-drag, .sim-text, .sim-text-pin {
+            user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
 
         /* Color Grid */
@@ -99,15 +116,8 @@ namespace pxsim.visuals {
 
         private layoutView: LayoutView;
 
-        private controlGroup: ViewContainer;
-        private selectedNode: NodeType;
-        private selectedPort: number;
-        private controlView: View;
         private cachedControlNodes: { [index: string]: View[] } = {};
         private cachedDisplayViews: { [index: string]: LayoutElement[] } = {};
-
-        private closeGroup: ViewContainer;
-        private closeIconView: View;
 
         private screenCanvas: HTMLCanvasElement;
         private screenCanvasCtx: CanvasRenderingContext2D;
@@ -143,7 +153,12 @@ namespace pxsim.visuals {
 
             Runtime.messagePosted = (msg) => {
                 switch (msg.type || "") {
-                    case "status": if ((msg as pxsim.SimulatorStateMessage).state == "killed") this.kill(); break;
+                    case "status": {
+                        const state = (msg as pxsim.SimulatorStateMessage).state;
+                        if (state == "killed") this.kill();
+                        if (state == "running") this.begin();
+                        break;
+                    }
                 }
             }
         }
@@ -177,38 +192,8 @@ namespace pxsim.visuals {
             this.layoutView.updateTheme(theme);
         }
 
-        public resize() {
-            const bounds = this.element.getBoundingClientRect();
-            this.width = bounds.width;
-            this.height = bounds.height;
-            this.layoutView.layout(bounds.width, bounds.height);
-
-            if (this.selectedNode) {
-                const scale = this.width / this.closeIconView.getInnerWidth() / 10;
-                // Translate close icon
-                this.closeIconView.scale(Math.max(0, Math.min(1, scale)));
-                const closeIconWidth = this.closeIconView.getWidth();
-                const closeIconHeight = this.closeIconView.getHeight();
-                const closeCoords = this.layoutView.getCloseIconCoords(closeIconWidth, closeIconHeight);
-                this.closeIconView.translate(closeCoords.x, closeCoords.y);
-            }
-
-            if (this.controlView) {
-                const h = this.controlView.getInnerHeight();
-                const w = this.controlView.getInnerWidth();
-                const bh = this.layoutView.getModuleBounds().height - this.closeIconView.getHeight();
-                const bw = this.layoutView.getModuleBounds().width - (this.width * MODULE_INNER_PADDING_RATIO * 2);
-                this.controlView.scale(Math.min(bh / h, bw / w), false);
-
-                const controlCoords = this.layoutView.getSelectedCoords();
-                this.controlView.translate(controlCoords.x, controlCoords.y);
-            }
-
-            //this.updateScreen();
-        }
-
-        private getControlForNode(id: NodeType, port: number) {
-            if (this.cachedControlNodes[id] && this.cachedControlNodes[id][port]) {
+        private getControlForNode(id: NodeType, port: number, useCache = true) {
+            if (useCache && this.cachedControlNodes[id] && this.cachedControlNodes[id][port]) {
                 return this.cachedControlNodes[id][port];
             }
 
@@ -237,9 +222,10 @@ namespace pxsim.visuals {
                 }
                 case NodeType.MediumMotor:
                 case NodeType.LargeMotor: {
-                    // const state = ev3board().getMotor(port)[0];
-                    // view = new MotorInputControl(this.element, this.defs, state, port);
-                    // break;
+                    // TODO: figure out if the motor is in "input" or "output" mode
+                    const state = ev3board().getMotors()[port];
+                    view = new MotorReporterControl(this.element, this.defs, state, port);
+                    break;
                 }
             }
 
@@ -285,6 +271,10 @@ namespace pxsim.visuals {
             return undefined;
         }
 
+        private getCloseIconView() {
+            return new CloseIconControl(this.element, this.defs, new PortNode(-1), -1);
+        }
+
         private buildDom() {
             this.wrapper = document.createElement('div');
             this.wrapper.style.display = 'inline';
@@ -299,25 +289,10 @@ namespace pxsim.visuals {
             this.layoutView = new LayoutView();
             this.layoutView.inject(this.element);
 
-            this.controlGroup = new ViewContainer();
-            this.controlGroup.inject(this.element);
-
-            this.closeGroup = new ViewContainer();
-            this.closeGroup.inject(this.element);
-
             // Add EV3 module element
             this.layoutView.setBrick(new BrickView(-1));
 
-            this.closeIconView = new CloseIconControl(this.element, this.defs, new PortNode(-1), -1);
-            this.closeIconView.registerClick(() => {
-                this.layoutView.clearSelected();
-                this.updateState();
-            })
-            this.closeGroup.addView(this.closeIconView);
-            this.closeIconView.setVisible(false);
-
             this.resize();
-            //this.updateState();
 
             // Add Screen canvas to board
             this.buildScreenCanvas();
@@ -329,6 +304,17 @@ namespace pxsim.visuals {
             window.addEventListener("resize", e => {
                 this.resize();
             });
+        }
+
+        public resize() {
+            if (!this.element) return;
+            this.width = document.body.offsetWidth;
+            this.height = document.body.offsetHeight;
+            this.layoutView.layout(this.width, this.height);
+
+            this.updateState();
+            let state = ev3board().screenState;
+            this.updateScreenStep(state);
         }
 
         private buildScreenCanvas() {
@@ -357,21 +343,60 @@ namespace pxsim.visuals {
         }
 
         private kill() {
-            if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
+            this.running = false;
+            if (this.lastAnimationIds.length > 0) {
+                this.lastAnimationIds.forEach(animationId => {
+                    cancelAnimationFrame(animationId);
+                })
+            }
+            // Save previous inputs for the next cycle
+            EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
+            EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);
         }
 
-        private lastAnimationId: number;
+        private static previousSelectedInputs: number[];
+        private static previousSeletedOutputs: number[];
+
+        private static isPreviousInputSelected(index: number, id: number) {
+            if (EV3View.previousSelectedInputs && EV3View.previousSelectedInputs[index] == id) {
+                EV3View.previousSelectedInputs[index] = undefined;
+                return true;
+            }
+            return false;
+        }
+
+        private static isPreviousOutputSelected(index: number, id: number) {
+            if (EV3View.previousSeletedOutputs && EV3View.previousSeletedOutputs[index] == id) {
+                EV3View.previousSeletedOutputs[index] = undefined;
+                return true;
+            }
+            return false;
+        }
+
+        private begin() {
+            this.running = true;
+            this.updateState();
+        }
+
+        private running: boolean = false;
+        private lastAnimationIds: number[] = [];
         public updateState() {
-            if (this.lastAnimationId) cancelAnimationFrame(this.lastAnimationId);
+            if (this.lastAnimationIds.length > 0) {
+                this.lastAnimationIds.forEach(animationId => {
+                    cancelAnimationFrame(animationId);
+                })
+            }
+            if (!this.running) return;
             const fps = GAME_LOOP_FPS;
             let now;
-            let then = Date.now();
+            let then = pxsim.U.now();
             let interval = 1000 / fps;
             let delta;
             let that = this;
             function loop() {
-                that.lastAnimationId = requestAnimationFrame(loop);
-                now = Date.now();
+                const animationId = requestAnimationFrame(loop);
+                that.lastAnimationIds.push(animationId);
+                now = pxsim.U.now();
                 delta = now - then;
                 if (delta > interval) {
                     then = now;
@@ -382,67 +407,50 @@ namespace pxsim.visuals {
         }
 
         private updateStateStep(elapsed: number) {
-            const selected = this.layoutView.getSelected();
-            let selectedChanged = false;
             const inputNodes = ev3board().getInputNodes();
             inputNodes.forEach((node, index) => {
                 node.updateState(elapsed);
-                if (!node.didChange()) return;
                 const view = this.getDisplayViewForNode(node.id, index);
+                if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    this.layoutView.setInput(index, view);
+                    const isSelected = EV3View.isPreviousInputSelected(index, node.id) || view.getSelected();
+                    if (isSelected && !view.getSelected()) view.setSelected(true);
+                    const control = isSelected ? this.getControlForNode(node.id, index, !node.modeChange()) : undefined;
+                    const closeIcon = control ? this.getCloseIconView() : undefined;
+                    this.layoutView.setInput(index, view, control, closeIcon);
                     view.updateState();
-                    if (selected == view) selectedChanged = true;
+                    if (control) control.updateState();
                 }
             });
 
             const brickNode = ev3board().getBrickNode();
             if (brickNode.didChange()) {
-                this.getDisplayViewForNode(ev3board().getBrickNode().id, -1).updateState();
+                this.getDisplayViewForNode(brickNode.id, -1).updateState();
             }
 
             const outputNodes = ev3board().getMotors();
             outputNodes.forEach((node, index) => {
                 node.updateState(elapsed);
-                if (!node.didChange()) return;
                 const view = this.getDisplayViewForNode(node.id, index);
+                if (!node.didChange() && !view.didChange()) return;
                 if (view) {
-                    this.layoutView.setOutput(index, view);
+                    const isSelected = EV3View.isPreviousOutputSelected(index, node.id) || view.getSelected();
+                    if (isSelected && !view.getSelected()) view.setSelected(true);
+                    const control = isSelected ? this.getControlForNode(node.id, index) : undefined;
+                    const closeIcon = control ? this.getCloseIconView() : undefined;
+                    this.layoutView.setOutput(index, view, control, closeIcon);
                     view.updateState();
-                    if (selected == view) selectedChanged = true;
+                    if (control) control.updateState();
                 }
             });
 
-            if (selected && (selected.getId() !== this.selectedNode || selected.getPort() !== this.selectedPort)) {
-                this.selectedNode = selected.getId();
-                this.selectedPort = selected.getPort();
-                this.controlGroup.clear();
-                const control = this.getControlForNode(this.selectedNode, selected.getPort());
-                if (control) {
-                    this.controlView = control;
-                    this.controlGroup.addView(control);
-                }
-                this.closeIconView.setVisible(true);
-                this.resize();
-            } else if (!selected) {
-                this.controlGroup.clear();
-                this.controlView = undefined;
-                this.selectedNode = undefined;
-                this.selectedPort = undefined;
-                this.closeIconView.setVisible(false);
+            let state = ev3board().screenState;
+            if (state.didChange()) {
+                this.updateScreenStep(state);
             }
-
-            if (selectedChanged && selected) {
-                this.controlView.updateState();
-            }
-
-            this.updateScreenStep();
         }
 
-        private updateScreenStep() {
-            let state = ev3board().screenState;
-            if (!state.didChange()) return;
-
+        private updateScreenStep(state: EV3ScreenState) {
             const bBox = this.layoutView.getBrick().getScreenBBox();
             if (!bBox || bBox.width == 0) return;
 

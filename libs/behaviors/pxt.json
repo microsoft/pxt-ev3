@@ -1,0 +1,6 @@
+{
+    "additionalFilePath": "../../node_modules/pxt-common-packages/libs/behaviors",
+    "dependencies": {
+        "core": "file:../ev3"
+    }
+}

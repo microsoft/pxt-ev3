@@ -89,6 +89,14 @@ namespace sensors.internal {
         //serial.writeLine("UART " + port + " / " + mode + " - " + info)
     }
 
+    export function getBatteryInfo(): { temp: number; current: number } {
+        init();
+        return {
+            temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
+            current: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent)
+        }
+    }
+
     function detectDevices() {
         let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0
@@ -214,6 +222,7 @@ namespace sensors.internal {
         }
 
         public setLevel(level: number) {
+            if (this == null) return
             this.level = this.clampValue(level);
 
             if (this.level >= this.highThreshold) {
@@ -299,6 +308,10 @@ namespace sensors.internal {
             if (!this.isActive())
                 return 0
             return getUartNumber(fmt, off, this._port)
+        }
+
+        protected reset() {
+            if (this.isActive()) uartReset(this._port);
         }
     }
 

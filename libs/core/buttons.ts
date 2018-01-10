@@ -66,6 +66,7 @@ namespace brick {
 
         //% hidden
         _update(curr: boolean) {
+            if (this == null) return
             if (this._isPressed == curr) return
             this._isPressed = curr
             if (curr) {
@@ -91,6 +92,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=81 blockGap=8
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         isPressed() {
             return this._isPressed
         }
@@ -104,8 +106,9 @@ namespace brick {
         //% blockId=buttonWasPressed
         //% parts="brick"
         //% blockNamespace=brick
-        //% weight=80 blockGap=8
+        //% weight=80
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         wasPressed() {
             const r = this._wasPressed
             this._wasPressed = false
@@ -124,6 +127,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=99 blockGap=8
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         onEvent(ev: ButtonEvent, body: () => void) {
             control.onEvent(this._id, ev, body)
         }
@@ -138,6 +142,7 @@ namespace brick {
         //% blockNamespace=brick
         //% weight=98 blockGap=8
         //% group="Buttons"
+        //% button.fieldEditor="brickbuttons"
         pauseUntil(ev: ButtonEvent) {
             control.waitForEvent(this._id, ev);
         }
@@ -162,6 +167,11 @@ namespace brick {
             if (sl[i])
                 ret |= 1 << i
         }
+        // this needs to be done in query(), which is run without the main JS execution mutex
+        // otherwise, while(true){} will lock the device
+        if (ret & DAL.BUTTON_ID_ESCAPE) {
+            control.reset()
+        }
         return ret
     }
 
@@ -171,8 +181,6 @@ namespace brick {
         if (!btnsMM) control.fail("no buttons?")
         buttons = []
         sensors.internal.unsafePollForChanges(50, readButtons, (prev, curr) => {
-            if (curr & DAL.BUTTON_ID_ESCAPE)
-                control.reset()
             for (let b of buttons)
                 b._update(!!(curr & b.mask))
         })
@@ -187,7 +195,7 @@ namespace brick {
             initBtns()
             buttons.push(this)
         }
-    }
+    }    
 
     initBtns() // always ON as it handles ESCAPE button
 
@@ -228,6 +236,7 @@ namespace control {
     /**
      * Determine the version of system software currently running.
      */
+    //%
     export function deviceFirmwareVersion(): string {
         let buf = output.createBuffer(6)
         brick.internal.getBtnsMM().read(buf)

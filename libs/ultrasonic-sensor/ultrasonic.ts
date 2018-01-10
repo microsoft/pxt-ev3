@@ -46,6 +46,7 @@ namespace sensors {
         //% block="on %sensor|%event"
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
         onEvent(event: UltrasonicSensorEvent, handler: () => void) {
@@ -60,6 +61,7 @@ namespace sensors {
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
+        //% sensor.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"        
         pauseUntil(event: UltrasonicSensorEvent) {
@@ -75,14 +77,34 @@ namespace sensors {
         //% blockId=sonarGetDistance
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8   
+        //% sensor.fieldEditor="ports"
+        //% weight=65
         //% group="Ultrasonic Sensor"     
         distance(): number {
             // it supposedly also has an inch mode, but we stick to cm
             this._setMode(0)
             return this._query();
         }
+
+
+        /**
+         * Sets a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold
+         */
+        //% blockId=ultrasonicSetThreshold block="set %condition|to %value"
+        //% group="Threshold" blockGap=8
+        setThreshold(condition: UltrasonicSensorEvent, value: number) {            
+            switch(condition) {
+                case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;
+                case UltrasonicSensorEvent.ObjectFar: this.promixityThreshold.setHighThreshold(value); break;
+                case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold = value; break;
+            }
+        }
     }
+  
+    //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4
+    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
     
     //% fixedInstance whenUsed block="ultrasonic 1" jres=icons.port1
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
@@ -92,7 +114,4 @@ namespace sensors {
 
     //% fixedInstance whenUsed block="ultrasonic 3" jres=icons.port3
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
-  
-    //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4
-    export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 }

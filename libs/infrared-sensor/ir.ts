@@ -112,7 +112,7 @@ namespace sensors {
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
         //% blockNamespace=sensors
-        //% weight=80 blockGap=8
+        //% weight=80
         //% group="Remote Infrared Beacon"
         wasPressed() {
             return this.button.wasPressed();
@@ -238,7 +238,7 @@ namespace sensors {
         //% blockId=infraredGetRemoteCommand
         //% parts="infrared"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8        
+        //% weight=65       
         //% group="Infrared Sensor"     
         remoteCommand(): number {
             this._setMode(IrSensorMode.RemoteControl)
@@ -249,6 +249,21 @@ namespace sensors {
         getDirectionAndDistance() {
             this._setMode(IrSensorMode.Seek)
             return this.getNumber(NumberFormat.UInt16LE, this.channel * 2)
+        }
+
+
+        /**
+         * Sets a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold
+         */
+        //% blockId=irSetThreshold block="set %condition|to %value"
+        //% group="Threshold" blockGap=8
+        setThreshold(condition: InfraredSensorEvent, value: number) {
+            if (condition == InfraredSensorEvent.ObjectNear)
+                this.proximityThreshold.setLowThreshold(value)
+            else
+                this.proximityThreshold.setHighThreshold(value);
         }
     }
 

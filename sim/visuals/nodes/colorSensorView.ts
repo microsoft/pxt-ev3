@@ -1,7 +1,7 @@
-/// <reference path="./staticView.ts" />
+/// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
-    export class ColorSensorView extends StaticModuleView implements LayoutElement {
+    export class ColorSensorView extends ModuleView implements LayoutElement {
 
         private control: ColorGridControl;
 
@@ -10,10 +10,11 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 8;
+            return 1 / 4;
         }
 
         public updateState() {
+            super.updateState();
             // TODO: show different color modes
         }
     }
