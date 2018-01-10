@@ -95,19 +95,19 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         //     }, svg);
         // }
         // Center point
-        Blockly.utils.createSvgElement('circle', {
-            'cx': FieldTurnRatio.HALF, 'cy': FieldTurnRatio.HALF,
-            'r': Blockly.FieldAngle.CENTER_RADIUS,
-            'class': 'blocklyAngleCenterPoint'
-        }, svg);
+        // Blockly.utils.createSvgElement('circle', {
+        //     'cx': FieldTurnRatio.HALF, 'cy': FieldTurnRatio.HALF,
+        //     'r': Blockly.FieldAngle.CENTER_RADIUS,
+        //     'class': 'blocklyAngleCenterPoint'
+        // }, svg);
         // Handle group: a circle and the arrow image
         this.handle_ = Blockly.utils.createSvgElement('g', {}, svg);
-        Blockly.utils.createSvgElement('circle', {
-            'cx': 0,
-            'cy': 0,
-            'r': Blockly.FieldAngle.HANDLE_RADIUS * 2,
-            'style': 'stroke: #fff; stroke-width: 5; stroke-opacity: 0.25; fill: #fff;'
-        }, this.handle_);
+        // Blockly.utils.createSvgElement('circle', {
+        //     'cx': 0,
+        //     'cy': 0,
+        //     'r': Blockly.FieldAngle.HANDLE_RADIUS * 2,
+        //     'style': 'stroke: #fff; stroke-width: 5; stroke-opacity: 0.25; fill: #fff;'
+        // }, this.handle_);
         this.arrowSvg_ = Blockly.utils.createSvgElement(
             'image',
             {
@@ -217,7 +217,11 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         let d = '';
         d += `M ${FieldTurnRatio.HALF} ${FieldTurnRatio.HALF} `;
         let h = Math.cos(angleRadians) * FieldTurnRatio.RADIUS / 2;
-        d += `c 0 ${0} ${h} ${h} ${FieldTurnRatio.RADIUS * Math.cos(angleRadians)} ${FieldTurnRatio.RADIUS * -Math.sin(angleRadians)}`;
+        var angleDegreesWithOffset = angleDegrees + 2 * Blockly.FieldAngle.OFFSET;
+        var angleRadiansWithOffset = goog.math.toRadians(angleDegreesWithOffset);
+        var hy = Math.cos(angleRadiansWithOffset) * FieldTurnRatio.RADIUS / 2;
+        var hx = Math.cos(angleRadiansWithOffset) * FieldTurnRatio.RADIUS / 2;
+        d += `c 0 ${0} ${hx} ${-Math.abs(hy)} ${FieldTurnRatio.RADIUS * Math.cos(angleRadians)} ${FieldTurnRatio.RADIUS * -Math.sin(angleRadians)}`;
         this.path_.setAttribute('d', d); //this.describeArc(80, 80, 100, value, value));
     }
 
