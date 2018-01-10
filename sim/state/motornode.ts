@@ -40,6 +40,10 @@ namespace pxsim {
         }
 
         setSpeedCmd(cmd: DAL, values: number[]) {
+            if (this.speedCmd != cmd ||
+                JSON.stringify(this.speedCmdValues) != JSON.stringify(values))
+                this.setChangedState();    
+            // new command TODO: values
             this.speedCmd = cmd;
             this.speedCmdValues = values;
             this.speedCmdTacho = this.angle;
