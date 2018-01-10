@@ -232,11 +232,7 @@ namespace pxsim.visuals {
                 case NodeType.MediumMotor:
                 case NodeType.LargeMotor: {
                     const state = ev3board().getMotors()[port];
-                    if (state.isInput()) {
-                        view = new MotorSliderControl(this.element, this.defs, state, port);
-                    } else {
-                        view = new MotorReporterControl(this.element, this.defs, state, port);
-                    }
+                    view = new MotorSliderControl(this.element, this.defs, state, port);
                     break;
                 }
             }

@@ -96,11 +96,6 @@ namespace pxsim {
             this.started = true;
         }
 
-        isInput() {
-            // TODO: figure out if a motor is in an input or output state
-            return true;
-        }
-
         setSpeedAsInput(speed: number) {
             this.speed = speed;
         }
