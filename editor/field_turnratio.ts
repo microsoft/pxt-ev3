@@ -2,9 +2,6 @@
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
 export interface FieldTurnRatioOptions extends Blockly.FieldCustomOptions {
-    min?: string;
-    max?: string;
-    label?: string;
 }
 
 export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.FieldCustom {
@@ -26,12 +23,8 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
      * @constructor
      */
     constructor(value_: any, params: FieldTurnRatioOptions, opt_validator?: Function) {
-        super(String(value_), '-100', '100', null, '10', 'Speed', opt_validator);
+        super(String(value_), '-100', '100', null, '10', 'TurnRatio', opt_validator);
         this.params = params;
-        if (this.params['min']) this.min_ = parseFloat(this.params.min);
-        if (this.params['max']) this.max_ = parseFloat(this.params.max);
-        if (this.params['label']) this.labelText_ = this.params.label;
-
         (this as any).sliderColor_ = '#a8aaa8';
     }
 
