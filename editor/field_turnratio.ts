@@ -43,7 +43,8 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
     private path_: SVGPathElement;
 
     static HALF = 80;
-    static RADIUS = FieldTurnRatio.HALF - Blockly.FieldAngle.HANDLE_RADIUS - 1;
+    static HANDLE_RADIUS = 30;
+    static RADIUS = FieldTurnRatio.HALF - FieldTurnRatio.HANDLE_RADIUS - 1;
 
     createLabelDom_(labelText: string) {
         var labelContainer = document.createElement('div');
@@ -52,9 +53,22 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             'xmlns:html': 'http://www.w3.org/1999/xhtml',
             'xmlns:xlink': 'http://www.w3.org/1999/xlink',
             'version': '1.1',
-            'height': (FieldTurnRatio.HALF * 2) + 'px',
+            'height': (FieldTurnRatio.HALF + FieldTurnRatio.HANDLE_RADIUS) + 'px',
             'width': (FieldTurnRatio.HALF * 2) + 'px'
         }, labelContainer);
+        var defs = Blockly.utils.createSvgElement('defs', {}, svg);
+        var marker = Blockly.utils.createSvgElement('marker', {
+            'id': 'head',
+            'orient': "auto",
+            'markerWidth': '2',
+            'markerHeight': '4',
+            'refX': '0.1', 'refY': '1.5'
+        }, defs);
+        var markerPath = Blockly.utils.createSvgElement('path', {
+            'd': 'M0,0 V3 L1.5,1.5 Z',
+            'fill': '#f12a21'
+        }, marker);
+
         // Blockly.utils.createSvgElement('circle', {
         //     'cx': FieldTurnRatio.HALF, 'cy': FieldTurnRatio.HALF,
         //     'r': FieldTurnRatio.RADIUS,
@@ -71,7 +85,8 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         this.path_ = Blockly.utils.createSvgElement('path', {
             'x1': FieldTurnRatio.HALF,
             'y1': FieldTurnRatio.HALF,
-            'style': 'fill: none; stroke: #446688; stroke-width: 10'
+            'marker-end': 'url(#head)',
+            'style': 'fill: none; stroke: rgb(168, 170, 168); stroke-width: 10'
         }, svg);
         // The fixed vertical line at the offset
         // var offsetRadians = Math.PI * Blockly.FieldAngle.OFFSET / 180;
@@ -108,20 +123,20 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         //     'r': Blockly.FieldAngle.HANDLE_RADIUS * 2,
         //     'style': 'stroke: #fff; stroke-width: 5; stroke-opacity: 0.25; fill: #fff;'
         // }, this.handle_);
-        this.arrowSvg_ = Blockly.utils.createSvgElement(
-            'image',
-            {
-                'width': Blockly.FieldAngle.ARROW_WIDTH * 2,
-                'height': Blockly.FieldAngle.ARROW_WIDTH * 2,
-                'x': -Blockly.FieldAngle.ARROW_WIDTH,
-                'y': -Blockly.FieldAngle.ARROW_WIDTH
-            },
-            this.handle_
-        );
-        this.arrowSvg_.setAttributeNS(
-            'http://www.w3.org/1999/xlink',
-            'xlink:href', Blockly.FieldAngle.ARROW_SVG_DATAURI
-        );
+        // this.arrowSvg_ = Blockly.utils.createSvgElement(
+        //     'image',
+        //     {
+        //         'width': Blockly.FieldAngle.ARROW_WIDTH * 2,
+        //         'height': Blockly.FieldAngle.ARROW_WIDTH * 2,
+        //         'x': -Blockly.FieldAngle.ARROW_WIDTH,
+        //         'y': -Blockly.FieldAngle.ARROW_WIDTH
+        //     },
+        //     this.handle_
+        // );
+        // this.arrowSvg_.setAttributeNS(
+        //     'http://www.w3.org/1999/xlink',
+        //     'xlink:href', Blockly.FieldAngle.ARROW_SVG_DATAURI
+        // );
 
         this.updateGraph_();
 
@@ -203,17 +218,17 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
                 ' 0 ', largeFlag, ' ', sweepFlag, ' ', x2, ',', y2, ' z');
 
             // Image rotation needs to be set in degrees
-            if (Blockly.FieldAngle.CLOCKWISE) {
-                var imageRotation = angleDegrees + 2 * Blockly.FieldAngle.OFFSET;
-            } else {
-                var imageRotation = -angleDegrees;
-            }
-            this.arrowSvg_.setAttribute('transform', 'rotate(' + ((imageRotation + 45) / 180 * 360) + ')');
+            // if (Blockly.FieldAngle.CLOCKWISE) {
+            //     var imageRotation = angleDegrees + 2 * Blockly.FieldAngle.OFFSET;
+            // } else {
+            //     var imageRotation = -angleDegrees;
+            // }
+            // this.arrowSvg_.setAttribute('transform', 'rotate(' + ((imageRotation + 45) / 180 * 360) + ')');
         }
         // this.line_.setAttribute('x2', `${x2}`);
         // this.line_.setAttribute('y2', `${y2}`);
         this.handle_.setAttribute('transform', 'translate(' + x2 + ',' + y2 + ')');
-        
+
         let d = '';
         d += `M ${FieldTurnRatio.HALF} ${FieldTurnRatio.HALF} `;
         let h = Math.cos(angleRadians) * FieldTurnRatio.RADIUS / 2;
