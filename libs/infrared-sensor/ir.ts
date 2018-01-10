@@ -257,8 +257,9 @@ namespace sensors {
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
-        //% blockId=irSetThreshold block="set %condition|to %value"
+        //% blockId=irSetThreshold block="set %sensor|%condition|to %value"
         //% group="Threshold" blockGap=8
+        //% value.min=0 value.max=100
         setThreshold(condition: InfraredSensorEvent, value: number) {
             if (condition == InfraredSensorEvent.ObjectNear)
                 this.proximityThreshold.setLowThreshold(value)
