@@ -216,8 +216,14 @@ namespace motors {
         setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
+            // stop if speed is 0
             if (!speed) {
                 this.stop();
+                return;
+            }
+            // special: 0 is infinity
+            if (value == 0) {
+                this._setSpeed(speed);
                 return;
             }
             let useSteps: boolean;
