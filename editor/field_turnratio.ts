@@ -53,7 +53,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             'xmlns:html': 'http://www.w3.org/1999/xhtml',
             'xmlns:xlink': 'http://www.w3.org/1999/xlink',
             'version': '1.1',
-            'height': (FieldTurnRatio.HALF + FieldTurnRatio.HANDLE_RADIUS) + 'px',
+            'height': (FieldTurnRatio.HALF + FieldTurnRatio.HANDLE_RADIUS + 10) + 'px',
             'width': (FieldTurnRatio.HALF * 2) + 'px'
         }, labelContainer);
         var defs = Blockly.utils.createSvgElement('defs', {}, svg);
@@ -69,6 +69,13 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             'fill': '#f12a21'
         }, marker);
 
+        this.reporter = pxsim.svg.child(svg, "text", {
+            'x': FieldTurnRatio.HALF, 'y': 96,
+            'text-anchor': 'middle', 'alignment-baseline': 'middle',
+            'style': 'font-size: 50px',
+            'class': 'sim-text inverted number'
+        }) as SVGTextElement;
+        
         // Blockly.utils.createSvgElement('circle', {
         //     'cx': FieldTurnRatio.HALF, 'cy': FieldTurnRatio.HALF,
         //     'r': FieldTurnRatio.RADIUS,
@@ -86,7 +93,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             'x1': FieldTurnRatio.HALF,
             'y1': FieldTurnRatio.HALF,
             'marker-end': 'url(#head)',
-            'style': 'fill: none; stroke: rgb(168, 170, 168); stroke-width: 10'
+            'style': 'fill: none; stroke: #f12a21; stroke-width: 10'
         }, svg);
         // The fixed vertical line at the offset
         // var offsetRadians = Math.PI * Blockly.FieldAngle.OFFSET / 180;
@@ -145,18 +152,11 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         //     viewBox: "0 0 200 200"
         // });
 
-        // labelContainer.appendChild(this.speedSVG);
+        //labelContainer.appendChild(this.speedSVG);
 
         // const rect = pxsim.svg.child(this.speedSVG, "rect", {
         //     'x': 90, 'y': 100, 'height': 80, 'width': 20, 'style': 'fill: #000'
         // })
-
-        // this.reporter = pxsim.svg.child(this.speedSVG, "text", {
-        //     'x': 100, 'y': 80,
-        //     'text-anchor': 'middle', 'alignment-baseline': 'middle',
-        //     'style': 'font-size: 50px',
-        //     'class': 'sim-text inverted number'
-        // }) as SVGTextElement;
 
         // labelContainer.setAttribute('class', 'blocklyFieldSliderLabel');
         var readout = document.createElement('span');
@@ -192,8 +192,10 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         if (!this.handle_) {
             return;
         }
-        var value = goog.math.clamp(parseFloat(this.getText()), -100, 100) / 100 * 90;
-        var angleDegrees = Number(value) % 360 + Blockly.FieldAngle.OFFSET;
+        const v = goog.math.clamp(parseFloat(this.getText()), -100, 100);
+        
+        const value = v * 90;
+        const angleDegrees = Number(value) % 360 + Blockly.FieldAngle.OFFSET;
         var angleRadians = goog.math.toRadians(angleDegrees);
         var path = ['M ', FieldTurnRatio.HALF, ',', FieldTurnRatio.HALF];
         var x2 = FieldTurnRatio.HALF;
@@ -229,13 +231,11 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         // this.line_.setAttribute('y2', `${y2}`);
         this.handle_.setAttribute('transform', 'translate(' + x2 + ',' + y2 + ')');
 
-
-        // left wheel
         {
             const x = goog.math.clamp(parseFloat(this.getText()), -100, 100) / 100;
             const theta = x * Math.PI / 2;
             const cx = FieldTurnRatio.HALF;
-            const cy = FieldTurnRatio.HALF;
+            const cy = FieldTurnRatio.HALF - 14;
             const gamma = Math.PI - 2 * theta;
             const r = FieldTurnRatio.RADIUS;
             const alpha = 0.2 + Math.abs(x) * 0.5;
@@ -250,27 +250,11 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             const d = `M ${cx} ${cy} C ${cx} ${cy - y1} ${cx + x3} ${cy - y3} ${cx + x2} ${cy - y2}`;
             this.path_.setAttribute('d', d);
         }
+
+        this.reporter.textContent = `${v}`;
     }
 
     setReadout_(readout: Element, value: string) {
-        this.updateSpeed(parseFloat(value));
-        // Update reporter
-        //this.reporter.textContent = `${value}%`;
-
         this.updateGraph_();
-    }
-
-    private updateSpeed(speed: number) {
-        let sign = this.sign(speed);
-        speed = (Math.abs(speed) / 100 * 50) + 50;
-        if (sign == -1) speed = 50 - speed;
-        let c = Math.PI * (90 * 2);
-        let pct = ((100 - speed) / 100) * c;
-        //this.circleBar.setAttribute('stroke-dashoffset', `${pct}`);
-    }
-
-    // A re-implementation of Math.sign (since IE11 doesn't support it)
-    private sign(num: number) {
-        return num ? num < 0 ? -1 : 1 : 0;
     }
 }
