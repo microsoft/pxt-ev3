@@ -13,7 +13,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
     private params: any;
 
     private path_: SVGPathElement;
-    private reporter: SVGTextElement;
+    private reporter_: SVGTextElement;
 
     /**
      * Class for a color wheel field.
@@ -61,7 +61,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
             'd': 'M0,0 V3 L1.5,1.5 Z',
             'fill': '#f12a21'
         }, marker);
-        this.reporter = pxsim.svg.child(svg, "text", {
+        this.reporter_ = pxsim.svg.child(svg, "text", {
             'x': FieldTurnRatio.HALF, 'y': 96,
             'text-anchor': 'middle', 'alignment-baseline': 'middle',
             'style': 'font-size: 50px',
@@ -106,7 +106,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         const d = `M ${cx} ${cy} C ${cx} ${cy - y1} ${cx + x3} ${cy - y3} ${cx + x2} ${cy - y2}`;
         this.path_.setAttribute('d', d);
 
-        this.reporter.textContent = `${v}`;
+        this.reporter_.textContent = `${v}`;
     }
 
     setReadout_(readout: Element, value: string) {
