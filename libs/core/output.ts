@@ -476,7 +476,7 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio|speed %speed=motorSpeedPicker|%"
+        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio=motorTurnRatioPicker|speed %speed=motorSpeedPicker|%"
         //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
