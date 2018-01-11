@@ -13,24 +13,21 @@ namespace pxsim.visuals {
             this.group.setAttribute("transform", `translate(12, 0) scale(2)`)
 
             let gc = "gradient-color";
-            this.colorGradient = svg.linearGradient(this.defs, gc, true);
+            this.colorGradient = svg.linearGradient(this.defs, gc, false);
             svg.setGradientValue(this.colorGradient, "50%");
-            svg.setGradientColors(this.colorGradient, "black", "white");
+            svg.setGradientColors(this.colorGradient, "black", "yellow");
 
-            const circle = pxsim.svg.child(this.group, "g");
-            const innerCircle = pxsim.svg.child(circle, "circle",
+            const rect = pxsim.svg.child(this.group, "g");
+            const innerRect = pxsim.svg.child(rect, "rect",
                 {cursor: '-webkit-grab',
                 fill: `url(#${gc})`,
-                r: 17,
-                cx: 13,
-                cy: 20,
-                stroke: 'black',
-                'stroke-width': 2
+                width: 35,
+                height: 50
             });
 
             let pt = parent.createSVGPoint();
             let captured = false;
-            touchEvents(circle,
+            touchEvents(rect,
                 ev => {
                     if (captured && (ev as MouseEvent).clientX) {
                         ev.preventDefault();
@@ -71,9 +68,10 @@ namespace pxsim.visuals {
         }
 
         private setColor(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
-            const width = CONTROL_WIDTH;
+            const height = CONTROL_HEIGHT;
             let cur = svg.cursorPoint(pt, parent, ev);
-            let t = Math.max(0, Math.min(1, (width + this.left / this.scaleFactor - cur.x / this.scaleFactor) / width));
+            //let t = Math.max(0, Math.min(1, (width + this.left / this.scaleFactor - cur.x / this.scaleFactor) / width));
+            let t = Math.max(0, Math.min(1, (height + this.top/this.scaleFactor - cur.y/this.scaleFactor) / height));
             const state = this.state;
             state.setColor((1-t)*100);
         }
