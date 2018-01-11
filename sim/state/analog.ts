@@ -30,8 +30,8 @@ namespace pxsim {
                 data,
                 beforeMemRead: () => {
                     //console.log("analog before read");
-                    data[AnalogOff.BatteryTemp] = 21; // TODO simulate this
-                    data[AnalogOff.BatteryCurrent] = 100; // TODO simulate this
+                    util.map16Bit(data, AnalogOff.BatteryTemp, 21);
+                    util.map16Bit(data, AnalogOff.BatteryCurrent, 900);
                     const inputNodes = ev3board().getInputNodes();
                     for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                         const node = inputNodes[port];
