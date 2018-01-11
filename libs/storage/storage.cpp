@@ -9,35 +9,35 @@ namespace storage {
 
 /** Will be moved. */
 //%
-Buffer stringToBuffer(String s) {
+Buffer __stringToBuffer(String s) {
     return mkBuffer((uint8_t *)s->data, s->length);
 }
 
 /** Will be moved. */
 //%
-String bufferToString(Buffer s) {
+String __bufferToString(Buffer s) {
     return mkString((char*)s->data, s->length);
 }
 
 //%
-void init() {
+void __init() {
     // do nothing
 }
 
 //%
-void unlink(String filename) {
+void __unlink(String filename) {
     ::unlink(filename->data);
 }
 
 //%
-void truncate(String filename) {
+void __truncate(String filename) {
     int fd = open(filename->data, O_CREAT | O_TRUNC | O_WRONLY, 0777);
     close(fd);
 }
 
 /** Create named directory. */
 //%
-void mkdir(String filename) {
+void __mkdir(String filename) {
     ::mkdir(filename->data, 0777);
 }
 

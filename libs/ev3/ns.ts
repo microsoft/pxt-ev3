@@ -57,3 +57,8 @@ namespace loops {
 namespace light {
 
 }
+
+//% color=#c0c0c0 advanced=true weight=5
+namespace storage {
+
+}
