@@ -2,35 +2,35 @@
 /**
  * Patterns for lights under the buttons.
  */
-const enum LightsPattern {
-    //% block=Off enumval=0
+const enum BrickLight {
+    //% block=off enumval=0
     //% blockIdentity=brick.lightPattern
     Off = 0,
-    //% block=Green enumval=1
+    //% block=green enumval=1
     //% blockIdentity=brick.lightPattern
     Green = 1,
-    //% block=Red enumval=2
+    //% block=red enumval=2
     //% blockIdentity=brick.lightPattern
     Red = 2,
-    //% block=Orange enumval=3
+    //% block=orange enumval=3
     //% blockIdentity=brick.lightPattern
     Orange = 3,
-    //% block="Flashing Green" enumval=4
+    //% block="green flash" enumval=4
     //% blockIdentity=brick.lightPattern
     GreenFlash = 4,
-    //% block="Flashing Red" enumval=5
+    //% block="red flash" enumval=5
     //% blockIdentity=brick.lightPattern
     RedFlash = 5,
-    //% block="Flashing Orange" enumval=6
+    //% block="orange flash" enumval=6
     //% blockIdentity=brick.lightPattern
     OrangeFlash = 6,
-    //% block="Pulsing Green" enumval=7
+    //% block="green pulse" enumval=7
     //% blockIdentity=brick.lightPattern
     GreenPulse = 7,
-    //% block="Pulsing Red" enumval=8
+    //% block="red pulse" enumval=8
     //% blockIdentity=brick.lightPattern
     RedPulse = 8,
-    //% block="Pulsing Orange" enumval=9
+    //% block="orange pulse" enumval=9
     //% blockIdentity=brick.lightPattern
     OrangePulse = 9,
 }
@@ -252,32 +252,21 @@ namespace control {
 }
 
 namespace brick {
-    let currPattern: LightsPattern
+    // the brick starts with the red color
+    let currPattern: BrickLight = BrickLight.Red;
 
     /**
      * Set lights.
-     * @param pattern the lights pattern to use.
+     * @param pattern the lights pattern to use. eg: BrickLight.Orange
      */
-    //% blockId=setLights block="set light to %pattern=led_pattern"
+    //% blockId=setLights block="set light to %pattern"
     //% weight=100 group="Buttons"
-    export function setLight(pattern: number): void {
+    export function setLight(pattern: BrickLight): void {
         if (currPattern === pattern)
             return
-        currPattern = pattern
-        let cmd = output.createBuffer(2)
+        currPattern = pattern;
+        const cmd = output.createBuffer(2)
         cmd[0] = pattern + 48
         brick.internal.getBtnsMM().write(cmd)
-    }
-
-
-    /**
-     * Pattern block.
-     * @param pattern the lights pattern to use. eg: LightsPattern.Green
-     */
-    //% blockId=led_pattern block="%pattern"
-    //% shim=TD_ID colorSecondary="#6e9a36" group="Light"
-    //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
-    export function lightPattern(pattern: LightsPattern): number {
-        return pattern;
     }
 }
