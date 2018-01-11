@@ -1,7 +1,7 @@
 {
   "sensors.GyroSensor.angle|block": "%sensor|angle",
-  "sensors.GyroSensor.calibrate|block": "%sensor|calibrate",
-  "sensors.GyroSensor.rotationRate|block": "%sensor|rotation rate",
+  "sensors.GyroSensor.rate|block": "%sensor|rate",
+  "sensors.GyroSensor.reset|block": "%sensor|reset",
   "sensors.gyro1|block": "gyro 1",
   "sensors.gyro2|block": "gyro 2",
   "sensors.gyro3|block": "gyro 3",

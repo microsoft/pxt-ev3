@@ -111,7 +111,7 @@ namespace motors {
      * Stops all motors
      */
     //% blockId=motorStopAll block="stop all motors"
-    //% weight=5
+    //% weight=1
     //% group="Move"
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
@@ -198,7 +198,9 @@ namespace motors {
         /**
          * Resets the motor(s).
          */
-        //%
+        //% weight=5
+        //% group="Move"
+        //% blockId=motorReset block="%motors|reset"
         reset() {
             this.init();
             reset(this._port);

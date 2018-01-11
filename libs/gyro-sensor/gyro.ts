@@ -45,15 +45,15 @@ namespace sensors {
          * Get the current rotation rate from the gyroscope.
          * @param sensor the gyroscope to query the request
          */
-        //% help=input/gyro/rotation-rate
-        //% block="%sensor|rotation rate"
+        //% help=input/gyro/rate
+        //% block="%sensor|rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
         //% weight=65 blockGap=8        
         //% group="Gyro Sensor"
-        rotationRate(): number {
+        rate(): number {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
@@ -65,14 +65,14 @@ namespace sensors {
          * Forces a calibration of the gyro. Must be called when the sensor is completely still.
          */
         //% help=input/gyro/calibrate
-        //% block="%sensor|calibrate"
-        //% blockId=gyroCalibrate   
+        //% block="%sensor|reset"
+        //% blockId=gyroReset  
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
         //% weight=50 blockGap=8        
         //% group="Gyro Sensor"
-        calibrate(): void {
+        reset(): void {
             if (this.calibrating) return; // already in calibration mode
 
             this.calibrating = true;
@@ -90,7 +90,9 @@ namespace sensors {
                 this.setMode(GyroSensorMode.Angle);
             else
                 this.setMode(GyroSensorMode.Rate);
-            this.calibrating = false;
+            // give it more time to settle
+            loops.pause(500);
+            this.calibrating = false;            
         }
     }
 
