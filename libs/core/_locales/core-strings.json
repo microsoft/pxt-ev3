@@ -52,6 +52,7 @@
   "control|block": "control",
   "motors.Motor.angle|block": "%motor|angle",
   "motors.Motor.clearCounts|block": "%motor|clear counts",
+  "motors.Motor.setRegulated|block": "set %motor|regulated %value",
   "motors.Motor.speed|block": "%motor|speed",
   "motors.Motor.tacho|block": "%motor|tacho",
   "motors.MotorBase.pauseUntilReady|block": "%motor|pause until ready",

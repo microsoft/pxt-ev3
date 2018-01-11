@@ -61,6 +61,8 @@
   "control.raiseEvent|param|value": "Component specific code indicating the cause of the event.",
   "motors.Motor.angle": "Gets motor angle.",
   "motors.Motor.clearCounts": "Clears the motor count",
+  "motors.Motor.setRegulated": "Indicates if the motor speed should be regulated. Default is true.",
+  "motors.Motor.setRegulated|param|value": "true for regulated motor",
   "motors.Motor.speed": "Gets motor actual speed.",
   "motors.Motor.tacho": "Gets motor tachometer count.",
   "motors.Motor.toString": "Returns the status of the motor",
