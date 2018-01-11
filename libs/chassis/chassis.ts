@@ -29,26 +29,13 @@ namespace chassis {
          * using a unicycle model.
          * @param speed speed of the center point between motors, eg: 10
          * @param rotationSpeed rotation of the robot around the center point, eg: 30
-         */
-        //% blockId=motorDrive block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s"
-        //% inlineInputMode=inline
-        //% weight=99 blockGap=8
-        drive(speed: number, rotationSpeed: number) {
-            this.driveFor(speed, rotationSpeed, 0, MoveUnit.Degrees);
-        }
-
-        /**
-         * Makes a differential drive robot move with a given speed (cm/s) and rotation rate (deg/s)
-         * using a unicycle model.
-         * @param speed speed of the center point between motors, eg: 10
-         * @param rotationSpeed rotation of the robot around the center point, eg: 30
          * @param value the amount of movement, eg: 2
          * @param unit 
          */
-        //% blockId=motorDriveFor block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s|for %value|%unit"
+        //% blockId=motorDrive block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s"
         //% inlineInputMode=inline
         //% weight=95 blockGap=8
-        driveFor(speed: number, rotationSpeed: number, value: number, unit: MoveUnit) {
+        drive(speed: number, rotationSpeed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             // speed is expressed in %
             const R = this.wheelRadius; // cm
             const L = this.baseLength; // cm
@@ -65,7 +52,7 @@ namespace chassis {
             const sr = vr / maxw * 100; // % 
             const sl = vl / maxw * 100; // %
 
-            this.motors.tankFor(sr, sl, value, unit)
+            this.motors.tank(sr, sl, value, unit)
         }
 
         /**

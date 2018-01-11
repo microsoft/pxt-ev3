@@ -93,7 +93,7 @@ namespace sensors.internal {
         init();
         return {
             temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
-            current: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent)
+            current: Math.round(analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent) / 10)
         }
     }
 
@@ -310,7 +310,7 @@ namespace sensors.internal {
             return getUartNumber(fmt, off, this._port)
         }
 
-        protected reset() {
+        reset() {
             if (this.isActive()) uartReset(this._port);
         }
     }

@@ -2,35 +2,35 @@
 /**
  * Patterns for lights under the buttons.
  */
-const enum LightsPattern {
-    //% block=Off enumval=0
+const enum BrickLight {
+    //% block=off enumval=0
     //% blockIdentity=brick.lightPattern
     Off = 0,
-    //% block=Green enumval=1
+    //% block=green enumval=1
     //% blockIdentity=brick.lightPattern
     Green = 1,
-    //% block=Red enumval=2
+    //% block=red enumval=2
     //% blockIdentity=brick.lightPattern
     Red = 2,
-    //% block=Orange enumval=3
+    //% block=orange enumval=3
     //% blockIdentity=brick.lightPattern
     Orange = 3,
-    //% block="Flashing Green" enumval=4
+    //% block="green flash" enumval=4
     //% blockIdentity=brick.lightPattern
     GreenFlash = 4,
-    //% block="Flashing Red" enumval=5
+    //% block="red flash" enumval=5
     //% blockIdentity=brick.lightPattern
     RedFlash = 5,
-    //% block="Flashing Orange" enumval=6
+    //% block="orange flash" enumval=6
     //% blockIdentity=brick.lightPattern
     OrangeFlash = 6,
-    //% block="Pulsing Green" enumval=7
+    //% block="green pulse" enumval=7
     //% blockIdentity=brick.lightPattern
     GreenPulse = 7,
-    //% block="Pulsing Red" enumval=8
+    //% block="red pulse" enumval=8
     //% blockIdentity=brick.lightPattern
     RedPulse = 8,
-    //% block="Pulsing Orange" enumval=9
+    //% block="orange pulse" enumval=9
     //% blockIdentity=brick.lightPattern
     OrangePulse = 9,
 }
@@ -170,6 +170,7 @@ namespace brick {
         // this needs to be done in query(), which is run without the main JS execution mutex
         // otherwise, while(true){} will lock the device
         if (ret & DAL.BUTTON_ID_ESCAPE) {
+            motors.stopAllMotors(); // ensuring that all motors are off
             control.reset()
         }
         return ret
@@ -203,31 +204,31 @@ namespace brick {
     /**
      * Enter button on the EV3 Brick.
      */
-    //% whenUsed block="enter" weight=95 fixedInstance
+    //% whenUsed block="button enter" weight=95 fixedInstance
     export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 
     /**
      * Left button on the EV3 Brick.
      */
-    //% whenUsed block="left" weight=95 fixedInstance
+    //% whenUsed block="button left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
      * Right button on the EV3 Brick.
      */
-    //% whenUsed block="right" weight=94 fixedInstance
+    //% whenUsed block="button right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
      * Up button on the EV3 Brick.
      */
-    //% whenUsed block="up" weight=95 fixedInstance
+    //% whenUsed block="button up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
      * Down button on the EV3 Brick.
      */
-    //% whenUsed block="down" weight=95 fixedInstance
+    //% whenUsed block="button down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
 }
 
@@ -251,32 +252,21 @@ namespace control {
 }
 
 namespace brick {
-    let currPattern: LightsPattern
+    // the brick starts with the red color
+    let currPattern: BrickLight = BrickLight.Red;
 
     /**
      * Set lights.
-     * @param pattern the lights pattern to use.
+     * @param pattern the lights pattern to use. eg: BrickLight.Orange
      */
-    //% blockId=setLights block="set light to %pattern=led_pattern"
+    //% blockId=setLights block="set light to %pattern"
     //% weight=100 group="Buttons"
-    export function setLight(pattern: number): void {
+    export function setLight(pattern: BrickLight): void {
         if (currPattern === pattern)
             return
-        currPattern = pattern
-        let cmd = output.createBuffer(2)
+        currPattern = pattern;
+        const cmd = output.createBuffer(2)
         cmd[0] = pattern + 48
         brick.internal.getBtnsMM().write(cmd)
-    }
-
-
-    /**
-     * Pattern block.
-     * @param pattern the lights pattern to use. eg: LightsPattern.Green
-     */
-    //% blockId=led_pattern block="%pattern"
-    //% shim=TD_ID colorSecondary="#6e9a36" group="Light"
-    //% blockHidden=true useEnumVal=1 pattern.fieldOptions.decompileLiterals=1
-    export function lightPattern(pattern: LightsPattern): number {
-        return pattern;
     }
 }

@@ -92,8 +92,9 @@ namespace sensors {
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
-        //% blockId=ultrasonicSetThreshold block="set %condition|to %value"
+        //% blockId=ultrasonicSetThreshold block="set %sensor|%condition|to %value"
         //% group="Threshold" blockGap=8
+        //% value.min=0 value.max=255
         setThreshold(condition: UltrasonicSensorEvent, value: number) {            
             switch(condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;

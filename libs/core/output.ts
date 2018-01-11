@@ -111,7 +111,7 @@ namespace motors {
      * Stops all motors
      */
     //% blockId=motorStopAll block="stop all motors"
-    //% weight=5
+    //% weight=1
     //% group="Move"
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
@@ -175,7 +175,7 @@ namespace motors {
         */
         //% blockId=motorSetReversed block="set %motor|reversed %reversed"
         //% reversed.fieldEditor=toggleonoff
-        //% weight=59
+        //% weight=59 blockGap=8
         //% group="Move"
         setReversed(reversed: boolean) {
             this.init();
@@ -198,7 +198,9 @@ namespace motors {
         /**
          * Resets the motor(s).
          */
-        //%
+        //% weight=5
+        //% group="Move"
+        //% blockId=motorReset block="%motors|reset"
         reset() {
             this.init();
             reset(this._port);
@@ -216,10 +218,17 @@ namespace motors {
         setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
+            // stop if speed is 0
             if (!speed) {
                 this.stop();
                 return;
             }
+            // special: 0 is infinity
+            if (value == 0) {
+                this._setSpeed(speed);
+                return;
+            }
+            // timed motor moves
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -242,6 +251,8 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
+            // wait till motor is done with this work
+            this.pauseUntilReady();
         }
 
         /**
@@ -271,10 +282,12 @@ namespace motors {
     //% fixedInstances
     export class Motor extends MotorBase {
         private _large: boolean;
+        private _regulated: boolean;
 
         constructor(port: Output, large: boolean) {
             super(port, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
             this._large = large;
+            this._regulated = true;
             this.markUsed();
         }
 
@@ -290,7 +303,7 @@ namespace motors {
         }
 
         private __setSpeed(speed: number) {
-            const b = mkCmd(this._port, DAL.opOutputSpeed, 1)
+            const b = mkCmd(this._port, this._regulated ? DAL.opOutputPower : DAL.opOutputSpeed, 1)
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
             if (speed) {
@@ -304,9 +317,22 @@ namespace motors {
                 step1: 0,
                 step2: stepsOrTime,
                 step3: 0,
-                speed: speed,
+                speed: this._regulated ? speed : undefined,
+                power: this._regulated ? undefined : speed,
                 useBrake: this._brake
             })
+        }
+
+        /**
+         * Indicates if the motor speed should be regulated. Default is true.
+         * @param value true for regulated motor
+         */
+        //% blockId=outputMotorSetRegulated block="set %motor|regulated %value"
+        //% value.fieldEditor=toggleonoff
+        //% weight=58
+        //% group="Move"
+        setRegulated(value: boolean) {
+            this._regulated = value;
         }
 
         /**
