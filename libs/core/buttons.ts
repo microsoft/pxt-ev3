@@ -170,6 +170,7 @@ namespace brick {
         // this needs to be done in query(), which is run without the main JS execution mutex
         // otherwise, while(true){} will lock the device
         if (ret & DAL.BUTTON_ID_ESCAPE) {
+            motors.stopAllMotors(); // ensuring that all motors are off
             control.reset()
         }
         return ret
@@ -203,31 +204,31 @@ namespace brick {
     /**
      * Enter button on the EV3 Brick.
      */
-    //% whenUsed block="enter" weight=95 fixedInstance
+    //% whenUsed block="button enter" weight=95 fixedInstance
     export const buttonEnter: Button = new DevButton(DAL.BUTTON_ID_ENTER)
 
     /**
      * Left button on the EV3 Brick.
      */
-    //% whenUsed block="left" weight=95 fixedInstance
+    //% whenUsed block="button left" weight=95 fixedInstance
     export const buttonLeft: Button = new DevButton(DAL.BUTTON_ID_LEFT)
 
     /**
      * Right button on the EV3 Brick.
      */
-    //% whenUsed block="right" weight=94 fixedInstance
+    //% whenUsed block="button right" weight=94 fixedInstance
     export const buttonRight: Button = new DevButton(DAL.BUTTON_ID_RIGHT)
 
     /**
      * Up button on the EV3 Brick.
      */
-    //% whenUsed block="up" weight=95 fixedInstance
+    //% whenUsed block="button up" weight=95 fixedInstance
     export const buttonUp: Button = new DevButton(DAL.BUTTON_ID_UP)
 
     /**
      * Down button on the EV3 Brick.
      */
-    //% whenUsed block="down" weight=95 fixedInstance
+    //% whenUsed block="button down" weight=95 fixedInstance
     export const buttonDown: Button = new DevButton(DAL.BUTTON_ID_DOWN)
 }
 
