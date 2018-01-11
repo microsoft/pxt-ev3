@@ -2,7 +2,7 @@ screen.clear()
 brick.print("PXT!", 10, 30, Draw.Quad)
 
 brick.drawRect(40, 40, 20, 10, Draw.Fill)
-brick.setLight(LightsPattern.Orange)
+brick.setLight(BrickLight.Orange)
 
 brick.heart.doubled().draw(100, 50, Draw.Double | Draw.Transparent)
 
@@ -12,7 +12,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Click, () => {
 
 brick.buttonLeft.onEvent(ButtonEvent.Click, () => {
     brick.drawRect(10, 70, 20, 10, Draw.Fill)
-    brick.setLight(LightsPattern.Red)
+    brick.setLight(BrickLight.Red)
     brick.setFont(brick.microbitFont())
 })
 
