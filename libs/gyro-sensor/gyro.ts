@@ -5,12 +5,34 @@ const enum GyroSensorMode {
 }
 
 namespace sensors {
+    namespace calibration {
+        export const gyroDriftFactor = 0.005;
+        export const gyroCalibrationSamples = 200;
+    }
+
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
-        private calibrating: boolean;
+        private _calibrating: boolean;
+        private _rateOffset: number; // gyro is subject to drifting
+
         constructor(port: number) {
             super(port)
-            this.calibrating = false;
+            this._calibrating = false;
+            this._rateOffset = 0;
+            this.setMode(GyroSensorMode.Rate);
+        }
+
+        _query(): number {
+            return this.getNumber(NumberFormat.Int16LE, 0);
+        }
+
+        _update(prev: number, curr: number) {
+            if (this.mode == GyroSensorMode.Rate) {
+                // slow first order filter to counter drift
+                this._rateOffset = calibration.gyroDriftFactor * curr + (1 - calibration.gyroDriftFactor) * this._rateOffset;
+            } else {
+                this._rateOffset = 0;
+            }
         }
 
         _deviceType() {
@@ -34,11 +56,11 @@ namespace sensors {
         //% weight=64 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
-            if (this.calibrating)
-                pauseUntil(() => !this.calibrating, 2000);
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
 
             this.setMode(GyroSensorMode.Angle)
-            return this.getNumber(NumberFormat.Int16LE, 0)
+            return this._query();
         }
 
         /**
@@ -54,11 +76,19 @@ namespace sensors {
         //% weight=65 blockGap=8        
         //% group="Gyro Sensor"
         rate(): number {
-            if (this.calibrating)
-                pauseUntil(() => !this.calibrating, 2000);
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
 
             this.setMode(GyroSensorMode.Rate)
-            return this.getNumber(NumberFormat.Int16LE, 0)
+            return this._query() - this._rateOffset;
+        }
+
+        /**
+         * Gets the drift correction offset for the rate
+         */
+        //%
+        rateOffset(): number {
+            return this._rateOffset;
         }
 
         /**
@@ -73,9 +103,9 @@ namespace sensors {
         //% weight=50 blockGap=8        
         //% group="Gyro Sensor"
         reset(): void {
-            if (this.calibrating) return; // already in calibration mode
+            if (this._calibrating) return; // already in calibration mode
 
-            this.calibrating = true;
+            this._calibrating = true;
             // may be triggered by a button click, give time to settle
             loops.pause(500);
             // send a reset command
@@ -92,7 +122,29 @@ namespace sensors {
                 this.setMode(GyroSensorMode.Rate);
             // give it more time to settle
             loops.pause(500);
-            this.calibrating = false;            
+            // compute offset for rate mode
+            if (this.mode == GyroSensorMode.Rate) {
+                let mx = 0;
+                let mn = 0;
+                let sum = 0;
+                do {
+                    // sample sensor and make sure it is standing still
+                    mx = -1000;
+                    mn = 1000;
+                    sum = 0;
+                    for (let i = 0; i < calibration.gyroCalibrationSamples; ++i) {
+                        const v = this._query();
+                        mx = Math.max(mx, v);
+                        mn = Math.max(mn, v);
+                        sum += v;
+                        loops.pause(1);
+                    }
+                } while (mx - mn > 2);
+                this._rateOffset = sum / calibration.gyroCalibrationSamples;
+            }
+
+            // unlock queries
+            this._calibrating = false;
         }
     }
 
