@@ -79,7 +79,7 @@ namespace sensors {
             // may be triggered by a button click, give time to settle
             loops.pause(500);
             // send a reset command
-            this.reset();
+            super.reset();
             // we need to switch mode twice to perform a calibration
             if (this.mode == GyroSensorMode.Rate)
                 this.setMode(GyroSensorMode.Angle);

@@ -310,7 +310,7 @@ namespace sensors.internal {
             return getUartNumber(fmt, off, this._port)
         }
 
-        protected reset() {
+        reset() {
             if (this.isActive()) uartReset(this._port);
         }
     }
