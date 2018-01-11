@@ -93,7 +93,7 @@ namespace sensors.internal {
         init();
         return {
             temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
-            current: Math.round(analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent) / 10);
+            current: Math.round(analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent) / 10)
         }
     }
 
