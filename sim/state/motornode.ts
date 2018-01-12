@@ -17,7 +17,7 @@ namespace pxsim {
         private speedCmdTime: number;
         private _synchedMotor: MotorNode; // non-null if synchronized
 
-        private manualSpeed: number = 0;
+        private manualSpeed: number = undefined;
 
         constructor(port: number, large: boolean) {
             super(port);

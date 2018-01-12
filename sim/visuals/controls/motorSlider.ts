@@ -55,13 +55,13 @@ namespace pxsim.visuals {
                 if (captured && (ev as MouseEvent).clientY != undefined) {
                     ev.preventDefault();
                     this.updateSliderValue(pt, parent, ev as MouseEvent);
-                    this.handleSliderDown();
+                    this.handleSliderMove();
                 }
             }, ev => {
                 captured = true;
                 if ((ev as MouseEvent).clientY != undefined) {
                     this.updateSliderValue(pt, parent, ev as MouseEvent);
-                    this.handleSliderMove();
+                    this.handleSliderDown();
                 }
             }, () => {
                 captured = false;

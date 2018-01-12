@@ -303,7 +303,7 @@ namespace motors {
         }
 
         private __setSpeed(speed: number) {
-            const b = mkCmd(this._port, this._regulated ? DAL.opOutputPower : DAL.opOutputSpeed, 1)
+            const b = mkCmd(this._port, this._regulated ? DAL.opOutputSpeed : DAL.opOutputPower, 1)
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
             if (speed) {

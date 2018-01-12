@@ -97,6 +97,7 @@ namespace pxsim {
                             motors.forEach(motor => motor.stop());
                             return 2;
                         }
+                        case DAL.opOutputPower: 
                         case DAL.opOutputSpeed: {
                             // setSpeed
                             const port = buf.data[1];
