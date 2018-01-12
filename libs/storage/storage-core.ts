@@ -141,14 +141,8 @@ namespace storage {
 
             const sz = storage.temporary.size(filename);
             if (sz > size) {
-                let buf = storage.temporary.readAsBuffer(filename);
+                let buf = storage.temporary.readAsBuffer(filename)
                 buf = buf.slice(buf.length / 2);
-                // scan for \n and break after
-                for (let i = 0; i < buf.length; ++i)
-                    if (buf[i] == 0x0a) {
-                        buf = buf.slice(i + 1)
-                        break;
-                    }
                 storage.temporary.overwriteWithBuffer(filename, buf);
             }
         }
