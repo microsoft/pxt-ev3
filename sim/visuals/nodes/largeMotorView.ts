@@ -46,9 +46,9 @@ namespace pxsim.visuals {
         }
 
         protected renderMotorAngle(holeEl: Element, angle: number) {
-            const width = 125.92;
-            const height = 37.9;
-            const transform = `rotate(${angle} ${width / 2} ${height / 2})`;
+            const width = 35.92;
+            const height = 35.9;
+            const transform = `translate(45.000000, 1.000000) rotate(${angle} ${width / 2} ${height / 2})`;
             holeEl.setAttribute("transform", transform);
         }
 
