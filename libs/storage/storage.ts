@@ -9,8 +9,15 @@ namespace storage {
         storage.temporary.appendLine(fn, `${t}> ${line}`);
         // shring by 50% if too big
         if (sz > 65536) {
-            const buf = storage.temporary.readAsBuffer(fn);
-            storage.temporary.overwriteWithBuffer(fn, buf.slice(buf.length / 2));
+            let buf = storage.temporary.readAsBuffer(fn);
+            buf = buf.slice(buf.length / 2);
+            // scan for \n and break after
+            for(let i = 0; i < buf.length; ++i)
+                if (buf[i] == 0x0a) {
+                    buf = buf.slice(i + 1)
+                    break;
+                }
+            storage.temporary.overwriteWithBuffer(fn, buf);
         }
     })    
 }
