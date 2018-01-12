@@ -61,8 +61,24 @@ namespace storage {
         }
 
         /**
+         * Append a row of CSV headers
+         * @param filename the file name to append data, eg: "data.csv"
+         * @param headers the data to append
+         */
+        //% blockId=storageAppendCSVHeaders block="storage %source|%filename|append CSV headers %headers"
+        appendCSVHeaders(filename: string, headers: string[]) {
+            let s = ""
+            for (const d of headers) {
+                if (s) s += "\t"
+                s = s + d;
+            }
+            s += "\r\n"
+            this.append(filename, s)
+        }
+
+                /**
          * Append a row of CSV data
-         * @param filename the file name to append data, eg: "data.txt"
+         * @param filename the file name to append data, eg: "data.csv"
          * @param data the data to append
          */
         //% blockId=storageAppendCSV block="storage %source|%filename|append CSV %data"

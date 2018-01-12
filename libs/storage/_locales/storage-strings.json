@@ -1,4 +1,5 @@
 {
+  "storage.Storage.appendCSVHeaders|block": "storage %source|%filename|append CSV headers %headers",
   "storage.Storage.appendCSV|block": "storage %source|%filename|append CSV %data",
   "storage.Storage.appendLine|block": "storage %source|%filename|append line %data",
   "storage.Storage.append|block": "storage %source|%filename|append %data",
