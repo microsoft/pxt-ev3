@@ -1,7 +1,7 @@
 namespace pxsim.storage {
     export function __stringToBuffer(s: string): RefBuffer {
         // TODO
-        return new RefBuffer([]);
+        return new RefBuffer(new Uint8Array([]));
     }
 
     export function __bufferToString(b: RefBuffer): string {

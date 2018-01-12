@@ -58,7 +58,7 @@ namespace light {
 
 }
 
-//% color=#c0c0c0 advanced=true weight=5
+//% color="#b0b0b0" advanced=true weight=5
 namespace storage {
 
 }

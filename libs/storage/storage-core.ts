@@ -34,18 +34,22 @@ namespace storage {
             return filename.substr(0, last)
         }            
 
-
         /**
          *  Append string data to a new or existing file. 
+         * @param filename the file name to append data, eg: "data.txt"
+         * @param data the data to append
          */
-        //%
+        //% blockId=storageAppend block="storage %source|%filename|append %data"
         append(filename: string, data: string): void {
             this.appendBuffer(filename, __stringToBuffer(data))
         }
 
         /**
          * Appends a new line of data in the file
+         * @param filename the file name to append data, eg: "data.txt"
+         * @param data the data to append
          */
+        //% blockId=storageAppendLine block="storage %source|%filename|append line %data"
         appendLine(filename: string, data: string): void {
             this.append(filename, data + "\r\n");
         }
@@ -57,17 +61,27 @@ namespace storage {
             f.write(data)
         }
 
+        /**
+         * Append a row of CSV data
+         * @param filename the file name to append data, eg: "data.txt"
+         * @param data the data to append
+         */
+        //% blockId=storageAppendCSV block="storage %source|%filename|append CSV %data"
         appendCSV(filename: string, data: number[]) {
             let s = ""
             for (const d of data) {
                 if (s) s += "\t"
                 s = s + d;
             }
-            s += "\n"
+            s += "\r\n"
             this.append(filename, s)
         }
 
-        /** Overwrite file with string data. */
+        /** Overwrite file with string data.
+         * @param filename the file name to append data, eg: "data.txt"
+         * @param data the data to append
+         */
+        //% blockId=storageOverwrite block="storage %source|%filename|overwrite with|%data"
         overwrite(filename: string, data: string): void {
             this.overwriteWithBuffer(filename, __stringToBuffer(data))
         }
@@ -78,17 +92,22 @@ namespace storage {
             this.appendBuffer(filename, data)
         }
 
-        /** Return true if the file already exists. */
+        /** Tests if a file exists
+         * @param filename the file name to append data, eg: "data.txt"
+         */
+        //% blockId=storageExists block="storage %source|%filename|exists"
         exists(filename: string): boolean {
             return !!control.mmap(this.mapFilename(filename), 0, 0);
         }
 
         /** Delete a file, or do nothing if it doesn't exist. */
+        //% blockId=storageRemove block="storage %source|remove %filename"
         remove(filename: string): void {
             __unlink(this.mapFilename(filename))
         }
 
         /** Return the size of the file, or -1 if it doesn't exists. */
+        //% blockId=storageSize block="storage %source|%filename|size"
         size(filename: string): int32 {
             let f = control.mmap(this.mapFilename(filename), 0, 0)
             if (!f) return -1;
@@ -96,11 +115,13 @@ namespace storage {
         }
 
         /** Read contents of file as a string. */
+        //% blockId=storageRead block="storage %source|read %filename|as string"
         read(filename: string): string {
             return __bufferToString(this.readAsBuffer(filename))
         }
 
         /** Read contents of file as a buffer. */
+        //%
         readAsBuffer(filename: string): Buffer {
             let f = this.getFile(filename)
             let sz = f.lseek(0, SeekWhence.End)
