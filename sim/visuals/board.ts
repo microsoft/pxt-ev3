@@ -44,7 +44,7 @@ namespace pxsim.visuals {
         }
         .sim-text.number {
             font-family: Courier, Lato, Work Sans, PT Serif, Source Serif Pro;
-            font-weight: bold;
+            /*font-weight: bold;*/
         }
         .sim-text.inverted {
             fill:#5A5A5A;
@@ -70,6 +70,15 @@ namespace pxsim.visuals {
             stroke: #000;
             fill: gray !important;
             cursor: pointer;
+        }
+
+        /* Motor slider */
+        .sim-motor-btn {
+            cursor: pointer;
+        }
+        .sim-motor-btn:hover .btn {
+            stroke-width: 2px;
+            stroke: black !important;
         }
     `;
 
@@ -222,9 +231,8 @@ namespace pxsim.visuals {
                 }
                 case NodeType.MediumMotor:
                 case NodeType.LargeMotor: {
-                    // TODO: figure out if the motor is in "input" or "output" mode
                     const state = ev3board().getMotors()[port];
-                    view = new MotorReporterControl(this.element, this.defs, state, port);
+                    view = new MotorSliderControl(this.element, this.defs, state, port);
                     break;
                 }
             }

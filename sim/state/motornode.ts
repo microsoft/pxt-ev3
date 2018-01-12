@@ -17,6 +17,8 @@ namespace pxsim {
         private speedCmdTime: number;
         private _synchedMotor: MotorNode; // non-null if synchronized
 
+        private manualSpeed: number = 0;
+
         constructor(port: number, large: boolean) {
             super(port);
             this.setLarge(large);
@@ -42,7 +44,7 @@ namespace pxsim {
         setSpeedCmd(cmd: DAL, values: number[]) {
             if (this.speedCmd != cmd ||
                 JSON.stringify(this.speedCmdValues) != JSON.stringify(values))
-                this.setChangedState();    
+                this.setChangedState();
             // new command TODO: values
             this.speedCmd = cmd;
             this.speedCmdValues = values;
@@ -96,6 +98,17 @@ namespace pxsim {
             this.started = true;
         }
 
+        manualMotorDown() {
+        }
+
+        manualMotorMove(speed: number) {
+            this.manualSpeed = speed;
+        }
+
+        manualMotorUp() {
+            this.manualSpeed = undefined;
+        }
+
         updateState(elapsed: number) {
             //console.log(`motor: ${elapsed}ms - ${this.speed}% - ${this.angle}> - ${this.tacho}|`)
             const interval = Math.min(20, elapsed);
@@ -109,78 +122,83 @@ namespace pxsim {
         }
 
         private updateStateStep(elapsed: number) {
-            // compute new speed
-            switch (this.speedCmd) {
-                case DAL.opOutputSpeed:
-                case DAL.opOutputPower:
-                    // assume power == speed
-                    // TODO: PID
-                    this.speed = this.speedCmdValues[0];
-                    break;
-                case DAL.opOutputTimeSpeed:
-                case DAL.opOutputTimePower:
-                case DAL.opOutputStepPower:
-                case DAL.opOutputStepSpeed: {
-                    // ramp up, run, ramp down, <brake> using time
-                    const speed = this.speedCmdValues[0];
-                    const step1 = this.speedCmdValues[1];
-                    const step2 = this.speedCmdValues[2];
-                    const step3 = this.speedCmdValues[3];
-                    const brake = this.speedCmdValues[4];
-                    const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed)
-                        ? pxsim.U.now() - this.speedCmdTime
-                        : this.tacho - this.speedCmdTacho;
-                    if (dstep < step1) // rampup
-                        this.speed = speed * dstep / step1;
-                    else if (dstep < step1 + step2) // run
-                        this.speed = speed;
-                    else if (dstep < step1 + step2 + step3)
-                        this.speed = speed * (step1 + step2 + step3 - dstep) / (step1 + step2 + step3);
-                    else {
-                        if (brake) this.speed = 0;
-                        this.clearSpeedCmd();
-                    }
-                    break;
-                }
-                case DAL.opOutputStepSync:
-                case DAL.opOutputTimeSync: {
-                    const otherMotor = this._synchedMotor;
-                    if (otherMotor.port < this.port) // handled in other motor code
+            if (!this.manualSpeed) {
+                // compute new speed
+                switch (this.speedCmd) {
+                    case DAL.opOutputSpeed:
+                    case DAL.opOutputPower:
+                        // assume power == speed
+                        // TODO: PID
+                        this.speed = this.speedCmdValues[0];
                         break;
-
-                    const speed = this.speedCmdValues[0];
-                    const turnRatio = this.speedCmdValues[1];
-                    const stepsOrTime = this.speedCmdValues[2];
-                    const brake = this.speedCmdValues[3];
-                    const dstep = this.speedCmd == DAL.opOutputTimeSync
-                        ? pxsim.U.now() - this.speedCmdTime
-                        : this.tacho - this.speedCmdTacho;
-                    // 0 is special case, run infinite
-                    if (!stepsOrTime || dstep < stepsOrTime)
-                        this.speed = speed;
-                    else {
-                        if (brake) this.speed = 0;
-                        this.clearSpeedCmd();
+                    case DAL.opOutputTimeSpeed:
+                    case DAL.opOutputTimePower:
+                    case DAL.opOutputStepPower:
+                    case DAL.opOutputStepSpeed: {
+                        // ramp up, run, ramp down, <brake> using time
+                        const speed = this.speedCmdValues[0];
+                        const step1 = this.speedCmdValues[1];
+                        const step2 = this.speedCmdValues[2];
+                        const step3 = this.speedCmdValues[3];
+                        const brake = this.speedCmdValues[4];
+                        const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed)
+                            ? pxsim.U.now() - this.speedCmdTime
+                            : this.tacho - this.speedCmdTacho;
+                        if (dstep < step1) // rampup
+                            this.speed = speed * dstep / step1;
+                        else if (dstep < step1 + step2) // run
+                            this.speed = speed;
+                        else if (dstep < step1 + step2 + step3)
+                            this.speed = speed * (step1 + step2 + step3 - dstep) / (step1 + step2 + step3);
+                        else {
+                            if (brake) this.speed = 0;
+                            this.clearSpeedCmd();
+                        }
+                        break;
                     }
+                    case DAL.opOutputStepSync:
+                    case DAL.opOutputTimeSync: {
+                        const otherMotor = this._synchedMotor;
+                        if (otherMotor.port < this.port) // handled in other motor code
+                            break;
 
-                    // turn ratio is a bit weird to interpret
-                    // see https://communities.theiet.org/blogs/698/1706
-                    if (turnRatio < 0) {
-                        otherMotor.speed = speed;
-                        this.speed *= (100 + turnRatio) / 100;
-                    } else {
-                        otherMotor.speed = this.speed * (100 - turnRatio) / 100;
+                        const speed = this.speedCmdValues[0];
+                        const turnRatio = this.speedCmdValues[1];
+                        const stepsOrTime = this.speedCmdValues[2];
+                        const brake = this.speedCmdValues[3];
+                        const dstep = this.speedCmd == DAL.opOutputTimeSync
+                            ? pxsim.U.now() - this.speedCmdTime
+                            : this.tacho - this.speedCmdTacho;
+                        // 0 is special case, run infinite
+                        if (!stepsOrTime || dstep < stepsOrTime)
+                            this.speed = speed;
+                        else {
+                            if (brake) this.speed = 0;
+                            this.clearSpeedCmd();
+                        }
+
+                        // turn ratio is a bit weird to interpret
+                        // see https://communities.theiet.org/blogs/698/1706
+                        if (turnRatio < 0) {
+                            otherMotor.speed = speed;
+                            this.speed *= (100 + turnRatio) / 100;
+                        } else {
+                            otherMotor.speed = this.speed * (100 - turnRatio) / 100;
+                        }
+
+                        // clamp
+                        this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
+                        otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));;
+
+                        // stop other motor if needed
+                        if (!this._synchedMotor)
+                            otherMotor.clearSpeedCmd();
+                        break;
                     }
-
-                    // clamp
-                    this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
-                    otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));;
-
-                    // stop other motor if needed
-                    if (!this._synchedMotor)
-                        otherMotor.clearSpeedCmd();
-                    break;
                 }
+            }
+            else {
+                this.speed = this.manualSpeed;
             }
             this.speed = Math.round(this.speed); // integer only
 
