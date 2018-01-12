@@ -6,8 +6,7 @@ namespace storage {
 
     //% fixedInstances
     export class Storage {
-        constructor() 
-        {}
+        constructor() { }
 
         protected mapFilename(filename: string) {
             return filename;
@@ -32,7 +31,7 @@ namespace storage {
                 if (filename[i] == "/")
                     last = i
             return filename.substr(0, last)
-        }            
+        }
 
         /**
          *  Append string data to a new or existing file. 
@@ -130,6 +129,29 @@ namespace storage {
             f.read(b)
             return b
         }
+
+        /**
+         * Resizing the size of a file to stay under the limit
+         * @param filename name of the file to drop
+         * @param size maximum length
+         */
+        //% blockId=storageLimit block="storage %source|limit %filename|to %size|bytes"
+        limit(filename: string, size: number) {
+            if (!this.exists(filename) || size < 0) return;
+
+            const sz = storage.temporary.size(filename);
+            if (sz > size) {
+                let buf = storage.temporary.readAsBuffer(filename);
+                buf = buf.slice(buf.length / 2);
+                // scan for \n and break after
+                for (let i = 0; i < buf.length; ++i)
+                    if (buf[i] == 0x0a) {
+                        buf = buf.slice(i + 1)
+                        break;
+                    }
+                storage.temporary.overwriteWithBuffer(filename, buf);
+            }
+        }
     }
 
     class TemporaryStorage extends Storage {
@@ -157,6 +179,6 @@ namespace storage {
         protected mapFilename(filename: string) {
             if (filename[0] == '/') return filename;
             return '/' + filename;
-        }        
+        }
     }
 }
