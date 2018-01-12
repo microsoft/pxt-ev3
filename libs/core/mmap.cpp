@@ -7,6 +7,16 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
+/**
+* Mode for lseek()
+*/
+enum class SeekWhence {
+    Set = 0,
+    Current = 1,
+    End = 2,
+};
+
+
 namespace pxt {
 PXT_VTABLE_CTOR(MMap) {
     length = 0;
@@ -109,6 +119,12 @@ int write(MMap *mmap, Buffer data) {
 //%
 int read(MMap *mmap, Buffer data) {
     return ::read(mmap->fd, data->data, data->length);
+}
+
+/** Set pointer on the underlaying file. */
+//%
+int lseek(MMap *mmap, int offset, SeekWhence whence) {
+    return ::lseek(mmap->fd, offset, (int)whence);
 }
 
 }

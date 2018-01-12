@@ -41,6 +41,10 @@ declare interface MMap {
     /** Perform read(2) on the underlaying file */
     //% shim=MMapMethods::read
     read(data: Buffer): int32;
+
+    /** Set pointer on the underlaying file. */
+    //% shim=MMapMethods::lseek
+    lseek(offset: int32, whence: SeekWhence): int32;
 }
 declare namespace control {
 

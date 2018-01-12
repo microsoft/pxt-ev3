@@ -8,6 +8,7 @@ namespace pxsim.MMapMethods {
         read?: (d: Buffer) => number;
         write?: (d: Buffer) => number;
         ioctl?: (id: number, d: Buffer) => number;
+        lseek?: (offset: number, whence: number) => number;
     }
 
     import BM = pxsim.BufferMethods
@@ -23,6 +24,7 @@ namespace pxsim.MMapMethods {
             if (!impl.read) impl.read = () => 0
             if (!impl.write) impl.write = () => 0
             if (!impl.ioctl) impl.ioctl = () => -1
+            if (!impl.lseek) impl.lseek = (offset, whence) => -1
         }
         destroy() {
         }
@@ -67,6 +69,10 @@ namespace pxsim.MMapMethods {
 
     export function read(m: MMap, data: Buffer): number {
         return m.impl.read(data)
+    }
+
+    export function lseek(m: MMap, offset: number, whence: number): number {
+        return m.impl.lseek(offset, whence);
     }
 }
 

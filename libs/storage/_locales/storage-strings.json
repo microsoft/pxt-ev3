@@ -1,0 +1,14 @@
+{
+  "storage.Storage.appendCSV|block": "storage %source|%filename|append CSV %data",
+  "storage.Storage.appendLine|block": "storage %source|%filename|append line %data",
+  "storage.Storage.append|block": "storage %source|%filename|append %data",
+  "storage.Storage.exists|block": "storage %source|%filename|exists",
+  "storage.Storage.limit|block": "storage %source|limit %filename|to %size|bytes",
+  "storage.Storage.overwrite|block": "storage %source|%filename|overwrite with|%data",
+  "storage.Storage.read|block": "storage %source|read %filename|as string",
+  "storage.Storage.remove|block": "storage %source|remove %filename",
+  "storage.Storage.size|block": "storage %source|%filename|size",
+  "storage.temporary|block": "temporary",
+  "storage|block": "storage",
+  "{id:category}Storage": "Storage"
+}
