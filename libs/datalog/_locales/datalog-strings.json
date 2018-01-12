@@ -1,7 +1,6 @@
 {
   "datalog.addRow|block": "datalog add row",
   "datalog.addValue|block": "datalog add %name|=%value",
-  "datalog.setFile|block": "datalog set file %filename",
   "datalog|block": "datalog",
   "{id:category}Datalog": "Datalog"
 }

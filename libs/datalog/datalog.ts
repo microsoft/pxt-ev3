@@ -71,7 +71,7 @@ namespace datalog {
     /**
      * Starts a new data logger for the given file
      */
-    //% blockId=datalogSetFile block="datalog set file %filename"
+    //%
     export function setFile(fn: string) {
         _filename = fn;
         clear();
