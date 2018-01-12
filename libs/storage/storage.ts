@@ -1,5 +1,6 @@
 namespace storage {
     // automatically send console output to temp storage
+    storage.temporary.remove("console.txt");
     console.addListener(function(line) {
         const fn = "console.txt";
         const mxs = 65536;
@@ -11,5 +12,5 @@ namespace storage {
             const buf = storage.temporary.readAsBuffer(fn);
             storage.temporary.overwriteWithBuffer(fn, buf.slice(buf.length / 2));
         }
-    })
+    })    
 }

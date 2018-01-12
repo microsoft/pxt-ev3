@@ -12,4 +12,12 @@ namespace pxsim.storage {
     export function __mkdir(fn: string) {
         // TODO
     }
+
+    export function __unlink(filename: string): void { 
+        // TODO
+    }
+
+    export function __truncate(filename: string): void { 
+        // TODO
+    }
 }
