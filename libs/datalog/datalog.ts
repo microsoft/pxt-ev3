@@ -46,7 +46,8 @@ namespace datalog {
     export function addRow(): void {
         commit();
         init();
-        addValue("time (ms)", control.millis() - _start);
+        const s = (control.millis() - _start) / 1000;
+        addValue("time (s)", s);
     }
 
     /**
