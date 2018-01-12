@@ -1,6 +1,6 @@
 //% weight=100 color=#0fbc11 icon=""
 namespace datalog {
-    let _headers: string[];
+    let _headers: string[] = undefined;
     let _headersLength: number;
     let _values: number[];
     let _start: number;
@@ -17,7 +17,7 @@ namespace datalog {
             _headers = [];
             _headersLength = 0;
             _start = control.millis();
-            storage.temporary.remove(_filename);
+            _storage.remove(_filename);
         }
         _values = [];
     }
@@ -27,7 +27,7 @@ namespace datalog {
         if (_values && _values.length > 0) {
             // write headers for the first row
             if (!_headersLength) {
-                storage.temporary.appendCSVHeaders(_filename, _headers);
+                _storage.appendCSVHeaders(_filename, _headers);
                 _headersLength = _storage.size(_filename);
             }
             // commit row data
