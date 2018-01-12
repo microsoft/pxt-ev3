@@ -6,7 +6,10 @@ namespace storage {
 
     //% fixedInstances
     export class Storage {
-        constructor() { }
+        csvSeparator: string;
+        constructor() { 
+            this.csvSeparator = ",";
+        }
 
         protected mapFilename(filename: string) {
             return filename;
@@ -69,23 +72,23 @@ namespace storage {
         appendCSVHeaders(filename: string, headers: string[]) {
             let s = ""
             for (const d of headers) {
-                if (s) s += "\t"
+                if (s) s += this.csvSeparator;
                 s = s + d;
             }
             s += "\r\n"
             this.append(filename, s)
         }
 
-                /**
-         * Append a row of CSV data
-         * @param filename the file name to append data, eg: "data.csv"
-         * @param data the data to append
-         */
+        /**
+ * Append a row of CSV data
+ * @param filename the file name to append data, eg: "data.csv"
+ * @param data the data to append
+ */
         //% blockId=storageAppendCSV block="storage %source|%filename|append CSV %data"
         appendCSV(filename: string, data: number[]) {
             let s = ""
             for (const d of data) {
-                if (s) s += "\t"
+                if (s) s += this.csvSeparator;
                 s = s + d;
             }
             s += "\r\n"

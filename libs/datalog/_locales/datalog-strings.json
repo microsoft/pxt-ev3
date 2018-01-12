@@ -1,0 +1,6 @@
+{
+  "datalog.addRow|block": "datalog add row",
+  "datalog.addValue|block": "datalog add %name|=%value",
+  "datalog|block": "datalog",
+  "{id:category}Datalog": "Datalog"
+}

@@ -1,0 +1,8 @@
+{
+  "datalog.addRow": "Starts a row of data",
+  "datalog.addValue": "Adds a cell to the row of data",
+  "datalog.addValue|param|name": "name of the cell, eg: \"x\"",
+  "datalog.addValue|param|value": "value of the cell, eg: 0",
+  "datalog.setFile": "Starts a new data logger for the given file",
+  "datalog.setStorage": "* @param storage custom storage solution"
+}
