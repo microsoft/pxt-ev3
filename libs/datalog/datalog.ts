@@ -73,8 +73,6 @@ namespace datalog {
             i = _headers.length - 1;
         }
         _values[i] = value;
-        if (i > 0) // 0 is time
-            console.logValue(name, value)
     }
 
     /**
