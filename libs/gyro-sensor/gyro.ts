@@ -7,7 +7,7 @@ const enum GyroSensorMode {
 namespace sensors {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
-        private calibrating: boolean;        
+        private calibrating: boolean;
         private _drift: number;
         constructor(port: number) {
             super(port)
@@ -25,12 +25,15 @@ namespace sensors {
         }
 
         _update(prev: number, curr: number) {
-            if(this.mode == GyroSensorMode.Rate) {
-                const p = 0.0005;
-                this._drift = (1 - p) * this._drift + p * curr;
+            if (this.mode == GyroSensorMode.Rate) {
+                // correct slow drift and ignore large rates
+                if (Math.abs(curr) < 5) {
+                    const p = 0.0005;
+                    this._drift = (1 - p) * this._drift + p * curr;
+                }
             }
         }
-        
+
         setMode(m: GyroSensorMode) {
             if (m == GyroSensorMode.Rate && this.mode != m)
                 this._drift = 0;
@@ -112,7 +115,7 @@ namespace sensors {
             // clear drift
             this._drift = 0;
             // and we're done
-            this.calibrating = false;            
+            this.calibrating = false;
         }
     }
 
