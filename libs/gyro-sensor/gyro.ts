@@ -9,10 +9,12 @@ namespace sensors {
     export class GyroSensor extends internal.UartSensor {
         private calibrating: boolean;
         private _drift: number;
+        private _drifting: boolean;
         constructor(port: number) {
             super(port)
             this.calibrating = false;
             this._drift = 0;
+            this._drifting = true;
             this.setMode(GyroSensorMode.Rate);
         }
 
@@ -27,7 +29,7 @@ namespace sensors {
         _update(prev: number, curr: number) {
             if (this.mode == GyroSensorMode.Rate) {
                 // correct slow drift and ignore large rates
-                if (Math.abs(curr) < 5) {
+                if (Math.abs(curr) < 4) {
                     const p = 0.0005;
                     this._drift = (1 - p) * this._drift + p * curr;
                 }
@@ -77,15 +79,9 @@ namespace sensors {
                 pauseUntil(() => !this.calibrating, 2000);
 
             this.setMode(GyroSensorMode.Rate);
-            return this._query() + Math.round(this._drift);
-        }
-
-        /**
-         * Gets the computed rate drift
-         */
-        //%
-        drift(): number {
-            return this._drift;
+            let v = this._query();
+            if (this._drifting) v -= this._drift;
+            return v;
         }
 
         /**
@@ -112,10 +108,34 @@ namespace sensors {
             this.setMode(this.mode);
             // wait till sensor is live
             pauseUntil(() => this.isActive());
-            // clear drift
+            // compute drift
             this._drift = 0;
+            if (this.mode == GyroSensorMode.Rate) {
+                for(let i = 0; i < 200; ++i) {
+                    this._drift += this._query();
+                    loops.pause(4);
+                }
+                this._drift /= 200;
+            }
             // and we're done
             this.calibrating = false;
+        }
+
+        /**
+         * Gets the computed rate drift
+         */
+        //%
+        drift(): number {
+            return this._drift;
+        }
+
+        /**
+         * Enables or disable drift correction
+         * @param enabled 
+         */
+        //%
+        setDriftCorrection(enabled: boolean) {
+            this._drifting = enabled;
         }
     }
 

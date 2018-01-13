@@ -2,5 +2,6 @@
   "sensors.GyroSensor.angle": "Get the current angle from the gyroscope.",
   "sensors.GyroSensor.drift": "Gets the computed rate drift",
   "sensors.GyroSensor.rate": "Get the current rotation rate from the gyroscope.",
-  "sensors.GyroSensor.reset": "Forces a calibration of the gyro. Must be called when the sensor is completely still."
+  "sensors.GyroSensor.reset": "Forces a calibration of the gyro. Must be called when the sensor is completely still.",
+  "sensors.GyroSensor.setDriftCorrection": "Enables or disable drift correction"
 }
