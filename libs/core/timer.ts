@@ -38,8 +38,7 @@ namespace control {
         //% blockId=timerPauseUntil block="%timer|pause until (ms) %ms"
         pauseUntil(ms: number) {
             const remaining = this.millis() - ms;
-            if (remaining >= 0)
-                loops.pause(remaining);
+            loops.pause(Math.max(0, remaining));
         }
     }
 
