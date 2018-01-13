@@ -7,10 +7,11 @@ const enum GyroSensorMode {
 namespace sensors {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
-        private calibrating: boolean;
+        private calibrating: boolean;        
         constructor(port: number) {
             super(port)
             this.calibrating = false;
+            this.setMode(GyroSensorMode.Rate);
         }
 
         _deviceType() {
@@ -80,18 +81,11 @@ namespace sensors {
             loops.pause(500);
             // send a reset command
             super.reset();
-            // we need to switch mode twice to perform a calibration
-            if (this.mode == GyroSensorMode.Rate)
-                this.setMode(GyroSensorMode.Angle);
-            else
-                this.setMode(GyroSensorMode.Rate);
-            // switch back and wait
-            if (this.mode == GyroSensorMode.Rate)
-                this.setMode(GyroSensorMode.Angle);
-            else
-                this.setMode(GyroSensorMode.Rate);
-            // give it more time to settle
-            loops.pause(500);
+            // switch back to the desired mode
+            this.setMode(this.mode);
+            // wait till sensor is live
+            pauseUntil(() => this.isActive());
+            // and we're done
             this.calibrating = false;            
         }
     }
