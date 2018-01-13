@@ -64,7 +64,9 @@ namespace sensors.internal {
 
         for (let info_ of sensorInfos) {
             let info = info_
-            unsafePollForChanges(50, () => {
+            const rate = info_.devType == DAL.DEVICE_TYPE_GYRO
+                ? 10 : 50;
+            unsafePollForChanges(rate, () => {
                 if (info.sensor) return info.sensor._query()
                 return 0
             }, (prev, curr) => {

@@ -29,7 +29,7 @@ namespace sensors {
         _update(prev: number, curr: number) {
             if (this.mode == GyroSensorMode.Rate) {
                 // correct slow drift and ignore large rates
-                if (Math.abs(curr) < 4) {
+                if (Math.abs(curr) < 20) {
                     const p = 0.0005;
                     this._drift = (1 - p) * this._drift + p * curr;
                 }
