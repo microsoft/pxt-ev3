@@ -8,9 +8,11 @@ namespace sensors {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
         private calibrating: boolean;        
+        private _drift: number;
         constructor(port: number) {
             super(port)
             this.calibrating = false;
+            this._drift = 0;
             this.setMode(GyroSensorMode.Rate);
         }
 
@@ -18,7 +20,20 @@ namespace sensors {
             return DAL.DEVICE_TYPE_GYRO
         }
 
+        _query(): number {
+            return this.getNumber(NumberFormat.Int16LE, 0);
+        }
+
+        _update(prev: number, curr: number) {
+            if(this.mode == GyroSensorMode.Rate) {
+                const p = 0.0005;
+                this._drift = (1 - p) * this._drift + p * curr;
+            }
+        }
+        
         setMode(m: GyroSensorMode) {
+            if (m == GyroSensorMode.Rate && this.mode != m)
+                this._drift = 0;
             this._setMode(m)
         }
 
@@ -38,8 +53,8 @@ namespace sensors {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
-            this.setMode(GyroSensorMode.Angle)
-            return this.getNumber(NumberFormat.Int16LE, 0)
+            this.setMode(GyroSensorMode.Angle);
+            return this._query();
         }
 
         /**
@@ -58,8 +73,16 @@ namespace sensors {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
-            this.setMode(GyroSensorMode.Rate)
-            return this.getNumber(NumberFormat.Int16LE, 0)
+            this.setMode(GyroSensorMode.Rate);
+            return this._query() + Math.round(this._drift);
+        }
+
+        /**
+         * Gets the computed rate drift
+         */
+        //%
+        drift(): number {
+            return this._drift;
         }
 
         /**
@@ -77,8 +100,9 @@ namespace sensors {
             if (this.calibrating) return; // already in calibration mode
 
             this.calibrating = true;
-            // may be triggered by a button click, give time to settle
-            loops.pause(500);
+            // may be triggered by a button click, 
+            // give time for robot to settle
+            loops.pause(700);
             // send a reset command
             super.reset();
             // switch back to the desired mode
