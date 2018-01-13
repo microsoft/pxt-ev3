@@ -39,7 +39,7 @@ namespace control {
         pauseUntil(ms: number) {
             const remaining = this.millis() - ms;
             if (remaining >= 0)
-                loops.pause(ms);
+                loops.pause(remaining);
         }
     }
 
