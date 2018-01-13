@@ -11,6 +11,7 @@
         "mmap.cpp",
         "control.cpp",
         "console.ts",
+        "timer.ts",
         "serialnumber.cpp",
         "buttons.ts",
         "png.cpp",

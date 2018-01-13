@@ -58,7 +58,7 @@ namespace console {
 
 namespace console.screen {
     const maxLines = 100;
-    const screenLines = 8;
+    const screenLines = 10;
     let lines: string[];
     let scrollPosition = 0;
 
@@ -66,8 +66,8 @@ namespace console.screen {
         if (!lines) {
             lines = [];
             console.addListener(log);
-            brick.buttonUp.onEvent(ButtonEvent.Click, () => scroll(-1))
-            brick.buttonDown.onEvent(ButtonEvent.Click, () => scroll(1))                
+            brick.buttonUp.onEvent(ButtonEvent.Click, () => scroll(-3))
+            brick.buttonDown.onEvent(ButtonEvent.Click, () => scroll(3))                
         }
     }
 
