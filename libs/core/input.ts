@@ -64,9 +64,7 @@ namespace sensors.internal {
 
         for (let info_ of sensorInfos) {
             let info = info_
-            const rate = info_.devType == DAL.DEVICE_TYPE_GYRO
-                ? 10 : 50;
-            unsafePollForChanges(rate, () => {
+            unsafePollForChanges(50, () => {
                 if (info.sensor) return info.sensor._query()
                 return 0
             }, (prev, curr) => {
@@ -314,6 +312,7 @@ namespace sensors.internal {
 
         reset() {
             if (this.isActive()) uartReset(this._port);
+            this.realmode = 0;
         }
     }
 
