@@ -7,7 +7,7 @@ namespace storage {
     //% fixedInstances
     export class Storage {
         csvSeparator: string;
-        constructor() { 
+        constructor() {
             this.csvSeparator = ",";
         }
 
@@ -80,18 +80,13 @@ namespace storage {
         }
 
         /**
- * Append a row of CSV data
- * @param filename the file name to append data, eg: "data.csv"
- * @param data the data to append
- */
+         * Append a row of CSV data
+         * @param filename the file name to append data, eg: "data.csv"
+         * @param data the data to append
+         */
         //% blockId=storageAppendCSV block="storage %source|%filename|append CSV %data"
         appendCSV(filename: string, data: number[]) {
-            let s = ""
-            for (const d of data) {
-                if (s) s += this.csvSeparator;
-                s = s + d;
-            }
-            s += "\r\n"
+            let s = toCSV(data, this.csvSeparator);
             this.append(filename, s)
         }
 
@@ -165,6 +160,16 @@ namespace storage {
                 storage.temporary.overwriteWithBuffer(filename, buf);
             }
         }
+    }
+
+    export function toCSV(data: number[], sep: string) {
+        let s = ""
+        for (const d of data) {
+            if (s) s += sep;
+            s = s + d;
+        }
+        s += "\r\n"
+        return s;
     }
 
     class TemporaryStorage extends Storage {

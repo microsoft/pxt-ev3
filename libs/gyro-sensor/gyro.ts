@@ -8,16 +8,27 @@ namespace sensors {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
         private calibrating: boolean;
+        private _drift: number;
+        private _drifting: boolean;
         constructor(port: number) {
             super(port)
             this.calibrating = false;
+            this._drift = 0;
+            this._drifting = true;
+            this.setMode(GyroSensorMode.Rate);
         }
 
         _deviceType() {
             return DAL.DEVICE_TYPE_GYRO
         }
 
+        _query(): number {
+            return this.getNumber(NumberFormat.Int16LE, 0);
+        }
+
         setMode(m: GyroSensorMode) {
+            if (m == GyroSensorMode.Rate && this.mode != m)
+                this._drift = 0;
             this._setMode(m)
         }
 
@@ -37,8 +48,8 @@ namespace sensors {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
-            this.setMode(GyroSensorMode.Angle)
-            return this.getNumber(NumberFormat.Int16LE, 0)
+            this.setMode(GyroSensorMode.Angle);
+            return this._query();
         }
 
         /**
@@ -57,8 +68,14 @@ namespace sensors {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
-            this.setMode(GyroSensorMode.Rate)
-            return this.getNumber(NumberFormat.Int16LE, 0)
+            this.setMode(GyroSensorMode.Rate);
+            let curr = this._query();
+            if (Math.abs(curr) < 20) {
+                const p = 0.0005;
+                this._drift = (1 - p) * this._drift + p * curr;
+                curr -= this._drift;
+            }
+            return curr;
         }
 
         /**
@@ -76,23 +93,45 @@ namespace sensors {
             if (this.calibrating) return; // already in calibration mode
 
             this.calibrating = true;
-            // may be triggered by a button click, give time to settle
-            loops.pause(500);
+            // may be triggered by a button click, 
+            // give time for robot to settle
+            loops.pause(700);
             // send a reset command
             super.reset();
-            // we need to switch mode twice to perform a calibration
-            if (this.mode == GyroSensorMode.Rate)
-                this.setMode(GyroSensorMode.Angle);
-            else
-                this.setMode(GyroSensorMode.Rate);
-            // switch back and wait
-            if (this.mode == GyroSensorMode.Rate)
-                this.setMode(GyroSensorMode.Angle);
-            else
-                this.setMode(GyroSensorMode.Rate);
-            // give it more time to settle
-            loops.pause(500);
-            this.calibrating = false;            
+            // switch back to the desired mode
+            this.setMode(this.mode);
+            // wait till sensor is live
+            pauseUntil(() => this.isActive());
+            // give it a bit of time to init
+            loops.pause(1000)
+            // compute drift
+            this._drift = 0;
+            if (this.mode == GyroSensorMode.Rate) {
+                for (let i = 0; i < 200; ++i) {
+                    this._drift += this._query();
+                    loops.pause(4);
+                }
+                this._drift /= 200;
+            }
+            // and we're done
+            this.calibrating = false;
+        }
+
+        /**
+         * Gets the computed rate drift
+         */
+        //%
+        drift(): number {
+            return this._drift;
+        }
+
+        /**
+         * Enables or disable drift correction
+         * @param enabled 
+         */
+        //%
+        setDriftCorrection(enabled: boolean) {
+            this._drifting = enabled;
         }
     }
 

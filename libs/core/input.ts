@@ -312,6 +312,7 @@ namespace sensors.internal {
 
         reset() {
             if (this.isActive()) uartReset(this._port);
+            this.realmode = 0;
         }
     }
 
