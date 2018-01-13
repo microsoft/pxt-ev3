@@ -109,6 +109,8 @@ namespace sensors {
             this.setMode(this.mode);
             // wait till sensor is live
             pauseUntil(() => this.isActive());
+            // clear drift
+            this._drift = 0;
             // and we're done
             this.calibrating = false;            
         }
