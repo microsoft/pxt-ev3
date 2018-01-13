@@ -48,6 +48,7 @@
   "console.sendToScreen|block": "send console to screen",
   "console|block": "console",
   "control.Timer.millis|block": "%timer|millis",
+  "control.Timer.pauseUntil|block": "%timer|pause until (ms) %ms",
   "control.Timer.reset|block": "%timer|reset",
   "control.Timer.seconds|block": "%timer|seconds",
   "control.raiseEvent|block": "raise event|from %src|with value %value",

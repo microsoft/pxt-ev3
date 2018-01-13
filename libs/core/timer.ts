@@ -30,6 +30,16 @@ namespace control {
         reset() {
             this.start = control.millis();
         }
+
+        /**
+         * Pauses until the timer reaches the given amount of milliseconds
+         * @param ms how long to pause for, eg: 5, 100, 200, 500, 1000, 2000
+         */
+        //% blockId=timerPauseUntil block="%timer|pause until (ms) %ms"
+        pauseUntil(ms: number) {
+            const remaining = this.millis() - ms;
+            loops.pause(ms);
+        }
     }
 
     //% whenUsed fixedInstance block="timer 1"

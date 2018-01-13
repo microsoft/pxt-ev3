@@ -53,6 +53,8 @@
   "console.sendToScreen": "Sends the log messages to the brick screen and uses the brick up and down buttons to scroll.",
   "control": "Program controls and events.",
   "control.Timer.millis": "Gets the elapsed time in millis",
+  "control.Timer.pauseUntil": "Pauses until the timer reaches the given amount of milliseconds",
+  "control.Timer.pauseUntil|param|ms": "how long to pause for, eg: 5, 100, 200, 500, 1000, 2000",
   "control.Timer.reset": "Resets the timer",
   "control.Timer.seconds": "Gets the elapsed time in seconds",
   "control.allocateNotifyEvent": "Allocates the next user notification event",
