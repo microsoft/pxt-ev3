@@ -5,7 +5,7 @@ namespace datalog {
     let _values: number[];
     let _buffer: string = "";
     let _start: number;
-    let _filename = "data.csv";
+    let _filename = "datalog.csv";
     let _storage: storage.Storage = storage.temporary;
     let _enabled = true;
 
@@ -77,11 +77,12 @@ namespace datalog {
 
     /**
      * Starts a new data logger for the given file
+     * @param filename the filename, eg: "datalog.csv"
      */
     //%
-    export function setFile(fn: string) {
+    export function setFile(filename: string) {
         flush();
-        _filename = fn;
+        _filename = filename;
         clear();
     }
 

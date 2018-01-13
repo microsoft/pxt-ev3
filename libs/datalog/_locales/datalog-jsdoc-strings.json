@@ -6,5 +6,6 @@
   "datalog.flush": "Commits any buffered row to disk",
   "datalog.setEnabled": "Turns on or off datalogging",
   "datalog.setFile": "Starts a new data logger for the given file",
+  "datalog.setFile|param|filename": "the filename, eg: \"datalog.csv\"",
   "datalog.setStorage": "* @param storage custom storage solution"
 }
