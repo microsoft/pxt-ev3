@@ -102,6 +102,8 @@ namespace sensors {
             this.setMode(this.mode);
             // wait till sensor is live
             pauseUntil(() => this.isActive());
+            // give it a bit of time to init
+            loops.pause(1000)
             // compute drift
             this._drift = 0;
             if (this.mode == GyroSensorMode.Rate) {

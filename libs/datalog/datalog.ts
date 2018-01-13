@@ -7,6 +7,7 @@ namespace datalog {
     let _start: number;
     let _filename = "data.csv";
     let _storage: storage.Storage = storage.temporary;
+    let _enabled = true;
 
     function clear() {
         _headers = undefined;        
@@ -49,6 +50,8 @@ namespace datalog {
     //% weight=100
     //% blockId=datalogAddRow block="datalog add row"
     export function addRow(): void {
+        if (!_enabled) return;
+        
         commit();
         init();
         const s = (control.millis() - _start) / 1000;
@@ -105,5 +108,16 @@ namespace datalog {
             _buffer = "";
             _storage.append(_filename, b);
         }
+    }
+
+    /**
+     * Turns on or off datalogging
+     * @param enabled 
+     */
+    //% blockId=datalogEnabled block="datalog %enabled"
+    //% enabled.fieldEditor=fieldonoff
+    export function setEnabled(enabled: boolean) {
+        flush();
+        _enabled = enabled;
     }
 }
