@@ -3,6 +3,7 @@ namespace datalog {
     let _headers: string[] = undefined;
     let _headersLength: number;
     let _values: number[];
+    let _buffer: string = "";
     let _start: number;
     let _filename = "data.csv";
     let _storage: storage.Storage = storage.temporary;
@@ -10,6 +11,7 @@ namespace datalog {
     function clear() {
         _headers = undefined;        
         _values = undefined;
+        _buffer = "";
     }
 
     function init() {
@@ -31,7 +33,10 @@ namespace datalog {
                 _headersLength = _storage.size(_filename);
             }
             // commit row data
-            _storage.appendCSV(_filename, _values);
+            _buffer += storage.toCSV(_values, _storage.csvSeparator);
+            // buffered writes
+            if (_buffer.length > 1024)
+                flush();
         }
 
         // clear values
@@ -74,6 +79,7 @@ namespace datalog {
      */
     //%
     export function setFile(fn: string) {
+        flush();
         _filename = fn;
         clear();
     }
@@ -84,7 +90,20 @@ namespace datalog {
      */
     //%
     export function setStorage(storage: storage.Storage) {
+        flush();
         _storage = storage;
         clear();
+    }
+
+    /**
+     * Commits any buffered row to disk
+     */
+    //%
+    export function flush() {
+        if (_buffer) {
+            const b = _buffer;
+            _buffer = "";
+            _storage.append(_filename, b);
+        }
     }
 }
