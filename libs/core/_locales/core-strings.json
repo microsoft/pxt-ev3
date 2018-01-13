@@ -106,6 +106,5 @@
   "{id:group}More": "More",
   "{id:group}Move": "Move",
   "{id:group}Screen": "Screen",
-  "{id:group}Sensors": "Sensors",
-  "{id:group}Timer": "Timer"
+  "{id:group}Sensors": "Sensors"
 }
