@@ -1,4 +1,7 @@
 namespace control {
+    /**
+     * A timer
+     */
     //% fixedInstances
     export class Timer {
         start: number;
@@ -8,7 +11,7 @@ namespace control {
         }
 
         /**
-         * Gets the elapsed time in millis
+         * Gets the elapsed time in millis since the last reset
          */
         //% blockId=timerMillis block="%timer|millis"
         millis(): number {
@@ -16,7 +19,7 @@ namespace control {
         }
         
         /**
-         * Gets the elapsed time in seconds
+         * Gets the elapsed time in seconds since the last reset
          */
         //% blockId=timerSeconds block="%timer|seconds"
         seconds(): number {
