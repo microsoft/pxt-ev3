@@ -175,7 +175,7 @@ namespace sounds {
     export const mechanicalMotorStop = music.fromWAV(hex``);
     //% fixedInstance jres block="mechanical ratchet"
     export const mechanicalRatchet = music.fromWAV(hex``);
-    //% fixedInstance jres block='"mechanical sonar"'
+    //% fixedInstance jres block="mechanical sonar"
     export const mechanicalSonar = music.fromWAV(hex``);
     //% fixedInstance jres block="mechanical tick tack"
     export const mechanicalTickTack = music.fromWAV(hex``);
