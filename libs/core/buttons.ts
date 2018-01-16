@@ -4,34 +4,24 @@
  */
 const enum BrickLight {
     //% block=off enumval=0
-    //% blockIdentity=brick.lightPattern
     Off = 0,
     //% block=green enumval=1
-    //% blockIdentity=brick.lightPattern
     Green = 1,
     //% block=red enumval=2
-    //% blockIdentity=brick.lightPattern
     Red = 2,
     //% block=orange enumval=3
-    //% blockIdentity=brick.lightPattern
     Orange = 3,
     //% block="green flash" enumval=4
-    //% blockIdentity=brick.lightPattern
     GreenFlash = 4,
     //% block="red flash" enumval=5
-    //% blockIdentity=brick.lightPattern
     RedFlash = 5,
     //% block="orange flash" enumval=6
-    //% blockIdentity=brick.lightPattern
     OrangeFlash = 6,
     //% block="green pulse" enumval=7
-    //% blockIdentity=brick.lightPattern
     GreenPulse = 7,
     //% block="red pulse" enumval=8
-    //% blockIdentity=brick.lightPattern
     RedPulse = 8,
     //% block="orange pulse" enumval=9
-    //% blockIdentity=brick.lightPattern
     OrangePulse = 9,
 }
 
