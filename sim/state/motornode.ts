@@ -70,6 +70,10 @@ namespace pxsim {
             this.rotationsPerMilliSecond = (large ? 170 : 250) / 60000;
         }
 
+        isLarge(): boolean {
+            return this.id == NodeType.LargeMotor;
+        }
+
         setPolarity(polarity: number) {
             // Either 1 or 255 (reverse)
             /*
