@@ -300,15 +300,56 @@ function HNG() {
 }
 
 function PPP() {
-    // TODO    
+    NS = false;
+    IS(2);
+    UP();
+    loops.pause(100)
+    motors.largeA.setSpeed(-30, 70, MoveUnit.Degrees);
+    loops.pause(800);
+    music.playSoundEffect(sounds.mechanicalHorn1);
+    loops.pause(1000);
+    for(let i = 0; i < 3; ++i) {
+        motors.largeA.setSpeed(-30, 20, MoveUnit.Degrees);
+        motors.largeA.setSpeed(30, 20, MoveUnit.Degrees);
+    }
+    motors.largeA.setSpeed(30, 70, MoveUnit.Degrees);
+    F_C = 1;
+    CS(0);
 }
 
 function HPY() {
-    // TODO    
+    IS(8)
+    MHT(0);
+    motors.largeAD.setSpeed(10, 0.8, MoveUnit.Seconds);
+    for(let i = 0; i < 3; ++i) {
+        music.playSoundEffect(sounds.animalsDogBark1);
+        motors.largeAD.setSpeed(-100, 0.2, MoveUnit.Seconds);
+        loops.pause(300)
+        motors.largeAD.setSpeed(10, 0.3, MoveUnit.Seconds)
+    }
+    loops.pause(500);
+    music.stopAllSounds();
+    DN();
+    RST();
+}
+
+function STL() {
+    UP();
+    motors.largeAD.setSpeed(-20, 60, MoveUnit.Degrees);
+    music.playSoundEffect(sounds.animalsDogWhine);
+    motors.largeAD.setSpeed(20, 60, MoveUnit.Degrees);
 }
 
 function WKU() {
-
+    let stateC = false;
+    IS(5);
+    music.playSoundEffect(sounds.animalsDogWhine)
+    MHT(0)
+    DN()
+    STL()
+    loops.pause(1000);
+    UP()
+    CS(0;)
 }
 
 DN();
