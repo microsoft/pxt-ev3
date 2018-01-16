@@ -16,6 +16,7 @@
         "libs/infrared-sensor",
         "libs/gyro-sensor",
         "libs/chassis",
+        "libs/mood",
         "libs/ev3",
         "libs/storage",
         "libs/datalog",

@@ -1,0 +1,6 @@
+{
+  "brick.Mood.show|block": "show mood %mood=mood_image_picker",
+  "brick|block": "brick",
+  "{id:category}Brick": "Brick",
+  "{id:group}Screen": "Screen"
+}

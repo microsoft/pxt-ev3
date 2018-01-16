@@ -10,6 +10,7 @@
         "base": "file:../base",
         "core": "file:../core",
         "music": "file:../music",
+        "mood": "file:../mood",
         "color-sensor": "file:../color-sensor",
         "touch-sensor": "file:../touch-sensor",
         "ultrasonic-sensor": "file:../ultrasonic-sensor",

@@ -1,0 +1,14 @@
+{
+    "name": "mood",
+    "description": "The EV3 mood library",
+    "files": [
+        "README.md",
+        "mood.ts"
+    ],
+    "testFiles": [
+    ],
+    "public": true,
+    "dependencies": {
+        "core": "file:../core"
+    }
+}
