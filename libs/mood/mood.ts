@@ -40,76 +40,78 @@ namespace brick {
     export function __moodImagePicker(mood: Mood): Mood {
         return mood;
     }    
+}
 
+namespace moods {
     /**
      * A sleeping mood
      */
     //% fixedInstance jres=images.eyesSleeping
-    export const sleeping = new Mood(images.eyesSleeping, sounds.expressionsSnoring, BrickLight.OrangePulse);
+    export const sleeping = new brick.Mood(images.eyesSleeping, sounds.expressionsSnoring, BrickLight.OrangePulse);
 
     /**
      * A awake mood
      */
     //% fixedInstance jres=images.eyesAwake
-    export const awake = new Mood(images.eyesAwake, sounds.informationActivate, BrickLight.Orange);
+    export const awake = new brick.Mood(images.eyesAwake, sounds.informationActivate, BrickLight.Orange);
 
     /**
      * A tired mood
      */
     //% fixedInstance jres=images.eyesTiredMiddle
-    export const tired = new Mood(images.eyesTiredMiddle, sounds.expressionsSneezing, BrickLight.OrangeFlash);
+    export const tired = new brick.Mood(images.eyesTiredMiddle, sounds.expressionsSneezing, BrickLight.OrangeFlash);
     
     /**
      * An angry mood
      */
     //% fixedInstance jres=images.eyesAngry
-    export const angry = new Mood(images.eyesAngry, sounds.animalsDogGrowl, BrickLight.RedPulse);
+    export const angry = new brick.Mood(images.eyesAngry, sounds.animalsDogGrowl, BrickLight.RedPulse);
 
     /**
      * A sad mood
      */
     //% fixedInstance jres=images.eyesTear
-    export const sad = new Mood(images.eyesTear, sounds.animalsDogWhine, BrickLight.Red);
+    export const sad = new brick.Mood(images.eyesTear, sounds.animalsDogWhine, BrickLight.Red);
 
     /**
      * A dizzy mood
      */
     //% fixedInstance jres=images.eyesDizzy
-    export const dizzy = new Mood(images.eyesDizzy, sounds.expressionsUhOh, BrickLight.OrangeFlash);
+    export const dizzy = new brick.Mood(images.eyesDizzy, sounds.expressionsUhOh, BrickLight.OrangeFlash);
 
     /**
      * A knocked out mood
      */
     //% fixedInstance jres=images.eyesKnockedOut
-    export const knockedOut = new Mood(images.eyesKnockedOut, sounds.informationError, BrickLight.RedFlash);
+    export const knockedOut = new brick.Mood(images.eyesKnockedOut, sounds.informationError, BrickLight.RedFlash);
     
     /**
      * Looking around left
      */
     //% fixedInstance jres=images.eyesMiddleLeft
-    export const middleLeft = new Mood(images.eyesMiddleLeft, sounds.informationAnalyze, BrickLight.Off);    
+    export const middleLeft = new brick.Mood(images.eyesMiddleLeft, sounds.informationAnalyze, BrickLight.Off);    
 
     /**
      * Looking around right
      */
     //% fixedInstance jres=images.eyesMiddleRight
-    export const middleRight = new Mood(images.eyesMiddleRight, sounds.informationAnalyze, BrickLight.Off);    
+    export const middleRight = new brick.Mood(images.eyesMiddleRight, sounds.informationAnalyze, BrickLight.Off);    
 
     /**
      * In love mood
      */
     //% fixedInstance jres=images.eyesLove
-    export const love = new Mood(images.eyesLove, sounds.expressionsMagicWand, BrickLight.GreenPulse);    
+    export const love = new brick.Mood(images.eyesLove, sounds.expressionsMagicWand, BrickLight.GreenPulse);    
 
     /**
      * In laughing mood
      */
     //% fixedInstance jres=images.eyesWinking
-    export const winking = new Mood(images.eyesWinking, sounds.expressionsLaughing1, BrickLight.GreenFlash);    
+    export const winking = new brick.Mood(images.eyesWinking, sounds.expressionsLaughing1, BrickLight.GreenFlash);    
 
     /**
      * In a neutral mood
      */
     //% fixedInstance jres=images.eyesNeutral
-    export const neutral = new Mood(images.eyesNeutral, undefined, BrickLight.Green);
+    export const neutral = new brick.Mood(images.eyesNeutral, undefined, BrickLight.Green);
 }

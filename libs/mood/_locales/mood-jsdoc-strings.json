@@ -1,16 +1,16 @@
 {
   "brick.Mood": "A mood",
   "brick.Mood.show": "Shows the mood on the EV3",
-  "brick.angry": "An angry mood",
-  "brick.awake": "A awake mood",
-  "brick.dizzy": "A dizzy mood",
-  "brick.knockedOut": "A knocked out mood",
-  "brick.love": "In love mood",
-  "brick.middleLeft": "Looking around left",
-  "brick.middleRight": "Looking around right",
-  "brick.neutral": "In a neutral mood",
-  "brick.sad": "A sad mood",
-  "brick.sleeping": "A sleeping mood",
-  "brick.tired": "A tired mood",
-  "brick.winking": "In laughing mood"
+  "moods.angry": "An angry mood",
+  "moods.awake": "A awake mood",
+  "moods.dizzy": "A dizzy mood",
+  "moods.knockedOut": "A knocked out mood",
+  "moods.love": "In love mood",
+  "moods.middleLeft": "Looking around left",
+  "moods.middleRight": "Looking around right",
+  "moods.neutral": "In a neutral mood",
+  "moods.sad": "A sad mood",
+  "moods.sleeping": "A sleeping mood",
+  "moods.tired": "A tired mood",
+  "moods.winking": "In laughing mood"
 }
