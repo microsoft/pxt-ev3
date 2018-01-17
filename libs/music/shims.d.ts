@@ -3,12 +3,12 @@ declare namespace music {
 
     /**
      * Set the output volume of the sound synthesizer.
-     * @param volume the volume 0...256, eg: 128
+     * @param volume the volume 0...100, eg: 50
      */
     //% weight=96
     //% blockId=synth_set_volume block="set volume %volume"
     //% parts="speaker" blockGap=8
-    //% volume.min=0 volume.max=256
+    //% volume.min=0 volume.max=100
     //% help=music/set-volume
     //% weight=1 shim=music::setVolume
     function setVolume(volume: int32): void;

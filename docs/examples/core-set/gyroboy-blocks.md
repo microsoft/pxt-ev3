@@ -139,12 +139,12 @@ function computeTimestep() {
     control.timer3.reset()
 }
 sensors.color1.onColorDetected(ColorSensorColor.Green, function () {
-    music.playTone(2000, 100)
+    moods.winking.show()
     controlDrive = 150
     controlSteering = 0
 })
 sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
-    music.playTone(2000, 100)
+    moods.middleRight.show()
     controlSteering = 70
 })
 // apply power to motors
@@ -153,11 +153,11 @@ function controlMotors() {
     motors.largeD.setSpeed(power - controlSteering * 0.1)
 }
 sensors.color1.onColorDetected(ColorSensorColor.Yellow, function () {
-    music.playTone(2000, 100)
+    moods.middleLeft.show()
     controlSteering = -70
 })
 sensors.color1.onColorDetected(ColorSensorColor.White, function () {
-    music.playTone(2000, 100)
+    moods.sad.show();
     controlDrive = -75
 })
 timestep = 0.014

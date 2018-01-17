@@ -1,6 +1,7 @@
 {
   "brick.Mood": "A mood",
   "brick.Mood.show": "Shows the mood on the EV3",
+  "brick.showMood": "Shows a mood",
   "moods.angry": "An angry mood",
   "moods.awake": "A awake mood",
   "moods.dizzy": "A dizzy mood",

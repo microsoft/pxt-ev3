@@ -13,7 +13,7 @@
 
 namespace music {
 
-uint8_t currVolume = 2;
+uint8_t currVolume = 50;
 uint8_t *lmsSoundMMap;
 
 int writeDev(void *data, int size) {
@@ -25,16 +25,16 @@ int writeDev(void *data, int size) {
 
 /**
 * Set the output volume of the sound synthesizer.
-* @param volume the volume 0...256, eg: 128
+* @param volume the volume 0...100, eg: 50
 */
 //% weight=96
 //% blockId=synth_set_volume block="set volume %volume"
 //% parts="speaker" blockGap=8
-//% volume.min=0 volume.max=256
+//% volume.min=0 volume.max=100
 //% help=music/set-volume
 //% weight=1
 void setVolume(int volume) {
-    currVolume = max(0, min(100, volume * 100 / 256));
+    currVolume = max(0, min(100, volume));
 }
 
 #define SOUND_CMD_BREAK 0

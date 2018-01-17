@@ -1,5 +1,5 @@
 {
-  "brick.Mood.show|block": "show mood %mood=mood_image_picker",
+  "brick.showMood|block": "show mood %mood=mood_image_picker",
   "brick|block": "brick",
   "moods|block": "moods",
   "{id:category}Brick": "Brick",

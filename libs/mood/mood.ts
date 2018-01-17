@@ -1,12 +1,23 @@
 namespace brick {
     /**
+     * Shows a mood
+     */
+    //% weight=90
+    //% blockId=moodShow block="show mood %mood=mood_image_picker"
+    //% weight=101 group="Screen" blockGap=8
+    export function showMood(mood: Mood) {
+        if(mood)
+            mood.show();
+    }
+
+    /**
      * A mood
      */
     //% fixedInstances
     export class Mood {
-        image: Image;
-        sound: Sound;
-        light: BrickLight;
+        private image: Image;
+        private sound: Sound;
+        private light: BrickLight;
 
         constructor(image: Image, sound: Sound, light: BrickLight) {
             this.image = image;
@@ -17,13 +28,11 @@ namespace brick {
         /**
          * Shows the mood on the EV3
          */
-        //% weight=90
-        //% blockId=moodShow block="show mood %mood=mood_image_picker"
-        //% weight=101 group="Screen" blockGap=8
         show() {
             brick.setLight(this.light);
             brick.showImage(this.image);
             music.playSoundEffectUntilDone(this.sound);
+            loops.pause(20);
         }
     }
 
@@ -38,7 +47,7 @@ namespace brick {
     //% group="Screen" weight=0 blockHidden=1
     export function __moodImagePicker(mood: Mood): Mood {
         return mood;
-    }    
+    }
 }
 
 namespace moods {
@@ -59,7 +68,7 @@ namespace moods {
      */
     //% fixedInstance jres=images.eyesTiredMiddle
     export const tired = new brick.Mood(images.eyesTiredMiddle, sounds.expressionsSneezing, BrickLight.OrangeFlash);
-    
+
     /**
      * An angry mood
      */
@@ -83,30 +92,30 @@ namespace moods {
      */
     //% fixedInstance jres=images.eyesKnockedOut
     export const knockedOut = new brick.Mood(images.eyesKnockedOut, sounds.informationError, BrickLight.RedFlash);
-    
+
     /**
      * Looking around left
      */
     //% fixedInstance jres=images.eyesMiddleLeft
-    export const middleLeft = new brick.Mood(images.eyesMiddleLeft, sounds.informationAnalyze, BrickLight.Off);    
+    export const middleLeft = new brick.Mood(images.eyesMiddleLeft, sounds.informationAnalyze, BrickLight.Off);
 
     /**
      * Looking around right
      */
     //% fixedInstance jres=images.eyesMiddleRight
-    export const middleRight = new brick.Mood(images.eyesMiddleRight, sounds.informationAnalyze, BrickLight.Off);    
+    export const middleRight = new brick.Mood(images.eyesMiddleRight, sounds.informationAnalyze, BrickLight.Off);
 
     /**
      * In love mood
      */
     //% fixedInstance jres=images.eyesLove
-    export const love = new brick.Mood(images.eyesLove, sounds.expressionsMagicWand, BrickLight.GreenPulse);    
+    export const love = new brick.Mood(images.eyesLove, sounds.expressionsMagicWand, BrickLight.GreenPulse);
 
     /**
      * In laughing mood
      */
     //% fixedInstance jres=images.eyesWinking
-    export const winking = new brick.Mood(images.eyesWinking, sounds.expressionsLaughing1, BrickLight.GreenFlash);    
+    export const winking = new brick.Mood(images.eyesWinking, sounds.expressionsLaughing1, BrickLight.GreenFlash);
 
     /**
      * In a neutral mood
