@@ -23,8 +23,7 @@ namespace brick {
         show() {
             brick.setLight(this.light);
             brick.showImage(this.image);
-            if (this.sound)
-                music.playSoundEffect(this.sound);
+            music.playSoundEffectUntilDone(this.sound);
         }
     }
 

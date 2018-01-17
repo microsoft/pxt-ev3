@@ -10,11 +10,11 @@
         "base": "file:../base",
         "core": "file:../core",
         "music": "file:../music",
-        "mood": "file:../mood",
         "color-sensor": "file:../color-sensor",
         "touch-sensor": "file:../touch-sensor",
         "ultrasonic-sensor": "file:../ultrasonic-sensor",
-        "gyro-sensor": "file:../gyro-sensor"
+        "gyro-sensor": "file:../gyro-sensor",
+        "mood": "file:../mood"
     },
     "public": true
 }
