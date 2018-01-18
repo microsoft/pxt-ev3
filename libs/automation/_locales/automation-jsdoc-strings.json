@@ -1,5 +1,5 @@
 {
-  "automation": "Automation, process control and robotic controllers\r\n\nProcess control, automation, robotics AI",
+  "automation": "Automation, process control and robotic controllers\n\nProcess control, automation, robotics AI",
   "automation.Behavior": "A behavior",
   "automation.Behavior.update": "Called on each behavior iteration even for suppresed behaviors",
   "automation.Behavior.update|param|elapsed": "milli seconds since last call",
