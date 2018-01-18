@@ -21,7 +21,7 @@
         "libs/storage",
         "libs/datalog",
         "libs/tests",
-        "libs/behaviors"
+        "libs/automation"
     ],
     "simulator": {
         "autoRun": true,
