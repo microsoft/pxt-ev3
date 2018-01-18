@@ -9,6 +9,7 @@
     },
     "galleries": {
         "Maker Activities": "maker",
-        "Coding Activites": "coding"
+        "Coding Activites": "coding",
+        "Lessons": "lessons"
     }
 }

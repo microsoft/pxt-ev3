@@ -2,6 +2,8 @@
 
 Learning activities for LEGO Mindstorms with MakeCode.
 
+## Motors and motion
+
 ```codecard
 [{
     "name": "Line Detection",

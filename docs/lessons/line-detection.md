@@ -139,7 +139,7 @@ while (true) {
 }
 ```
 
-### Step 5
+### Step 6
 
 Place a ``||motors:stop all motors||`` block under the ``||sensors:pause for color||`` block.  
 
@@ -153,7 +153,7 @@ while (true) {
 }
 ```
 
-### Step 6
+### Step 7
 
 Place a ``||loops:while||`` loop block under the second ``||loops:while||`` loop block.
 
@@ -170,7 +170,7 @@ while (true) {
 }
 ```
 
-### Step 7
+### Step 8
 
 Place a ``||sensors:pause for color||`` block inside the new ``||loops:while||`` loop block. Change the color to red.
 
@@ -191,7 +191,7 @@ while (true) {
 }
 ```
 
-### Step 8
+### Step 9
 
 Click `|Download|` and follow the instructions to get your code onto your EV3 Brick. Press the **center** button on the EV3 Brick to run the program.
  
