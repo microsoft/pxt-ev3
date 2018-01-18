@@ -40,7 +40,7 @@ Change the rotations to `9`.
 
 The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 brick. The motors are set for the reverse direction because they are mounted upside down in this model.
 
-```javascript-ignore
+```typescript-ignore
 motors.largeBC.tankFor(-60, 60, 9, MoveUnit.Rotations)
 ```
 
@@ -50,7 +50,7 @@ Place a ``||motors:stop all motors||`` block under ``||motors:tank large B+C||``
 
 The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 brick then stop.
 
-```javascript-ignore
+```typescript-ignore
 motors.largeBC.tankFor(-60, 60, 9, MoveUnit.Rotations)
 motors.stopAllMotors()
 ```
@@ -62,7 +62,7 @@ Change the `"Hello World"` text to `"30 cm"`.
 
 The ``||motors:tank large B+C||`` will run for `9` rotations when the **center** button is pressed on the EV3 brick then stop and display "30 cm" on the EV3 Brick’s screen.
 
-```javascript-ignore
+```typescript-ignore
 motors.largeBC.tankFor(-60, 60, 9, MoveUnit.Rotations)
 motors.stopAllMotors()
 brick.showString("30 cm", 1)
