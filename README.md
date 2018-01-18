@@ -5,7 +5,7 @@
 This repo contains the editor target hosted at https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
 
 LEGO Auth: https://src.education.lego.com/groups/ev3-makecode (use Google Authenticator)
-LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square 
+LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square
 
 ## Local Dev setup
 
