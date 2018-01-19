@@ -247,7 +247,7 @@ namespace sensors {
         //% blockId=colorCalibrateLight block="calibrate|%sensor|for %mode|light"
         //% group="Threshold" weight=91 blockGap=8
         //% sensor.fieldEditor="ports"
-        calibrateLight(mode: LightIntensityMode, deviation: number = 90) {
+        calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
 
             this.light(mode); // trigger a read
@@ -270,14 +270,15 @@ namespace sensors {
                     vold = v;
                     vcount = 1;
                 }
+
                 // wait a bit
                 loops.pause(50);                
             }
 
             // apply tolerance
             const minDist = 10;
-            min = Math.min(min + deviation / 2, max - deviation / 2 - minDist / 2);
-            max = Math.max(min + minDist + 2, max - deviation / 2);
+            min = Math.max(minDist / 2, Math.min(min + deviation / 2, max - deviation / 2 - minDist / 2));
+            max = Math.min(100 - minDist / 2, Math.max(min + minDist, max - deviation / 2));
         
             // apply thresholds
             this.thresholdDetector.setLowThreshold(min);
