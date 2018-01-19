@@ -193,6 +193,14 @@ namespace motors {
         stop() {
             this.init();
             stop(this._port, this._brake);
+            this.settle();
+        }
+
+        private settle() {
+            // if we've recently completed a motor command with brake
+            // allow 500ms for robot to settle
+            if(this._brake)
+                loops.pause(500);
         }
 
         /**
@@ -253,6 +261,8 @@ namespace motors {
             this._move(useSteps, stepsOrTime, speed);
             // wait till motor is done with this work
             this.pauseUntilReady();
+            // allow robot to settle
+            this.settle();
         }
 
         /**
