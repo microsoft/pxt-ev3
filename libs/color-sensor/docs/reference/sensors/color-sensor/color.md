@@ -3,9 +3,9 @@
 ```blocks
 loops.forever(function () {
     if (sensors.color1.color() == ColorSensorColor.Green) {
-        brick.setStatusLight(LightsPattern.Green)
+        brick.setLight(BrickLight.Green)
     } else {
-        brick.setStatusLight(LightsPattern.Orange)
+        brick.setLight(BrickLight.Orange)
     }
 })
 ```

@@ -3,13 +3,13 @@
 This program will play different sounds when the wheel is rotated. The sound is determined by which color is placed in front of the color Sensor.
 
 ```blocks
-input.color3.onColorDetected(ColorSensorColor.Blue, function () {
+sensors.color3.onColorDetected(ColorSensorColor.Blue, function () {
     music.playTone(Note.G4, music.beat(BeatFraction.Half))
 })
-input.color3.onColorDetected(ColorSensorColor.Red, function () {
+sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
     music.playTone(Note.C5, music.beat(BeatFraction.Half))
 })
-input.color3.onColorDetected(ColorSensorColor.Green, function () {
+sensors.color3.onColorDetected(ColorSensorColor.Green, function () {
     music.playTone(Note.D5, music.beat(BeatFraction.Half))
 })
 ```

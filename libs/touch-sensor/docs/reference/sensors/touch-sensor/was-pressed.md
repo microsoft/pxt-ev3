@@ -2,10 +2,10 @@
 
 ```blocks
 loops.forever(function () {
-    if (sensors.touchSensor1.wasPressed()) {
-        brick.setStatusLight(LightsPattern.Green)
+    if (sensors.touch1.wasPressed()) {
+        brick.setLight(BrickLight.Green)
     } else {
-        brick.setStatusLight(LightsPattern.Orange)
+        brick.setLight(BrickLight.Orange)
     }
 })
 ```

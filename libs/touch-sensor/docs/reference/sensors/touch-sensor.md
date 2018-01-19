@@ -1,11 +1,11 @@
 # Touch Sensor
 
 ```cards
-sensors.touchSensor1.onEvent(TouchSensorEvent.Pressed, function () {
+sensors.touch1.onEvent(TouchSensorEvent.Pressed, function () {
     brick.showImage(images.expressionsBigSmile)
 })
-sensors.touchSensor1.isPressed();
-sensors.touchSensor1.wasPressed();
+sensors.touch1.isPressed();
+sensors.touch1.wasPressed();
 ```
 
 ## See Also

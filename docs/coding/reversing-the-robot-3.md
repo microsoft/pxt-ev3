@@ -3,14 +3,14 @@
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
     brick.showImage(images.eyesSleeping)
-    sensors.touchSensor1.pauseUntil(TouchSensorEvent.Pressed)
+    sensors.touch1.pauseUntil(TouchSensorEvent.Pressed)
     brick.showImage(images.eyesNeutral)
     motors.largeBC.setSpeed(50)
-    sensors.touchSensor2.pauseUntil(TouchSensorEvent.Pressed)
+    sensors.touch2.pauseUntil(TouchSensorEvent.Pressed)
     brick.showImage(images.eyesTiredMiddle)
     motors.largeBC.setSpeed(0)
     loops.pause(1000)
-    brick.setLight(LightsPattern.OrangeFlash)
+    brick.setLight(BrickLight.OrangeFlash)
     brick.showImage(images.eyesDizzy)
     motors.largeBC.setSpeed(-50)
     loops.pause(2000)

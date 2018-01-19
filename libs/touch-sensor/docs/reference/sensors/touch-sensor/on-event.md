@@ -1,7 +1,7 @@
 # On Event
 
 ```sig
-sensors.touchSensor1.onEvent(TouchSensorEvent.Released, function () { })
+sensors.touch1.onEvent(TouchSensorEvent.Released, function () { })
 ```
 
 # Parameters
@@ -10,7 +10,7 @@ sensors.touchSensor1.onEvent(TouchSensorEvent.Released, function () { })
 
 
 ```blocks
-sensors.touchSensor1.onEvent(TouchSensorEvent.Released, function () {
+sensors.touch1.onEvent(TouchSensorEvent.Released, function () {
     brick.showImage(images.expressionsSick)
 })
 ```
