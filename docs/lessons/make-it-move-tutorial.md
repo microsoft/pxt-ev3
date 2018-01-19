@@ -1,6 +1,6 @@
 # Make It Move Without Wheels 
 
-## Objective @fullscreen
+## Objective @unplugged
 
 Design, build and program a robot that can move itself:
 
@@ -13,7 +13,7 @@ Your robot will:
 ![LECG Mindstorms brick with parts](/static/lessons/make-it-move/locomotion-no-wheels.jpg)
 
 
-## Construct @fullscreen
+## Construct @unplugged
 
 Build a Walker Bot!
 
@@ -67,6 +67,6 @@ motors.stopAllMotors()
 brick.showString("30 cm", 1)
 ```
 
-## Program 4 @fullscreen
+## Download @fullscreen
 
 Click `|Download|` and follow the instructions to get your code onto your EV3 Brick. Press the **center** button on the EV3 Brick to run the program.
