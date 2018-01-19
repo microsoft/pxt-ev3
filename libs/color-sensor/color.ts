@@ -39,9 +39,9 @@ const enum ColorSensorColor {
 
 enum LightCondition {
     //% block="dark"
-    Dark = sensors.internal.ThresholdState.Low,
+    Dark = sensors.ThresholdState.Low,
     //$ block="bright"
-    Bright = sensors.internal.ThresholdState.High
+    Bright = sensors.ThresholdState.High
 }
 
 namespace sensors {
@@ -52,12 +52,14 @@ namespace sensors {
      */
     //% fixedInstances
     export class ColorSensor extends internal.UartSensor {
-        thresholdDetector: sensors.internal.ThresholdDetector;
+        thresholdDetector: sensors.ThresholdDetector;
+        calibrating: boolean;
 
         constructor(port: number) {
             super(port)
             this._setMode(ColorSensorMode.None);
-            this.thresholdDetector = new sensors.internal.ThresholdDetector(this.id());
+            this.thresholdDetector = new sensors.ThresholdDetector(this.id());
+            this.calibrating = false;
         }
 
         _colorEventValue(value: number) {
@@ -95,6 +97,7 @@ namespace sensors {
         }
 
         _update(prev: number, curr: number) {
+            if (this.calibrating) return; // simply ignore data updates while calibrating
             if (this.mode == ColorSensorMode.Color)
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
@@ -230,18 +233,65 @@ namespace sensors {
         //% blockId=colorSetThreshold block="set %sensor|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=90
         //% value.min=0 value.max=100
+        //% sensor.fieldEditor="ports"
         setThreshold(condition: LightCondition, value: number) {
             if (condition == LightCondition.Dark)
                 this.thresholdDetector.setLowThreshold(value)
             else
                 this.thresholdDetector.setHighThreshold(value);
         }
+
+        /**
+         * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
+         */
+        //% blockId=colorCalibrateLight block="calibrate|%sensor|for %mode|light"
+        //% group="Threshold" weight=91 blockGap=8
+        //% sensor.fieldEditor="ports"
+        calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
+            this.calibrating = true; // prevent events
+
+            this.light(mode); // trigger a read
+            pauseUntil(() => this.isActive()); // ensure sensor is live
+            
+
+            let vold = 0;
+            let vcount = 0;
+            let min = 200;
+            let max = -200;     
+            let k = 0;       
+            while(k++ < 1000 && vcount < 50) {
+                let v = this.light(mode);
+                min = Math.min(min, v);
+                max = Math.max(max, v);
+                // detect if nothing has changed and stop calibration
+                if (Math.abs(v - vold) <= 2)
+                    vcount ++;
+                else {
+                    vold = v;
+                    vcount = 1;
+                }
+
+                // wait a bit
+                loops.pause(50);                
+            }
+
+            // apply tolerance
+            const minDist = 10;
+            min = Math.max(minDist / 2, Math.min(min + deviation / 2, max - deviation / 2 - minDist / 2));
+            max = Math.min(100 - minDist / 2, Math.max(min + minDist, max - deviation / 2));
+        
+            // apply thresholds
+            this.thresholdDetector.setLowThreshold(min);
+            this.thresholdDetector.setHighThreshold(max);
+
+            this.calibrating = false;
+        }
     }
 
-    //% whenUsed block="color 3" weight=90 fixedInstance jres=icons.port3
+    //% whenUsed block="color 3" weight=95 fixedInstance jres=icons.port3
     export const color3: ColorSensor = new ColorSensor(3)
     
-    //% whenUsed block="color 1" weight=95 fixedInstance jres=icons.port1
+    //% whenUsed block="color 1" weight=90 fixedInstance jres=icons.port1
     export const color1: ColorSensor = new ColorSensor(1)
 
     //% whenUsed block="color 2" weight=90 fixedInstance jres=icons.port2

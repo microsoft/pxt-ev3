@@ -138,12 +138,12 @@ namespace sensors {
     //% fixedInstances
     export class InfraredSensor extends internal.UartSensor {
         private channel: IrRemoteChannel;
-        private proximityThreshold: sensors.internal.ThresholdDetector;
+        private proximityThreshold: sensors.ThresholdDetector;
 
         constructor(port: number) {
             super(port)
             this.channel = IrRemoteChannel.Ch0
-            this.proximityThreshold = new sensors.internal.ThresholdDetector(this._id, 0, 100, 10, 90);
+            this.proximityThreshold = new sensors.ThresholdDetector(this._id, 0, 100, 10, 90);
             irButton(0) // make sure buttons array is initalized
 
             // and set the mode, as otherwise button events won't work
