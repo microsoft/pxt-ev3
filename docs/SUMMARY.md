@@ -34,8 +34,6 @@
     * [Roaming 1](/coding/roaming-1)
     * [Roaming 2](/coding/roaming-2)
 
-## Lessons #lessons
-
 * [Lessons](/lessons)
     * [Make it move](/lessons/make-it-move)
     * [Line detection](/lessons/line-detection)
