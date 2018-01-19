@@ -2,21 +2,21 @@ enum UltrasonicSensorEvent {
     //% block="object detected"
     ObjectDetected = 10,
     //% block="object near"
-    ObjectNear = sensors.internal.ThresholdState.Low,
+    ObjectNear = sensors.ThresholdState.Low,
     //% block="object far"
-    ObjectFar = sensors.internal.ThresholdState.High
+    ObjectFar = sensors.ThresholdState.High
 }
 
 namespace sensors {
 
     //% fixedInstances
     export class UltraSonicSensor extends internal.UartSensor {
-        private promixityThreshold: sensors.internal.ThresholdDetector;
+        private promixityThreshold: sensors.ThresholdDetector;
         private movementThreshold: number;
 
         constructor(port: number) {
             super(port)
-            this.promixityThreshold = new sensors.internal.ThresholdDetector(this.id(), 0, 255, 10, 100); // range is 0..255cm
+            this.promixityThreshold = new sensors.ThresholdDetector(this.id(), 0, 255, 10, 100); // range is 0..255cm
             this.movementThreshold = 1;
         }
 

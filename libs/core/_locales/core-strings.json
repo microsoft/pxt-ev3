@@ -101,6 +101,7 @@
   "{id:category}Motors": "Motors",
   "{id:category}Output": "Output",
   "{id:category}Screen": "Screen",
+  "{id:category}Sensors": "Sensors",
   "{id:category}Serial": "Serial",
   "{id:group}Buttons": "Buttons",
   "{id:group}Counters": "Counters",

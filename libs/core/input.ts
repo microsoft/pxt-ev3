@@ -196,83 +196,6 @@ namespace sensors.internal {
         }
     }
 
-    export enum ThresholdState {
-        Normal = 1,
-        High = 2,
-        Low = 3,
-    }
-
-    export class ThresholdDetector {
-        public id: number;
-        private min: number;
-        private max: number;
-        private lowThreshold: number;
-        private highThreshold: number;
-        private level: number;
-        public state: ThresholdState;
-
-        constructor(id: number, min = 0, max = 100, lowThreshold = 20, highThreshold = 80) {
-            this.id = id;
-            this.min = min;
-            this.max = max;
-            this.lowThreshold = lowThreshold;
-            this.highThreshold = highThreshold;
-            this.level = Math.ceil((max - min) / 2);
-            this.state = ThresholdState.Normal;
-        }
-
-        public setLevel(level: number) {
-            if (this == null) return
-            this.level = this.clampValue(level);
-
-            if (this.level >= this.highThreshold) {
-                this.setState(ThresholdState.High);
-            }
-            else if (this.level <= this.lowThreshold) {
-                this.setState(ThresholdState.Low);
-            }
-            else {
-                this.setState(ThresholdState.Normal);
-            }
-        }
-
-        public setLowThreshold(value: number) {
-            this.lowThreshold = this.clampValue(value);
-            this.highThreshold = Math.max(this.lowThreshold + 1, this.highThreshold);
-        }
-
-        public setHighThreshold(value: number) {
-            this.highThreshold = this.clampValue(value);
-            this.lowThreshold = Math.min(this.highThreshold - 1, this.lowThreshold);
-        }
-
-        private clampValue(value: number) {
-            if (value < this.min) {
-                return this.min;
-            }
-            else if (value > this.max) {
-                return this.max;
-            }
-            return value;
-        }
-
-        private setState(state: ThresholdState) {
-            if (this.state == state) return;
-
-            this.state = state;
-            switch (state) {
-                case ThresholdState.High:
-                    control.raiseEvent(this.id, ThresholdState.High);
-                    break;
-                case ThresholdState.Low:
-                    control.raiseEvent(this.id, ThresholdState.Low);
-                    break;
-                case ThresholdState.Normal:
-                    break;
-            }
-        }
-    }
-
     export class UartSensor extends Sensor {
         protected mode: number // the mode user asked for
         protected realmode: number // the mode the hardware is in
@@ -498,4 +421,84 @@ namespace sensors.internal {
         TST_UART_READ = 0xc0487409,
         TST_UART_WRITE = 0xc048740a,
     }
+}
+
+namespace sensors {
+    export enum ThresholdState {
+        Normal = 1,
+        High = 2,
+        Low = 3,
+    }
+
+    export class ThresholdDetector {
+        public id: number;
+        private min: number;
+        private max: number;
+        private lowThreshold: number;
+        private highThreshold: number;
+        private level: number;
+        public state: ThresholdState;
+
+        constructor(id: number, min = 0, max = 100, lowThreshold = 20, highThreshold = 80) {
+            this.id = id;
+            this.min = min;
+            this.max = max;
+            this.lowThreshold = lowThreshold;
+            this.highThreshold = highThreshold;
+            this.level = Math.ceil((max - min) / 2);
+            this.state = ThresholdState.Normal;
+        }
+
+        public setLevel(level: number) {
+            if (this == null) return
+            this.level = this.clampValue(level);
+
+            if (this.level >= this.highThreshold) {
+                this.setState(ThresholdState.High);
+            }
+            else if (this.level <= this.lowThreshold) {
+                this.setState(ThresholdState.Low);
+            }
+            else {
+                const interval = (this.highThreshold - this.lowThreshold) / 6;
+                if ((this.state == ThresholdState.High && this.level < this.highThreshold - interval) ||
+                    (this.state == ThresholdState.Low && this.level > this.lowThreshold + interval))
+                    this.setState(ThresholdState.Normal);
+            }
+        }
+
+        public setLowThreshold(value: number) {
+            this.lowThreshold = this.clampValue(value);
+            this.highThreshold = Math.max(this.lowThreshold + 1, this.highThreshold);
+        }
+
+        public setHighThreshold(value: number) {
+            this.highThreshold = this.clampValue(value);
+            this.lowThreshold = Math.min(this.highThreshold - 1, this.lowThreshold);
+        }
+
+        private clampValue(value: number) {
+            if (value < this.min) {
+                return this.min;
+            }
+            else if (value > this.max) {
+                return this.max;
+            }
+            return value;
+        }
+
+        private setState(state: ThresholdState) {
+            if (this.state == state) return;
+
+            this.state = state;
+            switch (state) {
+                case ThresholdState.High:
+                    control.raiseEvent(this.id, ThresholdState.High);
+                    break;
+                case ThresholdState.Low:
+                    control.raiseEvent(this.id, ThresholdState.Low);
+                    break;
+            }
+        }
+    }    
 }

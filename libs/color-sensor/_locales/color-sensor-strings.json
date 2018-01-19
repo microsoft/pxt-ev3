@@ -13,6 +13,7 @@
   "LightCondition.Dark|block": "dark",
   "LightIntensityMode.Ambient|block": "ambient light",
   "LightIntensityMode.Reflected|block": "reflected light",
+  "sensors.ColorSensor.calibrateLight|block": "calibrate|%sensor|for %mode|light",
   "sensors.ColorSensor.color|block": "%sensor| color",
   "sensors.ColorSensor.light|block": "%sensor|%mode",
   "sensors.ColorSensor.onColorDetected|block": "on %sensor|detected color %color",
