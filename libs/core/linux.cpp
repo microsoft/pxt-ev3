@@ -271,7 +271,7 @@ void setupThread(Action a, TValue arg = 0, void (*runner)(Thread *) = NULL, TVal
     }
 }
 
-void runInBackground(Action a) {
+void runInParallel(Action a) {
     setupThread(a);
 }
 

@@ -291,7 +291,7 @@ namespace music {
     export function playSoundEffect(sound: Sound) {
         if (!sound || numSoundsPlaying >= soundsLimit) return;
         numSoundsPlaying++;
-        control.runInBackground(() => {
+        control.runInParallel(() => {
             sound.play();
             numSoundsPlaying--;
         });

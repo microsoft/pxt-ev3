@@ -11,7 +11,7 @@ namespace sensors.internal {
 
         // This is implementation for the simulator.
 
-        control.runInBackground(() => {
+        control.runInParallel(() => {
             let prev = query()
             changeHandler(prev, prev)
             while (true) {

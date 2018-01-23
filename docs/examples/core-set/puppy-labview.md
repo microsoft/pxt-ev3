@@ -81,7 +81,7 @@ function IS(t: number) {
 
 function UP() {
     if (motors.largeA.angle() > -50) {
-        control.runInBackground(function () {
+        control.runInParallel(function () {
             motors.largeD.clearCounts()
             motors.largeD.setSpeed(-35);
             pauseUntil(() => motors.largeD.angle() < -25);
