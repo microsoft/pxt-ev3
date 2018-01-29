@@ -272,7 +272,8 @@ void setupThread(Action a, TValue arg = 0, void (*runner)(Thread *) = NULL, TVal
 }
 
 void releaseFiber() {
-    // called from main in pxt.cpp
+    stopUser();
+    pthread_exit(NULL);
 }
 
 void runInParallel(Action a) {
