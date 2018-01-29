@@ -161,8 +161,7 @@ namespace motors {
          * Sets the automatic brake on or off when the motor is off
          * @param brake a value indicating if the motor should break when off
          */
-        //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake"
-        //% brake.fieldEditor=toggleonoff
+        //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
         //% weight=60 blockGap=8
         //% group="Move"
         setBrake(brake: boolean) {
@@ -173,8 +172,7 @@ namespace motors {
         /** 
          * Reverses the motor polarity
         */
-        //% blockId=motorSetReversed block="set %motor|reversed %reversed"
-        //% reversed.fieldEditor=toggleonoff
+        //% blockId=motorSetReversed block="set %motor|reversed %reversed=toggleOnOff"
         //% weight=59 blockGap=8
         //% group="Move"
         setReversed(reversed: boolean) {
@@ -337,8 +335,7 @@ namespace motors {
          * Indicates if the motor speed should be regulated. Default is true.
          * @param value true for regulated motor
          */
-        //% blockId=outputMotorSetRegulated block="set %motor|regulated %value"
-        //% value.fieldEditor=toggleonoff
+        //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
         //% weight=58
         //% group="Move"
         setRegulated(value: boolean) {
