@@ -56,7 +56,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                         <div class="content">
                             <div class="description">
                                 <span class="ui yellow circular label">1</span>
-                                <strong>${lf("Connect svg to computer with USB cable")}</strong>
+                                <strong>${lf("Connect EV3 to computer with USB cable")}</strong>
                                 <br/>
                                 ${lf("Use the miniUSB port on top of EV3 brick")}
                             </div>
