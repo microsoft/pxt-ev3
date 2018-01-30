@@ -1,16 +1,7 @@
 {
-    "name": "datalog",
-    "description": "Tiny data logging framework",
-    "files": [
-        "README.md",
-        "datalog.ts"
-    ],
-    "testFiles": [
-        "test.ts"
-    ],
-    "public": true,
+    "additionalFilePath": "../../node_modules/pxt-common-packages/libs/datalog",
     "dependencies": {
-            "core": "file:../core",
-            "storage": "file:../storage"
+        "core": "file:../core",
+        "storage": "file:../storage"
     }
 }

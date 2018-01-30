@@ -1,11 +1,15 @@
 {
+  "datalog": "A data logging framework",
+  "datalog.DatalogStorage": "A storage for datalog data",
+  "datalog.DatalogStorage.appendHeaders": "Appends the headers in datalog",
+  "datalog.DatalogStorage.appendRow": "Appends a row of data",
+  "datalog.DatalogStorage.flush": "Flushes any buffered data",
+  "datalog.DatalogStorage.init": "Initializes the storage",
   "datalog.addRow": "Starts a row of data",
   "datalog.addValue": "Adds a cell to the row of data",
   "datalog.addValue|param|name": "name of the cell, eg: \"x\"",
   "datalog.addValue|param|value": "value of the cell, eg: 0",
   "datalog.flush": "Commits any buffered row to disk",
   "datalog.setEnabled": "Turns on or off datalogging",
-  "datalog.setFile": "Starts a new data logger for the given file",
-  "datalog.setFile|param|filename": "the filename, eg: \"datalog.csv\"",
   "datalog.setStorage": "* @param storage custom storage solution"
 }
