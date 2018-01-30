@@ -1,10 +1,7 @@
-enum ChassisProperty {
-    //% block="wheel radius (cm)"
-    WheelRadius,
-    //% block="base length (cm)"
-    BaseLength
-}
-
+/**
+ * A differential drive robot
+ */
+//% weight=50 color=#cf00cf
 namespace chassis {
     /**
      * A differential drive robot
@@ -29,13 +26,17 @@ namespace chassis {
          * using a unicycle model.
          * @param speed speed of the center point between motors, eg: 10
          * @param rotationSpeed rotation of the robot around the center point, eg: 30
-         * @param value the amount of movement, eg: 2
-         * @param unit 
-         */
+         * @param distance
+         **/
         //% blockId=motorDrive block="drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s"
         //% inlineInputMode=inline
         //% weight=95 blockGap=8
-        drive(speed: number, rotationSpeed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
+        drive(speed: number, rotationSpeed: number, distance: number = 0) {
+            if (!speed) {
+                this.motors.stop();
+                return;
+            } 
+
             // speed is expressed in %
             const R = this.wheelRadius; // cm
             const L = this.baseLength; // cm
@@ -52,26 +53,30 @@ namespace chassis {
             const sr = vr / maxw * 100; // % 
             const sl = vl / maxw * 100; // %
 
-            this.motors.tank(sr, sl, value, unit)
+            // cm / (cm/s) = s
+            const seconds = distance / speed;
+
+            this.motors.tank(sr, sl, seconds, MoveUnit.Seconds)
         }
 
         /**
-         * Sets a property of the robot
-         * @param property the property to set
-         * @param value  the value to set
+         * Sets the wheel radius in centimeters
+         * @param cm 
          */
-        //% blockId=chassisSetProperty block="set %chassis|%property|to %value"
-        //% blockGap=8
-        //% weight=10
-        setProperty(property: ChassisProperty, value: number) {
-            switch (property) {
-                case ChassisProperty.WheelRadius:
-                    this.wheelRadius = Math.max(0.1, value); break;
-                case ChassisProperty.BaseLength:
-                    this.baseLength = Math.max(0.1, value); break;
-            }
+        //% blockId=chassisSetWheelRadius block="set %chassis|wheel radius to %cm|(cm)"
+        setWheelRadius(cm: number) {
+            this.wheelRadius = cm;
         }
 
+        /**
+         * Sets the base length in centimeters
+         * @param cm 
+         */
+        //% blockId=chassisSetBaseLength block="set %chassis|base length to %cm|(cm)"
+        setBaseLength(cm: number) {
+            this.baseLength = cm;
+        }
+        
         /**
          * Sets the motors used by the chassis, default is B+C
          * @param motors 
@@ -80,6 +85,10 @@ namespace chassis {
         //% weight=10
         setMotors(motors: motors.SynchedMotorPair) {
             this.motors = motors;
+        }
+
+        toString(): string {
+            return `chassis base ${this.baseLength}, wheel ${this.wheelRadius}`;
         }
     }
 
