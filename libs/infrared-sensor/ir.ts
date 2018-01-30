@@ -258,7 +258,7 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=irSetThreshold block="set %sensor|%condition|to %value"
-        //% group="Threshold" blockGap=8
+        //% group="Threshold" blockGap=8 weight=49
         //% value.min=0 value.max=100
         setThreshold(condition: InfraredSensorEvent, value: number) {
             if (condition == InfraredSensorEvent.ObjectNear)
@@ -266,6 +266,17 @@ namespace sensors {
             else
                 this.proximityThreshold.setHighThreshold(value);
         }
+
+        /**
+         * Gets the threshold value
+         * @param condition the proximity condition
+         */
+        //% blockId=irGetThreshold block="%sensor|%condition"
+        //% group="Threshold" blockGap=8 weight=49
+        //% sensor.fieldEditor="ports"
+        threshold(condition: InfraredSensorEvent): number {
+            return this.proximityThreshold.threshold(<ThresholdState><number>LightCondition.Dark);
+        }        
     }
 
     //% fixedInstance whenUsed block="infrared 1" jres=icons.port1

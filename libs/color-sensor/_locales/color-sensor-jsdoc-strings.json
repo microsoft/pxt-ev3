@@ -15,5 +15,7 @@
   "sensors.ColorSensor.pauseForLight": "Waits for the given color to be detected",
   "sensors.ColorSensor.setThreshold": "Sets a threshold value",
   "sensors.ColorSensor.setThreshold|param|condition": "the dark or bright light condition",
-  "sensors.ColorSensor.setThreshold|param|value": "the value threshold"
+  "sensors.ColorSensor.setThreshold|param|value": "the value threshold",
+  "sensors.ColorSensor.threshold": "Gets the threshold value",
+  "sensors.ColorSensor.threshold|param|condition": "the light condition"
 }

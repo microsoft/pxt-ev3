@@ -93,20 +93,36 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=ultrasonicSetThreshold block="set %sensor|%condition|to %value"
-        //% group="Threshold" blockGap=8
+        //% group="Threshold" blockGap=8 weight=80
         //% value.min=0 value.max=255
-        setThreshold(condition: UltrasonicSensorEvent, value: number) {            
-            switch(condition) {
+        setThreshold(condition: UltrasonicSensorEvent, value: number) {
+            switch (condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;
                 case UltrasonicSensorEvent.ObjectFar: this.promixityThreshold.setHighThreshold(value); break;
                 case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold = value; break;
             }
         }
+
+        /**
+         * Gets the threshold value
+         * @param condition the proximity condition
+         */
+        //% blockId=ultrasonicGetThreshold block="%sensor|%condition"
+        //% group="Threshold" blockGap=8 weight=79
+        //% sensor.fieldEditor="ports"
+        threshold(condition: UltrasonicSensorEvent): number {
+            switch (condition) {
+                case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.threshold(ThresholdState.Low); break;
+                case UltrasonicSensorEvent.ObjectFar: this.promixityThreshold.threshold(ThresholdState.Low); break;
+                case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold; break;
+            }
+            return 0;
+        }
     }
-  
+
     //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4
     export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
-    
+
     //% fixedInstance whenUsed block="ultrasonic 1" jres=icons.port1
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
 

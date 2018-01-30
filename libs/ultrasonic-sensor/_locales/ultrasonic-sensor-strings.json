@@ -6,6 +6,7 @@
   "sensors.UltraSonicSensor.onEvent|block": "on %sensor|%event",
   "sensors.UltraSonicSensor.pauseUntil|block": "pause until %sensor| %event",
   "sensors.UltraSonicSensor.setThreshold|block": "set %sensor|%condition|to %value",
+  "sensors.UltraSonicSensor.threshold|block": "%sensor|%condition",
   "sensors.ultrasonic1|block": "ultrasonic 1",
   "sensors.ultrasonic2|block": "ultrasonic 2",
   "sensors.ultrasonic3|block": "ultrasonic 3",

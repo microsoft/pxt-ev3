@@ -21,6 +21,7 @@
   "sensors.ColorSensor.pauseForColor|block": "pause %sensor|for color %color",
   "sensors.ColorSensor.pauseForLight|block": "pause %sensor|for %mode|%condition",
   "sensors.ColorSensor.setThreshold|block": "set %sensor|%condition|to %value",
+  "sensors.ColorSensor.threshold|block": "%sensor|%condition",
   "sensors.color1|block": "color 1",
   "sensors.color2|block": "color 2",
   "sensors.color3|block": "color 3",

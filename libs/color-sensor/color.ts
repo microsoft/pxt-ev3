@@ -242,6 +242,17 @@ namespace sensors {
         }
 
         /**
+         * Gets the threshold value
+         * @param condition the light condition
+         */
+        //% blockId=colorGetThreshold block="%sensor|%condition"
+        //% group="Threshold" blockGap=8 weight=89
+        //% sensor.fieldEditor="ports"
+        threshold(condition: LightCondition): number {
+            return this.thresholdDetector.threshold(<ThresholdState><number>LightCondition.Dark);
+        }
+
+        /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
         //% blockId=colorCalibrateLight block="calibrate|%sensor|for %mode|light"

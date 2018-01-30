@@ -5,5 +5,7 @@
   "sensors.UltraSonicSensor.pauseUntil": "Waits for the event to occur",
   "sensors.UltraSonicSensor.setThreshold": "Sets a threshold value",
   "sensors.UltraSonicSensor.setThreshold|param|condition": "the dark or bright light condition",
-  "sensors.UltraSonicSensor.setThreshold|param|value": "the value threshold"
+  "sensors.UltraSonicSensor.setThreshold|param|value": "the value threshold",
+  "sensors.UltraSonicSensor.threshold": "Gets the threshold value",
+  "sensors.UltraSonicSensor.threshold|param|condition": "the proximity condition"
 }

@@ -432,11 +432,11 @@ namespace sensors {
 
     export class ThresholdDetector {
         public id: number;
-        private min: number;
-        private max: number;
-        private lowThreshold: number;
-        private highThreshold: number;
-        private level: number;
+        public min: number;
+        public max: number;
+        public lowThreshold: number;
+        public highThreshold: number;
+        public level: number;
         public state: ThresholdState;
 
         constructor(id: number, min = 0, max = 100, lowThreshold = 20, highThreshold = 80) {
@@ -464,6 +464,14 @@ namespace sensors {
                 if ((this.state == ThresholdState.High && this.level < this.highThreshold - interval) ||
                     (this.state == ThresholdState.Low && this.level > this.lowThreshold + interval))
                     this.setState(ThresholdState.Normal);
+            }
+        }
+
+        public threshold(t: ThresholdState): number {
+            switch(t) {
+                case ThresholdState.High: return this.highThreshold;
+                case ThresholdState.Low: return this.lowThreshold;
+                default: return (this.max - this.min) / 2;
             }
         }
 
