@@ -1,4 +1,5 @@
 {
+  "datalog": "A data logging framework",
   "datalog.DatalogStorage": "A storage for datalog data",
   "datalog.DatalogStorage.appendHeaders": "Appends the headers in datalog",
   "datalog.DatalogStorage.appendRow": "Appends a row of data",

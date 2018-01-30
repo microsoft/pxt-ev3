@@ -1,10 +1,14 @@
-namespace datalog {
-    class EV3datalogStorage implements datalog.DatalogStorage {
+namespace datalog.ev3 {
+    /**
+     * A datalog storage for the EV3
+     */
+    export class EV3DatalogStorage extends DatalogStorage { // implements DatalogStorage {
         private _filename: string;
         private _buffer: string;
         private _storage: storage.Storage;
 
         constructor(storage: storage.Storage, filename: string) {
+            super();
             this._filename = filename;
             this._storage = storage;
         }
@@ -43,7 +47,6 @@ namespace datalog {
             }    
         }
     }
-
-    // hook up
-    datalog.setStorage(new EV3datalogStorage(storage.temporary, "datalog.csv"));
+    // automatic hook up
+    datalog.setStorage(new datalog.ev3.EV3DatalogStorage(storage.temporary, "datalog.csv"));
 }
