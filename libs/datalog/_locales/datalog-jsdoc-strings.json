@@ -11,5 +11,7 @@
   "datalog.addValue|param|value": "value of the cell, eg: 0",
   "datalog.flush": "Commits any buffered row to disk",
   "datalog.setEnabled": "Turns on or off datalogging",
+  "datalog.setSampleInterval": "Sets the minimum number of milli seconds between rows",
+  "datalog.setSampleInterval|param|millis": "milliseconds between each sample, eg: 50",
   "datalog.setStorage": "* @param storage custom storage solution"
 }
