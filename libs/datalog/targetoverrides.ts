@@ -7,6 +7,11 @@ namespace datalog.ev3 {
         private _buffer: string;
         private _storage: storage.Storage;
 
+        /**
+         * Creates a new storage for the datalog
+         * @param storage 
+         * @param filename 
+         */
         constructor(storage: storage.Storage, filename: string) {
             super();
             this._filename = filename;
