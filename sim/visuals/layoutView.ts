@@ -77,6 +77,11 @@ namespace pxsim.visuals {
             return this.brick;
         }
 
+        public selectBrick() {
+            this.brick.setSelected(true);
+            this.position();
+        }
+
         public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
             if (this.inputs[port] != view || this.inputControls[port] != control) {
                 if (this.inputs[port]) {
@@ -226,7 +231,7 @@ namespace pxsim.visuals {
 
             // render the full brick layout, even when there are not connection
             // otherwise, it creates flickering of the simulator.
-            if (this.getSelected()) {
+            if (this.brick.getSelected()) {
                 // render the entire board
                 this.brick.resize(contentWidth, contentHeight);
                 this.brick.translate(0, 0);

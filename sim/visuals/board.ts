@@ -329,6 +329,11 @@ namespace pxsim.visuals {
             this.screenCanvas = document.createElement("canvas");
             this.screenCanvas.id = "board-screen-canvas";
             this.screenCanvas.style.position = "absolute";
+            this.screenCanvas.addEventListener(pxsim.pointerEvents.up, ev => {
+                this.layoutView.selectBrick();
+            })
+            this.screenCanvas.style.cursor = "pointer";
+            /*
             this.screenCanvas.style.cursor = "crosshair";
             this.screenCanvas.onmousemove = (e: MouseEvent) => {
                 const x = e.clientX;
@@ -340,6 +345,7 @@ namespace pxsim.visuals {
             this.screenCanvas.onmouseleave = () => {
                 this.updateXY(SCREEN_WIDTH, SCREEN_HEIGHT);
             }
+            */
 
             this.screenCanvas.width = SCREEN_WIDTH;
             this.screenCanvas.height = SCREEN_HEIGHT;

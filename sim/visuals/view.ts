@@ -206,8 +206,10 @@ namespace pxsim.visuals {
         }
 
         public setSelected(selected: boolean) {
-            this.selected = selected;
-            this.setChangedState();
+            if (this.selected != selected) {
+                this.selected = selected;
+                this.setChangedState();
+            }
         }
 
         protected setChangedState() {
