@@ -174,10 +174,10 @@ namespace pxsim.visuals {
             this.buttons.forEach((btn, index) => {
                 let button = stateButtons[index];
 
-                btn.addEventListener(pointerEvents.down, ev => {
+                pointerEvents.down.forEach(evid => btn.addEventListener(evid, ev => {
                     button.setPressed(true);
                     svg.fill(this.buttons[index], this.theme.buttonDown);
-                })
+                }));
                 btn.addEventListener(pointerEvents.leave, ev => {
                     button.setPressed(false);
                     svg.fill(this.buttons[index], this.theme.buttonUps[index]);
