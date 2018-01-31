@@ -37,6 +37,8 @@ namespace pxsim.visuals {
         private outputWires: WireView[] = [];
 
         private brick: BrickView;
+        private brickCloseIcon: View = undefined;
+
         private offsets: number[];
         private contentGroup: SVGGElement;
         private scrollGroup: SVGGElement;
@@ -67,14 +69,30 @@ namespace pxsim.visuals {
             this.position();
         }
 
-        public setBrick(brick: BrickView) {
+        public setBrick(brick: BrickView, brickCloseIcon: View) {
             this.brick = brick;
             this.brick.inject(this.scrollGroup);
-            this.position();
+
+            this.brickCloseIcon = brickCloseIcon;
+            this.addView(this.brickCloseIcon);
+            this.brickCloseIcon.setVisible(this.brick.getSelected());
+            this.position();            
         }
 
         public getBrick() {
             return this.brick;
+        }
+
+        public unselectBrick() {
+            this.brick.setSelected(false);
+            this.brickCloseIcon.setVisible(false);
+            this.position();
+        }
+
+        public selectBrick() {
+            this.brick.setSelected(true);
+            this.brickCloseIcon.setVisible(true);
+            this.position();
         }
 
         public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
@@ -224,17 +242,23 @@ namespace pxsim.visuals {
 
             const noConnections = this.outputs.concat(this.inputs).filter(m => m.getId() != NodeType.Port).length == 0;
 
-            if (noConnections) {
-                // No connections render the entire board
-                this.brick.resize(contentWidth, contentHeight);
-                this.brick.translate(0, 0);
+            // render the full brick layout, even when there are not connection
+            // otherwise, it creates flickering of the simulator.
+            if (this.brick.getSelected()) {
+                // render output button
+                const closeIconWidth = this.brickCloseIcon.getWidth();
+                const closeIconHeight = this.brickCloseIcon.getHeight();
+                this.brickCloseIcon.translate(contentWidth / 2 - closeIconWidth / 2, 0);
+
+                // render the entire board
+                this.brick.resize(contentWidth, contentHeight - closeIconHeight * 2);
+                this.brick.translate(0, closeIconHeight * 2);
 
                 // Hide all other connections
                 this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
                 return;
-            } else {
-                this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
             }
+            this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
 
             const moduleHeight = this.getModuleHeight();
 

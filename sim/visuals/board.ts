@@ -298,7 +298,14 @@ namespace pxsim.visuals {
             this.layoutView.inject(this.element);
 
             // Add EV3 module element
-            this.layoutView.setBrick(new BrickView(-1));
+            const brickCloseIcon = this.getCloseIconView();
+            brickCloseIcon.registerClick(ev => {                
+                this.layoutView.unselectBrick();                
+                this.resize();
+            });
+            const brick =new BrickView(-1);
+            brick.setSelected(EV3View.isPreviousBrickSelected());
+            this.layoutView.setBrick(brick, brickCloseIcon);
 
             this.resize();
 
@@ -329,6 +336,12 @@ namespace pxsim.visuals {
             this.screenCanvas = document.createElement("canvas");
             this.screenCanvas.id = "board-screen-canvas";
             this.screenCanvas.style.position = "absolute";
+            this.screenCanvas.addEventListener(pxsim.pointerEvents.up, ev => {
+                this.layoutView.selectBrick();
+                this.resize();
+            })
+            this.screenCanvas.style.cursor = "pointer";
+            /*
             this.screenCanvas.style.cursor = "crosshair";
             this.screenCanvas.onmousemove = (e: MouseEvent) => {
                 const x = e.clientX;
@@ -340,6 +353,7 @@ namespace pxsim.visuals {
             this.screenCanvas.onmouseleave = () => {
                 this.updateXY(SCREEN_WIDTH, SCREEN_HEIGHT);
             }
+            */
 
             this.screenCanvas.width = SCREEN_WIDTH;
             this.screenCanvas.height = SCREEN_HEIGHT;
@@ -360,10 +374,12 @@ namespace pxsim.visuals {
             // Save previous inputs for the next cycle
             EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
             EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);
+            EV3View.previousSelectedBrick = this.layoutView.getBrick().getSelected();
         }
 
         private static previousSelectedInputs: number[];
         private static previousSeletedOutputs: number[];
+        private static previousSelectedBrick: boolean;
 
         private static isPreviousInputSelected(index: number, id: number) {
             if (EV3View.previousSelectedInputs && EV3View.previousSelectedInputs[index] == id) {
@@ -379,6 +395,12 @@ namespace pxsim.visuals {
                 return true;
             }
             return false;
+        }
+
+        private static isPreviousBrickSelected() {
+            const b = EV3View.previousSelectedBrick;
+            EV3View.previousSelectedBrick = false;
+            return !!b;
         }
 
         private begin() {
