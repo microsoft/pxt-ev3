@@ -9,7 +9,6 @@ brick.showString("Hello world!", 1);
 brick.showNumber(0, 1);
 brick.showValue("item", 0, 1);
 brick.clearScreen();
-brick.printPorts();
 ```
 
 ## Buttons
