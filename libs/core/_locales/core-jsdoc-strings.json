@@ -30,7 +30,6 @@
   "brick.buttonRight": "Right button on the EV3 Brick.",
   "brick.buttonUp": "Up button on the EV3 Brick.",
   "brick.clearScreen": "Clear the screen",
-  "brick.printPorts": "Print the port states on the screen",
   "brick.setLight": "Set lights.",
   "brick.setLight|param|pattern": "the lights pattern to use. eg: BrickLight.Orange",
   "brick.showImage": "Show an image on the screen",
