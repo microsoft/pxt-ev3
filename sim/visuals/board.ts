@@ -331,6 +331,7 @@ namespace pxsim.visuals {
             this.screenCanvas.style.position = "absolute";
             this.screenCanvas.addEventListener(pxsim.pointerEvents.up, ev => {
                 this.layoutView.selectBrick();
+                this.resize();
             })
             this.screenCanvas.style.cursor = "pointer";
             /*
