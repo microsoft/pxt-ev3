@@ -15,6 +15,7 @@ brick.showString("This message wil self-destruct in:", 1);
 brick.showString("seconds", 3);
 for (let i = 0; i < 10; i++) {
     brick.showNumber(10 - i, 2);
+    loops.pause(1000);
 }
 brick.clearScreen();
 ```
