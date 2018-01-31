@@ -2,16 +2,16 @@
 
 ```blocks
 let drive: number[] = []
-brick.buttonLeft.onEvent(ButtonEvent.Click, function () {
+brick.buttonLeft.onEvent(ButtonEvent.Bumped, function () {
     drive.push(1)
 })
-brick.buttonRight.onEvent(ButtonEvent.Click, function () {
+brick.buttonRight.onEvent(ButtonEvent.Bumped, function () {
     drive.push(3)
 })
-brick.buttonUp.onEvent(ButtonEvent.Click, function () {
+brick.buttonUp.onEvent(ButtonEvent.Bumped, function () {
     drive.push(4)
 })
-brick.buttonDown.onEvent(ButtonEvent.Click, function () {
+brick.buttonDown.onEvent(ButtonEvent.Bumped, function () {
     drive.push(5)
 })
 pauseUntil(() => drive.length >= 5)

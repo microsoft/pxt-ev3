@@ -15,10 +15,10 @@ brick.printPorts();
 ## Buttons
 
 ```cards
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
 
 });
-brick.buttonEnter.pauseUntil(ButtonEvent.Click);
+brick.buttonEnter.pauseUntil(ButtonEvent.Bumped);
 brick.buttonEnter.isPressed()
 brick.buttonEnter.wasPressed()
 brick.setLight(BrickLight.Red);

@@ -29,13 +29,14 @@ const enum BrickLight {
  * User interaction on buttons
  */
 const enum ButtonEvent {
-    //% block="click"
-    Click = 1,
-    //% block="up"
-    Up = 3,
-    //% block="down"
-    Down = 4,
+    //% block="pressed"
+    Pressed = 4,
+    //% block="bumped"
+    Bumped = 1,
+    //% block="released"
+    Released = 3,
 }
+
 
 namespace brick {
     /**
@@ -62,12 +63,12 @@ namespace brick {
             if (curr) {
                 this._wasPressed = true;
                 this.downTime = control.millis()
-                control.raiseEvent(this._id, ButtonEvent.Down)
+                control.raiseEvent(this._id, ButtonEvent.Pressed)
             } else {
-                control.raiseEvent(this._id, ButtonEvent.Up)
+                control.raiseEvent(this._id, ButtonEvent.Released)
                 const delta = control.millis() - this.downTime;
                 if (delta < 500)
-                    control.raiseEvent(this._id, ButtonEvent.Click)
+                    control.raiseEvent(this._id, ButtonEvent.Bumped)
             }
         }
 

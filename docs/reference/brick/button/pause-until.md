@@ -3,7 +3,7 @@
 Causes your program to wait until an event at a button happens.
 
 ```sig
-brick.buttonEnter.pauseUntil(ButtonEvent.Click);
+brick.buttonEnter.pauseUntil(ButtonEvent.Bumped);
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ brick.showString("We're going to wait", 1);
 brick.showString("for you to press and", 2);
 brick.showString("release the UP button", 3);
 waitTime = control.millis();
-brick.buttonUp.pauseUntil(ButtonEvent.Click);
+brick.buttonUp.pauseUntil(ButtonEvent.Bumped);
 brick.clearScreen();
 if (control.millis() - waitTime > 5000) {
     brick.showString("Ok, that took awhile!", 1)

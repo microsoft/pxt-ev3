@@ -19,7 +19,7 @@ Name-value-pairs are used to report data values to the screen. If you want to sh
 Show the current amount of ambient light detected by sensor 2.
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     brick.showValue("color", sensors.color2.light(LightIntensityMode.Ambient), 1)
 })
 ```

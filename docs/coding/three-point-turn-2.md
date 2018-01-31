@@ -1,7 +1,7 @@
 # Three Point Turn Activity 2
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     motors.largeBC.tank(75, 30)
     loops.pause(1500)
     motors.largeBC.tank(-30, -75)

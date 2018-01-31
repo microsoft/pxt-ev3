@@ -33,7 +33,7 @@ Read about [touch sensors](/reference/sensors/touch-sensor) and using them as to
 Set the brick light to green if the `right` button was pressed before the `left` button. If not, the brick light is turned off when the `left` button is pressed.
 
 ```blocks
-brick.buttonLeft.onEvent(ButtonEvent.Click, function() {
+brick.buttonLeft.onEvent(ButtonEvent.Bumped, function() {
     if (brick.buttonRight.wasPressed()) {
         brick.setLight(BrickLight.Green)
     } else {

@@ -44,7 +44,7 @@ loops.forever(function () {
     lasterror = error
     if (brick.buttonEnter.wasPressed()) {
         motors.largeBC.setSpeed(0)
-        brick.buttonDown.pauseUntil(ButtonEvent.Click)
+        brick.buttonDown.pauseUntil(ButtonEvent.Bumped)
     }
 })
 ```

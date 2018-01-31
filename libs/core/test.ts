@@ -6,25 +6,25 @@ brick.setLight(BrickLight.Orange)
 
 brick.heart.doubled().draw(100, 50, Draw.Double | Draw.Transparent)
 
-brick.buttonEnter.onEvent(ButtonEvent.Click, () => {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
     screen.clear()
 })
 
-brick.buttonLeft.onEvent(ButtonEvent.Click, () => {
+brick.buttonLeft.onEvent(ButtonEvent.Bumped, () => {
     brick.drawRect(10, 70, 20, 10, Draw.Fill)
     brick.setLight(BrickLight.Red)
     brick.setFont(brick.microbitFont())
 })
 
-brick.buttonRight.onEvent(ButtonEvent.Click, () => {
+brick.buttonRight.onEvent(ButtonEvent.Bumped, () => {
     brick.print("Right!", 10, 60)
 })
 
-brick.buttonDown.onEvent(ButtonEvent.Click, () => {
+brick.buttonDown.onEvent(ButtonEvent.Bumped, () => {
     brick.print("Down! ", 10, 60)
 })
 
-brick.buttonUp.onEvent(ButtonEvent.Click, () => {
+brick.buttonUp.onEvent(ButtonEvent.Bumped, () => {
     brick.print("Up!  ", 10, 60)
 })
 

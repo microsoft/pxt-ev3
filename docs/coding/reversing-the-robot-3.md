@@ -1,12 +1,12 @@
 # Reversing the robot Activity 3
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     brick.showImage(images.eyesSleeping)
-    sensors.touch1.pauseUntil(TouchSensorEvent.Pressed)
+    sensors.touch1.pauseUntil(ButtonEvent.Pressed)
     brick.showImage(images.eyesNeutral)
     motors.largeBC.setSpeed(50)
-    sensors.touch2.pauseUntil(TouchSensorEvent.Pressed)
+    sensors.touch2.pauseUntil(ButtonEvent.Pressed)
     brick.showImage(images.eyesTiredMiddle)
     motors.largeBC.setSpeed(0)
     loops.pause(1000)
