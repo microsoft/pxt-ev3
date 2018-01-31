@@ -2,23 +2,23 @@
 
 ```blocks
 let drive: number[] = []
-brick.buttonLeft.onEvent(ButtonEvent.Click, function () {
+brick.buttonLeft.onEvent(ButtonEvent.Bumped, function () {
     drive.push(1)
     music.playSoundEffectUntilDone(sounds.systemClick)
 })
-brick.buttonRight.onEvent(ButtonEvent.Click, function () {
+brick.buttonRight.onEvent(ButtonEvent.Bumped, function () {
     drive.push(3)
     music.playSoundEffectUntilDone(sounds.systemClick)
 })
-brick.buttonUp.onEvent(ButtonEvent.Click, function () {
+brick.buttonUp.onEvent(ButtonEvent.Bumped, function () {
     drive.push(4)
     music.playSoundEffectUntilDone(sounds.systemClick)
 })
-brick.buttonDown.onEvent(ButtonEvent.Click, function () {
+brick.buttonDown.onEvent(ButtonEvent.Bumped, function () {
     drive.push(5)
     music.playSoundEffectUntilDone(sounds.systemClick)
 })
-brick.buttonEnter.pauseUntil(ButtonEvent.Click);
+brick.buttonEnter.pauseUntil(ButtonEvent.Bumped);
 loops.pause(1000)
 music.playSoundEffectUntilDone(sounds.communicationGo)
 for (let d of drive) {

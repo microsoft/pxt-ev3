@@ -1,7 +1,4 @@
 {
-  "TouchSensorEvent.Bumped|block": "bumped",
-  "TouchSensorEvent.Pressed|block": "pressed",
-  "TouchSensorEvent.Released|block": "released",
   "sensors.TouchSensor.isPressed|block": "%sensor|is pressed",
   "sensors.TouchSensor.onEvent|block": "on %sensor|%event",
   "sensors.TouchSensor.pauseUntil|block": "pause until %sensor|%event",

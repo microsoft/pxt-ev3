@@ -11,7 +11,7 @@ function INI() {
     motors.mediumA.setSpeed(30, 1, MoveUnit.Seconds);
     motors.mediumA.setSpeed(-50, 90, MoveUnit.Degrees);
     motors.largeC.setSpeed(50)
-    sensors.touch1.pauseUntil(TouchSensorEvent.Pressed);
+    sensors.touch1.pauseUntil(ButtonEvent.Pressed);
     motors.largeC.setSpeed(-50, 0.86, MoveUnit.Rotations);
 }
 

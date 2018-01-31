@@ -7,12 +7,12 @@ Welcome to the **Microsoft MakeCode** editor for the **@boardname@**!
 You can program the @boardname@ using [Blocks](/blocks) or [JavaScript](/javascript) in your web browser:
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Click, () => {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
     motors.largeA.setSpeed(50)
 })
 ```
 ```typescript
-brick.buttonEnter.onEvent(ButtonEvent.Click, () => {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
     motors.largeA.setSpeed(50)
 })
 ```
@@ -33,7 +33,7 @@ You can run your code using the micro:bit simulator, all within the confines of 
 The simulator has support for the LED screen, buttons, as well as compass, accelerometer, and digital I/O pins.
 
 ```sim
-brick.buttonEnter.onEvent(ButtonEvent.Click, () => {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
     motors.largeA.setSpeed(50)
 })
 ```

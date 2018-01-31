@@ -3,7 +3,7 @@
 Run some code when a button is clicked, pressed down, or released.
 
 ```sig
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
 
 });
 ```
@@ -15,7 +15,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
 Your @boardname@ has touch sensors that work like buttons. Instead of saying `enter` or `left` as the source button, use a touch sensor block with a sensor name like `touch 1`.
 
 ```block
-sensors.touch1.onEvent(TouchSensorEvent.Pressed, function () {
+sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
     brick.setLight(BrickLight.Orange);
 });
 ```
@@ -38,13 +38,13 @@ Check for event on the ENTER button. Put a message on the screen when the button
 
 ```blocks
 brick.showString("ENTER is: UP", 1);
-brick.buttonEnter.onEvent(ButtonEvent.Up, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Released, function () {
     brick.showString("ENTER is: UP      ", 1);
 });
-brick.buttonEnter.onEvent(ButtonEvent.Down, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
     brick.showString("ENTER is: DOWN    ", 1);
 });
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     brick.showString("ENTER was: CLICKED", 1);
 });
 ```

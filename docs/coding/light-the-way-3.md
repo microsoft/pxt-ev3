@@ -7,7 +7,7 @@ sensors.color3.onLightChanged(LightIntensityMode.Ambient, LightCondition.Bright,
 sensors.color3.onLightChanged(LightIntensityMode.Ambient, LightCondition.Dark, function () {
     brick.showImage(images.objectsLightOn)
 })
-sensors.touch1.onEvent(TouchSensorEvent.Pressed, function () {
+sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsLightOn);
 })
 ```

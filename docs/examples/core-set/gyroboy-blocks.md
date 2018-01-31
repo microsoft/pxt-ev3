@@ -111,7 +111,7 @@ function stop() {
     motors.stopAllMotors()
     state = 0
     moods.knockedOut.show();
-    sensors.touch3.pauseUntil(TouchSensorEvent.Pressed)
+    sensors.touch3.pauseUntil(ButtonEvent.Pressed)
     moods.neutral.show();
 }
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {

@@ -1,17 +1,5 @@
 // keep TouchSensorEvent in sync with ButtonEvent
 
-/**
- * Touch sensor interactions
- */
-const enum TouchSensorEvent {
-    //% block="pressed"
-    Pressed = 4,
-    //% block="bumped"
-    Bumped = 1,
-    //% block="released"
-    Released = 3,
-}
-
 namespace sensors {
 
     //% fixedInstances
@@ -48,8 +36,8 @@ namespace sensors {
         //% sensor.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Touch Sensor"
-        onEvent(ev: TouchSensorEvent, body: () => void) {
-            this.button.onEvent(<ButtonEvent><number>ev, body)
+        onEvent(ev: ButtonEvent, body: () => void) {
+            this.button.onEvent(ev, body)
         }
 
         /**
@@ -64,7 +52,7 @@ namespace sensors {
         //% sensor.fieldEditor="ports"
         //% weight=98 blockGap=8
         //% group="Touch Sensor"
-        pauseUntil(ev: TouchSensorEvent) {
+        pauseUntil(ev: ButtonEvent) {
             this.button.pauseUntil(<ButtonEvent><number>ev);
         }
 

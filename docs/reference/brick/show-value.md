@@ -3,7 +3,7 @@
 Show a name-value-pair on the screen at the line you select.
 
 ```sig
-brick.showNumber("item", 0, 1);
+brick.showValue("item", 0, 1);
 ```
 
 Name-value-pairs are used to report data values to the screen. If you want to show the current temperature on the screen, you might use `"temp"` as the data name for the the value.
@@ -19,7 +19,7 @@ Name-value-pairs are used to report data values to the screen. If you want to sh
 Show the current amount of ambient light detected by sensor 2.
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     brick.showValue("color", sensors.color2.light(LightIntensityMode.Ambient), 1)
 })
 ```

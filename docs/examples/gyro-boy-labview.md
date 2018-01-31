@@ -149,7 +149,7 @@ loops.forever(function () {
     brick.setLight(BrickLight.RedPulse);
     brick.showImage(images.eyesKnockedOut)
     music.playSoundEffect(sounds.movementsSpeedDown)
-    sensors.touch3.pauseUntil(TouchSensorEvent.Pressed)
+    sensors.touch3.pauseUntil(ButtonEvent.Pressed)
     brick.setLight(BrickLight.Off);
 })
 
