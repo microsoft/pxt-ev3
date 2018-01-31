@@ -56,7 +56,7 @@ export class FieldTurnRatio extends Blockly.FieldSlider implements Blockly.Field
         }, marker);
         this.reporter_ = pxsim.svg.child(svg, "text", {
             'x': FieldTurnRatio.HALF, 'y': 96,
-            'text-anchor': 'middle', 'alignment-baseline': 'middle',
+            'text-anchor': 'middle', 'dominant-baseline': 'middle',
             'style': 'font-size: 50px',
             'class': 'sim-text inverted number'
         }) as SVGTextElement;

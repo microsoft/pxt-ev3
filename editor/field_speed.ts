@@ -40,7 +40,9 @@ export class FieldSpeed extends Blockly.FieldSlider implements Blockly.FieldCust
         var labelContainer = document.createElement('div');
         this.speedSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg") as SVGGElement;
         pxsim.svg.hydrate(this.speedSVG, {
-            viewBox: "0 0 200 100"
+            viewBox: "0 0 200 100",
+            width: "200",
+            height: "100"
         });
 
         labelContainer.appendChild(this.speedSVG);
@@ -58,7 +60,7 @@ export class FieldSpeed extends Blockly.FieldSlider implements Blockly.FieldCust
 
         this.reporter = pxsim.svg.child(this.speedSVG, "text", {
             'x': 100, 'y': 80,
-            'text-anchor': 'middle', 'alignment-baseline': 'middle',
+            'text-anchor': 'middle', 'dominant-baseline': 'middle',
             'style': 'font-size: 50px',
             'class': 'sim-text inverted number'
         }) as SVGTextElement;

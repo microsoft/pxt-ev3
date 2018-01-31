@@ -23,7 +23,7 @@ namespace pxsim.visuals {
 
             this.reporter = pxsim.svg.child(this.group, "text", { 
                 'x': this.getWidth() / 2, 'y': this.getHeight() / 2, 
-                'text-anchor': 'middle', 'alignment-baseline': 'middle',
+                'text-anchor': 'middle', 'dominant-baseline': 'middle',
                 'style': 'font-size: 50px', 
                 'class': 'sim-text inverted number' }) as SVGTextElement;
 
