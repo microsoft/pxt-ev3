@@ -11,10 +11,11 @@ brick.clearScreen();
 Clear the screen after displaying the message.
 
 ```blocks
-brick.showString("This message wil self-destruct in:", 1);
-brick.showString("seconds", 3);
+brick.showString("This message will", 1);
+brick.showString("self-destruct in:", 2);
+brick.showString("seconds", 5);
 for (let i = 0; i < 10; i++) {
-    brick.showNumber(10 - i, 2);
+    brick.showNumber(10 - i, 4);
     loops.pause(1000);
 }
 brick.clearScreen();
