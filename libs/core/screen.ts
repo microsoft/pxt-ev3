@@ -72,6 +72,7 @@ namespace brick {
      */
     //% blockId=screen_print block="show string %text|at line %line"
     //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
+    //% help=brick/show-string
     //% line.min=1 line.max=10
     export function showString(text: string, line: number) {
         const NUM_LINES = 9;
@@ -87,6 +88,7 @@ namespace brick {
      */
     //% blockId=screenShowNumber block="show number %name|at line %line"
     //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% help=brick/show-number
     //% line.min=1 line.max=10
     export function showNumber(value: number, line: number) {
         showString("" + value, line);
@@ -99,6 +101,7 @@ namespace brick {
      */
     //% blockId=screenShowValue block="show value %name|= %text|at line %line"
     //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% help=brick/show-value
     //% line.min=1 line.max=10
     export function showValue(name: string, value: number, line: number) {
         value = Math.round(value * 1000) / 1000;
@@ -136,11 +139,12 @@ namespace brick {
     }
 
     /**
-     * Shows an image on screen
+     * Show an image on the screen
      * @param image image to draw
      */
     //% blockId=screen_show_image block="show image %image=screen_image_picker"
     //% weight=100 group="Screen" blockGap=8
+    //% help=brick/show-image
     export function showImage(image: Image) {
         if (!image) return;
         image.draw(0, 0, Draw.Normal);
@@ -160,10 +164,11 @@ namespace brick {
     }
 
     /**
-     * Clears the screen
+     * Clear the screen
      */
     //% blockId=screen_clear_screen block="clear screen"
     //% weight=90 group="Screen"
+    //% help=brick/clear-screen
     export function clearScreen() {
         screen.clear();
     }
@@ -208,9 +213,10 @@ namespace brick {
     }
 
     /**
-     * Prints the port states on the screen
+     * Print the port states on the screen
      */
     //% blockId=brickPrintPorts block="print ports"
+    //% help=brick/print-ports
     //% weight=1 group="Screen"
     export function printPorts() {
         const col = 44;
