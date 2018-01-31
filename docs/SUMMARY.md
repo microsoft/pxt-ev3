@@ -41,3 +41,11 @@
 ## Reference #reference
 
 * [Reference](/reference)
+    * [Brick](/reference/brick)
+        * [show string](/reference/brick/show-string)
+        * [show number](/reference/brick/show-number)
+        * [show value](/reference/brick/show-value)
+        * [show mood](/reference/brick/show-mood)
+        * [show image](/reference/brick/show-image)
+        * [clear screen](/reference/brick/clear-screen)
+        * [print ports](/reference/brick/print-ports)

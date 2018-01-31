@@ -1,9 +1,10 @@
 namespace brick {
     /**
-     * Shows a mood
+     * Show a mood on the brick's screen
      */
     //% weight=90
     //% blockId=moodShow block="show mood %mood=mood_image_picker"
+    //% help=brick/show-mood
     //% weight=101 group="Screen" blockGap=8
     export function showMood(mood: Mood) {
         if(mood)
