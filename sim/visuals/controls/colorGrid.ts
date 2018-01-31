@@ -19,18 +19,18 @@ namespace pxsim.visuals {
                 if (c % 2 == 0) cy += 5;
                 if (colorIds[c]) {
                     const circle = pxsim.svg.child(this.group, "circle", { 'class': 'sim-color-grid-circle', 'cx': cx, 'cy': cy, 'r': '2', 'style': `fill: ${colors[c]}` });
-                    circle.addEventListener(pointerEvents.down, ev => {
+                    pointerEvents.down.forEach(evid => circle.addEventListener(evid, ev => {
                         this.setColor(colorValue[c]);
-                    })
+                    }));
                 }
             }
 
             const whiteCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'white-cirlce-wrapper' });
             pxsim.svg.child(whiteCircleWrapper, "circle", { 'class': 'sim-color-grid-circle', 'cx': 2.2, 'cy': '11', 'r': '2', 'style': `fill: #fff` });
             pxsim.svg.child(whiteCircleWrapper, "circle", { 'cx': 2.2, 'cy': '11', 'r': '2', 'style': `fill: none;stroke: #94989b;stroke-width: 0.1px` });
-            whiteCircleWrapper.addEventListener(pointerEvents.down, ev => {
+            pointerEvents.down.forEach(evid => whiteCircleWrapper.addEventListener(evid, ev => {
                 this.setColor(6);
-            })
+            }));
             return this.group;
         }
 

@@ -38,10 +38,10 @@ namespace pxsim.visuals {
             this.content.style.cursor = "pointer";
             const btn = this.content;
             const state = ev3board().getSensor(this.port, DAL.DEVICE_TYPE_TOUCH) as TouchSensorNode;
-            btn.addEventListener(pointerEvents.down, ev => {
+            pointerEvents.down.forEach(evid => btn.addEventListener(evid, ev => {
                 this.setPressed(true);
                 state.setPressed(true);
-            })
+            }))
             btn.addEventListener(pointerEvents.leave, ev => {
                 this.setPressed(false);
                 state.setPressed(false);
