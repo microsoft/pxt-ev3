@@ -17,5 +17,6 @@
   "sensors.ColorSensor.setThreshold|param|condition": "the dark or bright light condition",
   "sensors.ColorSensor.setThreshold|param|value": "the value threshold",
   "sensors.ColorSensor.threshold": "Gets the threshold value",
-  "sensors.ColorSensor.threshold|param|condition": "the light condition"
+  "sensors.ColorSensor.threshold|param|condition": "the light condition",
+  "sensors.color": "Returns a color that the sensor can detect"
 }

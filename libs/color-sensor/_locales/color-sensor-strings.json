@@ -26,6 +26,7 @@
   "sensors.color2|block": "color 2",
   "sensors.color3|block": "color 3",
   "sensors.color4|block": "color 4",
+  "sensors.color|block": "color %color",
   "sensors|block": "sensors",
   "{id:category}Sensors": "Sensors",
   "{id:group}Color Sensor": "Color Sensor",
