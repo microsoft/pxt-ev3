@@ -5,7 +5,7 @@ Run some code when a button is clicked, pressed down, or released.
 ```sig
 brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
 
-})
+});
 ```
 
 ## ~hint
@@ -15,8 +15,8 @@ brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
 Your @boardname@ has touch sensors that work like buttons. Instead of saying `enter` or `left` as the source button, use a touch sensor block with a sensor name like `touch 1`.
 
 ```block
-sensors.touch1.onEvent(ButtonEvent.Down, function() {
-    brick.setLight(BrickLight.Blue);
+sensors.touch1.onEvent(TouchSensorEvent.Pressed, function () {
+    brick.setLight(BrickLight.Orange);
 });
 ```
 
@@ -26,11 +26,11 @@ Read about [touch sensors](/reference/sensors/touch-sensor) and using them as to
 
 ## Parameters
 
-* ``ev`` the button action to run some code for. The button actions (events) are:
+* **ev**: the button action to run some code for. The button actions (events) are:
 > * ``click``: button was clicked (pressed and released)
 > * ``up``: button is released from just being pressed
 > * ``down``: button is just pressed down
-* ``body`` the code you want to run when something happens with a button
+* **body**: the code you want to run when something happens with a button
 
 ## Example
 

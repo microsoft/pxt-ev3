@@ -16,7 +16,7 @@ You can choose one of several images to show on the display.
 Show a sleeping image on the brick's display.
 
 ```blocks
-brick.showImage(image.expressionsZzz)
+brick.showImage(images.expressionsZzz)
 ```
 
 ## See also

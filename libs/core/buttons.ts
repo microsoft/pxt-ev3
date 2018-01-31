@@ -75,7 +75,7 @@ namespace brick {
          * Check if button is currently pressed or not.
          * @param button the button to query the request
          */
-        //% help=input/button/is-pressed
+        //% help=brick/button/is-pressed
         //% block="%button|is pressed"
         //% blockId=buttonIsPressed
         //% parts="brick"
@@ -91,7 +91,7 @@ namespace brick {
          * See if the button was pressed again since the last time you checked.
          * @param button the button to query the request
          */
-        //% help=input/button/was-pressed
+        //% help=brick/button/was-pressed
         //% block="%button|was pressed"
         //% blockId=buttonWasPressed
         //% parts="brick"
@@ -111,7 +111,7 @@ namespace brick {
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
          */
-        //% help=input/button/on-event
+        //% help=brick/button/on-event
         //% blockId=buttonEvent block="on %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
@@ -126,7 +126,7 @@ namespace brick {
          * Waits until the event is raised
          * @param ev the event to wait for
          */
-        //% help=input/button/pause-until
+        //% help=brick/button/pause-until
         //% blockId=buttonWaitUntil block="pause until %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
@@ -251,6 +251,7 @@ namespace brick {
      */
     //% blockId=setLights block="set light to %pattern"
     //% weight=100 group="Buttons"
+    //% help=brick/set-light
     export function setLight(pattern: BrickLight): void {
         if (currPattern === pattern)
             return
