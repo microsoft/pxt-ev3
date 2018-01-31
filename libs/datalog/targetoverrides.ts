@@ -2,7 +2,7 @@ namespace datalog.ev3 {
     /**
      * A datalog storage for the EV3
      */
-    export class EV3DatalogStorage extends DatalogStorage { // implements DatalogStorage {
+    export class EV3DatalogStorage extends DatalogStorage {
         private _filename: string;
         private _buffer: string;
         private _storage: storage.Storage;
@@ -38,18 +38,18 @@ namespace datalog.ev3 {
             // commit row data
             this._buffer += storage.toCSV(values, this._storage.csvSeparator);
             // buffered writes
-            if (this._buffer.length > 1024)
+            if (this._buffer.length > 512)
                 this.flush();
         }
         /**
          * Flushes any buffered data
          */
         flush(): void {
-            if (this._buffer) {
+            if (this._buffer) {                                
                 const b = this._buffer;
                 this._buffer = "";
                 this._storage.append(this._filename, b);
-            }    
+            }
         }
     }
     // automatic hook up
