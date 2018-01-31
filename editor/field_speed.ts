@@ -60,7 +60,7 @@ export class FieldSpeed extends Blockly.FieldSlider implements Blockly.FieldCust
 
         this.reporter = pxsim.svg.child(this.speedSVG, "text", {
             'x': 100, 'y': 80,
-            'text-anchor': 'middle', 'alignment-baseline': 'middle',
+            'text-anchor': 'middle', 'dominant-baseline': 'middle',
             'style': 'font-size: 50px',
             'class': 'sim-text inverted number'
         }) as SVGTextElement;
