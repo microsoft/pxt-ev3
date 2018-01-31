@@ -1,8 +1,0 @@
-{
-  "datalog.addRow|block": "datalog add row",
-  "datalog.addValue|block": "datalog add %name|=%value",
-  "datalog.setEnabled|block": "datalog %enabled=toggleOnOff",
-  "datalog.setSampleInterval|block": "set datalog sampling interval to %millis|(ms)",
-  "datalog|block": "datalog",
-  "{id:category}Datalog": "Datalog"
-}

@@ -1,8 +1,0 @@
-{
-  "chassis.Chassis.drive|block": "drive %chassis|at %speed|cm/s|turning %rotationSpeed|deg/s",
-  "chassis.Chassis.setBaseLength|block": "set %chassis|base length to %cm|(cm)",
-  "chassis.Chassis.setMotors|block": "set %chassis|motors to %motors",
-  "chassis.Chassis.setWheelRadius|block": "set %chassis|wheel radius to %cm|(cm)",
-  "chassis|block": "chassis",
-  "{id:category}Chassis": "Chassis"
-}
