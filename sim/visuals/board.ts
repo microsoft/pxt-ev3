@@ -298,7 +298,12 @@ namespace pxsim.visuals {
             this.layoutView.inject(this.element);
 
             // Add EV3 module element
-            this.layoutView.setBrick(new BrickView(-1));
+            const brickCloseIcon = this.getCloseIconView();
+            brickCloseIcon.registerClick(ev => {
+                this.layoutView.unselectBrick();
+                this.resize();
+            });
+            this.layoutView.setBrick(new BrickView(-1), brickCloseIcon);
 
             this.resize();
 
