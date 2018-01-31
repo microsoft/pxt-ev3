@@ -218,7 +218,7 @@ namespace motors {
          * @param value (optional) measured distance or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorSetSpeed block="set %motor|speed to %speed=motorSpeedPicker|%"
+        //% blockId=motorSetSpeed block="set %motor speed to %speed=motorSpeedPicker|%|for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
         setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
@@ -484,7 +484,7 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairTank block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker|%"
+        //% blockId=motorPairTank block="tank %motors|%speedLeft=motorSpeedPicker|%|%speedRight=motorSpeedPicker||for %value %unit"
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
         //% group="Move"
@@ -509,7 +509,7 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio=motorTurnRatioPicker|speed %speed=motorSpeedPicker|%"
+        //% blockId=motorPairSteer block="steer %chassis|turn ratio %turnRatio=motorTurnRatioPicker|speed %speed=motorSpeedPicker||for %value %unit"
         //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
