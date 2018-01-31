@@ -226,18 +226,15 @@ namespace pxsim.visuals {
 
             // render the full brick layout, even when there are not connection
             // otherwise, it creates flickering of the simulator.
-            /**
-            if (noConnections) {
-                // No connections render the entire board
+            if (this.getSelected()) {
+                // render the entire board
                 this.brick.resize(contentWidth, contentHeight);
                 this.brick.translate(0, 0);
 
                 // Hide all other connections
                 this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
                 return;
-            } else {
             }
-            */
             this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
 
             const moduleHeight = this.getModuleHeight();
