@@ -19,21 +19,21 @@ enum LightIntensityMode {
 }
 
 const enum ColorSensorColor {
-    //% block="none"
+    //% block="none" blockIdentity=sensors.color
     None,
-    //% block="black"
+    //% block="black" blockIdentity=sensors.color
     Black,
-    //% block="blue"
+    //% block="blue" blockIdentity=sensors.color
     Blue,
-    //% block="green"
+    //% block="green" blockIdentity=sensors.color
     Green,
-    //% block="yellow"
+    //% block="yellow" blockIdentity=sensors.color
     Yellow,
-    //% block="red"
+    //% block="red" blockIdentity=sensors.color
     Red,
-    //% block="white"
+    //% block="white" blockIdentity=sensors.color
     White,
-    //% block="brown"
+    //% block="brown" blockIdentity=sensors.color
     Brown,
 }
 
@@ -157,6 +157,7 @@ namespace sensors {
         //% sensor.fieldEditor="ports"
         //% weight=98
         //% group="Color Sensor"
+        //% blockGap=8
         color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
@@ -263,45 +264,57 @@ namespace sensors {
 
             this.light(mode); // trigger a read
             pauseUntil(() => this.isActive()); // ensure sensor is live
-            
+
 
             let vold = 0;
             let vcount = 0;
             let min = 200;
-            let max = -200;     
-            let k = 0;       
-            while(k++ < 1000 && vcount < 50) {
+            let max = -200;
+            let k = 0;
+            while (k++ < 1000 && vcount < 50) {
                 let v = this.light(mode);
                 min = Math.min(min, v);
                 max = Math.max(max, v);
                 // detect if nothing has changed and stop calibration
                 if (Math.abs(v - vold) <= 2)
-                    vcount ++;
+                    vcount++;
                 else {
                     vold = v;
                     vcount = 1;
                 }
 
                 // wait a bit
-                loops.pause(50);                
+                loops.pause(50);
             }
 
             // apply tolerance
             const minDist = 10;
             min = Math.max(minDist / 2, Math.min(min + deviation / 2, max - deviation / 2 - minDist / 2));
             max = Math.min(100 - minDist / 2, Math.max(min + minDist, max - deviation / 2));
-        
+
             // apply thresholds
             this.thresholdDetector.setLowThreshold(min);
             this.thresholdDetector.setHighThreshold(max);
 
             this.calibrating = false;
         }
+
+    }
+
+    /**
+     * Returns a color that the sensor can detect
+     */
+    //% shim=TD_ID
+    //% blockId=colorSensorColor block="color %color"
+    //% group="Color Sensor"
+    //% weight=97
+    export function color(color: ColorSensorColor): ColorSensorColor {
+        return color;
     }
 
     //% whenUsed block="color 3" weight=95 fixedInstance jres=icons.port3
     export const color3: ColorSensor = new ColorSensor(3)
-    
+
     //% whenUsed block="color 1" weight=90 fixedInstance jres=icons.port1
     export const color1: ColorSensor = new ColorSensor(1)
 
