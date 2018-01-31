@@ -47,14 +47,17 @@ namespace pxsim.visuals {
         }
 
         private lastLightPattern: number = -1;
-        private lastLightAnimationId: any;
+        private lastLightAnimationId: any = undefined;
         private updateLight() {
             let state = ev3board().getBrickNode().lightState;
 
             const lightPattern = state.lightPattern;
             if (lightPattern == this.lastLightPattern) return;
             this.lastLightPattern = lightPattern;
-            if (this.lastLightAnimationId) cancelAnimationFrame(this.lastLightAnimationId);
+            if (this.lastLightAnimationId) {
+                cancelAnimationFrame(this.lastLightAnimationId);
+                delete this.lastLightAnimationId;
+            }
             switch (lightPattern) {
                 case 0:  // LED_BLACK
                     this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`));
@@ -94,6 +97,7 @@ namespace pxsim.visuals {
         }
 
         private flashLightAnimation(id: string) {
+            const pattern = this.lastLightPattern;
             let fps = 3;
             let now;
             let then = Date.now();
@@ -101,8 +105,9 @@ namespace pxsim.visuals {
             let delta;
             let that = this;
             function draw() {
+                if (that.lastLightPattern != pattern) return;
                 that.lastLightAnimationId = requestAnimationFrame(draw);
-                now = Date.now();
+                now = pxsim.U.now();
                 delta = now - then;
                 if (delta > interval) {
                     then = now - (delta % interval);
@@ -124,6 +129,7 @@ namespace pxsim.visuals {
 
 
         private pulseLightAnimation(id: string) {
+            const pattern = this.lastLightPattern;
             let fps = 8;
             let now;
             let then = Date.now();
@@ -131,8 +137,9 @@ namespace pxsim.visuals {
             let delta;
             let that = this;
             function draw() {
+                if (that.lastLightPattern != pattern) return;
                 that.lastLightAnimationId = requestAnimationFrame(draw);
-                now = Date.now();
+                now = pxsim.U.now();
                 delta = now - then;
                 if (delta > interval) {
                     // update time stuffs
