@@ -74,6 +74,8 @@ namespace pxsim.visuals {
             this.brick.inject(this.scrollGroup);
 
             this.brickCloseIcon = brickCloseIcon;
+            this.addView(this.brickCloseIcon);
+            this.brickCloseIcon.setVisible(this.brick.getSelected());
             this.position();            
         }
 
@@ -83,12 +85,13 @@ namespace pxsim.visuals {
 
         public unselectBrick() {
             this.brick.setSelected(false);
+            this.brickCloseIcon.setVisible(false);
             this.position();
         }
 
         public selectBrick() {
             this.brick.setSelected(true);
-            this.addView(this.brickCloseIcon);
+            this.brickCloseIcon.setVisible(true);
             this.position();
         }
 
