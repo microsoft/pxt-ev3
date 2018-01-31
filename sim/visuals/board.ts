@@ -299,11 +299,13 @@ namespace pxsim.visuals {
 
             // Add EV3 module element
             const brickCloseIcon = this.getCloseIconView();
-            brickCloseIcon.registerClick(ev => {
-                this.layoutView.unselectBrick();
+            brickCloseIcon.registerClick(ev => {                
+                this.layoutView.unselectBrick();                
                 this.resize();
             });
-            this.layoutView.setBrick(new BrickView(-1), brickCloseIcon);
+            const brick =new BrickView(-1);
+            brick.setSelected(EV3View.isPreviousBrickSelected());
+            this.layoutView.setBrick(brick, brickCloseIcon);
 
             this.resize();
 
@@ -372,10 +374,12 @@ namespace pxsim.visuals {
             // Save previous inputs for the next cycle
             EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
             EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);
+            EV3View.previousSelectedBrick = this.layoutView.getBrick().getSelected();
         }
 
         private static previousSelectedInputs: number[];
         private static previousSeletedOutputs: number[];
+        private static previousSelectedBrick: boolean;
 
         private static isPreviousInputSelected(index: number, id: number) {
             if (EV3View.previousSelectedInputs && EV3View.previousSelectedInputs[index] == id) {
@@ -391,6 +395,12 @@ namespace pxsim.visuals {
                 return true;
             }
             return false;
+        }
+
+        private static isPreviousBrickSelected() {
+            const b = EV3View.previousSelectedBrick;
+            EV3View.previousSelectedBrick = false;
+            return !!b;
         }
 
         private begin() {

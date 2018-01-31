@@ -74,7 +74,6 @@ namespace pxsim.visuals {
             this.brick.inject(this.scrollGroup);
 
             this.brickCloseIcon = brickCloseIcon;
-            this.brickCloseIcon.inject(this.scrollGroup);
             this.position();            
         }
 
@@ -89,6 +88,7 @@ namespace pxsim.visuals {
 
         public selectBrick() {
             this.brick.setSelected(true);
+            this.addView(this.brickCloseIcon);
             this.position();
         }
 
@@ -248,8 +248,8 @@ namespace pxsim.visuals {
                 this.brickCloseIcon.translate(contentWidth / 2 - closeIconWidth / 2, 0);
 
                 // render the entire board
-                this.brick.resize(contentWidth, contentHeight - closeIconHeight);
-                this.brick.translate(0, closeIconHeight);
+                this.brick.resize(contentWidth, contentHeight - closeIconHeight * 2);
+                this.brick.translate(0, closeIconHeight * 2);
 
                 // Hide all other connections
                 this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
