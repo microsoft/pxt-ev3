@@ -85,7 +85,7 @@
         "accentColor": "#0089BF",
         "logoUrl": "https://lego.makecode.com",
         "logo": "./static/lego_education_logo.png",
-        "highConstractLogo": "./static/lego_education_logo_white.png",
+        "highContrastLogo": "./static/lego_education_logo_white.png",
         "docsLogo": "./static/lego-logo.svg",
         "portraitLogo": "./static/lego-logo.svg",
         "footerLogo": "./static/lego-logo.svg",
