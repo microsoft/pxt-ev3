@@ -11,3 +11,21 @@ brick.showValue("item", 0, 1);
 brick.clearScreen();
 brick.printPorts();
 ```
+
+## Buttons
+
+```cards
+brick.buttonEnter.onEvent(ButtonEvent.Click, function () {
+
+});
+brick.buttonEnter.pauseUntil(ButtonEvent.Click);
+brick.buttonEnter.isPressed()
+brick.buttonEnter.wasPressed()
+brick.setLight(BrickLight.Red);
+```
+
+## Other
+
+```cards
+brick.batteryLevel()
+```

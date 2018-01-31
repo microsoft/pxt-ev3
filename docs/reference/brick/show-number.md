@@ -8,8 +8,8 @@ brick.showNumber(0, 1);
 
 ## Parameters
 
-**value**: a [number](/types/number) to show on the brick's screen.
-**line**: The line number on the screen where the value is displayed. The line numbers for the screen start with line `1`.
+* **value**: a [number](/types/number) to show on the brick's screen.
+* **line**: The line number on the screen where the value is displayed. The line numbers for the screen start with line `1`.
 
 ## Example
 

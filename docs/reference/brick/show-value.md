@@ -11,8 +11,8 @@ Name-value-pairs are used to report data values to the screen. If you want to sh
 ## Parameters
 
 * **name**: a [string](/types/string) which is the name of the data value.
-**value**: a [number](/types/number) to show on the brick's screen.
-**line**: The line number on the screen where the value is displayed. The line numbers for the screen start with line `1`.
+* **value**: a [number](/types/number) to show on the brick's screen.
+* **line**: The line number on the screen where the value is displayed. The line numbers for the screen start with line `1`.
 
 ## Example
 
