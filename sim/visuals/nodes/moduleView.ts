@@ -18,7 +18,7 @@ namespace pxsim.visuals {
                 return `id="${this.normalizeId(id)}"`;
             });
             xml = xml.replace(/url\(#(.*?)\)/g, (m: string, id: string) => {
-                return `url(#${this.normalizeId(id)}`;
+                return `url(#${this.normalizeId(id)})`;
             });
             xml = xml.replace(/xlink:href=\"#(.*?)\"/g, (m: string, id: string) => {
                 return `xlink:href="#${this.normalizeId(id)}"`;
