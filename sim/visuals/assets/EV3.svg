@@ -17,17 +17,17 @@
       <stop offset="0.52" stop-color="#6a6a6a"/>
       <stop offset="1" stop-color="#6a6a6a"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-green" x1="-382.07" y1="493.36" x2="-382.07" y2="494.25" gradientTransform="matrix(65.53, 0, 0, -48.84, 25091.11, 24228.69)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-green" x1="0" y1="0" x2="145" y2="48" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#6a6a6a"/>
       <stop offset="0.52" stop-color="#8CE300"/>
       <stop offset="1" stop-color="#6a6a6a"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-red" x1="-382.07" y1="493.36" x2="-382.07" y2="494.25" gradientTransform="matrix(65.53, 0, 0, -48.84, 25091.11, 24228.69)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-red" x1="0" y1="0" x2="145" y2="48" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#6a6a6a"/>
       <stop offset="0.52" stop-color="#D02E26"/>
       <stop offset="1" stop-color="#6a6a6a"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-orange" x1="-382.07" y1="493.36" x2="-382.07" y2="494.25" gradientTransform="matrix(65.53, 0, 0, -48.84, 25091.11, 24228.69)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-orange" x1="0" y1="0" x2="145" y2="48" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#6a6a6a"/>
       <stop offset="0.52" stop-color="#F8D039"/>
       <stop offset="1" stop-color="#6a6a6a"/>
