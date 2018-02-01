@@ -6,6 +6,7 @@ namespace pxsim.visuals {
         private group: SVGGElement;
         private colorGradient: SVGLinearGradientElement;
         private defs: SVGDefsElement;
+        private reporter: SVGTextElement;
 
         getInnerWidth() {
             return 111;
@@ -13,6 +14,10 @@ namespace pxsim.visuals {
 
         getInnerHeight() {
             return 192;
+        }
+
+        private getReporterHeight() {
+            return 50;
         }
 
         private getSliderWidth() {
@@ -33,8 +38,13 @@ namespace pxsim.visuals {
             svg.setGradientValue(this.colorGradient, "50%");
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
+            const reporterGroup = pxsim.svg.child(this.group, "g");
+            reporterGroup.setAttribute("transform", `translate(${this.getWidth() / 2}, 42)`);
+            this.reporter = pxsim.svg.child(reporterGroup, "text", { 'text-anchor': 'middle', 'x': 0, 'y': '0', 'class': 'sim-text number large inverted' }) as SVGTextElement;
+
             const sliderGroup = pxsim.svg.child(this.group, "g");
-            sliderGroup.setAttribute("transform", `translate(12, 0) scale(2)`);
+            sliderGroup.setAttribute("transform", `translate(${this.getWidth() / 2 - this.getSliderWidth() / 2}, ${this.getReporterHeight()})`);
+
             const rect = pxsim.svg.child(sliderGroup, "rect",
                 {
                     "x": 0,
