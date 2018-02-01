@@ -77,7 +77,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult, isCli = false) {
     let rbfBIN = pxt.U.fromHex(rbfHex)
     pxt.HF2.write16(rbfBIN, 4, rbfBIN.length)
 
-    let origElfUF2 = UF2.parseFile(pxt.U.stringToUint8Array(atob(resp.outfiles[pxt.outputName()])))
+    let origElfUF2 = UF2.parseFile(pxt.U.stringToUint8Array(ts.pxtc.decodeBase64(resp.outfiles[pxt.outputName()])))
 
     let mkFile = (ext: string, data: Uint8Array = null) => {
         let f = UF2.newBlockFile()
