@@ -2,6 +2,7 @@
 
 ```namespaces
 brick.showMood(moods.sleeping);
+motors.stopAllMotors()
 ```
 
 ## See Also

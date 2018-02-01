@@ -113,6 +113,7 @@ namespace motors {
     //% blockId=motorStopAll block="stop all motors"
     //% weight=1
     //% group="Move"
+    //% help=motors/stop-all-motors
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b)
