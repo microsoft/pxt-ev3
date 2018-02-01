@@ -7,23 +7,55 @@ namespace pxsim.visuals {
         private colorGradient: SVGLinearGradientElement;
         private defs: SVGDefsElement;
 
+        getInnerWidth() {
+            return 111;
+        }
+
+        getInnerHeight() {
+            return 192;
+        }
+
+        private getSliderWidth() {
+            return 62;
+        }
+
+        private getSliderHeight() {
+            return 111;
+        }
+
         getInnerView(parent: SVGSVGElement) {
             this.defs = <SVGDefsElement>svg.child(this.element, "defs", {});
             this.group = svg.elt("g") as SVGGElement;
-            this.group.setAttribute("transform", `translate(12, 0) scale(2)`)
+            //this.group.setAttribute("transform", `translate(12, 0) scale(2)`)
 
             let gc = "gradient-color";
             this.colorGradient = svg.linearGradient(this.defs, gc, false);
             svg.setGradientValue(this.colorGradient, "50%");
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
+            const sliderGroup = pxsim.svg.child(this.group, "g");
+            sliderGroup.setAttribute("transform", `translate(12, 0) scale(2)`);
+            const rect = pxsim.svg.child(sliderGroup, "rect",
+                {
+                    "x": 0,
+                    "y": 0,
+                    "width": this.getSliderWidth(),
+                    "height": this.getSliderHeight(),
+                    "style": `fill: url(#${gc})`
+                }
+            )
+            return this.group;
+
+            /**
             const rect = pxsim.svg.child(this.group, "g");
             const innerRect = pxsim.svg.child(rect, "rect",
                 {cursor: '-webkit-grab',
                 fill: `url(#${gc})`,
-                width: 35,
-                height: 50
+                width: this.getInnerWidth(),
+                height: this.getInnerHeight()
             });
+
+            innerRect.setAttribute("transform", `translate(12, 0) scale(2)`);
 
             let pt = parent.createSVGPoint();
             let captured = false;
@@ -48,16 +80,10 @@ namespace pxsim.visuals {
                 }
             )
             return this.group;
+            **/
         }
 
-        getInnerWidth() {
-            return CONTROL_WIDTH;
-        }
-
-        getInnerHeight() {
-            return CONTROL_WIDTH;
-        }
-
+        /*
         updateState() {
             if (!this.visible) {
                 return;
@@ -75,6 +101,11 @@ namespace pxsim.visuals {
             const state = this.state;
             state.setColor((1-t)*100);
         }
+        **/
     }
 
 }
+
+// scaleFactor = 0-1
+// height = size of the element
+// top, left = x, y of top corner
