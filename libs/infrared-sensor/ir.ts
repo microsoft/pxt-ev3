@@ -23,7 +23,7 @@ const enum IrRemoteButton {
 
 const enum InfraredSensorEvent {
     //% block="object near"
-    ObjectNear = 1,
+    ObjectNear = 3,
     //% block="object detected"
     ObjectDetected = 2
 }
