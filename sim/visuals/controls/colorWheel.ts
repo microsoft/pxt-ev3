@@ -17,7 +17,7 @@ namespace pxsim.visuals {
         }
 
         private getReporterHeight() {
-            return 50;
+            return 58;
         }
 
         private getSliderWidth() {
@@ -26,6 +26,31 @@ namespace pxsim.visuals {
 
         private getSliderHeight() {
             return 111;
+        }
+
+        private getMax() {
+            // TODO
+            return 100;
+        }
+
+        updateState() {
+            if (!this.visible) {
+                return;
+            }
+            const node = this.state;
+            const percentage = node.getValue();
+            const inversePercentage = this.getMax() - percentage;
+            svg.setGradientValue(this.colorGradient, inversePercentage + "%");
+            this.reporter.textContent = `${parseFloat((percentage).toString()).toFixed(0)}`;
+        }
+
+        updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
+            let cur = svg.cursorPoint(pt, parent, ev);
+            const height = this.getSliderHeight();
+            const bBox = this.content.getBoundingClientRect();
+            let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
+            const state = this.state;
+            state.setColor(t * this.getMax());
         }
 
         getInnerView(parent: SVGSVGElement) {
@@ -39,7 +64,7 @@ namespace pxsim.visuals {
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
             const reporterGroup = pxsim.svg.child(this.group, "g");
-            reporterGroup.setAttribute("transform", `translate(${this.getWidth() / 2}, 42)`);
+            reporterGroup.setAttribute("transform", `translate(${this.getWidth() / 2}, 50)`);
             this.reporter = pxsim.svg.child(reporterGroup, "text", { 'text-anchor': 'middle', 'x': 0, 'y': '0', 'class': 'sim-text number large inverted' }) as SVGTextElement;
 
             const sliderGroup = pxsim.svg.child(this.group, "g");
@@ -54,6 +79,28 @@ namespace pxsim.visuals {
                     "style": `fill: url(#${gc})`
                 }
             )
+
+            let pt = parent.createSVGPoint();
+            let captured = false;
+            touchEvents(rect, ev => {
+                if (captured && (ev as MouseEvent).clientY) {
+                    ev.preventDefault();
+                    this.updateColorLevel(pt, parent, ev as MouseEvent);
+                }
+            }, ev => {
+                captured = true;
+                if ((ev as MouseEvent).clientY) {
+                    //rect.setAttribute('cursor', '-webkit-grabbing');
+                    this.updateColorLevel(pt, parent, ev as MouseEvent);
+                }
+            }, () => {
+                captured = false;
+                //rect.setAttribute('cursor', '-webkit-grab');
+            }, () => {
+                captured = false;
+                //rect.setAttribute('cursor', '-webkit-grab');
+            })
+
             return this.group;
 
             /**
