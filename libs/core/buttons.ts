@@ -116,7 +116,7 @@ namespace brick {
         //% blockId=buttonEvent block="on %button|%event"
         //% parts="brick"
         //% blockNamespace=brick
-        //% weight=99 blockGap=8
+        //% weight=99 blockGap=16
         //% group="Buttons"
         //% button.fieldEditor="brickbuttons"
         onEvent(ev: ButtonEvent, body: () => void) {

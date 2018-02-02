@@ -82,12 +82,12 @@ namespace sensors {
          * Forces a calibration of the gyro. Must be called when the sensor is completely still.
          */
         //% help=input/gyro/calibrate
-        //% block="%sensor|reset"
+        //% block="reset %sensor|"
         //% blockId=gyroReset  
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=50 blockGap=8        
+        //% weight=50        
         //% group="Gyro Sensor"
         reset(): void {
             if (this.calibrating) return; // already in calibration mode
