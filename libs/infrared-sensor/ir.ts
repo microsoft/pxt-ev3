@@ -225,7 +225,7 @@ namespace sensors {
         //% blockId=infraredGetProximity
         //% parts="infrared"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8   
+        //% weight=98 blockGap=8   
         //% group="Infrared Sensor"     
         proximity(): number {
             this._setMode(IrSensorMode.Proximity)
