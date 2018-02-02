@@ -1,4 +1,20 @@
 namespace pxsim.visuals {
+    export function normalizeId(prefix: string, svgId: string) {
+        return `${prefix}-${svgId}`;
+    }
+
+    export function normalizeXml(prefix: string, xml: string): string {
+        xml = xml.replace(/id=\"(.*?)\"/g, (m: string, id: string) => {
+            return `id="${normalizeId(prefix, id)}"`;
+        });
+        xml = xml.replace(/url\(#(.*?)\)/g, (m: string, id: string) => {
+            return `url(#${normalizeId(prefix, id)})`;
+        });
+        xml = xml.replace(/xlink:href=\"#(.*?)\"/g, (m: string, id: string) => {
+            return `xlink:href="#${normalizeId(prefix, id)}"`;
+        });
+        return xml;
+    }
 
     export class ModuleView extends View implements LayoutElement {
         protected content: SVGSVGElement;
@@ -9,21 +25,11 @@ namespace pxsim.visuals {
 
         constructor(protected xml: string, protected prefix: string, protected id: NodeType, protected port: NodeType) {
             super();
-            this.xml = this.normalizeXml(xml);
+            this.xml = normalizeXml(this.prefix, xml);
         }
 
         private normalizeXml(xml: string) {
-            const prefix = this.prefix;
-            xml = xml.replace(/id=\"(.*?)\"/g, (m: string, id: string) => {
-                return `id="${this.normalizeId(id)}"`;
-            });
-            xml = xml.replace(/url\(#(.*?)\)/g, (m: string, id: string) => {
-                return `url(#${this.normalizeId(id)})`;
-            });
-            xml = xml.replace(/xlink:href=\"#(.*?)\"/g, (m: string, id: string) => {
-                return `xlink:href="#${this.normalizeId(id)}"`;
-            });
-            return xml;
+            return pxsim.visuals.normalizeXml(this.prefix, xml);
         }
 
         protected normalizeId(svgId: string) {

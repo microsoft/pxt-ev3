@@ -129,7 +129,7 @@ namespace sensors {
          * @param ev the event to wait for
          */
         //% help=input/remote-infrared-beacon/pause-until
-        //% blockId=remotebuttonEvent block="pause until %button|%event"
+        //% blockId=remoteButtonPauseUntil block="pause until %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8

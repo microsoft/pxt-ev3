@@ -11,47 +11,47 @@ namespace pxsim.visuals {
 
     export class RemoteBeaconButtonsControl extends ControlView<InfraredSensorNode> {
         private group: SVGGElement;
-                
+        private id = Math.random().toString();
+
         getInnerView() {
             this.group = svg.elt("g") as SVGGElement;
-            this.group.setAttribute("transform", `translate(2, 2.5) scale(0.6)`)
+            this.group.setAttribute("transform", `scale(0.25, 0.25)`)
+            
+            const xml = pxsim.visuals.normalizeXml(this.id, pxsim.visuals.REMOVE_SVG);
+            const content = svg.parseString(xml);
+            this.group.appendChild(content);
 
-            const btnIds = [
-                InfraredRemoteButton.CenterBeacon, 
-                InfraredRemoteButton.TopLeft, 
-                InfraredRemoteButton.TopRight,
-                InfraredRemoteButton.BottomLeft,
-                InfraredRemoteButton.BottomRight];
-            const colors = ['#f12a21', '#ffd01b', '#006db3', '#00934b', '#6c2d00'];
+            const btns: Map<InfraredRemoteButton> = {
+                "center": InfraredRemoteButton.CenterBeacon,
+                "topleft": InfraredRemoteButton.TopLeft,
+                "topright": InfraredRemoteButton.TopRight,
+                "bottomleft": InfraredRemoteButton.BottomLeft,
+                "bottomright": InfraredRemoteButton.BottomRight
+            }
 
-            let cy = -4;
-            btnIds.forEach((cid, c) => {
-                const cx = c % 2 == 0 ? 2.2 : 8.2;
-                if (c % 2 == 0) cy += 5;
-                if (btnIds[c]) {
-                    const circle = pxsim.svg.child(this.group, "circle", { 'class': 'sim-color-grid-circle', 'cx': cx, 'cy': cy, 'r': '2', 'style': `fill: ${colors[c]}` });
-                    pointerEvents.down.forEach(evid => circle.addEventListener(evid, ev => {
-                        ev3board().remoteState.setPressed(cid, true);
-                    }));
-                    circle.addEventListener(pointerEvents.leave, ev => {
-                        ev3board().remoteState.setPressed(cid, false);
-                    });
-                    circle.addEventListener(pointerEvents.up, ev => {
-                        ev3board().remoteState.setPressed(cid, true);
-                    });
-                }
-
-            })
-
+            Object.keys(btns).forEach(bid => {
+                const cid = btns[bid];
+                const bel = content.getElementById(pxsim.visuals.normalizeId(this.id, bid));
+                bel.className += " sim-button";
+                pointerEvents.down.forEach(evid => bel.addEventListener(evid, ev => {
+                    ev3board().remoteState.setPressed(cid, true);
+                }));
+                bel.addEventListener(pointerEvents.leave, ev => {
+                    ev3board().remoteState.setPressed(cid, false);
+                });
+                bel.addEventListener(pointerEvents.up, ev => {
+                    ev3board().remoteState.setPressed(cid, false);
+                });
+            });
             return this.group;
         }
 
         getInnerWidth() {
-            return 10.2;
+            return 98.3;
         }
 
         getInnerHeight() {
-            return 15;
+            return 110.8;
         }
     }
 }
