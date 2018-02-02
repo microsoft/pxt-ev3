@@ -13,6 +13,7 @@ namespace pxsim {
         motorState: EV3MotorState;
         screenState: EV3ScreenState;
         audioState: AudioState;
+        remoteState: RemoteState;
 
         inputNodes: SensorNode[] = [];
         brickNode: BrickNode;
@@ -38,6 +39,7 @@ namespace pxsim {
             this.motorState = new EV3MotorState();
             this.screenState = new EV3ScreenState();
             this.audioState = new AudioState();
+            this.remoteState = new RemoteState();
         }
 
         receiveMessage(msg: SimulatorMessage) {

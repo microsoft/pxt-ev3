@@ -1,6 +1,9 @@
 /// <reference path="./sensor.ts"/>
 
 namespace pxsim {
+    export class RemoteState {
+    }
+
     export enum InfraredSensorMode {
         None = -1,
         Proximity = 0,

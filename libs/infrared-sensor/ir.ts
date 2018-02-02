@@ -54,29 +54,22 @@ namespace sensors {
         }
     }
 
-    let buttons: RemoteInfraredBeaconButton[]
-
-    export function irButton(id: InfraredRemoteButton): RemoteInfraredBeaconButton {
-        if (buttons == null) {
-            buttons = []
-            for (let i = 0; i < 5; ++i) {
-                buttons.push(new RemoteInfraredBeaconButton(new brick.Button()))
-            }
+    const __remoteButtons: RemoteInfraredBeaconButton[] = [];
+    function __irButton(id: InfraredRemoteButton): RemoteInfraredBeaconButton {
+        for(let i = 0; i < __remoteButtons.length; ++i) {
+            if (__remoteButtons[i].position == id)
+                return __remoteButtons[i];
         }
-
-        let num = -1
-        while (id) {
-            id >>= 1;
-            num++;
-        }
-        num = Math.clamp(0, buttons.length - 1, num)
-        return buttons[num]
+        const btn = new RemoteInfraredBeaconButton(id, new brick.Button());
+        __remoteButtons.push(btn);
+        return btn;
     }
 
     //% fixedInstances
     export class RemoteInfraredBeaconButton extends control.Component {
+        position: InfraredRemoteButton;
         private button: brick.Button;
-        constructor(button: brick.Button) {
+        constructor(position: InfraredRemoteButton, button: brick.Button) {
             super();
             this.button = button;
         }
@@ -130,6 +123,20 @@ namespace sensors {
         onEvent(ev: ButtonEvent, body: () => void) {
             this.button.onEvent(ev, body);
         }
+
+        /**
+         * Pauses until the given event is raised
+         * @param ev the event to wait for
+         */
+        //% help=input/remote-infrared-beacon/pause-until
+        //% blockId=remotebuttonEvent block="pause until %button|%event"
+        //% parts="remote"
+        //% blockNamespace=sensors
+        //% weight=99 blockGap=8
+        //% group="Remote Infrared Beacon"
+        pauseUntil(ev: ButtonEvent) {
+            this.button.pauseUntil(ev);
+        }
     }
 
     //% fixedInstances
@@ -141,7 +148,6 @@ namespace sensors {
             super(port)
             this._channel = InfraredRemoteChannel.Ch0
             this._proximityThreshold = new sensors.ThresholdDetector(this._id, 0, 100, 10, 90);
-            irButton(0); // ensure buttons
             this.setMode(InfraredSensorMode.Proximity);
         }
 
@@ -156,9 +162,9 @@ namespace sensors {
 
         _update(prev: number, curr: number) {
             if (this.mode == InfraredSensorMode.RemoteControl) {
-                for (let i = 0; i < buttons.length; ++i) {
+                for (let i = 0; i < __remoteButtons.length; ++i) {
                     let v = !!(curr & (1 << i))
-                    buttons[i]._update(v)
+                    __remoteButtons[i]._update(v)
                 }
             } else if (this.mode == InfraredSensorMode.Proximity) {
                 this._proximityThreshold.setLevel(curr);
@@ -283,29 +289,29 @@ namespace sensors {
      * Remote beacon (center) button.
      */
     //% whenUsed block="remote button center" weight=95 fixedInstance
-    export const remoteButtonCenter = irButton(InfraredRemoteButton.CenterBeacon)
+    export const remoteButtonCenter = __irButton(InfraredRemoteButton.CenterBeacon)
 
     /**
      * Remote top-left button.
      */
     //% whenUsed block="remote button top-left" weight=95 fixedInstance
-    export const remoteButtonTopLeft = irButton(InfraredRemoteButton.TopLeft)
+    export const remoteButtonTopLeft = __irButton(InfraredRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
     //% whenUsed block="remote button top-right" weight=95 fixedInstance
-    export const remoteButtonTopRight = irButton(InfraredRemoteButton.TopRight)
+    export const remoteButtonTopRight = __irButton(InfraredRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
     //% whenUsed block="remote button bottom-left" weight=95 fixedInstance
-    export const remoteButtonBottomLeft = irButton(InfraredRemoteButton.BottomLeft)
+    export const remoteButtonBottomLeft = __irButton(InfraredRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
     //% whenUsed block="remote button bottom-right" weight=95 fixedInstance
-    export const remoteButtonBottomRight = irButton(InfraredRemoteButton.BottomRight)
+    export const remoteButtonBottomRight = __irButton(InfraredRemoteButton.BottomRight)
 }
