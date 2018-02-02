@@ -1,23 +1,31 @@
-const enum IrSensorMode {
+const enum InfraredSensorMode {
     None = -1,
     Proximity = 0,
     Seek = 1,
     RemoteControl = 2,
 }
 
-const enum IrRemoteChannel {
+const enum InfraredRemoteChannel {
+    //% block="channel 0"
     Ch0 = 0, // top
+    //% block="channel 1"
     Ch1 = 1,
+    //% block="channel 2"
     Ch2 = 2,
+    //% block="channel 3"
     Ch3 = 3,
 }
 
-const enum IrRemoteButton {
-    None = 0x00,
+const enum InfraredRemoteButton {
+    //% block="center beacon"
     CenterBeacon = 0x01,
+    //% block="top left"
     TopLeft = 0x02,
+    //% block="bottom left"
     BottomLeft = 0x04,
+    //% block="top right"
     TopRight = 0x08,
+    //% block="bottom right"
     BottomRight = 0x10,
 }
 
@@ -31,56 +39,37 @@ const enum InfraredSensorEvent {
 namespace sensors {
     function mapButton(v: number) {
         switch (v) {
-            case 0: return IrRemoteButton.None
-            case 1: return IrRemoteButton.TopLeft
-            case 2: return IrRemoteButton.BottomLeft
-            case 3: return IrRemoteButton.TopRight
-            case 4: return IrRemoteButton.TopRight | IrRemoteButton.BottomRight
-            case 5: return IrRemoteButton.TopLeft | IrRemoteButton.TopRight
-            case 6: return IrRemoteButton.TopLeft | IrRemoteButton.BottomRight
-            case 7: return IrRemoteButton.BottomLeft | IrRemoteButton.TopRight
-            case 8: return IrRemoteButton.BottomLeft | IrRemoteButton.BottomRight
-            case 9: return IrRemoteButton.CenterBeacon
-            case 10: return IrRemoteButton.BottomLeft | IrRemoteButton.TopLeft
-            case 11: return IrRemoteButton.TopRight | IrRemoteButton.BottomRight
-            default: return IrRemoteButton.None
+            case 1: return InfraredRemoteButton.TopLeft
+            case 2: return InfraredRemoteButton.BottomLeft
+            case 3: return InfraredRemoteButton.TopRight
+            case 4: return InfraredRemoteButton.TopRight | InfraredRemoteButton.BottomRight
+            case 5: return InfraredRemoteButton.TopLeft | InfraredRemoteButton.TopRight
+            case 6: return InfraredRemoteButton.TopLeft | InfraredRemoteButton.BottomRight
+            case 7: return InfraredRemoteButton.BottomLeft | InfraredRemoteButton.TopRight
+            case 8: return InfraredRemoteButton.BottomLeft | InfraredRemoteButton.BottomRight
+            case 9: return InfraredRemoteButton.CenterBeacon
+            case 10: return InfraredRemoteButton.BottomLeft | InfraredRemoteButton.TopLeft
+            case 11: return InfraredRemoteButton.TopRight | InfraredRemoteButton.BottomRight
+            default: return 0;
         }
     }
 
-    let buttons: RemoteInfraredBeaconButton[]
-
-    function create(ir: InfraredSensor) {
-        // it's created by referencing it
-    }
-
-    export function irButton(id: IrRemoteButton): RemoteInfraredBeaconButton {
-        if (buttons == null) {
-            buttons = []
-            for (let i = 0; i < 5; ++i) {
-                buttons.push(new RemoteInfraredBeaconButton(new brick.Button()))
-            }
-
-            // this defeats our static allocation system
-            // make sure sensors are up
-            //create(infraredSensor1)
-            //create(infraredSensor2)
-            //create(infraredSensor3)
-            //create(infraredSensor4)
+    const __remoteButtons: RemoteInfraredBeaconButton[] = [];
+    function __irButton(id: InfraredRemoteButton): RemoteInfraredBeaconButton {
+        for(let i = 0; i < __remoteButtons.length; ++i) {
+            if (__remoteButtons[i].position == id)
+                return __remoteButtons[i];
         }
-
-        let num = -1
-        while (id) {
-            id >>= 1;
-            num++;
-        }
-        num = Math.clamp(0, buttons.length - 1, num)
-        return buttons[num]
+        const btn = new RemoteInfraredBeaconButton(id, new brick.Button());
+        __remoteButtons.push(btn);
+        return btn;
     }
 
     //% fixedInstances
     export class RemoteInfraredBeaconButton extends control.Component {
+        position: InfraredRemoteButton;
         private button: brick.Button;
-        constructor(button: brick.Button) {
+        constructor(position: InfraredRemoteButton, button: brick.Button) {
             super();
             this.button = button;
         }
@@ -134,40 +123,51 @@ namespace sensors {
         onEvent(ev: ButtonEvent, body: () => void) {
             this.button.onEvent(ev, body);
         }
+
+        /**
+         * Pauses until the given event is raised
+         * @param ev the event to wait for
+         */
+        //% help=input/remote-infrared-beacon/pause-until
+        //% blockId=remotebuttonEvent block="pause until %button|%event"
+        //% parts="remote"
+        //% blockNamespace=sensors
+        //% weight=99 blockGap=8
+        //% group="Remote Infrared Beacon"
+        pauseUntil(ev: ButtonEvent) {
+            this.button.pauseUntil(ev);
+        }
     }
 
     //% fixedInstances
     export class InfraredSensor extends internal.UartSensor {
-        private channel: IrRemoteChannel;
-        private proximityThreshold: sensors.ThresholdDetector;
+        private _channel: InfraredRemoteChannel;
+        private _proximityThreshold: sensors.ThresholdDetector;
 
         constructor(port: number) {
             super(port)
-            this.channel = IrRemoteChannel.Ch0
-            this.proximityThreshold = new sensors.ThresholdDetector(this._id, 0, 100, 10, 90);
-            irButton(0) // make sure buttons array is initalized
-
-            // and set the mode, as otherwise button events won't work
-            this.mode = IrSensorMode.RemoteControl;
+            this._channel = InfraredRemoteChannel.Ch0
+            this._proximityThreshold = new sensors.ThresholdDetector(this._id, 0, 100, 10, 90);
+            this.setMode(InfraredSensorMode.Proximity);
         }
 
         _query() {
-            if (this.mode == IrSensorMode.RemoteControl)
-                return mapButton(this.getNumber(NumberFormat.UInt8LE, this.channel));
-            else if (this.mode == IrSensorMode.Proximity) {
+            if (this.mode == InfraredSensorMode.RemoteControl)
+                return mapButton(this.getNumber(NumberFormat.UInt8LE, this._channel));
+            else if (this.mode == InfraredSensorMode.Proximity) {
                 return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
             }
             return 0
         }
 
         _update(prev: number, curr: number) {
-            if (this.mode == IrSensorMode.RemoteControl) {
-                for (let i = 0; i < buttons.length; ++i) {
+            if (this.mode == InfraredSensorMode.RemoteControl) {
+                for (let i = 0; i < __remoteButtons.length; ++i) {
                     let v = !!(curr & (1 << i))
-                    buttons[i]._update(v)
+                    __remoteButtons[i]._update(v)
                 }
-            } else if (this.mode == IrSensorMode.Proximity) {
-                this.proximityThreshold.setLevel(curr);
+            } else if (this.mode == InfraredSensorMode.Proximity) {
+                this._proximityThreshold.setLevel(curr);
             }
         }
 
@@ -175,13 +175,7 @@ namespace sensors {
             return DAL.DEVICE_TYPE_IR
         }
 
-        setRemoteChannel(c: IrRemoteChannel) {
-            c = Math.clamp(0, 3, c | 0)
-            this.channel = c
-            this.setMode(IrSensorMode.RemoteControl)
-        }
-
-        setMode(m: IrSensorMode) {
+        setMode(m: InfraredSensorMode) {
             this._setMode(m)
         }
 
@@ -197,7 +191,7 @@ namespace sensors {
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
         onEvent(event: InfraredSensorEvent, handler: () => void) {
-            this._setMode(IrSensorMode.Proximity)
+            this._setMode(InfraredSensorMode.Proximity)
             control.onEvent(this._id, event, handler);
         }
 
@@ -212,7 +206,7 @@ namespace sensors {
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
         pauseUntil(event: InfraredSensorEvent) {
-            this._setMode(IrSensorMode.Proximity)
+            this._setMode(InfraredSensorMode.Proximity)
             control.waitForEvent(this._id, event);
         }
 
@@ -228,32 +222,23 @@ namespace sensors {
         //% weight=98 blockGap=8   
         //% group="Infrared Sensor"     
         proximity(): number {
-            this._setMode(IrSensorMode.Proximity)
+            this._setMode(InfraredSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
         /**
-         * Get the remote commandreceived the infrared sensor.
-         * @param sensor the infrared sensor
+         * Sets the remote channel to listen from
+         * @param channel the channel to listen
          */
-        //% help=input/infrared/remote-command
-        //% block="%sensor|remote command"
-        //% blockId=infraredGetRemoteCommand
-        //% parts="infrared"
         //% blockNamespace=sensors
+        //% blockId=irSetRemoteChannel block="set %sensor|remote channel to %channel"
         //% weight=65       
-        //% group="Infrared Sensor"     
-        remoteCommand(): number {
-            this._setMode(IrSensorMode.RemoteControl)
-            return this.getNumber(NumberFormat.UInt8LE, this.channel)
+        //% group="Remote Infrared Beacon"
+        setRemoteChannel(channel: InfraredRemoteChannel) {
+            this.setMode(InfraredSensorMode.RemoteControl)
+            channel = Math.clamp(0, 3, channel | 0)
+            this._channel = channel;
         }
-
-        // TODO
-        getDirectionAndDistance() {
-            this._setMode(IrSensorMode.Seek)
-            return this.getNumber(NumberFormat.UInt16LE, this.channel * 2)
-        }
-
 
         /**
          * Sets a threshold value
@@ -263,11 +248,11 @@ namespace sensors {
         //% blockId=irSetThreshold block="set %sensor|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=49
         //% value.min=0 value.max=100
-        setThreshold(condition: InfraredSensorEvent, value: number) {
+        setPromixityThreshold(condition: InfraredSensorEvent, value: number) {
             if (condition == InfraredSensorEvent.ObjectNear)
-                this.proximityThreshold.setLowThreshold(value)
+                this._proximityThreshold.setLowThreshold(value)
             else
-                this.proximityThreshold.setHighThreshold(value);
+                this._proximityThreshold.setHighThreshold(value);
         }
 
         /**
@@ -277,9 +262,15 @@ namespace sensors {
         //% blockId=irGetThreshold block="%sensor|%condition"
         //% group="Threshold" blockGap=8 weight=49
         //% sensor.fieldEditor="ports"
-        threshold(condition: InfraredSensorEvent): number {
-            return this.proximityThreshold.threshold(<ThresholdState><number>LightCondition.Dark);
-        }        
+        proximityThreshold(condition: InfraredSensorEvent): number {
+            return this._proximityThreshold.threshold(<ThresholdState><number>LightCondition.Dark);
+        }
+
+        // TODO
+        private getDirectionAndDistance() {
+            this._setMode(InfraredSensorMode.Seek)
+            return this.getNumber(NumberFormat.UInt16LE, this._channel * 2)
+        }
     }
 
     //% fixedInstance whenUsed block="infrared 1" jres=icons.port1
@@ -298,29 +289,29 @@ namespace sensors {
      * Remote beacon (center) button.
      */
     //% whenUsed block="remote button center" weight=95 fixedInstance
-    export const remoteButtonCenter = irButton(IrRemoteButton.CenterBeacon)
+    export const remoteButtonCenter = __irButton(InfraredRemoteButton.CenterBeacon)
 
     /**
      * Remote top-left button.
      */
     //% whenUsed block="remote button top-left" weight=95 fixedInstance
-    export const remoteButtonTopLeft = irButton(IrRemoteButton.TopLeft)
+    export const remoteButtonTopLeft = __irButton(InfraredRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
     //% whenUsed block="remote button top-right" weight=95 fixedInstance
-    export const remoteButtonTopRight = irButton(IrRemoteButton.TopRight)
+    export const remoteButtonTopRight = __irButton(InfraredRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
     //% whenUsed block="remote button bottom-left" weight=95 fixedInstance
-    export const remoteButtonBottomLeft = irButton(IrRemoteButton.BottomLeft)
+    export const remoteButtonBottomLeft = __irButton(InfraredRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
     //% whenUsed block="remote button bottom-right" weight=95 fixedInstance
-    export const remoteButtonBottomRight = irButton(IrRemoteButton.BottomRight)
+    export const remoteButtonBottomRight = __irButton(InfraredRemoteButton.BottomRight)
 }
