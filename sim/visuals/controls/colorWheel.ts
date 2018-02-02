@@ -3,7 +3,6 @@ namespace pxsim.visuals {
     export class ColorWheelControl extends ControlView<ColorSensorNode> {
         private group: SVGGElement;
         private colorGradient: SVGLinearGradientElement;
-        private defs: SVGDefsElement;
         private reporter: SVGTextElement;
         private rect: SVGElement;
 
@@ -51,12 +50,11 @@ namespace pxsim.visuals {
             state.setColor(t * this.getMax());
         }
 
-        getInnerView(parent: SVGSVGElement) {
-            this.defs = <SVGDefsElement>svg.child(this.element, "defs", {});
+        getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
             this.group = svg.elt("g") as SVGGElement;
 
             let gc = "gradient-color";
-            this.colorGradient = svg.linearGradient(this.defs, gc, false);
+            this.colorGradient = svg.linearGradient(globalDefs, gc, false);
             svg.setGradientValue(this.colorGradient, "50%");
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
