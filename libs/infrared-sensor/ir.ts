@@ -23,7 +23,7 @@ const enum IrRemoteButton {
 
 const enum InfraredSensorEvent {
     //% block="object near"
-    ObjectNear = 1,
+    ObjectNear = 3,
     //% block="object detected"
     ObjectDetected = 2
 }
@@ -60,11 +60,12 @@ namespace sensors {
                 buttons.push(new RemoteInfraredBeaconButton(new brick.Button()))
             }
 
+            // this defeats our static allocation system
             // make sure sensors are up
-            create(infraredSensor1)
-            create(infraredSensor2)
-            create(infraredSensor3)
-            create(infraredSensor4)
+            //create(infraredSensor1)
+            //create(infraredSensor2)
+            //create(infraredSensor3)
+            //create(infraredSensor4)
         }
 
         let num = -1
@@ -196,6 +197,7 @@ namespace sensors {
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
         onEvent(event: InfraredSensorEvent, handler: () => void) {
+            this._setMode(IrSensorMode.Proximity)
             control.onEvent(this._id, event, handler);
         }
 
@@ -210,6 +212,7 @@ namespace sensors {
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
         pauseUntil(event: InfraredSensorEvent) {
+            this._setMode(IrSensorMode.Proximity)
             control.waitForEvent(this._id, event);
         }
 
@@ -222,7 +225,7 @@ namespace sensors {
         //% blockId=infraredGetProximity
         //% parts="infrared"
         //% blockNamespace=sensors
-        //% weight=65 blockGap=8   
+        //% weight=98 blockGap=8   
         //% group="Infrared Sensor"     
         proximity(): number {
             this._setMode(IrSensorMode.Proximity)
