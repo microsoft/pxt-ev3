@@ -231,7 +231,7 @@ namespace pxsim.visuals {
                     break;
                 }
                 case NodeType.InfraredSensor: {
-                    const state = ev3board().getInputNodes()[0] as InfraredSensorNode;
+                    const state = ev3board().getInputNodes()[port] as InfraredSensorNode;
                     if (state.getMode() == InfraredSensorMode.Proximity)
                         view = new ProximitySliderControl(this.element, this.defs, state, port);
                     else if (state.getMode() == InfraredSensorMode.RemoteControl)
