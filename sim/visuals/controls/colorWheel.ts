@@ -93,8 +93,8 @@ namespace pxsim.visuals {
                     "stroke-dasharray": "5, 3",
                     "x1": 0,
                     "x2": 62,
-                    "y1": 69,
-                    "y2": 69,
+                    "y1": 105,
+                    "y2": 105,
                     "style": `stroke-width: 2; stroke: black`
                 }
             )
@@ -104,8 +104,8 @@ namespace pxsim.visuals {
                     "stroke-dasharray": "5, 3",
                     "x1": 0,
                     "x2": 62,
-                    "y1": 57,
-                    "y2": 57,
+                    "y1": 89,
+                    "y2": 89,
                     "style": `stroke-width: 2; stroke: black`
                 }
             )
