@@ -76,28 +76,6 @@ namespace pxsim.visuals {
             )
             this.rect = rect;
 
-            const lowThreshold = pxsim.svg.child(sliderGroup, "line",
-                {
-                    "stroke-dasharray": "5, 3",
-                    "x1": 0,
-                    "x2": 62,
-                    "y1": 105,
-                    "y2": 105,
-                    "style": `stroke-width: 2; stroke: black`
-                }
-            )
-
-            const highThreshold = pxsim.svg.child(sliderGroup, "line",
-                {
-                    "stroke-dasharray": "5, 3",
-                    "x1": 0,
-                    "x2": 62,
-                    "y1": 89,
-                    "y2": 89,
-                    "style": `stroke-width: 2; stroke: black`
-                }
-            )
-
             let pt = parent.createSVGPoint();
             let captured = false;
             touchEvents(rect, ev => {
