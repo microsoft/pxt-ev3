@@ -197,6 +197,7 @@ namespace sensors {
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
         onEvent(event: InfraredSensorEvent, handler: () => void) {
+            this._setMode(IrSensorMode.Proximity)
             control.onEvent(this._id, event, handler);
         }
 
@@ -211,6 +212,7 @@ namespace sensors {
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
         pauseUntil(event: InfraredSensorEvent) {
+            this._setMode(IrSensorMode.Proximity)
             control.waitForEvent(this._id, event);
         }
 
