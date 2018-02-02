@@ -37,7 +37,7 @@ namespace pxsim.visuals {
                         ev3board().remoteState.setPressed(cid, false);
                     });
                     circle.addEventListener(pointerEvents.up, ev => {
-                        ev3board().remoteState.setPressed(cid, true);
+                        ev3board().remoteState.setPressed(cid, false);
                     });
                 }
 
