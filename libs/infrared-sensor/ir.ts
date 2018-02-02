@@ -294,34 +294,33 @@ namespace sensors {
     //% fixedInstance whenUsed block="infrared 4" jres=icons.port4
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
-
     /**
      * Remote beacon (center) button.
      */
-    //% whenUsed block="center" weight=95 fixedInstance
+    //% whenUsed block="remote button center" weight=95 fixedInstance
     export const remoteButtonCenter = irButton(IrRemoteButton.CenterBeacon)
 
     /**
      * Remote top-left button.
      */
-    //% whenUsed block="top-left" weight=95 fixedInstance
+    //% whenUsed block="remote button top-left" weight=95 fixedInstance
     export const remoteButtonTopLeft = irButton(IrRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
-    //% whenUsed block="top-right" weight=95 fixedInstance
+    //% whenUsed block="remote button top-right" weight=95 fixedInstance
     export const remoteButtonTopRight = irButton(IrRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
-    //% whenUsed block="bottom-left" weight=95 fixedInstance
+    //% whenUsed block="remote button bottom-left" weight=95 fixedInstance
     export const remoteButtonBottomLeft = irButton(IrRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
-    //% whenUsed block="bottom-right" weight=95 fixedInstance
+    //% whenUsed block="remote button bottom-right" weight=95 fixedInstance
     export const remoteButtonBottomRight = irButton(IrRemoteButton.BottomRight)
 }
