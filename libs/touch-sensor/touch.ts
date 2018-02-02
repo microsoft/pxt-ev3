@@ -34,7 +34,7 @@ namespace sensors {
         //% parts="touch"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=99 blockGap=8
+        //% weight=99 blockGap=12
         //% group="Touch Sensor"
         onEvent(ev: ButtonEvent, body: () => void) {
             this.button.onEvent(ev, body)
@@ -50,7 +50,7 @@ namespace sensors {
         //% parts="touch"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=98 blockGap=8
+        //% weight=98 blockGap=12
         //% group="Touch Sensor"
         pauseUntil(ev: ButtonEvent) {
             this.button.pauseUntil(<ButtonEvent><number>ev);
@@ -66,7 +66,7 @@ namespace sensors {
         //% parts="touch"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=81
+        //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isPressed() {
             return this.button.isPressed();
@@ -82,7 +82,7 @@ namespace sensors {
         //% parts="touch"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=81 blockGap=8
+        //% weight=81
         //% group="Touch Sensor"
         wasPressed() {
             return this.button.wasPressed();
