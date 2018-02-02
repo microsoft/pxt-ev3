@@ -113,7 +113,8 @@ namespace pxsim.visuals {
             let t = Math.max(0, Math.min(1, (ProximitySliderControl.SLIDER_HANDLE_HEIGHT + height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height))
 
             const state = this.state;
-            state.setPromixity((1 - t) * (this.getMax()));
+            const v = Math.floor((1 - t) * (this.getMax()));
+            state.setPromixity(v);
         }
 
         private getMin() {
