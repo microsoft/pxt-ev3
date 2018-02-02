@@ -120,15 +120,15 @@ namespace pxsim.visuals {
             }, ev => {
                 captured = true;
                 if ((ev as MouseEvent).clientY) {
-                    //rect.setAttribute('cursor', '-webkit-grabbing');
+                    rect.setAttribute('cursor', '-webkit-grabbing');
                     this.updateColorLevel(pt, parent, ev as MouseEvent);
                 }
             }, () => {
                 captured = false;
-                //rect.setAttribute('cursor', '-webkit-grab');
+                rect.setAttribute('cursor', '-webkit-grab');
             }, () => {
                 captured = false;
-                //rect.setAttribute('cursor', '-webkit-grab');
+                rect.setAttribute('cursor', '-webkit-grab');
             })
 
             return this.group;
