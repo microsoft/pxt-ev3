@@ -8,6 +8,9 @@ namespace pxsim.visuals {
         private defs: SVGDefsElement;
         private reporter: SVGTextElement;
 
+        private rect: SVGElement;
+        private sliderGroup: SVGElement;
+
         getInnerWidth() {
             return 111;
         }
@@ -46,8 +49,10 @@ namespace pxsim.visuals {
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
-            const height = this.getSliderHeight();
-            const bBox = this.content.getBoundingClientRect();
+            //const height = this.getSliderHeight();
+            //const bBox = this.content.getBoundingClientRect();
+            const bBox = this.rect.getBoundingClientRect();
+            const height = bBox.height;
             let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
             const state = this.state;
             state.setColor(t * this.getMax());
@@ -69,6 +74,7 @@ namespace pxsim.visuals {
 
             const sliderGroup = pxsim.svg.child(this.group, "g");
             sliderGroup.setAttribute("transform", `translate(${this.getWidth() / 2 - this.getSliderWidth() / 2}, ${this.getReporterHeight()})`);
+            this.sliderGroup = sliderGroup;
 
             const rect = pxsim.svg.child(sliderGroup, "rect",
                 {
@@ -79,6 +85,8 @@ namespace pxsim.visuals {
                     "style": `fill: url(#${gc})`
                 }
             )
+
+            this.rect = rect;
 
             const lowThreshold = pxsim.svg.child(sliderGroup, "line",
                 {
