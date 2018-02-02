@@ -60,11 +60,12 @@ namespace sensors {
                 buttons.push(new RemoteInfraredBeaconButton(new brick.Button()))
             }
 
+            // this defeats our static allocation system
             // make sure sensors are up
-            create(infraredSensor1)
-            create(infraredSensor2)
-            create(infraredSensor3)
-            create(infraredSensor4)
+            //create(infraredSensor1)
+            //create(infraredSensor2)
+            //create(infraredSensor3)
+            //create(infraredSensor4)
         }
 
         let num = -1
