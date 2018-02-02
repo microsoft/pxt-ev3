@@ -261,7 +261,7 @@ namespace sensors {
         }
 
         // TODO
-        getDirectionAndDistance() {
+        private getDirectionAndDistance() {
             this._setMode(InfraredSensorMode.Seek)
             return this.getNumber(NumberFormat.UInt16LE, this._channel * 2)
         }
