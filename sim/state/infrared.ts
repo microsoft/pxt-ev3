@@ -71,7 +71,11 @@ namespace pxsim {
         }
 
         getValue() {
-            return this.proximity;
+            switch(this.mode) {
+                case InfraredSensorMode.Proximity: return this.proximity;
+                case InfraredSensorMode.RemoteControl: return ev3board().remoteState.unmapButtons();
+                default: return 0;
+            }
         }
     }
 }
