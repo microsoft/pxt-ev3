@@ -1,17 +1,17 @@
 namespace pxsim.visuals {
+    export function normalizeId(prefix: string, svgId: string) {
+        return `${prefix}-${svgId}`;
+    }
 
     export function normalizeXml(prefix: string, xml: string): string {
-        function normalizeId(svgId: string) {
-            return `${this.prefix}-${svgId}`;
-        }
         xml = xml.replace(/id=\"(.*?)\"/g, (m: string, id: string) => {
-            return `id="${normalizeId(id)}"`;
+            return `id="${normalizeId(prefix, id)}"`;
         });
         xml = xml.replace(/url\(#(.*?)\)/g, (m: string, id: string) => {
-            return `url(#${normalizeId(id)})`;
+            return `url(#${normalizeId(prefix, id)})`;
         });
         xml = xml.replace(/xlink:href=\"#(.*?)\"/g, (m: string, id: string) => {
-            return `xlink:href="#${normalizeId(id)}"`;
+            return `xlink:href="#${normalizeId(prefix, id)}"`;
         });
         return xml;
     }

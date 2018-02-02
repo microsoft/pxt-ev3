@@ -1,22 +1,21 @@
 namespace pxsim.visuals {
     export const REMOVE_SVG = `
     <svg xmlns="http://www.w3.org/2000/svg" width="371.7" height="418.7" viewBox="0 0 98.3 110.8" id="svg8">
-  <g id="layer1" transform="translate(0 -186.2)" stroke-width=".5">
-    <g id="g939" transform="translate(-44.5 129.7)">
-      <rect rx="2.1" y="56.7" x="56.6" height="9.6" width="72.7" id="rect90-3" fill="#666" stroke="#000"/>
-      <rect rx="2.1" y="157.4" x="56.7" height="9.6" width="73.1" id="rect90" stroke="#000"/>
-      <path id="rect10" d="M58.8 63.4c-1.1 0-2.1 1-2.1 2.2V81h-9.8c-1.2 0-2.1 1-2.1 2.2v73.6c0 1.2 1 2.2 2.1 2.2h9.8v.5c0 1.2 1 2.2 2.1 2.2h68.3c1.2 0 2.2-1 2.2-2.2v-.5h11.1c1.2 0 2.2-1 2.2-2.2V83.2c0-1.2-1-2.2-2.2-2.2h-11.1V65.6c0-1.2-1-2.2-2.2-2.2z" fill="#fff" stroke="#000"/>
-      <path id="topLeft" d="M75.5 68.1c7.3 0 7.7 8.2 7.7 9.4v17.4c0 1.2-1 2.1-2.2 2.1H70.2C69 97 68 96 68 95V78c0-1.2.2-9.8 7.5-9.8z" fill="#ccc" stroke="#000"/>
-      <path id="rect12-8" d="M110 68.1c7.3 0 7.7 8.2 7.7 9.4v17.4c0 1.2-1 2.1-2.2 2.1h-10.8c-1.2 0-2.1-1-2.1-2.1v-17c0-1.2.2-9.8 7.4-9.8z" fill="#ccc" stroke="#000"/>
-      <path id="bottomRight" d="M110.2 136.5c-7.3 0-7.6-8.2-7.6-9.4v-17.3c0-1.2 1-2.2 2.1-2.2h10.8c1.2 0 2.2 1 2.2 2.2v17c0 1.1-.2 9.7-7.5 9.7z" fill="#ccc" stroke="#000"/>
-      <path id="bottomLeft" d="M75.7 136.5c-7.3 0-7.7-8.2-7.7-9.4v-17.3c0-1.2 1-2.2 2.2-2.2H81c1.2 0 2.2 1 2.2 2.2v17c0 1.1-.3 9.7-7.5 9.7z" fill="#ccc" stroke="#000"/>
-      <path id="rect84" d="M72 143.9h40.1c1.2 0 5.4 6.4 5.4 7.6v5.7c0 1.2-1 2.2-2.2 2.2H70c-1.2 0-2.1-1-2.1-2.2v-5.4c0-1.2 3-8 4.1-8z" fill="#b3b3b3" stroke="#000"/>
-      <rect ry="1.3" y="101.4" x="67.6" height="3.2" width="15.1" id="rect107" fill="#247aff"/>
-      <rect ry="1.3" y="101.4" x="102.7" height="3.2" width="15.1" id="rect107-1" fill="#ff242b"/>
+    <g id="layer1" transform="translate(0 -186.2)">
+      <rect id="rect90-3" width="72.7" height="9.6" x="12.1" y="186.5" rx="2.1" fill="#666" stroke="#000" stroke-width=".5"/>
+      <rect id="rect90" width="73.1" height="9.6" x="12.2" y="287.1" rx="2.1" stroke="#000" stroke-width=".5"/>
+      <path d="M14.3 193.2c-1.1 0-2.1 1-2.1 2.1v15.5H2.4c-1.2 0-2.1 1-2.1 2.1v73.7c0 1.1 1 2.1 2.1 2.1h9.8v.6c0 1.2 1 2.1 2.1 2.1h68.3c1.2 0 2.2-1 2.2-2.1v-.6h11.1c1.2 0 2.2-1 2.2-2.1v-73.7c0-1.1-1-2.1-2.2-2.1H84.8v-15.5c0-1.2-1-2.1-2.2-2.1z" id="rect10" fill="#fff" stroke="#000" stroke-width="1.1"/>
+      <path d="M31 197.9c7.3 0 7.7 8.2 7.7 9.3v17.4c0 1.2-1 2.2-2.2 2.2H25.7c-1.2 0-2.2-1-2.2-2.2v-17c0-1.1.2-9.7 7.5-9.7z" id="topleft" fill="#ccc" stroke="#000" stroke-width="1.1"/>
+      <path d="M65.5 197.9c7.3 0 7.7 8.2 7.7 9.3v17.4c0 1.2-1 2.2-2.2 2.2H60.2c-1.2 0-2.1-1-2.1-2.2v-17c0-1.1.2-9.7 7.4-9.7z" id="topright" fill="#ccc" stroke="#000" stroke-width="1.1"/>
+      <path d="M65.7 266.3c-7.3 0-7.6-8.2-7.6-9.4v-17.4c0-1.2 1-2.2 2.1-2.2H71c1.2 0 2.2 1 2.2 2.2v17c0 1.2-.2 9.8-7.5 9.8z" id="bottomright" fill="#ccc" stroke="#000" stroke-width="1.1"/>
+      <path d="M31.2 266.3c-7.3 0-7.7-8.2-7.7-9.4v-17.4c0-1.2 1-2.2 2.2-2.2h10.8c1.2 0 2.2 1 2.2 2.2v17c0 1.2-.3 9.8-7.5 9.8z" id="bottomleft" fill="#ccc" stroke="#000" stroke-width="1.1"/>
+      <path d="M27.5 273.6l40.1.1c1.2 0 5.4 6.3 5.4 7.5v5.8c0 1.1-1 2.1-2.2 2.1H25.5c-1.2 0-2.1-1-2.1-2.1v-5.5c0-1.2 3-7.9 4.1-7.9z" id="center" fill="#b3b3b3" stroke="#000" stroke-width="1.1"/>
+      <rect id="rect107" width="15.1" height="3.2" x="23.1" y="231.1" ry="1.3" fill="#247aff" stroke-width=".5"/>
+      <rect id="rect107-1" width="15.1" height="3.2" x="58.2" y="231.1" ry="1.3" fill="#ff242b" stroke-width=".5"/>
+      <circle id="path941" cx="49.2" cy="263.3" r="2.5" fill="#ff242b" stroke-width=".5"/>
+      <circle id="path943" cx="49.2" cy="263.3" r="4.5" fill="none" stroke="#949494" stroke-width=".5"/>
     </g>
-    <circle id="path941" cx="49.2" cy="263.3" r="2.5" fill="#ff242b"/>
-    <circle id="path943" cx="49.2" cy="263.3" r="4.5" fill="none" stroke="#949494"/>
-  </g>
-</svg>
-`;
+  </svg>
+  
+  `;
 }
