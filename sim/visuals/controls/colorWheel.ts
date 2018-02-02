@@ -80,13 +80,24 @@ namespace pxsim.visuals {
                 }
             )
 
-            const thresholdLine = pxsim.svg.child(sliderGroup, "line",
+            const lowThreshold = pxsim.svg.child(sliderGroup, "line",
                 {
                     "stroke-dasharray": "5, 3",
                     "x1": 0,
                     "x2": 62,
-                    "y1": 75,
-                    "y2": 75,
+                    "y1": 69,
+                    "y2": 69,
+                    "style": `stroke-width: 2; stroke: black`
+                }
+            )
+
+            const highThreshold = pxsim.svg.child(sliderGroup, "line",
+                {
+                    "stroke-dasharray": "5, 3",
+                    "x1": 0,
+                    "x2": 62,
+                    "y1": 57,
+                    "y2": 57,
                     "style": `stroke-width: 2; stroke: black`
                 }
             )
