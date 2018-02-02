@@ -6,10 +6,14 @@ const enum InfraredSensorMode {
 }
 
 const enum InfraredRemotechannel {    
+    //% block="channel 0"
     Ch0 = 0, // top
+    //% block="channel 1"
     Ch1 = 1,
+    //% block="channel 2"
     Ch2 = 2,
-    Ch3 = 3,
+    //% block="channel 3"
+    Ch3 = 3
 }
 
 const enum InfraredRemoteButton {
