@@ -276,6 +276,8 @@ namespace pxsim.visuals {
                     view = new ColorSensorView(port); break;
                 case NodeType.UltrasonicSensor:
                     view = new UltrasonicSensorView(port); break;
+                case NodeType.InfraredSensor:
+                    view = new InfraredView(port); break;
                 case NodeType.Brick:
                     //return new BrickView(0);
                     view = this.layoutView.getBrick(); break;

@@ -37,8 +37,8 @@ namespace pxsim.visuals {
 
             this.slider = pxsim.svg.child(sliderGroup, "g", { "transform": "translate(0,0)" }) as SVGGElement;
             const sliderInner = pxsim.svg.child(this.slider, "g");
-            pxsim.svg.child(sliderInner, "rect", { 'width': this.getSliderWidth(), 'height': DistanceSliderControl.SLIDER_HANDLE_HEIGHT, 'rx': '2', 'ry': '2', 'style': 'fill: #f12a21' });
-            pxsim.svg.child(sliderInner, "rect", { 'x': '0.5', 'y': '0.5', 'width': this.getSliderWidth() - 1, 'height': DistanceSliderControl.SLIDER_HANDLE_HEIGHT - 1, 'rx': '1.5', 'ry': '1.5', 'style': 'fill: none;stroke: #b32e29' });
+            pxsim.svg.child(sliderInner, "rect", { 'width': this.getSliderWidth(), 'height': ProximitySliderControl.SLIDER_HANDLE_HEIGHT, 'rx': '2', 'ry': '2', 'style': 'fill: #f12a21' });
+            pxsim.svg.child(sliderInner, "rect", { 'x': '0.5', 'y': '0.5', 'width': this.getSliderWidth() - 1, 'height': ProximitySliderControl.SLIDER_HANDLE_HEIGHT - 1, 'rx': '1.5', 'ry': '1.5', 'style': 'fill: none;stroke: #b32e29' });
 
             const dragSurface = svg.child(this.group, "rect", {
                 x: 0,
