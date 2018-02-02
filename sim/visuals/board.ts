@@ -230,6 +230,11 @@ namespace pxsim.visuals {
                     view = new DistanceSliderControl(this.element, this.defs, state, port);
                     break;
                 }
+                case NodeType.InfraredSensor: {
+                    const state = ev3board().getInputNodes()[0] as InfraredSensorNode;
+                    if (state.getMode() == InfraredSensorMode.Proximity)
+                        view = new ProximitySliderControl(this.element, this.defs, state, port);
+                }
                 case NodeType.GyroSensor: {
                     const state = ev3board().getInputNodes()[port] as GyroSensorNode;
                     view = new RotationSliderControl(this.element, this.defs, state, port);
