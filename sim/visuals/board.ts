@@ -234,6 +234,7 @@ namespace pxsim.visuals {
                     const state = ev3board().getInputNodes()[0] as InfraredSensorNode;
                     if (state.getMode() == InfraredSensorMode.Proximity)
                         view = new ProximitySliderControl(this.element, this.defs, state, port);
+                    break;
                 }
                 case NodeType.GyroSensor: {
                     const state = ev3board().getInputNodes()[port] as GyroSensorNode;
@@ -312,11 +313,11 @@ namespace pxsim.visuals {
 
             // Add EV3 module element
             const brickCloseIcon = this.getCloseIconView();
-            brickCloseIcon.registerClick(ev => {                
-                this.layoutView.unselectBrick();                
+            brickCloseIcon.registerClick(ev => {
+                this.layoutView.unselectBrick();
                 this.resize();
             });
-            const brick =new BrickView(-1);
+            const brick = new BrickView(-1);
             brick.setSelected(EV3View.isPreviousBrickSelected());
             this.layoutView.setBrick(brick, brickCloseIcon);
 
