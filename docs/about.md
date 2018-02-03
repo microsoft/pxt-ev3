@@ -19,7 +19,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
 
 The editor work in [most modern browsers](/browsers), work [offline](/offline) once loaded and do not require any installation. 
 
-## [Compile and Flash: Your Program!](/device/usb)
+## Compile and Flash: Your Program!
 
 When you have your code ready, you connect your @boardname@ to a computer via a USB cable 
 so it appears as a mounted drive (named **EV3**). 
