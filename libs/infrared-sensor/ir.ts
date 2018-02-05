@@ -164,7 +164,7 @@ namespace sensors {
         _update(prev: number, curr: number) {
             if (this.mode == InfraredSensorMode.RemoteControl) {
                 for (let i = 0; i < __remoteButtons.length; ++i) {
-                    let v = !!(curr & (1 << i))
+                    const v = !!(curr & __remoteButtons[i].position);
                     __remoteButtons[i]._update(v)
                 }
             } else if (this.mode == InfraredSensorMode.Proximity) {
