@@ -28,11 +28,11 @@ namespace pxsim.visuals {
                 "bottomleft": InfraredRemoteButton.BottomLeft,
                 "bottomright": InfraredRemoteButton.BottomRight
             }
-
+            
             Object.keys(btns).forEach(bid => {
                 const cid = btns[bid];
                 const bel = content.getElementById(pxsim.visuals.normalizeId(this.id, bid));
-                bel.className += " sim-button";
+                bel.setAttribute("class", "sim-button");
                 pointerEvents.down.forEach(evid => bel.addEventListener(evid, ev => {
                     ev3board().remoteState.setPressed(cid, true);
                 }));
