@@ -39,10 +39,10 @@ const enum InfraredSensorEvent {
 namespace sensors {
     function mapButton(v: number) {
         switch (v) {
-            case 1: return InfraredRemoteButton.TopLeft
-            case 2: return InfraredRemoteButton.BottomLeft
-            case 3: return InfraredRemoteButton.TopRight
-            case 4: return InfraredRemoteButton.TopRight | InfraredRemoteButton.BottomRight
+            case 1: return InfraredRemoteButton.TopLeft;
+            case 2: return InfraredRemoteButton.BottomLeft;
+            case 3: return InfraredRemoteButton.TopRight;
+            case 4: return InfraredRemoteButton.BottomRight;
             case 5: return InfraredRemoteButton.TopLeft | InfraredRemoteButton.TopRight
             case 6: return InfraredRemoteButton.TopLeft | InfraredRemoteButton.BottomRight
             case 7: return InfraredRemoteButton.BottomLeft | InfraredRemoteButton.TopRight
@@ -71,6 +71,7 @@ namespace sensors {
         private button: brick.Button;
         constructor(position: InfraredRemoteButton, button: brick.Button) {
             super();
+            this.position = position;
             this.button = button;
         }
 
@@ -294,24 +295,24 @@ namespace sensors {
     /**
      * Remote top-left button.
      */
-    //% whenUsed block="remote button top-left" weight=95 fixedInstance
+    //% whenUsed block="remote button top left" weight=95 fixedInstance
     export const remoteButtonTopLeft = __irButton(InfraredRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
-    //% whenUsed block="remote button top-right" weight=95 fixedInstance
+    //% whenUsed block="remote button top right" weight=95 fixedInstance
     export const remoteButtonTopRight = __irButton(InfraredRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
-    //% whenUsed block="remote button bottom-left" weight=95 fixedInstance
+    //% whenUsed block="remote button bottom left" weight=95 fixedInstance
     export const remoteButtonBottomLeft = __irButton(InfraredRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
-    //% whenUsed block="remote button bottom-right" weight=95 fixedInstance
+    //% whenUsed block="remote button bottom right" weight=95 fixedInstance
     export const remoteButtonBottomRight = __irButton(InfraredRemoteButton.BottomRight)
 }
