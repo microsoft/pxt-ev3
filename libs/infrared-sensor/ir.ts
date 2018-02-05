@@ -68,15 +68,15 @@ namespace sensors {
     //% fixedInstances
     export class RemoteInfraredBeaconButton extends control.Component {
         position: InfraredRemoteButton;
-        private button: brick.Button;
+        private _button: brick.Button;
         constructor(position: InfraredRemoteButton, button: brick.Button) {
             super();
             this.position = position;
-            this.button = button;
+            this._button = button;
         }
 
         _update(curr: boolean) {
-            this.button._update(curr);
+            this._button._update(curr);
         }
 
         /**
@@ -91,7 +91,7 @@ namespace sensors {
         //% weight=81 blockGap=8
         //% group="Remote Infrared Beacon"
         isPressed() {
-            return this.button.isPressed();
+            return this._button.isPressed();
         }
 
         /**
@@ -106,7 +106,7 @@ namespace sensors {
         //% weight=80
         //% group="Remote Infrared Beacon"
         wasPressed() {
-            return this.button.wasPressed();
+            return this._button.wasPressed();
         }
 
         /**
@@ -122,7 +122,7 @@ namespace sensors {
         //% weight=99 blockGap=8
         //% group="Remote Infrared Beacon"
         onEvent(ev: ButtonEvent, body: () => void) {
-            this.button.onEvent(ev, body);
+            this._button.onEvent(ev, body);
         }
 
         /**
@@ -136,7 +136,7 @@ namespace sensors {
         //% weight=99 blockGap=8
         //% group="Remote Infrared Beacon"
         pauseUntil(ev: ButtonEvent) {
-            this.button.pauseUntil(ev);
+            this._button.pauseUntil(ev);
         }
     }
 
