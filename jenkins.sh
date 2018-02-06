@@ -4,7 +4,7 @@
 export NVM_DIR="/home/dotnet-bot/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" 
 
-nvm install 5
+nvm install 8
 
 # Set up build environment variables
 echo ---------- Setting build environment variables
