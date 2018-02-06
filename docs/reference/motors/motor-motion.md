@@ -99,7 +99,7 @@ loops.pause(travelTime)
 motors.stopAllMotors()
 ```
 
-If you want to make the brick travel only 2.5 meters, you can use the same code but set the tank speeds to 50% or cut the travel time in half.
+If you want to make the brick travel only 2.5 meters, you can use the same code but set the ``||motors:tank||`` speeds to 50% or cut the travel time in half.
 
 ## See also
 
