@@ -13,6 +13,7 @@ namespace pxsim {
         motorState: EV3MotorState;
         screenState: EV3ScreenState;
         audioState: AudioState;
+        remoteState: RemoteState;
 
         inputNodes: SensorNode[] = [];
         brickNode: BrickNode;
@@ -38,6 +39,7 @@ namespace pxsim {
             this.motorState = new EV3MotorState();
             this.screenState = new EV3ScreenState();
             this.audioState = new AudioState();
+            this.remoteState = new RemoteState();
         }
 
         receiveMessage(msg: SimulatorMessage) {
@@ -143,6 +145,7 @@ namespace pxsim {
                     case DAL.DEVICE_TYPE_COLOR: this.inputNodes[port] = new ColorSensorNode(port); break;
                     case DAL.DEVICE_TYPE_TOUCH: this.inputNodes[port] = new TouchSensorNode(port); break;
                     case DAL.DEVICE_TYPE_ULTRASONIC: this.inputNodes[port] = new UltrasonicSensorNode(port); break;
+                    case DAL.DEVICE_TYPE_IR: this.inputNodes[port] = new InfraredSensorNode(port); break;
                 }
             }
             return this.inputNodes[port];
