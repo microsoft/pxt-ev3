@@ -1,10 +1,12 @@
 # stop
 
-Set the motor rotation.
+Stop the motor.
 
 ```sig
 motors.largeA.stop()
 ```
+
+The motor stops but any motion caused from running the motor before continues until it runs down. If you are driving your brick and then stop the motors, it will coast for awhile before stopping. If you want the brick to stop right away, use ``||motors:set brake||`` to stop it.
 
 ## Example
 
@@ -20,4 +22,4 @@ motors.largeA.setSpeed(50)
 
 ## See also
 
-[reset](/reference/motors/motor/reset)
+[set brake](/reference/motors/motor/set-brake), [reset](/reference/motors/motor/reset),

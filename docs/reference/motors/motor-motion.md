@@ -1,6 +1,6 @@
 # Motor motion - speed, distance, time
 
-To run a motor, yor tell it what speed you want it to turn at. Let's say we run the motor at half speed.
+To run a motor, you tell it what speed you want it to turn at. Let's say we run the motor at half speed.
 
 ```block
 motors.largeA.setSpeed(50)

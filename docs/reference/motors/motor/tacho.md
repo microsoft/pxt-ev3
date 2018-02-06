@@ -17,7 +17,7 @@ A standard way to know how fast a motor is turning is by measuring its _revoluti
 1. Record the current tacho count
 2. Run the motor for 60 seconds
 3. Get the tacho count again
-4. Subtract the first tacho count from the second one.
+4. Subtract the first tacho count from the second one
 
 ## ~
 

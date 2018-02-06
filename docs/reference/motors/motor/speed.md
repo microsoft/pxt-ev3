@@ -1,28 +1,30 @@
 # speed
 
-Get the current speed of the motor's rotation as a percentage.
+Get the current speed of the motor's rotation as a percentage of maximum speed.
 
 ```sig
 motors.largeA.speed()
 ```
 
-When a motor is started for the first time, or after a reset, it's angle of rotation starts at `0` degrees. A complete rotation (a turn in a full circle) is `360` degrees. At `360` degrees, the motor angle gets set back to `0`. So, one and a half turns adds up to `540` degrees of total rotation but the motor only cares about the current angle from `0` degrees which is `180` degrees.
+The actual speed of the motor is the same or very close to it's current speed setting if the motor is regulated. If not, the actual speed can change from the set speed when a force, or load, is applied to it.
 
 ## Returns
 
-* a [number](/types/number) which is the current angle of rotation for the motor. The value returned is the number of degrees from `0` to `359`.
+* a [number](/types/number) which is the motor's current speed. This value is a percentage of maximum speed: `0` - `100`. This number is negative, like `-27`, if the direction of rotation is in reverse.
 
 ## Example
 
-Reset the motor connected to port **A** and run it for for 2 seconds at a speed of `45`. Stop and get the current angle of rotation.
+Turn speed regulation off and report the actual speed of the large motor in the forward direction. Occasionally touch the wheel on the motor to see if it changes the speed.
 
 ```blocks
-let motorAngle = 0;
-motors.largeA.reset()
-motors.largeA.setSpeed(45)
-loops.pause(2000)
+motors.largeA.setRegulated(false)
+motors.largeA.setSpeed(55)
+brick.showString("Actual speed:", 1)
+for (let i = 0; i < 30; i++) {
+    loops.pause(500)
+    brick.showNumber(motors.largeA.speed(), 3)
+}
 motors.largeA.stop()
-motorAngle = motors.largeA.angle()
 ```
 
 ## See also
