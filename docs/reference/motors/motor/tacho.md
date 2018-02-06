@@ -23,7 +23,7 @@ A standard way to know how fast a motor is turning is by measuring its _revoluti
 
 ## Returns
 
-* a [number](/reference/types/number) which is the count of rotations that the motor has turned since it was first started or reset.
+* a [number](/types/number) which is the count of rotations that the motor has turned since it was first started or reset.
 
 ## Example
 

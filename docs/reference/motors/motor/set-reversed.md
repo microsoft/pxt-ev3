@@ -1,16 +1,16 @@
 # set Reversed
 
-Change the direction of rotation for motor speed.
+Change the direction of rotation for a motor.
 
 ```sig
 motors.largeA.setReversed(true)
 ```
 
-You use a positive value (some number greater than `0`) to drive you motor in the default direction. If you're using a motor in a way that make more sense for you program to use a negative speed setting for that direction, you can reverse the speed range.
+You use a positive value (some number greater than `0`) to drive you motor in the default direction. If you're using a motor in a way that makes more sense for your program to use a negative speed setting for that direction, you can reverse the speed range.
 
 ## Paramters
 
-* **reversed**: a [boolean](/reference/types/boolean) value that is `false` if the motor will use a speed value between `0` and `100` to turn in the default direction. If `true`, the motor uses a speed value between `0` and `-100` to turn in the default direction.
+* **reversed**: a [boolean](/types/boolean) value that is `false` if the motor will use a speed value between `0` and `100` to turn in the default direction. If `true`, the motor uses a speed value between `0` and `-100` to turn in the default direction.
 
 ## Example
 

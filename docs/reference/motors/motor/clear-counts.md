@@ -6,7 +6,7 @@ Set all counters for the motor back to zero.
 motors.largeA.clearCounts()
 ```
 
-The counters for a motor are: **tacho**, **angle**, and **speed**. Each of these counters is set to start counting from `0` again. This is a way to begin new counts without having to stop the motor or reset it.
+The counters for a motor are: **tacho**, **angle**, and **speed**. Each of these counters is set to start counting from `0` again. This is a way to begin new counts without having to reset the motor.
 
 ## Example
 
@@ -18,18 +18,18 @@ motors.largeA.reset()
 motors.largeA.setSpeed(50)
 loops.pause(10000)
 tachoCount = motors.largeA.tacho()
-tachoCount = motors.largeA.clearCounts()
+motors.largeA.clearCounts()
 motors.largeA.setSpeed(50)
 loops.pause(10000)
 if (tachoCount == motors.largeA.tacho()) {
-    brick.showString("Motor turns equal.), 1)
+    brick.showString("Motor turns equal.", 1)
 } else {
-    brick.showString("Motor turns NOT equal.), 1)
+    brick.showString("Motor turns NOT equal.", 1)
 }
 motors.largeA.stop()
 ```
 
 ## See also
 
-[tacho](/refernce/motors/motor/tacho), [angle](/refernce/motors/motor/tacho),
-[speed](/refernce/motors/motor/speed), [reset](/reference/motors/motor/reset)
+[tacho](/reference/motors/motor/tacho), [angle](/reference/motors/motor/angle),
+[speed](/reference/motors/motor/speed), [reset](/reference/motors/motor/reset)

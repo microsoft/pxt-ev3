@@ -6,7 +6,7 @@ Rotate two motors in synchronization.
 motors.largeAB.tank(50, 50)
 ```
 
-Tanking the brick will drive two motors in synchronization. This means that both motors will start at the same time. Also, each motor uses the same amount of rotation at the same speed. You can use different speed values for each motor to perform turns or spins. You set a _drive ratio_ between each motor by using different speeds.
+Tanking the brick will drive two motors in synchronization. This means that both motors will start at the same time. Also, each motor uses the same amount of rotation when running at the same speed. You can use different speed values for each motor to perform turns or spins. You set a _drive ratio_ between each motor by using different speeds.
 
 ## Parameters
 
@@ -17,4 +17,4 @@ Tanking the brick will drive two motors in synchronization. This means that both
 
 ## See also
 
-[steer](/reference/motors/motor/steer), [set speed](/reference/motors/motor/set-speed)
+[steer](/reference/motors/synced/steer), [set speed](/reference/motors/motor/set-speed)

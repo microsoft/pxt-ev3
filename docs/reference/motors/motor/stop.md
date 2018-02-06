@@ -7,6 +7,7 @@ motors.largeA.stop()
 ```
 
 ## Example
+
 Run the motor connected to port **A** for 2 seconds at a speed of `30`. Stop and wait for 2 seconds, then continue at a speed of `50`.
 
 ```blocks

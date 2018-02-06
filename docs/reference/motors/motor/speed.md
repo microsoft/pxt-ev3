@@ -10,7 +10,7 @@ When a motor is started for the first time, or after a reset, it's angle of rota
 
 ## Returns
 
-* a [number](/reference/types/number) which is the current angle of rotation for the motor. The value returned is the number of degrees from `0` to `359`.
+* a [number](/types/number) which is the current angle of rotation for the motor. The value returned is the number of degrees from `0` to `359`.
 
 ## Example
 
