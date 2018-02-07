@@ -48,7 +48,6 @@
         * [show mood](/reference/brick/show-mood)
         * [show image](/reference/brick/show-image)
         * [clear screen](/reference/brick/clear-screen)
-        * [print ports](/reference/brick/print-ports)
         * [on event](/reference/brick/button/on-event)
         * [is pressed](/reference/brick/button/is-pressed)
         * [was pressed](/reference/brick/button/was-pressed)

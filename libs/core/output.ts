@@ -187,7 +187,7 @@ namespace motors {
          */
         //% weight=6 blockGap=8
         //% group="Move"
-        //% blockId=motorStop block="%motors|stop"
+        //% blockId=motorStop block="stop %motors|"
         stop() {
             this.init();
             stop(this._port, this._brake);
@@ -206,7 +206,7 @@ namespace motors {
          */
         //% weight=5
         //% group="Move"
-        //% blockId=motorReset block="%motors|reset"
+        //% blockId=motorReset block="reset %motors|"
         reset() {
             this.init();
             reset(this._port);
@@ -279,7 +279,7 @@ namespace motors {
          * Pauses the execution until the previous command finished.
          * @param timeOut optional maximum pausing time in milliseconds
          */
-        //% blockId=motorPauseUntilRead block="%motor|pause until ready"
+        //% blockId=motorPauseUntilRead block="pause until %motor|ready"
         //% weight=90
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
@@ -385,7 +385,7 @@ namespace motors {
         /**
          * Clears the motor count
          */
-        //% blockId=motorClearCount block="%motor|clear counts"
+        //% blockId=motorClearCount block="clear %motor|counters"
         //% weight=68
         //% blockGap=8
         //% group="Counters"

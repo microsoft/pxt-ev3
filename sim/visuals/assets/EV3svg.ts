@@ -1,6 +1,7 @@
 
 namespace pxsim.visuals {
-  export const EV3_SVG = `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 110.73 170.04">
+  export const EV3_SVG = `
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 110.73 170.04">
   <defs>
     <linearGradient id="linear-gradient" x1="-374.89" y1="432.9" x2="-374.89" y2="432.82" gradientTransform="matrix(110.73, 0, 0, -106.94, 41567.45, 46425.3)" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f1f1f1"/>
@@ -19,17 +20,17 @@ namespace pxsim.visuals {
       <stop offset="0.52" stop-color="#6a6a6a"/>
       <stop offset="1" stop-color="#6a6a6a"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-green" x1="-382.07" y1="493.36" x2="-382.07" y2="494.25" gradientTransform="matrix(65.53, 0, 0, -48.84, 25091.11, 24228.69)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-green" x1="0" y1="0" x2="145" y2="48" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#6a6a6a"/>
       <stop offset="0.52" stop-color="#8CE300"/>
       <stop offset="1" stop-color="#6a6a6a"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-red" x1="-382.07" y1="493.36" x2="-382.07" y2="494.25" gradientTransform="matrix(65.53, 0, 0, -48.84, 25091.11, 24228.69)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-red" x1="0" y1="0" x2="145" y2="48" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#6a6a6a"/>
       <stop offset="0.52" stop-color="#D02E26"/>
       <stop offset="1" stop-color="#6a6a6a"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-orange" x1="-382.07" y1="493.36" x2="-382.07" y2="494.25" gradientTransform="matrix(65.53, 0, 0, -48.84, 25091.11, 24228.69)" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-orange" x1="0" y1="0" x2="145" y2="48" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#6a6a6a"/>
       <stop offset="0.52" stop-color="#F8D039"/>
       <stop offset="1" stop-color="#6a6a6a"/>
@@ -104,5 +105,6 @@ namespace pxsim.visuals {
       <path id="ev3_e" data-name="ev3 e" d="M19.39,156.1a.34.34,0,0,1,.38.3v1.17a.33.33,0,0,1-.38.3H14.34c-.11,0-.2.06-.2.14h0v.82h0c0,.08.09.14.2.14h5.05a.33.33,0,0,1,.38.3v1.15a.33.33,0,0,1-.35.3H12.67a.35.35,0,0,1-.38-.3v-6.89a.34.34,0,0,1,.38-.3h6.75a.31.31,0,0,1,.35.28v1.17a.31.31,0,0,1-.33.3H14.36c-.11,0-.22,0-.22.13V156c0,.08.09.14.19.14Z" transform="translate(0 0)" style="fill: #f1f1f1"/>
     </g>
   </g>
-</svg>`;
+</svg>
+`;
 }

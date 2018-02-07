@@ -230,6 +230,14 @@ namespace pxsim.visuals {
                     view = new DistanceSliderControl(this.element, this.defs, state, port);
                     break;
                 }
+                case NodeType.InfraredSensor: {
+                    const state = ev3board().getInputNodes()[port] as InfraredSensorNode;
+                    if (state.getMode() == InfraredSensorMode.Proximity)
+                        view = new ProximitySliderControl(this.element, this.defs, state, port);
+                    else if (state.getMode() == InfraredSensorMode.RemoteControl)
+                        view = new RemoteBeaconButtonsControl(this.element, this.defs, state, port);
+                    break;
+                }
                 case NodeType.GyroSensor: {
                     const state = ev3board().getInputNodes()[port] as GyroSensorNode;
                     view = new RotationSliderControl(this.element, this.defs, state, port);
@@ -271,6 +279,8 @@ namespace pxsim.visuals {
                     view = new ColorSensorView(port); break;
                 case NodeType.UltrasonicSensor:
                     view = new UltrasonicSensorView(port); break;
+                case NodeType.InfraredSensor:
+                    view = new InfraredView(port); break;
                 case NodeType.Brick:
                     //return new BrickView(0);
                     view = this.layoutView.getBrick(); break;
@@ -305,11 +315,11 @@ namespace pxsim.visuals {
 
             // Add EV3 module element
             const brickCloseIcon = this.getCloseIconView();
-            brickCloseIcon.registerClick(ev => {                
-                this.layoutView.unselectBrick();                
+            brickCloseIcon.registerClick(ev => {
+                this.layoutView.unselectBrick();
                 this.resize();
             });
-            const brick =new BrickView(-1);
+            const brick = new BrickView(-1);
             brick.setSelected(EV3View.isPreviousBrickSelected());
             this.layoutView.setBrick(brick, brickCloseIcon);
 

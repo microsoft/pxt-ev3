@@ -115,7 +115,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=100 blockGap=8
+        //% weight=100 blockGap=12
         //% group="Color Sensor"
         onColorDetected(color: ColorSensorColor, handler: () => void) {
             this.setMode(ColorSensorMode.Color)
@@ -174,7 +174,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% sensor.fieldEditor="ports"
-        //% weight=89 blockGap=8
+        //% weight=89 blockGap=12
         //% group="Color Sensor"
         onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
             this.setMode(<ColorSensorMode><number>mode)

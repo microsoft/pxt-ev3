@@ -1,20 +1,20 @@
 
 //% color="#68C3E2" weight=100 icon="\uf106"
 //% groups='["Buttons", "Screen"]'
-//% labelLineWidth=0
+//% labelLineWidth=60
 namespace brick {
 }
 
 
 //% color="#C8509B" weight=95 icon="\uf10f"
-//% labelLineWidth=0
+//% labelLineWidth=100
 //% groups='["Touch Sensor", "Color Sensor", "Ultrasonic Sensor", "Gyro Sensor", "Infrared Sensor", "Remote Infrared Beacon", "Threshold"]'
 namespace sensors {
 }
 
 //% color="#A5CA18" weight=90 icon="\uf10d"
 //% groups='["Move", "Counters"]'
-//% labelLineWidth=0
+//% labelLineWidth=50
 namespace motors {
 }
 
