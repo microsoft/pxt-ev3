@@ -20,9 +20,9 @@ INI()
 let down = false;
 loops.forever(function () {
     brick.showImage(images.informationQuestionMark)
-    brick.setLight(BrickLight.OrangePulse);
+    brick.setStatusLight(StatusLight.OrangePulse);
     pauseUntil(() => (down = brick.buttonDown.wasPressed()) || brick.buttonUp.wasPressed())
-    brick.setLight(BrickLight.Off)
+    brick.setStatusLight(StatusLight.Off)
     music.playSoundEffect(sounds.mechanicalAirRelease)
     brick.showImage(images.informationAccept)
     if (down) {
