@@ -15,24 +15,24 @@ namespace pxsim.visuals {
 
         getInnerView() {
             this.group = svg.elt("g") as SVGGElement;
-            this.group.setAttribute("transform", `scale(0.25, 0.25)`)
+            this.group.setAttribute("transform", `scale(0.9, 0.9)`)
             
             const xml = pxsim.visuals.normalizeXml(this.id, pxsim.visuals.REMOVE_SVG);
             const content = svg.parseString(xml);
             this.group.appendChild(content);
 
             const btns: Map<InfraredRemoteButton> = {
-                "center": InfraredRemoteButton.CenterBeacon,
+                "centerbeacon": InfraredRemoteButton.CenterBeacon,
                 "topleft": InfraredRemoteButton.TopLeft,
                 "topright": InfraredRemoteButton.TopRight,
                 "bottomleft": InfraredRemoteButton.BottomLeft,
                 "bottomright": InfraredRemoteButton.BottomRight
             }
-
+            
             Object.keys(btns).forEach(bid => {
                 const cid = btns[bid];
                 const bel = content.getElementById(pxsim.visuals.normalizeId(this.id, bid));
-                bel.className += " sim-button";
+                bel.setAttribute("class", "sim-button");
                 pointerEvents.down.forEach(evid => bel.addEventListener(evid, ev => {
                     ev3board().remoteState.setPressed(cid, true);
                 }));
@@ -47,11 +47,11 @@ namespace pxsim.visuals {
         }
 
         getInnerWidth() {
-            return 98.3;
+            return 80;
         }
 
         getInnerHeight() {
-            return 110.8;
+            return 123.773;
         }
     }
 }

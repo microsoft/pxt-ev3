@@ -24,13 +24,13 @@ namespace pxsim {
             switch(this.state) {
                 case InfraredRemoteButton.TopLeft: return 1;
                 case InfraredRemoteButton.BottomLeft: return 2;
-                case InfraredRemoteButton.TopLeft: return 3;
-                case InfraredRemoteButton.TopRight | InfraredRemoteButton.BottomRight: return 4;
+                case InfraredRemoteButton.TopRight: return 3;
+                case InfraredRemoteButton.BottomRight: return 4;
                 case InfraredRemoteButton.TopLeft | InfraredRemoteButton.TopRight: return 5;
                 case InfraredRemoteButton.TopLeft | InfraredRemoteButton.BottomRight: return 6;
                 case InfraredRemoteButton.BottomLeft | InfraredRemoteButton.TopRight: return 7;
                 case InfraredRemoteButton.BottomLeft | InfraredRemoteButton.BottomRight: return 8;
-                case InfraredRemoteButton.CenterBeacon: return 9;
+                case InfraredRemoteButton.CenterBeacon: return 9;                
                 case InfraredRemoteButton.BottomLeft | InfraredRemoteButton.TopLeft: return 10;
                 case InfraredRemoteButton.TopRight | InfraredRemoteButton.BottomRight: return 11;
                 default: return 0;

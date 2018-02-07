@@ -113,6 +113,7 @@ namespace motors {
     //% blockId=motorStopAll block="stop all motors"
     //% weight=1
     //% group="Move"
+    //% help=motors/stop-all-motors
     export function stopAllMotors() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b)
@@ -164,21 +165,23 @@ namespace motors {
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
         //% weight=60 blockGap=8
         //% group="Move"
+        //% help=motors/motor/set-brake
         setBrake(brake: boolean) {
             this.init();
             this._brake = brake;
         }
 
         /** 
-         * Reverses the motor polarity
+         * Inverts the motor polarity
         */
-        //% blockId=motorSetReversed block="set %motor|reversed %reversed=toggleOnOff"
+        //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
         //% weight=59 blockGap=8
         //% group="Move"
-        setReversed(reversed: boolean) {
+        //% help=motors/motor/set-inverted
+        setInverted(inverted: boolean) {
             this.init();
             const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, reversed ? 0 : 1);
+            b.setNumber(NumberFormat.Int8LE, 2, inverted ? 0 : 1);
             writePWM(b)
         }
 
@@ -187,6 +190,7 @@ namespace motors {
          */
         //% weight=6 blockGap=8
         //% group="Move"
+        //% help=motors/motor/stop
         //% blockId=motorStop block="stop %motors|"
         stop() {
             this.init();
@@ -206,6 +210,7 @@ namespace motors {
          */
         //% weight=5
         //% group="Move"
+        //% help=motors/motor/reset
         //% blockId=motorReset block="reset %motors|"
         reset() {
             this.init();
@@ -221,6 +226,7 @@ namespace motors {
         //% blockId=motorSetSpeed block="set %motor|speed to %speed=motorSpeedPicker|%"
         //% weight=100 blockGap=8
         //% group="Move"
+        //% help=motors/motor/set-speed
         setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
@@ -338,6 +344,7 @@ namespace motors {
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
         //% weight=58
         //% group="Move"
+        //% help=motors/motor/set-regulated
         setRegulated(value: boolean) {
             this._regulated = value;
         }
@@ -350,6 +357,7 @@ namespace motors {
         //% weight=72 
         //% blockGap=8
         //% group="Counters"
+        //% help=motors/motor/speed
         speed(): number {
             this.init();
             return getMotorData(this._port).actualSpeed;
@@ -363,6 +371,7 @@ namespace motors {
         //% weight=70
         //% blockGap=8
         //% group="Counters"
+        //% help=motors/motor/angle
         angle(): number {
             this.init();
             return getMotorData(this._port).count;
@@ -377,6 +386,7 @@ namespace motors {
         //% weight=69
         //% blockGap=8
         //% group="Counters"
+        //% help=motors/motor/tacho
         tacho(): number {
             this.init();
             return getMotorData(this._port).tachoCount;
@@ -389,6 +399,7 @@ namespace motors {
         //% weight=68
         //% blockGap=8
         //% group="Counters"
+        //% help=motors/motor/clear-counts
         clearCounts() {
             this.init();
             const b = mkCmd(this._port, DAL.opOutputClearCount, 0)
@@ -488,6 +499,7 @@ namespace motors {
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
         //% group="Move"
+        //% help=motors/synced/tank
         tank(speedLeft: number, speedRight: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
 
@@ -514,6 +526,7 @@ namespace motors {
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
         //% group="Move"
+        //% help=motors/synced/steer
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);

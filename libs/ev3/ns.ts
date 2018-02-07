@@ -12,7 +12,7 @@ namespace brick {
 namespace sensors {
 }
 
-//% color="#A5CA18" weight=90 icon="\uf10d"
+//% color="#00852B" weight=90 icon="\uf10d"
 //% groups='["Move", "Counters"]'
 //% labelLineWidth=50
 namespace motors {
