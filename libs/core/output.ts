@@ -221,6 +221,7 @@ namespace motors {
         //% blockId=motorSetSpeed block="set %motor speed to %speed=motorSpeedPicker||for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
+        //% expandableArgumentMode=toggle
         setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
@@ -488,6 +489,7 @@ namespace motors {
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
         //% group="Move"
+        //% expandableArgumentMode=toggle
         tank(speedLeft: number, speedRight: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
 
@@ -514,6 +516,7 @@ namespace motors {
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
         //% group="Move"
+        //% expandableArgumentMode=toggle
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
