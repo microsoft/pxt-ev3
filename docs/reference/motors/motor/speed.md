@@ -1,16 +1,16 @@
 # speed
 
-Get the current speed of the motor's rotation as a percentage of maximum speed.
+Get the current speed of motor rotation as a percentage of maximum speed.
 
 ```sig
 motors.largeA.speed()
 ```
 
-The actual speed of the motor is the same or very close to it's current speed setting if the motor is regulated. If not, the actual speed can change from the set speed when a force, or load, is applied to it.
+The actual speed of the motor is the same or very close to it's current speed setting when the motor is regulated. If not regulated, the actual speed can change from the set speed when a force, or load, is applied to it.
 
 ## Returns
 
-* a [number](/types/number) which is the motor's current speed. This value is a percentage of maximum speed: `0` - `100`. This number is negative, like `-27`, if the direction of rotation is in reverse.
+* a [number](/types/number) which is the motor's current speed. This value is a percentage of maximum speed from `0` to `100`. This number is negative, like `-27`, if the direction of rotation is in reverse.
 
 ## Example
 
