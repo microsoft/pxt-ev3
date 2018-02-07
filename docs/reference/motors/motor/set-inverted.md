@@ -3,7 +3,7 @@
 Change the direction of rotation for a motor.
 
 ```sig
-motors.largeA.setReversed(true)
+motors.largeA.setInverted(true)
 ```
 
 You use a positive value (some number greater than `0`) to drive you motor in the default direction. If you're using a motor in a way that makes more sense for your program to use a negative speed setting for that direction, you can reverse the speed range.
@@ -21,7 +21,7 @@ motors.largeA.setSpeed(30)
 loops.pause(2000)
 motors.largeA.stop()
 loops.pause(2000)
-motors.largeA.setReversed(true)
+motors.largeA.setInverted(true)
 motors.largeA.setSpeed(-30)
 loops.pause(2000)
 motors.largeA.stop()
