@@ -172,16 +172,16 @@ namespace motors {
         }
 
         /** 
-         * Reverses the motor polarity
+         * Inverts the motor polarity
         */
-        //% blockId=motorSetReversed block="set %motor|reversed %reversed=toggleOnOff"
+        //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
         //% weight=59 blockGap=8
         //% group="Move"
-        //% help=motors/motor/set-reversed
-        setReversed(reversed: boolean) {
+        //% help=motors/motor/set-inverted
+        setInverted(inverted: boolean) {
             this.init();
             const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, reversed ? 0 : 1);
+            b.setNumber(NumberFormat.Int8LE, 2, inverted ? 0 : 1);
             writePWM(b)
         }
 

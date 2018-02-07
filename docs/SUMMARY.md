@@ -59,7 +59,7 @@
         * [stop](/reference/motors/motor/stop)
         * [reset](/reference/motors/motor/reset)
         * [set brake](/reference/motors/motor/set-brake)
-        * [set reversed](/reference/motors/motor/set-reversed)
+        * [set inverted](/reference/motors/motor/set-inverted)
         * [set regulated](/reference/motors/motor/set-regulated)
         * [tank](/reference/motors/synced/tank)
         * [steer](/reference/motors/synced/steer)
