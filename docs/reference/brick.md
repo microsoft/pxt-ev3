@@ -20,7 +20,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
 brick.buttonEnter.pauseUntil(ButtonEvent.Bumped);
 brick.buttonEnter.isPressed()
 brick.buttonEnter.wasPressed()
-brick.setLight(BrickLight.Red);
+brick.setStatusLight(BrickLight.Red);
 ```
 
 ## Other

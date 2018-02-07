@@ -16,7 +16,7 @@ Your @boardname@ has touch sensors that work like buttons. Instead of saying `en
 
 ```block
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
-    brick.setLight(BrickLight.Orange);
+    brick.setStatusLight(BrickLight.Orange);
 });
 ```
 
