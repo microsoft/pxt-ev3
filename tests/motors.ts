@@ -5,7 +5,7 @@ tests.test("lgB set speed 10", () => {
     tests.assertClose("speedB", 10, motors.largeB.speed(), 2)
 });
 tests.test("lgB set speed 25 (reversed)", () => {
-    motors.largeB.setReversed(true)
+    motors.largeB.setInverted(true)
     motors.largeB.setSpeed(25)
     loops.pause(500)
     tests.assertClose("speedB", -25, motors.largeB.speed(), 2)
