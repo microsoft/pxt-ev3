@@ -1,17 +1,17 @@
 # Coding in MakeCode
 
-This guide is intended for users who are used to the LabView LEGO Minstorms editor.
+This guide helps users who are used to the LabView LEGO Minstorms editor quickly get familiar with using blocks in MakeCode.
 
-## Snap the blocks
+## Snap together the blocks
 
-Just like LabView, blocks can be dragged from the cabinet and snapped together
+Just like with LabView, blocks in the MakeCode editor can be dragged from the cabinet and snapped together
 to create a sequence of program instructions.
 
-The program below **starts**, turns on motor A, waits a second and stop motor A.
+Take a look a the LabView program below: it **starts**, turns on motor A, waits a second, and finally stops motor A.
 
 ![sequence of block](/static/labview/sequencing.png)     
 
-The blocks are similar: they snap on the ``||on start||`` block then latch to each other vertically.
+The blocks in MakeCode have similar functions and go together in the same way: they snap into the ``||loops:on start||`` block and then connect to each other vertically.
 
 ```blocks
 motors.largeA.setSpeed(50)
@@ -19,7 +19,7 @@ loops.pause(1000)
 motors.largeA.stop()
 ```
 
-All block programs can be converted to JavaScript and edited from there as well.
+Any block program can be converted to JavaScript and you can edit it as lines of code too.
 
 ```typescript
 motors.largeA.setSpeed(50)
@@ -29,12 +29,13 @@ motors.largeA.stop()
 
 ## Download to the EV3
 
-The MakeCode editor provides a simulator to try out the code in your browser. It restarts automatically after you make a code change. Once you are ready to transfer it to the @boardname@, click the ``||Download||`` button and follow the instructions.
+Before you actually run your program on the @boardname@, you can first try it in the simulator. The MakeCode editor includes a simulator in the browser for you to test your code. You can make changes to your program and check them out it the simulator to make sure your code works the way want. The similator knows when you modify your code and it restarts automatically to run the new code.
+
+Once you're ready to transfer your program to the @boardname@, click the ``|Download|`` button and follow the instructions.
 
 ## Single motors
 
-The program below controls a large motor on port A in a variety of ways: setting the speed, 
-setting the speed for a given time, angle or number of rotations.
+This program controls a large motor on port A in several different ways. It sets just the speed and then sets speed for: an amount of time, angle of movement, and a number of rotations.
 
 ![Single motor blocks](/static/labview/motors.png)       
 
@@ -48,7 +49,7 @@ motors.largeA.stop();
 
 ## Steering
 
-The **steering** blocks allow to synchronize two motors at a precise rate. They can also specify the duration, angle or number of rotations.
+The **steering** blocks let you to synchronize two motors at a precise rate. They can also specify the duration, angle, or number of rotations for the motors to turn.
 
 ![Steering blocks](/static/labview/steer.png)
 
@@ -62,7 +63,7 @@ motors.largeBC.stop();
 
 ## Tank
 
-The **tank** blocks control the speed of two motors, typically from a differential drive robot. They can also specify the duration, angle or number of rotations.
+The **tank** blocks control the speed of two motors. These are commonly used for a differential drive robot. The blocks can also specify the duration, angle, or number of rotations.
 
 ![Tank block](/static/labview/tank.png)
 
@@ -76,7 +77,7 @@ motors.largeBC.stop();
 
 ## Coasting and braking
 
-By default, all motors coast when the move command is done. You can change this behavior with the `set brake`` block. 
+By default, all motors coast when any command used to move finishes. You can keep them from coasting with the ``||motors:set brake||`` block. 
 
 ![Brake block](/static/labview/brake.png)
 
@@ -87,7 +88,7 @@ motors.largeD.setSpeed(50, 1, MoveUnit.Rotations)
 
 ## Inverting and regulating motors
 
-Sometime you need to invert the direction of a motor. Use the ``set invert`` block.
+If you wan to change the direction that a motor turns, use the ``||motors:set inverted||`` block.
 
 ![Brake block](/static/labview/invertmotor.png)
 
@@ -97,7 +98,7 @@ motors.largeA.setInverted(true);
 
 By default, the speed of motors is regulated. This means that if your robot goes up a hill,
 the regulator will adjust the power to match the desired speed. You can disable this feature
-using ``set regulated``.
+using ``||motors:set regulated||``.
 
 ![Brake block](/static/labview/unregulatedmotor.png)
 
@@ -107,7 +108,7 @@ motors.largeA.setRegulated(false);
 
 ## Brick
 
-The brick category contains a number of blocks to display graphics on the brick screen.
+The **Brick** category has a number of blocks to display graphics on the brick screen.
 
 ![brick image](/static/labview/brickimage.png)
 
@@ -126,8 +127,7 @@ brick.setStatusLight(StatusLight.OrangePulse);
 
 ## Waiting (pausing)
 
-It is quite common to wait for a sensor state, such as a touch button pressed.
-The ``pause until`` blocks provide a variety of ways to acheive this.
+It is quite common to have to wait for a task to finish or for a sensor state to change, such as a touch button pressed. The ``||loops:pause||`` and ``||sensors:pause until||`` blocks provide a way for your program to wait for a period of time.
 
 ![pause for time](/static/labview/pausefortime.png)      
 
@@ -153,8 +153,7 @@ sensors.ultrasonic4.pauseUntil(UltrasonicSensorEvent.ObjectNear)
 motors.largeD.stop();
 ```
 
-You can also use the ``pause until`` block to wait on any boolean expression.
-The runtime will evaluate this expression until it becomes true.
+You can also use the ``||loops:pause until||`` block to wait on any [boolean](/types/boolean) expression. As your program runs, it waits until the condition (expression) inside becomes true.
 
 ```blocks
 motors.largeD.setSpeed(50)
@@ -202,10 +201,9 @@ loops.forever(function () {
 
 ## Concurrent loops
 
-You can spin up multiple ``forever`` loops that will run at the same time.
-Only one code is running at the time, but each loop iteration will interleave.
+You can start up multiple ``||loops:forever||`` loops that will run at the same time. Actually, only the code in just one of the loops is really running at any exact moment in time. Each loop, though, gets a turn to run all of its code and this makes them run [_concurrently_](https://en.wikipedia.org/wiki/Concurrent_computing).
 
-![Brake block](/static/labview/multipleloops.png)
+![Multiple loops running at the same time](/static/labview/multipleloops.png)
 
 ```blocks
 loops.forever(() => {
@@ -222,8 +220,7 @@ loops.forever(() => {
 
 ## Conditional
 
-The ``if`` block allow to run different code based on a boolean condition.
-This is similar to the switch block.
+The ``||logic:if||`` block allows you to run different code depending on whether some condition ([boolean](/types/boolean) expression) is `true` or `false`. Also, this is similar to the ``||loops:switch||`` block.
 
 ![Brake block](/static/labview/ife.png)
 
@@ -239,7 +236,7 @@ loops.forever(function() {
 
 ## Random
 
-The ``random range`` blocks returns number between two bounds.
+The ``||math:pick random||`` block returns a random number selected from a range of numbers.
 
 ![Brake block](/static/labview/random.png)
 
