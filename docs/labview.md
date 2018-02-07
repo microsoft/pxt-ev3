@@ -1,0 +1,25 @@
+# Minstorms to MakeCode primer
+
+This guide is intended for users who are used to the LabView LEGO Minstorms editor.
+
+![Brake block](/static/labview/brake.png)
+![Brake block](/static/labview/disabled.png)
+![Brake block](/static/labview/lighttospeed.png)
+![Brake block](/static/labview/multipleloops.png)
+![Brake block](/static/labview/pausefortouch.png)
+![Brake block](/static/labview/speedoflight.png)
+![Brake block](/static/labview/tank.png)
+![Brake block](/static/labview/brickimage.png)
+![Brake block](/static/labview/ife.png)
+![Brake block](/static/labview/loopinfinite.png)
+![Brake block](/static/labview/pausefordistance.png)
+![Brake block](/static/labview/random.png)
+![Brake block](/static/labview/speedoflightvar.png)
+![Brake block](/static/labview/unregulatedmotor.png)
+![Brake block](/static/labview/brickstatuslight.png)
+![Brake block](/static/labview/invertmotor.png)
+![Brake block](/static/labview/motors.png)       
+![Brake block](/static/labview/pausefortime.png)      
+![Brake block](/static/labview/sequencing.png)     
+![Brake block](/static/labview/steer.png)
+![Brake block](/static/labview/while.png)
