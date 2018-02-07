@@ -3,9 +3,9 @@
 ```blocks
 loops.forever(function () {
     if (sensors.color1.reflectedLight() > 20) {
-        brick.setStatusLight(BrickLight.Green)
+        brick.setStatusLight(StatusLight.Green)
     } else {
-        brick.setStatusLight(BrickLight.Orange)
+        brick.setStatusLight(StatusLight.Orange)
     }
 })
 ```

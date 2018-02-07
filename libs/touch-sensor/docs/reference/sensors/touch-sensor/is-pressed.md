@@ -3,9 +3,9 @@
 ```blocks
 loops.forever(function () {
     if (sensors.touch1.isPressed()) {
-        brick.setStatusLight(BrickLight.Green)
+        brick.setStatusLight(StatusLight.Green)
     } else {
-        brick.setStatusLight(BrickLight.Orange)
+        brick.setStatusLight(StatusLight.Orange)
     }
 })
 ```

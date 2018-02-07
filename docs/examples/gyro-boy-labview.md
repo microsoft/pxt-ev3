@@ -146,11 +146,11 @@ loops.forever(function () {
     }
     motors.stopAllMotors()
     st = 0;
-    brick.setStatusLight(BrickLight.RedPulse);
+    brick.setStatusLight(StatusLight.RedPulse);
     brick.showImage(images.eyesKnockedOut)
     music.playSoundEffect(sounds.movementsSpeedDown)
     sensors.touch3.pauseUntil(ButtonEvent.Pressed)
-    brick.setStatusLight(BrickLight.Off);
+    brick.setStatusLight(StatusLight.Off);
 })
 
 // BHV

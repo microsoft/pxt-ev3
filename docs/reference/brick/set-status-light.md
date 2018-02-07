@@ -3,7 +3,7 @@
 Set the light on the brick to a solid or flashing color.
 
 ```sig
-brick.setStatusLight(BrickLight.Red);
+brick.setStatusLight(StatusLight.Red);
 ```
 ## Parameters
 
@@ -25,13 +25,13 @@ Repeatedly show a different color pattern for the brick light.
 
 ```blocks
 loops.forever(function () {
-    brick.setStatusLight(BrickLight.Orange)
+    brick.setStatusLight(StatusLight.Orange)
     loops.pause(1000)
-    brick.setStatusLight(BrickLight.GreenFlash)
+    brick.setStatusLight(StatusLight.GreenFlash)
     loops.pause(2000)
-    brick.setStatusLight(BrickLight.RedPulse)
+    brick.setStatusLight(StatusLight.RedPulse)
     loops.pause(2000)
-    brick.setStatusLight(BrickLight.Off)
+    brick.setStatusLight(StatusLight.Off)
     loops.pause(500)
 })
 ```

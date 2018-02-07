@@ -35,9 +35,9 @@ Set the brick light to green if the `right` button was pressed before the `left`
 ```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Bumped, function() {
     if (brick.buttonRight.wasPressed()) {
-        brick.setStatusLight(BrickLight.Green)
+        brick.setStatusLight(StatusLight.Green)
     } else {
-        brick.setStatusLight(BrickLight.Off)
+        brick.setStatusLight(StatusLight.Off)
     }
 })
 ```

@@ -22,11 +22,11 @@ loops.forever(function() {
     battery = brick.batteryLevel();
     if (battery > 15)
     {
-        brick.setStatusLight(BrickLight.Green);
+        brick.setStatusLight(StatusLight.Green);
     } else if (battery > 5) {
-        brick.setStatusLight(BrickLight.Orange);
+        brick.setStatusLight(StatusLight.Orange);
     } else {
-        brick.setStatusLight(BrickLight.RedPulse)
+        brick.setStatusLight(StatusLight.RedPulse)
     }
     loops.pause(30000)
 })

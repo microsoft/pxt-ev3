@@ -10,7 +10,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     brick.showImage(images.eyesTiredMiddle)
     motors.largeBC.setSpeed(0)
     loops.pause(1000)
-    brick.setStatusLight(BrickLight.OrangeFlash)
+    brick.setStatusLight(StatusLight.OrangeFlash)
     brick.showImage(images.eyesDizzy)
     motors.largeBC.setSpeed(-50)
     loops.pause(2000)
