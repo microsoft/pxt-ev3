@@ -52,7 +52,7 @@
         * [is pressed](/reference/brick/button/is-pressed)
         * [was pressed](/reference/brick/button/was-pressed)
         * [pause until](/reference/brick/button/pause-until)
-        * [set light](/reference/brick/set-light)
+        * [set light](/reference/brick/set-status-light)
         * [battery level](/reference/brick/battery-level)
     * [Motors](/reference/motors)
         * [set speed](/reference/motors/motor/set-speed)
