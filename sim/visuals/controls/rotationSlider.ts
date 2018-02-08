@@ -76,7 +76,7 @@ namespace pxsim.visuals {
             let t = Math.max(0, Math.min(1, (width + bBox.left / this.scaleFactor - cur.x / this.scaleFactor) / width))
 
             const state = this.state;
-            state.setAngle((1 - t) * (100));
+            state.setRate((1 - t) * (100));
         }
     }
 
