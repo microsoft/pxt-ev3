@@ -133,6 +133,11 @@
         "extendEditor": true,
         "disableBlockIcons": true,
         "blocklyOptions": {
+            "grid": {
+                "spacing": 40,
+                "length": 2,
+                "colour": "#ddd"
+            }
         },
         "blockColors": {
             "loops": "#58AB41",
