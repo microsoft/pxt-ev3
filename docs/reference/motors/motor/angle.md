@@ -6,11 +6,11 @@ Get the current angle of the motor's rotation in degrees.
 motors.largeA.angle()
 ```
 
-When a motor is started for the first time, or after a reset, it's angle of rotation starts at `0` degrees. A complete rotation (a turn in a full circle) is `360` degrees. At `360` degrees, the motor angle gets set back to `0`. So, one and a half turns adds up to `540` degrees of total rotation but the motor only cares about the current angle from `0` degrees which is `180` degrees.
+When a motor is started for the first time, or after a reset, it's angle of rotation starts at `0` degrees. A complete rotation (a turn in a full circle) is `360` degrees. At `360` degrees, the motor angle doesn't go back to `0` but keeps counting in degrees. So, one and a half turns adds up to `540` degrees of total rotation.
 
 ## Returns
 
-* a [number](/types/number) which is the current angle of rotation for the motor. The value returned is the number of degrees from `0` to `359`.
+* a [number](/types/number) which is the current angle of rotation for the motor.
 
 ## Example
 
