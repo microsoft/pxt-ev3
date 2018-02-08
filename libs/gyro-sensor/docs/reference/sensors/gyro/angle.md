@@ -3,7 +3,7 @@
 Get the current rotation angle of the gyro.
 
 ```sig
-sensors.gyro2.rate()
+sensors.gyro2.angle()
 ```
 
 When the brick changes its position, it's moved in the direction of one of the axes used to measure three-dimensional space. Depending on where the gyro sensor is attached, it can measure the difference in angle from where it was before it moved. This angle is measured in degrees. The angle is the number of degrees rotated from where the gyro was last [reset](/reference/sensors/gyro/reset).
