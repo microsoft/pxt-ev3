@@ -68,3 +68,7 @@
         * [speed](/reference/motors/motor/speed)
         * [clear counts](/reference/motors/motor/clear-counts)
         * [stop all motors](/reference/motors/stop-all-motors)
+    * [Sensors](/reference/sensors)
+        * [angle](/reference/sensors/gyro/angle)
+        * [rate](/reference/sensors/gyro/rate)
+        * [reset](/reference/sensors/gyro/reset)
