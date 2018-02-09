@@ -86,9 +86,11 @@ namespace pxsim.visuals {
         private prevVal: number;
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
+            let bBox = this.content.getBoundingClientRect();
+
             const coords = {
-                x: cur.x / this.scaleFactor - this.left / this.scaleFactor,
-                y: cur.y / this.scaleFactor - this.top / this.scaleFactor
+                x: cur.x / this.scaleFactor - bBox.left / this.scaleFactor,
+                y: cur.y / this.scaleFactor - bBox.top / this.scaleFactor
             };
             const radius = MotorSliderControl.SLIDER_RADIUS / 2;
             const dx = coords.x - radius;
