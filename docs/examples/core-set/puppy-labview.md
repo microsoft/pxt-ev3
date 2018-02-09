@@ -29,7 +29,7 @@ function DN() {
 function MNRH() {
     motors.mediumC.setBrake(true)
     brick.showImage(images.legoEv3icon)
-    brick.setLight(BrickLight.OrangePulse)
+    brick.setStatusLight(StatusLight.OrangePulse)
     while (!brick.buttonEnter.wasPressed()) {
         if (brick.buttonUp.wasPressed()) {
             motors.mediumC.setSpeed(-100);
@@ -41,7 +41,7 @@ function MNRH() {
     }
     motors.mediumC.stop();
     motors.mediumC.clearCounts();
-    brick.setLight(BrickLight.Green);
+    brick.setStatusLight(StatusLight.Green);
 }
 
 function IS(t: number) {

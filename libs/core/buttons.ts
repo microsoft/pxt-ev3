@@ -2,7 +2,7 @@
 /**
  * Patterns for lights under the buttons.
  */
-const enum BrickLight {
+const enum StatusLight {
     //% block=off enumval=0
     Off = 0,
     //% block=green enumval=1
@@ -244,16 +244,16 @@ namespace control {
 
 namespace brick {
     // the brick starts with the red color
-    let currPattern: BrickLight = BrickLight.Red;
+    let currPattern: StatusLight = StatusLight.Red;
 
     /**
      * Set lights.
      * @param pattern the lights pattern to use. eg: BrickLight.Orange
      */
-    //% blockId=setLights block="set light to %pattern"
+    //% blockId=setLights block="set status light to %pattern"
     //% weight=100 group="Buttons"
-    //% help=brick/set-light
-    export function setLight(pattern: BrickLight): void {
+    //% help=brick/set-status-light
+    export function setStatusLight(pattern: StatusLight): void {
         if (currPattern === pattern)
             return
         currPattern = pattern;

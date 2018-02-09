@@ -2,7 +2,7 @@
      User Global Variables
 *******************************/
 
-@importGoogleFonts: true;
+@fontName  : 'Open Sans';
 
 @headerFont        : "Open Sans","Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
 @pageFont          : "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -26,6 +26,9 @@
 @yellow: #fccd00;
 @orange: #fa7f2a;
 @green: @brightYellowishGreen;
+
+@legoGreyLight: #eaeeef;
+@legoGreyDark: #f4f7f9;
 
 /* Lego official colors */
 
@@ -122,9 +125,9 @@
    Background
 --------------------*/
 
-@simulatorBackground: #fff; /*#fcfbfa; */
-@editorToolsBackground: #fff; /*#fcfbfa; */
-@blocklySvgColor: #ecf6fe;
+@simulatorBackground: #D6EDFF; /* #FFF */ /* #fcfbfa; */
+@editorToolsBackground: #fff; /* #fcfbfa; */
+@blocklySvgColor: #f9f9f9; /*#f2f6f8;*/ /*ecf6fe;*/ 
 
 @homeScreenBackground: #EAEEEF;
 
@@ -159,10 +162,10 @@
 @blocklyRowWidthTablet: 100px;
 @blocklyRowWidthMobile: 50px;
 
-@blocklyRowHeightWide: 50px;
-@blocklyRowHeightComputer: 50px;
-@blocklyRowHeightTablet: 50px;
-@blocklyRowHeightMobile: 50px;
+@blocklyRowHeightWide: 45px;
+@blocklyRowHeightComputer: 45px;
+@blocklyRowHeightTablet: 45px;
+@blocklyRowHeightMobile: 45px;
 
 
 /*-------------------

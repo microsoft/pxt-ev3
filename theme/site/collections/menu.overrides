@@ -6,3 +6,8 @@
 .ui.menu.inverted .item {
     text-transform: uppercase;
 }
+
+#mainmenu {
+    background: #f4f7f9;
+    border-bottom: 5px solid #00a5c8;
+}

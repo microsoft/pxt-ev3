@@ -233,7 +233,7 @@ namespace sensors {
          */
         //% blockNamespace=sensors
         //% blockId=irSetRemoteChannel block="set %sensor|remote channel to %channel"
-        //% weight=65       
+        //% weight=99       
         //% group="Remote Infrared Beacon"
         setRemoteChannel(channel: InfraredRemoteChannel) {
             this.setMode(InfraredSensorMode.RemoteControl)

@@ -15,12 +15,14 @@
     Add your custom CSS here
 *******************************/
 
-/* Roboto font */
-@RobotoFont: data-uri("../docs/static/fonts/Roboto_400_normal.woff");
-
+/* Open Sans font */
 @font-face  {
-    font-family: 'Roboto';
-    src: @RobotoFont format("woff");
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'),
+         data-uri('../docs/static/fonts/Open_Sans/OpenSans-Regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         data-uri('../docs/static/fonts/Open_Sans/OpenSans-Regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 .ui.button.download-button {
@@ -72,6 +74,10 @@
     color: @blue;
 }
 
+.menubar .ui.item.editor-menuitem .item.toggle {
+    height: 45px;
+}
+
 .sandboxfooter a:not(.thin) {
     color:white !important;
 }
@@ -80,6 +86,14 @@
 .menubar .ui.menu.fixed > .left.menu > .ui.item > .ui.text,
     .menubar .ui.menu.fixed > .ui.item > span {
     text-transform: lowercase;
+}
+
+#filelist {
+    background: @simulatorBackground data-uri("../docs/static/backgrounds/simulator.png") 0 0 repeat !important;
+}
+
+#downloadArea {
+    background: white;
 }
 
 /* Mobile */
@@ -95,15 +109,15 @@
 
 /* Small Monitor */
 @media only screen and (min-width: @computerBreakpoint) and (max-width: @largestSmallMonitor) {
-    #filelist, #downloadArea {
-        border-top: 2px solid #ECF6FF;
+    #editortools, #downloadArea {
+        background: #828A95;
     }
 }
 
 /* Large Monitor */
 @media only screen and (min-width: @largeMonitorBreakpoint) {
-    #filelist, #downloadArea {
-        border-top: 2px solid #ECF6FF;
+    #editortools, #downloadArea {
+        background: #828A95;
     }
 }
 /* Mobile, Tablet AND thin screen */

@@ -36,7 +36,7 @@ namespace sensors {
          * Get the current angle from the gyroscope.
          * @param sensor the gyroscope to query the request
          */
-        //% help=input/gyro/angle
+        //% help=sensors/gyro/angle
         //% block="%sensor|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
@@ -56,7 +56,7 @@ namespace sensors {
          * Get the current rotation rate from the gyroscope.
          * @param sensor the gyroscope to query the request
          */
-        //% help=input/gyro/rate
+        //% help=sensors/gyro/rate
         //% block="%sensor|rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
@@ -81,7 +81,7 @@ namespace sensors {
         /**
          * Forces a calibration of the gyro. Must be called when the sensor is completely still.
          */
-        //% help=input/gyro/calibrate
+        //% help=sensors/gyro/reset
         //% block="reset %sensor|"
         //% blockId=gyroReset  
         //% parts="gyroscope"
