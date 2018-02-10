@@ -29,7 +29,7 @@ namespace sensors {
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
          */
-        //% help=input/touch-sensor/on-event
+        //% help=sensors/touch-sensor/on-event
         //% blockId=touchEvent block="on %sensor|%event"
         //% parts="touch"
         //% blockNamespace=sensors
@@ -45,7 +45,7 @@ namespace sensors {
          * @param sensor the touch sensor that needs to be clicked or used
          * @param event the kind of button gesture that needs to be detected
          */
-        //% help=input/touch-sensor/pause-until
+        //% help=sensors/touch-sensor/pause-until
         //% blockId=touchWaitUntil block="pause until %sensor|%event"
         //% parts="touch"
         //% blockNamespace=sensors
@@ -60,7 +60,7 @@ namespace sensors {
          * Check if touch sensor is touched.
          * @param sensor the port to query the request
          */
-        //% help=input/touch-sensor/is-pressed
+        //% help=sensors/touch-sensor/is-pressed
         //% block="%sensor|is pressed"
         //% blockId=touchIsPressed
         //% parts="touch"
@@ -76,7 +76,7 @@ namespace sensors {
          * Check if touch sensor is touched since it was last checked.
          * @param sensor the port to query the request
          */
-        //% help=input/touch-sensor/was-pressed
+        //% help=sensors/touch-sensor/was-pressed
         //% block="%sensor|was pressed"
         //% blockId=touchWasPressed
         //% parts="touch"
