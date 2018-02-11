@@ -3,7 +3,7 @@
 ```cards
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectDetected, function () {});
 sensors.ultrasonic1.distance();
-sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.Detected);
+sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.ObjectDetected);
 ```
 
 ## See Also

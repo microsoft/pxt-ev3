@@ -3,7 +3,7 @@
 Make your program wait until an some object is detected in proximity of the sensor.
 
 ```sig
-sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.Detected);
+sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.ObjectDetected);
 ```
 
 How an object is detected depends on the distance and movement _thresholds_ set for the sensor. A threshold is a number that is some distance in centimeters or the strength of ultrasonic sound. You can set a distance to detect something that is far, near, or is sending out ultrasound (like the sensor of another robot in the area). The three thresholds you can set are:
@@ -28,7 +28,7 @@ Wait for another object sending out ultrasonic sound. Show a message on the scre
 ```blocks
 brick.showString("Waiting for another", 1);
 brick.showString("robot to appear...", 2);
-sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.Detected);
+sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.ObjectDetected);
 brick.showString("Hey, I just heard", 1)
 brick.showString("Something!", 2);
 ```
