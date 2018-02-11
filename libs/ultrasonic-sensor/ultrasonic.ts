@@ -41,7 +41,7 @@ namespace sensors {
          * Registers code to run when the given color is close
          * @param handler the code to run when detected
          */
-        //% help=input/ultrasonic/on
+        //% help=sensors/ultrasonic/on-event
         //% blockId=ultrasonicOn
         //% block="on %sensor|%event"
         //% parts="ultrasonicsensor"
@@ -56,7 +56,7 @@ namespace sensors {
         /**
          * Waits for the event to occur
          */
-        //% help=input/ultrasonic/wait
+        //% help=sensors/ultrasonic/pause-until
         //% block="pause until %sensor| %event"
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
@@ -72,7 +72,7 @@ namespace sensors {
          * Gets the distance from the sonar in centimeters
          * @param sensor the ultrasonic sensor port
          */
-        //% help=input/ultrasonic/distance
+        //% help=sensors/ultrasonic/distance
         //% block="%sensor|distance"
         //% blockId=sonarGetDistance
         //% parts="ultrasonicsensor"

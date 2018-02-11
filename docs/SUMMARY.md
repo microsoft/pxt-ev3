@@ -78,3 +78,7 @@
             * [angle](/reference/sensors/gyro/angle)
             * [rate](/reference/sensors/gyro/rate)
             * [reset](/reference/sensors/gyro/reset)
+        * [Ultrasonic](/reference/sensors/ultrasonic)
+            * [on event](/reference/sensors/ultrasonic/on-event),
+            * [distance](reference/sensors/ultrasonic/distance),
+            * [pause until](reference/sensors/ultrasonic/pause-until)
