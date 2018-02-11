@@ -27,4 +27,4 @@ sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectFar, function () {
 
 ## See also
 
-[rate](/reference/sensors/gyro/rate), [reset](/reference/sensors/gyro/reset)
+[on event](/reference/sensors/ultrasonic/on-event), [pause until](/reference/sensors/ultrasonic/pause-until)
