@@ -8,6 +8,6 @@
 }
 
 #mainmenu {
-    background: #f4f7f9;
+    background: @legoGreyLight;
     border-bottom: 5px solid #00a5c8;
 }
