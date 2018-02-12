@@ -19,21 +19,21 @@ enum LightIntensityMode {
 }
 
 const enum ColorSensorColor {
-    //% block="none" blockIdentity=sensors.color
+    //% block="none"
     None,
-    //% block="black" blockIdentity=sensors.color
+    //% block="black"
     Black,
-    //% block="blue" blockIdentity=sensors.color
+    //% block="blue"
     Blue,
-    //% block="green" blockIdentity=sensors.color
+    //% block="green"
     Green,
-    //% block="yellow" blockIdentity=sensors.color
+    //% block="yellow"
     Yellow,
-    //% block="red" blockIdentity=sensors.color
+    //% block="red"
     Red,
-    //% block="white" blockIdentity=sensors.color
+    //% block="white"
     White,
-    //% block="brown" blockIdentity=sensors.color
+    //% block="brown"
     Brown,
 }
 
