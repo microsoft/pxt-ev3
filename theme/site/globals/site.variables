@@ -27,8 +27,10 @@
 @orange: #fa7f2a;
 @green: @brightYellowishGreen;
 
-@legoGreyLight: #eaeeef;
+@legoGreyLight: #F4F1F4;
 @legoGreyDark: #f4f7f9;
+
+@grey: @legoGreyLight;
 
 /* Lego official colors */
 
@@ -126,7 +128,7 @@
 --------------------*/
 
 @simulatorBackground: #D6EDFF; /* #FFF */ /* #fcfbfa; */
-@editorToolsBackground: #fff; /* #fcfbfa; */
+@editorToolsBackground: @legoGreyLight; /* #fff;*/ /* #fcfbfa; */
 @blocklySvgColor: #f9f9f9; /*#f2f6f8;*/ /*ecf6fe;*/ 
 
 @homeScreenBackground: #EAEEEF;
@@ -149,8 +151,8 @@
    Editor
 --------------------*/
 
-@blocklyToolboxColor: #FAC80A;
-@trashIconColor: white;
+@blocklyToolboxColor: #FFF; /*#FAC80A;*/
+@trashIconColor: #FAC80A; /*white*/
 
 
 /*-------------------

@@ -29,11 +29,23 @@
     &:extend(.ui.primary.button all);
 }
 
-.ui.button.editortools-btn {
-    &:extend(.ui.blue.button all);
+@buttonBackgroundColor: white;
+@buttonForegroundColor: #5E5E5E;
+
+.ui.button.editortools-btn, .simtoolbar .ui.button,
+    .ui.button.collapse-button, .ui.button.collapsed-button {
+    background-color: @buttonBackgroundColor;
+    color: @buttonForegroundColor;
+    border: none !important;
+    box-shadow: none !important;
+}
+.ui.button.editortools-btn:hover, 
+.ui.button.editortools-btn:focus {
+    color: darken(@buttonForegroundColor, 0.2) !important;
 }
 
-.projectname-input {
+.ui.input.projectname-input input {
+    box-shadow: none; border: none !important;
 }
 
 .ui.button.getting-started-btn {
@@ -93,7 +105,7 @@
 }
 
 #downloadArea {
-    background: white;
+    background: @legoGreyLight;
 }
 
 /* Mobile */
@@ -109,15 +121,18 @@
 
 /* Small Monitor */
 @media only screen and (min-width: @computerBreakpoint) and (max-width: @largestSmallMonitor) {
-    #editortools, #downloadArea {
-        background: #828A95;
-    }
+
 }
 
 /* Large Monitor */
 @media only screen and (min-width: @largeMonitorBreakpoint) {
-    #editortools, #downloadArea {
-        background: #828A95;
+
+}
+
+/* >= Small Monitor (Small Monitor + Large Monitor + Wide Monitor) */
+@media only screen and (min-width: @computerBreakpoint) {
+    .fullscreensim #boardview {    
+        background: @simulatorBackground data-uri("../docs/static/backgrounds/simulator.png") 0 0 repeat !important;
     }
 }
 /* Mobile, Tablet AND thin screen */
