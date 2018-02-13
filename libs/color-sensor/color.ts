@@ -19,22 +19,22 @@ enum LightIntensityMode {
 }
 
 const enum ColorSensorColor {
-    //% block="none"
+    //% block="none" jres=colors.none
     None,
-    //% block="black"
+    //% block="black" jres=colors.black
     Black,
-    //% block="blue"
+    //% block="blue" jres=colors.blue
     Blue,
-    //% block="green"
+    //% block="green" jres=colors.green
     Green,
-    //% block="yellow"
+    //% block="yellow" jres=colors.yellow
     Yellow,
-    //% block="red"
+    //% block="red" jres=colors.red
     Red,
-    //% block="white"
+    //% block="white" jres=colors.white
     White,
-    //% block="brown"
-    Brown,
+    //% block="brown" jres=colors.brown
+    Brown
 }
 
 enum LightCondition {
@@ -117,6 +117,11 @@ namespace sensors {
         //% sensor.fieldEditor="ports"
         //% weight=100 blockGap=12
         //% group="Color Sensor"
+        //% color.fieldEditor="gridpicker"
+        //% color.fieldOptions.columns=4 
+        //% color.fieldOptions.tooltips=true
+        //% color.fieldOptions.hideRect=true
+        //% color.fieldOptions.width=268
         onColorDetected(color: ColorSensorColor, handler: () => void) {
             this.setMode(ColorSensorMode.Color)
             const v = this._colorEventValue(<number>color);
@@ -137,6 +142,11 @@ namespace sensors {
         //% sensor.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Color Sensor"
+        //% color.fieldEditor="gridpicker"
+        //% color.fieldOptions.columns=4 
+        //% color.fieldOptions.tooltips=true
+        //% color.fieldOptions.hideRect=true
+        //% color.fieldOptions.width=268
         pauseForColor(color: ColorSensorColor) {
             this.setMode(ColorSensorMode.Color);
             if (this.color() != color) {
