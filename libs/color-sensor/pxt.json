@@ -3,6 +3,7 @@
     "description": "Color Sensor support",
     "files": [
         "README.md",
+        "colors.jres",
         "color.ts"
     ],
     "testFiles": [
