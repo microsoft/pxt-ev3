@@ -62,22 +62,22 @@ static Image lastImg;
 
 //%
 void updateLCD(Image img) {
-    if (dirty && mappedFrameBuffer != MAP_FAILED) {
-        dirty = false;
-        if (img && img != lastImg) {
-            decrRC(lastImg);
-            incrRC(img);
-            lastImg = img;
-        }
-        if (lastImg)
-            bitBufferToFrameBuffer(lastImg->pix(), mappedFrameBuffer);
+    if (img && img != lastImg) {
+        decrRC(lastImg);
+        incrRC(img);
+        lastImg = img;
+    }
+
+    if (lastImg && lastImg->isDirty() && mappedFrameBuffer != MAP_FAILED) {
+        lastImg->clearDirty();
+        bitBufferToFrameBuffer(lastImg->pix(), mappedFrameBuffer);
     }
 }
 
 void *screenRefresh(void *dummy) {
     while (true) {
         sleep_core_us(30000);
-        updateLCD();
+        updateLCD(NULL);
     }
 }
 

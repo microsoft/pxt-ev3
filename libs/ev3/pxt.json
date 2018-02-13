@@ -9,6 +9,7 @@
     "dependencies": {
         "base": "file:../base",
         "core": "file:../core",
+        "screen": "file:../screen",
         "music": "file:../music",
         "color-sensor": "file:../color-sensor",
         "touch-sensor": "file:../touch-sensor",

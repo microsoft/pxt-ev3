@@ -40,4 +40,6 @@ typedef Buffer Sound;
 #define DEVICE_ID_NOTIFY 10000
 #define DEVICE_ID_NOTIFY_ONE 10001
 
+#define IMAGE_BITS 1
+
 #endif
