@@ -38,7 +38,7 @@
         "packages": true,
         "sharing": true,
         "publishing": true,
-        "importing": false,
+        "importing": true,
         "preferredPackages": [],
         "githubPackages": true
     },
