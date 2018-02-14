@@ -73,7 +73,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                 <span class="ui blue circular label">2</span>
                                 <strong>${lf("Make sure you have the latest EV3 firmware")}</strong>
                                 <br/>
-                                <a href="" target="_blank">${lf("Click here to update to latest firmware")}</a>
+                                <a href="https://ev3manager.education.lego.com/" target="_blank">${lf("Click here to update to latest firmware")}</a>
                             </div>
                         </div>
                     </div>
