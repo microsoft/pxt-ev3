@@ -46,7 +46,7 @@ motors.largeAB.tank(75, 75)
 loops.pause(10000)
 motors.largeAB.tank(-55, -55)
 loops.pause(10000)
-motors.stopAllMotors()
+motors.stopAll()
 ```
 
 ### Slip steer
@@ -73,7 +73,7 @@ Run both motors in opposite directions to spin the brick around to the left.
 ```blocks
 motors.largeAB.tank(-30, 30)
 loops.pause(5000)
-motors.stopAllMotors()
+motors.stopAll()
 ```
 
 ## See also
