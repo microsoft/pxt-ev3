@@ -13,7 +13,8 @@ These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (455
   "description": "Create instruments with your EV3 Brick!",
   "url":"/maker/sound-machine",
   "cardType": "example",
-  "imageUrl": "/static/maker/sound-machine.png"
+  "imageUrl": "/static/maker/sound-machine.png",
+  "cardType": "side"  
 }
 ]
 ```
