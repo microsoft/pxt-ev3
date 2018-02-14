@@ -32,7 +32,7 @@ Think about examples from your brainstorming discussion. Then explain why you ch
 
 ![The Mars rover](/static/lessons/make-it-move/hero.png)
 
-https://www.youtube.com/watch?v=ErC_s3hLGMk
+https://www.youtube.com/ErC_s3hLGMk
 
 ## Construct
 
@@ -56,13 +56,13 @@ As you test your design solution, use the table for recording your findings.
 
 [**VIEW BUILDING INSTRUCTIONS**](TODO) for a sample solution. (7.8 MB, PDF)
 
-# Contemplate
+## Contemplate
 
-## Test and Analyze
+### Test and Analyze
 
 How well does your solution satisfy the design brief? Record your data. Name the columns and rows, such as Trial Number, Distance Moved, and Observations.
 
-## Review and Revise
+### Review and Revise
 
 Take a moment to reflect on your robot solution.
 
@@ -72,9 +72,9 @@ Think about:
 * Is it accurate? How do you know?
 Describe two ways you could improve your robot.
 
-# Continue
+## Continue
 
-## Communicate
+### Communicate
 
 Here are some ideas:
 * Create a video of your project, especially your final presentation and your robot’s performance.
