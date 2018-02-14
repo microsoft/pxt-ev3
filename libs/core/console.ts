@@ -52,11 +52,11 @@ namespace console {
     //% blockId=logsendtostreen block="send console to screen"
     //% weight=1
     export function sendToScreen(): void {
-        console.screen.attach();
+        console._screen.attach();
     }
 }
 
-namespace console.screen {
+namespace console._screen {
     const maxLines = 100;
     const screenLines = 10;
     let lines: string[];
@@ -77,7 +77,7 @@ namespace console.screen {
         for (let i = 0; i < screenLines; ++i) {
             const line = lines[i + scrollPosition];
             if (line)
-                brick.print(line, 0, 4 + i * brick.LINE_HEIGHT)
+                screen.print(line, 0, 4 + i * brick.LINE_HEIGHT)
         }
     }
 

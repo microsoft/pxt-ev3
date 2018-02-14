@@ -19,7 +19,7 @@ struct PNGHeader {
     uint8_t IDAT[4];
 } __attribute__((packed));
 
-namespace screen {
+namespace image {
 
 static uint32_t swap(uint32_t num) {
     return ((num >> 24) & 0xff) | ((num << 8) & 0xff0000) | ((num >> 8) & 0xff00) |

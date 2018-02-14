@@ -9,11 +9,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
-#define XX(v) ((uint32_t)(v)&0xffff)
-#define YY(v) ((uint32_t)(v) >> 16)
-
-// We only support up to 4 arguments for C++ functions - need to pack them on the TS side
-namespace screen {
+namespace pxt {
 
 #define ROW_SIZE 23
 #define FB_SIZE (60 * LCD_HEIGHT)
@@ -61,7 +57,7 @@ static uint8_t *mappedFrameBuffer;
 static Image lastImg;
 
 //%
-void updateLCD(Image img) {
+void updateScreen(Image img) {
     if (img && img != lastImg) {
         decrRC(lastImg);
         incrRC(img);
@@ -69,19 +65,14 @@ void updateLCD(Image img) {
     }
 
     if (lastImg && lastImg->isDirty() && mappedFrameBuffer != MAP_FAILED) {
+        if (lastImg->bpp() != 1 || lastImg->width() != LCD_WIDTH || lastImg->height() != LCD_HEIGHT)
+            target_panic(906);
         lastImg->clearDirty();
         bitBufferToFrameBuffer(lastImg->pix(), mappedFrameBuffer);
     }
 }
 
-void *screenRefresh(void *dummy) {
-    while (true) {
-        sleep_core_us(30000);
-        updateLCD(NULL);
-    }
-}
-
-void init() {
+void screen_init() {
     DMESG("init screen");
     if (mappedFrameBuffer)
         return;
@@ -92,10 +83,6 @@ void init() {
     if (mappedFrameBuffer == MAP_FAILED) {
         target_panic(903);
     }
-
-    pthread_t pid;
-    pthread_create(&pid, NULL, screenRefresh, NULL);
-    pthread_detach(pid);
 }
 
 static const uint8_t numbers[] = {
@@ -148,10 +135,5 @@ extern "C" void drawPanic(int code) {
         bitBufferToFrameBuffer(bitBuffer, mappedFrameBuffer);
     }
 }
-}
 
-namespace pxt {
-void screen_init() {
-    screen::init();
-}
 } // namespace pxt
