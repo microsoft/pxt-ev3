@@ -3,7 +3,7 @@
 ```namespaces
 brick.showMood(moods.sleeping);
 sensors.color(null);
-motors.stopAllMotors();
+motors.stopAll();
 ```
 
 ## See Also

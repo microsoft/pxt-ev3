@@ -2,14 +2,30 @@
 
 ## Projects #projects
 
+* [Getting Started](/getting-started)
+    * [Try](/getting-started/try)
+    * [Use](/getting-started/use)
+
+* [Coding](/coding)
+    * [Autonomous Parking](/coding/autonomous-parking)
+    * [Object Detection](/coding/object-detection)
+    * [Line Following](/coding/line-following)
+        
+* [Design Engineering](/design-engineering)
+    * [Make It Move Without Wheels](/design-engineering/make-it-move)
+    * [Make It Smarter and Faster](/design-engineering/make-it-faster)
+    * [Make a System that Communicates](/design-engineering/make-it-communicate)
+
 * [Maker](/maker)
-    * [Sound Machine](/maker/sound-machine)
+    * [Make a Sound Machine](/maker/sound-machine)
+
+* [Examples](/examples)
+    * [Make it move](/lessons/make-it-move)
+    * [Line detection](/lessons/line-detection)
     * [Sound of Color](/maker/sound-of-color)
     * [Security Gadget](/maker/security-gadget)
     * [Intruder detector](/maker/intruder-detector)
     * [Puppet](/maker/puppet)
-
-* [Coding](/coding)
     * [Three Point Turn 1](/coding/three-point-turn-1)
     * [Three Point Turn 2](/coding/three-point-turn-2)
     * [Three Point Turn 3](/coding/three-point-turn-3)
@@ -33,10 +49,6 @@
     * [Cruise Control 3](/coding/cruise-control-3)
     * [Roaming 1](/coding/roaming-1)
     * [Roaming 2](/coding/roaming-2)
-
-* [Lessons](/lessons)
-    * [Make it move](/lessons/make-it-move)
-    * [Line detection](/lessons/line-detection)
 
 ## Reference #reference
 
@@ -67,7 +79,7 @@
         * [angle](/reference/motors/motor/angle)
         * [speed](/reference/motors/motor/speed)
         * [clear counts](/reference/motors/motor/clear-counts)
-        * [stop all motors](/reference/motors/stop-all-motors)
+        * [stop all motors](/reference/motors/stop-all)
     * [Sensors](/reference/sensors)
         * [Touch](/reference/sensors/touch-sensor)
             * [on event](/reference/sensors/touch-sensor/on-event)

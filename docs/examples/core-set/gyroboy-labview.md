@@ -144,7 +144,7 @@ loops.forever(function () {
         let p = 5 - (t2 - t1);
         loops.pause(Math.max(1, p))
     }
-    motors.stopAllMotors()
+    motors.stopAll()
     st = 0;
     brick.setStatusLight(StatusLight.RedPulse);
     brick.showImage(images.eyesKnockedOut)

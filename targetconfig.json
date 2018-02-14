@@ -8,8 +8,9 @@
         ]
     },
     "galleries": {
-        "Maker Activities": "maker",
-        "Coding Activites": "coding",
-        "Lessons": "lessons"
+        "Getting Started": "getting-started",
+        "Design Engineering": "design-engineering",
+        "Coding": "coding",
+        "Maker": "maker"
     }
 }

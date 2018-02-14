@@ -12,7 +12,7 @@ motors.largeA.setInverted(true)
 motors.largeA.setRegulated(false)
 motors.largeA.stop()
 motors.largeA.reset()
-motors.stopAllMotors()
+motors.stopAll()
 ```
 ## Counters
 
