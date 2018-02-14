@@ -21,6 +21,7 @@
   "files": [
     "README.md",
     "pxtarget.json",
+    "targetconfig.json",
     "built/*.js",
     "built/*.json",
     "built/*.d.ts",
