@@ -81,7 +81,7 @@ Study the program...what do you think the program will do?
 motors.largeBC.steer(0, 20)
 while (true) {
     sensors.color3.pauseForColor(ColorSensorColor.Red)
-    motors.stopAllMotors()
+    motors.stopAll()
 }
 ```
 
@@ -148,7 +148,7 @@ while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
         sensors.color3.pauseForColor(ColorSensorColor.Red)
-        motors.stopAllMotors()
+        motors.stopAll()
     }
 }
 ```
@@ -162,7 +162,7 @@ while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
         sensors.color3.pauseForColor(ColorSensorColor.Red)
-        motors.stopAllMotors()
+        motors.stopAll()
     }
     while (true) {
         
@@ -183,7 +183,7 @@ while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
         sensors.color3.pauseForColor(ColorSensorColor.Red)
-        motors.stopAllMotors()
+        motors.stopAll()
     }
     while (true) {
         sensors.color3.pauseForColor(ColorSensorColor.Red)

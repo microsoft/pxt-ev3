@@ -108,7 +108,7 @@ function checkFallen() {
 // stop all motors and wait for touch button to be
 // pressed
 function stop() {
-    motors.stopAllMotors()
+    motors.stopAll()
     state = 0
     moods.knockedOut.show();
     sensors.touch3.pauseUntil(ButtonEvent.Pressed)

@@ -163,5 +163,5 @@
             "editor.background": "#ecf6ff"
         }
     },
-    "ignoreDocsErrors": false
+    "ignoreDocsErrors": true
 }
