@@ -248,7 +248,7 @@ namespace brick {
 
     /**
      * Set lights.
-     * @param pattern the lights pattern to use. eg: BrickLight.Orange
+     * @param pattern the lights pattern to use. eg: StatusLight.Orange
      */
     //% blockId=setLights block="set status light to %pattern"
     //% weight=100 group="Buttons"
