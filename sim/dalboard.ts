@@ -11,7 +11,7 @@ namespace pxsim {
         analogState: EV3AnalogState;
         uartState: EV3UArtState;
         motorState: EV3MotorState;
-        screenState: EV3ScreenState;
+        screenState: ScreenState;
         audioState: AudioState;
         remoteState: RemoteState;
 
@@ -37,7 +37,7 @@ namespace pxsim {
             this.analogState = new EV3AnalogState();
             this.uartState = new EV3UArtState();
             this.motorState = new EV3MotorState();
-            this.screenState = new EV3ScreenState();
+            this.screenState = new ScreenState(["#97b5a6", "#000000"], visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT);
             this.audioState = new AudioState();
             this.remoteState = new RemoteState();
         }

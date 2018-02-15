@@ -496,7 +496,7 @@ namespace pxsim.visuals {
             }
         }
 
-        private updateScreenStep(state: EV3ScreenState) {
+        private updateScreenStep(state: ScreenState) {
             const bBox = this.layoutView.getBrick().getScreenBBox();
             if (!bBox || bBox.width == 0) return;
 
@@ -511,13 +511,7 @@ namespace pxsim.visuals {
 
             this.screenCanvasData = this.screenCanvasCtx.getImageData(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-            let sp = 3
-            const points = state.points
-            const data = this.screenCanvasData.data
-            for (let i = 0; i < points.length; ++i) {
-                data[sp] = points[i]
-                sp += 4;
-            }
+            new Uint32Array(this.screenCanvasData.data.buffer).set(state.screen)
 
             // Move the image to another canvas element in order to scale it
             this.screenCanvasTemp.style.width = `${SCREEN_WIDTH}`;

@@ -1,143 +1,8 @@
-namespace pxsim {
-    export enum Draw {
-        Normal = 0x00, // set pixels to black, no fill
-        Clear = 0x01,
-        Xor = 0x02,
-        Fill = 0x04,
-        Transparent = 0x08,
-        Double = 0x10,
-        Quad = 0x20,
-    }
-
-
-    function OFF(x: number, y: number) {
-        return x + y * visuals.SCREEN_WIDTH
-    }
-
-
-    export class EV3ScreenState {
-        changed: boolean = true;
-        points: Uint8Array;
-        constructor() {
-            this.points = new Uint8Array(visuals.SCREEN_WIDTH * visuals.SCREEN_HEIGHT)
-        }
-
-        applyMode(off: number, v: number) {
-            if (v & Draw.Clear)
-                this.points[off] = 0;
-            else if (v & Draw.Xor)
-                this.points[off] = this.points[off] ? 0 : 255;
-            else
-                this.points[off] = 255;
-        }
-
-        setPixel(x: number, y: number, v: number) {
-            this.applyMode(OFF(x, y), v)
-            this.changed = true;
-        }
-
-        clear() {
-            for (let i = 0; i < this.points.length; ++i)
-                this.points[i] = 0;
-            this.changed = true;
-        }
-
-        blitLineCore(x: number, y: number, w: number, buf: RefBuffer, mode: Draw, offset = 0) {
-            if (y < 0 || y >= visuals.SCREEN_HEIGHT)
-                return;
-            if (x + w <= 0)
-                return;
-            if (x >= visuals.SCREEN_WIDTH)
-                return;
-
-            let off = OFF(x, y);
-            const off0 = OFF(0, y);
-            const off1 = OFF(visuals.SCREEN_WIDTH - 1, y);
-            let mask = 0x01
-            let dp = offset
-
-            for (let i = 0; i < w; ++i) {
-                if ((buf.data[dp] & mask) && off0 <= off && off <= off1) {
-                    this.applyMode(off, mode);
-                }
-                off++
-                mask <<= 1
-                if (mask & 0x100) {
-                    mask = 0x01
-                    dp++
-                }
-            }
-
-            this.changed = true;
-        }
-
-        clearLine(x: number, y: number, w: number) {
-            let off = OFF(x, y);
-            const off0 = OFF(0, y);
-            const off1 = OFF(visuals.SCREEN_WIDTH - 1, y);
-            for (let i = 0; i < w; ++i) {
-                if (off0 <= off && off <= off1) {
-                    this.points[off] = 0
-                }
-                off++
-            }
-        }
-
-        didChange() {
-            const res = this.changed;
-            this.changed = false;
-            return res;
-        }
-    }
-}
-
-
-namespace pxsim.screen {
-    function XX(v: number) { return (v << 16) >> 16 }
-    function YY(v: number) { return v >> 16 }
-
-    export function _setPixel(x: number, y: number, mode: Draw) {
-        const screenState = ev3board().screenState;
-        screenState.setPixel(x, y, mode);
-    }
-
-    export function _blitLine(xw: number, y: number, buf: RefBuffer, mode: Draw) {
-        const screenState = ev3board().screenState;
-        screenState.blitLineCore(XX(xw), y, YY(xw), buf, mode)
-    }
-
-    export function isValidImage(buf: RefBuffer) {
-        return buf.data.length >= 3 && buf.data[0] == 0xf0;
-    }
-
-    export function PIX2BYTES(x: number) {
-        return ((x + 7) >> 3)
-    }
-    export function clear(): void {
-        const screenState = ev3board().screenState;
-        screenState.clear()
-    }
-
-    export function dump() {
-        // No need for this one.
-    }
-
-    export function imageOf(buf: RefBuffer) {
-        return incr(buf)
-    }
-}
-
 namespace pxsim.screen {
     function DMESG(msg: string) {
         control.dmesg(msg)
     }
     const NULL: RefBuffer = null;
-    function revbits(v: number) {
-        v = (v & 0xf0) >> 4 | (v & 0x0f) << 4;
-        v = (v & 0xcc) >> 2 | (v & 0x33) << 2;
-        v = (v & 0xaa) >> 1 | (v & 0x55) << 1;
-        return v;
-    }
 
     export function unpackPNG(png: RefBuffer) {
         function memcmp(off: number, mark: string) {
@@ -208,9 +73,10 @@ namespace pxsim.screen {
         }
 
         const res = output.createBuffer(2 + byteW * height);
-        res.data[0] = 0xf0;
+        res.data[0] = 0xf1;
         res.data[1] = width;
-        let dst = 2
+        res.data[2] = height;
+        let dst = 3
         let src = 0
         let lastMask = (1 << (width & 7)) - 1;
         if (lastMask == 0)
@@ -222,99 +88,13 @@ namespace pxsim.screen {
                 return NULL;
             }
             for (let j = 0; j < byteW; ++j) {
-                res.data[dst] = ~revbits(two[src++]);
+                res.data[dst] = ~(two[src++]);
                 if (j == byteW - 1) {
                     res.data[dst] &= lastMask;
                 }
                 dst++;
             }
         }
-        return res;
+        return image.ofBuffer(res)
     }
-}
-
-namespace pxsim.ImageMethods {
-    const bitdouble = [
-        0x00, 0x03, 0x0c, 0x0f, 0x30, 0x33, 0x3c, 0x3f, 0xc0, 0xc3, 0xcc, 0xcf, 0xf0, 0xf3, 0xfc, 0xff,
-    ]
-
-    export function buffer(buf: RefBuffer) {
-        return incr(buf)
-    }
-
-    export function width(buf: RefBuffer) {
-        if (!screen.isValidImage(buf)) return 0
-        return buf.data[1]
-    }
-
-    export function height(buf: RefBuffer) {
-        if (!screen.isValidImage(buf)) return 0
-        const bw = screen.PIX2BYTES(buf.data[1]);
-        const h = ((buf.data.length - 2) / bw) | 0;
-        return h
-    }
-
-    export function draw(buf: RefBuffer, x: number, y: number, mode: Draw): void {
-        const screenState = ev3board().screenState;
-
-        if (!screen.isValidImage(buf))
-            return;
-
-        if (mode & (Draw.Double | Draw.Quad)) {
-            buf = doubled(buf);
-            if (mode & Draw.Quad) {
-                let pbuf = buf;
-                buf = doubled(buf);
-                decr(pbuf);
-            }
-        }
-
-        let pixwidth = buf.data[1];
-        let ptr = 2;
-        const bytewidth = screen.PIX2BYTES(pixwidth);
-        pixwidth = Math.min(pixwidth, visuals.SCREEN_WIDTH);
-        while (ptr + bytewidth <= buf.data.length) {
-            if (mode & (Draw.Clear | Draw.Xor | Draw.Transparent)) {
-                // no erase of background
-            } else {
-                screenState.clearLine(x, y, pixwidth)
-            }
-            screenState.blitLineCore(x, y, pixwidth, buf, mode, ptr);
-            y++;
-            ptr += bytewidth;
-        }
-
-        if (mode & (Draw.Double | Draw.Quad))
-            decr(buf);
-    }
-
-    export function doubled(buf: RefBuffer): RefBuffer {
-        if (!screen.isValidImage(buf))
-            return null;
-        const w = buf.data[1];
-        if (w > 126)
-            return null;
-        const bw = screen.PIX2BYTES(w);
-        const h = ((buf.data.length - 2) / bw) | 0;
-        const bw2 = screen.PIX2BYTES(w * 2);
-        const out = pins.createBuffer(2 + bw2 * h * 2)
-        out.data[0] = 0xf0;
-        out.data[1] = w * 2;
-        let src = 2
-        let dst = 2
-        for (let i = 0; i < h; ++i) {
-            for (let jj = 0; jj < 2; ++jj) {
-                let p = src;
-                for (let j = 0; j < bw; ++j) {
-                    const v = buf.data[p++]
-                    out.data[dst++] = bitdouble[v & 0xf];
-                    out.data[dst++] = bitdouble[v >> 4];
-                }
-            }
-            src += bw;
-        }
-        return out;
-    }
-
-
 }
