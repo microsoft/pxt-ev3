@@ -212,5 +212,10 @@ Here are some fun programs for your @boardname@!
   "description": "Keep your brick entertained and happy",
   "url":"/examples/happy-unhappy",
   "cardType": "example"
+}, {
+  "name": "Distance Measurer",
+  "description": "Use a motor to measure angle and distance",
+  "url": "/examples/distance-measurer",
+  "cardType": "example"
 }]
 ```
