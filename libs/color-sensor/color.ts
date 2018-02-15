@@ -294,7 +294,7 @@ namespace sensors {
                 }
 
                 // wait a bit
-                loops.pause(50);
+                pause(50);
             }
 
             // apply tolerance

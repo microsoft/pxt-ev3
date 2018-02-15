@@ -1,9 +1,9 @@
 # Reverse Beeper Activity 1
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     music.playTone(440, sensors.ultrasonic4.distance());
-    loops.pause(50)
+    pause(50)
 })
 motors.largeBC.setSpeed(-20);
 sensors.ultrasonic4.pauseUntil(UltrasonicSensorEvent.ObjectNear);

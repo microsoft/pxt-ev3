@@ -31,15 +31,15 @@ brick.buttonUp.onEvent(ButtonEvent.Bumped, () => {
 
 let num = 0
 
-loops.forever(() => {
+forever(() => {
     serial.writeDmesg()
-    loops.pause(100)
+    pause(100)
 })
 
 /*
-loops.forever(() => {
+forever(() => {
     let v = input.color.getColor()
     screen.print(10, 60, v + "   ")
-    loops.pause(200)
+    pause(200)
 })
 */

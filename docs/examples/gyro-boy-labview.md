@@ -36,7 +36,7 @@ function RST() {
     sensors.gyro2.reset()
     sensors.gyro2.rate()
     control.timer2.reset()
-    loops.pause(5000)
+    pause(5000)
     mSum = 0;
     mPos = 0;
     mD = 0;
@@ -65,7 +65,7 @@ function OS() {
             gSum = gyro;
             gMx = Math.max(gMx, gyro)
             gMn = Math.min(gMn, gyro)
-            loops.pause(4);
+            pause(4);
         }
     } while (gMx - gMn > 2);
     gOS = gSum / 200;
@@ -121,7 +121,7 @@ function CHK() {
 }
 
 // M
-loops.forever(function () {
+forever(function () {
     RST();
     brick.showImage(images.eyesSleeping)
     OS()
@@ -142,7 +142,7 @@ loops.forever(function () {
         CHK()
         let t2 = control.timer1.millis();
         let p = 5 - (t2 - t1);
-        loops.pause(Math.max(1, p))
+        pause(Math.max(1, p))
     }
     motors.stopAll()
     st = 0;
@@ -154,7 +154,7 @@ loops.forever(function () {
 })
 
 // BHV
-loops.forever(function () {
+forever(function () {
     switch (st) {
         case 0:
             Cdrv = 0;
@@ -162,7 +162,7 @@ loops.forever(function () {
             break;
         case 1:
             Cdrv = 40;
-            loops.pause(4000);
+            pause(4000);
             Cdrv = 0;
             music.playTone(1000, 100);
             st = 2;
@@ -203,13 +203,13 @@ loops.forever(function () {
                     Cstr = 70;
                 else
                     Cstr = -70;
-                loops.pause(4000);
+                pause(4000);
                 music.playTone(2000, 100)
                 Cstr = 0;
                 Cdrv = oldDr;
             }
             break;
     }
-    loops.pause(80);
+    pause(80);
 })
 ```

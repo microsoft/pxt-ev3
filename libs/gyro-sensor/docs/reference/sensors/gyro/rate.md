@@ -18,7 +18,7 @@ When the brick is in motion, it moves in the direction of one of axes used to me
 Flash the status light to red if the roll rate of `gyro 2` is more that `30` degrees per second.
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     if (sensors.gyro2.rate() > 30) {
         brick.setStatusLight(StatusLight.RedFlash)
     } else {

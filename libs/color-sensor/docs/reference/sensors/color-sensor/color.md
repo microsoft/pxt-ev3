@@ -1,7 +1,7 @@
 # color
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     if (sensors.color1.color() == ColorSensorColor.Green) {
         brick.setStatusLight(StatusLight.Green)
     } else {

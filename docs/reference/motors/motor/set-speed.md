@@ -69,7 +69,7 @@ Run the motor connected to port **A** continuously. Pause 20 seconds and then st
 
 ```blocks
 motors.largeA.setSpeed(75)
-loops.pause(20000)
+pause(20000)
 motors.largeA.stop()
 ```
 
@@ -79,7 +79,7 @@ Run the motor connected to port **A** in reverse. Pause 5 seconds and then stop 
 
 ```blocks
 motors.largeA.setSpeed(-60)
-loops.pause(5000)
+pause(5000)
 motors.largeA.stop()
 ```
 

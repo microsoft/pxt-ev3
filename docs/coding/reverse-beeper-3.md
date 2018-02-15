@@ -13,7 +13,7 @@ control.runInParallel(function () {
     while (beep) {
         if (sensors.ultrasonic4.distance() < 20) {
             music.playTone(440, sensors.ultrasonic4.distance())
-            loops.pause(50)
+            pause(50)
         }
     }
 })

@@ -7,6 +7,6 @@ while (true) {
         music.playSoundEffectUntilDone(sounds.mechanicalMotorStart)
         music.playSoundEffectUntilDone(sounds.mechanicalMotorIdle);
     }
-    loops.pause(1);
+    pause(1);
 }
 ```

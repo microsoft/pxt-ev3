@@ -23,7 +23,7 @@ Turn off the speed regulation for the motor connected to port **A**.
 ```blocks
 motors.largeA.setRegulated(false)
 motors.largeA.setSpeed(75)
-loops.pause(20000)
+pause(20000)
 motors.largeA.stop()
 ```
 

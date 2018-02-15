@@ -127,7 +127,7 @@ sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     } else {
         controlSteering = -70
     }
-    loops.pause(4000)
+    pause(4000)
     music.playTone(2000, 100)
     controlSteering = 0
     controlDrive = oldControlDrive
@@ -162,7 +162,7 @@ sensors.color1.onColorDetected(ColorSensorColor.White, function () {
 })
 timestep = 0.014
 // main loop
-loops.forever(function () {
+forever(function () {
     reset()
     while (!fallen) {
         control.timer3.pauseUntil(5)

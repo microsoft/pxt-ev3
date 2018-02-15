@@ -21,7 +21,7 @@ motors.largeA.setRegulated(false)
 motors.largeA.setSpeed(55)
 brick.showString("Actual speed:", 1)
 for (let i = 0; i < 30; i++) {
-    loops.pause(500)
+    pause(500)
     brick.showNumber(motors.largeA.speed(), 3)
 }
 motors.largeA.stop()

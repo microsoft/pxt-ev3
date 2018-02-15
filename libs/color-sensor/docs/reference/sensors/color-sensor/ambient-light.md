@@ -1,7 +1,7 @@
 # Ambient Light
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     if (sensors.color1.ambientLight() > 20) {
         brick.setStatusLight(StatusLight.Green)
     } else {

@@ -15,7 +15,7 @@ The blocks in MakeCode have similar functions and go together in the same way: t
 
 ```blocks
 motors.largeA.setSpeed(50)
-loops.pause(1000)
+pause(1000)
 motors.largeA.stop()
 ```
 
@@ -23,7 +23,7 @@ Any block program can be converted to JavaScript and you can edit it as lines of
 
 ```typescript
 motors.largeA.setSpeed(50)
-loops.pause(1000)
+pause(1000)
 motors.largeA.stop()
 ```
 
@@ -133,7 +133,7 @@ It is quite common to have to wait for a task to finish or for a sensor state to
 
 ```blocks
 motors.largeD.setSpeed(50)
-loops.pause(1000)
+pause(1000)
 motors.largeD.stop();
 ```
 
@@ -166,7 +166,7 @@ motors.largeD.stop()
 ![Single loop](/static/labview/loopinfinite.png)
 
 ```blocks
-loops.forever(() => {
+forever(() => {
     motors.largeD.setSpeed(50, 1, MoveUnit.Rotations);
     motors.largeD.setSpeed(-50, 1, MoveUnit.Rotations);
 })
@@ -193,7 +193,7 @@ while(k < 10) {
 
 ```blocks
 let light = 0;
-loops.forever(function () {
+forever(function () {
     light = sensors.color3.light(LightIntensityMode.Reflected);
     motors.largeD.setSpeed(light)
 })
@@ -206,15 +206,15 @@ You can start up multiple ``||loops:forever||`` loops that will run at the same 
 ![Multiple loops running at the same time](/static/labview/multipleloops.png)
 
 ```blocks
-loops.forever(() => {
+forever(() => {
     motors.largeD.setSpeed(50, 1, MoveUnit.Rotations);
     motors.largeD.setSpeed(-50, 1, MoveUnit.Rotations);
 })
-loops.forever(() => {
+forever(() => {
     brick.showImage(images.eyesMiddleRight)
-    loops.pause(1000)
+    pause(1000)
     brick.showImage(images.eyesMiddleLeft)
-    loops.pause(1000)
+    pause(1000)
 })
 ```
 
@@ -225,7 +225,7 @@ The ``||logic:if||`` block allows you to run different code depending on whether
 ![Brake block](/static/labview/ife.png)
 
 ```blocks
-loops.forever(function() {
+forever(function() {
     if(sensors.touch1.isPressed()) {
         motors.largeD.setSpeed(50)
     } else {
@@ -241,8 +241,8 @@ The ``||math:pick random||`` block returns a random number selected from a range
 ![Brake block](/static/labview/random.png)
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     motors.largeBC.steer(Math.randomRange(-5, 5), 50)
-    loops.pause(100)
+    pause(100)
 })
 ```

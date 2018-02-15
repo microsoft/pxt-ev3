@@ -72,9 +72,9 @@ Steer the brick in a snake pattern for a short time.
 ```block
 for (let i = 0; i < 4; i++) {
     motors.largeBC.steer(30, 30)
-    loops.pause(5000)
+    pause(5000)
     motors.largeBC.steer(-30, 30)
-    loops.pause(5000)
+    pause(5000)
 }
 motors.stopAll()
 ```

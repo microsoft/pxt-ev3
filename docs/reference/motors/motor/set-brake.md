@@ -20,7 +20,7 @@ Run the motor connected to port **A** for 2 seconds at a speed of `30`. Stop and
 
 ```blocks
 motors.largeA.setSpeed(30)
-loops.pause(2000)
+pause(2000)
 motors.largeA.stop()
 motors.largeA.setBrake(true)
 ```

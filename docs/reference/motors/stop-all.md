@@ -14,7 +14,7 @@ Tank the @boardname@ forward at half speed for 5 seconds and then stop.
 
 ```blocks
 motors.largeAB.tank(50, 50);
-loops.pause(5000);
+pause(5000);
 motors.stopAll();
 ```
 

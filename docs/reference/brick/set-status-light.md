@@ -24,14 +24,14 @@ brick.setStatusLight(StatusLight.Red);
 Repeatedly show a different color pattern for the brick light.
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     brick.setStatusLight(StatusLight.Orange)
-    loops.pause(1000)
+    pause(1000)
     brick.setStatusLight(StatusLight.GreenFlash)
-    loops.pause(2000)
+    pause(2000)
     brick.setStatusLight(StatusLight.RedPulse)
-    loops.pause(2000)
+    pause(2000)
     brick.setStatusLight(StatusLight.Off)
-    loops.pause(500)
+    pause(500)
 })
 ```

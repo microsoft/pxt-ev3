@@ -95,7 +95,7 @@ namespace sensors {
             this.calibrating = true;
             // may be triggered by a button click, 
             // give time for robot to settle
-            loops.pause(700);
+            pause(700);
             // send a reset command
             super.reset();
             // switch back to the desired mode
@@ -103,13 +103,13 @@ namespace sensors {
             // wait till sensor is live
             pauseUntil(() => this.isActive());
             // give it a bit of time to init
-            loops.pause(1000)
+            pause(1000)
             // compute drift
             this._drift = 0;
             if (this.mode == GyroSensorMode.Rate) {
                 for (let i = 0; i < 200; ++i) {
                     this._drift += this._query();
-                    loops.pause(4);
+                    pause(4);
                 }
                 this._drift /= 200;
             }

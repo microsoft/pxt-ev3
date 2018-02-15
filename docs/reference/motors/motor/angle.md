@@ -20,7 +20,7 @@ Reset the motor connected to port **A** and run it for for 2 seconds at a speed 
 let motorAngle = 0;
 motors.largeA.reset()
 motors.largeA.setSpeed(45)
-loops.pause(2000)
+pause(2000)
 motors.largeA.stop()
 motorAngle = motors.largeA.angle()
 ```

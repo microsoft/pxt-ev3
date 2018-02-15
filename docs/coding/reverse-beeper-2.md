@@ -1,10 +1,10 @@
 # Reverse Beeper Activity 2
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     if (motors.largeB.speed() != 0 && sensors.ultrasonic4.distance() < 20) {
         music.playTone(440, sensors.ultrasonic4.distance());
-        loops.pause(50)
+        pause(50)
     }
 })
 motors.largeBC.setSpeed(-20);

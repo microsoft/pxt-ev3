@@ -202,7 +202,7 @@ namespace motors {
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
             if(this._brake)
-                loops.pause(500);
+                pause(500);
         }
 
         /**

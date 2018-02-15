@@ -26,9 +26,9 @@ while (!(brick.buttonEnter.wasPressed())) {
     brick.showValue("min", min, 4)
     brick.showValue("max", v, 5)
     brick.showValue("setpoint", setpoint, 6)
-    loops.pause(100)
+    pause(100)
 }
-loops.forever(function () {
+forever(function () {
     brick.clearScreen()
     v = sensors.color3.light(LightIntensityMode.Reflected)
     brick.showValue("light", v, 1)

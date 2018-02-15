@@ -21,7 +21,7 @@ let GTO = 0;
 function DN() {
     motors.largeAD.setBrake(true);
     motors.largeAD.tank(50, 50, 1, MoveUnit.Seconds);
-    loops.pause(100);
+    pause(100);
     motors.largeA.clearCounts()
     motors.largeD.clearCounts()
 }
@@ -100,7 +100,7 @@ function UP() {
         pauseUntil(() => motors.largeA.angle() < -65);
         motors.largeA.stop();
 
-        loops.pause(500);
+        pause(500);
     }
 }
 
@@ -277,7 +277,7 @@ function NGR() {
     IS(4)
     music.playSoundEffect(sounds.animalsDogGrowl);
     UP();
-    loops.pause(1500);
+    pause(1500);
     music.stopAllSounds()
     music.playSoundEffect(sounds.animalsDogBark1)
     P_C--;
@@ -303,11 +303,11 @@ function PPP() {
     NS = false;
     IS(2);
     UP();
-    loops.pause(100)
+    pause(100)
     motors.largeA.setSpeed(-30, 70, MoveUnit.Degrees);
-    loops.pause(800);
+    pause(800);
     music.playSoundEffect(sounds.mechanicalHorn1);
-    loops.pause(1000);
+    pause(1000);
     for(let i = 0; i < 3; ++i) {
         motors.largeA.setSpeed(-30, 20, MoveUnit.Degrees);
         motors.largeA.setSpeed(30, 20, MoveUnit.Degrees);
@@ -324,10 +324,10 @@ function HPY() {
     for(let i = 0; i < 3; ++i) {
         music.playSoundEffect(sounds.animalsDogBark1);
         motors.largeAD.setSpeed(-100, 0.2, MoveUnit.Seconds);
-        loops.pause(300)
+        pause(300)
         motors.largeAD.setSpeed(10, 0.3, MoveUnit.Seconds)
     }
-    loops.pause(500);
+    pause(500);
     music.stopAllSounds();
     DN();
     RST();
@@ -347,7 +347,7 @@ function WKU() {
     MHT(0)
     DN()
     STL()
-    loops.pause(1000);
+    pause(1000);
     UP()
     CS(0;)
 }
@@ -358,7 +358,7 @@ MNRH();
 IS(1);
 UP();
 RST();
-loops.forever(function () {
+forever(function () {
     MON();
     switch (DB_S) {
         case 0:

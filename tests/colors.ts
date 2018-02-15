@@ -15,7 +15,7 @@ tests.test("Bright ambient light", function () {
     let actualLight: number
     for (let i = 0; i < 4; i++) {
         actualLight = sensors.color1.ambientLight()
-        loops.pause(500)
+        pause(500)
     }
     tests.assertClose("Light", actualLight, 20, 15)
 })
@@ -29,7 +29,7 @@ tests.test("Bright reflected light", function () {
     let actualLight: number
     for (let i = 0; i < 4; i++) {
         actualLight = sensors.color1.reflectedLight()
-        loops.pause(500)
+        pause(500)
     }
     tests.assertClose("Light", actualLight, 17, 14)
 })

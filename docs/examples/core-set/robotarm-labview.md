@@ -18,7 +18,7 @@ function INI() {
 INI()
 
 let down = false;
-loops.forever(function () {
+forever(function () {
     brick.showImage(images.informationQuestionMark)
     brick.setStatusLight(StatusLight.OrangePulse);
     pauseUntil(() => (down = brick.buttonDown.wasPressed()) || brick.buttonUp.wasPressed())
