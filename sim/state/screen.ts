@@ -1,4 +1,4 @@
-namespace pxsim.screen {
+namespace pxsim.image {
     function DMESG(msg: string) {
         control.dmesg(msg)
     }
@@ -72,7 +72,7 @@ namespace pxsim.screen {
             return NULL;
         }
 
-        const res = output.createBuffer(2 + byteW * height);
+        const res = output.createBuffer(3 + byteW * height);
         res.data[0] = 0xf1;
         res.data[1] = width;
         res.data[2] = height;
