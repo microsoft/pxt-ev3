@@ -14,41 +14,32 @@ namespace pxt {
 #define ROW_SIZE 23
 #define FB_SIZE (60 * LCD_HEIGHT)
 
-static const uint8_t pixmap[] = {0x00, 0xE0, 0x1C, 0xFC, 0x03, 0xE3, 0x1F, 0xFF};
-
-static uint8_t revbits(uint8_t v) {
-    v = (v & 0xf0) >> 4 | (v & 0x0f) << 4;
-    v = (v & 0xcc) >> 2 | (v & 0x33) << 2;
-    v = (v & 0xaa) >> 1 | (v & 0x55) << 1;
-    return v;
-}
+static const uint8_t pixmap[] = {0x00, 0x03, 0x1C, 0x1F, 0xE0, 0xE3, 0xFC, 0xFF};
 
 static void bitBufferToFrameBuffer(uint8_t *bitBuffer, uint8_t *fb) {
     uint32_t pixels;
 
-    // TODO remove revbits() calls
-
     for (int line = 0; line < LCD_HEIGHT; line++) {
         int n = 7;
         while (n--) {
-            pixels = revbits(*bitBuffer++) << 0;
-            pixels |= revbits(*bitBuffer++) << 8;
-            pixels |= revbits(*bitBuffer++) << 16;
+            pixels = *bitBuffer++ << 16;
+            pixels |= *bitBuffer++ << 8;
+            pixels |=  *bitBuffer++ << 0;
 
             int m = 8;
             while (m--) {
-                *fb++ = pixmap[pixels & 0x07];
-                pixels >>= 3;
+                *fb++ = pixmap[(pixels >> 21) & 0x07];
+                pixels <<= 3;
             }
         }
 
-        pixels = revbits(*bitBuffer++) << 0;
-        pixels |= revbits(*bitBuffer++) << 8;
+        pixels = *bitBuffer++ << 8;
+        pixels |= *bitBuffer++ << 0;
 
         int m = 4;
         while (m--) {
-            *fb++ = pixmap[pixels & 0x07];
-            pixels >>= 3;
+            *fb++ = pixmap[(pixels >> 13) & 0x07];
+            pixels <<= 3;
         }
     }
 }
