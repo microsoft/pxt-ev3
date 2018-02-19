@@ -18,7 +18,7 @@ The speed setting is a pecentage of the motor's full speed. Full speed is the sp
 
 If you use just the **speed** number, the motors run continously and won't stop unless you tell them to. You can also give a value for a certain amount of distance you want the motors to rotate for. The **value** can be an amount of time, a turn angle in degrees, or a number of full rotations.
 
-If you decide to use a **value** of rotation distance, you need to choose a type of movement **unit**. Also, if you use a number of milliseconds as movement units, then you don't need to include the unit type. The description in [set speed](/reference/motors/motor/set-speed) shows how to use different movement units.
+If you decide to use a **value** of rotation distance, you need to choose a type of movement **unit**. Also, if you use a number of milliseconds as movement units, then you don't need to include the unit type. The description in [run](/reference/motors/motor/run) shows how to use different movement units.
 
 ## Parameters
 
@@ -81,4 +81,4 @@ motors.stopAll()
 
 ## See also
 
-[tank](/reference/motors/synced/tank), [set speed](/reference/motors/motor/set-speed)
+[tank](/reference/motors/synced/tank), [run](/reference/motors/motor/run)

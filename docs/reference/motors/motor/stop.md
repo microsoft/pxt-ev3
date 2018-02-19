@@ -13,11 +13,11 @@ The motor stops but any motion caused from previously running the motor continue
 Run the motor connected to port **A** for 2 seconds at a speed of `30`. Stop and wait for 2 seconds, then continue at a speed of `50`.
 
 ```blocks
-motors.largeA.setSpeed(30)
+motors.largeA.run(30)
 pause(2000)
 motors.largeA.stop()
 pause(2000)
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 ```
 
 ## See also

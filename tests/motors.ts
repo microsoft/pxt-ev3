@@ -1,17 +1,17 @@
 // add tests package
-tests.test("lgB set speed 10", () => {
-    motors.largeB.setSpeed(10);
+tests.test("lgB run 10", () => {
+    motors.largeB.run(10);
     pause(500)
     tests.assertClose("speedB", 10, motors.largeB.speed(), 2)
 });
-tests.test("lgB set speed 25 (reversed)", () => {
+tests.test("lgB run 25 (reversed)", () => {
     motors.largeB.setInverted(true)
-    motors.largeB.setSpeed(25)
+    motors.largeB.run(25)
     pause(500)
     tests.assertClose("speedB", -25, motors.largeB.speed(), 2)
 });
-tests.test("lgBC set speed 5", () => {
-    motors.largeBC.setSpeed(5)
+tests.test("lgBC run 5", () => {
+    motors.largeBC.run(5)
     pause(500)
     tests.assertClose("speedB", 5, motors.largeB.speed(), 1);
     tests.assertClose("speedC", 5, motors.largeC.speed(), 1);

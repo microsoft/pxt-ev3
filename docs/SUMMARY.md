@@ -67,7 +67,7 @@
         * [set light](/reference/brick/set-status-light)
         * [battery level](/reference/brick/battery-level)
     * [Motors](/reference/motors)
-        * [set speed](/reference/motors/motor/set-speed)
+        * [run](/reference/motors/motor/run)
         * [stop](/reference/motors/motor/stop)
         * [reset](/reference/motors/motor/reset)
         * [set brake](/reference/motors/motor/set-brake)

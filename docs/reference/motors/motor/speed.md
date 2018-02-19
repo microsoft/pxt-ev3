@@ -6,7 +6,7 @@ Get the current speed of motor rotation as a percentage of maximum speed.
 motors.largeA.speed()
 ```
 
-The actual speed of the motor is the same or very close to it's current speed setting when the motor is regulated. If not regulated, the actual speed can change from the set speed when a force, or load, is applied to it.
+The actual speed of the motor is the same or very close to it's current speed setting when the motor is regulated. If not regulated, the actual speed can change from the set point speed when a force, or load, is applied to it.
 
 ## Returns
 
@@ -18,7 +18,7 @@ Turn speed regulation off and report the actual speed of the large motor in the 
 
 ```blocks
 motors.largeA.setRegulated(false)
-motors.largeA.setSpeed(55)
+motors.largeA.run(55)
 brick.showString("Actual speed:", 1)
 for (let i = 0; i < 30; i++) {
     pause(500)
