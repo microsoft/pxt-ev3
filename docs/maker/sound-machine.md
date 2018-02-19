@@ -4,9 +4,9 @@ This example program combined with the small model will make a beat and rhythm o
 
 ```blocks
 forever(function () {
-    motors.largeA.setSpeed(50)
+    motors.largeA.run(50)
     pause(200)
-    motors.largeA.setSpeed(100)
+    motors.largeA.run(100)
     pause(200)
 })
 ``` 

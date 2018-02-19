@@ -43,7 +43,7 @@ forever(function () {
     motors.largeBC.steer(P + (I + D), 100)
     lasterror = error
     if (brick.buttonEnter.wasPressed()) {
-        motors.largeBC.setSpeed(0)
+        motors.largeBC.run(0)
         brick.buttonDown.pauseUntil(ButtonEvent.Bumped)
     }
 })

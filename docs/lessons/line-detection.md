@@ -213,13 +213,13 @@ music.playSoundEffect(sounds.systemGeneralAlert)
 }
 while (true) {
     while (true) {      sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
-        motors.largeB.setSpeed(10)
-        motors.largeC.setSpeed(-10)
+        motors.largeB.run(10)
+        motors.largeC.run(-10)
     }
     while (true) {
         sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
-        motors.largeA.setSpeed(-10)
-        motors.largeA.setSpeed(10)
+        motors.largeA.run(-10)
+        motors.largeA.run(10)
     }
 }
 ```
@@ -235,13 +235,13 @@ You will need to constantly debug your program in order to make your robot trave
 ```blocks
 while (true) {
     while (true) {   sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
-        motors.largeB.setSpeed(10)
-        motors.largeC.setSpeed(-10)
+        motors.largeB.run(10)
+        motors.largeC.run(-10)
     }
     while (true) {
         sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
-        motors.largeB.setSpeed(-10)
-        motors.largeC.setSpeed(10)
+        motors.largeB.run(-10)
+        motors.largeC.run(10)
     }
 }
 ```

@@ -14,7 +14,7 @@ Take a look a the LabView program below: it **starts**, turns on motor A, waits 
 The blocks in MakeCode have similar functions and go together in the same way: they snap into the ``||loops:on start||`` block and then connect to each other vertically.
 
 ```blocks
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 pause(1000)
 motors.largeA.stop()
 ```
@@ -22,7 +22,7 @@ motors.largeA.stop()
 Any block program can be converted to JavaScript and you can edit it as lines of code too.
 
 ```typescript
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 pause(1000)
 motors.largeA.stop()
 ```
@@ -40,10 +40,10 @@ This program controls a large motor on port A in several different ways. It sets
 ![Single motor blocks](/static/labview/motors.png)       
 
 ```blocks
-motors.largeA.setSpeed(50);
-motors.largeA.setSpeed(50, 1000, MoveUnit.MilliSeconds);
-motors.largeA.setSpeed(50, 360, MoveUnit.Degrees);
-motors.largeA.setSpeed(50, 1, MoveUnit.Rotations);
+motors.largeA.run(50);
+motors.largeA.run(50, 1000, MoveUnit.MilliSeconds);
+motors.largeA.run(50, 360, MoveUnit.Degrees);
+motors.largeA.run(50, 1, MoveUnit.Rotations);
 motors.largeA.stop();
 ```
 
@@ -83,7 +83,7 @@ By default, all motors coast when any command used to move finishes. You can kee
 
 ```blocks
 motors.largeD.setBrake(true);
-motors.largeD.setSpeed(50, 1, MoveUnit.Rotations)
+motors.largeD.run(50, 1, MoveUnit.Rotations)
 ```
 
 ## Inverting and regulating motors
@@ -132,7 +132,7 @@ It is quite common to have to wait for a task to finish or for a sensor state to
 ![pause for time](/static/labview/pausefortime.png)      
 
 ```blocks
-motors.largeD.setSpeed(50)
+motors.largeD.run(50)
 pause(1000)
 motors.largeD.stop();
 ```
@@ -140,7 +140,7 @@ motors.largeD.stop();
 ![pause for touch](/static/labview/pausefortouch.png)
 
 ```blocks
-motors.largeD.setSpeed(50)
+motors.largeD.run(50)
 sensors.touch1.pauseUntil(ButtonEvent.Pressed)
 motors.largeD.stop();
 ```
@@ -148,7 +148,7 @@ motors.largeD.stop();
 ![pause for distance](/static/labview/pausefordistance.png)
 
 ```blocks
-motors.largeD.setSpeed(50)
+motors.largeD.run(50)
 sensors.ultrasonic4.pauseUntil(UltrasonicSensorEvent.ObjectNear)
 motors.largeD.stop();
 ```
@@ -156,7 +156,7 @@ motors.largeD.stop();
 You can also use the ``||loops:pause until||`` block to wait on any [boolean](/types/boolean) expression. As your program runs, it waits until the condition (expression) inside becomes true.
 
 ```blocks
-motors.largeD.setSpeed(50)
+motors.largeD.run(50)
 pauseUntil(() => sensors.touch1.isPressed())
 motors.largeD.stop()
 ```
@@ -167,8 +167,8 @@ motors.largeD.stop()
 
 ```blocks
 forever(() => {
-    motors.largeD.setSpeed(50, 1, MoveUnit.Rotations);
-    motors.largeD.setSpeed(-50, 1, MoveUnit.Rotations);
+    motors.largeD.run(50, 1, MoveUnit.Rotations);
+    motors.largeD.run(-50, 1, MoveUnit.Rotations);
 })
 ```
 
@@ -176,13 +176,13 @@ forever(() => {
 
 ```blocks
 for(let i = 0; i < 10; i++) {
-    motors.largeD.setSpeed(50, 1, MoveUnit.Rotations);
-    motors.largeD.setSpeed(-50, 1, MoveUnit.Rotations);
+    motors.largeD.run(50, 1, MoveUnit.Rotations);
+    motors.largeD.run(-50, 1, MoveUnit.Rotations);
 }
 let k = 0;
 while(k < 10) {
-    motors.largeD.setSpeed(50, 1, MoveUnit.Rotations);
-    motors.largeD.setSpeed(-50, 1, MoveUnit.Rotations);    
+    motors.largeD.run(50, 1, MoveUnit.Rotations);
+    motors.largeD.run(-50, 1, MoveUnit.Rotations);    
     k++;
 }
 ```
@@ -195,7 +195,7 @@ while(k < 10) {
 let light = 0;
 forever(function () {
     light = sensors.color3.light(LightIntensityMode.Reflected);
-    motors.largeD.setSpeed(light)
+    motors.largeD.run(light)
 })
 ```
 
@@ -207,8 +207,8 @@ You can start up multiple ``||loops:forever||`` loops that will run at the same 
 
 ```blocks
 forever(() => {
-    motors.largeD.setSpeed(50, 1, MoveUnit.Rotations);
-    motors.largeD.setSpeed(-50, 1, MoveUnit.Rotations);
+    motors.largeD.run(50, 1, MoveUnit.Rotations);
+    motors.largeD.run(-50, 1, MoveUnit.Rotations);
 })
 forever(() => {
     brick.showImage(images.eyesMiddleRight)
@@ -227,7 +227,7 @@ The ``||logic:if||`` block allows you to run different code depending on whether
 ```blocks
 forever(function() {
     if(sensors.touch1.isPressed()) {
-        motors.largeD.setSpeed(50)
+        motors.largeD.run(50)
     } else {
         motors.largeD.stop()
     }

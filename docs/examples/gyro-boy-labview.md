@@ -137,8 +137,8 @@ forever(function () {
         GM();
         EQ();
         cntrl();
-        motors.largeA.setSpeed(lpwr)
-        motors.largeD.setSpeed(rpwr)
+        motors.largeA.run(lpwr)
+        motors.largeD.run(rpwr)
         CHK()
         let t2 = control.timer1.millis();
         let p = 5 - (t2 - t1);
@@ -196,9 +196,9 @@ forever(function () {
                 Cstr = 0;
                 oldDr = Cdrv;
                 Cdrv = -10;
-                motors.mediumC.setSpeed(30, 30, MoveUnit.Degrees);
-                motors.mediumC.setSpeed(-30, 60, MoveUnit.Degrees);
-                motors.mediumC.setSpeed(30, 30, MoveUnit.Degrees);
+                motors.mediumC.run(30, 30, MoveUnit.Degrees);
+                motors.mediumC.run(-30, 60, MoveUnit.Degrees);
+                motors.mediumC.run(30, 30, MoveUnit.Degrees);
                 if (Math.randomRange(-1, 1) >= 1)
                     Cstr = 70;
                 else

@@ -15,7 +15,7 @@ function accelerate() {
 function update() {
     brick.clearScreen()
     brick.showString("speed: " + speed, 1)
-    motors.largeBC.setSpeed(speed)
+    motors.largeBC.run(speed)
 }
 sensors.touch2.onEvent(ButtonEvent.Pressed, function () {
     accelerate()

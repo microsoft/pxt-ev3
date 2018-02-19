@@ -8,12 +8,12 @@ You can program the @boardname@ using [Blocks](/blocks) or [JavaScript](/javascr
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
-    motors.largeA.setSpeed(50)
+    motors.largeA.run(50)
 })
 ```
 ```typescript
 brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
-    motors.largeA.setSpeed(50)
+    motors.largeA.run(50)
 })
 ```
 
@@ -34,6 +34,6 @@ The simulator has support for the LED screen, buttons, as well as compass, accel
 
 ```sim
 brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
-    motors.largeA.setSpeed(50)
+    motors.largeA.run(50)
 })
 ```
