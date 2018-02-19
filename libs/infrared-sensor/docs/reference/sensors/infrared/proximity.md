@@ -1,12 +1,14 @@
 # proximity
 
-Get the promixity measured by the infrared sensor, from ``0`` (close) to ``100`` (far).
+Get the promixity of an object measured by the infrared sensor.
 
 ```sig
 sensors.infraredSensor1.proximity();
 ```
 
-The proximity value returned is a number between `0` and `100` which is a relative measurment of  distance to an object. That means, if the sensor can measure distances up to 50 centimeters, then a proximity value of `25` says that an object is 12.5 centimeters away. You can set an object at a fixed distance from the sensor and measure it with a tape measure. Then, find the out what proximity value is for that same distance. You now have a number to _correlate_ to distance. In the example, the proximity value of `25` means 12.5 centimeters. So, each proximity value means (25 / 12.5) centimeters which is 2 centimeters per proximity value.
+The proximity value returned is a number between `0` and `100` which is a _relative_ measurment of  distance to an object. A value of `0` means something is very close and `100` means something is far away. The proximity is determined by the amount of infrared light reflected back by an object. The proximity value for an object that has a lighter color and smooth surface will be less than an object at the same distance with a darker color and a rough surface.
+
+Proximity isn't an actual measurement units of distance, like in centimeters or meters, but it gives you an idea whether something is close or not so close.
 
 ## Returns
 
@@ -18,9 +20,8 @@ When the infrared sensor on port 4 detects a near object, display its proximity 
 
 ```blocks
 sensors.infraredSensor4.onEvent(InfraredSensorEvent.ObjectNear, function () {
-    brick.showString("Object detected at:", 1)
-    brick.showNumber(sensors.infraredSensor4.proximity(), 2)
-    brick.showString("centimeters", 3)
+    brick.clearScreen()
+    brick.showValue("proximity", sensors.infraredSensor4.proximity(), 1)
 })
 ```
 
