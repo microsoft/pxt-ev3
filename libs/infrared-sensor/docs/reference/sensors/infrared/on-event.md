@@ -26,7 +26,7 @@ When the ultrasonic sensor on port 4 detects a near object, display its distance
 sensors.infraredSensor4.onEvent(InfraredSensorEvent.ObjectNear, function () {
     brick.showString("Object detected at:", 1)
     brick.showNumber(sensors.infraredSensor4.proximity(), 2)
-    brick.showString("centimeters", 3)
+    brick.showString("percent of range", 3)
 })
 ```
 

@@ -25,7 +25,7 @@ Wait for another object sending out infrared light. Show a message on the screen
 brick.showString("Waiting for another", 1);
 brick.showString("robot to appear...", 2);
 sensors.infraredSensor1.pauseUntil(InfraredSensorEvent.ObjectDetected);
-brick.showString("Hey, I just heard", 1)
+brick.showString("Hey, I just saw", 1)
 brick.showString("Something!", 2);
 ```
 
