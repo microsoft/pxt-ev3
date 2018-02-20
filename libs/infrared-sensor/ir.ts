@@ -184,7 +184,7 @@ namespace sensors {
          * Registers code to run when an object is getting near.
          * @param handler the code to run when detected
          */
-        //% help=input/infrared/on
+        //% help=sensors/infrared/on-event
         //% block="on %sensor|%event"
         //% blockId=infraredOn
         //% parts="infraredsensor"
@@ -199,7 +199,7 @@ namespace sensors {
         /**
          * Waits for the event to occur
          */
-        //% help=input/ultrasonic/wait
+        //% help=sensors/infrared/pause-until
         //% block="pause until %sensor| %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
@@ -215,7 +215,7 @@ namespace sensors {
          * Get the promixity measured by the infrared sensor, from ``0`` (close) to ``100`` (far)
          * @param sensor the infrared sensor
          */
-        //% help=input/infrared/proximity
+        //% help=sensors/infrared/proximity
         //% block="%sensor|proximity"
         //% blockId=infraredGetProximity
         //% parts="infrared"

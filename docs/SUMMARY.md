@@ -94,3 +94,7 @@
             * [on event](/reference/sensors/ultrasonic/on-event),
             * [distance](reference/sensors/ultrasonic/distance),
             * [pause until](reference/sensors/ultrasonic/pause-until)
+        * [Infrared](/reference/sensors/infrared)
+            * [on event](/reference/sensors/infrared/on-event),
+            * [distance](reference/sensors/infrared/proximity),
+            * [pause until](reference/sensors/infrared/pause-until)

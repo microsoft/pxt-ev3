@@ -6,7 +6,7 @@ Get the current speed of motor rotation as a percentage of maximum speed.
 motors.largeA.speed()
 ```
 
-The actual speed of the motor is the same or very close to it's current speed setting when the motor is regulated. If not regulated, the actual speed can change from the set point speed when a force, or load, is applied to it.
+The actual speed of the motor is the same or very close to it's current speed setting when the motor is regulated. If not regulated, the actual speed can change from the speed you told it to run at (your desired or _set point_ speed) when a force, or load, is applied to it.
 
 ## Returns
 
