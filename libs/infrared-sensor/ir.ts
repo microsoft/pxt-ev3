@@ -83,7 +83,7 @@ namespace sensors {
          * Check if a remote button is currently pressed or not.
          * @param button the remote button to query the request
          */
-        //% help=input/remote-infrared-beacon/is-pressed
+        //% help=sensors/beacon/is-pressed
         //% block="%button|is pressed"
         //% blockId=remoteButtonIsPressed
         //% parts="remote"
@@ -98,7 +98,7 @@ namespace sensors {
          * See if the remote button was pressed again since the last time you checked.
          * @param button the remote button to query the request
          */
-        //% help=input/remote-infrared-beacon/was-pressed
+        //% help=sensors/beacon/was-pressed
         //% block="%button|was pressed"
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
@@ -110,12 +110,12 @@ namespace sensors {
         }
 
         /**
-         * Do something when a button or sensor is clicked, up or down
+         * Do something when a remote button is pressed, bumped, or released
          * @param button the button that needs to be clicked or used
          * @param event the kind of button gesture that needs to be detected
          * @param body code to run when the event is raised
          */
-        //% help=input/remote-infrared-beacon/on-event
+        //% help=sensors/beacon/on-event
         //% blockId=remotebuttonEvent block="on %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
@@ -126,10 +126,10 @@ namespace sensors {
         }
 
         /**
-         * Pauses until the given event is raised
+         * Pause until a remote button event happens
          * @param ev the event to wait for
          */
-        //% help=input/remote-infrared-beacon/pause-until
+        //% help=sensors/beacon/pause-until
         //% blockId=remoteButtonPauseUntil block="pause until %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
@@ -181,7 +181,7 @@ namespace sensors {
         }
 
         /**
-         * Registers code to run when an object is getting near.
+         * Register code to run when an object is getting near.
          * @param handler the code to run when detected
          */
         //% help=sensors/infrared/on-event
@@ -197,7 +197,7 @@ namespace sensors {
         }
 
         /**
-         * Waits for the event to occur
+         * Wait until the infrared sensor detects something
          */
         //% help=sensors/infrared/pause-until
         //% block="pause until %sensor| %event"
@@ -228,13 +228,14 @@ namespace sensors {
         }
 
         /**
-         * Sets the remote channel to listen from
+         * Set the remote channel to listen to
          * @param channel the channel to listen
          */
         //% blockNamespace=sensors
         //% blockId=irSetRemoteChannel block="set %sensor|remote channel to %channel"
         //% weight=99       
         //% group="Remote Infrared Beacon"
+        //% help=sensors/beacon/set-remote-channel
         setRemoteChannel(channel: InfraredRemoteChannel) {
             this.setMode(InfraredSensorMode.RemoteControl)
             channel = Math.clamp(0, 3, channel | 0)
@@ -257,7 +258,7 @@ namespace sensors {
         }
 
         /**
-         * Gets the threshold value
+         * Get a threshold value
          * @param condition the proximity condition
          */
         //% blockId=irGetThreshold block="%sensor|%condition"

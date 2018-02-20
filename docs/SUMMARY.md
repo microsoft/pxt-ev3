@@ -91,10 +91,16 @@
             * [rate](/reference/sensors/gyro/rate)
             * [reset](/reference/sensors/gyro/reset)
         * [Ultrasonic](/reference/sensors/ultrasonic)
-            * [on event](/reference/sensors/ultrasonic/on-event),
-            * [distance](reference/sensors/ultrasonic/distance),
+            * [on event](/reference/sensors/ultrasonic/on-event)
+            * [distance](reference/sensors/ultrasonic/distance)
             * [pause until](reference/sensors/ultrasonic/pause-until)
         * [Infrared](/reference/sensors/infrared)
-            * [on event](/reference/sensors/infrared/on-event),
-            * [distance](reference/sensors/infrared/proximity),
+            * [on event](/reference/sensors/infrared/on-event)
+            * [distance](reference/sensors/infrared/proximity)
             * [pause until](reference/sensors/infrared/pause-until)
+        * [Infrared beacon](/reference/sensors/beacon)
+            * [on event](/reference/sensors/beacon/on-event)
+            * [pause until](/reference/sensors/beacon/pause-until)
+            * [is pressed](/reference/sensors/beacon/is-pressed)
+            * [was pressed](/reference/sensors/beacon/was-pressed)
+            * [set remote channel](/reference/sensors/beacon/set-remote-channel)
