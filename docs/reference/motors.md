@@ -3,7 +3,7 @@
 ## Motion
 
 ```cards
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 motors.largeAB.tank(50, 50)
 motors.largeAB.steer(0, 50)
 motors.largeA.pauseUntilReady()

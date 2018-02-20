@@ -119,9 +119,9 @@ sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     controlSteering = 0
     oldControlDrive = controlDrive
     controlDrive = -10
-    motors.mediumC.setSpeed(30, 30, MoveUnit.Degrees);
-    motors.mediumC.setSpeed(-30, 60, MoveUnit.Degrees);
-    motors.mediumC.setSpeed(30, 30, MoveUnit.Degrees);
+    motors.mediumC.run(30, 30, MoveUnit.Degrees);
+    motors.mediumC.run(-30, 60, MoveUnit.Degrees);
+    motors.mediumC.run(30, 30, MoveUnit.Degrees);
     if (Math.randomRange(-1, 1) >= 1) {
         controlSteering = 70
     } else {
@@ -149,8 +149,8 @@ sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
 })
 // apply power to motors
 function controlMotors() {
-    motors.largeA.setSpeed(power + controlSteering * 0.1)
-    motors.largeD.setSpeed(power - controlSteering * 0.1)
+    motors.largeA.run(power + controlSteering * 0.1)
+    motors.largeD.run(power - controlSteering * 0.1)
 }
 sensors.color1.onColorDetected(ColorSensorColor.Yellow, function () {
     moods.middleLeft.show()
