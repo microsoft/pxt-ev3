@@ -98,3 +98,10 @@
             * [on event](/reference/sensors/infrared/on-event),
             * [distance](reference/sensors/infrared/proximity),
             * [pause until](reference/sensors/infrared/pause-until)
+        * [Color](/reference/sensors/color-sensor)
+            * [on color detected](/reference/sensors/color-sensor/on-color-detected)
+            * [pause for color](/reference/sensors/color-sensor/pause-for-color)
+            * [on light changed](/reference/sensors/color-sensor/on-light-changed)
+            * [pause for light](/reference/sensors/color-sensor/pause-for-light)
+            * [color](/reference/sensors/color-sensor/color)
+            * [light](/reference/sensors/color-sensor/ambient-light)
