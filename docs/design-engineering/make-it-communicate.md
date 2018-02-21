@@ -34,7 +34,7 @@ More building ideas:
 
 * [Tracks](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/tracks-32d7554813af3f25cf5012d54a4bad2b.pdf)
 
-* [Color Sensor 2] (https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20sensor_v2-e7fd54b6fa3cdfe36f414c1d2510f9cb.pdf)
+* [Color Sensor 2](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20sensor_v2-e7fd54b6fa3cdfe36f414c1d2510f9cb.pdf)
 
 
 Build a path for your robot to follow. You can use electrical tape on a floor, or marker on paper. You can use objects as milestones to indicate a path that can be detected by either the Touch Sensor, Color Sensor, or Ultrasonic Sensor. 
@@ -77,27 +77,48 @@ This program works with the Track Rover. If you create a different robot, adjust
 
 ```blocks
 forever(function () {
-    if (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Black)
+    if (sensors.color3.color() == ColorSensorColor.Black) {
         motors.largeB.run(-50)
         motors.largeC.run(0)
-    } else if (false) {
-        sensors.color3.pauseForColor(ColorSensorColor.White)
+    } else if (sensors.color3.color() == ColorSensorColor.White) {
         motors.largeC.run(-50)
         motors.largeB.run(0)
-    } else if (false) {
-        sensors.color3.pauseForColor(ColorSensorColor.Green)
+    } else if (sensors.color3.color() == ColorSensorColor.Green) {
         motors.stopAll()
         music.playSoundEffect(sounds.colorsGreen)
-        loops.pause(1000)
-    } else if (false) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        pause(1000)
+        motors.largeBC.run(-50)
+    } else if (sensors.color3.color() == ColorSensorColor.Red) {
         music.playSoundEffect(sounds.colorsRed)
         motors.stopAll()
-        loops.pause(1000)
+        pause(1000)
+        motors.largeBC.run(-50)
     } else {
     	
     }
+})
+```
+
+```blocks
+sensors.color3.onColorDetected(ColorSensorColor.Black, function () {
+    motors.largeB.run(-50)
+    motors.largeC.run(0)    
+})
+sensors.color3.onColorDetected(ColorSensorColor.White, function () {
+    motors.largeB.run(0)    
+    motors.largeC.run(-50)
+})
+sensors.color3.onColorDetected(ColorSensorColor.Green, function () {
+    motors.stopAll()
+    music.playSoundEffect(sounds.colorsGreen)
+    pause(1000)  
+    motors.largeBC.run(-50)
+})
+sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
+    motors.stopAll()
+    music.playSoundEffect(sounds.colorsRed)
+    pause(1000)
+    motors.largeBC.run(-50)
 })
 ```
 
