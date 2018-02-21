@@ -1,4 +1,8 @@
-# Reflected Light
+# reflected Light
+
+```sig
+sensors.color1.reflectedLight()
+```
 
 ```blocks
 forever(function () {

@@ -1,4 +1,4 @@
-# Color Sensor
+# Color sensor
 
 ```cards
 sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
@@ -8,7 +8,7 @@ sensors.color1.ambientLight();
 sensors.color1.reflectedLight();
 ```
 
-## See Also
+## See slso
 
 [on color detected](/reference/sensors/color-sensor/on-color-detected),
 [color](/reference/sensors/color-sensor/color),

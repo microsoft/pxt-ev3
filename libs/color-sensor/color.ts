@@ -192,7 +192,7 @@ namespace sensors {
         }
 
         /**
-         * Waits for the given color to be detected
+         * Wait for the given color to be detected
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-light
@@ -210,7 +210,7 @@ namespace sensors {
         }
 
         /**
-         * Measures the ambient or reflected light value from 0 (darkest) to 100 (brightest).
+         * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest).
          * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
@@ -237,7 +237,7 @@ namespace sensors {
         }
 
         /**
-         * Sets a threshold value
+         * Set a threshold value
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
@@ -253,7 +253,7 @@ namespace sensors {
         }
 
         /**
-         * Gets the threshold value
+         * Get a threshold value
          * @param condition the light condition
          */
         //% blockId=colorGetThreshold block="%sensor|%condition"
@@ -318,6 +318,7 @@ namespace sensors {
     //% blockId=colorSensorColor block="color %color"
     //% group="Color Sensor"
     //% weight=97
+    //% help=sensors/color
     export function color(color: ColorSensorColor): ColorSensorColor {
         return color;
     }

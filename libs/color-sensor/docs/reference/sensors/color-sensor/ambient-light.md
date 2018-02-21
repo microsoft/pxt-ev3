@@ -1,4 +1,8 @@
-# Ambient Light
+# ambient Light
+
+```sig
+sensors.color1.ambientLight()
+```
 
 ```blocks
 forever(function () {
@@ -9,3 +13,7 @@ forever(function () {
     }
 })
 ```
+
+## See also
+
+[reflected light](/reference/sensors/color/reflected-light)
