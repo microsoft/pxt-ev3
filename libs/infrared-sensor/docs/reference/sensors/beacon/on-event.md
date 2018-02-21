@@ -16,11 +16,20 @@ An [infrared beacon][lego beacon] works with an infrared sensor connected to the
 > * ``released``: the button was just released
 * **body**: the code you want to run when something happens to the beacon button.
 
+## ~hint
+
+**Remote channel**
+
+In order to recognize a button event signalled from a remote beacon, an infrared sensor must know what channel to listen on for messages from that beacon. An infrared sensor needs to set the channel first, then it can receive messages transmitted by the beacon. Before waiting for, or checking on an button event from a beacon, use [set remote channel](/reference/sensors/beacon/set-remote-channel).
+
+## ~
+
 ## Example
 
 Check for an event on beacon button sensor ``center``. Put an expression on the screen when the button is released.
 
 ```blocks
+sensors.infraredSensor1.setRemoteChannel(InfraredRemoteChannel.Ch0)
 sensors.remoteButtonCenter.onEvent(ButtonEvent.Released, function () {
     brick.showImage(images.expressionsSick)
 })

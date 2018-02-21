@@ -14,11 +14,20 @@ If a button was pressed, then that event is remembered. Once you check if a beac
 
 * a [boolean](/types/boolean) value that is `true` if the beacon button was pressed before. It's `false` if the button was not pressed.
 
+## ~hint
+
+**Remote channel**
+
+In order to recognize a button event signalled from a remote beacon, an infrared sensor must know what channel to listen on for messages from that beacon. An infrared sensor needs to set the channel first, then it can receive messages transmitted by the beacon. Before waiting for, or checking on an button event from a beacon, use [set remote channel](/reference/sensors/beacon/set-remote-channel).
+
+## ~
+
 ## Example
 
 If the beacon button ``top left`` was pressed, show a `green` status light. Otherwise, set the status light to `orange`.
 
 ```blocks
+sensors.infraredSensor1.setRemoteChannel(InfraredRemoteChannel.Ch0)
 forever(function () {
     if (sensors.remoteButtonTopLeft.wasPressed()) {
         brick.setStatusLight(StatusLight.Green)
