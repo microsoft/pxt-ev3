@@ -55,7 +55,7 @@ Explore the different Motor and Sensor blocks in the programming menu.
 
 ### Sample Solution 
 
-[Video: EV3 Track Rover](/static/make-it-communicate/trackrover.mp4)
+[Video: EV3 Track Rover](/static/lessons/make-it-communicate/trackrover.mp4)
 
 The Track Rover follows a path using the color sensor. It identifies two locations by color.
 
