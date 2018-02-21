@@ -3,12 +3,13 @@
 # Color
 
 ```cards
-sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {});
-sensors.color1.color();
-sensors.color1.light();
-sensors.color1.pauseForColor(null)
+sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {})
+sensors.color1.onLightChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {})
 sensors.color1.pauseForLight(LightIntensityMode.Reflected, LightCondition.Dark)
-sensors.color()
+sensors.color1.pauseForColor(ColorSensorColor.Blue)
+sensors.color1.color();
+sensors.color1.light(LightIntensityMode.Ambient)
+sensors.color(ColorSensorColor.Blue)
 ```
 
 ## Touch

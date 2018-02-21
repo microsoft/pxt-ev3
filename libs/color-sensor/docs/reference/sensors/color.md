@@ -3,11 +3,10 @@
 Get a color that the sensor can detect that is close to the color you asked for.
 
 ```sig
-sensors.color()
+sensors.color(ColorSensorColor.Blue)
 ```
 
 Since the color sensor can accurately detect some basic colors, you can't just tell it to look for any color. The sensor may recoginze some color component of the color you ask for. So, you can get a simple color that matches some of your color and tell the sensor to look for that.
-
 
 ## Parameters
 
