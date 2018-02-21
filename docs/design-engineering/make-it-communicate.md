@@ -85,16 +85,14 @@ forever(function () {
         motors.largeB.run(0)
     } else if (sensors.color3.color() == ColorSensorColor.Green) {
         motors.stopAll()
-        music.playSoundEffect(sounds.colorsGreen)
-        pause(1000)
+        music.playSoundEffectUntilDone(sounds.colorsGreen)
         motors.largeBC.run(-50)
     } else if (sensors.color3.color() == ColorSensorColor.Red) {
-        music.playSoundEffect(sounds.colorsRed)
         motors.stopAll()
-        pause(1000)
+        music.playSoundEffectUntilDone(sounds.colorsRed)
         motors.largeBC.run(-50)
     } else {
-    	
+
     }
 })
 ```
