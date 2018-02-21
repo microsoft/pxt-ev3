@@ -19,21 +19,21 @@ enum LightIntensityMode {
 }
 
 const enum ColorSensorColor {
-    //% block="none" jres=colors.none
+    //% block="none" jres=colors.none blockIdentity=sensors.color
     None,
-    //% block="black" jres=colors.black
+    //% block="black" jres=colors.black blockIdentity=sensors.color
     Black,
-    //% block="blue" jres=colors.blue
+    //% block="blue" jres=colors.blue blockIdentity=sensors.color
     Blue,
-    //% block="green" jres=colors.green
+    //% block="green" jres=colors.green blockIdentity=sensors.color
     Green,
-    //% block="yellow" jres=colors.yellow
+    //% block="yellow" jres=colors.yellow blockIdentity=sensors.color
     Yellow,
-    //% block="red" jres=colors.red
+    //% block="red" jres=colors.red blockIdentity=sensors.color
     Red,
-    //% block="white" jres=colors.white
+    //% block="white" jres=colors.white blockIdentity=sensors.color
     White,
-    //% block="brown" jres=colors.brown
+    //% block="brown" jres=colors.brown blockIdentity=sensors.color
     Brown
 }
 
@@ -319,6 +319,11 @@ namespace sensors {
     //% group="Color Sensor"
     //% weight=97
     //% help=sensors/color
+    //% color.fieldEditor="gridpicker"
+    //% color.fieldOptions.columns=4 
+    //% color.fieldOptions.tooltips=true
+    //% color.fieldOptions.hideRect=true
+    //% color.fieldOptions.width=268
     export function color(color: ColorSensorColor): ColorSensorColor {
         return color;
     }
