@@ -1,9 +1,10 @@
 # Reference
 
 ```namespaces
-brick.showMood(moods.sleeping);
+control.runInParallel(function(){});
 sensors.color(null);
 motors.stopAll();
+brick.showMood(moods.sleeping);
 ```
 
 ## See Also
@@ -11,5 +12,4 @@ motors.stopAll();
 [brick](/reference/brick),
 [sensors](/reference/sensors),
 [motors](/reference/motors),
-[touch sensor](/reference/sensors/touch-sensor),
-[color sensor](/reference/sensors/color-sensor)
+[control](/reference/control)
