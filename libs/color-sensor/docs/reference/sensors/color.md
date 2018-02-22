@@ -12,7 +12,6 @@ Since the color sensor can accurately detect some basic colors, you can't just t
 
 * **color**: a color to match with a detectable color. The colors to choose from are:
 
->* ``none``
 >* ``blue``
 >* ``green``
 >* ``yellow``
@@ -24,7 +23,6 @@ Since the color sensor can accurately detect some basic colors, you can't just t
 
 * a color value that the color sensor can detect. The detectable colors are:
 
->* ``none``
 >* ``blue``
 >* ``green``
 >* ``yellow``

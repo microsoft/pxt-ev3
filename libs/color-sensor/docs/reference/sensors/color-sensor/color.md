@@ -12,7 +12,7 @@ The [color](/reference/sensors/color) value returned is one of the colors that t
 
 * a color value for the current color detected by the color sensor. The colors detected are:
 
->* ``none``
+>* ``none``: no color is detected.
 >* ``blue``
 >* ``green``
 >* ``yellow``

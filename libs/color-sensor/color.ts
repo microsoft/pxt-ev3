@@ -40,7 +40,7 @@ const enum ColorSensorColor {
 enum LightCondition {
     //% block="dark"
     Dark = sensors.ThresholdState.Low,
-    //$ block="bright"
+    //% block="bright"
     Bright = sensors.ThresholdState.High
 }
 
@@ -245,6 +245,7 @@ namespace sensors {
         //% group="Threshold" blockGap=8 weight=90
         //% value.min=0 value.max=100
         //% sensor.fieldEditor="ports"
+        //% help=sensors/color-sensor/set-threshold
         setThreshold(condition: LightCondition, value: number) {
             if (condition == LightCondition.Dark)
                 this.thresholdDetector.setLowThreshold(value)
@@ -259,6 +260,7 @@ namespace sensors {
         //% blockId=colorGetThreshold block="%sensor|%condition"
         //% group="Threshold" blockGap=8 weight=89
         //% sensor.fieldEditor="ports"
+        //% help=sensors/color-sensor/threshold
         threshold(condition: LightCondition): number {
             return this.thresholdDetector.threshold(<ThresholdState><number>LightCondition.Dark);
         }
@@ -266,9 +268,10 @@ namespace sensors {
         /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
-        //% blockId=colorCalibrateLight block="calibrate|%sensor|for %mode|light"
+        //% blockId=colorCalibrateLight block="calibrate|%sensor|for %mode"
         //% group="Threshold" weight=91 blockGap=8
         //% sensor.fieldEditor="ports"
+        //% help=sensors/color-sensor/calibrate-light
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
 
