@@ -421,28 +421,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large A"
+    //% whenUsed fixedInstance block="large motor A"
     export const largeA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large B"
+    //% whenUsed fixedInstance block="large motor B"
     export const largeB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large C"
+    //% whenUsed fixedInstance block="large motor C"
     export const largeC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large D"
+    //% whenUsed fixedInstance block="large motor D"
     export const largeD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium A"
+    //% whenUsed fixedInstance block="medium motor A"
     export const mediumA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium B"
+    //% whenUsed fixedInstance block="medium motor B"
     export const mediumB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium C"
+    //% whenUsed fixedInstance block="medium motor C"
     export const mediumC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium D"
+    //% whenUsed fixedInstance block="medium motor D"
     export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
@@ -586,16 +586,16 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large B+C"
+    //% whenUsed fixedInstance block="large motors B+C"
     export const largeBC = new SynchedMotorPair(Output.BC);
 
-    //% whenUsed fixedInstance block="large A+D"
+    //% whenUsed fixedInstance block="large motors A+D"
     export const largeAD = new SynchedMotorPair(Output.AD);
 
-    //% whenUsed fixedInstance block="large A+B"
+    //% whenUsed fixedInstance block="large motors A+B"
     export const largeAB = new SynchedMotorPair(Output.AB);
 
-    //% whenUsed fixedInstance block="large C+D"
+    //% whenUsed fixedInstance block="large motors C+D"
     export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {

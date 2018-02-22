@@ -316,6 +316,7 @@ namespace sensors {
 
     /**
      * Returns a color that the sensor can detect
+     * @param color the color sensed by the sensor, eg: ColorSensorColor.Red
      */
     //% shim=TD_ID
     //% blockId=colorSensorColor block="color %color"
