@@ -26,7 +26,7 @@ motors.largeA.run(50, 500)
 
 Here is how you use each different movement unit to run the motor for a fixed rotation distance.
 
-```typescript
+```blocks
 // Run motor for 700 Milliseconds. 
 motors.largeA.run(25, 700, MoveUnit.MilliSeconds);
 
