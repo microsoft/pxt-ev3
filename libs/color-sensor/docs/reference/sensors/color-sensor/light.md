@@ -32,4 +32,4 @@ forever(function () {
 
 ## See also
 
-[reflected light](/reference/sensors/color-sensor/reflected-light)
+[calibrate light](/reference/sensors/color-sensor/calibrate-light)
