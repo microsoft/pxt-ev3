@@ -110,15 +110,16 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-color-detected
-        //% block="on %sensor|detected color %color"
+        //% block="on **color** %this|detected color %color"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=100 blockGap=12
         //% group="Color Sensor"
         //% color.fieldEditor="gridpicker"
-        //% color.fieldOptions.columns=4 
+        //% color.fieldOptions.columns=4
         //% color.fieldOptions.tooltips=true
         //% color.fieldOptions.hideRect=true
         //% color.fieldOptions.width=268
@@ -135,15 +136,16 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-color
-        //% block="pause %sensor|for color %color"
+        //% block="pause **color** %this|for color %color"
         //% blockId=colorPauseForColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=99 blockGap=8
         //% group="Color Sensor"
         //% color.fieldEditor="gridpicker"
-        //% color.fieldOptions.columns=4 
+        //% color.fieldOptions.columns=4
         //% color.fieldOptions.tooltips=true
         //% color.fieldOptions.hideRect=true
         //% color.fieldOptions.width=268
@@ -160,11 +162,12 @@ namespace sensors {
          * @param sensor the color sensor to query the request
          */
         //% help=sensors/color-sensor/color
-        //% block="%sensor| color"
+        //% block="**color** %this| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=98
         //% group="Color Sensor"
         //% blockGap=8
@@ -179,11 +182,12 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-light-changed
-        //% block="on %sensor|%mode|%condition"
+        //% block="on **color** %this|%mode|%condition"
         //% blockId=colorOnLightChanged
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=89 blockGap=12
         //% group="Color Sensor"
         onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
@@ -196,11 +200,12 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-light
-        //% block="pause %sensor|for %mode|%condition"
+        //% block="pause **color** %this|for %mode|%condition"
         //% blockId=colorPauseForLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=88 blockGap=8
         //% group="Color Sensor"
         pauseForLight(mode: LightIntensityMode, condition: LightCondition) {
@@ -214,11 +219,12 @@ namespace sensors {
          * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
-        //% block="%sensor|%mode"
+        //% block="**color** %this|%mode"
         //% blockId=colorLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=87
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
@@ -241,10 +247,11 @@ namespace sensors {
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
-        //% blockId=colorSetThreshold block="set %sensor|%condition|to %value"
+        //% blockId=colorSetThreshold block="set **color** %this|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=90
         //% value.min=0 value.max=100
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         setThreshold(condition: LightCondition, value: number) {
             if (condition == LightCondition.Dark)
                 this.thresholdDetector.setLowThreshold(value)
@@ -256,9 +263,10 @@ namespace sensors {
          * Gets the threshold value
          * @param condition the light condition
          */
-        //% blockId=colorGetThreshold block="%sensor|%condition"
+        //% blockId=colorGetThreshold block="**color** %this|%condition"
         //% group="Threshold" blockGap=8 weight=89
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         threshold(condition: LightCondition): number {
             return this.thresholdDetector.threshold(<ThresholdState><number>LightCondition.Dark);
         }
@@ -266,9 +274,10 @@ namespace sensors {
         /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
-        //% blockId=colorCalibrateLight block="calibrate|%sensor|for %mode|light"
+        //% blockId=colorCalibrateLight block="calibrate **color** %this|for %mode|light"
         //% group="Threshold" weight=91 blockGap=8
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
 

@@ -37,11 +37,12 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=sensors/gyro/angle
-        //% block="%sensor|angle"
+        //% block="**gyro** %this|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=64 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
@@ -57,12 +58,13 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=sensors/gyro/rate
-        //% block="%sensor|rate"
+        //% block="**gyro** %this|rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
-        //% weight=65 blockGap=8        
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
+        //% weight=65 blockGap=8
         //% group="Gyro Sensor"
         rate(): number {
             if (this.calibrating)
@@ -82,18 +84,19 @@ namespace sensors {
          * Forces a calibration of the gyro. Must be called when the sensor is completely still.
          */
         //% help=sensors/gyro/reset
-        //% block="reset %sensor|"
-        //% blockId=gyroReset  
+        //% block="reset **gyro** %this|"
+        //% blockId=gyroReset
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
-        //% weight=50        
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
+        //% weight=50
         //% group="Gyro Sensor"
         reset(): void {
             if (this.calibrating) return; // already in calibration mode
 
             this.calibrating = true;
-            // may be triggered by a button click, 
+            // may be triggered by a button click,
             // give time for robot to settle
             pause(700);
             // send a reset command
@@ -127,7 +130,7 @@ namespace sensors {
 
         /**
          * Enables or disable drift correction
-         * @param enabled 
+         * @param enabled
          */
         //%
         setDriftCorrection(enabled: boolean) {

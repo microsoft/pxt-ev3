@@ -30,10 +30,11 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=sensors/touch-sensor/on-event
-        //% blockId=touchEvent block="on %sensor|%event"
+        //% blockId=touchEvent block="on **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=99 blockGap=12
         //% group="Touch Sensor"
         onEvent(ev: ButtonEvent, body: () => void) {
@@ -46,10 +47,11 @@ namespace sensors {
          * @param event the kind of button gesture that needs to be detected
          */
         //% help=sensors/touch-sensor/pause-until
-        //% blockId=touchWaitUntil block="pause until %sensor|%event"
+        //% blockId=touchWaitUntil block="pause until **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=98 blockGap=12
         //% group="Touch Sensor"
         pauseUntil(ev: ButtonEvent) {
@@ -61,11 +63,12 @@ namespace sensors {
          * @param sensor the port to query the request
          */
         //% help=sensors/touch-sensor/is-pressed
-        //% block="%sensor|is pressed"
+        //% block="**touch** %this|is pressed"
         //% blockId=touchIsPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isPressed() {
@@ -77,11 +80,12 @@ namespace sensors {
          * @param sensor the port to query the request
          */
         //% help=sensors/touch-sensor/was-pressed
-        //% block="%sensor|was pressed"
+        //% block="**touch** %this|was pressed"
         //% blockId=touchWasPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         //% weight=81
         //% group="Touch Sensor"
         wasPressed() {

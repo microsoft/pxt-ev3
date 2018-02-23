@@ -84,7 +84,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/is-pressed
-        //% block="%button|is pressed"
+        //% block="**remote button** %button|is pressed"
         //% blockId=remoteButtonIsPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -99,7 +99,7 @@ namespace sensors {
          * @param button the remote button to query the request
          */
         //% help=input/remote-infrared-beacon/was-pressed
-        //% block="%button|was pressed"
+        //% block="**remote button** %button|was pressed"
         //% blockId=remotebuttonWasPressed
         //% parts="remote"
         //% blockNamespace=sensors
@@ -116,7 +116,7 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=input/remote-infrared-beacon/on-event
-        //% blockId=remotebuttonEvent block="on %button|%event"
+        //% blockId=remotebuttonEvent block="on **remote button** %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
@@ -130,7 +130,7 @@ namespace sensors {
          * @param ev the event to wait for
          */
         //% help=input/remote-infrared-beacon/pause-until
-        //% blockId=remoteButtonPauseUntil block="pause until %button|%event"
+        //% blockId=remoteButtonPauseUntil block="pause until **remote button** %button|%event"
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
@@ -185,12 +185,14 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=input/infrared/on
-        //% block="on %sensor|%event"
+        //% block="on **infrared** %this|%event"
         //% blockId=infraredOn
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         onEvent(event: InfraredSensorEvent, handler: () => void) {
             this._setMode(InfraredSensorMode.Proximity)
             control.onEvent(this._id, event, handler);
@@ -200,12 +202,14 @@ namespace sensors {
          * Waits for the event to occur
          */
         //% help=input/ultrasonic/wait
-        //% block="pause until %sensor| %event"
+        //% block="pause until **infrared** %this| %event"
         //% blockId=infraredwait
         //% parts="infraredsensor"
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         pauseUntil(event: InfraredSensorEvent) {
             this._setMode(InfraredSensorMode.Proximity)
             control.waitForEvent(this._id, event);
@@ -216,12 +220,14 @@ namespace sensors {
          * @param sensor the infrared sensor
          */
         //% help=input/infrared/proximity
-        //% block="%sensor|proximity"
+        //% block="**infrared** %this|proximity"
         //% blockId=infraredGetProximity
         //% parts="infrared"
         //% blockNamespace=sensors
-        //% weight=98 blockGap=8   
-        //% group="Infrared Sensor"     
+        //% weight=98 blockGap=8
+        //% group="Infrared Sensor"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         proximity(): number {
             this._setMode(InfraredSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
@@ -232,9 +238,11 @@ namespace sensors {
          * @param channel the channel to listen
          */
         //% blockNamespace=sensors
-        //% blockId=irSetRemoteChannel block="set %sensor|remote channel to %channel"
-        //% weight=99       
+        //% blockId=irSetRemoteChannel block="set **infrared** %this|remote channel to %channel"
+        //% weight=99
         //% group="Remote Infrared Beacon"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         setRemoteChannel(channel: InfraredRemoteChannel) {
             this.setMode(InfraredSensorMode.RemoteControl)
             channel = Math.clamp(0, 3, channel | 0)
@@ -246,9 +254,11 @@ namespace sensors {
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
-        //% blockId=irSetThreshold block="set %sensor|%condition|to %value"
+        //% blockId=irSetThreshold block="set **infrared** %this|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=49
         //% value.min=0 value.max=100
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         setPromixityThreshold(condition: InfraredSensorEvent, value: number) {
             if (condition == InfraredSensorEvent.ObjectNear)
                 this._proximityThreshold.setLowThreshold(value)
@@ -260,9 +270,10 @@ namespace sensors {
          * Gets the threshold value
          * @param condition the proximity condition
          */
-        //% blockId=irGetThreshold block="%sensor|%condition"
+        //% blockId=irGetThreshold block="**infrared** %this|%condition"
         //% group="Threshold" blockGap=8 weight=49
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="imagedropdown"
+        //% this.fieldOptions.columns=4
         proximityThreshold(condition: InfraredSensorEvent): number {
             return this._proximityThreshold.threshold(<ThresholdState><number>LightCondition.Dark);
         }
@@ -289,30 +300,30 @@ namespace sensors {
     /**
      * Remote beacon (center) button.
      */
-    //% whenUsed block="remote button center" weight=95 fixedInstance
+    //% whenUsed block="center" weight=95 fixedInstance
     export const remoteButtonCenter = __irButton(InfraredRemoteButton.CenterBeacon)
 
     /**
      * Remote top-left button.
      */
-    //% whenUsed block="remote button top left" weight=95 fixedInstance
+    //% whenUsed block="top left" weight=95 fixedInstance
     export const remoteButtonTopLeft = __irButton(InfraredRemoteButton.TopLeft)
 
     /**
      * Remote top-right button.
      */
-    //% whenUsed block="remote button top right" weight=95 fixedInstance
+    //% whenUsed block="top right" weight=95 fixedInstance
     export const remoteButtonTopRight = __irButton(InfraredRemoteButton.TopRight)
 
     /**
      * Remote bottom-left button.
      */
-    //% whenUsed block="remote button bottom left" weight=95 fixedInstance
+    //% whenUsed block="bottom left" weight=95 fixedInstance
     export const remoteButtonBottomLeft = __irButton(InfraredRemoteButton.BottomLeft)
 
     /**
      * Remote bottom-right button.
      */
-    //% whenUsed block="remote button bottom right" weight=95 fixedInstance
+    //% whenUsed block="bottom right" weight=95 fixedInstance
     export const remoteButtonBottomRight = __irButton(InfraredRemoteButton.BottomRight)
 }
