@@ -13,7 +13,7 @@
         
 * [Design Engineering](/design-engineering)
     * [Make It Move Without Wheels](/design-engineering/make-it-move)
-    * [Make It Smarter and Faster](/design-engineering/make-it-faster)
+    * [Make It Smarter and Faster](/design-engineering/make-it-smarter)
     * [Make a System that Communicates](/design-engineering/make-it-communicate)
 
 * [Maker](/maker)
