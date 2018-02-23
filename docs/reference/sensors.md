@@ -1,5 +1,17 @@
 # Sensors
 
+# Color
+
+```cards
+sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {})
+sensors.color1.onLightChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {})
+sensors.color1.pauseForLight(LightIntensityMode.Reflected, LightCondition.Dark)
+sensors.color1.pauseForColor(ColorSensorColor.Blue)
+sensors.color1.color();
+sensors.color1.light(LightIntensityMode.Ambient)
+sensors.color(ColorSensorColor.Blue)
+```
+
 ## Touch
 
 ```cards
@@ -23,4 +35,23 @@ sensors.gyro1.reset();
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectDetected, function () {});
 sensors.ultrasonic1.distance();
 sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.ObjectDetected);
+```
+
+## Infrared
+
+```cards
+sensors.infraredSensor1.onEvent(null, function () {});
+sensors.infraredSensor1.pauseUntil(null);
+sensors.infraredSensor1.proximity();
+
+```
+
+## Infrared beacon button
+
+```cards
+sensors.remoteButtonCenter.onEvent(ButtonEvent.Pressed, function () {})
+sensors.remoteButtonCenter.pauseUntil(ButtonEvent.Pressed);
+sensors.remoteButtonCenter.isPressed()
+sensors.remoteButtonCenter.wasPressed()
+sensors.infraredSensor1.setRemoteChannel(null)
 ```

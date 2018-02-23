@@ -20,9 +20,9 @@
     },
     {
         "name": "Make a System that Communicates",
-        "description": "TBD",
-        "imageUrl": "/static/lessons/make-a-system.png",
-        "url": "/design-engineering/make-it-move",
+        "description": "A robot that tells you what it is doing.",
+        "imageUrl": "/static/lessons/make-it-communicate.png",
+        "url": "/design-engineering/make-it-communicate",
         "cardType": "side"
     }
 ]

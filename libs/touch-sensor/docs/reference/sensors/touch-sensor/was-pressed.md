@@ -10,7 +10,7 @@ If a touch sensor was pressed, then that event is remembered. Once you check if 
 
 ## Returns
 
-* a [boolean](/types/boolean) value that is `true` if the sensor is was pressed before. It's `false` if the sensor was not pressed.
+* a [boolean](/types/boolean) value that is `true` if the sensor was pressed before. It's `false` if the sensor was not pressed.
 
 ## Example
 

@@ -19,28 +19,28 @@ enum LightIntensityMode {
 }
 
 const enum ColorSensorColor {
-    //% block="none" jres=colors.none
+    //% block="none" jres=colors.none blockIdentity=sensors.color
     None,
-    //% block="black" jres=colors.black
+    //% block="black" jres=colors.black blockIdentity=sensors.color
     Black,
-    //% block="blue" jres=colors.blue
+    //% block="blue" jres=colors.blue blockIdentity=sensors.color
     Blue,
-    //% block="green" jres=colors.green
+    //% block="green" jres=colors.green blockIdentity=sensors.color
     Green,
-    //% block="yellow" jres=colors.yellow
+    //% block="yellow" jres=colors.yellow blockIdentity=sensors.color
     Yellow,
-    //% block="red" jres=colors.red
+    //% block="red" jres=colors.red blockIdentity=sensors.color
     Red,
-    //% block="white" jres=colors.white
+    //% block="white" jres=colors.white blockIdentity=sensors.color
     White,
-    //% block="brown" jres=colors.brown
+    //% block="brown" jres=colors.brown blockIdentity=sensors.color
     Brown
 }
 
 enum LightCondition {
     //% block="dark"
     Dark = sensors.ThresholdState.Low,
-    //$ block="bright"
+    //% block="bright"
     Bright = sensors.ThresholdState.High
 }
 
@@ -196,7 +196,7 @@ namespace sensors {
         }
 
         /**
-         * Waits for the given color to be detected
+         * Wait for the given color to be detected
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-light
@@ -215,7 +215,7 @@ namespace sensors {
         }
 
         /**
-         * Measures the ambient or reflected light value from 0 (darkest) to 100 (brightest).
+         * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest).
          * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
@@ -243,7 +243,7 @@ namespace sensors {
         }
 
         /**
-         * Sets a threshold value
+         * Set a threshold value
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
@@ -252,6 +252,7 @@ namespace sensors {
         //% value.min=0 value.max=100
         //% this.fieldEditor="imagedropdown"
         //% this.fieldOptions.columns=4
+        //% help=sensors/color-sensor/set-threshold
         setThreshold(condition: LightCondition, value: number) {
             if (condition == LightCondition.Dark)
                 this.thresholdDetector.setLowThreshold(value)
@@ -260,13 +261,14 @@ namespace sensors {
         }
 
         /**
-         * Gets the threshold value
+         * Get a threshold value
          * @param condition the light condition
          */
         //% blockId=colorGetThreshold block="**color** %this|%condition"
         //% group="Threshold" blockGap=8 weight=89
         //% this.fieldEditor="imagedropdown"
         //% this.fieldOptions.columns=4
+        //% help=sensors/color-sensor/threshold
         threshold(condition: LightCondition): number {
             return this.thresholdDetector.threshold(<ThresholdState><number>LightCondition.Dark);
         }
@@ -274,10 +276,11 @@ namespace sensors {
         /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
-        //% blockId=colorCalibrateLight block="calibrate **color** %this|for %mode|light"
+        //% blockId=colorCalibrateLight block="calibrate **color** %this|for %mode"
         //% group="Threshold" weight=91 blockGap=8
         //% this.fieldEditor="imagedropdown"
         //% this.fieldOptions.columns=4
+        //% help=sensors/color-sensor/calibrate-light
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
 
@@ -322,11 +325,18 @@ namespace sensors {
 
     /**
      * Returns a color that the sensor can detect
+     * @param color the color sensed by the sensor, eg: ColorSensorColor.Red
      */
     //% shim=TD_ID
     //% blockId=colorSensorColor block="color %color"
     //% group="Color Sensor"
     //% weight=97
+    //% help=sensors/color
+    //% color.fieldEditor="gridpicker"
+    //% color.fieldOptions.columns=4
+    //% color.fieldOptions.tooltips=true
+    //% color.fieldOptions.hideRect=true
+    //% color.fieldOptions.width=268
     export function color(color: ColorSensorColor): ColorSensorColor {
         return color;
     }
