@@ -51,6 +51,7 @@ namespace console {
      */
     //% blockId=logsendtostreen block="send console to screen"
     //% weight=1
+    //% help=console/send-to-screen
     export function sendToScreen(): void {
         console.screen.attach();
     }
