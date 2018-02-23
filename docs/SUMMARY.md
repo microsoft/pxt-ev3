@@ -129,3 +129,7 @@
             * [millis](/reference/control/timer/millis)
             * [reset](/reference/control/timer/reset)
             * [pause until](/reference/control/timer/pause-until)
+    * [Console](/reference/console)
+        * [log](/reference/console/log)
+        * [log value](/reference/console/log-value)
+        * [send to screen](/reference/console/send-to-screen)
