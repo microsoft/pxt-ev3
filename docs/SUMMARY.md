@@ -132,3 +132,4 @@
     * [Console](/reference/console)
         * [log](/reference/console/log)
         * [log value](/reference/console/log-value)
+        * [send to screen](/reference/console/send-to-screen)
