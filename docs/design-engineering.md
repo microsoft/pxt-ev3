@@ -8,14 +8,14 @@
         "name": "Make It Move Without Wheels",
         "description": "TBD",
         "imageUrl": "/static/lessons/make-it-move.png",
-        "url": "/design-engineering/make-it-move",
+        "url": "/design-engineering/make-it-move-1",
         "cardType": "side"
     },
     {
         "name": "Make It Smarter and Faster",
         "description": "TBD",
         "imageUrl": "/static/lessons/make-it-smarter.png",
-        "url": "/design-engineering/make-it-smarter",
+        "url": "/design-engineering/make-it-smarter-1",
         "cardType": "side"
     },
     {
