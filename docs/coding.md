@@ -9,6 +9,7 @@
   "name": "Autonomous Parking",
   "description": "TBD",
   "url":"/coding/autonomous-parking",
+  "imageUrl": "/static/lessons/parking.png",
   "cardType": "side"
 }, {
   "name": "Object Detection",
