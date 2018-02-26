@@ -4,7 +4,8 @@
     "files": [
         "README.md",
         "colors.jres",
-        "color.ts"
+        "color.ts",
+        "ns.ts"
     ],
     "testFiles": [
         "test.ts"
