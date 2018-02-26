@@ -12,7 +12,7 @@
     "cardType": "side"
 },
 {
-    "name": "use",
+    "name": "Use",
     "imageUrl": "/static/lessons/use.png",
     "description": "Build a robot and drive into the world of robotics!",
     "url": "/getting-started/use",
