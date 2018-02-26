@@ -351,6 +351,10 @@ namespace pxsim.visuals {
         private buildScreenCanvas() {
             this.screenCanvas = document.createElement("canvas");
             this.screenCanvas.id = "board-screen-canvas";
+            this.screenCanvas.style.userSelect = "none";
+            this.screenCanvas.style.msUserSelect = "none";
+            this.screenCanvas.style.webkitUserSelect = "none";
+            (this.screenCanvas.style as any).MozUserSelect = "none";
             this.screenCanvas.style.position = "absolute";
             this.screenCanvas.addEventListener(pxsim.pointerEvents.up, ev => {
                 this.layoutView.selectBrick();
