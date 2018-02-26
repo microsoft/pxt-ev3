@@ -6,7 +6,8 @@
         "ns.ts",
         "startup.ts",
         "images.jres",
-        "images.ts"
+        "images.ts",
+        "mood.ts"
     ],
     "dependencies": {
         "base": "file:../base",
@@ -17,8 +18,7 @@
         "touch-sensor": "file:../touch-sensor",
         "ultrasonic-sensor": "file:../ultrasonic-sensor",
         "gyro-sensor": "file:../gyro-sensor",
-        "infrared-sensor": "file:../infrared-sensor",
-        "mood": "file:../mood"
+        "infrared-sensor": "file:../infrared-sensor"
     },
     "public": true
 }
