@@ -55,7 +55,8 @@ declare namespace control {
      * @param mode optional definition of how the event should be processed after construction.
      */
     //% weight=21 blockGap=12 blockId="control_raise_event"
-    //% block="raise event|from %src|with value %value" blockExternalInputs=1 shim=control::raiseEvent
+    //% block="raise event|from %src|with value %value" blockExternalInputs=1
+    //% help=control/raise-event shim=control::raiseEvent
     function raiseEvent(src: int32, value: int32): void;
 
     /**
