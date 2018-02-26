@@ -37,11 +37,11 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=sensors/gyro/angle
-        //% block="%sensor|angle"
+        //% block="**gyro** %this|angle"
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="ports"
         //% weight=64 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
@@ -57,12 +57,12 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=sensors/gyro/rate
-        //% block="%sensor|rate"
+        //% block="**gyro** %this|rate"
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
-        //% weight=65 blockGap=8        
+        //% this.fieldEditor="ports"
+        //% weight=65 blockGap=8
         //% group="Gyro Sensor"
         rate(): number {
             if (this.calibrating)
@@ -82,20 +82,20 @@ namespace sensors {
          * Forces a calibration of the gyro. Must be called when the sensor is completely still.
          */
         //% help=sensors/gyro/reset
-        //% block="reset %sensor|"
-        //% blockId=gyroReset  
+        //% block="reset **gyro** %this|"
+        //% blockId=gyroReset
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
-        //% weight=50        
+        //% this.fieldEditor="ports"
+        //% weight=50
         //% group="Gyro Sensor"
         reset(): void {
             if (this.calibrating) return; // already in calibration mode
 
             this.calibrating = true;
-            // may be triggered by a button click, 
+            // may be triggered by a button click,
             // give time for robot to settle
-            loops.pause(700);
+            pause(700);
             // send a reset command
             super.reset();
             // switch back to the desired mode
@@ -103,13 +103,13 @@ namespace sensors {
             // wait till sensor is live
             pauseUntil(() => this.isActive());
             // give it a bit of time to init
-            loops.pause(1000)
+            pause(1000)
             // compute drift
             this._drift = 0;
             if (this.mode == GyroSensorMode.Rate) {
                 for (let i = 0; i < 200; ++i) {
                     this._drift += this._query();
-                    loops.pause(4);
+                    pause(4);
                 }
                 this._drift /= 200;
             }
@@ -127,7 +127,7 @@ namespace sensors {
 
         /**
          * Enables or disable drift correction
-         * @param enabled 
+         * @param enabled
          */
         //%
         setDriftCorrection(enabled: boolean) {
@@ -135,15 +135,15 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="gyro 2" weight=95 jres=icons.port2
+    //% fixedInstance whenUsed block="2" weight=95 jres=icons.port2
     export const gyro2: GyroSensor = new GyroSensor(2)
 
-    //% fixedInstance whenUsed block="gyro 1" jres=icons.port1
+    //% fixedInstance whenUsed block="1" jres=icons.port1
     export const gyro1: GyroSensor = new GyroSensor(1)
 
-    //% fixedInstance whenUsed block="gyro 3" jres=icons.port3
+    //% fixedInstance whenUsed block="3" jres=icons.port3
     export const gyro3: GyroSensor = new GyroSensor(3)
 
-    //% fixedInstance whenUsed block="gyro 4" jres=icons.port4
+    //% fixedInstance whenUsed block="4" jres=icons.port4
     export const gyro4: GyroSensor = new GyroSensor(4)
 }

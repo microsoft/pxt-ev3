@@ -113,8 +113,8 @@ namespace motors {
     //% blockId=motorStopAll block="stop all motors"
     //% weight=1
     //% group="Move"
-    //% help=motors/stop-all-motors
-    export function stopAllMotors() {
+    //% help=motors/stop-all
+    export function stopAll() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b)
     }
@@ -134,17 +134,17 @@ namespace motors {
         protected _brake: boolean;
         private _initialized: boolean;
         private _init: () => void;
-        private _setSpeed: (speed: number) => void;
+        private _run: (speed: number) => void;
         private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
 
-        constructor(port: Output, init: () => void, setSpeed: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
+        constructor(port: Output, init: () => void, run: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
             super();
             this._port = port;
             this._portName = outputToName(this._port);
             this._brake = false;
             this._initialized = false;
             this._init = init;
-            this._setSpeed = setSpeed;
+            this._run = run;
             this._move = move;
         }
 
@@ -202,7 +202,7 @@ namespace motors {
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
             if(this._brake)
-                loops.pause(500);
+                pause(500);
         }
 
         /**
@@ -218,17 +218,17 @@ namespace motors {
         }
 
         /**
-         * Sets the motor speed for limited time or distance.
+         * Runs the motor at a given speed for limited time or distance.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
          * @param value (optional) measured distance or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorSetSpeed block="set %motor speed to %speed=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorRun block="run %motor at %speed=motorSpeedPicker|\\%||for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
         //% expandableArgumentMode=toggle
-        //% help=motors/motor/set-speed
-        setSpeed(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
+        //% help=motors/motor/run
+        run(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             // stop if speed is 0
@@ -238,7 +238,7 @@ namespace motors {
             }
             // special: 0 is infinity
             if (value == 0) {
-                this._setSpeed(speed);
+                this._run(speed);
                 return;
             }
             // timed motor moves
@@ -421,28 +421,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large A"
+    //% whenUsed fixedInstance block="large motor A"
     export const largeA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large B"
+    //% whenUsed fixedInstance block="large motor B"
     export const largeB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large C"
+    //% whenUsed fixedInstance block="large motor C"
     export const largeC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large D"
+    //% whenUsed fixedInstance block="large motor D"
     export const largeD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium A"
+    //% whenUsed fixedInstance block="medium motor A"
     export const mediumA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium B"
+    //% whenUsed fixedInstance block="medium motor B"
     export const mediumB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium C"
+    //% whenUsed fixedInstance block="medium motor C"
     export const mediumC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium D"
+    //% whenUsed fixedInstance block="medium motor D"
     export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
@@ -586,16 +586,16 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large B+C"
+    //% whenUsed fixedInstance block="large motors B+C"
     export const largeBC = new SynchedMotorPair(Output.BC);
 
-    //% whenUsed fixedInstance block="large A+D"
+    //% whenUsed fixedInstance block="large motors A+D"
     export const largeAD = new SynchedMotorPair(Output.AD);
 
-    //% whenUsed fixedInstance block="large A+B"
+    //% whenUsed fixedInstance block="large motors A+B"
     export const largeAB = new SynchedMotorPair(Output.AB);
 
-    //% whenUsed fixedInstance block="large C+D"
+    //% whenUsed fixedInstance block="large motors C+D"
     export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {

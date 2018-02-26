@@ -15,12 +15,12 @@ See if the motor turns the same number of times for each of two count periods. R
 ```blocks
 let tachoCount = 0;
 motors.largeA.reset()
-motors.largeA.setSpeed(50)
-loops.pause(10000)
+motors.largeA.run(50)
+pause(10000)
 tachoCount = motors.largeA.tacho()
 motors.largeA.clearCounts()
-motors.largeA.setSpeed(50)
-loops.pause(10000)
+motors.largeA.run(50)
+pause(10000)
 if (tachoCount == motors.largeA.tacho()) {
     brick.showString("Motor turns equal.", 1)
 } else {

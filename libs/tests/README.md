@@ -7,9 +7,9 @@ A unit test framework
 Tests are registered as event handlers. They will automatically run once ``on start`` is finished.
 
 ```blocks
-tests.test("lgB set speed 10", () => {
-    motors.largeB.setSpeed(10);
-    loops.pause(100)
+tests.test("lgB run 10", () => {
+    motors.largeB.run(10);
+    pause(100)
     tests.assertClose("speedB", 10, motors.largeB.speed(), 2)
 });
 ```

@@ -8,7 +8,7 @@ sensors.touch1.pauseUntil(ButtonEvent.Bumped);
 
 ## Parameters
 
-* **ev**: the touch sensor action to wait for. The the touch actions (events) are:
+* **ev**: the touch sensor action to wait for. The touch actions (events) are:
 > * ``pressed``: the sensor was pressed, or pressed and released
 > * ``bumped``: the sensor was just bumped
 > * ``released``: the sensor was just released

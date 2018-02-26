@@ -16,7 +16,7 @@ Show the battery level percentage on the screen. Also, show a green light if the
 
 ```blocks
 let battery = 0;
-loops.forever(function() {
+forever(function() {
     brick.showString("Battery level:", 1)
     brick.showNumber(battery, 2)
     battery = brick.batteryLevel();
@@ -28,6 +28,6 @@ loops.forever(function() {
     } else {
         brick.setStatusLight(StatusLight.RedPulse)
     }
-    loops.pause(30000)
+    pause(30000)
 })
 ```

@@ -33,7 +33,7 @@ namespace brick {
             brick.setStatusLight(this.light);
             brick.showImage(this.image);
             music.playSoundEffectUntilDone(this.sound);
-            loops.pause(20);
+            pause(20);
         }
     }
 

@@ -3,12 +3,12 @@
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Bumped, function () {
     motors.largeBC.tank(75, 30)
-    loops.pause(1500)
+    pause(1500)
     motors.largeBC.tank(-30, -75)
     sensors.ultrasonic4.pauseUntil(UltrasonicSensorEvent.ObjectNear);
     motors.largeBC.tank(0, 0)
-    loops.pause(1000)
+    pause(1000)
     motors.largeBC.tank(50, 50)
-    loops.pause(3000)
+    pause(3000)
 })
 ```

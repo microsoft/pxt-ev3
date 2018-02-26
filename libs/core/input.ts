@@ -15,7 +15,7 @@ namespace sensors.internal {
             let prev = query()
             changeHandler(prev, prev)
             while (true) {
-                loops.pause(periodMs)
+                pause(periodMs)
                 let curr = query()
                 if (prev !== curr) {
                     changeHandler(prev, curr)
@@ -57,9 +57,9 @@ namespace sensors.internal {
         uartMM = control.mmap("/dev/lms_uart", UartOff.Size, 0)
         if (!uartMM) control.fail("no uart sensor")
 
-        loops.forever(() => {
+        forever(() => {
             detectDevices()
-            loops.pause(500)
+            pause(500)
         })
 
         for (let info_ of sensorInfos) {
@@ -258,7 +258,7 @@ namespace sensors.internal {
             if (port < 0) return 0
             let s = getUartStatus(port)
             if (s) return s
-            loops.pause(25)
+            pause(25)
         }
     }
 
@@ -280,7 +280,7 @@ namespace sensors.internal {
 
             uartMM.setNumber(NumberFormat.Int8LE, UartOff.Status + port,
                 getUartStatus(port) & 0xfffe)
-            loops.pause(10)
+            pause(10)
         }
     }
 
@@ -299,7 +299,7 @@ namespace sensors.internal {
             } else {
                 break
             }
-            loops.pause(10)
+            pause(10)
         }
     }
 

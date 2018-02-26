@@ -21,7 +21,7 @@ let GTO = 0;
 function DN() {
     motors.largeAD.setBrake(true);
     motors.largeAD.tank(50, 50, 1, MoveUnit.Seconds);
-    loops.pause(100);
+    pause(100);
     motors.largeA.clearCounts()
     motors.largeD.clearCounts()
 }
@@ -32,9 +32,9 @@ function MNRH() {
     brick.setStatusLight(StatusLight.OrangePulse)
     while (!brick.buttonEnter.wasPressed()) {
         if (brick.buttonUp.wasPressed()) {
-            motors.mediumC.setSpeed(-100);
+            motors.mediumC.run(-100);
         } else if (brick.buttonDown.wasPressed()) {
-            motors.mediumC.setSpeed(100);
+            motors.mediumC.run(100);
         } else {
             motors.mediumC.stop();
         }
@@ -83,24 +83,24 @@ function UP() {
     if (motors.largeA.angle() > -50) {
         control.runInParallel(function () {
             motors.largeD.clearCounts()
-            motors.largeD.setSpeed(-35);
+            motors.largeD.run(-35);
             pauseUntil(() => motors.largeD.angle() < -25);
             motors.largeD.stop();
             motors.largeD.setRegulated(false)
-            motors.largeD.setSpeed(-15)
+            motors.largeD.run(-15)
             pauseUntil(() => motors.largeD.angle() < -65);
             motors.largeD.stop();
         })
         motors.largeA.clearCounts()
-        motors.largeA.setSpeed(-35);
+        motors.largeA.run(-35);
         pauseUntil(() => motors.largeA.angle() < -25);
         motors.largeA.stop();
         motors.largeA.setRegulated(false)
-        motors.largeA.setSpeed(-15)
+        motors.largeA.run(-15)
         pauseUntil(() => motors.largeA.angle() < -65);
         motors.largeA.stop();
 
-        loops.pause(500);
+        pause(500);
     }
 }
 
@@ -231,9 +231,9 @@ function IDL() {
 function MHT(Pos: number) {
     let _R = Pos - motors.mediumC.angle();
     if (_R >= 0) {
-        motors.mediumC.setSpeed(100, _R, MoveUnit.Degrees);
+        motors.mediumC.run(100, _R, MoveUnit.Degrees);
     } else {
-        motors.mediumC.setSpeed(-100, Math.abs(_R), MoveUnit.Degrees);
+        motors.mediumC.run(-100, Math.abs(_R), MoveUnit.Degrees);
     }
 }
 
@@ -277,7 +277,7 @@ function NGR() {
     IS(4)
     music.playSoundEffect(sounds.animalsDogGrowl);
     UP();
-    loops.pause(1500);
+    pause(1500);
     music.stopAllSounds()
     music.playSoundEffect(sounds.animalsDogBark1)
     P_C--;
@@ -303,16 +303,16 @@ function PPP() {
     NS = false;
     IS(2);
     UP();
-    loops.pause(100)
-    motors.largeA.setSpeed(-30, 70, MoveUnit.Degrees);
-    loops.pause(800);
+    pause(100)
+    motors.largeA.run(-30, 70, MoveUnit.Degrees);
+    pause(800);
     music.playSoundEffect(sounds.mechanicalHorn1);
-    loops.pause(1000);
+    pause(1000);
     for(let i = 0; i < 3; ++i) {
-        motors.largeA.setSpeed(-30, 20, MoveUnit.Degrees);
-        motors.largeA.setSpeed(30, 20, MoveUnit.Degrees);
+        motors.largeA.run(-30, 20, MoveUnit.Degrees);
+        motors.largeA.run(30, 20, MoveUnit.Degrees);
     }
-    motors.largeA.setSpeed(30, 70, MoveUnit.Degrees);
+    motors.largeA.run(30, 70, MoveUnit.Degrees);
     F_C = 1;
     CS(0);
 }
@@ -320,14 +320,14 @@ function PPP() {
 function HPY() {
     IS(8)
     MHT(0);
-    motors.largeAD.setSpeed(10, 0.8, MoveUnit.Seconds);
+    motors.largeAD.run(10, 0.8, MoveUnit.Seconds);
     for(let i = 0; i < 3; ++i) {
         music.playSoundEffect(sounds.animalsDogBark1);
-        motors.largeAD.setSpeed(-100, 0.2, MoveUnit.Seconds);
-        loops.pause(300)
-        motors.largeAD.setSpeed(10, 0.3, MoveUnit.Seconds)
+        motors.largeAD.run(-100, 0.2, MoveUnit.Seconds);
+        pause(300)
+        motors.largeAD.run(10, 0.3, MoveUnit.Seconds)
     }
-    loops.pause(500);
+    pause(500);
     music.stopAllSounds();
     DN();
     RST();
@@ -335,9 +335,9 @@ function HPY() {
 
 function STL() {
     UP();
-    motors.largeAD.setSpeed(-20, 60, MoveUnit.Degrees);
+    motors.largeAD.run(-20, 60, MoveUnit.Degrees);
     music.playSoundEffect(sounds.animalsDogWhine);
-    motors.largeAD.setSpeed(20, 60, MoveUnit.Degrees);
+    motors.largeAD.run(20, 60, MoveUnit.Degrees);
 }
 
 function WKU() {
@@ -347,7 +347,7 @@ function WKU() {
     MHT(0)
     DN()
     STL()
-    loops.pause(1000);
+    pause(1000);
     UP()
     CS(0;)
 }
@@ -358,7 +358,7 @@ MNRH();
 IS(1);
 UP();
 RST();
-loops.forever(function () {
+forever(function () {
     MON();
     switch (DB_S) {
         case 0:

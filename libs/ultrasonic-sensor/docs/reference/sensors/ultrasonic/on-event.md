@@ -20,7 +20,7 @@ Both **near** and **far** have distance thresholds set in centimeters. The **det
 > * ``object detected``: some other object is sending out an ultrasonic sound
 > * ``object near``: the sensor detected something within the distance of the near threshold
 > * ``object far``: the sensor detected somethin within the distance of the far threshold
-* **body**: the code you want to run when something happens to the touch sensor.
+* **body**: the code you want to run when something is dectected by the ultrasonic sensor.
 
 ## Example
 

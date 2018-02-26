@@ -161,7 +161,7 @@ namespace brick {
         // this needs to be done in query(), which is run without the main JS execution mutex
         // otherwise, while(true){} will lock the device
         if (ret & DAL.BUTTON_ID_ESCAPE) {
-            motors.stopAllMotors(); // ensuring that all motors are off
+            motors.stopAll(); // ensuring that all motors are off
             control.reset()
         }
         return ret
@@ -248,7 +248,7 @@ namespace brick {
 
     /**
      * Set lights.
-     * @param pattern the lights pattern to use. eg: BrickLight.Orange
+     * @param pattern the lights pattern to use. eg: StatusLight.Orange
      */
     //% blockId=setLights block="set status light to %pattern"
     //% weight=100 group="Buttons"

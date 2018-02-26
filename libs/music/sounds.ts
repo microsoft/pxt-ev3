@@ -260,11 +260,12 @@ namespace music {
     const soundsLimit = 1;
 
     /**
-     * Plays a sound
+     * Play a sound and wait until it finishes
      * @param sound the sound to play
      */
     //% blockId=music_play_sound_effect_until_done block="play sound effect %sound|until done"
     //% weight=98 blockGap=8
+    //% help=music/play-sound-effect-until-done
     export function playSoundEffectUntilDone(sound: Sound) {
         if (!sound || numSoundsPlaying >= soundsLimit) return;
         numSoundsPlaying++;
@@ -288,6 +289,7 @@ namespace music {
      */
     //% blockId=music_play_sound_effect block="play sound effect %sound"
     //% weight=99 blockGap=8
+    //% help=music/play-sound-effect
     export function playSoundEffect(sound: Sound) {
         if (!sound || numSoundsPlaying >= soundsLimit) return;
         numSoundsPlaying++;

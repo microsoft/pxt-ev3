@@ -1,9 +1,9 @@
-# set Speed
+# run
 
 Set the rotation speed of the motor as a percentage of maximum speed.
 
 ```sig
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 ```
 
 The speed setting is a pecentage of the motor's full speed. Full speed is the speed that the motor runs when the brick supplies maximum output voltage to the port.
@@ -19,28 +19,28 @@ If you use a number of milliseconds as movement units, then you don't need to in
 To run the motor for 500 milliseconds:
 
 ```block
-motors.largeA.setSpeed(50, 500)
+motors.largeA.run(50, 500)
 ```
 
 ## ~
 
 Here is how you use each different movement unit to run the motor for a fixed rotation distance.
 
-```typescript
+```blocks
 // Run motor for 700 Milliseconds. 
-motors.largeA.setSpeed(25, 700, MoveUnit.MilliSeconds);
+motors.largeA.run(25, 700, MoveUnit.MilliSeconds);
 
 // Run motor for 700 Milliseconds again but no units specified. 
-motors.largeA.setSpeed(25, 700);
+motors.largeA.run(25, 700);
 
 // Run the motor for 45 seconds
-motors.largeA.setSpeed(50, 45, MoveUnit.Seconds);
+motors.largeA.run(50, 45, MoveUnit.Seconds);
 
 // Turn the motor for 270 degrees
-motors.largeA.setSpeed(50, 270, MoveUnit.Degrees)
+motors.largeA.run(50, 270, MoveUnit.Degrees)
 
 // Turn the motor at full speed for 9 full rotations
-motors.largeA.setSpeed(100, 9, MoveUnit.Rotations);
+motors.largeA.run(100, 9, MoveUnit.Rotations);
 ```
 
 ## Parameters
@@ -56,7 +56,7 @@ motors.largeA.setSpeed(100, 9, MoveUnit.Rotations);
 Turning the motor in the opposite direction (reverse) is simple. Reverse is just a negative speed setting. To drive the motor in reverse at 25% speed:
 
 ```block
-motors.largeB.setSpeed(-25)
+motors.largeB.run(-25)
 ```
 
 ## ~
@@ -68,8 +68,8 @@ motors.largeB.setSpeed(-25)
 Run the motor connected to port **A** continuously. Pause 20 seconds and then stop the motor.
 
 ```blocks
-motors.largeA.setSpeed(75)
-loops.pause(20000)
+motors.largeA.run(75)
+pause(20000)
 motors.largeA.stop()
 ```
 
@@ -78,8 +78,8 @@ motors.largeA.stop()
 Run the motor connected to port **A** in reverse. Pause 5 seconds and then stop the motor.
 
 ```blocks
-motors.largeA.setSpeed(-60)
-loops.pause(5000)
+motors.largeA.run(-60)
+pause(5000)
 motors.largeA.stop()
 ```
 
@@ -88,7 +88,7 @@ motors.largeA.stop()
 Run the motor connected to port **B** for 35 full rotations and then stop.
 
 ```blocks
-motors.largeB.setSpeed(50, 35, MoveUnit.Rotations)
+motors.largeB.run(50, 35, MoveUnit.Rotations)
 ```
 
 ## See also

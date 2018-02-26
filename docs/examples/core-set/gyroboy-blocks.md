@@ -108,7 +108,7 @@ function checkFallen() {
 // stop all motors and wait for touch button to be
 // pressed
 function stop() {
-    motors.stopAllMotors()
+    motors.stopAll()
     state = 0
     moods.knockedOut.show();
     sensors.touch3.pauseUntil(ButtonEvent.Pressed)
@@ -119,15 +119,15 @@ sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     controlSteering = 0
     oldControlDrive = controlDrive
     controlDrive = -10
-    motors.mediumC.setSpeed(30, 30, MoveUnit.Degrees);
-    motors.mediumC.setSpeed(-30, 60, MoveUnit.Degrees);
-    motors.mediumC.setSpeed(30, 30, MoveUnit.Degrees);
+    motors.mediumC.run(30, 30, MoveUnit.Degrees);
+    motors.mediumC.run(-30, 60, MoveUnit.Degrees);
+    motors.mediumC.run(30, 30, MoveUnit.Degrees);
     if (Math.randomRange(-1, 1) >= 1) {
         controlSteering = 70
     } else {
         controlSteering = -70
     }
-    loops.pause(4000)
+    pause(4000)
     music.playTone(2000, 100)
     controlSteering = 0
     controlDrive = oldControlDrive
@@ -149,8 +149,8 @@ sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
 })
 // apply power to motors
 function controlMotors() {
-    motors.largeA.setSpeed(power + controlSteering * 0.1)
-    motors.largeD.setSpeed(power - controlSteering * 0.1)
+    motors.largeA.run(power + controlSteering * 0.1)
+    motors.largeD.run(power - controlSteering * 0.1)
 }
 sensors.color1.onColorDetected(ColorSensorColor.Yellow, function () {
     moods.middleLeft.show()
@@ -162,7 +162,7 @@ sensors.color1.onColorDetected(ColorSensorColor.White, function () {
 })
 timestep = 0.014
 // main loop
-loops.forever(function () {
+forever(function () {
     reset()
     while (!fallen) {
         control.timer3.pauseUntil(5)

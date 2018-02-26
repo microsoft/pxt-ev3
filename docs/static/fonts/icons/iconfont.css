@@ -1,8 +1,8 @@
 @font-face {
 	font-family: "iconfont";
-	src: url("iconfont.eot?8b7e57577c2d1f1ae9e810b9e010bc84?#iefix") format("embedded-opentype"),
-url("iconfont.woff2?8b7e57577c2d1f1ae9e810b9e010bc84") format("woff2"),
-url("iconfont.woff?8b7e57577c2d1f1ae9e810b9e010bc84") format("woff");
+	src: url("iconfont.eot?92b07c6c5392088e45983d845234d068?#iefix") format("embedded-opentype"),
+url("iconfont.woff2?92b07c6c5392088e45983d845234d068") format("woff2"),
+url("iconfont.woff?92b07c6c5392088e45983d845234d068") format("woff");
 }
 
 .icon {
@@ -90,4 +90,7 @@ url("iconfont.woff?8b7e57577c2d1f1ae9e810b9e010bc84") format("woff");
 }
 .icon-blocks:before {
 	content: "\f119";
+}
+.icon-search:before {
+	content: "\f11a";
 }

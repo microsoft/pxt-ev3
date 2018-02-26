@@ -19,8 +19,8 @@ Also, you can use the brake to do simple skid steering for your brick.
 Run the motor connected to port **A** for 2 seconds at a speed of `30`. Stop and set the brake.
 
 ```blocks
-motors.largeA.setSpeed(30)
-loops.pause(2000)
+motors.largeA.run(30)
+pause(2000)
 motors.largeA.stop()
 motors.largeA.setBrake(true)
 ```

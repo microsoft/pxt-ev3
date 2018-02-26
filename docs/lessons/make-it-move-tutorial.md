@@ -51,7 +51,7 @@ The ``||motors:tank large B+C||`` block will run for `9` rotations when the **ce
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
-motors.stopAllMotors()
+motors.stopAll()
 ```
 
 ## Program 3 @fullscreen
@@ -63,7 +63,7 @@ The ``||motors:tank large B+C||`` will run for `9` rotations when the **center**
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
-motors.stopAllMotors()
+motors.stopAll()
 brick.showString("30 cm", 1)
 ```
 

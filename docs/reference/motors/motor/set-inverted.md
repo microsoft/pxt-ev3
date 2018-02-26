@@ -17,13 +17,13 @@ You use a positive value (some number greater than `0`) to drive you motor in th
 Run the motor connected to port **A** for 2 seconds at a speed of `30`. Stop and switch the direciton of rotation. Run the motor at a speed of `-30`. Watch and see if the motor turns in the same direction as before.
 
 ```blocks
-motors.largeA.setSpeed(30)
-loops.pause(2000)
+motors.largeA.run(30)
+pause(2000)
 motors.largeA.stop()
-loops.pause(2000)
+pause(2000)
 motors.largeA.setInverted(true)
-motors.largeA.setSpeed(-30)
-loops.pause(2000)
+motors.largeA.run(-30)
+pause(2000)
 motors.largeA.stop()
 ```
 

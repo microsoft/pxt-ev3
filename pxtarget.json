@@ -40,7 +40,7 @@
         "packages": true,
         "sharing": true,
         "publishing": true,
-        "importing": false,
+        "importing": true,
         "preferredPackages": [],
         "githubPackages": true
     },
@@ -165,5 +165,5 @@
             "editor.background": "#ecf6ff"
         }
     },
-    "ignoreDocsErrors": false
+    "ignoreDocsErrors": true
 }

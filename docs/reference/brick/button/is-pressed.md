@@ -32,7 +32,7 @@ Set the brick light to green when the `down` is pressed. When the button is not 
 
 ```blocks
 let isRed = false;
-loops.forever(function() {
+forever(function() {
     if (brick.buttonLeft.isPressed()) {
         brick.setStatusLight(StatusLight.Green);
         isRed = false;

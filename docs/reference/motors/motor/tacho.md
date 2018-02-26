@@ -33,12 +33,12 @@ A standard way to know how fast a motor is turning is by measuring its _revoluti
 Run the motor connected to port **A** at half speed for 5 seconds. Display the number of full rotations on the screen.
 
 ```blocks
-motors.largeA.setSpeed(50)
-loops.pause(5000)
+motors.largeA.run(50)
+pause(5000)
 motors.largeA.stop()
 brick.showString("Motor rotations:", 1)
 brick.showNumber(motors.largeA.tacho() / 360, 3)
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 ```
 
 ## See also

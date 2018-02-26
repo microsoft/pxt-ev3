@@ -19,17 +19,17 @@ brick.buttonDown.onEvent(ButtonEvent.Bumped, function () {
     music.playSoundEffectUntilDone(sounds.systemClick)
 })
 brick.buttonEnter.pauseUntil(ButtonEvent.Bumped);
-loops.pause(1000)
+pause(1000)
 music.playSoundEffectUntilDone(sounds.communicationGo)
 for (let d of drive) {
     if (d == 1) {
-        motors.largeC.setSpeed(50, 360, MoveUnit.Degrees)
+        motors.largeC.run(50, 360, MoveUnit.Degrees)
     } else if (d == 3) {
-        motors.largeB.setSpeed(50, 360, MoveUnit.Degrees)
+        motors.largeB.run(50, 360, MoveUnit.Degrees)
     } else if (d == 4) {
-        motors.largeBC.setSpeed(50, 360, MoveUnit.Degrees)
+        motors.largeBC.run(50, 360, MoveUnit.Degrees)
     } else {
-        motors.largeBC.setSpeed(-50, 360, MoveUnit.Degrees)
+        motors.largeBC.run(-50, 360, MoveUnit.Degrees)
     }
 }
 music.playSoundEffectUntilDone(sounds.communicationGameOver)

@@ -17,8 +17,6 @@ clients/**/bin/**
 clients/**/obj/**
 clients/electron/projects
 libs/**/_locales/**
-libs/**/shims.d.ts
-libs/**/enums.d.ts
 
 videos/**
 

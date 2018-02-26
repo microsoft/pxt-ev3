@@ -2,7 +2,7 @@
 
 [![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_rainbow/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/job/pxt-ev3_Push/)
 
-This repo contains the editor target hosted at https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
+This repo contains the editor target hosted at https://makecode.legoeducation.com
 
 LEGO Auth: https://src.education.lego.com/groups/ev3-makecode (use Google Authenticator)
 LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square
@@ -11,7 +11,7 @@ LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-squa
 
 These instructions assume familiarity with dev tools and languages.
 
-* install Node.js 6+
+* install Node.js 8.9.4+
 * install Docker; make sure `docker` command is in your `PATH`
 * (optional) install [Visual Studio Code](https://code.visualstudio.com/)
 
@@ -57,12 +57,6 @@ pxt serve --cloud
 cd libs/core
 pxt deploy
 ```
-
-### Hosted editor
-
-Currently hosted at:
-
-https://d541eec2-1e96-4b7b-a223-da9d01d0337a.pxt.io/
 
 ### Jenkins build
 https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/

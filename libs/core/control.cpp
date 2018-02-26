@@ -10,6 +10,7 @@ namespace control {
  */
 //% weight=21 blockGap=12 blockId="control_raise_event"
 //% block="raise event|from %src|with value %value" blockExternalInputs=1
+//% help=control/raise-event
 void raiseEvent(int src, int value) {
     pxt::raiseEvent(src, value);
 }

@@ -10,20 +10,20 @@ If a touch sensor was pressed, then that event is remembered. Once you check if 
 
 ## Returns
 
-* a [boolean](/types/boolean) value that is `true` if the sensor is was pressed before. It's `false` if the sensor was not pressed.
+* a [boolean](/types/boolean) value that is `true` if the sensor was pressed before. It's `false` if the sensor was not pressed.
 
 ## Example
 
 If the touch sensor ``touch 1`` was pressed, show a `green` status light. Otherwise, set the status light to `orange`.
 
 ```blocks
-loops.forever(function () {
+forever(function () {
     if (sensors.touch1.wasPressed()) {
         brick.setStatusLight(StatusLight.Green)
     } else {
         brick.setStatusLight(StatusLight.Orange)
     }
-    loops.pause(500)
+    pause(500)
 })
 ```
 

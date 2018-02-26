@@ -26,7 +26,8 @@ webfontsGenerator({
     "./icons/check.svg",
     "./icons/download.svg",
     "./icons/save.svg",
-    "./icons/blocks.svg"
+    "./icons/blocks.svg",
+    "./categories/search.svg"
   ],
   dest: '../docs/static/fonts/icons/',
   round: 10

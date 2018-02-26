@@ -3,7 +3,7 @@
 ## Motion
 
 ```cards
-motors.largeA.setSpeed(50)
+motors.largeA.run(50)
 motors.largeAB.tank(50, 50)
 motors.largeAB.steer(0, 50)
 motors.largeA.pauseUntilReady()
@@ -12,7 +12,7 @@ motors.largeA.setInverted(true)
 motors.largeA.setRegulated(false)
 motors.largeA.stop()
 motors.largeA.reset()
-motors.stopAllMotors()
+motors.stopAll()
 ```
 ## Counters
 

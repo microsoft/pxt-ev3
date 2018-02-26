@@ -3,10 +3,10 @@ tests.onEvent(TestEvent.RunSetUp, function() {
     console.sendToScreen();
 })
 tests.onEvent(TestEvent.TestSetUp, function() {
-    motors.stopAllMotors();
+    motors.stopAll();
     motors.resetAllMotors();
 })
 tests.onEvent(TestEvent.TestTearDown, function() {
-    motors.stopAllMotors();
+    motors.stopAll();
     motors.resetAllMotors();
 })

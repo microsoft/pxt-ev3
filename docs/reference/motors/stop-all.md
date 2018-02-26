@@ -3,7 +3,7 @@
 Stops all motors currently running on the brick.
 
 ```sig
-motors.stopAllMotors();
+motors.stopAll();
 ```
 
 The motors stops but any motion caused from previously running the motors continues until it runs down. If you are driving your brick and then stop the motors, it will coast for awhile before stopping. 
@@ -14,8 +14,8 @@ Tank the @boardname@ forward at half speed for 5 seconds and then stop.
 
 ```blocks
 motors.largeAB.tank(50, 50);
-loops.pause(5000);
-motors.stopAllMotors();
+pause(5000);
+motors.stopAll();
 ```
 
 ## See also
