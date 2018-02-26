@@ -15,7 +15,7 @@
         "name": "Make It Smarter and Faster",
         "description": "TBD",
         "imageUrl": "/static/lessons/make-it-smarter.png",
-        "url": "/design-engineering/make-it-move",
+        "url": "/design-engineering/make-it-smarter",
         "cardType": "side"
     },
     {

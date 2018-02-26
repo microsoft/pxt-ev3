@@ -1,9 +1,9 @@
 # Infrared sensor
 
 ```cards
-sensors.infraredSensor1.onEvent(null, function () {});
-sensors.infraredSensor1.pauseUntil(null);
-sensors.infraredSensor1.proximity();
+sensors.infrared1.onEvent(null, function () {});
+sensors.infrared1.pauseUntil(null);
+sensors.infrared1.proximity();
 ```
 
 ## See Also

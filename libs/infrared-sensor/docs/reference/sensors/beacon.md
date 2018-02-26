@@ -5,7 +5,7 @@ sensors.remoteButtonCenter.onEvent(ButtonEvent.Pressed, function () {})
 sensors.remoteButtonCenter.pauseUntil(ButtonEvent.Pressed);
 sensors.remoteButtonCenter.isPressed()
 sensors.remoteButtonCenter.wasPressed()
-sensors.infraredSensor1.setRemoteChannel(null)
+sensors.infrared1.setRemoteChannel(null)
 ```
 
 ## See also

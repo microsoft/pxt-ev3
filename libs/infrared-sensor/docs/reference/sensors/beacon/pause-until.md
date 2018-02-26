@@ -34,7 +34,7 @@ brick.showString("We're going to wait", 1);
 brick.showString("for you to bump the", 2);
 brick.showString("touch sensor on port 1", 3);
 waitTime = control.millis();
-sensors.infraredSensor1.setRemoteChannel(InfraredRemoteChannel.Ch0)
+sensors.infrared1.setRemoteChannel(InfraredRemoteChannel.Ch0)
 sensors.remoteButtonCenter.pauseUntil(ButtonEvent.Bumped);
 brick.clearScreen();
 if (control.millis() - waitTime > 5000) {
