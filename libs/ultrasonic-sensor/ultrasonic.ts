@@ -46,8 +46,7 @@ namespace sensors {
         //% block="on **ultrasonic** %this|%event"
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor"
         onEvent(event: UltrasonicSensorEvent, handler: () => void) {
@@ -62,8 +61,7 @@ namespace sensors {
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"
         pauseUntil(event: UltrasonicSensorEvent) {
@@ -79,8 +77,7 @@ namespace sensors {
         //% blockId=sonarGetDistance
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=65
         //% group="Ultrasonic Sensor"
         distance(): number {
@@ -98,8 +95,7 @@ namespace sensors {
         //% blockId=ultrasonicSetThreshold block="set **ultrasonic** %this|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=80
         //% value.min=0 value.max=255
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         setThreshold(condition: UltrasonicSensorEvent, value: number) {
             switch (condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;
@@ -114,8 +110,7 @@ namespace sensors {
          */
         //% blockId=ultrasonicGetThreshold block="**ultrasonic** %this|%condition"
         //% group="Threshold" blockGap=8 weight=79
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         threshold(condition: UltrasonicSensorEvent): number {
             switch (condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.threshold(ThresholdState.Low); break;
@@ -126,15 +121,15 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="ultrasonic 4" jres=icons.port4
+    //% fixedInstance whenUsed block="4" jres=icons.port4
     export const ultrasonic4: UltraSonicSensor = new UltraSonicSensor(4)
 
-    //% fixedInstance whenUsed block="ultrasonic 1" jres=icons.port1
+    //% fixedInstance whenUsed block="1" jres=icons.port1
     export const ultrasonic1: UltraSonicSensor = new UltraSonicSensor(1)
 
-    //% fixedInstance whenUsed block="ultrasonic 2" jres=icons.port2
+    //% fixedInstance whenUsed block="2" jres=icons.port2
     export const ultrasonic2: UltraSonicSensor = new UltraSonicSensor(2)
 
-    //% fixedInstance whenUsed block="ultrasonic 3" jres=icons.port3
+    //% fixedInstance whenUsed block="3" jres=icons.port3
     export const ultrasonic3: UltraSonicSensor = new UltraSonicSensor(3)
 }

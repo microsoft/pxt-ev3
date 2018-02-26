@@ -33,8 +33,7 @@ namespace sensors {
         //% blockId=touchEvent block="on **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=99 blockGap=12
         //% group="Touch Sensor"
         onEvent(ev: ButtonEvent, body: () => void) {
@@ -50,8 +49,7 @@ namespace sensors {
         //% blockId=touchWaitUntil block="pause until **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=98 blockGap=12
         //% group="Touch Sensor"
         pauseUntil(ev: ButtonEvent) {
@@ -67,8 +65,7 @@ namespace sensors {
         //% blockId=touchIsPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isPressed() {
@@ -84,8 +81,7 @@ namespace sensors {
         //% blockId=touchWasPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% weight=81
         //% group="Touch Sensor"
         wasPressed() {
@@ -93,12 +89,12 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="touch 1" weight=95 fixedInstance jres=icons.port1
+    //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
     export const touch1: TouchSensor = new TouchSensor(1)
-    //% whenUsed block="touch 2" weight=95 fixedInstance jres=icons.port2
+    //% whenUsed block="2" weight=95 fixedInstance jres=icons.port2
     export const touch2: TouchSensor = new TouchSensor(2)
-    //% whenUsed block="touch 3" weight=95 fixedInstance jres=icons.port3
+    //% whenUsed block="3" weight=95 fixedInstance jres=icons.port3
     export const touch3: TouchSensor = new TouchSensor(3)
-    //% whenUsed block="touch 4" weight=95 fixedInstance jres=icons.port4
+    //% whenUsed block="4" weight=95 fixedInstance jres=icons.port4
     export const touch4: TouchSensor = new TouchSensor(4)
 }

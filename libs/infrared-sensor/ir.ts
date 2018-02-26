@@ -191,8 +191,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=100 blockGap=8
         //% group="Infrared Sensor"
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         onEvent(event: InfraredSensorEvent, handler: () => void) {
             this._setMode(InfraredSensorMode.Proximity)
             control.onEvent(this._id, event, handler);
@@ -208,8 +207,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=99 blockGap=8
         //% group="Infrared Sensor"
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         pauseUntil(event: InfraredSensorEvent) {
             this._setMode(InfraredSensorMode.Proximity)
             control.waitForEvent(this._id, event);
@@ -226,8 +224,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% weight=98 blockGap=8
         //% group="Infrared Sensor"
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         proximity(): number {
             this._setMode(InfraredSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
@@ -241,8 +238,7 @@ namespace sensors {
         //% blockId=irSetRemoteChannel block="set **infrared** %this|remote channel to %channel"
         //% weight=99
         //% group="Remote Infrared Beacon"
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         //% help=sensors/beacon/set-remote-channel
         setRemoteChannel(channel: InfraredRemoteChannel) {
             this.setMode(InfraredSensorMode.RemoteControl)
@@ -258,8 +254,7 @@ namespace sensors {
         //% blockId=irSetThreshold block="set **infrared** %this|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=49
         //% value.min=0 value.max=100
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         setPromixityThreshold(condition: InfraredSensorEvent, value: number) {
             if (condition == InfraredSensorEvent.ObjectNear)
                 this._proximityThreshold.setLowThreshold(value)
@@ -273,8 +268,7 @@ namespace sensors {
          */
         //% blockId=irGetThreshold block="**infrared** %this|%condition"
         //% group="Threshold" blockGap=8 weight=49
-        //% this.fieldEditor="imagedropdown"
-        //% this.fieldOptions.columns=4
+        //% this.fieldEditor="ports"
         proximityThreshold(condition: InfraredSensorEvent): number {
             return this._proximityThreshold.threshold(<ThresholdState><number>LightCondition.Dark);
         }
@@ -286,16 +280,16 @@ namespace sensors {
         }
     }
 
-    //% fixedInstance whenUsed block="infrared 1" jres=icons.port1
+    //% fixedInstance whenUsed block="1" jres=icons.port1
     export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
 
-    //% fixedInstance whenUsed block="infrared 2" jres=icons.port2
+    //% fixedInstance whenUsed block="2" jres=icons.port2
     export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
 
-    //% fixedInstance whenUsed block="infrared 3" jres=icons.port3
+    //% fixedInstance whenUsed block="3" jres=icons.port3
     export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
 
-    //% fixedInstance whenUsed block="infrared 4" jres=icons.port4
+    //% fixedInstance whenUsed block="4" jres=icons.port4
     export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
 
     /**
