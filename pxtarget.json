@@ -21,6 +21,8 @@
         "libs/storage",
         "libs/datalog",
         "libs/tests",
+        "libs/screen",
+        "libs/game",
         "libs/automation"
     ],
     "simulator": {
