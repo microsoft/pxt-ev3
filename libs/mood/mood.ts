@@ -41,10 +41,10 @@ namespace brick {
      * An image
      * @param image the image
      */
-    //% blockId=mood_image_picker block="%image" shim=TD_ID
-    //% image.fieldEditor="images"
-    //% image.fieldOptions.columns=4
-    //% image.fieldOptions.width=400
+    //% blockId=mood_image_picker block="%mood" shim=TD_ID
+    //% mood.fieldEditor="images"
+    //% mood.fieldOptions.columns=4
+    //% mood.fieldOptions.width=400
     //% group="Screen" weight=0 blockHidden=1
     export function __moodImagePicker(mood: Mood): Mood {
         return mood;
