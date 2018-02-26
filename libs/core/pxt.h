@@ -32,7 +32,6 @@ class MMap : public RefObject {
 extern volatile bool paniced;
 
 // Buffer, Sound, and Image share representation.
-typedef Buffer Image;
 typedef Buffer Sound;
 
 }
@@ -40,5 +39,7 @@ typedef Buffer Sound;
 #define DEVICE_EVT_ANY 0
 #define DEVICE_ID_NOTIFY 10000
 #define DEVICE_ID_NOTIFY_ONE 10001
+
+#define IMAGE_BITS 1
 
 #endif

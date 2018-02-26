@@ -19,18 +19,11 @@ struct PNGHeader {
     uint8_t IDAT[4];
 } __attribute__((packed));
 
-namespace screen {
+namespace image {
 
 static uint32_t swap(uint32_t num) {
     return ((num >> 24) & 0xff) | ((num << 8) & 0xff0000) | ((num >> 8) & 0xff00) |
            ((num << 24) & 0xff000000);
-}
-
-static uint8_t revbits(uint8_t v) {
-    v = (v & 0xf0) >> 4 | (v & 0x0f) << 4;
-    v = (v & 0xcc) >> 2 | (v & 0x33) << 2;
-    v = (v & 0xaa) >> 1 | (v & 0x55) << 1;
-    return v;
 }
 
 /** Decompresses a 1-bit gray scale PNG image to image format. */
@@ -101,12 +94,11 @@ Image unpackPNG(Buffer png) {
         return NULL;
     }
 
-    Buffer res = mkBuffer(NULL, 2 + byteW * hd.height);
-    res->data[0] = 0xf0;
-    res->data[1] = hd.width;
-    uint8_t *dst = res->data + 2;
+    auto res = mkImage(hd.width, hd.height, 1);
+
+    uint8_t *dst = res->pix();
     uint8_t *src = tmp;
-    uint8_t lastMask = (1 << (hd.width & 7)) - 1;
+    uint8_t lastMask = 0xff << (8 - (hd.width & 7));
     if (lastMask == 0)
         lastMask = 0xff;
     for (uint32_t i = 0; i < hd.height; ++i) {
@@ -117,7 +109,7 @@ Image unpackPNG(Buffer png) {
             return NULL;
         }
         for (uint32_t j = 0; j < byteW; ++j) {
-            *dst = ~revbits(*src++);
+            *dst = ~*src++;
             if (j == byteW - 1) {
                 *dst &= lastMask;
             }
