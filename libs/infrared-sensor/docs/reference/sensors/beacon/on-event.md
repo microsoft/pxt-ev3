@@ -29,7 +29,7 @@ In order to recognize a button event signalled from a remote beacon, an infrared
 Check for an event on beacon button sensor ``center``. Put an expression on the screen when the button is released.
 
 ```blocks
-sensors.infraredSensor1.setRemoteChannel(InfraredRemoteChannel.Ch0)
+sensors.infrared1.setRemoteChannel(InfraredRemoteChannel.Ch0)
 sensors.remoteButtonCenter.onEvent(ButtonEvent.Released, function () {
     brick.showImage(images.expressionsSick)
 })

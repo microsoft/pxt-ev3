@@ -40,9 +40,9 @@ sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.ObjectDetected);
 ## Infrared
 
 ```cards
-sensors.infraredSensor1.onEvent(null, function () {});
-sensors.infraredSensor1.pauseUntil(null);
-sensors.infraredSensor1.proximity();
+sensors.infrared1.onEvent(null, function () {});
+sensors.infrared1.pauseUntil(null);
+sensors.infrared1.proximity();
 
 ```
 
@@ -53,5 +53,5 @@ sensors.remoteButtonCenter.onEvent(ButtonEvent.Pressed, function () {})
 sensors.remoteButtonCenter.pauseUntil(ButtonEvent.Pressed);
 sensors.remoteButtonCenter.isPressed()
 sensors.remoteButtonCenter.wasPressed()
-sensors.infraredSensor1.setRemoteChannel(null)
+sensors.infrared1.setRemoteChannel(null)
 ```

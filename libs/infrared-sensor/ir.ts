@@ -276,16 +276,16 @@ namespace sensors {
     }
 
     //% fixedInstance whenUsed block="infrared 1" jres=icons.port1
-    export const infraredSensor1: InfraredSensor = new InfraredSensor(1)
+    export const infrared1: InfraredSensor = new InfraredSensor(1)
 
     //% fixedInstance whenUsed block="infrared 2" jres=icons.port2
-    export const infraredSensor2: InfraredSensor = new InfraredSensor(2)
+    export const infrared2: InfraredSensor = new InfraredSensor(2)
 
     //% fixedInstance whenUsed block="infrared 3" jres=icons.port3
-    export const infraredSensor3: InfraredSensor = new InfraredSensor(3)
+    export const infrared3: InfraredSensor = new InfraredSensor(3)
 
     //% fixedInstance whenUsed block="infrared 4" jres=icons.port4
-    export const infraredSensor4: InfraredSensor = new InfraredSensor(4)
+    export const infrared4: InfraredSensor = new InfraredSensor(4)
 
     /**
      * Remote beacon (center) button.

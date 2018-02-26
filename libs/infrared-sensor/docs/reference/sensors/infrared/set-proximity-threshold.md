@@ -3,7 +3,7 @@
 Set the proximity threshold for when objects are near or detected.
 
 ```sig
-sensors.infraredSensor1.setPromixityThreshold(InfraredSensorEvent.ObjectNear, 0)
+sensors.infrared1.setPromixityThreshold(InfraredSensorEvent.ObjectNear, 0)
 ```
 
 Infrared sensors determine proximity of an object by measuring the intensity of the infrared light reflected from it. The proximity range of measurment is from `0` to `100`. You can decide what value in that range you want mean that something is near or that something was detected.
@@ -20,8 +20,8 @@ If you want a proximity value of `32` to mean that a detected object is near, th
 Set a threshold for detecting something moving within a proximity `30`. Wait for an object to show up. When it does, flash the status light and make noise as an alarm.
 
 ```blocks
-sensors.infraredSensor1.setPromixityThreshold(InfraredSensorEvent.ObjectDetected, 30)
-sensors.infraredSensor1.pauseUntil(InfraredSensorEvent.ObjectDetected)
+sensors.infrared1.setPromixityThreshold(InfraredSensorEvent.ObjectDetected, 30)
+sensors.infrared1.pauseUntil(InfraredSensorEvent.ObjectDetected)
 brick.clearScreen()
 brick.showString("Perimeter Breach!!!", 3)
 brick.setStatusLight(StatusLight.RedFlash)
