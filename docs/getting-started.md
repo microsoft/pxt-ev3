@@ -7,14 +7,14 @@
 {
     "name": "Try",
     "imageUrl": "/static/lessons/try.png",
-    "description": "TBD",
+    "description": "Get a quick introduction to programming with EV3.",
     "url": "/getting-started/try",
     "cardType": "side"
 },
 {
     "name": "use",
     "imageUrl": "/static/lessons/use.png",
-    "description": "TBD",
+    "description": "Build a robot and drive into the world of robotics!",
     "url": "/getting-started/use",
     "cardType": "side"
 }
