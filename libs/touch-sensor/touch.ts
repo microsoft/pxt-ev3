@@ -30,10 +30,10 @@ namespace sensors {
          * @param body code to run when the event is raised
          */
         //% help=sensors/touch-sensor/on-event
-        //% blockId=touchEvent block="on %sensor|%event"
+        //% blockId=touchEvent block="on **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="ports"
         //% weight=99 blockGap=12
         //% group="Touch Sensor"
         onEvent(ev: ButtonEvent, body: () => void) {
@@ -46,10 +46,10 @@ namespace sensors {
          * @param event the kind of button gesture that needs to be detected
          */
         //% help=sensors/touch-sensor/pause-until
-        //% blockId=touchWaitUntil block="pause until %sensor|%event"
+        //% blockId=touchWaitUntil block="pause until **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="ports"
         //% weight=98 blockGap=12
         //% group="Touch Sensor"
         pauseUntil(ev: ButtonEvent) {
@@ -61,11 +61,11 @@ namespace sensors {
          * @param sensor the port to query the request
          */
         //% help=sensors/touch-sensor/is-pressed
-        //% block="%sensor|is pressed"
+        //% block="**touch** %this|is pressed"
         //% blockId=touchIsPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="ports"
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isPressed() {
@@ -77,11 +77,11 @@ namespace sensors {
          * @param sensor the port to query the request
          */
         //% help=sensors/touch-sensor/was-pressed
-        //% block="%sensor|was pressed"
+        //% block="**touch** %this|was pressed"
         //% blockId=touchWasPressed
         //% parts="touch"
         //% blockNamespace=sensors
-        //% sensor.fieldEditor="ports"
+        //% this.fieldEditor="ports"
         //% weight=81
         //% group="Touch Sensor"
         wasPressed() {
@@ -89,12 +89,12 @@ namespace sensors {
         }
     }
 
-    //% whenUsed block="touch 1" weight=95 fixedInstance jres=icons.port1
+    //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
     export const touch1: TouchSensor = new TouchSensor(1)
-    //% whenUsed block="touch 2" weight=95 fixedInstance jres=icons.port2
+    //% whenUsed block="2" weight=95 fixedInstance jres=icons.port2
     export const touch2: TouchSensor = new TouchSensor(2)
-    //% whenUsed block="touch 3" weight=95 fixedInstance jres=icons.port3
+    //% whenUsed block="3" weight=95 fixedInstance jres=icons.port3
     export const touch3: TouchSensor = new TouchSensor(3)
-    //% whenUsed block="touch 4" weight=95 fixedInstance jres=icons.port4
+    //% whenUsed block="4" weight=95 fixedInstance jres=icons.port4
     export const touch4: TouchSensor = new TouchSensor(4)
 }
