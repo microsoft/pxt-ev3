@@ -4,7 +4,9 @@
     "files": [
         "README.md",
         "ns.ts",
-        "startup.ts"
+        "startup.ts",
+        "images.jres",
+        "images.ts"
     ],
     "dependencies": {
         "base": "file:../base",
