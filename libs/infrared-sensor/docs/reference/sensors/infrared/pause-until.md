@@ -3,7 +3,7 @@
 Make your program wait until an some object is detected in proximity of the infrared sensor.
 
 ```sig
-sensors.infraredSensor1.pauseUntil(InfraredSensorEvent.ObjectDetected);
+sensors.infrared1.pauseUntil(InfraredSensorEvent.ObjectDetected);
 ```
 
 How an object is detected depends on the light _thresholds_ set for the sensor. A threshold is a number for relative distance of the a return of reflected infrared light. The brighter the light, the nearer the object is. The value for what _near_ means is determined by this threshold. A certain minimum amount of light returned is also set to determine that an object is detected. The two thresholds you can set are:
@@ -24,7 +24,7 @@ Wait for another object sending out infrared light. Show a message on the screen
 ```blocks
 brick.showString("Waiting for another", 1);
 brick.showString("robot to appear...", 2);
-sensors.infraredSensor1.pauseUntil(InfraredSensorEvent.ObjectDetected);
+sensors.infrared1.pauseUntil(InfraredSensorEvent.ObjectDetected);
 brick.showString("Hey, I just saw", 1)
 brick.showString("Something!", 2);
 ```

@@ -3,7 +3,7 @@
 Run some code when an object is detected by the infrared sensor.
 
 ```sig
-sensors.infraredSensor4.onEvent(InfraredSensorEvent.ObjectNear, function () {});
+sensors.infrared4.onEvent(InfraredSensorEvent.ObjectNear, function () {});
 ```
 
 How an object is detected depends on the light _thresholds_ set for the sensor. A threshold is a number for relative distance of the a return of reflected infrared light. The brighter the light, the nearer the object is. The value for what _near_ means is determined by this threshold. A certain minimum amount of light returned is also set to determine that an object is detected. The two thresholds you can set are:
@@ -23,9 +23,9 @@ How an object is detected depends on the light _thresholds_ set for the sensor. 
 When the ultrasonic sensor on port 4 detects a near object, display its distance on the screen.
 
 ```blocks
-sensors.infraredSensor4.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared4.onEvent(InfraredSensorEvent.ObjectNear, function () {
     brick.showString("Object detected at:", 1)
-    brick.showNumber(sensors.infraredSensor4.proximity(), 2)
+    brick.showNumber(sensors.infrared4.proximity(), 2)
     brick.showString("percent of range", 3)
 })
 ```
