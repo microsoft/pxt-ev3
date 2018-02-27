@@ -1,6 +1,7 @@
 # Reference
 
 ```namespaces
+music.playSoundEffect(sounds.animalsCatPurr);
 sensors.color(null);
 motors.stopAll();
 brick.showMood(moods.sleeping);
@@ -18,5 +19,6 @@ control.runInParallel(function(){});
 [brick](/reference/brick),
 [sensors](/reference/sensors),
 [motors](/reference/motors),
+[music](/reference/music),
 [control](/reference/control),
 [console](/reference/console)
