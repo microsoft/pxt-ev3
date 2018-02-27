@@ -63,6 +63,11 @@ void updateScreen(Image img) {
     }
 }
 
+//%
+void updateStats(String str) {
+
+}
+
 void screen_init() {
     DMESG("init screen");
     if (mappedFrameBuffer)
