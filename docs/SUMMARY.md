@@ -7,14 +7,9 @@
     * [Use](/getting-started/use)
 
 * [Coding](/coding)
-    * [Cruise Control](/coding/cruise-control)
-    * [Ignition](/coding/ignition)
-    * [Light the Way](/coding/light-the-way)
-    * [Reverse Beeper](/coding/reverse-beeper)
-    * [Reversing the Robot](/coding/reversing-the-robot)
-    * [Roaming](/coding/roaming)
-    * [Three Point Turn](/coding/three-point-turn)
-    * [Traffic Lights](/coding/traffic-lights)
+    * [Autonomous Parking](/coding/autonomous-parking)
+    * [Object Detection](/coding/object-detection)
+    * [Line Following](/coding/line-following)
         
 * [Design Engineering](/design-engineering)
     * [Make It Move Without Wheels](/design-engineering/make-it-move)
@@ -31,6 +26,14 @@
     * [Security Gadget](/maker/security-gadget)
     * [Intruder detector](/maker/intruder-detector)
     * [Puppet](/maker/puppet)
+    * [Cruise Control](/coding/cruise-control)
+    * [Ignition](/coding/ignition)
+    * [Light the Way](/coding/light-the-way)
+    * [Reverse Beeper](/coding/reverse-beeper)
+    * [Reversing the Robot](/coding/reversing-the-robot)
+    * [Roaming](/coding/roaming)
+    * [Three Point Turn](/coding/three-point-turn)
+    * [Traffic Lights](/coding/traffic-lights)
 
 ## Reference #reference
 
