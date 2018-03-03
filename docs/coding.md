@@ -20,7 +20,7 @@
 }, {
   "name": "Line Following",
   "description": "TBD",
-  "url":"/coding/line-following",
+  "url":"/coding/line-detection",
   "imageUrl": "/static/lessons/line-detection.jpg",
   "cardType": "side"
 }]
