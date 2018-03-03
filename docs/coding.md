@@ -7,7 +7,7 @@
 [
 {
   "name": "Autonomous Parking",
-  "description": "TBD",
+  "description": "Design cars that can park by themselves",
   "url":"/coding/autonomous-parking",
   "imageUrl": "/static/lessons/autonomous-parking.png",
   "cardType": "side"
