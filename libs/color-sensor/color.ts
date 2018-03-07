@@ -110,7 +110,7 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-color-detected
-        //% block="on **color** %this|detected color %color=colorEnumPicker"
+        //% block="on **color sensor** %this|detected %color=colorEnumPicker"
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -130,7 +130,7 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-color
-        //% block="pause **color** %this|for color %color=colorEnumPicker"
+        //% block="pause **color sensor** %this|for %color=colorEnumPicker"
         //% blockId=colorPauseForColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -150,7 +150,7 @@ namespace sensors {
          * @param sensor the color sensor to query the request
          */
         //% help=sensors/color-sensor/color
-        //% block="**color** %this| color"
+        //% block="**color sensor** %this| color"
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -169,7 +169,7 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-light-changed
-        //% block="on **color** %this|%mode|%condition"
+        //% block="on **color sensor** %this|%mode|%condition"
         //% blockId=colorOnLightChanged
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -186,7 +186,7 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-for-light
-        //% block="pause **color** %this|for %mode|%condition"
+        //% block="pause **color sensor** %this|for %mode|%condition"
         //% blockId=colorPauseForLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -204,7 +204,7 @@ namespace sensors {
          * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
-        //% block="**color** %this|%mode"
+        //% block="**color sensor** %this|%mode"
         //% blockId=colorLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -231,7 +231,7 @@ namespace sensors {
          * @param condition the dark or bright light condition
          * @param value the value threshold
          */
-        //% blockId=colorSetThreshold block="set **color** %this|%condition|to %value"
+        //% blockId=colorSetThreshold block="set **color sensor** %this|%condition|to %value"
         //% group="Threshold" blockGap=8 weight=90
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
@@ -247,7 +247,7 @@ namespace sensors {
          * Get a threshold value
          * @param condition the light condition
          */
-        //% blockId=colorGetThreshold block="**color** %this|%condition"
+        //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
         //% group="Threshold" blockGap=8 weight=89
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
@@ -258,7 +258,7 @@ namespace sensors {
         /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
-        //% blockId=colorCalibrateLight block="calibrate **color** %this|for %mode"
+        //% blockId=colorCalibrateLight block="calibrate **color sensor** %this|for %mode"
         //% group="Threshold" weight=91 blockGap=8
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/calibrate-light

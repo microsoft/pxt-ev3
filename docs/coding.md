@@ -7,7 +7,7 @@
 [
 {
   "name": "Autonomous Parking",
-  "description": "TBD",
+  "description": "Design cars that can park by themselves",
   "url":"/coding/autonomous-parking",
   "imageUrl": "/static/lessons/autonomous-parking.png",
   "cardType": "side"
@@ -20,7 +20,7 @@
 }, {
   "name": "Line Following",
   "description": "TBD",
-  "url":"/coding/line-following",
+  "url":"/coding/line-detection",
   "imageUrl": "/static/lessons/line-detection.jpg",
   "cardType": "side"
 }]
