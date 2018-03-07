@@ -26,14 +26,6 @@
     * [Security Gadget](/maker/security-gadget)
     * [Intruder detector](/maker/intruder-detector)
     * [Puppet](/maker/puppet)
-    * [Cruise Control](/coding/cruise-control)
-    * [Ignition](/coding/ignition)
-    * [Light the Way](/coding/light-the-way)
-    * [Reverse Beeper](/coding/reverse-beeper)
-    * [Reversing the Robot](/coding/reversing-the-robot)
-    * [Roaming](/coding/roaming)
-    * [Three Point Turn](/coding/three-point-turn)
-    * [Traffic Lights](/coding/traffic-lights)
 
 ## Reference #reference
 
