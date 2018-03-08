@@ -1,7 +1,7 @@
 
-# Make a Sound Machine
+# Make a Security Gadget
 
-![Maker – Make a Security Gadget Main Image](/static/lessons/sound-machine/lego-maker-sound-machine-1.jpg)
+![Maker – Make a Security Gadget Main Image](/static/lessons/make-a-security-gadget/lego-maker-security.jpg)
 
 Invent a Security Gadget that will protect your belongings by warning you!
 
@@ -9,7 +9,7 @@ Invent a Security Gadget that will protect your belongings by warning you!
 
 Over time, people have come up with many different ways to help protect their personal belongings from theft. These inventions include simple alarm systems and even traps! 
 
-![Make a Security Gadget 3 Stock Footage Images](/static/lessons/sound-machine/lego-maker-sound-machine.jpg)
+![Make a Security Gadget 3 Stock Footage Images](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 Look at the photos and think about:
 
@@ -40,7 +40,7 @@ This activity uses sensor inputs. You may want to try the Use or Object Detectio
 
 ### Defining the Problem
 
-![LEGO Education Maker Design Process](/static/lessons/sound-machine/lego-maker-sound-machine.jpg)
+![LEGO Education Maker Design Process](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 1. What problems did you imagine? 
 2. Pick one problem and explain it to a partner.
@@ -89,7 +89,7 @@ Now that you have finished you can:
 
 #### Phone Protector
 
-![Security Gadget Tinkering Example #1 – Phone Stand](/static/lessons/sound-machine/lego-maker-sound-machine.jpg)
+![Security Gadget Tinkering Example #1 – Phone Stand](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 This example program combined with the small model will sound an alarm if someone picks it up. The program activates an alarm when an object is lifted from the Touch Sensor.
 
@@ -97,7 +97,7 @@ This example program combined with the small model will sound an alarm if someon
 2. Drag a ``||music:play sound effect||`` block and place it below the ``||sensors:pause until||`` block.
 3. Change the sound effect to ``mechanical horn1``.
 
-![Tinkering Example #1 Programming Blocks (see JavaScript below)](/static/lessons/sound-machine/lego-maker-sound-machine.jpg)
+![Tinkering Example #1 Programming Blocks (see JavaScript below)](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 ```blocks
 forever(function () {
@@ -110,11 +110,11 @@ Click **Download** and follow the instructions to get your code onto your EV3 Br
 
 #### Object Detection
 
-![Security Gadget Tinkering Example #1 – Mouse detector](/static/lessons/sound-machine/lego-maker-sound-machine.jpg)
+![Security Gadget Tinkering Example #1 – Mouse detector](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 This example program combined with the small model will sound an alarm if someone (or something) crosses its path! The program activates an alarm when an object moves in front of the Ultrasonic Sensor.
 
-![Tinkering Example #2 Programming Blocks (see JavaScript below)](/static/lessons/sound-machine/lego-maker-sound-machine.jpg)
+![Tinkering Example #2 Programming Blocks (see JavaScript below)](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 1. Drag a ``||sensors:pause until ultrasonic||`` block and place it inside the ``||loops:forever||`` loop.
 2. Drag a ``||music:play sound effect||`` block and place it below the ``||sensors:pause until||`` block.
