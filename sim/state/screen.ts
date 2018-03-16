@@ -98,3 +98,9 @@ namespace pxsim.image {
         return image.ofBuffer(res)
     }
 }
+
+namespace pxsim.game {
+    export function takeScreenshot() {
+        // TODO
+    }
+}
