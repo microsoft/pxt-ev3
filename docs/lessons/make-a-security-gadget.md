@@ -1,15 +1,15 @@
 
 # Make a Security Gadget
 
-![Maker – Make a Security Gadget Main Image](/static/lessons/make-a-security-gadget/lego-maker-security.jpg)
-
 Invent a Security Gadget that will protect your belongings by warning you!
+
+![Maker – Make a Security Gadget Main Image](/static/lessons/make-a-security-gadget/lego-maker-security-detect.jpg)
 
 ## Connect 
 
 Over time, people have come up with many different ways to help protect their personal belongings from theft. These inventions include simple alarm systems and even traps! 
 
-![Make a Security Gadget 3 Stock Footage Images](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
+![Make a Security Gadget 3 Stock Footage Images](/static/lessons/make-a-security-gadget/three-stock.jpg)
 
 Look at the photos and think about:
 
@@ -36,11 +36,15 @@ Additional materials to add to your Security Gadget:
 
 ### Prior Knowledge
 
-This activity uses sensor inputs. You may want to try the Use or Object Detection activity before this one. Or, you can start out with this activity and tinker with coding sensor inputs on your own.
+This activity uses sensor inputs. You may want to try the [Use](/getting-started/use) or [Object Detection](/coding/object-detection) activity before this one. Or, you can start out with this activity and tinker with coding sensor inputs on your own.
+
+## Contemplate
+
+Follow the steps of the [Maker Design Process](/lessons/classroom-management#design-process) for this lesson:
+
+![LEGO Education Maker Design Process](/static/lessons/common/lego-maker-design-process.jpg)
 
 ### Defining the Problem
-
-![LEGO Education Maker Design Process](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 1. What problems did you imagine? 
 2. Pick one problem and explain it to a partner.
@@ -64,7 +68,7 @@ Some things to do while brainstorming:
 1. You should have generated a number of ideas. Now select the best one to make. 
 2. Write out two or three specific design criteria your design must meet.
 
-## Go Make
+### Go Make
 
 It is time to start making!
 
@@ -85,19 +89,19 @@ Now that you have finished you can:
 * Label the three most important parts and explain how they work.
 * Share your work with others.
 
-### Sample Solutions
+## Continue
 
-#### Phone Protector
-
-![Security Gadget Tinkering Example #1 – Phone Stand](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
+### Phone Protector - Sample Solution
 
 This example program combined with the small model will sound an alarm if someone picks it up. The program activates an alarm when an object is lifted from the Touch Sensor.
+
+![Security Gadget Tinkering Example #1 – Phone Stand](/static/lessons/make-a-security-gadget/lego-maker-security-gadget.jpg)
+
+#### Programming
 
 1. Drag a ``||sensors:pause until touch||`` block and place it inside the ``||loops:forever||`` loop.
 2. Drag a ``||music:play sound effect||`` block and place it below the ``||sensors:pause until||`` block.
 3. Change the sound effect to ``mechanical horn1``.
-
-![Tinkering Example #1 Programming Blocks (see JavaScript below)](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
 
 ```blocks
 forever(function () {
@@ -108,13 +112,13 @@ forever(function () {
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the ``center`` button on the EV3 Brick to run the program.
 
-#### Object Detection
-
-![Security Gadget Tinkering Example #1 – Mouse detector](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
+### Object Detection - Sample Solution
 
 This example program combined with the small model will sound an alarm if someone (or something) crosses its path! The program activates an alarm when an object moves in front of the Ultrasonic Sensor.
 
-![Tinkering Example #2 Programming Blocks (see JavaScript below)](/static/lessons/make-a-security-gadget/lego-security-gadget.jpg)
+![Security Gadget Tinkering Example #1 – Mouse detector](/static/lessons/make-a-security-gadget/lego-maker-security-detect.jpg)
+
+#### Programming
 
 1. Drag a ``||sensors:pause until ultrasonic||`` block and place it inside the ``||loops:forever||`` loop.
 2. Drag a ``||music:play sound effect||`` block and place it below the ``||sensors:pause until||`` block.
@@ -131,5 +135,5 @@ Click **Download** and follow the instructions to get your code onto your EV3 Br
 
 ### Well done!
 
-Click [here](#) to try out some more projects!
+Click [here](/examples) to try out some more projects!
 

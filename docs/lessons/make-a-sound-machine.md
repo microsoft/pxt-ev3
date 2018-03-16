@@ -1,8 +1,8 @@
 # Make a Sound Machine
 
-![Maker – Make a Sound Machine Main Image](/static/lessons/make-a-sound-machine/lego-maker-sound-machine-1.jpg)
-
 Make a Sound Machine that can play a rhythm, music or just noise!
+
+![Maker – Make a Sound Machine Main Image](/static/lessons/make-a-sound-machine/lego-maker-sound-machine-1.jpg)
 
 ## Connect 
 
@@ -35,11 +35,15 @@ Additional materials to add to your Sound Machine:
 
 ### Prior Knowledge
 
-This activity uses motor rotations and sensor inputs. You may want to try the Use or Object Detection activity before this one. Or, you can start out with this activity and tinker with coding motor and sensor inputs on your own.
+This activity uses motor rotations and sensor inputs. You may want to try the [Use](/getting-started/use) or [Object Detection](/coding/object-detection) activity before this one. Or, you can start out with this activity and tinker with coding motor and sensor inputs on your own.
+
+## Contemplate
+
+Follow the steps of the [Maker Design Process](/lessons/classroom-management#design-process) for this lesson:
+
+![LEGO Education Maker Design Process](/static/lessons/common/lego-maker-design-process.jpg)
 
 ### Defining the Problem
-
-![LEGO Education Maker Design Process](/static/lessons/make-a-sound-machine/lego-maker-sound-machine.jpg)
 
 1. What problems did you imagine? 
 2. Pick one problem and explain it to a partner.
@@ -63,32 +67,35 @@ Some things to do while brainstorming:
 * You should have generated a number of ideas. Now select the best one to make. 
 * Write out two or three specific design criteria your design must meet.
 
-## Go Make
+### Go Make
 
 It is time to start making!
+
 * Use the components from the LEGO® MINDSTORMS EV3 Core Set and additional materials to make your chosen solution. 
 * Test and analyze your design as you go and record any improvements that you make. 
 
-Review and Revise Your Solution 
+### Review and Revise Your Solution
+
 * Have you managed to solve the problem that you defined? 
 * Look back at your design criteria. How well does your solution work? 
 * How can you improve your design?
 
-Communicate Your Solution 
+### Communicate Your Solution
+
 Now that you have finished you can:
 * Make a sketch or take a photo or video of your model.
 * Label the three most important parts and explain how they work.
 * Share your work with others.
 
-## Sample Solutions
+## Continue
 
-### Rhythm Maker
-
-![Sound Machine Tinkering Example #1](/static/lessons/make-a-sound-machine/lego-maker-sound-machine.jpg)
+### Rhythm Maker - Sample Solution
 
 This example program combined with the small model will make a beat and rhythm on any surface when the program is run.
 
-![Tinkering Example #1 Programming Blocks (see JavaScript below)](/static/lessons/make-a-sound-machine/lego-maker-sound-machine.jpg)
+![Sound Machine Tinkering Example](/static/lessons/make-a-sound-machine/lego-maker-sound-machine.jpg)
+
+#### Programming
 
 1. Drag a run ``||motors:large motor A||`` block inside the ``||loops:forever||`` loop.
 2. Press the **(+)**.
@@ -110,13 +117,13 @@ forever(function () {
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the ``center`` button on the EV3 Brick to run the program.
 
-### Color Sensor Sounds
-
-![Sound Machine Tinkering Example #1](/static/lessons/make-a-sound-machine/lego-maker-sound-machine.jpg)
+### Color Sensor Sounds - Sample Solution
 
 You can also tinker with the use of sensors.
 
-![Tinkering Example #2 Programming Blocks (see JavaScript below)](/static/lessons/make-a-sound-machine/lego-maker-sound-machine.jpg)
+![Sound Machine Color Sensor](/static/lessons/make-a-sound-machine/lego-maker-sound-machine-color-sensor.jpg)
+
+#### Programming
 
 1. Drag an ``||logic:if else||`` Logic block and place it inside the ``||loops:forever||`` loop.
 2. Drag a ``||sensors:pause color sensor||`` block and place it inside the ``||logic:if true then||`` block.
@@ -152,6 +159,6 @@ Click **Download** and follow the instructions to get your code onto your EV3 Br
 
 ### Well done!
 
-Click [here](#) to try out some more projects!
+Click [here](/examples) to try out some more projects!
 
 
