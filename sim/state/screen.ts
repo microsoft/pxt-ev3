@@ -99,8 +99,8 @@ namespace pxsim.image {
     }
 }
 
-namespace pxsim.pxtcore {
-    export function updateStats(str: string) {
+namespace pxsim.game {
+    export function takeScreenshot() {
         // TODO
     }
 }
