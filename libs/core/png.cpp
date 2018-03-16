@@ -28,7 +28,7 @@ static uint32_t swap(uint32_t num) {
 
 /** Decompresses a 1-bit gray scale PNG image to image format. */
 //%
-Image unpackPNG(Buffer png) {
+Image_ unpackPNG(Buffer png) {
     if (!png) {
         DMESG("PNG: Missing image");
         return NULL;

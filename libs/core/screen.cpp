@@ -45,10 +45,10 @@ static void bitBufferToFrameBuffer(uint8_t *bitBuffer, uint8_t *fb) {
 }
 
 static uint8_t *mappedFrameBuffer;
-static Image lastImg;
+static Image_ lastImg;
 
 //%
-void updateScreen(Image img) {
+void updateScreen(Image_ img) {
     if (img && img != lastImg) {
         decrRC(lastImg);
         incrRC(img);
