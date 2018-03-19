@@ -16,15 +16,15 @@ Think about:
 
 ### Build
 
-Build a LEGO MINDSTORMS vehicle that can avoid accidents between vehicles and objects in the road.
+Build a LEGO MINDSTORMS vehicle that can avoid accidents between vehicles and objects in the road. Start by constructing this model:
 
-Start by constructing this [model](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-ultrasonic-sensor-driving-base-61ffdfa461aee2470b8ddbeab16e2070.pdf).
+[![EV3 Robot Driving Base](/static/coding/object-detection/ev3-robot-driving-base.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-ultrasonic-sensor-driving-base-61ffdfa461aee2470b8ddbeab16e2070.pdf)
 
-![EV3 Robot Driving Base](/static/coding/object-detection/ev3-robot-driving-base.jpg)
+Build an obstacle for your robot to detect. You can build the **cuboid model** out of LEGO bricks or an obstacle of your choice. 
 
-Build an obstacle for your robot to detect. You can build the [cuboid model](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-cuboid-dc93b2e60bed2981e76b3bac9ea04558.pdf) out of LEGO bricks or an obstacle of your choice. 
+[![Cubiod block](/static/coding/object-detection/ev3-cuboid.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-cuboid-dc93b2e60bed2981e76b3bac9ea04558.pdf)
 
-![Cubiod block](/static/coding/object-detection/ev3-cuboid.jpg)
+### Check
 
 Before you program, check:
 
@@ -134,4 +134,4 @@ Click **Download** and follow the instructions to get your code onto your EV3 Br
 * Include an image of your program with comments. 
 * Add a team photograph! 
 
-Congratulations! What will you design next
+Congratulations! What will you design next?

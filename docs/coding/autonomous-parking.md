@@ -16,12 +16,11 @@ Design cars that can park themselves safely without driver intervention.
 
 ### Build
 
-Build a LEGO MINDSTORMS vehicle that can park itself safely without driver intervention.
-Start by constructing this [model](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf).
+Build a LEGO MINDSTORMS vehicle that can park itself safely without driver intervention. Start by constructing this model:
 
-![EV3- Robot Driving Base](/static/coding/autonomous-parking/ev3-robot-driving-base.jpg)
+[![EV3- Robot Driving Base](/static/coding/autonomous-parking/ev3-robot-driving-base.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf)
 
-### Checks
+### Check
 
 Before you program, check:
 
@@ -65,6 +64,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
     loops.pause(3000)
 })
 ```
+
 ### Download and test
 
 Click Download and follow the instructions to get your code onto your EV3 Brick. Press the center button on the EV3 Brick to run the program.
@@ -159,7 +159,6 @@ Click Download and follow the instructions to get your code onto your EV3 Brick.
 * Can your program be more streamlined? Have you used too many blocks?
 * Is there a more efficient way to build your program?
 * How can your program be used in real-world scenarios?
-
 
 ## Continue
 

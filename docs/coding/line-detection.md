@@ -16,15 +16,15 @@ Think about:
 
 ### Build
 
-Build a LEGO MINDSTORMS vehicle that can help prevent drivers from falling asleep and causing an accident.
+Build a LEGO MINDSTORMS vehicle that can help prevent drivers from falling asleep and causing an accident. Start by constructing this model:
 
-Start by constructing this [model](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-color-sensor-down-driving-base-d30ed30610c3d6647d56e17bc64cf6e2.pdf):
+[![EV3 robot with color sensor](/static/coding/line-detection/ev3-robot-color-sensor-down.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-color-sensor-down-driving-base-d30ed30610c3d6647d56e17bc64cf6e2.pdf)
 
-![EV3 robot with color sensor](/static/coding/line-detection/ev3-robot-color-sensor-down.jpg)
+Build red and green “lights” for your robot to detect. You can use LEGO bricks, colored tape, or marker on white paper. Building instructions:
 
-Build red and green “lights” for your robot to detect. You can use LEGO bricks, colored tape, or marker on white paper. Read the building [instructions](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20squares-0a88dfd98bb2e64b5b8151fc422bae36.pdf).
+[![IMAGE: Color Squares](/static/coding/line-detection/ev3-color-squares.jpg)](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20squares-0a88dfd98bb2e64b5b8151fc422bae36.pdf)
 
-![IMAGE: Color Squares](/static/coding/line-detection/ev3-color-squares.jpg)
+### Check
 
 Before you program, check:
 
@@ -33,7 +33,7 @@ Before you program, check:
 * Are the wheels rotating freely?
 * Are the wires connected from the Color Sensor to port 3?
 
-![IMAGE: EV3 Driving Base](/static/coding/line-detection/ev3-robot-driving-base.jpg)
+![EV3 Driving Base](/static/coding/line-detection/ev3-robot-driving-base.jpg)
 
 ### Program
 
@@ -126,7 +126,7 @@ music.playSoundEffect(sounds.systemGeneralAlert)
 
 1. Start motors ``B`` and ``C`` (drive forward with a curve toward the line).
 2. Wait for the color sensor to detect the color black.
-3. Play sound effect “System General Alert.”
+3. Play sound effect ``system general alert``.
 4. Start motors ``B`` and ``C`` (drive forward with a curve away from the line).
 5. Wait for the color sensor to detect the color white.
 6. Loop forever.
@@ -141,11 +141,11 @@ loops.forever(function () {
 })
 ```
 
-### Download and test
+#### Download and test
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. 
 
-### Differentiation
+#### Differentiation
 
 Program your robot to drive on “autopilot” along a given route. You will need to create a program that recognizes and responds to a dark line (or white line). You will create a line-following program and your robot will need to travel along the line without losing contact with it.
 
@@ -167,14 +167,16 @@ motors.largeBC.steer(0, 50)
 ```block
 if (true) {
 	
+} else {
+
 }
 ```
 
 ### ~
 
-### Sample Solutions
+### Sample Solutions - Line Following in Loop
 
-#### Line Following in Loop
+#### Method 1
 
 1. While the Color Sensor detects the color black, start motors ``B`` and ``C`` (drive forward with a curve toward the line).
 2. While the Color Sensor detects the color white, start motors ``B`` and ``C`` (drive forward with a curve away from the line).
@@ -193,7 +195,7 @@ forever(function () {
 })
 ```
 
-#### Line Following in Loop
+#### Method 2
 
 1. If the Color Sensor detects the color black, start motors ``B`` and ``C`` (drive forward with a curve toward the line).
 Else the Color Sensor detects the color white, start motors ``B`` and ``C`` (drive forward with a curve away from the line).
@@ -235,4 +237,3 @@ Personalize:
 * Add a team photograph! 
 
 Congratulations! What will you design next?
-
