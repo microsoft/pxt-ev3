@@ -134,4 +134,4 @@ Click **Download** and follow the instructions to get your code onto your EV3 Br
 * Include an image of your program with comments. 
 * Add a team photograph! 
 
-Congratulations! What will you design next
+Congratulations! What will you design next?

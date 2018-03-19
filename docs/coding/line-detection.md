@@ -33,7 +33,7 @@ Before you program, check:
 * Are the wheels rotating freely?
 * Are the wires connected from the Color Sensor to port 3?
 
-![IMAGE: EV3 Driving Base](/static/coding/line-detection/ev3-robot-driving-base.jpg)
+![EV3 Driving Base](/static/coding/line-detection/ev3-robot-driving-base.jpg)
 
 ### Program
 
@@ -237,4 +237,3 @@ Personalize:
 * Add a team photograph! 
 
 Congratulations! What will you design next?
-

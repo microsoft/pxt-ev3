@@ -64,6 +64,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
     loops.pause(3000)
 })
 ```
+
 ### Download and test
 
 Click Download and follow the instructions to get your code onto your EV3 Brick. Press the center button on the EV3 Brick to run the program.
@@ -158,7 +159,6 @@ Click Download and follow the instructions to get your code onto your EV3 Brick.
 * Can your program be more streamlined? Have you used too many blocks?
 * Is there a more efficient way to build your program?
 * How can your program be used in real-world scenarios?
-
 
 ## Continue
 
