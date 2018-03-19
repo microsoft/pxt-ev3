@@ -13,13 +13,13 @@
   "cardType": "side"
 }, {
   "name": "Object Detection",
-  "description": "TBD",
+  "description": "Design ways to avoid accidents between vehicles and objects",
   "url":"/coding/object-detection",
   "imageUrl": "/static/lessons/object-detection.jpg",
   "cardType": "side"
 }, {
-  "name": "Line Following",
-  "description": "TBD",
+  "name": "Line Detection",
+  "description": "Improve driving safety by helping drivers stay on course",
   "url":"/coding/line-detection",
   "imageUrl": "/static/lessons/line-detection.jpg",
   "cardType": "side"

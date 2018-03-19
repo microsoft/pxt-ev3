@@ -9,7 +9,7 @@
 * [Coding](/coding)
     * [Autonomous Parking](/coding/autonomous-parking)
     * [Object Detection](/coding/object-detection)
-    * [Line Following](/coding/line-following)
+    * [Line Detection](/coding/line-detection)
         
 * [Design Engineering](/design-engineering)
     * [Make It Move Without Wheels](/design-engineering/make-it-move)
