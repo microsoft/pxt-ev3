@@ -1,6 +1,5 @@
 # Make It Smarter and Faster 
 
-
 ## Connect 
 
 ### Design Brief
@@ -34,18 +33,25 @@ Think about:
 ### Build
 
 Think about a creature’s movement for inspiration. Your mechanism can be attached or unattached to the EV3 brick. You can start by tinkering with the LEGO elements in the picture add then build on.
+
 More building ideas: 
 
-* [EV3 Frames](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/ev3%20frames-5054ee378e624fb4cb31158d2fc8e5cf.pdf)
-* [Color Sensor 1](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20sensor_v1-16a7231bdc187cd88a8da120c68f58d5.pdf)
-* [Gyro Sensor](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/gyro%20sensor-6f0fdbd82ae45fe0effa0ebf3f460f3d.pdf)
-* [Ultrasonic Sensor](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/ultrasonic%20sensor-a56156c72e8946ed4c58c5e69f3520d3.pdf)
-* [Touch Sensor](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/touch%20sensor-868fda1b9d6070a0a034fb22456a7fc9.pdf)
-* [Jaw](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/jaw-ee93e8f3243e4d30cd34b0c337c33653.pdf)
-* [Leg 1](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/leg%201-c14624046ea3a95148820ed404f5ac65.pdf)
-* [Leg 2](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/leg%202-8855c35b990205f6b9d7130687a3d4db.pdf)
-* [Leg 3](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/leg%203-575d52ef15fb79f1e4d3350d36607160.pdf)
+| | | | | |
+|-|-|-|-|-|
+|[![EV3 Frames](/static/lessons/make-it-smarter/ev3-parts-frames.jpg)][EV3 Frames] | |[![EV3 Color Sensor 1](/static/lessons/make-it-smarter/ev3-parts-color-sensor-1.jpg)][Color Sensor 1] | |[![EV3 Gyro Sensor](/static/lessons/make-it-smarter/ev3-parts-gyro-sensor.jpg)][Gyro Sensor] |
+| [EV3 Frames] | | [Color Sensor 1] | | [Gyro Sensor] |
+<br/>
 
+| | | | | |
+|-|-|-|-|-|
+|[![EV3 Ultrasonic Sensor](/static/lessons/make-it-smarter/ev3-parts-ultrasonic-sensor.jpg)][Ultrasonic Sensor] | | [![EV3 Touch Sensor](/static/lessons/make-it-smarter/ev3-parts-touch-sensor.jpg)][Touch Sensor] | | [![EV3 Gyro Sensor](/static/lessons/make-it-smarter/ev3-parts-jaw.jpg)][Jaw] |
+| [Ultrasonic Sensor] | | [Touch Sensor] | | [Jaw] |
+<br/>
+
+| | | | | |
+|-|-|-|-|-|
+| [![EV3 Leg 1](/static/lessons/make-it-smarter/ev3-parts-leg-1.jpg)][Leg 1] | | [![EV3 Leg 2](/static/lessons/make-it-smarter/ev3-parts-leg-2.jpg)][Leg 2] | | [![EV3 Leg 3](/static/lessons/make-it-smarter/ev3-parts-leg-3.jpg)][Leg 3] |
+| [Leg 1] | | [Leg 2] | | [Leg 3] |
 
 ### Program 
 
@@ -55,81 +61,46 @@ Before you program, think about:
 * How will you program the robot to respond?
 * Which programming blocks will you use?
 
-### ~ hint
+### ~hint
 
 **Hint:** Explore the different Sensor blocks in the Sensors Menu
 
 ### ~
 
-## SCREEN 5
+### Sample Solution 
 
-Sample Solution 
+The Insect uses its Ultrasonic Sensor to sense danger and move away from a threat.
 
-[Video: EV3 Insect]
-
-This Insect uses its Ultrasonic Sensor to sense danger and move away from threat.
-
+https://www.youtube.com/watch?v=PoeYoiXHHE4
+<br/>
 The Insect solution combines these building ideas:
 
-* EV3 Frames
-* Leg 2
-* Leg 3
-* Ultrasonic Sensor 
+* [EV3 Frames]
+* [Leg 2]
+* [Leg 3]
+* [Ultrasonic Sensor]
 
-Four copies of Leg 3 were built: one for the front left, one for the back right, and two mirror copies for the front right and back left.
+Four copies of Leg 3 are built: one for the front left, one for the back right, and two mirror copies for the front right and back left.
 
-* [Building Instructions](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/insect-94b8a46f0dc5082c9d78ddb734626dc9.pdf)
+Building Instructions:
+
+[![Insect robot](/static/lessons/make-it-smarter/insect-bot.jpg)](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/insect-94b8a46f0dc5082c9d78ddb734626dc9.pdf)
 
 ### Sample Solution 
 
 This program checks if the Ultrasonic Sensor senses something near. 
 
-This program:
+The blocks inside the ``||loops:forever||`` loop have these actions: 
 
-* Turns on the green EV3 brick Status Light
-
-```block
-brick.setStatusLight(StatusLight.Green)
-```
-
-* Waits for Ultrasonic Sensor to detect an object
-
-```block
-sensors.ultrasonic4.pauseUntil(UltrasonicSensorEvent.ObjectDetected)
-```
-
-* Turns on Motors A and D in opposite directions
-
-```block
-motors.largeAD.tank(50, -50)
-```
-
-* Waits for one half of a second (1500 milli seconds)
-
-```block
-pause(1500)
-```
-
-* Reverses the direction of Motors A and D
-
-```block
-motors.largeAD.tank(-50, 50)
-```
-
-* Waits for one half of a second
-* Stops all motors
-
-```block
-motors.stopAll()
-```
-
-* Makes an insect chirping sound
-
-```block
-music.playSoundEffectUntilDone(sounds.animalsInsectChirp)
-```
-
-* Loops so the insect wanders around when the Ultrasonic Sensor is triggered
+1. Turn on the ``green`` EV3 brick Status Light.
+2. Wait for Ultrasonic Sensor to detect an object.
+3. Turn on Motors ``A`` and ``D`` in opposite directions.
+4. Wait for one quarter of a second (``1500`` milli seconds).
+5. Reverse the direction of Motors ``A`` and ``D``.
+6. Wait for one quarter of a second.
+7. Stop all motors.
+8. Make an insect chirping sound.
+9. Loop continuously so that the insect wanders around when the Ultrasonic Sensor is detects something.
 
 ```blocks
 forever(function () {
@@ -146,7 +117,7 @@ forever(function () {
 
 ### Download and test
 
-Click Download and follow the instructions to get your code onto your EV3 Brick. Press the center button on the EV3 Brick to run the program.
+Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the center button on the EV3 Brick to run the program.
 
 ## Contemplate 
 
@@ -156,7 +127,6 @@ As you work on your solution:
 1. Describe one part of your design that worked especially well. 
 2. Describe one design change that you had to make. 
 3. What will you try next? 
-
 
 ### Review and Revise 
 
@@ -170,15 +140,14 @@ Think about:
 
 Describe two ways you could improve your robot.
 
-
 ## Continue 
 
-Personalize your project
+Personalize your project:
 
 * Add/remove LEGO elements to improve the way your robot moves. 
 * Click on the JavaScript tab and experiment with changing the values in the code.
 * Add a custom image or sounds by adding blocks from the Brick or Music menus.
-* Does your robot resemble a creature? Add arts and crafts materials to you project.
+* Does your robot resemble a creature? Maybe add more craft materials to your project.
 
 ## Communicate 
 
@@ -190,3 +159,14 @@ Here are some ideas:
 * Add a team photograph! 
 
 Congratulations! What will you design next?
+
+
+[EV3 Frames]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/ev3%20frames-5054ee378e624fb4cb31158d2fc8e5cf.pdf
+[Color Sensor 1]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20sensor_v1-16a7231bdc187cd88a8da120c68f58d5.pdf
+[Gyro Sensor]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/gyro%20sensor-6f0fdbd82ae45fe0effa0ebf3f460f3d.pdf
+[Ultrasonic Sensor]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/ultrasonic%20sensor-a56156c72e8946ed4c58c5e69f3520d3.pdf
+[Touch Sensor]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/touch%20sensor-868fda1b9d6070a0a034fb22456a7fc9.pdf
+[Jaw]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/jaw-ee93e8f3243e4d30cd34b0c337c33653.pdf
+[Leg 1]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/leg%201-c14624046ea3a95148820ed404f5ac65.pdf
+[Leg 2]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/leg%202-8855c35b990205f6b9d7130687a3d4db.pdf
+[Leg 3]: https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/leg%203-575d52ef15fb79f1e4d3350d36607160.pdf
