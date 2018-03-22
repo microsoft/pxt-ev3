@@ -25,7 +25,6 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
     }
 
     mapEnum(colorString: string) {
-        console.log(colorString);
         switch(colorString) {
             case 'ColorSensorColor.Black': return '#000000';
             case 'ColorSensorColor.Blue': return '#006db3';
