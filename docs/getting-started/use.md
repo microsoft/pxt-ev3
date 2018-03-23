@@ -32,7 +32,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 })
 ```
 
-* Drag a ``||motors:steer large B+C motor||`` block inside an ``||brick:on button||`` block.
+* Drag a ``||motors:steer large motors B+C||`` block inside an ``||brick:on button||`` block.
 * Click on the **(+)** sign.
 * Change to ``1`` rotation.
 
@@ -83,7 +83,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 })
 ```
 
-* Drag a ``||motors:tank large B+C||`` motor block inside the ``||brick:on button||`` block.
+* Drag a ``||motors:tank large motors B+C||`` motor block inside the ``||brick:on button||`` block.
 * Drag the Ultrasonic Sensor threshold ``||sensors:set ultrasonic 4||``  block and place it below the motor block.
 * Drag a ``|sensors:pause until ultrasonic 4||`` block and place it under the threshold block.
 * Drag a ``||motors:stop all motors||`` block and place it below the sensor block.

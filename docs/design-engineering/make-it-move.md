@@ -1,15 +1,12 @@
 # Make It Move Without Wheels
 
-Design, build and program a robot that can move itself using no wheels
-for locomotion.
-
-![Make it move banner](/static/lessons/make-it-move/make-it-move-without-wheels.jpg)
-
 ## Connect
 
 ### Design Brief
 
-Design, build and program a robot that can move itself.
+Design, build and program a robot that can move itself using no wheels for locomotion.
+
+![Make it move banner](/static/lessons/make-it-move/make-it-move-without-wheels.jpg)
 
 Your robot will:
 
@@ -35,7 +32,8 @@ If you want some building help you can follow these instructions.
 
 ### Program
 
-Before you program, think about: 
+Before you program, think about:
+
 * How will you program the robot to move? 
 * How will you program the robot to stop?
 * How will you program the robot to display the distance moved?
