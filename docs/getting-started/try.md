@@ -16,7 +16,7 @@ Power on your EV3 Brick by pressing the Center Button.
 
 Use the USB cable to connect your EV3 Brick to your device.
 
-![IMG: Hand on cable & computer, Neutral Image Display, EV3 Brick](/static/getting-started/03_Insert%20USB-02.png)
+![Computer and cable connected to EV3 Brick](/static/getting-started/03_insert-usb-02.png)
 
 ## Create and Run your First Program
 
