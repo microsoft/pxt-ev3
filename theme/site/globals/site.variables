@@ -27,7 +27,7 @@
 @orange: #fa7f2a;
 @green: @brightYellowishGreen;
 
-@legoGreyLight: #F4F1F4;
+@legoGreyLight: #F2F2F2;
 @legoGreyDark: #f4f7f9;
 
 @grey: @legoGreyLight;
@@ -131,7 +131,7 @@
 @editorToolsBackground: @legoGreyLight; /* #fff;*/ /* #fcfbfa; */
 @blocklySvgColor: #f9f9f9; /*#f2f6f8;*/ /*ecf6fe;*/ 
 
-@homeScreenBackground: #EAEEEF;
+@homeScreenBackground: #F2F2F2;
 
 /*-------------------
    Full screen
