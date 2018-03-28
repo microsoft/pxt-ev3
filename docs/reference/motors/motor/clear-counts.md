@@ -17,11 +17,11 @@ let tachoCount = 0;
 motors.largeA.reset()
 motors.largeA.run(50)
 pause(10000)
-tachoCount = motors.largeA.tacho()
+tachoCount = motors.largeA.angle()
 motors.largeA.clearCounts()
 motors.largeA.run(50)
 pause(10000)
-if (tachoCount == motors.largeA.tacho()) {
+if (tachoCount == motors.largeA.angle()) {
     brick.showString("Motor turns equal.", 1)
 } else {
     brick.showString("Motor turns NOT equal.", 1)

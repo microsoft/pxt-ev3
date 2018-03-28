@@ -378,21 +378,6 @@ namespace motors {
             return getMotorData(this._port).count;
         }
 
-
-        /**
-         * Gets motor tachometer count.
-         * @param motor the port which connects to the motor
-         */
-        //% blockId=motorTachoCount block="%motor|tacho"
-        //% weight=69
-        //% blockGap=8
-        //% group="Counters"
-        //% help=motors/motor/tacho
-        tacho(): number {
-            this.init();
-            return getMotorData(this._port).tachoCount;
-        }
-
         /**
          * Clears the motor count
          */

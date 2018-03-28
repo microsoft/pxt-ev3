@@ -19,6 +19,5 @@ motors.stopAll()
 ```cards
 motors.largeA.speed()
 motors.largeA.angle()
-motors.largeA.tacho()
 motors.largeA.clearCounts()
 ```
