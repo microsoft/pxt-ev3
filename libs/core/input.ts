@@ -177,6 +177,10 @@ namespace sensors.internal {
             return 0
         }
 
+        _info(): string {
+            return this._query().toString();
+        }
+
         _update(prev: number, curr: number) {
         }
 
