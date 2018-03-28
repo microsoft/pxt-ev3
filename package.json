@@ -45,7 +45,7 @@
     "webfonts-generator": "^0.4.0"
   },
   "dependencies": {
-    "pxt-common-packages": "0.20.14",
+    "pxt-common-packages": "0.20.28",
     "pxt-core": "3.5.11"
   },
   "scripts": {
