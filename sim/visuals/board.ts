@@ -109,7 +109,7 @@ namespace pxsim.visuals {
         }
     });
 
-    export function randomTheme(): IBoardTheme {
+    export function randomTheme(highContrast?: boolean, light?: boolean): IBoardTheme {
         return themes[Math.floor(Math.random() * themes.length)];
     }
 
@@ -391,6 +391,9 @@ namespace pxsim.visuals {
                     cancelAnimationFrame(animationId);
                 })
             }
+            // Kill the brick
+            this.layoutView.getBrick().kill();
+
             // Save previous inputs for the next cycle
             EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
             EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);

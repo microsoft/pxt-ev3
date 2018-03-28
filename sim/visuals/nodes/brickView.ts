@@ -13,6 +13,9 @@ namespace pxsim.visuals {
         private currentCanvasX = 178;
         private currentCanvasY = 128;
 
+        private static LIGHT_BLACK_COLOR = '#6a6a6a';
+        private static LIGHT_RED_COLOR = '#6a6a6a';
+
         constructor(port: number) {
             super(EV3_SVG, "board", NodeType.Brick, port);
         }
@@ -26,9 +29,16 @@ namespace pxsim.visuals {
             this.light = this.content.getElementById(this.normalizeId(BrickView.EV3_LIGHT_ID)) as SVGElement;
         }
 
-        private setStyleFill(svgId: string, fillUrl: string) {
+        protected optimizeForLightMode() {
+            (this.content.getElementById(this.normalizeId('ev3_body_2')) as SVGElement).style.fill = '#f1f1f1';
+            (this.content.getElementById(this.normalizeId('ev3_screen_grey')) as SVGElement).style.fill = '#a8aaa8';
+            (this.content.getElementById(this.normalizeId('ev3_grey_buttom')) as SVGElement).style.fill = '#a8aaa8';
+            (this.content.getElementById(this.normalizeId('btn_part_2')) as SVGElement).style.fill = '#393939';
+        }
+
+        private setStyleFill(svgId: string, fillUrl: string, lightFill?: string) {
             const el = (this.content.getElementById(svgId) as SVGRectElement);
-            if (el) el.style.fill = `url("#${fillUrl}")`;
+            if (el) el.style.fill = inLightMode() ? lightFill || BrickView.LIGHT_BLACK_COLOR : `url("#${fillUrl}")`;
         }
 
         public hasClick() {
@@ -64,15 +74,15 @@ namespace pxsim.visuals {
                     //svg.fill(this.light, "#FFF");
                     break;
                 case 1:  // LED_GREEN
-                    this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-green`));
+                    this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-green`), 'green');
                     //svg.fill(this.light, "#00ff00");
                     break;
                 case 2:  // LED_RED
-                    this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-red`));
+                    this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-red`), 'red');
                     //svg.fill(this.light, "#ff0000");
                     break;
                 case 3:  // LED_ORANGE
-                    this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-orange`));
+                    this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-orange`), 'orange');
                     //svg.fill(this.light, "#FFA500");
                     break;
                 case 4:  // LED_GREEN_FLASH
@@ -120,13 +130,12 @@ namespace pxsim.visuals {
         private flash: boolean;
         private flashLightAnimationStep(id: string) {
             if (this.flash) {
-                this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`));
+                this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`), id);
             } else {
                 this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`));
             }
             this.flash = !this.flash;
         }
-
 
         private pulseLightAnimation(id: string) {
             const pattern = this.lastLightPattern;
@@ -153,19 +162,22 @@ namespace pxsim.visuals {
         private pulse: number = 0;
         private pulseLightAnimationStep(id: string) {
             switch (this.pulse) {
-                case 0: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`)); break;
                 case 1: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`)); break;
                 case 2: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`)); break;
                 case 3: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`)); break;
                 case 4: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`)); break;
-                case 5: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`)); break;
-                case 6: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`)); break;
+                case 5: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`), id); break;
+                case 6: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`), id); break;
                 case 7: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-black`)); break;
-                case 8: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`)); break;
+                case 8: this.setStyleFill(this.normalizeId(BrickView.EV3_LIGHT_ID), this.normalizeId(`linear-gradient-${id}`), id); break;
 
             }
             this.pulse++;
             if (this.pulse == 9) this.pulse = 0;
+        }
+
+        public kill() {
+            cancelAnimationFrame(this.lastLightAnimationId);
         }
 
         public attachEvents() {

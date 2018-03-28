@@ -131,8 +131,6 @@
 @editorToolsBackground: @legoGreyLight; /* #fff;*/ /* #fcfbfa; */
 @blocklySvgColor: #f9f9f9; /*#f2f6f8;*/ /*ecf6fe;*/ 
 
-@homeScreenBackground: #F2F2F2;
-
 /*-------------------
    Full screen
 --------------------*/
@@ -146,6 +144,13 @@
 
 @sidedocsButtonsTop: (@mainMenuHeight + 1rem);
 @sidedocsButtonsRight: 4.25rem;
+
+/*-------------------
+   Home screen
+--------------------*/
+
+@homeScreenBackground: #F2F2F2;
+@homeCardBorderColor: #F2F2F2;
 
 /*-------------------
    Editor

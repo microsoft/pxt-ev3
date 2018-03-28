@@ -9,6 +9,10 @@ namespace pxsim.visuals {
             super(COLOR_SENSOR_SVG, "color", NodeType.ColorSensor, port);
         }
 
+        protected optimizeForLightMode() {
+            (this.content.getElementById(this.normalizeId('color_bigbox-2_path')) as SVGElement).style.fill = '#a8aaa8';
+        }
+
         public getPaddingRatio() {
             return 1 / 4;
         }

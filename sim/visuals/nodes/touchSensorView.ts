@@ -12,8 +12,15 @@ namespace pxsim.visuals {
 
         private xLinkGradients: string[];
 
+        private static LIGHT_TOUCH_BLACK_COLOR = '#000';
+        private static LIGHT_TOUCH_RED_COLOR = '#d42715';
+
         constructor(port: number) {
             super(TOUCH_SENSOR_SVG, "touch", NodeType.TouchSensor, port);
+        }
+
+        protected optimizeForLightMode() {
+            (this.content.getElementById(this.normalizeId('touch_box_2-2')) as SVGElement).style.fill = '#a8aaa8';
         }
 
         public getPaddingRatio() {
@@ -29,9 +36,9 @@ namespace pxsim.visuals {
             if (el) el.setAttribute(attribute, value);
         }
 
-        private setStyleFill(svgId: string, fillUrl: string) {
+        private setStyleFill(svgId: string, fillUrl: string, lightFill: string) {
             const el = (this.content.getElementById(svgId) as SVGRectElement);
-            if (el) el.style.fill = `url("#${fillUrl}")`;
+            if (el) el.style.fill = inLightMode() ? lightFill : `url("#${fillUrl}")`;
         }
 
         public attachEvents() {
@@ -55,11 +62,11 @@ namespace pxsim.visuals {
         private setPressed(pressed: boolean) {
             if (pressed) {
                 for (let i = 0; i < 4; i ++) {
-                    this.setStyleFill(`${this.normalizeId(TouchSensorView.RECT_ID[i])}`, `${this.normalizeId(TouchSensorView.TOUCH_GRADIENT_PRESSED[i])}`);
+                    this.setStyleFill(`${this.normalizeId(TouchSensorView.RECT_ID[i])}`, `${this.normalizeId(TouchSensorView.TOUCH_GRADIENT_PRESSED[i])}`, TouchSensorView.LIGHT_TOUCH_BLACK_COLOR);
                 }
             } else {
                 for (let i = 0; i < 4; i ++) {
-                    this.setStyleFill(`${this.normalizeId(TouchSensorView.RECT_ID[i])}`, `${this.normalizeId(TouchSensorView.TOUCH_GRADIENT_UNPRESSED[i])}`);
+                    this.setStyleFill(`${this.normalizeId(TouchSensorView.RECT_ID[i])}`, `${this.normalizeId(TouchSensorView.TOUCH_GRADIENT_UNPRESSED[i])}`, TouchSensorView.LIGHT_TOUCH_RED_COLOR);
                 }
             }
         }
