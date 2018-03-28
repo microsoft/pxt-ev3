@@ -303,7 +303,7 @@ namespace pxsim.visuals {
             this.wrapper = document.createElement('div');
             this.wrapper.style.display = 'inline';
 
-            this.element = svg.elt("svg", { height: "100%", width: "100%" }) as SVGSVGElement;
+            this.element = svg.elt("svg", { height: "100%", width: "100%", "class": "user-select-none" }) as SVGSVGElement;
 
             this.defs = svg.child(this.element, "defs") as SVGDefsElement;
 
