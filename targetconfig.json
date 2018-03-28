@@ -12,5 +12,13 @@
         "Design Engineering": "design-engineering",
         "Coding": "coding",
         "Maker": "maker"
+    },
+    "electronManifest": {
+        "majorReleases": {
+            "0": {
+                "latest": "v0.1.5",
+                "promptVersion": "v0.1.5"
+            }
+        }
     }
 }
