@@ -5,7 +5,7 @@
 //% groups=["0.,","1#*"]
 function img(lits: any, ...args: any[]): Image { return null }
 
-let screen = image.create(DAL.LCD_WIDTH, DAL.LCD_HEIGHT)
+const screen = image.create(DAL.LCD_WIDTH, DAL.LCD_HEIGHT)
 
 namespace _screen_internal {
     //% shim=pxt::updateScreen
@@ -13,10 +13,9 @@ namespace _screen_internal {
     //% shim=pxt::updateStats
     function updateStats(msg: string): void { }
 
-    control.setupScreenRefresh(() => updateScreen(screen))
-
-    export function _stats(msg: string) {
-        updateStats(msg)
+    control.__screen.setupUpdate(() => updateScreen(screen))
+    control.EventContext.onStats = function(msg: string) { 
+        updateStats(msg);
     }
 }
 

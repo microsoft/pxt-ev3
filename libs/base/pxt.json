@@ -16,6 +16,7 @@
         "ns.ts",
         "control.cpp",
         "control.ts",
+        "eventcontext.ts",
         "serial.cpp",
         "serial.ts",
         "fieldeditors.ts"
