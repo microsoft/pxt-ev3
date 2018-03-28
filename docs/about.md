@@ -27,6 +27,12 @@ so it appears as a mounted drive (named **EV3**).
 Compilation to machine code from [Blocks](/blocks) or [JavaScript](/javascript) happens in the browser. You save the binary 
 program to a **.uf2** file, which you then copy to the **EV3** drive, which flashes the device with the new program.
 
+### ~ hint
+
+Not seeing the **EV3** drive? Make sure to upgrade your firmware at https://ev3manager.education.lego.com/.
+
+### ~
+
 ## Simulator: Test Your Code
 
 You can run your code using the micro:bit simulator, all within the confines of a web browser. 
