@@ -18,6 +18,7 @@ namespace sensors {
             super(port)
             this.promixityThreshold = new sensors.ThresholdDetector(this.id(), 0, 255, 10, 100); // range is 0..255cm
             this.movementThreshold = 1;
+            this._setMode(0);
         }
 
         _deviceType() {
@@ -26,6 +27,10 @@ namespace sensors {
 
         _query(): number {
             return ((this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff) / 10) >> 0; // range is 0..2550, in 0.1 cm increments.
+        }
+
+        _info(): string {
+            return `${this.distance()}cm`
         }
 
         _update(prev: number, curr: number) {
@@ -38,7 +43,7 @@ namespace sensors {
         }
 
         /**
-         * Registers code to run when the given color is close
+         * Registers code to run when an object is close or far
          * @param handler the code to run when detected
          */
         //% help=sensors/ultrasonic/on-event

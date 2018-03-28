@@ -15,6 +15,10 @@ namespace sensors {
             return this._readPin6() > 2500 ? 1 : 0
         }
 
+        _info(): string {
+            return this._query() ? "pres" : "rel";
+        }
+
         _update(prev: number, curr: number) {
             this.button._update(curr > 0)
         }
