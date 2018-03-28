@@ -56,7 +56,7 @@ namespace sensors {
 
     const __remoteButtons: RemoteInfraredBeaconButton[] = [];
     function __irButton(id: InfraredRemoteButton): RemoteInfraredBeaconButton {
-        for(let i = 0; i < __remoteButtons.length; ++i) {
+        for (let i = 0; i < __remoteButtons.length; ++i) {
             if (__remoteButtons[i].position == id)
                 return __remoteButtons[i];
         }
@@ -159,6 +159,14 @@ namespace sensors {
                 return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
             }
             return 0
+        }
+
+        _info(): string {
+            if (this.mode == InfraredSensorMode.RemoteControl)
+                return "remote";
+            else if (this.mode == InfraredSensorMode.Proximity)
+                return `${this._query()}%`;
+            return "";
         }
 
         _update(prev: number, curr: number) {
