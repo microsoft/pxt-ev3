@@ -99,9 +99,9 @@ namespace brick {
             const data = datas[i];
             if (!data.actualSpeed && !data.count) continue;
             const x = i * col;
-            screen.print(`${scale(data.actualSpeed)}%`, x, brick.LINE_HEIGHT)
-            screen.print(`${scale(data.count)}>`, x, 2 * brick.LINE_HEIGHT)
-            screen.print(`${scale(data.tachoCount)}|`, x, 3 * brick.LINE_HEIGHT)
+            screen.print("ABCD"[i], x, brick.LINE_HEIGHT)
+            screen.print(`${scale(data.actualSpeed)}%`, x, 2* brick.LINE_HEIGHT)
+            screen.print(`${scale(data.count)}>`, x, 3 * brick.LINE_HEIGHT)
         }
 
         // sensors
@@ -109,8 +109,9 @@ namespace brick {
         for (let i = 0; i < sis.length; ++i) {
             const si = sis[i];
             const x = (si.port() - 1) * col;
-            const v = si._query();
-            screen.print(`${scale(v)}`, x, 9 * brick.LINE_HEIGHT)
+            const inf = si._info();
+            screen.print(si.port() + "", x, 8 * brick.LINE_HEIGHT)
+            screen.print(inf, x, 9 * brick.LINE_HEIGHT)
         }
     }
 

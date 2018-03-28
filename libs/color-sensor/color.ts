@@ -96,6 +96,22 @@ namespace sensors {
             return 0
         }
 
+        _info(): string {
+            switch (this.mode) {
+                case ColorSensorMode.Color:
+                    return ["none",
+                        "black",
+                        "blue",
+                        "green",
+                        "yellow",
+                        "red",
+                        "white",
+                        "brown"][this._query()];
+                default:
+                    return this._query().toString();
+            }
+        }
+
         _update(prev: number, curr: number) {
             if (this.calibrating) return; // simply ignore data updates while calibrating
             if (this.mode == ColorSensorMode.Color)
