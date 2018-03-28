@@ -1,35 +1,3 @@
 namespace pxsim.visuals {
-    export const MEDIUM_MOTOR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48">
-  <defs>
-    <linearGradient id="linear-gradient" x1="-427.2" y1="440.79" x2="-427.2" y2="440.63" gradientTransform="matrix(44.14, 0, 0, -44.15, 18878.72, 19502.57)" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#a8aaa8"/>
-      <stop offset="1" stop-color="#535453"/>
-    </linearGradient>
-  </defs>
-  <title>MediumMotor</title>
-  <g style="isolation: isolate">
-    <g id="svg7610">
-      <g id="Medium_Motor" data-name="Medium Motor">
-        <g id="medmotor_box" data-name="medmotor box">
-          <path id="medmotor_box_wgradient" data-name="medmotor box wgradient" d="M2.57,0h39a2.36,2.36,0,0,1,2.57,2V42.33c0,1-1.1,1.82-2.57,1.82h-39C1.1,44.15,0,43.34,0,42.33V2A2.36,2.36,0,0,1,2.57,0Z" transform="translate(2 1.84)" style="fill: url(#linear-gradient)"/>
-        </g>
-        <g id="medmotor_star" data-name="medmotor star">
-          <g>
-            <image width="48" height="48" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAxCAYAAACcXioiAAAACXBIWXMAAAsSAAALEgHS3X78AAACfElEQVRoQ+2aPXLbMBBG32ZUijlCnDo/R1AukCoHyAFS5Sw5g5t0bnwCu0ofpTZ9A1usvSmwoClRJEEAI4gzejMcqliS+2FB4AMoUVVyISICrIErO3dpgBpoNONDJde9RKTCJf4R+Ga/u9TADbAFalXdkYEsAiz5L8B3nICxCmyBa+Auh4jVVMAUneR/ABugAuRIaIUT9w4TJyLJIpIEWJ+/wrX8Bng7fgViMRtcRR5F5G/KO/FmKiCANa5Vq6nADhXwwY7DrjaLHALgeJcZQ4D32MtulYwil4AYfOXOogKxRLe8p7SAZC4CSnMRUJrBmThwbBbSRxIh4HFDs3VPwIQl7oXj/M1U3BBr3PUAY3aiEZGjVnzPjQZY4mOscbNqjIgGeLDzGINWvBUQaImHSOlGIUZu2IqbgAr4CtwCT8AL7sbndLzgcrvF5Vq1jQ98An5bwNSNSh9PuFw/A+KH0RhLXIo9K96dB1L68SnZs+JLnchaK75UAWA9ZskCgGULUFiugAZ4BJquAB0IPjcUZz9ugNoL8IqSNplOxA74Z0ezUlU1p3eNG5787tocUuaQOZXfAfe4XB9UVVcAqroTkTsLaghzoZ5TuFGPb+jWzA3Z6dBk/Hrgp53nVEJx7vKXnUMq0XBgp/cWNFaJbe+yYXzCoS14SINL/g9hAnors96KbM5Gqy0Dg+MHUNxjo+6z1Hmg5SKgNBcBpSktIGrk6VJSQOsopwLHKCVAed2sqmPnAMgnICaB9sv9VOAYOQTEWPEdGZKHRAFWeu8Q74Fnpjemnnm1xEndBxI/dEOUFe9Z4hSy/FcCZlnxniVOIZsACPhKYaR2my5ZBZTgP7HrUIs43RAaAAAAAElFTkSuQmCC" style="opacity: 0.30000000000000004;mix-blend-mode: multiply"/>
-            <path id="medmotor_cut-2" data-name="medmotor cut-2" d="M0,21.25A6.21,6.21,0,0,1,6.22,15H15V6.23A6.22,6.22,0,0,1,21.24,0H22.9a6.22,6.22,0,0,1,6.22,6.22V15h8.8a6.21,6.21,0,0,1,6.22,6.22v1.66a6.21,6.21,0,0,1-6.22,6.22h-8.8v8.8a6.21,6.21,0,0,1-6.22,6.22H21.24A6.22,6.22,0,0,1,15,37.93v-8.8H6.22A6.22,6.22,0,0,1,0,22.92H0Z" transform="translate(2 1.84)" style="fill: #a8aaa8"/>
-          </g>
-          <circle id="medmotor_hole_4" data-name="medmotor hole 4" cx="39.77" cy="24" r="4.85" style="fill: #393939"/>
-          <circle id="medmotor_hole_3" data-name="medmotor hole 3" cx="8.37" cy="24" r="4.85" style="fill: #393939"/>
-          <circle id="medmotor_hole_2" data-name="medmotor hole 2" cx="24.15" cy="8.22" r="4.85" style="fill: #393939"/>
-          <circle id="medmotor_hole_1" data-name="medmotor hole 1" cx="24.15" cy="39.62" r="4.85" style="fill: #393939"/>
-        </g>
-        <g id="medmotor_red" data-name="medmotor red">
-          <circle cx="24.3" cy="24" r="6.75" style="fill: #d42715"/>
-          <circle cx="24.3" cy="24" r="6.63" style="fill: none;stroke: #a20800;stroke-width: 0.25px"/>
-        </g>
-        <path id="medmotor_Hole" data-name="medmotor Hole" d="M20.59,19.46s-.05,1-.77,1-1.46,0-1.46,0a2.38,2.38,0,0,0-.45,1.69c0,1.27.36,1.6.36,1.6h1.62a.64.64,0,0,1,.7.59.21.21,0,0,1,0,.11v1.67a4,4,0,0,0,1.77.29A6.88,6.88,0,0,0,24,26.15V24.48a.73.73,0,0,1,.73-.7,9.89,9.89,0,0,0,1.44-.14s.4-.37.44-1.63-.36-1.64-.36-1.64H24.6a.65.65,0,0,1-.75-.51.49.49,0,0,1,0-.17,11.22,11.22,0,0,1,0-1.64,4.78,4.78,0,0,0-3.25,0C20.58,18.74,20.59,19.46,20.59,19.46Z" transform="translate(2 1.84)"/>
-      </g>
-    </g>
-  </g>
-</svg>`;
+    export const MEDIUM_MOTOR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48"><defs><linearGradient id="linear-gradient" x1="-427.2" y1="440.79" x2="-427.2" y2="440.63" gradientTransform="matrix(44.14 0 0 -44.15 18878.72 19502.57)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a8aaa8"/><stop offset="1" stop-color="#535453"/></linearGradient></defs><g style="isolation:isolate"><g id="svg7610"><g id="Medium_Motor" data-name="Medium Motor"><g id="medmotor_box" data-name="medmotor box"><path id="medmotor_box_wgradient" data-name="medmotor box wgradient" d="M2.57 0h39a2.36 2.36 0 0 1 2.57 2v40.33c0 1-1.1 1.82-2.57 1.82h-39C1.1 44.15 0 43.34 0 42.33V2a2.36 2.36 0 0 1 2.57-2z" transform="translate(2 1.84)" fill="url(#linear-gradient)"/></g><g id="medmotor_star" data-name="medmotor star"><image width="48" height="48" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAxCAYAAACcXioiAAAACXBIWXMAAAsSAAALEgHS3X78AAACfElEQVRoQ+2aPXLbMBBG32ZUijlCnDo/R1AukCoHyAFS5Sw5g5t0bnwCu0ofpTZ9A1usvSmwoClRJEEAI4gzejMcqliS+2FB4AMoUVVyISICrIErO3dpgBpoNONDJde9RKTCJf4R+Ga/u9TADbAFalXdkYEsAiz5L8B3nICxCmyBa+Auh4jVVMAUneR/ABugAuRIaIUT9w4TJyLJIpIEWJ+/wrX8Bng7fgViMRtcRR5F5G/KO/FmKiCANa5Vq6nADhXwwY7DrjaLHALgeJcZQ4D32MtulYwil4AYfOXOogKxRLe8p7SAZC4CSnMRUJrBmThwbBbSRxIh4HFDs3VPwIQl7oXj/M1U3BBr3PUAY3aiEZGjVnzPjQZY4mOscbNqjIgGeLDzGINWvBUQaImHSOlGIUZu2IqbgAr4CtwCT8AL7sbndLzgcrvF5Vq1jQ98An5bwNSNSh9PuFw/A+KH0RhLXIo9K96dB1L68SnZs+JLnchaK75UAWA9ZskCgGULUFiugAZ4BJquAB0IPjcUZz9ugNoL8IqSNplOxA74Z0ezUlU1p3eNG5787tocUuaQOZXfAfe4XB9UVVcAqroTkTsLaghzoZ5TuFGPb+jWzA3Z6dBk/Hrgp53nVEJx7vKXnUMq0XBgp/cWNFaJbe+yYXzCoS14SINL/g9hAnors96KbM5Gqy0Dg+MHUNxjo+6z1Hmg5SKgNBcBpSktIGrk6VJSQOsopwLHKCVAed2sqmPnAMgnICaB9sv9VOAYOQTEWPEdGZKHRAFWeu8Q74Fnpjemnnm1xEndBxI/dEOUFe9Z4hSy/FcCZlnxniVOIZsACPhKYaR2my5ZBZTgP7HrUIs43RAaAAAAAElFTkSuQmCC" style="mix-blend-mode:multiply" opacity=".3"/><path id="medmotor_cut-2" data-name="medmotor cut-2" d="M0 21.25A6.21 6.21 0 0 1 6.22 15H15V6.23A6.22 6.22 0 0 1 21.24 0h1.66a6.22 6.22 0 0 1 6.22 6.22V15h8.8a6.21 6.21 0 0 1 6.22 6.22v1.66a6.21 6.21 0 0 1-6.22 6.22h-8.8v8.8a6.21 6.21 0 0 1-6.22 6.22h-1.66A6.22 6.22 0 0 1 15 37.93v-8.8H6.22A6.22 6.22 0 0 1 0 22.92z" transform="translate(2 1.84)" fill="#a8aaa8"/><circle id="medmotor_hole_4" data-name="medmotor hole 4" cx="39.77" cy="24" r="4.85" fill="#393939"/><circle id="medmotor_hole_3" data-name="medmotor hole 3" cx="8.37" cy="24" r="4.85" fill="#393939"/><circle id="medmotor_hole_2" data-name="medmotor hole 2" cx="24.15" cy="8.22" r="4.85" fill="#393939"/><circle id="medmotor_hole_1" data-name="medmotor hole 1" cx="24.15" cy="39.62" r="4.85" fill="#393939"/></g><g id="medmotor_red" data-name="medmotor red"><circle cx="24.3" cy="24" r="6.75" fill="#d42715"/><circle cx="24.3" cy="24" r="6.63" fill="none" stroke="#a20800" stroke-width=".25"/></g><path id="medmotor_Hole" data-name="medmotor Hole" d="M20.59 19.46s-.05 1-.77 1h-1.46a2.38 2.38 0 0 0-.45 1.69c0 1.27.36 1.6.36 1.6h1.62a.64.64 0 0 1 .7.59.21.21 0 0 1 0 .11v1.67a4 4 0 0 0 1.77.29 6.88 6.88 0 0 0 1.64-.26v-1.67a.73.73 0 0 1 .73-.7 9.89 9.89 0 0 0 1.44-.14s.4-.37.44-1.63-.36-1.64-.36-1.64H24.6a.65.65 0 0 1-.75-.51.49.49 0 0 1 0-.17 11.22 11.22 0 0 1 0-1.64 4.78 4.78 0 0 0-3.25 0c-.02.69-.01 1.41-.01 1.41z" transform="translate(2 1.84)"/></g></g></g></svg>`;
 }

@@ -249,6 +249,9 @@ namespace pxsim.visuals {
         protected getView() {
             return super.getView();
         }
+
+        public kill() {
+        }
     }
 
     export class ViewContainer extends View {

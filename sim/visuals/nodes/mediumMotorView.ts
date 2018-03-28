@@ -8,6 +8,10 @@ namespace pxsim.visuals {
             super(MEDIUM_MOTOR_SVG, "medium-motor", NodeType.MediumMotor, port, "medmotor_Hole");
         }
 
+        protected optimizeForLightMode() {
+            (this.content.getElementById(this.normalizeId('medmotor_box_wgradient')) as SVGElement).style.fill = '#a8aaa8';
+        }
+
         public getPaddingRatio() {
             return 1 / 5;
         }

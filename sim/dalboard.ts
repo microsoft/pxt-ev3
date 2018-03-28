@@ -19,6 +19,9 @@ namespace pxsim {
         brickNode: BrickNode;
         outputNodes: MotorNode[] = [];
 
+        highcontrastMode?: boolean;
+        lightMode?: boolean;
+
         public motorMap: pxt.Map<number> = {
             0x01: 0,
             0x02: 1,
@@ -77,16 +80,24 @@ namespace pxsim {
                 fnArgs: fnArgs,
                 maxWidth: "100%",
                 maxHeight: "100%",
+                highContrast: msg.highContrast,
+                light: msg.light
             };
             const viewHost = new visuals.BoardHost(pxsim.visuals.mkBoardView({
-                visual: boardDef.visual
+                visual: boardDef.visual,
+                highContrast: msg.highContrast,
+                light: msg.light
             }), opts);
 
             document.body.innerHTML = ""; // clear children
+            document.body.className = msg.light ? "light" : "";
             document.body.appendChild(this.view = viewHost.getView() as SVGSVGElement);
 
             this.inputNodes = [];
             this.outputNodes = [];
+
+            this.highcontrastMode = msg.highContrast;
+            this.lightMode = msg.light;
 
             return Promise.resolve();
         }
@@ -169,6 +180,14 @@ namespace pxsim {
 
     export function ev3board(): EV3Board {
         return runtime.board as EV3Board;
+    }
+
+    export function inLightMode(): boolean {
+        return /light=1/i.test(window.location.href) || ev3board().lightMode;
+    }
+
+    export function inHighcontrastMode(): boolean {
+        return ev3board().highcontrastMode;
     }
 
     if (!pxsim.initCurrentRuntime) {

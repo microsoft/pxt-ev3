@@ -55,6 +55,7 @@ namespace pxsim.visuals {
         protected buildDom(): SVGElement {
             this.content = svg.parseString(this.xml);
             this.buildDomCore();
+            if (pxsim.inLightMode()) this.optimizeForLightMode();
             this.attachEvents();
             if (this.hasClick())
                 this.content.style.cursor = "pointer";
@@ -63,6 +64,10 @@ namespace pxsim.visuals {
 
         protected buildDomCore() {
 
+        }
+
+        protected optimizeForLightMode() {
+            
         }
 
         public getInnerHeight() {
