@@ -39,7 +39,7 @@ namespace brick {
     }
 
     /**
-     * Shows a number on the screen
+     * Show a number on the screen
      * @param value the numeric value
      * @param line the line number to print the text at, eg: 1
      */
@@ -52,7 +52,7 @@ namespace brick {
     }
 
     /**
-     * Shows a name, value pair on the screen
+     * Show a name, value pair on the screen
      * @param value the numeric value
      * @param line the line number to print the text at, eg: 1
      */
@@ -78,7 +78,7 @@ namespace brick {
     }
 
     /**
-    * Display the sensor and motor states attached to ports   
+    * Display the status of the sensors and motors attached to ports   
     */
     //% blockId=brickShowPorts block="show ports"
     //% help=brick/show-ports blockGap=8
