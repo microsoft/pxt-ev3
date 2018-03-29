@@ -98,6 +98,9 @@
         "betaUrl": "https://makecode.legoeducation.com/about",
         "boardName": "LEGO Mindstorms EV3 Brick",
         "selectLanguage": true,
+        "availableLocales": [
+            "en"
+        ],
         "highContrast": true,
         "docMenu": [
             {
