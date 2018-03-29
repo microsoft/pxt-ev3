@@ -18,6 +18,7 @@
 
 * [Maker](/maker)
     * [Make a Sound Machine](/maker/sound-machine)
+    * [Make a Security Gadget](/maker/security-gadget)
 
 * [Examples](/examples)
     * [Make it move](/lessons/make-it-move)
