@@ -102,7 +102,7 @@
         "docMenu": [
             {
                 "name": "Support",
-                "path": "https://service.lego.com"
+                "path": "http://service.lego.com"
             },
             {
                 "name": "About",
