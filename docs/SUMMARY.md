@@ -71,7 +71,6 @@
         * [set regulated](/reference/motors/motor/set-regulated)
         * [tank](/reference/motors/synced/tank)
         * [steer](/reference/motors/synced/steer)
-        * [tacho](/reference/motors/motor/tacho)
         * [angle](/reference/motors/motor/angle)
         * [speed](/reference/motors/motor/speed)
         * [clear counts](/reference/motors/motor/clear-counts)

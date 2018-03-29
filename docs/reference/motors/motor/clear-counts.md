@@ -31,5 +31,5 @@ motors.largeA.stop()
 
 ## See also
 
-[tacho](/reference/motors/motor/tacho), [angle](/reference/motors/motor/angle),
+[angle](/reference/motors/motor/angle),
 [speed](/reference/motors/motor/speed), [reset](/reference/motors/motor/reset)

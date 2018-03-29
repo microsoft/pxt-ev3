@@ -29,5 +29,5 @@ motors.largeA.stop()
 
 ## See also
 
-[tacho](/reference/motors/motor/tacho), [speed](/reference/motors/motor/speed),
+[speed](/reference/motors/motor/speed),
 [reset](/reference/motors/motor/reset), [clear counts](/reference/motors/motor/clear-counts)
