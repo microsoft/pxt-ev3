@@ -1,8 +1,8 @@
 # Maker Activites
 
-These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (45544). Supporting materials for teachers and middle school students are provided, offering everything teachers and students need to explore their inner makers as they follow the design process to solve open-ended, themed challenges...
+These six activities require the [LEGO® MINDSTORMS® Education EV3 Core Set (45544)](https://education.lego.com/en-us/products/lego-mindstorms-education-ev3-core-set-/5003400). Supporting materials for teachers and middle school students are provided, offering everything teachers and students need to explore their inner makers as they follow the design process to solve open-ended, themed challenges...
 
-* [Download Curriculum Materials](https://education.lego.com/en-us/downloads/mindstorms-ev3)
+* [Download Curriculum Materials](https://education.lego.com/en-us/downloads/mindstorms-ev3/curriculum)
 
 ## Activites
 
@@ -10,7 +10,7 @@ These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (455
 [
 {
   "name": "Make A Sound Machine",
-  "description": "Create instruments with your EV3 Brick!",
+  "description": "Make a Sound Machine that can play a rhythm, music or just noise!",
   "url":"/maker/sound-machine",
   "cardType": "example",
   "imageUrl": "/static/lessons/make-a-sound-machine.png",
@@ -18,7 +18,7 @@ These six activities require the LEGO® MINDSTORMS® Education EV3 Core Set (455
 },
 {
   "name": "Make A Security Gadget",
-  "description": "TBD",
+  "description": "Invent a Security Gadget that will protect your belongings by warning you!",
   "url":"/maker/security-gadget",
   "cardType": "example",
   "imageUrl": "/static/lessons/make-a-security-device.png",
