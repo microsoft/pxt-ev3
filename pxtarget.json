@@ -166,7 +166,7 @@
             "arrays": "\uf109"
         },
         "monacoColors": {
-            "editor.background": "#ecf6ff"
+            "editor.background": "#f9f9f9"
         }
     },
     "ignoreDocsErrors": true
