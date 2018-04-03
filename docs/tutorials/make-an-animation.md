@@ -1,6 +1,6 @@
 # Make a custom animation
 
-## Introduction
+## Introduction @fullscreen
 
 Create a custom animation for your LEGO Mindstorms Brick.
  
@@ -46,7 +46,7 @@ brick.showString("Press my button!", 1)
 
 ## Step 5
 
-Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:set status light||`` block onto the Workspace, and drop it into the ``||brick:on button||`` block after the Show Image block.
+Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:set status light||`` block onto the Workspace, and drop it into the ``||brick:on button||`` block after the ``||brick:show image||`` block.
 
 ```block
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
