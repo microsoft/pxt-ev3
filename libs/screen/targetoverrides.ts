@@ -14,28 +14,51 @@ namespace _screen_internal {
     function updateStats(msg: string): void { }
 
     control.__screen.setupUpdate(() => updateScreen(screen))
-    control.EventContext.onStats = function(msg: string) { 
+    control.EventContext.onStats = function (msg: string) {
         updateStats(msg);
     }
 }
 
 namespace brick {
-    export const LINE_HEIGHT = 12;
+    const textOffset = 4;
+    const lineOffset = 2;
+    export let font = image.font8;
+
+    /**
+     * Gets the text line height
+     */
+    //%
+    export function lineHeight(): number {
+        return font.charHeight + lineOffset;
+    }
+
+    /**
+     * Number of lines
+     */
+    //%
+    export function lineCount(): number {
+        return ((screen.height - textOffset) / lineHeight()) >> 0
+    }
 
     /**
      * Show text on the screen at a specific line.
      * @param text the text to print on the screen, eg: "Hello world"
-     * @param line the line number to print the text at, eg: 1
+     * @param line the line number to print the text at (starting at 1), eg: 1
      */
     //% blockId=screen_print block="show string %text|at line %line"
     //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
     //% help=brick/show-string
     //% line.min=1 line.max=10
     export function showString(text: string, line: number) {
-        const NUM_LINES = 9;
-        const offset = 5;
-        const y = offset + (Math.clamp(0, NUM_LINES, line - 1) / (NUM_LINES + 2)) * DAL.LCD_HEIGHT;
-        screen.print(text, offset, y);
+        // line indexing starts at 1.
+        line = (line - 1) >> 0;
+        const nlines = lineCount();
+        if (line < 0 || line > nlines) return; // out of screen
+
+        const h = lineHeight();
+        const y = textOffset + h * line;
+        screen.fillRect(0, y, screen.width, h, 0); // clear background
+        screen.print(text, textOffset, y, 1, font);
     }
 
     /**
@@ -85,6 +108,7 @@ namespace brick {
     //% weight=10 group="Screen"
     export function showPorts() {
         const col = 44;
+        const lineHeight8 = image.font8.charHeight + 2;
         clearScreen();
 
         function scale(x: number) {
@@ -98,19 +122,22 @@ namespace brick {
             const data = datas[i];
             if (!data.actualSpeed && !data.count) continue;
             const x = i * col;
-            screen.print("ABCD"[i], x, brick.LINE_HEIGHT)
-            screen.print(`${scale(data.actualSpeed)}%`, x, 2* brick.LINE_HEIGHT)
-            screen.print(`${scale(data.count)}>`, x, 3 * brick.LINE_HEIGHT)
+            screen.print("ABCD"[i], x + 2, 1 * lineHeight8, 1, image.font8)
+            screen.print(`${scale(data.actualSpeed)}%`, x + 2, 3 * lineHeight8, 1, image.font8)
+            screen.print(`${scale(data.count)}>`, x + 2, 4 * lineHeight8, 1, image.font5)
         }
+        screen.drawLine(0, 5 * lineHeight8, screen.width, 5 * lineHeight8, 1);
 
         // sensors
         const sis = sensors.internal.getActiveSensors();
+        const h = screen.height;
+        screen.drawLine(0, h - 5 * lineHeight8, screen.width, h - 5 * lineHeight8, 1)
         for (let i = 0; i < sis.length; ++i) {
             const si = sis[i];
             const x = (si.port() - 1) * col;
             const inf = si._info();
-            screen.print(si.port() + "", x, 8 * brick.LINE_HEIGHT)
-            screen.print(inf, x, 9 * brick.LINE_HEIGHT)
+            screen.print(si.port() + "", x, h - 4 * lineHeight8, 1, image.font8)
+            screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
         }
     }
 
