@@ -14,7 +14,7 @@ The fact that a button was pressed earlier is remembered. Once **was pressed** i
 
 Your @boardname@ has touch sensors that work like buttons. Instead of saying `enter` or `left` as the source button, use a touch sensor block with a sensor name like `touch 1`.
 
-```block
+```typescript
 if (sensors.touch1.wasPressed()) {
     console.log("Hey, I was pressed.");
 }
@@ -32,7 +32,7 @@ Read about [touch sensors](/reference/sensors/touch-sensor) and using them as to
 
 Set the brick light to green if the `right` button was pressed before the `left` button. If not, the brick light is turned off when the `left` button is pressed.
 
-```blocks
+```typescript
 brick.buttonLeft.onEvent(ButtonEvent.Bumped, function() {
     if (brick.buttonRight.wasPressed()) {
         brick.setStatusLight(StatusLight.Green)
@@ -45,6 +45,5 @@ brick.buttonLeft.onEvent(ButtonEvent.Bumped, function() {
 ## See also
 
 [is pressed](/reference/brick/button/is-pressed),
-[on event](/reference/brick/button/on-event)
-
+[on event](/reference/brick/button/on-event),
 [Touch sensors](/reference/sensors/touch-sensor)

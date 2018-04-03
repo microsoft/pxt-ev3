@@ -14,7 +14,7 @@ v = sensors.color3.light(LightIntensityMode.Reflected)
 min = v
 max = v
 setpoint = v
-while (!(brick.buttonEnter.wasPressed())) {
+while (!(brick.buttonEnter.isPressed())) {
     brick.clearScreen()
     brick.showString("Move robot on terrain", 1)
     brick.showString("Press ENTER when done", 2)

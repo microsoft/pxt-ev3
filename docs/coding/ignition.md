@@ -22,7 +22,7 @@ Play some motor sounds if touch sensor `1` is pressed at the same moment when an
 
 ```blocks
 while (true) {
-    if (sensors.touch1.wasPressed() &&
+    if (sensors.touch1.isPressed() &&
         sensors.ultrasonic4.distance() < 10) {
         music.playSoundEffectUntilDone(sounds.mechanicalMotorStart)
         music.playSoundEffectUntilDone(sounds.mechanicalMotorIdle);
@@ -38,8 +38,8 @@ Play some motor sounds if touch sensor `1` is pressed when both the `enter` butt
 ```blocks
 while (true) {
     if (sensors.ultrasonic4.distance() < 10 &&
-        sensors.touch1.wasPressed() &&
-        brick.buttonEnter.wasPressed()) {
+        sensors.touch1.isPressed() &&
+        brick.buttonEnter.isPressed()) {
         music.playSoundEffectUntilDone(sounds.mechanicalMotorStart)
         music.playSoundEffectUntilDone(sounds.mechanicalMotorIdle);
     }
