@@ -9,6 +9,7 @@
     },
     "galleries": {
         "Getting Started": "getting-started",
+        "Tutorials": "tutorials",
         "Design Engineering": "design-engineering",
         "Coding": "coding",
         "Maker": "maker"
