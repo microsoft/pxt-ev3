@@ -16,7 +16,7 @@ If a touch sensor was pressed, then that event is remembered. Once you check if 
 
 If the touch sensor ``touch 1`` was pressed, show a `green` status light. Otherwise, set the status light to `orange`.
 
-```blocks
+```typescript
 forever(function () {
     if (sensors.touch1.wasPressed()) {
         brick.setStatusLight(StatusLight.Green)

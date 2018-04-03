@@ -95,6 +95,7 @@ namespace brick {
         //% help=brick/button/was-pressed
         //% block="%button|was pressed"
         //% blockId=buttonWasPressed
+        //% blockHidden=true
         //% parts="brick"
         //% blockNamespace=brick
         //% weight=80

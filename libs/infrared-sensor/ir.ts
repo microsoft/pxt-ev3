@@ -101,6 +101,7 @@ namespace sensors {
         //% help=sensors/beacon/was-pressed
         //% block="**remote button** %button|was pressed"
         //% blockId=remotebuttonWasPressed
+        //% blockHidden=true
         //% parts="remote"
         //% blockNamespace=sensors
         //% weight=80

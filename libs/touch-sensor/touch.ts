@@ -83,6 +83,7 @@ namespace sensors {
         //% help=sensors/touch-sensor/was-pressed
         //% block="**touch** %this|was pressed"
         //% blockId=touchWasPressed
+        //% blockHidden=true
         //% parts="touch"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"

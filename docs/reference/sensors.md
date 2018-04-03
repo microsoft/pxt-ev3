@@ -17,8 +17,8 @@ sensors.color(ColorSensorColor.Blue)
 ```cards
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {})
 sensors.touch1.pauseUntil(ButtonEvent.Pressed)
-sensors.touch1.wasPressed()
 sensors.touch1.isPressed()
+sensors.touch1.wasPressed()
 ```
 
 ## Gyro

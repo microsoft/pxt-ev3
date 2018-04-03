@@ -26,7 +26,7 @@ In order to recognize a button event signalled from a remote beacon, an infrared
 
 If the beacon button ``top left`` was pressed, show a `green` status light. Otherwise, set the status light to `orange`.
 
-```blocks
+```typescript
 sensors.infrared1.setRemoteChannel(InfraredRemoteChannel.Ch0)
 forever(function () {
     if (sensors.remoteButtonTopLeft.wasPressed()) {
