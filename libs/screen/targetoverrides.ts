@@ -22,7 +22,7 @@ namespace _screen_internal {
 namespace brick {
     const textOffset = 4;
     const lineOffset = 2;
-    const font = image.font8;
+    export let font = image.font8;
 
     /**
      * Gets the text line height
@@ -53,7 +53,7 @@ namespace brick {
         // line indexing starts at 1.
         line = (line - 1) >> 0;
         const nlines = lineCount();
-        if (line < 0 || line >= nlines) return; // out of screen
+        if (line < 0 || line > nlines) return; // out of screen
 
         const h = lineHeight();
         const y = textOffset + h * line;

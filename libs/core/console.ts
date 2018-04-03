@@ -59,7 +59,6 @@ namespace console {
 
 namespace console._screen {
     const maxLines = 100;
-    const screenLines = 10;
     let lines: string[];
     let scrollPosition = 0;
 
@@ -75,10 +74,11 @@ namespace console._screen {
     function printLog() {
         brick.clearScreen()
         if (!lines) return;
+        const screenLines = brick.lineCount();
         for (let i = 0; i < screenLines; ++i) {
             const line = lines[i + scrollPosition];
             if (line)
-                screen.print(line, 0, 4 + i * brick.lineHeight())
+                screen.print(line, 0, 4 + i * brick.lineHeight(), 1, brick.font)
         }
     }
 
@@ -98,6 +98,7 @@ namespace console._screen {
             scrollPosition = Math.min(scrollPosition, lines.length - 1)
         }
         // move down scroll once it gets large than the screen
+        const screenLines = brick.lineCount();
         if (lines.length > screenLines
             && lines.length >= scrollPosition + screenLines) {
             scrollPosition++;
