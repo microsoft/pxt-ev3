@@ -137,7 +137,7 @@ namespace brick {
             const x = (si.port() - 1) * col;
             const inf = si._info();
             screen.print(si.port() + "", x, h - 4 * lineHeight8, 1, image.font8)
-            screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length <= 4 ? image.font5 : image.font8);
+            screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
         }
     }
 
