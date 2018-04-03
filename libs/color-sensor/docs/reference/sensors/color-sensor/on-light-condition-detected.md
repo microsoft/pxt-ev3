@@ -3,7 +3,7 @@
 Run some code when the amount of light dectected changes.
 
 ```sig
-sensors.color1.onLightChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {
+sensors.color1.onLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark, function () {
 
 })
 ```
@@ -21,7 +21,7 @@ You can check for a change in either _ambient_ or _reflected_ light and run some
 Show a message on the screen when the ambient light goes dark.
 
 ```blocks
-sensors.color1.onLightChanged(LightIntensityMode.Ambient, LightCondition.Dark, function() {
+sensors.color1.onLightConditionDetected(LightIntensityMode.Ambient, LightCondition.Dark, function() {
     brick.clearScreen();
     brick.showString("It just got dark", 1)
     brick.showString("Can you see me?", 2)

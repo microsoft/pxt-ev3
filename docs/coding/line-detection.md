@@ -54,7 +54,7 @@ loops.forever(function () {
 	
 })
 motors.largeBC.steer(0, 50)
-sensors.color3.pauseForColor(ColorSensorColor.Red)
+sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
 motors.stopAll()
 ```
 
@@ -70,7 +70,7 @@ motors.stopAll()
 ```blocks
 loops.forever(function () {
     motors.largeBC.steer(0, 50)
-    sensors.color3.pauseForColor(ColorSensorColor.Red)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     motors.stopAll()
 })
 ```
@@ -94,9 +94,9 @@ Now add to your program and have your robot to drive forward again when the ligh
 ```blocks
 loops.forever(function () {
     motors.largeBC.steer(0, 50)
-    sensors.color3.pauseForColor(ColorSensorColor.Red)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     motors.stopAll()
-    sensors.color3.pauseForColor(ColorSensorColor.Green)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Green)
 })
 ```
 
@@ -134,10 +134,10 @@ music.playSoundEffect(sounds.systemGeneralAlert)
 ```blocks
 loops.forever(function () {
     motors.largeBC.steer(-30, 20)
-    sensors.color3.pauseForColor(ColorSensorColor.Black)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Black)
     music.playSoundEffect(sounds.systemGeneralAlert)
     motors.largeBC.steer(30, 20)
-    sensors.color3.pauseForColor(ColorSensorColor.White)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.White)
 })
 ```
 
@@ -185,11 +185,11 @@ if (true) {
 ```blocks
 forever(function () {
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Black)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Black)
         motors.largeBC.steer(-30, 50)
     }
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.White)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.White)
         motors.largeBC.steer(30, 50)
     }
 })
@@ -204,10 +204,10 @@ Else the Color Sensor detects the color white, start motors ``B`` and ``C`` (dri
 ```blocks
 forever(function () {
     if (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Black)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Black)
         motors.largeBC.steer(-30, 50)
     } else {
-        sensors.color3.pauseForColor(ColorSensorColor.White)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.White)
         motors.largeBC.steer(30, 50)
     }
 })

@@ -60,18 +60,18 @@ while (true) {
 
 ### Step 3
 
-Place a ``||sensors:pause for color||`` from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
+Place a ``||sensors:pause until color detected||`` from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
  
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
-    sensors.color3.pauseForColor(ColorSensorColor.Red)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
 }
 ```
 
 ### Step 4
 
-Place a ``||motors:stop all motors||`` block under the ``||sensors:pause for color||`` block.
+Place a ``||motors:stop all motors||`` block under the ``||sensors:pause until color detected||`` block.
 
 Study the program...what do you think the program will do?
 
@@ -80,7 +80,7 @@ Study the program...what do you think the program will do?
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
-    sensors.color3.pauseForColor(ColorSensorColor.Red)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     motors.stopAll()
 }
 ```
@@ -128,26 +128,26 @@ while (true) {
 
 ### Step 5
 
-Place a ``||sensors:pause for color||`` block from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
+Place a ``||sensors:pause until color detected||`` block from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
 
 ```blocks
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     }
 }
 ```
 
 ### Step 6
 
-Place a ``||motors:stop all motors||`` block under the ``||sensors:pause for color||`` block.  
+Place a ``||motors:stop all motors||`` block under the ``||sensors:pause until color detected||`` block.  
 
 ```blocks
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         motors.stopAll()
     }
 }
@@ -161,7 +161,7 @@ Place a ``||loops:while||`` loop block under the second ``||loops:while||`` loop
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         motors.stopAll()
     }
     while (true) {
@@ -172,7 +172,7 @@ while (true) {
 
 ### Step 8
 
-Place a ``||sensors:pause for color||`` block inside the new ``||loops:while||`` loop block. Change the color to red.
+Place a ``||sensors:pause unril color detected||`` block inside the new ``||loops:while||`` loop block. Change the color to red.
 
 What do you think the program will do?
 
@@ -182,11 +182,11 @@ What do you think the program will do?
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         motors.stopAll()
     }
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     }
 }
 ```
@@ -208,16 +208,17 @@ Think about what you have learned, then document it. Describe your pseudocode fo
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
-sensors.color3.pauseForColor(ColorSensorColor.Yellow)
+sensors.color3.pauseUntilColorDetected(ColorSensorColor.Yellow)
 music.playSoundEffect(sounds.systemGeneralAlert)
 }
 while (true) {
-    while (true) {      sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
+    while (true) {      
+        sensors.color3.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Bright)
         motors.largeB.run(10)
         motors.largeC.run(-10)
     }
     while (true) {
-        sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
+        sensors.color3.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Bright)
         motors.largeA.run(-10)
         motors.largeA.run(10)
     }
@@ -234,12 +235,13 @@ You will need to constantly debug your program in order to make your robot trave
 
 ```blocks
 while (true) {
-    while (true) {   sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
+    while (true) {   
+        sensors.color3.pauseUntilLightDetected(LightIntensityMode.Reflected, LightCondition.Bright)
         motors.largeB.run(10)
         motors.largeC.run(-10)
     }
     while (true) {
-        sensors.color3.pauseForLight(LightIntensityMode.Reflected, LightCondition.Bright)
+        sensors.color3.pauseUntilLightDetected(LightIntensityMode.Reflected, LightCondition.Bright)
         motors.largeB.run(-10)
         motors.largeC.run(10)
     }

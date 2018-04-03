@@ -1,9 +1,9 @@
-# pause For Light
+# pause Until Light Condition Detected
 
-Wait for the light condition to change.
+Wait until a particular light condition is detected.
 
 ```sig
-sensors.color1.pauseForLight(LightIntensityMode.Reflected, LightCondition.Dark)
+sensors.color1.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark)
 ```
 
 You can wait for a change in either _ambient_ or _reflected_ light. This event happens when the sensor detects light going to ``dark`` or to ``bright``. You choose what condition you will wait for.
@@ -19,11 +19,11 @@ Wait for the ambient light to go dark, then show an expression on the screen.
 
 ```blocks
 brick.showString("Waiting for dark", 1)
-sensors.color1.pauseForLight(LightIntensityMode.Reflected, LightCondition.Dark)
+sensors.color1.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark)
 brick.clearScreen()
 brick.showImage(images.expressionsSick)
 ```
 
 ## See also
 
-[on light changed](/reference/sensors/color-sensor/on-light-changed)
+[on light condition detected](/reference/sensors/color-sensor/on-light-condition-detected)

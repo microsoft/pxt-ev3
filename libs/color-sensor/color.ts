@@ -145,15 +145,15 @@ namespace sensors {
          * Waits for the given color to be detected
          * @param color the color to detect
          */
-        //% help=sensors/color-sensor/pause-for-color
-        //% block="pause **color sensor** %this|for %color=colorEnumPicker"
-        //% blockId=colorPauseForColorDetected
+        //% help=sensors/color-sensor/pause-until-color-detected
+        //% block="pause until **color sensor** %this|detected %color=colorEnumPicker"
+        //% blockId=colorpauseUntilColorDetectedDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Color Sensor"
-        pauseForColor(color: number) {
+        pauseUntilColorDetected(color: number) {
             this.setMode(ColorSensorMode.Color);
             if (this.color() != color) {
                 const v = this._colorEventValue(<number>color);
@@ -184,15 +184,15 @@ namespace sensors {
          * @param condition the light condition
          * @param handler the code to run when detected
          */
-        //% help=sensors/color-sensor/on-light-changed
-        //% block="on **color sensor** %this|%mode|%condition"
-        //% blockId=colorOnLightChanged
+        //% help=sensors/color-sensor/on-light-condition-detected
+        //% block="on **color sensor** %this|detected %mode|%condition"
+        //% blockId=colorOnLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=89 blockGap=12
         //% group="Color Sensor"
-        onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
+        onLightConditionDetected(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
             this.setMode(<ColorSensorMode><number>mode)
             control.onEvent(this._id, <number>condition, handler);
         }
@@ -201,15 +201,15 @@ namespace sensors {
          * Wait for the given color to be detected
          * @param color the color to detect
          */
-        //% help=sensors/color-sensor/pause-for-light
-        //% block="pause **color sensor** %this|for %mode|%condition"
-        //% blockId=colorPauseForLight
+        //% help=sensors/color-sensor/pause-until-light-condition-detected
+        //% block="pause until **color sensor** %this|detected %mode|%condition"
+        //% blockId=colorPauseUntilLightConditionDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=88 blockGap=8
         //% group="Color Sensor"
-        pauseForLight(mode: LightIntensityMode, condition: LightCondition) {
+        pauseUntilLightConditionDetected(mode: LightIntensityMode, condition: LightCondition) {
             this.setMode(<ColorSensorMode><number>mode)
             if (this.thresholdDetector.state != <number>condition)
                 control.waitForEvent(this._id, <number>condition)

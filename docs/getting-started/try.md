@@ -135,7 +135,7 @@ Keeping the Large Motor connected to **Port D**, connect the Color Sensor to **P
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    sensors.color3.pauseForColor(ColorSensorColor.Green)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Green)
     motors.largeD.run(50, 1, MoveUnit.Rotations)
 })
 ```
@@ -143,7 +143,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 * Using the same program, replace the ``||sensors:pause until touch 1||`` block with a ``||sensors:pause color sensor 3||`` for color block.
 
 ```block
-sensors.color3.pauseForColor(ColorSensorColor.Green)
+sensors.color3.pauseUntilColorDetected(ColorSensorColor.Green)
 ```
 
 * Select the color you want to detect (e.g., green).
