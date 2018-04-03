@@ -164,7 +164,7 @@ namespace motors {
          */
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
         //% weight=60 blockGap=8
-        //% group="Move"
+        //% group="Properties"
         //% help=motors/motor/set-brake
         setBrake(brake: boolean) {
             this.init();
@@ -176,7 +176,7 @@ namespace motors {
         */
         //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
         //% weight=59 blockGap=8
-        //% group="Move"
+        //% group="Properties"
         //% help=motors/motor/set-inverted
         setInverted(inverted: boolean) {
             this.init();
@@ -344,7 +344,7 @@ namespace motors {
          */
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
         //% weight=58
-        //% group="Move"
+        //% group="Properties"
         //% help=motors/motor/set-regulated
         setRegulated(value: boolean) {
             this._regulated = value;

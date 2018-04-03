@@ -13,7 +13,7 @@ namespace sensors {
 }
 
 //% color="#00852B" weight=90 icon="\uf10d"
-//% groups='["Move", "Counters"]'
+//% groups='["Move", "Counters", "Properties"]'
 //% labelLineWidth=50
 namespace motors {
 }
