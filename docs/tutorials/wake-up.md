@@ -16,7 +16,7 @@ brick.showMood(moods.sleeping)
 
 ## Step 2
 
-Notice your brick is snoring with eyes closed in the simulator! Let’s wake her up. Open the ``||brick:Brick`` Toolbox drawer again. Drag out 2 more ``||brick:show mood||`` blocks onto the Workspace, and drop them into the ``||brick:on start||`` block also.
+Notice your brick is snoring with eyes closed in the simulator! Let’s wake her up. Open the ``||brick:Brick||`` Toolbox drawer again. Drag out 2 more ``||brick:show mood||`` blocks onto the Workspace, and drop them into the ``||brick:on start||`` block also.
 
 ```block
 brick.showMood(moods.sleeping) 
