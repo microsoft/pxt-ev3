@@ -11,5 +11,11 @@ Step by step guide to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/wake-up",
   "imageUrl":"/static/tutorials/wake-up.png"
+}, {
+  "name": "Make An Animation",
+  "description": "Create a custom animation for your LEGO Mindstorms Brick.",
+  "cardType": "tutorial",
+  "url":"/tutorials/make-an-animation",
+  "imageUrl":"/static/tutorials/make-an-animation.png"
 }]
 ```
