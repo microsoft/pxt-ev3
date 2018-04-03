@@ -184,15 +184,15 @@ namespace sensors {
          * @param condition the light condition
          * @param handler the code to run when detected
          */
-        //% help=sensors/color-sensor/on-light-changed
+        //% help=sensors/color-sensor/on-light-condition-detected
         //% block="on **color sensor** %this|detected %mode|%condition"
-        //% blockId=colorOnLightChanged
+        //% blockId=colorOnLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=89 blockGap=12
         //% group="Color Sensor"
-        onLightChanged(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
+        onLightConditionDetected(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
             this.setMode(<ColorSensorMode><number>mode)
             control.onEvent(this._id, <number>condition, handler);
         }

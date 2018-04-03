@@ -26,4 +26,4 @@ brick.showImage(images.expressionsSick)
 
 ## See also
 
-[on light changed](/reference/sensors/color-sensor/on-light-changed)
+[on light condition detected](/reference/sensors/color-sensor/on-light-condition-detected)

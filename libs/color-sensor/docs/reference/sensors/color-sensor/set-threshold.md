@@ -12,7 +12,7 @@ After setting a threshold, any event for that light condition won't happen until
 
 ```block
 sensors.color1.setThreshold(LightCondition.Dark, 20)
-sensors.color1.onLightChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {
+sensors.color1.onLightConditionChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {
     brick.showMood(moods.sleeping)
 })
 ```
@@ -28,7 +28,7 @@ Make a daylight alarm. When the ambient light reaches `70` flash the status ligh
 
 ```blocks
 sensors.color3.setThreshold(LightCondition.Bright, 70)
-sensors.color3.onLightChanged(LightIntensityMode.Ambient, LightCondition.Bright, function () {
+sensors.color3.onLightConditionChanged(LightIntensityMode.Ambient, LightCondition.Bright, function () {
     brick.setStatusLight(StatusLight.GreenFlash)
     for (let i = 0; i < 5; i++) {
         music.playSoundEffectUntilDone(sounds.mechanicalBackingAlert)

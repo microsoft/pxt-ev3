@@ -17,7 +17,7 @@ Light intensity is measured from `0` (very dark) to `100` (very bright). A _thre
 Find out what light level is set as the ``dark`` threshold when a dark light event happens.
 
 ```blocks
-sensors.color3.onLightChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {
+sensors.color3.onLightConditionChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {
     brick.showValue("DarknessThresholdValue", sensors.color3.threshold(LightCondition.Dark), 1)
 })
 ```
