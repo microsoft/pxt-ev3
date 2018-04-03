@@ -5,7 +5,7 @@
 ```cards
 sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {})
 sensors.color1.onLightChanged(LightIntensityMode.Reflected, LightCondition.Dark, function () {})
-sensors.color1.pauseForLight(LightIntensityMode.Reflected, LightCondition.Dark)
+sensors.color1.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark)
 sensors.color1.pauseUntilColorDetected(ColorSensorColor.Blue)
 sensors.color1.color();
 sensors.color1.light(LightIntensityMode.Ambient)
