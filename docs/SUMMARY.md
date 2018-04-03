@@ -21,10 +21,6 @@
     * [Make a Security Gadget](/maker/security-gadget)
 
 * [Examples](/examples)
-    * [Make it move](/lessons/make-it-move)
-    * [Line detection](/lessons/line-detection)
-    * [Sound of Color](/maker/sound-of-color)
-    * [Security Gadget](/maker/security-gadget)
     * [Intruder detector](/maker/intruder-detector)
     * [Puppet](/maker/puppet)
     * [Three Point Turn 1](/coding/three-point-turn-1)
