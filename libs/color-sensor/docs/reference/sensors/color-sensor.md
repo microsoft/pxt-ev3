@@ -2,8 +2,8 @@
 
 ```cards
 sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {})
-sensors.color1.onLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark, function () {})
-sensors.color1.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark)
+sensors.color1.onLightDetected(LightIntensityMode.Reflected, Light.Dark, function () {})
+sensors.color1.pauseUntilLightDetected(LightIntensityMode.Reflected, Light.Dark)
 sensors.color1.pauseUntilColorDetected(ColorSensorColor.Blue)
 sensors.color1.color();
 sensors.color1.light(LightIntensityMode.Ambient)
@@ -13,7 +13,7 @@ sensors.color1.light(LightIntensityMode.Ambient)
 
 [on color detected](/reference/sensors/color-sensor/on-color-detected),
 [pause until color detected](/reference/sensors/color-sensor/pause-until-color-detected),
-[on light condition detected](/reference/sensors/color-sensor/on-light-condition-detected),
-[pause until light condition detected](/reference/sensors/color-sensor/pause-until-light-condition-detected),
+[on light detected](/reference/sensors/color-sensor/on-light-detected),
+[pause until light detected](/reference/sensors/color-sensor/pause-until-light-detected),
 [color](/reference/sensors/color-sensor/color),
 [light](/reference/sensors/color-sensor/ambient-light)
