@@ -78,7 +78,7 @@ namespace console._screen {
         for (let i = 0; i < screenLines; ++i) {
             const line = lines[i + scrollPosition];
             if (line)
-                screen.print(line, 0, 4 + i * brick.LINE_HEIGHT)
+                screen.print(line, 0, 4 + i * brick.lineHeight())
         }
     }
 
