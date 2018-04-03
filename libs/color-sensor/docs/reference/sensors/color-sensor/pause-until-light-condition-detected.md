@@ -1,6 +1,6 @@
-# pause For Light
+# pause Until Light Condition Detected
 
-Wait for the light condition to change.
+Wait until a particular light condition is detected.
 
 ```sig
 sensors.color1.pauseUntilLightConditionDetected(LightIntensityMode.Reflected, LightCondition.Dark)

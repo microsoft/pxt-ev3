@@ -60,7 +60,7 @@ while (true) {
 
 ### Step 3
 
-Place a ``||sensors:pause for color||`` from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
+Place a ``||sensors:pause until color detected||`` from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
  
 ```blocks
 motors.largeBC.steer(0, 20)
@@ -71,7 +71,7 @@ while (true) {
 
 ### Step 4
 
-Place a ``||motors:stop all motors||`` block under the ``||sensors:pause for color||`` block.
+Place a ``||motors:stop all motors||`` block under the ``||sensors:pause until color detected||`` block.
 
 Study the program...what do you think the program will do?
 
@@ -128,7 +128,7 @@ while (true) {
 
 ### Step 5
 
-Place a ``||sensors:pause for color||`` block from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
+Place a ``||sensors:pause until color detected||`` block from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
 
 ```blocks
 while (true) {
@@ -141,7 +141,7 @@ while (true) {
 
 ### Step 6
 
-Place a ``||motors:stop all motors||`` block under the ``||sensors:pause for color||`` block.  
+Place a ``||motors:stop all motors||`` block under the ``||sensors:pause until color detected||`` block.  
 
 ```blocks
 while (true) {
@@ -172,7 +172,7 @@ while (true) {
 
 ### Step 8
 
-Place a ``||sensors:pause for color||`` block inside the new ``||loops:while||`` loop block. Change the color to red.
+Place a ``||sensors:pause unril color detected||`` block inside the new ``||loops:while||`` loop block. Change the color to red.
 
 What do you think the program will do?
 
