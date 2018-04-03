@@ -37,7 +37,7 @@ const enum ColorSensorColor {
     Brown
 }
 
-enum LightCondition {
+enum Light {
     //% block="dark"
     Dark = sensors.ThresholdState.Low,
     //% block="bright"
@@ -184,7 +184,7 @@ namespace sensors {
          * @param condition the light condition
          * @param handler the code to run when detected
          */
-        //% help=sensors/color-sensor/on-light-condition-detected
+        //% help=sensors/color-sensor/on-light-detected
         //% block="on **color sensor** %this|detected %mode|%condition"
         //% blockId=colorOnLightDetected
         //% parts="colorsensor"
@@ -192,7 +192,7 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% weight=89 blockGap=12
         //% group="Color Sensor"
-        onLightConditionDetected(mode: LightIntensityMode, condition: LightCondition, handler: () => void) {
+        onLightDetected(mode: LightIntensityMode, condition: Light, handler: () => void) {
             this.setMode(<ColorSensorMode><number>mode)
             control.onEvent(this._id, <number>condition, handler);
         }
@@ -201,15 +201,15 @@ namespace sensors {
          * Wait for the given color to be detected
          * @param color the color to detect
          */
-        //% help=sensors/color-sensor/pause-until-light-condition-detected
+        //% help=sensors/color-sensor/pause-until-light-detected
         //% block="pause until **color sensor** %this|detected %mode|%condition"
-        //% blockId=colorPauseUntilLightConditionDetected
+        //% blockId=colorPauseUntilLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=88 blockGap=8
         //% group="Color Sensor"
-        pauseUntilLightConditionDetected(mode: LightIntensityMode, condition: LightCondition) {
+        pauseUntilLightDetected(mode: LightIntensityMode, condition: Light) {
             this.setMode(<ColorSensorMode><number>mode)
             if (this.thresholdDetector.state != <number>condition)
                 control.waitForEvent(this._id, <number>condition)
@@ -252,8 +252,8 @@ namespace sensors {
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/set-threshold
-        setThreshold(condition: LightCondition, value: number) {
-            if (condition == LightCondition.Dark)
+        setThreshold(condition: Light, value: number) {
+            if (condition == Light.Dark)
                 this.thresholdDetector.setLowThreshold(value)
             else
                 this.thresholdDetector.setHighThreshold(value);
@@ -267,8 +267,8 @@ namespace sensors {
         //% group="Threshold" blockGap=8 weight=89
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
-        threshold(condition: LightCondition): number {
-            return this.thresholdDetector.threshold(<ThresholdState><number>LightCondition.Dark);
+        threshold(condition: Light): number {
+            return this.thresholdDetector.threshold(<ThresholdState><number>Light.Dark);
         }
 
         /**
