@@ -65,7 +65,7 @@ Place a ``||sensors:pause for color||`` from ``||sensors:Sensors||`` inside the 
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
-    sensors.color3.pauseForColor(ColorSensorColor.Red)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
 }
 ```
 
@@ -80,7 +80,7 @@ Study the program...what do you think the program will do?
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
-    sensors.color3.pauseForColor(ColorSensorColor.Red)
+    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     motors.stopAll()
 }
 ```
@@ -134,7 +134,7 @@ Place a ``||sensors:pause for color||`` block from ``||sensors:Sensors||`` insid
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     }
 }
 ```
@@ -147,7 +147,7 @@ Place a ``||motors:stop all motors||`` block under the ``||sensors:pause for col
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         motors.stopAll()
     }
 }
@@ -161,7 +161,7 @@ Place a ``||loops:while||`` loop block under the second ``||loops:while||`` loop
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         motors.stopAll()
     }
     while (true) {
@@ -182,11 +182,11 @@ What do you think the program will do?
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         motors.stopAll()
     }
     while (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
     }
 }
 ```
@@ -208,7 +208,7 @@ Think about what you have learned, then document it. Describe your pseudocode fo
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
-sensors.color3.pauseForColor(ColorSensorColor.Yellow)
+sensors.color3.pauseUntilColorDetected(ColorSensorColor.Yellow)
 music.playSoundEffect(sounds.systemGeneralAlert)
 }
 while (true) {

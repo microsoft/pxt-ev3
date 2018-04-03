@@ -99,7 +99,7 @@
             * [set remote channel](/reference/sensors/beacon/set-remote-channel)
         * [Color](/reference/sensors/color-sensor)
             * [on color detected](/reference/sensors/color-sensor/on-color-detected)
-            * [pause for color](/reference/sensors/color-sensor/pause-for-color)
+            * [pause until color detected](/reference/sensors/color-sensor/pause-until-color-detected)
             * [on light changed](/reference/sensors/color-sensor/on-light-changed)
             * [pause for light](/reference/sensors/color-sensor/pause-for-light)
             * [color](/reference/sensors/color-sensor/color)

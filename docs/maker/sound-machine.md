@@ -143,13 +143,13 @@ You can also tinker with the use of sensors.
 ```blocks
 forever(function () {
     if (true) {
-        sensors.color3.pauseForColor(ColorSensorColor.Blue)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Blue)
         music.playTone(392, music.beat(BeatFraction.Whole))
     } else if (false) {
-        sensors.color3.pauseForColor(ColorSensorColor.Red)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
         music.playTone(523, music.beat(BeatFraction.Half))
     } else {
-        sensors.color3.pauseForColor(ColorSensorColor.Green)
+        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Green)
         music.playTone(587, music.beat(BeatFraction.Half))
     }
 })

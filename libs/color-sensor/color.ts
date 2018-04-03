@@ -145,15 +145,15 @@ namespace sensors {
          * Waits for the given color to be detected
          * @param color the color to detect
          */
-        //% help=sensors/color-sensor/pause-for-color
-        //% block="pause **color sensor** %this|for %color=colorEnumPicker"
-        //% blockId=colorPauseForColorDetected
+        //% help=sensors/color-sensor/pause-until-color-detected
+        //% block="pause until **color sensor** %this|detected %color=colorEnumPicker"
+        //% blockId=colorpauseUntilColorDetectedDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Color Sensor"
-        pauseForColor(color: number) {
+        pauseUntilColorDetected(color: number) {
             this.setMode(ColorSensorMode.Color);
             if (this.color() != color) {
                 const v = this._colorEventValue(<number>color);

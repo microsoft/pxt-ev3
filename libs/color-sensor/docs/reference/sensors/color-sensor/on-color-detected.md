@@ -24,4 +24,4 @@ sensors.color1.onColorDetected(ColorSensorColor.Blue, function () {
 ```
 ## See also
 
-[pause for color](/reference/sensors/color-sensor/pause-for-color), [color](/reference/sensors/color)
+[pause until color detected](/reference/sensors/color-sensor/pause-until-color-detected), [color](/reference/sensors/color)
