@@ -6,7 +6,7 @@
 
 Design, build and program a robot that can move itself using no wheels for locomotion.
 
-![Make it move banner](/static/lessons/make-it-move/make-it-move-without-wheels.jpg)
+![Make it move banner](/static/lessons/make-it-move/make-it-move-without-wheels.png)
 
 Your robot will:
 
