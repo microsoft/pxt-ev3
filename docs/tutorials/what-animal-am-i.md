@@ -2,7 +2,7 @@
 
 ## Introduction @fullscreen
 
-Create different animal effects with your LEGO Mindstorms Brick.
+Create different animal effects with your @boardname@.
 
 ![Guess the what the animal is](/static/tutorials/what-animal-am-i/guess-animal.gif)
 
@@ -18,7 +18,7 @@ brick.showString("Hello world", 1)
 
 In the ``||brick:show string||`` block, type the text ``"Guess what animal?"`` to replace ``"Hello world"``.
 
-```block
+```blocks
 brick.showString("Guess what animal?", 1)
 ```
 
@@ -26,7 +26,7 @@ brick.showString("Guess what animal?", 1)
 
 Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block and put it anywhere in the Workspace.
 
-```block
+```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
@@ -39,7 +39,7 @@ In the ``||brick:on button||`` block, use the drop-down menu to select the ``lef
  
 ![Dropdown with button choices](/static/tutorials/what-animal-am-i/on-button-dropdown.png)
 
-```block
+```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
@@ -50,7 +50,7 @@ brick.showString("Guess what animal?", 1)
 
 Open the ``||brick:Brick||`` Toolbox drawer. In the **Buttons** section, drag out **3** more ``||brick:on button||`` blocks onto the Workspace. Using the drop-down menu, select the ``right``, ``up``, and ``down`` buttons for these 3 blocks.
 
-```block
+```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
@@ -70,7 +70,7 @@ brick.showString("Guess what animal?", 1)
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out **4** ``||brick:show image||`` blocks onto the Workspace, and drop one of them into each of the ``||brick:on button||`` blocks.
 
-```block
+```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () { 
     brick.showImage(images.expressionsBigSmile) 
 }) 
@@ -92,7 +92,7 @@ In the ``||brick:show image||`` blocks, use the drop-down menu to select a diffe
  
 ![Dropdown with image selection](/static/tutorials/what-animal-am-i/show-image-dropdown.png)
 
-```block
+```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.expressionsMouth2shut)
 })
@@ -112,7 +112,7 @@ brick.showString("Guess what animal?", 0)
 
 Open the ``||music:Music||`` Toolbox drawer. Drag out **4** ``||music:play sound effect||`` blocks onto the Workspace, and drop one of them into each of the ``||brick:on button||`` blocks, just after the ``||brick:show image||`` block.
 
-```block
+```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.expressionsMouth2shut)
     music.playSoundEffect(sounds.animalsCatPurr)
@@ -138,7 +138,7 @@ In each ``||music:play sound effect||`` block, use the drop-down menu to select 
  
 ![Dropdown with sound effect selection](/static/tutorials/what-animal-am-i/play-sound-effect-dropdown.png)
 
-```block
+```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.expressionsMouth2shut)
     music.playSoundEffect(sounds.animalsCatPurr)
@@ -160,4 +160,4 @@ brick.showString("Guess what animal?", 0)
 
 ## Step 10
 
-Now, let’s download our program to the brick. Plug your EV3 brick into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. Test your program with a friend by pressing the right, left, up, and down buttons on your Brick. Have your friend guess what animal it is!
+Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. Test your program with a friend by pressing the right, left, up, and down buttons on your brick. Have your friend guess what animal it is!

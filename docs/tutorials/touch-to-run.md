@@ -10,7 +10,7 @@ Use the Touch sensor to run a motor.
 
 Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **2** ``||sensors:on touch||`` blocks onto the Workspace (you can place these anywhere).
 
-```block
+```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
 
 })
@@ -25,7 +25,7 @@ In one of the ``||sensors:on touch||`` blocks, use the second drop-down menu to 
  
 ![Touch sensor action dropdown](/static/tutorials/touch-to-run/on-touch-dropdown.png)
 
-```block
+```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
 
 })
@@ -38,7 +38,7 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:run||`` block onto the Workspace, and drop it into the ``||brick:on touch pressed||`` block.
 
-```block
+```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
     motors.largeA.run(50)
 })
@@ -51,7 +51,7 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:stop||`` block onto the Workspace, and drop it into the ``||sensors:on touch released||`` block.
 
-```block
+```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
     motors.largeA.run(50)
 })
@@ -62,4 +62,4 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 ## Step 5
 
-Now, let’s download our program to the brick. Plug your EV3 brick into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen.  Follow the directions to save your program to the brick. Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing and releasing the touch sensor – does the motor start and stop as expected?
+Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen.  Follow the directions to save your program to the brick. Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing and releasing the touch sensor – does the motor start and stop as expected?

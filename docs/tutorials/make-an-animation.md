@@ -2,7 +2,7 @@
 
 ## Introduction @fullscreen
 
-Create a custom animation for your LEGO Mindstorms Brick.
+Create a custom animation for your @boardname@.
  
 ![Button press on brick](/static/tutorials/make-an-animation/button-pressed.gif)
 
@@ -18,7 +18,7 @@ brick.showString("Hello world", 1)
 
 In the ``||brick:show string||`` block, type the text ``"Press my button"`` to replace ``"Hello world"``. 
 
-```block
+```blocks
 brick.showString("Press my button!", 1) 
 ```
 
@@ -26,7 +26,7 @@ brick.showString("Press my button!", 1)
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out an ``||brick:on button||`` block onto anyplace in the Workspace.
 
-```block
+```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
@@ -37,7 +37,7 @@ brick.showString("Press my button!", 1)
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:show image||`` block onto the Workspace, and drop it into the ``||brick:on button||`` block.
 
-```block
+```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
     brick.showImage(images.expressionsBigSmile) 
 }) 
@@ -48,7 +48,7 @@ brick.showString("Press my button!", 1)
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:set status light||`` block onto the Workspace, and drop it into the ``||brick:on button||`` block after the ``||brick:show image||`` block.
 
-```block
+```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
     brick.showImage(images.expressionsBigSmile) 
     brick.setStatusLight(StatusLight.Orange) 
@@ -58,4 +58,4 @@ brick.showString("Press my button!", 1)
 
 ## Step 6
 
-Now, let’s download our program to the brick. Plug your EV3 brick into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. 
+Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. 
