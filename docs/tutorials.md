@@ -36,5 +36,11 @@ Step by step guide to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/run-motors",
   "imageUrl":"/static/tutorials/run-motors.png"
+}, {
+  "name": "Touch to Run",
+  "description": "Press the Touch sensor and run a motor.",
+  "cardType": "tutorial",
+  "url":"/tutorials/touch-to-run",
+  "imageUrl":"/static/tutorials/touch-to-run.png"
 }]
 ```
