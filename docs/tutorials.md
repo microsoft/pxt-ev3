@@ -30,5 +30,11 @@ Step by step guide to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/mindstorms-music",
   "imageUrl":"/static/tutorials/mindstorms-music.png"
+}, {
+  "name": "Run Motors",
+  "description": "Use the buttons to start and stop the large and medium motors.",
+  "cardType": "tutorial",
+  "url":"/tutorials/run-motors",
+  "imageUrl":"/static/tutorials/run-motors.png"
 }]
 ```
