@@ -1,16 +1,29 @@
 # Touch to Run
 
-## Introduction
+## Introduction @fullscreen
 
 Use the Touch sensor to run a motor.
 
 ![Large motor connected to brick](/static/tutorials/touch-to-run/touch-to-run.gif)
 
-Open the ``||sensor:Sensors||`` Toolbox drawer. From the **Touch** Sensor section, drag out 2 ``||senosrs:on touch||`` blocks onto the Workspace (you can place these anywhere). 
+## Step 1
+
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **2** ``||sensors:on touch||`` blocks onto the Workspace (you can place these anywhere).
+
+```block
+sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
+
+})
+sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
+
+})
+```
+
+## Step 2
+
+In one of the ``||sensors:on touch||`` blocks, use the second drop-down menu to change from ``pressed`` to ``released``.
  
-In one of the On Touch blocks, use the second drop-down menu to change from “pressed” to “released”. 
- 
-![](/static/tutorials/touch-to-run/on-touch-dropdown.png)
+![Touch sensor action dropdown](/static/tutorials/touch-to-run/on-touch-dropdown.png)
 
 ```block
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
@@ -23,7 +36,7 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 ## Step 3
 
-Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:run||`` block onto the Workspace, and drop it into the ``||brick:on touch Pressed block.
+Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:run||`` block onto the Workspace, and drop it into the ``||brick:on touch pressed||`` block.
 
 ```block
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
@@ -36,7 +49,7 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 ## Step 4
 
-Open the Motors Toolbox drawer. Drag out a Stop block onto the Workspace, and drop it into the On Touch Released block.
+Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:stop||`` block onto the Workspace, and drop it into the ``||sensors:on touch released||`` block.
 
 ```block
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
