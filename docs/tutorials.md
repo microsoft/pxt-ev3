@@ -24,5 +24,11 @@ Step by step guide to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/what-animal-am-i",
   "imageUrl":"/static/tutorials/what-animal-am-i.png"
+}, {
+  "name": "Mindstorms Music",
+  "description": "Transform your LEGO Mindstorms Brick into a musical instrument!",
+  "cardType": "tutorial",
+  "url":"/tutorials/mindstorms-music",
+  "imageUrl":"/static/tutorials/mindstorms-music.png"
 }]
 ```
