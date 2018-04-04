@@ -2,13 +2,13 @@
 
 ## Introduction @fullscreen
 
-Use the Touch sensor value to stop a motor running.
+Use the Touch sensor value to stop a running motor.
 
 ![Touch sensor and motor attached to brick](/static/tutorials/touch-sensor-values/touch-to-stop.gif)
 
 ## Step 1
 
-Open the Motors Toolbox drawer. Drag out a Run block onto the Workspace, and drop it into the Forever block.
+Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``|motors:run||`` block onto the Workspace, and drop it into the ``||loops:forever||`` block.
 
 ```block
 forever(function () {
@@ -18,7 +18,7 @@ forever(function () {
 
 ## Step 2
 
-Open the Logic Toolbox drawer. Drag out an ``||logic:if then||`` block onto the Workspace, and drop it after the ``||motors:run||`` block.
+Open the ``||logic:Logic||`` Toolbox drawer. Drag out an ``||logic:if then||`` block onto the Workspace, and drop it in after the ``||motors:run||`` block.
 
 ```block
 forever(function () {
@@ -31,7 +31,7 @@ forever(function () {
 
 ## Step 3
 
-Open the Sensors Toolbox drawer.  Drag out a Touch is Pressed block onto the Workspace, and drop it in the If… Then block replacing “true”.
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out a ``||sensors:touch is pressed||`` block onto the Workspace, and drop it in the ``||logic:if then||`` block replacing ``true``.
 
 ```block
 forever(function () {
@@ -70,7 +70,7 @@ forever(function () {
 
 ## Step 6
 
-Open the ``||motors:||``Motors Toolbox drawer. Drag out a ``||motors:stop||`` block onto the Workspace, and drop it after the ``||music:play sound effect||`` block.
+Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:stop||`` block onto the Workspace, and drop it in after the ``||music:play sound effect||`` block.
 
 ```block
 forever(function () {
