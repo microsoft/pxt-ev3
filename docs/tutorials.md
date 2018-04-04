@@ -7,7 +7,7 @@ Step by step guides to coding your @boardname@.
 
 ```codecard
 [{
-  "name": "Wake Up MINDSTORMS",
+  "name": "Wake Up!",
   "description": "Show different moods on your @boardname@. Is it tired, sleepy, or awake?",
   "cardType": "tutorial",
   "url":"/tutorials/wake-up",
@@ -25,7 +25,7 @@ Step by step guides to coding your @boardname@.
   "url":"/tutorials/what-animal-am-i",
   "imageUrl":"/static/tutorials/what-animal-am-i.png"
 }, {
-  "name": "MINDSTORMS Music",
+  "name": "Music Brick",
   "description": "Transform your @boardname@ into a musical instrument!",
   "cardType": "tutorial",
   "url":"/tutorials/mindstorms-music",

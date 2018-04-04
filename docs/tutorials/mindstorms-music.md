@@ -1,4 +1,4 @@
-# MINDSTORMS Music
+# Music Brick
 
 ## Introduction @fullscreen
 

@@ -1,4 +1,4 @@
-# Wake Up MINDSTORMS
+# Wake Up!
 
 ## Introduction @fullscreen
 

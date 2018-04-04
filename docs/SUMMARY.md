@@ -7,10 +7,10 @@
     * [Use](/getting-started/use)
 
 * [Tutorials](/tutorials)
-    * [Wake Up](/tutorials/wake-up)
+    * [Wake Up!](/tutorials/wake-up)
     * [Make An Animation](/tutorials/make-an-animation)
     * [What Animal Am I?](/tutorials/what-animal-am-i)
-    * [MINDSTORMS Music](/tutorials/mindstorms-music)
+    * [Music Brick](/tutorials/mindstorms-music)
     * [Run Motors](/tutorials/run-motors)
     * [Touch to Run](/tutorials/touch-to-run)
     * [Touch Sensor Values](/tutorials/touch-sensor-values)
