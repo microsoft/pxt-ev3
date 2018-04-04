@@ -3,7 +3,9 @@
 Run some code when an object is detected by the ultrasonic sensor.
 
 ```sig
-sensors.ultrasonic1.pauseUntil(UltrasonicSensorEvent.ObjectDetected);
+sensors.ultrasonic1.onEvent(UltrasonicSensorEvent.ObjectDetected, function () {
+    
+})
 ```
 
 How an object is detected depends on the distance and movement _thresholds_ set for the sensor. A threshold is a number that is some distance in centimeters or the strength of ultrasonic sound. You can set a distance to detect something that is far, near, or is sending out ultrasound (like the sensor of another robot in the area). The three thresholds you can set are:
@@ -20,7 +22,7 @@ Both **near** and **far** have distance thresholds set in centimeters. The **det
 > * ``object detected``: some other object is sending out an ultrasonic sound
 > * ``object near``: the sensor detected something within the distance of the near threshold
 > * ``object far``: the sensor detected somethin within the distance of the far threshold
-* **body**: the code you want to run when something is dectected by the ultrasonic sensor.
+* **handler**: the code you want to run when something is dectected by the ultrasonic sensor.
 
 ## Example
 
