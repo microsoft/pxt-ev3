@@ -16,7 +16,7 @@ brick.showMood(moods.sleeping)
 
 ## Step 2
 
-Notice your brick is snoring with eyes closed in the simulator! Let’s wake her up. Open the ``||brick:Brick||`` Toolbox drawer again. Drag out 2 more ``||brick:show mood||`` blocks onto the Workspace, and drop them into the ``||brick:on start||`` block also.
+Notice your brick is snoring with eyes closed in the simulator! Let’s wake her up. Open the ``||brick:Brick||`` Toolbox drawer again. Drag out **2** more ``||brick:show mood||`` blocks and drop them into the ``||brick:on start||`` block also.
 
 ```blocks
 brick.showMood(moods.sleeping) 
@@ -50,5 +50,5 @@ brick.showMood(moods.love)
 
 ## Step 5
 
-Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. 
+Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
  
