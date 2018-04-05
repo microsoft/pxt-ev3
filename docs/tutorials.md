@@ -54,5 +54,11 @@ Step by step guides to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/what-color",
   "imageUrl":"/static/tutorials/what-color.png"
+}, {
+  "name": "Line Following",
+  "description": "Use the Color sensor to make a robot follow a line.",
+  "cardType": "tutorial",
+  "url":"/tutorials/line-following",
+  "imageUrl":"/static/tutorials/line-following.png"
 }]
 ```
