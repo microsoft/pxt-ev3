@@ -6,9 +6,9 @@ Get the distance threshold for when objects are near, far, or detected.
 sensors.ultrasonic1.threshold(UltrasonicSensorEvent.ObjectDetected)
 ```
 
-Whether something is near or far away really depends on the situation. A object moving towards you is "near" at further distance than something that isn't moving due to the time necessary to move out of its way.
+Whether something is near really depends on the situation. A object moving towards you is "near" at further distance than something that isn't moving due to the time necessary to move out of its way.
 
-Distances for near and far by have set _thresholds_. A threshold is a boundary or a limit. If near means anything that's closer that 20 centimeters, then the threshold for ``near``.
+Distances for near have set _thresholds_. A threshold is a boundary or a limit. If near means anything that's closer that 20 centimeters, then the threshold for ``near``.
 
 Also, the threshold for nowing that something has moved within a distance from you is set for ``detected``.
 
