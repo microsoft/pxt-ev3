@@ -58,7 +58,7 @@
 }
 
 /* Menu bar colors */
-.menubar .ui.item {
+.ui.menu .ui.item {
     color: #4A4A4A;
 }
 .fullscreensim .menubar .ui.menu {
@@ -73,18 +73,15 @@
 
 /* Editor menu toggle */
 .menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
-    background: @blue !important;
+    background: fade(@black, 10%) !important;
+    border: 2px solid fade(@black, 10%);
     border-radius: 0px !important;
-    border: 2px solid @blue;
-}
-.menubar .ui.menu.fixed .ui.item.editor-menuitem .item:not(.active) {
-    color: white;
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item {
     border-radius: 0px !important;
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
-    color: @blue;
+    color: white;
 }
 
 .menubar .ui.item.editor-menuitem .item.toggle {
