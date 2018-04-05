@@ -50,9 +50,9 @@ Step by step guides to coding your @boardname@.
   "imageUrl":"/static/tutorials/touch-sensor-values.png"
 }, {
   "name": "What Color?",
-  "description": "Check the value of a Touch sensor and stop a motor if pressed.",
+  "description": "Use the Color sensor to detect different colors.",
   "cardType": "tutorial",
   "url":"/tutorials/what-color",
-  "imageUrl":"/static/tutorials/touch-sensor-values.png"
+  "imageUrl":"/static/tutorials/what-color.png"
 }]
 ```

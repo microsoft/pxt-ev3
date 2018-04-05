@@ -24,9 +24,23 @@ brick.showString("What color?", 1)
 
 ## Step 3
 
-Open the Sensors Toolbox drawer.  From the Color Sensor section, drag out 3 On Color Sensor Detected blocks onto the Workspace (you can place these anywhere). 
- 
-In the On Color Sensor Detected blocks, use the second drop-down menu to select Red, Green, and Yellow colors. 
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **3** ``||sensors:on color sensor detected||`` blocks onto the Workspace (you can place these anywhere). 
+
+```blocks
+sensors.color3.onColorDetected(ColorSensorColor.Blue, function () {
+
+})
+sensors.color3.onColorDetected(ColorSensorColor.Blue, function () {
+
+})
+sensors.color3.onColorDetected(ColorSensorColor.Blue, function () {
+
+})
+```
+
+## Step 4
+
+In the ``||sensors:on color sensor detected||`` blocks, use the second drop-down menu to select Red, Green, and Yellow colors. 
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -41,43 +55,43 @@ sensors.color3.onColorDetected(ColorSensorColor.Yellow, function () {
 brick.showString("What color?", 1)
 ```
 
-## Step 4
-
-Open the ``||brick:Brick||`` Toolbox drawer. From the Buttons section, drag out a **3** ``||brick:set status light||`` blocks onto the Workspace, and drop one of them each into the On Color Detected blocks.
-
-```blocks
-sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
-    brick.setStatusLight(StatusLight.Orange)
-})
-sensors.color3.onColorDetected(ColorSensorColor.Green, function () {
-    brick.setStatusLight(StatusLight.Orange)
-})
-sensors.color3.onColorDetected(ColorSensorColor.Yellow, function () {
-    brick.setStatusLight(StatusLight.Orange)
-})
-brick.showString("What color?", 0)
-```
-
 ## Step 5
 
-In the Set Status Light blocks, use the drop-down menu to change the lights to Red, Green, and Orange corresponding to the different colors detected.  Note, there is no Yellow status light, so we’ll use Orange instead.
+Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out a **3** ``||brick:set status light||`` blocks onto the Workspace, and drop one of them each into the ``||sensors:on color detected||`` blocks.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
-    brick.setStatusLight(StatusLight.Red)
+    brick.setStatusLight(StatusLight.Orange)
 })
 sensors.color3.onColorDetected(ColorSensorColor.Green, function () {
-    brick.setStatusLight(StatusLight.Green)
+    brick.setStatusLight(StatusLight.Orange)
 })
 sensors.color3.onColorDetected(ColorSensorColor.Yellow, function () {
     brick.setStatusLight(StatusLight.Orange)
 })
-brick.showString("What color?", 0)
+brick.showString("What color?", 1)
 ```
 
 ## Step 6
 
-Open the Music Toolbox drawer.  Drag out 3 Play Sound Effect blocks onto the Workspace, and drop one of them each into the On Color Detected blocks after the Set Status Light block.
+In the ``||brick:set status light||`` blocks, use the drop-down menu to change the lights to Red, Green, and Orange corresponding to the different colors detected. There is no Yellow status light, so we’ll use Orange instead.
+
+```blocks
+sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
+    brick.setStatusLight(StatusLight.Red)
+})
+sensors.color3.onColorDetected(ColorSensorColor.Green, function () {
+    brick.setStatusLight(StatusLight.Green)
+})
+sensors.color3.onColorDetected(ColorSensorColor.Yellow, function () {
+    brick.setStatusLight(StatusLight.Orange)
+})
+brick.showString("What color?", 1)
+```
+
+## Step 7
+
+Open the ``||music:Music||`` Toolbox drawer. Drag out **3** ``||music:play sound effect||`` blocks onto the Workspace, and drop one of them each into the ``||sensors:on color detected||`` blocks after the ``||brick:set status light||`` block.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -92,12 +106,12 @@ sensors.color3.onColorDetected(ColorSensorColor.Yellow, function () {
     brick.setStatusLight(StatusLight.Orange)
     music.playSoundEffect(sounds.animalsCatPurr)
 })
-brick.showString("What color?", 0)
+brick.showString("What color?", 1)
 ```
 
-## Step 7
+## Step 8
 
-In the Play Sound Effect blocks, use the drop-down menu to select the “Colors Red”, “Colors Green”, and “Colors Yellow” sound effects corresponding to the different colors detected. 
+In the ``||music::play sound effect||`` blocks, use the drop-down menu to select the ``colors red``, ``colors green``, and ``colors yellow`` sound effects corresponding to the different colors detected. 
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -112,9 +126,9 @@ sensors.color3.onColorDetected(ColorSensorColor.Yellow, function () {
     brick.setStatusLight(StatusLight.Orange)
     music.playSoundEffect(sounds.colorsYellow)
 })
-brick.showString("What color?", 0)
+brick.showString("What color?", 1)
 ```
 
-## Step 8
+## Step 9
 
-Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen.  Follow the directions to save your program to the brick. Attach a Color Sensor to Port 3 of your brick. Test your program by flashing Red, Green and Yellow colored paper or LEGO bricks in front of the Color Sensor.
+Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen.  Follow the directions to save your program to the brick. Attach a Color Sensor to Port 3 of your brick. Test your program by flashing Red, Green and Yellow colored paper or use LEGO bricks in front of the Color Sensor.
