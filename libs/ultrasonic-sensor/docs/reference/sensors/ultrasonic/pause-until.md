@@ -19,7 +19,6 @@ Both **near** and **far** have distance thresholds set in centimeters. The **det
 * **event**: the object detection action to wait for. The detection types (events) are:
 > * ``detected``: some other object is sending out an ultrasonic sound
 > * ``near``: the sensor detected something within the distance of the near threshold
-> * ``far``: the sensor detected somethin within the distance of the far threshold
 
 ## Example
 
