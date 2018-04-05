@@ -159,6 +159,7 @@
 @blocklyToolboxColor: #FFF; /*#FAC80A;*/
 @trashIconColor: #FAC80A; /*white*/
 
+@editorToggleColor: @primaryColor;
 
 /*-------------------
    Blockly
