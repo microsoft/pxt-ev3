@@ -9,7 +9,10 @@
     },
     "galleries": {
         "Getting Started": "getting-started",
-        "Tutorials": "tutorials",
+        "Brick Tutorials": "tutorials/brick",
+        "Motor Tutorials": "tutorials/motors",
+        "Touch Sensor Tutorials": "tutorials/touch-sensor",
+        "Color Sensor Tutorials": "tutorials/color-sensor",
         "Design Engineering": "design-engineering",
         "Coding": "coding",
         "Maker": "maker"
