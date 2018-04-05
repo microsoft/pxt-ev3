@@ -1,9 +1,8 @@
 # Tutorials
 
-## Tutorials
-
 Step by step guides to coding your @boardname@.
 
+## Brick
 
 ```codecard
 [{
@@ -30,25 +29,43 @@ Step by step guides to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/mindstorms-music",
   "imageUrl":"/static/tutorials/mindstorms-music.png"
-}, {
+}]
+```
+
+## Motors
+
+```codecard
+[{
   "name": "Run Motors",
   "description": "Use the buttons to start and stop the large and medium motors.",
   "cardType": "tutorial",
   "url":"/tutorials/run-motors",
   "imageUrl":"/static/tutorials/run-motors.png"
-}, {
+}]
+```
+
+## Touch Sensor
+
+```codecard
+[{
   "name": "Touch to Run",
   "description": "Press the Touch sensor and run a motor.",
   "cardType": "tutorial",
   "url":"/tutorials/touch-to-run",
   "imageUrl":"/static/tutorials/touch-to-run.png"
 }, {
-  "name": "Using Touch Sensor Values",
+  "name": "Touch Sensor Values",
   "description": "Check the value of a Touch sensor and stop a motor if pressed.",
   "cardType": "tutorial",
   "url":"/tutorials/touch-sensor-values",
   "imageUrl":"/static/tutorials/touch-sensor-values.png"
-}, {
+}]
+```
+
+## Color Sensor
+
+```codecard
+[{
   "name": "What Color?",
   "description": "Use the Color sensor to detect different colors.",
   "cardType": "tutorial",
@@ -60,5 +77,11 @@ Step by step guides to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/line-following",
   "imageUrl":"/static/tutorials/line-following.png"
+}, {
+  "name": "Red Light, Green Light", 
+  "description": "Play Red Light, Green Light using the Color sensor and the robot.", 
+  "cardType": "tutorial", 
+  "url":"/tutorials/redlight-greenlight", 
+ "imageUrl":"/static/tutorials/redlight-greenlight.png" 
 }]
 ```
