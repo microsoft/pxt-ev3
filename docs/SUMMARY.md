@@ -14,6 +14,9 @@
     * [Run Motors](/tutorials/run-motors)
     * [Touch to Run](/tutorials/touch-to-run)
     * [Touch Sensor Values](/tutorials/touch-sensor-values)
+    * [What Color?](/tutorials/what-color)
+    * [Line Following](/tutorials/line-following)
+    * [Green Light, Red Light](/tutorials/greenlight-redlight)
 
 * [Coding](/coding)
     * [Autonomous Parking](/coding/autonomous-parking)

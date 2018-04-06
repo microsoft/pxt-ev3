@@ -49,9 +49,9 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 4
 
-The ``||motors:run||`` blocks specify which type of motor to run (Large or Medium), and which port the motor is attached to (Ports A, B, C, or D). The default setting is to run the large motor attached to port A at 50% speed.  When we press the Down button, we want our motor to run in the reverse direction.
+The ``||motors:run||`` blocks specify which type of motor to run (Large or Medium), and which port the motor is attached to (Ports A, B, C, or D). The default setting is to run the large motor attached to port A at 50% speed.
 
-In the Run block that is in the On Button Down pressed block, change the speed value from ``50%`` to ``-50%``. 
+When we press the Down button, we want our motor to run in the reverse direction. In the ``||motors:run||`` block that is in the ``||brick:on button down pressed||`` block, change the speed value from ``50%`` to ``-50%``. 
  
 ![Motor speed select field](/static/tutorials/run-motors/run-speed-field.png)
 
@@ -66,8 +66,8 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 5
 
-Now, let’s add a Medium motor, and specify how many rotations we want the motor to run for. 
-Open the ``||brick:Brick||`` Toolbox drawer. Drag out **2** ``|brick:on button||`` blocks onto the Workspace. In the ``||brick:on button||`` blocks, use the drop-down menu to select the ``left`` and ``right`` buttons.
+Now, let’s add a Medium motor, and tell it how many rotations we want it to run for. 
+Open the ``||brick:Brick||`` Toolbox drawer. Drag out **2** ``|brick:on button||`` blocks. In the ``||brick:on button||`` blocks, use the drop-down menu to select the ``left`` and ``right`` buttons.
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
@@ -227,4 +227,6 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 13
 
-Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. Attach a Large motor to Port A, and a Medium motor to Port D. Test your program by pressing the different buttons to see whether the correct motors are running as expected.
+Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+
+Attach a Large motor to Port A, and a Medium motor to Port D. Test your program by pressing the different buttons to see whether the correct motors are running as expected.

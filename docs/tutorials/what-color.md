@@ -57,7 +57,7 @@ brick.showString("What color?", 1)
 
 ## Step 5
 
-Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out a **3** ``||brick:set status light||`` blocks onto the Workspace, and drop one of them each into the ``||sensors:on color detected||`` blocks.
+Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out a **3** ``||brick:set status light||`` blocks and drop one of them each into the ``||sensors:on color detected||`` blocks.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -91,7 +91,7 @@ brick.showString("What color?", 1)
 
 ## Step 7
 
-Open the ``||music:Music||`` Toolbox drawer. Drag out **3** ``||music:play sound effect||`` blocks onto the Workspace, and drop one of them each into the ``||sensors:on color detected||`` blocks after the ``||brick:set status light||`` block.
+Open the ``||music:Music||`` Toolbox drawer. Drag out **3** ``||music:play sound effect||`` blocks and drop one of them each into the ``||sensors:on color detected||`` blocks after the ``||brick:set status light||`` block.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -131,4 +131,6 @@ brick.showString("What color?", 1)
 
 ## Step 9
 
-Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen.  Follow the directions to save your program to the brick. Attach a Color Sensor to Port 3 of your brick. Test your program by flashing Red, Green and Yellow colored paper or use LEGO bricks in front of the Color Sensor.
+Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+
+Attach a Color Sensor to Port 3 of your brick. Test your program by flashing Red, Green and Yellow colored paper or use LEGO bricks in front of the Color Sensor.

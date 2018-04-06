@@ -48,7 +48,7 @@ brick.showString("Guess what animal?", 1)
 
 ## Step 5
 
-Open the ``||brick:Brick||`` Toolbox drawer. In the **Buttons** section, drag out **3** more ``||brick:on button||`` blocks onto the Workspace. Using the drop-down menu, select the ``right``, ``up``, and ``down`` buttons for these 3 blocks.
+Open the ``||brick:Brick||`` Toolbox drawer. In the **Buttons** section, drag out **3** more ``||brick:on button||`` blocks. Using the drop-down menu, select the ``right``, ``up``, and ``down`` buttons for these 3 blocks.
 
 ```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () { 
@@ -110,7 +110,7 @@ brick.showString("Guess what animal?", 0)
 
 ## Step 8
 
-Open the ``||music:Music||`` Toolbox drawer. Drag out **4** ``||music:play sound effect||`` blocks onto the Workspace, and drop one of them into each of the ``||brick:on button||`` blocks, just after the ``||brick:show image||`` block.
+Open the ``||music:Music||`` Toolbox drawer. Drag out **4** ``||music:play sound effect||`` block and drop one of them into each of the ``||brick:on button||`` blocks, just after the ``||brick:show image||`` block.
 
 ```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
@@ -160,4 +160,6 @@ brick.showString("Guess what animal?", 0)
 
 ## Step 10
 
-Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen. Follow the directions to save your program to the brick. Test your program with a friend by pressing the right, left, up, and down buttons on your brick. Have your friend guess what animal it is!
+Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+
+Test your program with a friend by pressing the right, left, up, and down buttons on your brick. Have your friend guess what animal it is!
