@@ -43,7 +43,7 @@ Step by step guides to coding your @boardname@.
   "url":"/tutorials/touch-to-run",
   "imageUrl":"/static/tutorials/touch-to-run.png"
 }, {
-  "name": "Using Touch Sensor Values",
+  "name": "Touch Sensor Values",
   "description": "Check the value of a Touch sensor and stop a motor if pressed.",
   "cardType": "tutorial",
   "url":"/tutorials/touch-sensor-values",
