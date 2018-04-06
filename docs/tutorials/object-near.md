@@ -8,96 +8,133 @@ The digital Ultrasonic Sensor generates sound waves and reads their echoes to de
 
 ## Step 1
 
-Open the ``||sensors:Sensors||`` Toolbox drawer. From the **Ultrasonic Sensor** section, drag out an ``||sensors:on ultrasonic||`` block onto the Workspace (you can place this anywhere).
+Open the ``||variables:Variables||`` Toolbox drawer. Pull a ``||variables:set item to||`` block onto the Workspace and place it into the ``||loops:forever||`` block.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-
+let item = 0
+forever(function () {
+    item = 0
 })
 ```
 
 ## Step 2
 
-Open the ``||music:Music||`` Toolbox drawer. Drag out a ``||music:play sound effect||`` block onto the Workspace, and drop it into the ``||sensors:on ultrasonic||`` block.
+Go to the ``||variables:set item to||`` block and click the variable name dropdown and select "Rename variable...". In the window that pops up, rename the variable to ``nearness`` and click **Ok**.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.animalsCatPurr)
+let nearness = 0
+forever(function () {
+    nearness = 0
 })
 ```
 
 ## Step 3
 
-In the ``||music:play sound effect||`` block, use the drop-down menu to select the ``information detected`` sound effect. 
- 
-![Select sound effect from dropdown](/static/tutorials/object-near/play-sound-effect-dropdown.png)
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag the ``||sensors:ultrasonic distance||`` out and use it to replace the `0` in the ``||variables:set nearness to||`` block. 
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.informationDetected)
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
 })
 ```
 
 ## Step 4
 
-Open the ``||brick:Brick||`` Toolbox drawer. From the **Screen** section, drag out a ``||brick:show value||`` block onto the Workspace, and drop after the ``||music:play sound effect||`` block.
+Get an ``||logic:if then||`` block from the ``||logic:Logic||`` drawer and place it below ``||variables:set nearness to||``. Find the ``||logic:0 < 0||`` conditional block and replace the ``true`` value of the ``||logic:if then||`` condition with it.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("", 0, 1)
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
+    if (0 < 0) {
+
+    }
 })
 ```
 
 ## Step 5
 
-In the ``||brick:show value||`` block, type the text `"Distance (cm)"` in the first slot.
+In the ``||logic:0 < 0||`` conditional, put the ``||variables:nearness||`` variable from the ``||variables:Variables||`` drawer in the first slot. Change the value of `0` in the second slot to `50`. This sets our range for a near object.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", 0, 1)
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
+    if (nearness < 50) {
+
+    }
 })
 ```
 
 ## Step 6
 
-Open the ``||sensors:Sensors||`` Toolbox drawer. From the **Ultrasonic Sensor** section, drag out an ``||sensors:ultrasonic distance||`` block and drop into the second slot in the ``||brick:show value||`` block replacing the first `0`. 
+Go get a ``||brick:show value||`` block from the ``||brick:Brick||`` Toolbox drawer and put it  inside the ``||logic:if then||``. Set the string in the first slot to `"Distance (cm)"`. Get another ``||variables:nearness||`` and drop it into the second slot.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 1)
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
+    if (nearness < 50) {
+        brick.showValue("Distnace (cm)", nearness, 1)
+    }
 })
 ```
 
 ## Step 7
 
-Open the ``||sensors:Sensors||`` Toolbox drawer, and scroll to the bottom. From the **Threshold** section, drag out a ``||sensors:set ultrasonic||`` block onto the Workspace, and drop it into the ``||loops:on start||``.
+Now, let's add a sound as an alert when something is near. In the ``||music:Music||`` drawer, get the ``||music:play sound effect||`` and put it just below the ``||brick:show value||``.
 
 When an object is near, our brick will say `"detected"` and then display the distance away that the object is detected in centimeters. We can also set the threshold value for determining when an object is "near".
 
-```blocks 
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 1)
+```blocks
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
+    if (nearness < 50) {
+        brick.showValue("Distnace (cm)", nearness, 1)
+        music.playSoundEffect(sounds.animalsCatPurr)
+    }
 })
-sensors.ultrasonic4.setThreshold(UltrasonicSensorEvent.ObjectDetected, 0)
 ```
 
 ## Step 8
 
-In the ``||sensors:set ultrasonic||`` block, type `50` as the value in centimeters for the distance that the object will be detected in.
+In the ``||music:play sound effect||`` block, use the drop-down menu to select the ``information detected`` sound effect. 
+
+![Select sound effect from dropdown](/static/tutorials/object-near/play-sound-effect-dropdown.png)
+
+When an object is near, our brick will display the distance away that the object is detected in centimeters and then say `"detected"`.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
-    music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 1)
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
+    if (nearness < 50) {
+        brick.showValue("Distnace (cm)", nearness, 1)
+        music.playSoundEffect(sounds.informationDetected)
+    }
 })
-sensors.ultrasonic4.setThreshold(UltrasonicSensorEvent.ObjectNear, 50)
 ```
 
 ## Step 9
+
+To give a little time to see the message, put a ``||loops:pause||`` after the ``||music:play sound effect||`` block. Change the time from `100` to `1500` milliseconds. Pull out a ``||brick:clear screen||`` and put it after the ``||loops:pause||``.
+
+```blocks
+let nearness = 0
+forever(function () {
+    nearness = sensors.ultrasonic4.distance()
+    if (nearness < 50) {
+        brick.showValue("Distnace (cm)", nearness, 1)
+        music.playSoundEffect(sounds.informationDetected)
+        pause(1500)
+        brick.clearScreen()
+    }
+})
+```
+
+## Step 10
 
 Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
