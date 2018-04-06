@@ -91,13 +91,17 @@ namespace brick {
     /**
      * Show an image on the screen
      * @param image image to draw
+     * @param duration duration in milliseconds to display the image, eg: 400
      */
     //% blockId=screen_show_image block="show image %image=screen_image_picker"
     //% weight=100 group="Screen" blockGap=8
     //% help=brick/show-image
-    export function showImage(image: Image) {
+    export function showImage(image: Image, duration: number = 400) {
         if (!image) return;
-        screen.drawImage(image, 0, 0)
+        screen.fill(0);
+        screen.drawImage(image, 0, 0);
+        if (duration > 0)
+            pause(duration);
     }
 
     /**
