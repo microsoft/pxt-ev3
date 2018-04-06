@@ -68,7 +68,7 @@ Open the ``||motors:Motors||`` Toolbox drawer. Drag out **2** ``||motors:tank la
 
 ```blocks
 forever(function () {
-    if (sensors.color3.light(LightIntensityMode.Reflected) > 40) {
+    if (40 < sensors.color3.light(LightIntensityMode.Reflected)) {
         motors.largeBC.tank(50, 50)
     } else {
         motors.largeBC.tank(50, 50)
@@ -82,7 +82,7 @@ In the first ``||motors:tank large motors||`` block in the ``||logic:if||`` clau
 
 ```blocks
 forever(function () {
-    if (sensors.color3.light(LightIntensityMode.Reflected) > 40) {
+    if (40 < sensors.color3.light(LightIntensityMode.Reflected)) {
         motors.largeBC.tank(5, 15)
     } else {
         motors.largeBC.tank(50, 50)
@@ -96,7 +96,7 @@ In the second ``||motors:tank large motors||`` block in the ``||logic:else||`` c
 
 ```blocks
 forever(function () {
-    if (sensors.color3.light(LightIntensityMode.Reflected) > 40) {
+    if (40 < sensors.color3.light(LightIntensityMode.Reflected)) {
         motors.largeBC.tank(5, 15)
     } else {
         motors.largeBC.tank(15, 5)
