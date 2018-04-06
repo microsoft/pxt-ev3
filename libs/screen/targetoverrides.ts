@@ -93,7 +93,7 @@ namespace brick {
      * @param image image to draw
      * @param duration duration in milliseconds to display the image, eg: 400
      */
-    //% blockId=screen_show_image block="show image %image=screen_image_picker||for %duration ms"
+    //% blockId=screen_show_image block="show image %image=screen_image_picker"
     //% weight=100 group="Screen" blockGap=8
     //% help=brick/show-image
     export function showImage(image: Image, duration: number = 400) {
