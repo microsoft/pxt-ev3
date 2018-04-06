@@ -109,10 +109,6 @@
                 "path": "http://service.lego.com"
             },
             {
-                "name": "About",
-                "path": "/about"
-            },
-            {
                 "name": "Upgrade Firmware",
                 "path": "https://ev3manager.education.lego.com/"
             },
