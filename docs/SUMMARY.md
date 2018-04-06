@@ -17,6 +17,7 @@
     * [What Color?](/tutorials/what-color)
     * [Line Following](/tutorials/line-following)
     * [Green Light, Red Light](/tutorials/greenlight-redlight)
+    * [Object Near?](/tutorials/object-near)
 
 * [Coding](/coding)
     * [Autonomous Parking](/coding/autonomous-parking)
