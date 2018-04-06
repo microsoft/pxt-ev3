@@ -85,8 +85,6 @@ forever(function () {
 
 Now, let's add a sound as an alert when something is near. In the ``||music:Music||`` drawer, get the ``||music:play sound effect||`` and put it just below the ``||brick:show value||``.
 
-When an object is near, our brick will say `"detected"` and then display the distance away that the object is detected in centimeters. We can also set the threshold value for determining when an object is "near".
-
 ```blocks
 let nearness = 0
 forever(function () {
