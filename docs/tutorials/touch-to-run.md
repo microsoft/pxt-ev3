@@ -62,4 +62,6 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 ## Step 5
 
-Now, let’s download our program to the brick. Plug your @boardname@ into the computer with the USB cable, and click the blue **Download** button in the bottom left of your screen.  Follow the directions to save your program to the brick. Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing and releasing the touch sensor – does the motor start and stop as expected?
+Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+
+Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing and releasing the touch sensor – does the motor start and stop as expected?

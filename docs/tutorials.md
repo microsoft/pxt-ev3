@@ -78,10 +78,10 @@ Step by step guides to coding your @boardname@.
   "url":"/tutorials/line-following",
   "imageUrl":"/static/tutorials/line-following.png"
 }, {
-  "name": "Red Light, Green Light", 
-  "description": "Play Red Light, Green Light using the Color sensor and the robot.", 
-  "cardType": "tutorial", 
-  "url":"/tutorials/redlight-greenlight", 
- "imageUrl":"/static/tutorials/redlight-greenlight.png" 
+  "name": "Red Light, Green Light",
+  "description": "Play Red Light, Green Light using the Color sensor and the robot.",
+  "cardType": "tutorial",
+  "url":"/tutorials/redlight-greenlight",
+  "imageUrl":"/static/tutorials/redlight-greenlight.png"
 }]
 ```

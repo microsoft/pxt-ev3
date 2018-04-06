@@ -15,10 +15,10 @@ The distance value returned is the number of centimeters to the object that the 
 
 ## Example
 
-When the ultrasonic sensor on port 4 detects a far object, display its distance on the screen.
+When the ultrasonic sensor on port 4 detects a near object, display its distance on the screen.
 
 ```blocks
-sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectFar, function () {
+sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjecNear, function () {
     brick.showString("Object detected at:", 1)
     brick.showNumber(sensors.ultrasonic4.distance(), 2)
     brick.showString("centimeters", 3)
