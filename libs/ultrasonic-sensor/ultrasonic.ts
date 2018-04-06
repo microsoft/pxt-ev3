@@ -2,9 +2,7 @@ enum UltrasonicSensorEvent {
     //% block="object detected"
     ObjectDetected = 10,
     //% block="object near"
-    ObjectNear = sensors.ThresholdState.Low,
-    //% block="object far"
-    ObjectFar = sensors.ThresholdState.High
+    ObjectNear = sensors.ThresholdState.Low
 }
 
 namespace sensors {
@@ -43,7 +41,7 @@ namespace sensors {
         }
 
         /**
-         * Registers code to run when an object is close or far
+         * Registers code to run when an object is close or detected
          * @param handler the code to run when detected
          */
         //% help=sensors/ultrasonic/on-event
@@ -94,7 +92,7 @@ namespace sensors {
 
         /**
          * Sets a threshold value
-         * @param condition the dark or bright light condition
+         * @param condition the near or detected condition
          * @param value the value threshold
          */
         //% blockId=ultrasonicSetThreshold block="set **ultrasonic** %this|%condition|to %value"
@@ -104,7 +102,6 @@ namespace sensors {
         setThreshold(condition: UltrasonicSensorEvent, value: number) {
             switch (condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.setLowThreshold(value); break;
-                case UltrasonicSensorEvent.ObjectFar: this.promixityThreshold.setHighThreshold(value); break;
                 case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold = value; break;
             }
         }
@@ -119,7 +116,6 @@ namespace sensors {
         threshold(condition: UltrasonicSensorEvent): number {
             switch (condition) {
                 case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.threshold(ThresholdState.Low); break;
-                case UltrasonicSensorEvent.ObjectFar: this.promixityThreshold.threshold(ThresholdState.Low); break;
                 case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold; break;
             }
             return 0;
