@@ -45,7 +45,7 @@ Open the ``||brick:Brick||`` Toolbox drawer. From the **Screen** section, drag o
 ```blocks
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("", 0, 0)
+    brick.showValue("", 0, 1)
 })
 ```
 
@@ -56,7 +56,7 @@ In the ``||brick:show value||`` block, type the text `"Distance (cm)"` in the fi
 ```blocks
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", 0, 0)
+    brick.showValue("Distance (cm)", 0, 1)
 })
 ```
 
@@ -67,7 +67,7 @@ Open the ``||sensors:Sensors||`` Toolbox drawer. From the **Ultrasonic Sensor** 
 ```blocks
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 0)
+    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 1)
 })
 ```
 
@@ -80,7 +80,7 @@ When an object is near, our brick will say `"detected"` and then display the dis
 ```blocks 
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 0)
+    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 1)
 })
 sensors.ultrasonic4.setThreshold(UltrasonicSensorEvent.ObjectDetected, 0)
 ```
@@ -92,7 +92,7 @@ In the ``||sensors:set ultrasonic||`` block, type `50` as the value in centimete
 ```blocks
 sensors.ultrasonic4.onEvent(UltrasonicSensorEvent.ObjectNear, function () {
     music.playSoundEffect(sounds.informationDetected)
-    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 0)
+    brick.showValue("Distance (cm)", sensors.ultrasonic4.distance(), 1)
 })
 sensors.ultrasonic4.setThreshold(UltrasonicSensorEvent.ObjectNear, 50)
 ```
