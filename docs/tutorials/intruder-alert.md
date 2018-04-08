@@ -8,10 +8,12 @@ The Infrared Sensor uses infrared light waves to detect proximity to the robot. 
 
 ## Step 1
 
-Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out an ``||sensors:on infrared||`` block onto the Workspace (you can place this anywhere).
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out an ``||sensors:on infrared||`` block onto the Workspace (you can place this anywhere). Use the second drop-down menu to select ``detected``.
+
+![Sensor detect method dropdown selections](/static/tutorials/intruder-alert/detect-method-dropdown.png)
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
 
 })
 ```
@@ -21,7 +23,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
 Open the ``||brick:Brick||`` Toolbox drawer. From the **Screen** section, drag out a ``||brick:show image||`` block onto the Workspace, and drop it into the ``||sensors:on infrared||`` block.
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
     brick.showImage(images.expressionsBigSmile)
 })
 ```
@@ -33,7 +35,7 @@ In the ``||brick:show image||`` block, use the drop-down menu to select the **ST
 ![Screen image selections](/static/tutorials/intruder-alert/show-image-dropdown.png)
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
     brick.showImage(images.informationStop1)
 })
 ```
@@ -43,7 +45,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
 Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out a ``||brick:set status light||`` block onto the Workspace, and drop it after the ``||brick:show image||`` block. 
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
     brick.showImage(images.informationStop1)
     brick.setStatusLight(StatusLight.Orange)
 })
@@ -56,7 +58,7 @@ In the ``||brick:set status light||`` block, use the drop-down menu to select th
 ![Status light selection dropdown list](/static/tutorials/intruder-alert/set-status-light-dropdown.png)
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
     brick.showImage(images.informationStop1)
     brick.setStatusLight(StatusLight.RedFlash)
 })
@@ -67,7 +69,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
 Open the ``||loops:Loops||`` Toolbox drawer. Drag a ``||loops:repeat||`` loop onto the Workspace, and drop it after the ``||brick:set status light||`` block. 
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
     brick.showImage(images.informationStop1)
     brick.setStatusLight(StatusLight.RedFlash)
     for (let i = 0; i < 4; i++) {
@@ -81,7 +83,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
 Open the ``||music:Music||`` Toolbox drawer. Drag a ``||music:play sound effect until done||`` block onto the Workspace, and drop it into the ``||loops:repeat||`` loop.
 
 ```blocks
-sensors.infrared1.onEvent(InfraredSensorEvent.ObjectNear, function () {
+sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
     brick.showImage(images.informationStop1)
     brick.setStatusLight(StatusLight.RedFlash)
     for (let i = 0; i < 4; i++) {
