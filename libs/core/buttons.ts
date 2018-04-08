@@ -245,7 +245,7 @@ namespace control {
 
 namespace brick {
     // the brick starts with the red color
-    let currPattern: StatusLight = StatusLight.Red;
+    let currPattern: StatusLight = StatusLight.Off;
 
     /**
      * Set lights.
