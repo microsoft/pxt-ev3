@@ -14,7 +14,6 @@ namespace pxsim.visuals {
         private currentCanvasY = 128;
 
         private static LIGHT_BLACK_COLOR = '#6a6a6a';
-        private static LIGHT_RED_COLOR = '#6a6a6a';
 
         constructor(port: number) {
             super(EV3_SVG, "board", NodeType.Brick, port);
