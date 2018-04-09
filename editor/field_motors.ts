@@ -422,9 +422,14 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
 
         if (!this.isFirst_) {
             options = opts[currentFirst];
-            options.reverse();
         } else {
             options = Object.keys(opts);
+            // Flip the first and second options to make it sorted the way we want it (medium, large, dual)
+            if (options.length == 3) {
+                const temp = options[1];
+                options[1] = options[0];
+                options[0] = temp;
+            }
         }
 
         const isFirstUrl = {
