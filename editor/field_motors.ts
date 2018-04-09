@@ -429,6 +429,8 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
                 const temp = options[1];
                 options[1] = options[0];
                 options[0] = temp;
+            } else {
+                options.reverse();
             }
         }
 
