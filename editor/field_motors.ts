@@ -133,17 +133,9 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         this.setText(text);
     }
 
-    getFirstDisplayText_() {
-        return this.getFirstValue(this.text_);
-    }
-
     getFirstValue(text: string) {
         // Get first set of words up until last space
         return this.normalizeText_(text.substring(0, text.lastIndexOf(' ')));
-    }
-
-    getSecondDisplayText_() {
-        return this.getSecondValue(this.text_);
     }
 
     getSecondValue(text: string) {
@@ -202,12 +194,22 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         this.size_.width = 0;
     };
 
+    patchDualMotorText(text: string) {
+        if (text === null) {
+            return text;
+        }
+        if (text.indexOf(' ') == -1) {
+            text = `large motors ${text}`;
+        }
+        return text;
+    }
+
     setText(text: string) {
         if (text === null || text === this.text_) {
             // No change if null.
             return;
         }
-        if (text.indexOf(' ') == -1) text = `large motors ${text}`;
+        text = this.patchDualMotorText(text);
         this.text_ = text;
         this.updateTextNode_();
         this.updateTextNode2_();
@@ -293,13 +295,17 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         if (this.visible_ && this.textElement_) {
             goog.dom.removeChildren(/** @type {!Element} */(this.textElement_));
             goog.dom.removeChildren(/** @type {!Element} */(this.textElement2_));
+
+            var text = this.text_;
+            text = this.patchDualMotorText(text);
+
             // First dropdown
-            const textNode1 = document.createTextNode(this.getFirstDisplayText_());
+            const textNode1 = document.createTextNode(this.getFirstValue(text));
             this.textElement_.appendChild(textNode1);
 
             // Second dropdown
             if (this.textElement2_) {
-                const textNode2 = document.createTextNode(this.getSecondDisplayText_());
+                const textNode2 = document.createTextNode(this.getSecondValue(text));
                 this.textElement2_.appendChild(textNode2);
             }
             this.updateWidth();
@@ -404,7 +410,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             let text = options[opt][0].alt ? options[opt][0].alt : options[opt][0];
             if (text.indexOf(' ') == -1) {
                 // Patch dual motors as they don't have prefixes.
-                text = `large motors ${text}`
+                text = this.patchDualMotorText(text);
                 if (options[opt][0].alt) options[opt][0].alt = text;
             }
             const value = options[opt][1];
