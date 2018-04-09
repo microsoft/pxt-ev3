@@ -10,11 +10,11 @@
    viewBox="2135.306 6140.141 153.634 153.634"
    version="1.1"
    id="svg7024"
-   sodipodi:docname="Large Motor.svg"
+   sodipodi:docname="Large Motors.svg"
    width="153.634"
    height="153.634"
    inkscape:version="0.91 r13725"
-   inkscape:export-filename="C:\gh\pxt-ev3\libs\core\jres\icons\motorLarge-icon.png"
+   inkscape:export-filename="/Users/sam/pxt-ev3/libs/core/jres/icons/dualMotorLarge-icon.png"
    inkscape:export-xdpi="74.983398"
    inkscape:export-ydpi="74.983398">
   <metadata
@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

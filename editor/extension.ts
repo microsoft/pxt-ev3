@@ -3,7 +3,7 @@
 
 import { deployCoreAsync, initAsync } from "./deploy";
 import { FieldPorts } from "./field_ports";
-import { FieldImages } from "./field_images";
+import { FieldMotors } from "./field_motors";
 import { FieldSpeed } from "./field_speed";
 import { FieldBrickButtons } from "./field_brickbuttons";
 import { FieldTurnRatio } from "./field_turnratio";
@@ -17,8 +17,8 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
             selector: "ports",
             editor: FieldPorts
         }, {
-            selector: "images",
-            editor: FieldImages
+            selector: "motors",
+            editor: FieldMotors
         }, {
             selector: "speed",
             editor: FieldSpeed
