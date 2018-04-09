@@ -163,6 +163,7 @@ namespace motors {
          * @param brake a value indicating if the motor should break when off
          */
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
+        //% motor.fieldEditor="motors"
         //% weight=60 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-brake
@@ -175,6 +176,7 @@ namespace motors {
          * Inverts the motor polarity
         */
         //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
+        //% motor.fieldEditor="motors"
         //% weight=59 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-inverted
@@ -192,6 +194,7 @@ namespace motors {
         //% group="Move"
         //% help=motors/motor/stop
         //% blockId=motorStop block="stop %motors|"
+        //% motors.fieldEditor="motors"
         stop() {
             this.init();
             stop(this._port, this._brake);
@@ -212,6 +215,7 @@ namespace motors {
         //% group="Move"
         //% help=motors/motor/reset
         //% blockId=motorReset block="reset %motors|"
+        //% motors.fieldEditor="motors"
         reset() {
             this.init();
             reset(this._port);
@@ -226,6 +230,7 @@ namespace motors {
         //% blockId=motorRun block="run %motor at %speed=motorSpeedPicker|\\%||for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
+        //% motor.fieldEditor="motors"
         //% expandableArgumentMode=toggle
         //% help=motors/motor/run
         run(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
@@ -287,6 +292,7 @@ namespace motors {
          * @param timeOut optional maximum pausing time in milliseconds
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
+        //% motor.fieldEditor="motors"
         //% weight=90
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
@@ -343,6 +349,7 @@ namespace motors {
          * @param value true for regulated motor
          */
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
+        //% motor.fieldEditor="motors"
         //% weight=58
         //% group="Properties"
         //% help=motors/motor/set-regulated
@@ -355,6 +362,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorSpeed block="%motor|speed"
+        //% motor.fieldEditor="motors"
         //% weight=72 
         //% blockGap=8
         //% group="Counters"
@@ -369,6 +377,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorAngle block="%motor|angle"
+        //% motor.fieldEditor="motors"
         //% weight=70
         //% blockGap=8
         //% group="Counters"
@@ -382,6 +391,7 @@ namespace motors {
          * Clears the motor count
          */
         //% blockId=motorClearCount block="clear %motor|counters"
+        //% motor.fieldEditor="motors"
         //% weight=68
         //% blockGap=8
         //% group="Counters"
@@ -406,28 +416,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motor A"
+    //% whenUsed fixedInstance block="large motor A" jres=icons.portA
     export const largeA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large motor B"
+    //% whenUsed fixedInstance block="large motor B" jres=icons.portB
     export const largeB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large motor C"
+    //% whenUsed fixedInstance block="large motor C" jres=icons.portC
     export const largeC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large motor D"
+    //% whenUsed fixedInstance block="large motor D" jres=icons.portD
     export const largeD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium motor A"
+    //% whenUsed fixedInstance block="medium motor A" jres=icons.portA
     export const mediumA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium motor B"
+    //% whenUsed fixedInstance block="medium motor B" jres=icons.portB
     export const mediumB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium motor C"
+    //% whenUsed fixedInstance block="medium motor C" jres=icons.portC
     export const mediumC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium motor D"
+    //% whenUsed fixedInstance block="medium motor D" jres=icons.portD
     export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
@@ -481,7 +491,8 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairTank block="tank %motors %speedLeft=motorSpeedPicker|\\% %speedRight=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorPairTank block="tank **motors** %motors %speedLeft=motorSpeedPicker|\\% %speedRight=motorSpeedPicker|\\%||for %value %unit"
+        //% motors.fieldEditor="ports"
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
         //% group="Move"
@@ -508,7 +519,8 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairSteer block="steer %chassis turn ratio %turnRatio=motorTurnRatioPicker speed %speed=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorPairSteer block="steer **motors** %chassis turn ratio %turnRatio=motorTurnRatioPicker speed %speed=motorSpeedPicker|\\%||for %value %unit"
+        //% chassis.fieldEditor="ports"
         //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
@@ -571,16 +583,16 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motors B+C"
+    //% whenUsed fixedInstance block="B+C" jres=icons.portBC
     export const largeBC = new SynchedMotorPair(Output.BC);
 
-    //% whenUsed fixedInstance block="large motors A+D"
+    //% whenUsed fixedInstance block="A+D" jres=icons.portAD
     export const largeAD = new SynchedMotorPair(Output.AD);
 
-    //% whenUsed fixedInstance block="large motors A+B"
+    //% whenUsed fixedInstance block="A+B" jres=icons.portAB
     export const largeAB = new SynchedMotorPair(Output.AB);
 
-    //% whenUsed fixedInstance block="large motors C+D"
+    //% whenUsed fixedInstance block="C+D" jres=icons.portCD
     export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {
