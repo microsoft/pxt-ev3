@@ -207,6 +207,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             // No change if null.
             return;
         }
+        if (text.indexOf(' ')) text = `large motors ${text}`;
         this.text_ = text;
         this.updateTextNode_();
         this.updateTextNode2_();
