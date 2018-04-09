@@ -75,7 +75,7 @@ namespace pxsim.visuals {
                 return 0;
             }
             if (!this.content.hasAttribute("viewBox")) {
-                return parseFloat(this.content.getAttribute("height"));
+                return this.getContentHeight();
             }
             return parseFloat(this.content.getAttribute("viewBox").split(" ")[3]);
         }
@@ -85,9 +85,23 @@ namespace pxsim.visuals {
                 return 0;
             }
             if (!this.content.hasAttribute("viewBox")) {
-                return parseFloat(this.content.getAttribute("width"));
+                return this.getContentWidth();
             }
             return parseFloat(this.content.getAttribute("viewBox").split(" ")[2]);
+        }
+
+        public getContentHeight() {
+            if (!this.content) {
+                return 0;
+            }
+            return parseFloat(this.content.getAttribute("height"));
+        }
+    
+        public getContentWidth() {
+            if (!this.content) {
+                return 0;
+            }
+            return parseFloat(this.content.getAttribute("width"));
         }
 
         public attachEvents() {
@@ -98,7 +112,7 @@ namespace pxsim.visuals {
             this.updateDimensions(width, height);
         }
 
-        private updateDimensions(width: number, height: number) {
+        protected updateDimensions(width: number, height: number) {
             if (this.content) {
                 const currentWidth = this.getInnerWidth();
                 const currentHeight = this.getInnerHeight();
