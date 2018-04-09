@@ -15,14 +15,15 @@ namespace pxsim.visuals {
 
         private static LIGHT_BLACK_COLOR = '#6a6a6a';
 
-        constructor(port: number) {
-            super(EV3_SVG, "board", NodeType.Brick, port);
+        protected btnids: string[] = [];
+
+        constructor(xml: string, prefix: string, port: number) {
+            super(xml, prefix, NodeType.Brick, port);
         }
 
         protected buildDomCore() {
             // Setup buttons
-            const btnids = ["btn_up", "btn_enter", "btn_down", "btn_right", "btn_left", "btn_back"];
-            this.buttons = btnids.map(n => this.content.getElementById(this.normalizeId(n)) as SVGElement);
+            this.buttons = this.btnids.map(n => this.content.getElementById(this.normalizeId(n)) as SVGElement);
             this.buttons.forEach(b => svg.addClass(b, "sim-button"));
 
             this.light = this.content.getElementById(this.normalizeId(BrickView.EV3_LIGHT_ID)) as SVGElement;
