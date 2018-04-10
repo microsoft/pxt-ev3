@@ -51,7 +51,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
             const saveAs = pxt.BrowserUtils.hasSaveAs();
 
             const htmlBody = `
-            <div class="ui three column grid stackable">
+            <div class="ui two column grid stackable">
                 <div class="column">
                     <div class="ui">
                         <div class="image">
@@ -70,28 +70,11 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                 <div class="column">
                     <div class="ui">
                         <div class="image">
-                            <img class="ui medium rounded image" src="./static/download/firmware.svg" style="height:109px;width:261px;margin-bottom:1rem;">
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                <span class="ui blue circular label">2</span>
-                                <strong>${lf("Make sure you have the latest EV3 firmware")}</strong>
-                                <br/>
-                                <a href="https://ev3manager.education.lego.com/" target="_blank">${lf("Click here to update to latest firmware")}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="ui">
-                        <div class="image">
                             <img class="ui medium rounded image" src="./static/download/transfer.svg" style="height:109px;width:261px;margin-bottom:1rem;">
                         </div>
                         <div class="content">
                             <div class="description">
-                                <span class="ui blue circular label">3</span>
-                                ${lf("Move the .uf2 file to EV3 brick")}
-                                <br/>
+                                <span class="ui blue circular label">2</span>
                                 ${lf("Locate the downloaded .uf2 file and drag it to the EV3 drive")}
                             </div>
                         </div>
@@ -106,7 +89,11 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                 hideCancel: true,
                 hideAgree: false,
                 agreeLbl: lf("I got it"),
-                buttons: [downloadAgain ? {
+                buttons: [{
+                    label: lf("I don't see the EV3 drive"),
+                    url: '/troubleshoot',
+                    class: 'troubleshoot left floated'
+                }, downloadAgain ? {
                     label: fn,
                     icon: "download",
                     class: "lightgrey focused",
