@@ -45,6 +45,9 @@ namespace pxsim.visuals {
         .sim-text.small {
             font-size:6px;
         }
+        .sim-text.medium {
+            font-size:16px;
+        }
         .sim-text.large {
             font-size:30px;
         }
