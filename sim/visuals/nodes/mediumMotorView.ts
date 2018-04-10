@@ -29,7 +29,7 @@ namespace pxsim.visuals {
 
         protected positionMotorLabel() {
             this.motorLabelGroup.setAttribute('transform', 'translate(25 13)');
-            this.motorLabel.style.fontSize = '13px';
+            this.motorLabel.style.fontSize = '11px';
         }
     }
 }

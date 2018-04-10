@@ -24,7 +24,9 @@ namespace pxsim.visuals {
                 } else if (this.syncedLabelG) {
                     this.syncedLabelG.parentNode.removeChild(this.syncedLabelG);
                 }
+                this.setMotorLabel(motorState.getSpeed(), true);
             }
+            this.setMotorLabel(motorState.getSpeed());
         }
 
         private showSyncedLabel(motorNode: MotorNode, syncedMotor: MotorNode) {
@@ -57,8 +59,9 @@ namespace pxsim.visuals {
         }
 
         protected positionMotorLabel() {
-            this.motorLabelGroup.setAttribute('transform', 'translate(20 15)');
-            this.motorLabel.style.fontSize = '16px';
+            const hasSyncedLabel = this.syncedMotor;
+            this.motorLabelGroup.setAttribute('transform', `translate(${hasSyncedLabel ? '15 35' : '25 15'})`);
+            this.motorLabel.style.fontSize = '13px';
         }
     }
 }

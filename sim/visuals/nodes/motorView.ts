@@ -35,8 +35,8 @@ namespace pxsim.visuals {
             return 0.37;
         }
 
-        setMotorLabel(speed: number) {
-            if (this.currentLabel === `${speed}`) return;
+        setMotorLabel(speed: number, force?: boolean) {
+            if (!force && this.currentLabel === `${speed}`) return;
             this.currentLabel = `${speed}`;
             if (!this.motorLabel) {
                 this.motorLabelGroup = pxsim.svg.child(this.content, "g") as SVGGElement;
