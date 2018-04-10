@@ -313,16 +313,10 @@ namespace pxsim.visuals {
             this.layoutView = new LayoutView();
             this.layoutView.inject(this.element);
 
-            // Add EV3 module element
-            const brickCloseIcon = this.getCloseIconView();
-            brickCloseIcon.registerClick(ev => {
-                this.layoutView.unselectBrick();
-                this.resize();
-            });
-            const brick = new BrickView(-1);
-            brick.setSelected(EV3View.isPreviousBrickSelected());
-            this.layoutView.setBrick(brick, brickCloseIcon);
-
+            const brick = new BrickViewPortrait(-1);
+            this.layoutView.setBrick(brick);
+            EV3View.isPreviousBrickLandscape() ? this.layoutView.setlectBrick() : this.layoutView.unselectBrick();
+            
             this.resize();
 
             // Add Screen canvas to board
@@ -357,10 +351,9 @@ namespace pxsim.visuals {
             (this.screenCanvas.style as any).MozUserSelect = "none";
             this.screenCanvas.style.position = "absolute";
             this.screenCanvas.addEventListener(pxsim.pointerEvents.up, ev => {
-                this.layoutView.selectBrick();
+                this.layoutView.toggleBrickSelect();
                 this.resize();
             })
-            this.screenCanvas.style.cursor = "pointer";
             /*
             this.screenCanvas.style.cursor = "crosshair";
             this.screenCanvas.onmousemove = (e: MouseEvent) => {
@@ -397,12 +390,12 @@ namespace pxsim.visuals {
             // Save previous inputs for the next cycle
             EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
             EV3View.previousSeletedOutputs = ev3board().getMotors().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1);
-            EV3View.previousSelectedBrick = this.layoutView.getBrick().getSelected();
+            EV3View.previousBrickLandscape = this.layoutView.isBrickLandscape();
         }
 
         private static previousSelectedInputs: number[];
         private static previousSeletedOutputs: number[];
-        private static previousSelectedBrick: boolean;
+        private static previousBrickLandscape: boolean;
 
         private static isPreviousInputSelected(index: number, id: number) {
             if (EV3View.previousSelectedInputs && EV3View.previousSelectedInputs[index] == id) {
@@ -420,9 +413,9 @@ namespace pxsim.visuals {
             return false;
         }
 
-        private static isPreviousBrickSelected() {
-            const b = EV3View.previousSelectedBrick;
-            EV3View.previousSelectedBrick = false;
+        private static isPreviousBrickLandscape() {
+            const b = EV3View.previousBrickLandscape;
+            EV3View.previousBrickLandscape = false;
             return !!b;
         }
 
@@ -504,6 +497,7 @@ namespace pxsim.visuals {
         }
 
         private updateScreenStep(state: ScreenState) {
+            const isLandscape = this.layoutView.isBrickLandscape();
             const bBox = this.layoutView.getBrick().getScreenBBox();
             if (!bBox || bBox.width == 0) return;
 
@@ -515,6 +509,8 @@ namespace pxsim.visuals {
             this.screenCanvas.style.left = `${bBox.left + ((bBox.width - this.screenScaledWidth) * 0.5)}px`;
             this.screenCanvas.width = this.screenScaledWidth;
             this.screenCanvas.height = this.screenScaledHeight;
+
+            this.screenCanvas.style.cursor = !isLandscape ? "zoom-in" : "zoom-out";
 
             this.screenCanvasData = this.screenCanvasCtx.getImageData(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 

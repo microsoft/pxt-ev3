@@ -13,7 +13,11 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 5;
+            return 1 / 8;
+        }
+
+        getWiringRatio() {
+            return 0.5;
         }
 
         protected renderMotorAngle(holeEl: Element, angle: number) {

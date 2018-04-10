@@ -36,8 +36,9 @@ namespace pxsim.visuals {
         private inputWires: WireView[] = [];
         private outputWires: WireView[] = [];
 
-        private brick: BrickView;
-        private brickCloseIcon: View = undefined;
+        private brick: BrickViewPortrait;
+        private brickLandscape: BrickViewLandscape;
+        private brickInLandscape: boolean;
 
         private offsets: number[];
         private contentGroup: SVGGElement;
@@ -51,7 +52,8 @@ namespace pxsim.visuals {
             this.outputContainers = [new ViewContainer(), new ViewContainer, new ViewContainer(), new ViewContainer()];
             this.inputContainers = [new ViewContainer(), new ViewContainer, new ViewContainer(), new ViewContainer()];
 
-            this.brick = new BrickView(0);
+            this.brick = new BrickViewPortrait(0);
+            this.brickLandscape = new BrickViewLandscape(0);
 
             for (let port = 0; port < DAL.NUM_OUTPUTS; port++) {
                 this.outputWires[port] = new WireView(port);
@@ -69,30 +71,44 @@ namespace pxsim.visuals {
             this.position();
         }
 
-        public setBrick(brick: BrickView, brickCloseIcon: View) {
+        public setBrick(brick: BrickView) {
             this.brick = brick;
             this.brick.inject(this.scrollGroup);
-
-            this.brickCloseIcon = brickCloseIcon;
-            this.addView(this.brickCloseIcon);
-            this.brickCloseIcon.setVisible(this.brick.getSelected());
+            this.brickLandscape.inject(this.scrollGroup);
+            this.brick.setSelected(false);
+            this.brickLandscape.setSelected(true);
+            this.brickLandscape.setVisible(false);
             this.position();            
         }
 
+        public isBrickLandscape() {
+            return this.brickInLandscape;
+        }
+
         public getBrick() {
-            return this.brick;
+            return this.brickInLandscape ? this.brickLandscape : this.brick;
         }
 
         public unselectBrick() {
             this.brick.setSelected(false);
-            this.brickCloseIcon.setVisible(false);
+            this.brickLandscape.setSelected(true);
+            this.brickLandscape.setVisible(false);
+            this.brickInLandscape = false;
             this.position();
         }
 
-        public selectBrick() {
+        public setlectBrick() {
             this.brick.setSelected(true);
-            this.brickCloseIcon.setVisible(true);
+            this.brickLandscape.setSelected(false);
+            this.brickLandscape.setVisible(true);
+            this.brickInLandscape = true;
             this.position();
+        }
+
+        public toggleBrickSelect() {
+            const selected = this.brickInLandscape;
+            if (selected) this.unselectBrick();
+            else this.setlectBrick();
         }
 
         public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
@@ -223,6 +239,7 @@ namespace pxsim.visuals {
                 n.updateTheme(theme);
             })
             this.brick.updateTheme(theme);
+            this.brickLandscape.updateTheme(theme);
             this.outputs.forEach(n => {
                 n.updateTheme(theme);
             })
@@ -242,22 +259,6 @@ namespace pxsim.visuals {
 
             const noConnections = this.outputs.concat(this.inputs).filter(m => m.getId() != NodeType.Port).length == 0;
 
-            // render the full brick layout, even when there are not connection
-            // otherwise, it creates flickering of the simulator.
-            if (this.brick.getSelected()) {
-                // render output button
-                const closeIconWidth = this.brickCloseIcon.getWidth();
-                const closeIconHeight = this.brickCloseIcon.getHeight();
-                this.brickCloseIcon.translate(contentWidth / 2 - closeIconWidth / 2, 0);
-
-                // render the entire board
-                this.brick.resize(contentWidth, contentHeight - closeIconHeight * 2);
-                this.brick.translate(0, closeIconHeight * 2);
-
-                // Hide all other connections
-                this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
-                return;
-            }
             this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
 
             const moduleHeight = this.getModuleHeight();
@@ -325,6 +326,8 @@ namespace pxsim.visuals {
             // Render the brick in the middle
             this.brick.resize(brickWidth, brickHeight);
             this.brick.translate(currentX, currentY);
+            this.brickLandscape.resize(contentWidth, brickHeight);
+            this.brickLandscape.translate((contentWidth - this.brickLandscape.getContentWidth()) / 2, currentY);
 
             currentX = modulePadding;
             currentY += brickHeight + this.getWiringHeight();

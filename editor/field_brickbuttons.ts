@@ -155,5 +155,6 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
         Blockly.DropDownDiv.content_.removeAttribute('role');
         Blockly.DropDownDiv.content_.removeAttribute('aria-haspopup');
         Blockly.DropDownDiv.content_.removeAttribute('aria-activedescendant');
+        Blockly.DropDownDiv.getContentDiv().style.width = '';
     };
 }

@@ -1,0 +1,28 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 146.25 120.31">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-809.89" y1="-16.33" x2="-809.89" y2="-16.88" gradientTransform="translate(53145.53 916.09) scale(65.53 48.84)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6a6a6a"/>
+      <stop offset="0.52" stop-color="#6a6a6a"/>
+      <stop offset="1" stop-color="#6a6a6a"/>
+    </linearGradient>
+  </defs>
+  <title>EV3Landscape</title>
+  <g id="EV3">
+    <g id="brick">
+      <path id="ev3_body_2" data-name="ev3 body 2" d="M2.64,0h141a2.47,2.47,0,0,1,2.64,2.25h0V118.06a2.47,2.47,0,0,1-2.64,2.25H2.64A2.47,2.47,0,0,1,0,118.06H0V2.25A2.47,2.47,0,0,1,2.64,0Z" style="fill: #fff"/>
+      <g>
+        <path id="ev3_screenborder" data-name="ev3 screenborder" d="M8.47,1.54H137.78a6.58,6.58,0,0,1,6.58,6.58h0V80.79a6.6,6.6,0,0,1-6.58,6.6H8.47a6.6,6.6,0,0,1-6.58-6.6V8.12A6.58,6.58,0,0,1,8.47,1.54Z" style="fill: #393939"/>
+        <path id="ev3_screen" data-name="ev3 screen" d="M19.06,5.07h106.8a4.6,4.6,0,0,1,4.69,4.52v.09h0V77.84a4.61,4.61,0,0,1-4.61,4.62H19.06a4.61,4.61,0,0,1-4.61-4.62V9.68a4.6,4.6,0,0,1,4.61-4.61Z" style="fill: #97b5a6"/>
+      </g>
+    </g>
+    <g id="buttons">
+      <path id="btn_grey" data-name="btn grey" d="M68.9,119.14c-3.46-3.34-8.84-8.84-8.84-8.84v-1.13H57.93a5.13,5.13,0,1,1-.35-10.25h2.47V97.79l8.76-8.94h8.75c3.94,4,8.74,8.75,8.74,8.75v1.32h2a5.13,5.13,0,0,1,.35,10.25H86.3v1.13c-4.66,4.79-8.68,8.84-8.68,8.84Z" style="fill: #6a6a6a"/>
+      <path id="btn_color" data-name="btn color" d="M68.9,119.14c-3.46-3.34-8.84-8.84-8.84-8.84v-1.13H57.93a5.13,5.13,0,1,1-.35-10.25h2.47V97.79l8.76-8.94h8.75c3.94,4,8.74,8.75,8.74,8.75v1.32h2a5.13,5.13,0,0,1,.35,10.25H86.3v1.13c-4.66,4.79-8.68,8.84-8.68,8.84Z" style="fill: url(#linear-gradient)"/>
+      <path id="btn_left" data-name="btn left" d="M57.85,100.14H64.3v7.62H57.85a3.81,3.81,0,0,1-3.8-3.81h0A3.81,3.81,0,0,1,57.85,100.14Z" style="fill: #a8aaa8"/>
+      <path id="btn_right" data-name="btn right" d="M88.32,107.76H81.88v-7.62h6.44a3.81,3.81,0,0,1,3.81,3.8h0a3.81,3.81,0,0,1-3.81,3.81Z" style="fill: #a8aaa8"/>
+      <path id="btn_enter" data-name="btn enter" d="M69.37,100.14h7.44a.29.29,0,0,1,.29.28v7.06a.29.29,0,0,1-.29.28H69.37a.29.29,0,0,1-.28-.28v-7.06A.29.29,0,0,1,69.37,100.14Z" style="fill: #393939"/>
+      <path id="btn_up" data-name="btn up" d="M69.19,90.26l7.9-.09L83,96.28l-2.44,2.44v4.42H78.31v-2.55a1.86,1.86,0,0,0-1.86-1.86H69.58a1.54,1.54,0,0,0-1.6,1.46v3H65.7V98.72l-2.44-2.49Z" style="fill: #a8aaa8"/>
+      <path id="btn_down" data-name="btn down" d="M77.05,117.65l-7.85.06-5.94-6.1,2.48-2.43v-4.44H68v2.54a1.9,1.9,0,0,0,1.86,1.9c1.86,0,6.82,0,6.82,0a1.62,1.62,0,0,0,1.65-1.58h0v-2.86h2.27v4.44L83,111.61Z" style="fill: #a8aaa8"/>
+    </g>
+  </g>
+</svg>

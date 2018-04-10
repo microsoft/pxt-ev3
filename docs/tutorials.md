@@ -1,9 +1,8 @@
 # Tutorials
 
-## Tutorials
-
 Step by step guides to coding your @boardname@.
 
+## Brick
 
 ```codecard
 [{
@@ -30,13 +29,25 @@ Step by step guides to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/mindstorms-music",
   "imageUrl":"/static/tutorials/mindstorms-music.png"
-}, {
+}]
+```
+
+## Motors
+
+```codecard
+[{
   "name": "Run Motors",
   "description": "Use the buttons to start and stop the large and medium motors.",
   "cardType": "tutorial",
   "url":"/tutorials/run-motors",
   "imageUrl":"/static/tutorials/run-motors.png"
-}, {
+}]
+```
+
+## Touch Sensor
+
+```codecard
+[{
   "name": "Touch to Run",
   "description": "Press the Touch sensor and run a motor.",
   "cardType": "tutorial",
@@ -48,7 +59,13 @@ Step by step guides to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/touch-sensor-values",
   "imageUrl":"/static/tutorials/touch-sensor-values.png"
-}, {
+}]
+```
+
+## Color Sensor
+
+```codecard
+[{
   "name": "What Color?",
   "description": "Use the Color sensor to detect different colors.",
   "cardType": "tutorial",
@@ -66,5 +83,17 @@ Step by step guides to coding your @boardname@.
   "cardType": "tutorial",
   "url":"/tutorials/redlight-greenlight",
   "imageUrl":"/static/tutorials/redlight-greenlight.png"
+}]
+```
+
+## Ultrasonic Sensor
+
+```codecard
+[{
+  "name": "Object Near?",
+  "description": "Build a program that will detect when an object is nearby.",
+  "cardType": "tutorial",
+  "url":"/tutorials/object-near",
+  "imageUrl":"/static/tutorials/object-near.png"
 }]
 ```

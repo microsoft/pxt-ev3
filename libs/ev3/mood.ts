@@ -31,7 +31,7 @@ namespace brick {
          */
         show() {
             brick.setStatusLight(this.light);
-            brick.showImage(this.image);
+            brick.showImage(this.image, 0);
             music.playSoundEffectUntilDone(this.sound);
             pause(20);
         }
