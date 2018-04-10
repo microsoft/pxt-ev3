@@ -2,7 +2,7 @@
 /// <reference path="../node_modules/pxt-core/built/pxtblocks.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
-export interface FieldPortsOptions extends Blockly.FieldCustomDropdownOptions {
+export interface FieldPortsOptions extends pxtblockly.FieldImagesOptions {
     columns?: string;
     width?: string;
 }
@@ -11,7 +11,7 @@ export class FieldPorts extends pxtblockly.FieldImages implements Blockly.FieldC
     public isFieldCustom_ = true;
 
     constructor(text: string, options: FieldPortsOptions, validator?: Function) {
-        super(text, options, validator);
+        super(text, { sort: true, data: options.data }, validator);
 
         this.columns_ = parseInt(options.columns) || 4;
         this.width_ = parseInt(options.width) || 300;
@@ -22,11 +22,6 @@ export class FieldPorts extends pxtblockly.FieldImages implements Blockly.FieldC
     }
 
     trimOptions_() {
-    }
-
-    getOptions() {
-        const options = super.getOptions();
-        return options ? options.sort() : undefined;
     }
 
     protected buttonClick_ = function (e: any) {
