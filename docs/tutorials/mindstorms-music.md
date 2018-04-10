@@ -23,7 +23,7 @@ In the ``||brick:show string||`` block, type the text ``"Press my buttons to mak
 brick.showString("Press my buttons to make music!", 1)
 ```
 
-# Step 3
+## Step 3
 
 Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block onto the Workspace (you can put it anywhere).
 

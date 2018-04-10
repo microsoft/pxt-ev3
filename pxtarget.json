@@ -2,9 +2,9 @@
     "id": "ev3",
     "platformid": "linux",
     "nickname": "lego",
-    "name": "LEGO Mindstorms EV3",
-    "title": "LEGO Mindstorms EV3 - Blocks / Javascript editor",
-    "description": "A Blocks / JavaScript code editor for the LEGO Mindstorms EV3.",
+    "name": "LEGO MINDSTORMS EV3",
+    "title": "LEGO MINDSTORMS EV3 - Blocks / Javascript editor",
+    "description": "A Blocks / JavaScript code editor for the LEGO MINDSTORMS EV3.",
     "corepkg": "ev3",
     "bundleddirs": [
         "libs/base",
@@ -97,7 +97,7 @@
         "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
         "githubUrl": "https://github.com/Microsoft/pxt-ev3",
         "betaUrl": "https://makecode.legoeducation.com/about",
-        "boardName": "LEGO Mindstorms EV3 Brick",
+        "boardName": "LEGO MINDSTORMS EV3 Brick",
         "selectLanguage": true,
         "availableLocales": [
             "en"
