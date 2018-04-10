@@ -98,6 +98,7 @@
         "githubUrl": "https://github.com/Microsoft/pxt-ev3",
         "betaUrl": "https://makecode.legoeducation.com/about",
         "boardName": "LEGO Mindstorms EV3 Brick",
+        "driveDisplayName": "LEGO",
         "selectLanguage": true,
         "availableLocales": [
             "en"
