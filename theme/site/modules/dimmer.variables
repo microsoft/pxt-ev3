@@ -1,3 +1,5 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+@backgroundColor: fade(#A2A2A2, 80%);
