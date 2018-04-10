@@ -26,5 +26,10 @@ namespace pxsim.visuals {
             const transform = `translate(2 1.84) rotate(${angle} ${width / 2} ${height / 2})`;
             holeEl.setAttribute("transform", transform);
         }
+
+        protected positionMotorLabel() {
+            this.motorLabelGroup.setAttribute('transform', 'translate(25 13)');
+            this.motorLabel.style.fontSize = '13px';
+        }
     }
 }

@@ -3,6 +3,10 @@
 namespace pxsim.visuals {
     export abstract class MotorView extends ModuleView implements LayoutElement {
 
+        protected motorLabelGroup: SVGGElement;
+        protected motorLabel: SVGTextElement;
+        private currentLabel: string;
+
         constructor(xml: string, prefix: string, id: NodeType, port: NodeType,
             protected rotating_hole_id: string) {
             super(xml, prefix, id, port);
@@ -15,7 +19,8 @@ namespace pxsim.visuals {
             const speed = motorState.getSpeed();
 
             if (!speed) return;
-            this.setMotorAngle(motorState.getAngle());
+            this.setMotorAngle(motorState.getAngle() % 360);
+            this.setMotorLabel(speed);
         }
 
         private setMotorAngle(angle: number) {
@@ -29,5 +34,23 @@ namespace pxsim.visuals {
         getWiringRatio() {
             return 0.37;
         }
+
+        setMotorLabel(speed: number) {
+            if (this.currentLabel === `${speed}`) return;
+            this.currentLabel = `${speed}`;
+            if (!this.motorLabel) {
+                this.motorLabelGroup = pxsim.svg.child(this.content, "g") as SVGGElement;
+                this.motorLabel = pxsim.svg.child(this.motorLabelGroup, "text", { 'text-anchor': 'middle', 'x': '0', 'y': '0', 'class': 'sim-text number inverted' }) as SVGTextElement;
+            }
+            // If Motor speed is not 0
+            if (this.currentLabel) {
+                this.motorLabel.textContent = `${this.currentLabel}%`;
+                this.positionMotorLabel();
+            } else {
+                this.motorLabel.textContent = ``;
+            }
+        }
+
+        protected abstract positionMotorLabel(): void;
     }
 }

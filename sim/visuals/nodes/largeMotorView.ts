@@ -55,5 +55,10 @@ namespace pxsim.visuals {
         getWiringRatio() {
             return 0.37;
         }
+
+        protected positionMotorLabel() {
+            this.motorLabelGroup.setAttribute('transform', 'translate(20 15)');
+            this.motorLabel.style.fontSize = '16px';
+        }
     }
 }
