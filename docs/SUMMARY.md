@@ -16,8 +16,9 @@
     * [Touch Sensor Values](/tutorials/touch-sensor-values)
     * [What Color?](/tutorials/what-color)
     * [Line Following](/tutorials/line-following)
-    * [Green Light, Red Light](/tutorials/greenlight-redlight)
+    * [Red Light, Green Light](/tutorials/redlight-greenlight)
     * [Object Near?](/tutorials/object-near)
+    * [Intruder Alert](/tutorials/intruder-alert)
 
 * [Coding](/coding)
     * [Autonomous Parking](/coding/autonomous-parking)

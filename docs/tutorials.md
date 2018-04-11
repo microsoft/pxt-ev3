@@ -97,3 +97,16 @@ Step by step guides to coding your @boardname@.
   "imageUrl":"/static/tutorials/object-near.png"
 }]
 ```
+
+## Infrared Sensor
+
+```codecard
+[{
+  "name": "Intruder Alert",
+  "description": "Build an intruder alert using the infrared sensor.",
+  "cardType": "tutorial",
+  "url":"/tutorials/intruder-alert",
+  "imageUrl":"/static/tutorials/intruder-alert.png"
+}]
+```
+
