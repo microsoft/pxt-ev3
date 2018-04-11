@@ -102,11 +102,11 @@ Step by step guides to coding your @boardname@.
 
 ```codecard
 [{
-  "name": "Intruder Alert",
-  "description": "Build an intruder alert using the infrared sensor.",
+  "name": "Security Alert",
+  "description": "Build an security alert using the infrared sensor.",
   "cardType": "tutorial",
-  "url":"/tutorials/intruder-alert",
-  "imageUrl":"/static/tutorials/intruder-alert.png"
+  "url":"/tutorials/security-alert",
+  "imageUrl":"/static/tutorials/security-alert.png"
 }]
 ```
 
