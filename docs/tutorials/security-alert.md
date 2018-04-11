@@ -1,16 +1,16 @@
-# Intruder Alert
+# Security Alert
 
 ## Introduction @fullscreen
 
-The Infrared Sensor uses infrared light waves to detect proximity to the robot. Build an intruder alert using the infrared sensor. 
+The Infrared Sensor uses infrared light waves to detect proximity to the robot. Build an security alert using the infrared sensor. 
  
-![Brick in simulator with infrared sensor](/static/tutorials/intruder-alert/intruder-alert.gif)
+![Brick in simulator with infrared sensor](/static/tutorials/security-alert/security-alert.gif)
 
 ## Step 1
 
 Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out an ``||sensors:on infrared||`` block onto the Workspace (you can place this anywhere). Use the second drop-down menu to select ``detected``.
 
-![Sensor detect method dropdown selections](/static/tutorials/intruder-alert/detect-method-dropdown.png)
+![Sensor detect method dropdown selections](/static/tutorials/security-alert/detect-method-dropdown.png)
 
 ```blocks
 sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
@@ -32,7 +32,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
 
 In the ``||brick:show image||`` block, use the drop-down menu to select the **STOP** sign image. 
  
-![Screen image selections](/static/tutorials/intruder-alert/show-image-dropdown.png)
+![Screen image selections](/static/tutorials/security-alert/show-image-dropdown.png)
 
 ```blocks
 sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
@@ -55,7 +55,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
 
 In the ``||brick:set status light||`` block, use the drop-down menu to select the ``red flash`` light 
  
-![Status light selection dropdown list](/static/tutorials/intruder-alert/set-status-light-dropdown.png)
+![Status light selection dropdown list](/static/tutorials/security-alert/set-status-light-dropdown.png)
 
 ```blocks
 sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
@@ -96,7 +96,7 @@ sensors.infrared1.onEvent(InfraredSensorEvent.ObjectDetected, function () {
 
 In the ``||music:play sound effect until done||`` block, use the drop-down menu to select ``information error alarm`` sound effect. 
  
-![Sound effect dropdown selections](/static/tutorials/intruder-alert/play-sound-effect-dropdown.png)
+![Sound effect dropdown selections](/static/tutorials/security-alert/play-sound-effect-dropdown.png)
 
 ## Step 9
 

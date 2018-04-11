@@ -1,4 +1,4 @@
-# Intruder Detector
+# Movement Detector
 
 This program will activate an alarm when an object moves in front of the Ultrasonic Sensor.
 
