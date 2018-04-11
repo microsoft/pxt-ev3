@@ -279,7 +279,7 @@ namespace sensors {
         //% group="Threshold" blockGap=8 weight=49
         //% this.fieldEditor="ports"
         proximityThreshold(condition: InfraredSensorEvent): number {
-            return this._proximityThreshold.threshold(<ThresholdState><number>Light.Dark);
+            return this._proximityThreshold.threshold(<ThresholdState><number>condition);
         }
 
         // TODO

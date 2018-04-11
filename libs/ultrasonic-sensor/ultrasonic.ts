@@ -115,8 +115,8 @@ namespace sensors {
         //% this.fieldEditor="ports"
         threshold(condition: UltrasonicSensorEvent): number {
             switch (condition) {
-                case UltrasonicSensorEvent.ObjectNear: this.promixityThreshold.threshold(ThresholdState.Low); break;
-                case UltrasonicSensorEvent.ObjectDetected: this.movementThreshold; break;
+                case UltrasonicSensorEvent.ObjectNear: return this.promixityThreshold.threshold(ThresholdState.Low);
+                case UltrasonicSensorEvent.ObjectDetected: return this.movementThreshold;
             }
             return 0;
         }
