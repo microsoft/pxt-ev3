@@ -298,6 +298,23 @@ namespace motors {
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
         }
+
+        protected setOutputType(large: boolean) {
+            /*
+            Instruction opOutput_Set_Type (LAYER, NO, TYPE) 
+            Opcode 0xA1 Arguments (Data8) LAYER – Specify chain layer number [0 - 3]  
+            (Data8) NO – Port number [0 - 3]  
+            (Data8) TYPE – Output device type,  (0x07: Large motor, Medium motor = 0x08) Dispatch status Unchanged 
+            Description This function enables specifying the output device type
+            */             
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                if (this._port & (1 << i)) {
+                    const b = mkCmd(i, DAL.opOutputSetType, 1)
+                    b.setNumber(NumberFormat.Int8LE, 2, large ? 0x07 : 0x08)
+                    writePWM(b)        
+                }
+            }
+        }
     }
 
     //% fixedInstances
@@ -316,11 +333,8 @@ namespace motors {
             motors.__motorUsed(this._port, this._large);
         }
 
-        private __init() {
-            // specify motor size on this port            
-            const b = mkCmd(outOffset(this._port), DAL.opOutputSetType, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
-            writePWM(b)
+        private __init() {            
+            this.setOutputType(this._large);
         }
 
         private __setSpeed(speed: number) {
@@ -453,13 +467,7 @@ namespace motors {
         }
 
         private __init() {
-            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
-                if (this._port & (1 << i)) {
-                    const b = mkCmd(outOffset(1 << i), DAL.opOutputSetType, 1)
-                    b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
-                    writePWM(b)
-                }
-            }
+            this.setOutputType(true);
         }
 
         private __setSpeed(speed: number) {
