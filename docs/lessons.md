@@ -1,6 +1,6 @@
 # Lessons
 
-Learning activities for LEGO Mindstorms with MakeCode.
+Learning activities for @boardname@ with MakeCode.
 
 ## Motors and motion
 

@@ -7,13 +7,13 @@ Step by step guides to coding your @boardname@.
 ```codecard
 [{
   "name": "Wake Up!",
-  "description": "Show different moods on your @boardname@. Is it tired, sleepy, or awake?",
+  "description": "Show different moods on the screen. Is it tired, sleepy, or awake?",
   "cardType": "tutorial",
   "url":"/tutorials/wake-up",
   "imageUrl":"/static/tutorials/wake-up.png"
 }, {
   "name": "Make An Animation",
-  "description": "Create a custom animation for your @boardname@.",
+  "description": "Create a custom animation on your brick screen.",
   "cardType": "tutorial",
   "url":"/tutorials/make-an-animation",
   "imageUrl":"/static/tutorials/make-an-animation.png"
@@ -25,7 +25,7 @@ Step by step guides to coding your @boardname@.
   "imageUrl":"/static/tutorials/what-animal-am-i.png"
 }, {
   "name": "Music Brick",
-  "description": "Transform your @boardname@ into a musical instrument!",
+  "description": "Transform the brick into a musical instrument!",
   "cardType": "tutorial",
   "url":"/tutorials/mindstorms-music",
   "imageUrl":"/static/tutorials/mindstorms-music.png"
