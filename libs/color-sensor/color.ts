@@ -268,7 +268,7 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
         threshold(condition: Light): number {
-            return this.thresholdDetector.threshold(<ThresholdState><number>Light.Dark);
+            return this.thresholdDetector.threshold(<ThresholdState><number>condition);
         }
 
         /**
