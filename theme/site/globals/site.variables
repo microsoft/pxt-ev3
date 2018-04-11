@@ -184,3 +184,9 @@
 @blocklyFlyoutColor: #3B3C3D;
 @blocklyFlyoutColorOpacity: 1.0;
 @monacoFlyoutColor: rgba(59, 60, 61, 1.0);
+
+/*-------------------
+   Tutorial
+--------------------*/
+
+@tutorialSegmentBackground: #f2f2f2;
