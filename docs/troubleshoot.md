@@ -39,6 +39,16 @@ Firmware is the software that runs all the basic operations on your brick. Your 
 
 To update your firmware, follow these instructions: [Updating and Resetting Firmware](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/updating-and-resetting-lego-mindstorms-ev3-firmware-408100000007884).
 
+### ~hint
+
+**Offline firmware update**
+
+If your @boardname@ isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. You need to have the firmware file already downloaded and available on the computer connected to the brick.
+
+To do this, read the instructions in the **Manual Firmware Update** section of the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
+
+### ~
+
 ## LEGO Support
 
 If you've checked everything here and can't get the **@drivename@** drive to show up on your computer, you can't make the brick reset, or your program just won't download, then try the [Troubleshooting Walkthrough](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/lego-mindstorms-ev3-troubleshooting-walkthrough-408100000009798).
