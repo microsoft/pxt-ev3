@@ -253,6 +253,11 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/set-threshold
         setThreshold(condition: Light, value: number) {
+            // threshold is used in ambient or reflected modes
+            if (this.mode != LightIntensityMode.Ambient &&
+                this.mode != LightIntensityMode.Reflected)
+                this.setMode(ColorSensorMode.ReflectedLightIntensity);
+
             if (condition == Light.Dark)
                 this.thresholdDetector.setLowThreshold(value)
             else
@@ -268,7 +273,12 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
         threshold(condition: Light): number {
-            return this.thresholdDetector.threshold(<ThresholdState><number>Light.Dark);
+            // threshold is used in ambient or reflected modes
+            if (this.mode != LightIntensityMode.Ambient &&
+                this.mode != LightIntensityMode.Reflected)
+                this.setMode(ColorSensorMode.ReflectedLightIntensity);
+
+            return this.thresholdDetector.threshold(<ThresholdState><number>condition);
         }
 
         /**
