@@ -1,5 +1,11 @@
 # @extends
 
+## Support #support
+
+* [Troubleshoot](/troubleshoot)
+* [LEGO Support](http://service.lego.com/)
+* [EV3 Manager](https://ev3manager.education.lego.com/)
+
 ## Projects #projects
 
 * [Getting Started](/getting-started)
