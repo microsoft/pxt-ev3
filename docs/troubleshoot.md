@@ -25,9 +25,9 @@ Make sure that one end of your USB cable is firmly inserted into the port on the
 If you think your USB connection is good and you still can't see your **@drivename@** drive, try giving the brick a reset. You can follow these steps to reset:
 
 1. Using a finger from one hand, press the **Back** button. Keep holding it.
-2. With your other hand, use two fingers to hold down both the **Left** button and the **Enter** button. You hold these at the same time while your still pressing the **Back** button.
+2. With your other hand, use two fingers to hold down both the **Left** button and the **Enter** button. You hold these at the same time while you're still pressing the **Back** button.
 3. Now, release your finger from the **Back** button.
-4. When the brick says "Starting..." you can let go of the **Left** and **Enter** buttons.
+4. When the brick says "Starting.." you can let go of the **Left** and **Enter** buttons.
 
 You can also watch this [How to Reset](https://www.lego.com/en-us/videos/themes/mindstorms/how-to-reset-the-ev3-p-brick-fbcbdbed398e4e12a7ce30fa662c54be) video to see how to do a reset.
 
