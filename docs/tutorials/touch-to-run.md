@@ -36,7 +36,7 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 ## Step 3
 
-Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:run||`` block onto the Workspace, and drop it into the ``||brick:on touch pressed||`` block.
+Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:run||`` block onto the Workspace, and drop it into the ``||sensors:on touch pressed||`` block.
 
 ```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {

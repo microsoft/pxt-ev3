@@ -122,10 +122,11 @@ namespace pxsim {
                             return 2;
                         }
                         case DAL.opOutputSetType: {
-                            const port = buf.data[1];
+                            const portIndex = buf.data[1]; // not a port but a port index 0..3
                             const large = buf.data[2] == 0x07;
-                            const motors = ev3board().getMotor(port);
-                            motors.forEach(motor => motor.setLarge(large));
+                            const motor = ev3board().getMotors()[portIndex];
+                            if (motor)
+                                motor.setLarge(large);
                             return 2;
                         }
                         default:
