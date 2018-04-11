@@ -108,8 +108,8 @@
    Menu
 --------------------*/
 
-@mainMenuBackground: #ffffff;
-@mainMenuInvertedBackground: @yellow;
+@mainMenuBackground: @legoGreyLight;
+@mainMenuInvertedBackground: #FFFFFF;
 @mainMenuTutorialBackground: @orange;
 
 

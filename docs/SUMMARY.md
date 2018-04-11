@@ -18,6 +18,7 @@
     * [Line Following](/tutorials/line-following)
     * [Red Light, Green Light](/tutorials/redlight-greenlight)
     * [Object Near?](/tutorials/object-near)
+    * [Intruder Alert](/tutorials/intruder-alert)
 
 * [Coding](/coding)
     * [Autonomous Parking](/coding/autonomous-parking)
