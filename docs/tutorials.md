@@ -27,8 +27,8 @@ Step by step guides to coding your @boardname@.
   "name": "Music Brick",
   "description": "Transform the brick into a musical instrument!",
   "cardType": "tutorial",
-  "url":"/tutorials/mindstorms-music",
-  "imageUrl":"/static/tutorials/mindstorms-music.png"
+  "url":"/tutorials/music-brick",
+  "imageUrl":"/static/tutorials/music-brick.png"
 }]
 ```
 
@@ -110,3 +110,17 @@ Step by step guides to coding your @boardname@.
 }]
 ```
 
+## See Also
+
+[Wake Up!](/tutorials/wake-up),
+[Make An Animation](/tutorials/make-an-animation),
+[What Animal Am I?](/tutorials/what-animal-am-i),
+[Music Brick](/tutorials/music-brick),
+[Run Motors](/tutorials/run-motors),
+[Touch to Run](/tutorials/touch-to-run),
+[Touch Sensor Values](/tutorials/touch-sensor-values),
+[What Color?](/tutorials/what-color),
+[Line Following](/tutorials/line-following),
+[Red Light, Green Light](/tutorials/redlight-greenlight),
+[Object Near?](/tutorials/object-near),
+[Security Alert](/tutorials/security-alert)
