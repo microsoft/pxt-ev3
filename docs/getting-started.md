@@ -7,7 +7,7 @@
 {
     "name": "Try",
     "imageUrl": "/static/lessons/try.png",
-    "description": "Get a quick introduction to programming with EV3.",
+    "description": "Get a quick introduction to programming.",
     "url": "/getting-started/try",
     "cardType": "side"
 },
