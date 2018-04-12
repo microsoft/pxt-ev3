@@ -1,4 +1,4 @@
-# LEGO Mindstorms EV3 target for PXT
+# LEGO MINDSTORMS EV3 target for PXT
 
 [![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_rainbow/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/job/pxt-ev3_Push/)
 
