@@ -4,7 +4,7 @@
 
 Transform your @boardname@ into a musical instrument!
 
-![Press my buttons message](/static/tutorials/mindstorms-music/press-my-buttons.png)
+![Press my buttons message](/static/tutorials/music-brick/press-my-buttons.png)
 
 
 ## Step 1
@@ -53,7 +53,7 @@ brick.showString("Press my buttons to make music!", 1)
 
 In the ``||music:play tone||`` blocks, use the drop-down menu to select a note to play for each block.  You can also set the duration to play each note for.
 
-![Tone selector keyboard](/static/tutorials/mindstorms-music/play-tone-dropdown.png)
+![Tone selector keyboard](/static/tutorials/music-brick/play-tone-dropdown.png)
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
