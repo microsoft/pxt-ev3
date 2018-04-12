@@ -275,7 +275,7 @@ namespace sensors {
          * @param condition the light condition
          */
         //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
-        //% group="Calibration" blockGap=8 weight=89
+        //% group="Calibration" weight=89
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
         threshold(condition: Light): number {

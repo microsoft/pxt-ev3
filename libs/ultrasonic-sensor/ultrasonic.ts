@@ -111,7 +111,7 @@ namespace sensors {
          * @param condition the proximity condition
          */
         //% blockId=ultrasonicGetThreshold block="**ultrasonic** %this|%condition"
-        //% group="Calibration" blockGap=8 weight=79
+        //% group="Calibration" weight=79
         //% this.fieldEditor="ports"
         threshold(condition: UltrasonicSensorEvent): number {
             switch (condition) {

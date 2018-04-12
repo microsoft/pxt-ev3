@@ -276,7 +276,7 @@ namespace sensors {
          * @param condition the proximity condition
          */
         //% blockId=irGetThreshold block="**infrared** %this|%condition"
-        //% group="Calibration" blockGap=8 weight=49
+        //% group="Calibration" weight=49
         //% this.fieldEditor="ports"
         proximityThreshold(condition: InfraredSensorEvent): number {
             return this._proximityThreshold.threshold(<ThresholdState><number>condition);
