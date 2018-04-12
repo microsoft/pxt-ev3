@@ -16,7 +16,7 @@
     * [Wake Up!](/tutorials/wake-up)
     * [Make An Animation](/tutorials/make-an-animation)
     * [What Animal Am I?](/tutorials/what-animal-am-i)
-    * [Music Brick](/tutorials/mindstorms-music)
+    * [Music Brick](/tutorials/music-brick)
     * [Run Motors](/tutorials/run-motors)
     * [Touch to Run](/tutorials/touch-to-run)
     * [Touch Sensor Values](/tutorials/touch-sensor-values)
