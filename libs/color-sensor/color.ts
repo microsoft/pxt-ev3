@@ -232,11 +232,17 @@ namespace sensors {
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
+        /**
+         * Gets the ambient light
+         */
         //%
         ambientLight() {
             return this.light(LightIntensityMode.Ambient);
         }
 
+        /**
+         * Gets the reflected light value
+         */
         //%
         reflectedLight() {
             return this.light(LightIntensityMode.Reflected);
@@ -245,10 +251,10 @@ namespace sensors {
         /**
          * Set a threshold value
          * @param condition the dark or bright light condition
-         * @param value the value threshold
+         * @param value the value threshold, eg: 10
          */
         //% blockId=colorSetThreshold block="set **color sensor** %this|%condition|to %value"
-        //% group="Threshold" blockGap=8 weight=90
+        //% group="Calibration" blockGap=8 weight=90
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/set-threshold
@@ -269,7 +275,7 @@ namespace sensors {
          * @param condition the light condition
          */
         //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
-        //% group="Threshold" blockGap=8 weight=89
+        //% group="Calibration" blockGap=8 weight=89
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
         threshold(condition: Light): number {
@@ -285,7 +291,7 @@ namespace sensors {
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
         //% blockId=colorCalibrateLight block="calibrate **color sensor** %this|for %mode"
-        //% group="Threshold" weight=91 blockGap=8
+        //% group="Calibration" weight=91 blockGap=8
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/calibrate-light
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
