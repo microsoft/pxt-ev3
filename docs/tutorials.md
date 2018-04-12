@@ -6,7 +6,7 @@ Step by step guides to coding your @boardname@.
 
 ```codecard
 [{
-  "name": "Wake Up",
+  "name": "Wake Up!",
   "description": "Show different moods on the screen. Is it tired, sleepy, or awake?",
   "cardType": "tutorial",
   "url":"/tutorials/wake-up",
@@ -112,7 +112,7 @@ Step by step guides to coding your @boardname@.
 
 ## See Also
 
-[Wake Up](/tutorials/wake-up),
+[Wake Up!](/tutorials/wake-up),
 [Make An Animation](/tutorials/make-an-animation),
 [What Animal Am I?](/tutorials/what-animal-am-i),
 [Music Brick](/tutorials/music-brick),
