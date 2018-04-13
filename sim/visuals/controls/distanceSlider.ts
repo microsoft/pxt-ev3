@@ -15,7 +15,8 @@ namespace pxsim.visuals {
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
             let gid = "gradient-slider-" + this.getPort();
             this.group = svg.elt("g") as SVGGElement;
-            this.gradient = createGradient(gid, this.getGradientDefinition());
+            const prevGradient = globalDefs.querySelector(`#${gid}`) as SVGLinearGradientElement;
+            this.gradient = prevGradient ? prevGradient : createGradient(gid, this.getGradientDefinition());
             this.gradient.setAttribute('x1', '0%');
             this.gradient.setAttribute('y1', '0%');
             this.gradient.setAttribute('x2', '0%');
@@ -72,11 +73,6 @@ namespace pxsim.visuals {
             })
 
             return this.group;
-        }
-
-        public dispose() {
-            if (this.gradient) this.gradient.parentElement.removeChild(this.gradient);
-            super.dispose();
         }
 
         getInnerHeight() {
