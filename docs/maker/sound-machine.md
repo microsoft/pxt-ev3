@@ -19,7 +19,7 @@ Look at the photos and think about:
 
 ### Things You’ll Need
 
-* [LEGO MINDSTORMS Education EV3 Core Set](https://education.lego.com/enus/products/legomindstormseducationev3coreset/5003400)
+* [@boardname@ Core Set](https://education.lego.com/enus/products/legomindstormseducationev3coreset/5003400)
 
 Additional materials to add to your Sound Machine:
 
@@ -71,7 +71,7 @@ Some things to do while brainstorming:
 
 It is time to start making!
 
-* Use the components from the LEGO® MINDSTORMS EV3 Core Set and additional materials to make your chosen solution. 
+* Use the components from the @boardname@ Core Set and additional materials to make your chosen solution. 
 * Test and analyze your design as you go and record any improvements that you make. 
 
 ### Review and Revise Your Solution

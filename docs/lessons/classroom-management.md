@@ -4,7 +4,7 @@
 
 ### Required Materials
 
-* [LEGO MINDSTORMS Education EV3 Core Set](https://education.lego.com/enus/products/legomindstormseducationev3coreset/5003400)
+* [@boardname@ Core Set](https://education.lego.com/enus/products/legomindstormseducationev3coreset/5003400)
 * Lesson plan
 * Student Worksheet for each activity
 * Inspirational images for each activity
@@ -16,7 +16,7 @@ Each lesson is designed to take 90 minutes. If you work in shorter class periods
 
 ### Preparation
 
-It is important to establish student groups. Groups of two work well. Ensure that each student has a copy of the Student Worksheet for recording their design process, or alternatively, they can use their own preferred method for recording their design journey. They will also need the LEGO MINDSTORMS Education EV3 Core Set (one set for every two students is recommended).
+It is important to establish student groups. Groups of two work well. Ensure that each student has a copy of the Student Worksheet for recording their design process, or alternatively, they can use their own preferred method for recording their design journey. They will also need the @boardname@ Core Set (one set for every two students is recommended).
 
 ### Prior Learning
 

@@ -1,6 +1,6 @@
 # Coding in MakeCode
 
-This guide helps users who are used to the LabView LEGO Minstorms editor quickly get familiar with using blocks in MakeCode.
+This guide helps users who are used to work with @boardname@ to get familiar with using blocks in MakeCode.
 
 ## Snap together the blocks
 

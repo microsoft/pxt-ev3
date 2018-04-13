@@ -106,4 +106,4 @@ sensors.ultrasonic4.setThreshold(UltrasonicSensorEvent.ObjectDetected, 10)
 **Congratulations!**
 
 You are ready to move on to the next steps.
-Try a LEGO MINDSTORMS [Design Engineering](/design-engineering), [Coding](/coding), or [Maker](/maker) activity.
+Try a [Design Engineering](/design-engineering), [Coding](/coding), or [Maker](/maker) activity.

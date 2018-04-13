@@ -2,13 +2,13 @@
 
 If your're having trouble getting your code onto the @boardname@, try these steps to see if you can fix the problem.
 
-## Can I see the LEGO drive on my computer?
+## Can I see the **@drivename@** drive on my computer?
 
 When your @boardname@ is connected to your computer, you should see a new drive called **@drivename@** attached.
 
 On Windows, it looks like this in Explorer:
 
-![LEGO Drive in Windwos Explorer](/static/setup/ev3-drive-windows.png)
+![@drivename@ Drive in Windows Explorer](/static/setup/ev3-drive-windows.png)
 
 If you don't see the **@drivename@** drive, make sure your brick is powered on and check that your USB connection is good.
 

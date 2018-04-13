@@ -4,7 +4,7 @@ Get a quick introduction to programming with EV3.
 
 ![Display on EV3 Brick with Music Notes](/static/getting-started/01_EyesOn_Intro.png)
 
-We are excited to help you get started with LEGO MINDSTORMS Education EV3. In this project we will guide you through connecting your EV3 brick, creating your first program, controlling a Large Motor, a Touch Sensor and a Color Sensor. These steps can take up to 45 minutes.
+We are excited to help you get started with @boardname@. In this project we will guide you through connecting your EV3 brick, creating your first program, controlling a Large Motor, a Touch Sensor and a Color Sensor. These steps can take up to 45 minutes.
 
 ## Turn on your EV3 Brick
 

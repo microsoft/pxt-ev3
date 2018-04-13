@@ -16,7 +16,7 @@ Think about:
 
 ### Build
 
-Build a LEGO MINDSTORMS vehicle that can help prevent drivers from falling asleep and causing an accident. Start by constructing this model:
+Build a @boardname@ vehicle that can help prevent drivers from falling asleep and causing an accident. Start by constructing this model:
 
 [![EV3 robot with color sensor](/static/coding/line-detection/ev3-robot-color-sensor-down.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-color-sensor-down-driving-base-d30ed30610c3d6647d56e17bc64cf6e2.pdf)
 

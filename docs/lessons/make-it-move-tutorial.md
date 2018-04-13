@@ -10,7 +10,7 @@ Your robot will:
 * Use at least one motor
 * Use NO wheels for locomotion
 
-![LEGO MINDSTORMS brick with parts](/static/lessons/make-it-move/locomotion-no-wheels.jpg)
+![@boardname@ with parts](/static/lessons/make-it-move/locomotion-no-wheels.jpg)
 
 
 ## Construct @unplugged
@@ -25,7 +25,7 @@ The legs in the Walker Bot are designed to show how to change the rotary motion 
 
 Start by reading [these](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/ev3-dep/building%20instructions/walker-bot-bi-180fc24f9298e1dd6201099627d43903.pdf) instructions first.
  
-![LEGO MINDSTORMS Walker Bot](/static/lessons/make-it-move/walker-bot.jpg)
+![@boardname@ Walker Bot](/static/lessons/make-it-move/walker-bot.jpg)
 
  
 ## Program 1 @fullscreen

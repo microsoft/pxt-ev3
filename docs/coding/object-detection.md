@@ -16,7 +16,7 @@ Think about:
 
 ### Build
 
-Build a LEGO MINDSTORMS vehicle that can avoid accidents between vehicles and objects in the road. Start by constructing this model:
+Build a @boardname@ vehicle that can avoid accidents between vehicles and objects in the road. Start by constructing this model:
 
 [![EV3 Robot Driving Base](/static/coding/object-detection/ev3-robot-driving-base.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-ultrasonic-sensor-driving-base-61ffdfa461aee2470b8ddbeab16e2070.pdf)
 
