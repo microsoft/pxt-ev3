@@ -54,7 +54,8 @@ namespace pxsim.visuals {
             this.group = svg.elt("g") as SVGGElement;
 
             let gc = "gradient-color-" + this.getPort();
-            this.colorGradient = svg.linearGradient(globalDefs, gc, false);
+            const prevColorGradient = globalDefs.querySelector(`#${gc}`) as SVGLinearGradientElement;
+            this.colorGradient = prevColorGradient ? prevColorGradient : svg.linearGradient(globalDefs, gc, false);
             svg.setGradientValue(this.colorGradient, "50%");
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
@@ -98,11 +99,6 @@ namespace pxsim.visuals {
             })
 
             return this.group;
-        }
-
-        public dispose() {
-            if (this.colorGradient) this.colorGradient.parentElement.removeChild(this.colorGradient);
-            super.dispose();
         }
     }
 }
