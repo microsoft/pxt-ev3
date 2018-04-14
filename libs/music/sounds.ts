@@ -49,7 +49,7 @@ namespace sounds {
     export const communicationGameOver = music.fromWAV(hex``);
     //% fixedInstance jres block="communication go"
     export const communicationGo = music.fromWAV(hex``);
-    //% fixedInstance jres block="communicationGoodJob"
+    //% fixedInstance jres block="communication good job"
     export const communicationGoodJob = music.fromWAV(hex``);
     //% fixedInstance jres block="communication good"
     export const communicationGood = music.fromWAV(hex``);
@@ -263,7 +263,7 @@ namespace music {
      * Play a sound and wait until it finishes
      * @param sound the sound to play
      */
-    //% blockId=music_play_sound_effect_until_done block="play sound effect %sound|until done"
+    //% blockId=music_play_sound_effect_until_done block="play sound effect %sound=music_sound_picker|until done"
     //% weight=98 blockGap=8
     //% help=music/play-sound-effect-until-done
     export function playSoundEffectUntilDone(sound: Sound) {
@@ -278,6 +278,7 @@ namespace music {
      * @param sound the sound
      */
     //% blockId=music_sound_picker block="%sound" shim=TD_ID
+    //% sound.fieldEditor="music"
     //% weight=0 blockHidden=1
     export function __soundPicker(sound: Sound): Sound {
         return sound;
@@ -287,7 +288,7 @@ namespace music {
      * Start playing a sound and don't wait for it to finish.
      * @param sound the sound to play
      */
-    //% blockId=music_play_sound_effect block="play sound effect %sound"
+    //% blockId=music_play_sound_effect block="play sound effect %sound=music_sound_picker"
     //% weight=99 blockGap=8
     //% help=music/play-sound-effect
     export function playSoundEffect(sound: Sound) {
