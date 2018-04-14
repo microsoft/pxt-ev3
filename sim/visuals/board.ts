@@ -388,7 +388,8 @@ namespace pxsim.visuals {
                 })
             }
             // Kill the brick
-            this.layoutView.getBrick().kill();
+            this.layoutView.getPortraitBrick().kill();
+            this.layoutView.getLandscapeBrick().kill();
 
             // Save previous inputs for the next cycle
             EV3View.previousSelectedInputs = ev3board().getInputNodes().map((node, index) => (this.getDisplayViewForNode(node.id, index).getSelected()) ? node.id : -1)
@@ -474,7 +475,8 @@ namespace pxsim.visuals {
 
             const brickNode = ev3board().getBrickNode();
             if (brickNode.didChange()) {
-                this.getDisplayViewForNode(brickNode.id, -1).updateState();
+                this.layoutView.getPortraitBrick().updateState();
+                this.layoutView.getLandscapeBrick().updateState();
             }
 
             const outputNodes = ev3board().getMotors();

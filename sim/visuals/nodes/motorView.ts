@@ -18,7 +18,6 @@ namespace pxsim.visuals {
             if (!motorState) return;
             const speed = motorState.getSpeed();
 
-            if (!speed) return;
             this.setMotorAngle(motorState.getAngle() % 360);
             this.setMotorLabel(speed);
         }
@@ -42,13 +41,8 @@ namespace pxsim.visuals {
                 this.motorLabelGroup = pxsim.svg.child(this.content, "g") as SVGGElement;
                 this.motorLabel = pxsim.svg.child(this.motorLabelGroup, "text", { 'text-anchor': 'middle', 'x': '0', 'y': '0', 'class': 'sim-text number inverted' }) as SVGTextElement;
             }
-            // If Motor speed is not 0
-            if (this.currentLabel) {
-                this.motorLabel.textContent = `${this.currentLabel}%`;
-                this.positionMotorLabel();
-            } else {
-                this.motorLabel.textContent = ``;
-            }
+            this.motorLabel.textContent = `${this.currentLabel}%`;
+            this.positionMotorLabel();
         }
 
         protected abstract positionMotorLabel(): void;

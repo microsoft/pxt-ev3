@@ -78,7 +78,7 @@ namespace pxsim.visuals {
             this.brick.setSelected(false);
             this.brickLandscape.setSelected(true);
             this.brickLandscape.setVisible(false);
-            this.position();            
+            this.position();
         }
 
         public isBrickLandscape() {
@@ -86,7 +86,15 @@ namespace pxsim.visuals {
         }
 
         public getBrick() {
-            return this.brickInLandscape ? this.brickLandscape : this.brick;
+            return this.brickInLandscape ? this.getLandscapeBrick() : this.getPortraitBrick();
+        }
+
+        public getPortraitBrick() {
+            return this.brick;
+        }
+
+        public getLandscapeBrick() {
+            return this.brickLandscape;
         }
 
         public unselectBrick() {

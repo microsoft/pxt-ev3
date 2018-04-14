@@ -406,7 +406,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         let opts = {};
         let conts = {};
         let vals = {};
-        for (let opt in options) {
+        for (let opt = 0; opt < options.length; opt++) {
             let text = options[opt][0].alt ? options[opt][0].alt : options[opt][0];
             if (text.indexOf(' ') == -1) {
                 // Patch dual motors as they don't have prefixes.
