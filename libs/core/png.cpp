@@ -20,7 +20,7 @@ struct PNGHeader {
 } __attribute__((packed));
 
 namespace ImageMethods {
-    Image_ transposed(Image_ img);
+    void setPixel(Image_ img, int x, int y, int c);
 }
 
 namespace image {
@@ -98,13 +98,9 @@ Image_ unpackPNG(Buffer png) {
         return NULL;
     }
 
-    auto res = mkImage(hd.height, hd.width, 1);
+    auto res = mkImage(hd.width, hd.height, 1);
 
-    uint8_t *dst = res->pix();
     uint8_t *src = tmp;
-    uint8_t lastMask = 0xff << (8 - (hd.width & 7));
-    if (lastMask == 0)
-        lastMask = 0xff;
     for (uint32_t i = 0; i < hd.height; ++i) {
         if (*src++ != 0) {
             DMESG("PNG: unsupported filter");
@@ -112,17 +108,18 @@ Image_ unpackPNG(Buffer png) {
             decrRC(res);
             return NULL;
         }
+        int k = 0;
         for (uint32_t j = 0; j < byteW; ++j) {
-            *dst = ~*src++;
-            if (j == byteW - 1) {
-                *dst &= lastMask;
+            int mask = 0x80;
+            int v = *src++;
+            while (mask) {
+                if (!(v & mask))
+                    setPixel(res, i, k++, 1);
+                mask >>= 1;
             }
-            dst++;
         }
     }
     free(tmp);
-    auto r = transposed(res);
-    decrRC(res);
-    return r;
+    return res;
 }
 }
