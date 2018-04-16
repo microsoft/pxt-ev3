@@ -19,6 +19,10 @@ struct PNGHeader {
     uint8_t IDAT[4];
 } __attribute__((packed));
 
+namespace ImageMethods {
+    Image_ transposed(Image_ img);
+}
+
 namespace image {
 
 static uint32_t swap(uint32_t num) {
@@ -94,7 +98,7 @@ Image_ unpackPNG(Buffer png) {
         return NULL;
     }
 
-    auto res = mkImage(hd.width, hd.height, 1);
+    auto res = mkImage(hd.height, hd.width, 1);
 
     uint8_t *dst = res->pix();
     uint8_t *src = tmp;
@@ -117,6 +121,8 @@ Image_ unpackPNG(Buffer png) {
         }
     }
     free(tmp);
-    return res;
+    auto r = transposed(res);
+    decrRC(res);
+    return r;
 }
 }
