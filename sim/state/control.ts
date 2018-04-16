@@ -85,7 +85,7 @@ namespace pxsim.control {
     }
 
     export function dmesg(s: string) {
-        console.log("DMESG: " + s)
+        //console.log("DMESG: " + s)
     }
 }
 
