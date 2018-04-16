@@ -35,7 +35,7 @@ Not seeing the **@drivename@** drive? Make sure to upgrade your firmware at http
 ## Simulator: Test Your Code
 
 You can run your code using the @boardname@ simulator, all inside the same browser window. 
-The simulator has support for the brick screen, buttons, sensors, and motors.
+The simulator has support for the EV3 Brick screen, buttons, sensors, and motors.
 
 ```sim
 brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
