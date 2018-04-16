@@ -1,7 +1,7 @@
 /// <reference path="./moduleView.ts" />
 
 namespace pxsim.visuals {
-    export class InfraredView extends ModuleView implements LayoutElement {
+    export class InfraredView extends SensorView implements LayoutElement {
 
         constructor(port: number) {
             super(INFRARED_SVG, "infrared", NodeType.InfraredSensor, port);

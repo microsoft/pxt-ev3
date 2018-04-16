@@ -1,7 +1,7 @@
-/// <reference path="./moduleView.ts" />
+/// <reference path="./sensorView.ts" />
 
 namespace pxsim.visuals {
-    export class ColorSensorView extends ModuleView implements LayoutElement {
+    export class ColorSensorView extends SensorView implements LayoutElement {
 
         private control: ColorGridControl;
 
