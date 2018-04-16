@@ -8,7 +8,7 @@ console.sendToScreen();
 
 A "console" is a place for a user to see special messages from a device. It could be  something connected to a serial port, a display that shows text, or even a text file. A console is typically used as a place to send information that is added to a message _log_ (a record of messages that are sent from a device). Your program can send log messages using the [console](/reference/console) functions. The MakeCode editor has a console view that lets you see the console output when your program runs in the simulator.
 
-On the @boardname@, the screen can serve as a console too and you can make your console output go there. Before using the console log functions, set the screen as the console output location.
+On the @boardnickname@, the screen can serve as a console too and you can make your console output go there. Before using the console log functions, set the screen as the console output location.
 
 ## Example
 

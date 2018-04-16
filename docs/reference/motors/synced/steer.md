@@ -8,7 +8,7 @@ motors.largeAB.steer(0, 0)
 
 A brick driving with two motors can steer itself by changing the speed of one motor compared to the speed of the other. To make a slow turn to the left, you might make the right motor run slightly faster than the left one. To make a fast, or sharp, turn to the right, the left motor could run at least twice as fast as the right one.
 
-The @boardname@ steers by using a percentage value of _follow_ for one of the motors. This means that the motor in the turn direction will rotate slower than the other. It is the _follower_ motor and the other motor is the _drive_ motor. The drive motor runs at a percentage of full speed set in **speed**. The follower motor runs at a percentage of speed of the drive motor. So, it runs at a percentage of a percentage of full speed.
+The @boardnickname@ steers by using a percentage value of _follow_ for one of the motors. This means that the motor in the turn direction will rotate slower than the other. It is the _follower_ motor and the other motor is the _drive_ motor. The drive motor runs at a percentage of full speed set in **speed**. The follower motor runs at a percentage of speed of the drive motor. So, it runs at a percentage of a percentage of full speed.
 
 To make the turn happen you give a _turn ratio_ which is a percentage value of steer to the left or right. If you want to steer to the left at 30% of the of the drive motor speed, use the value of `-30` for **turnRatio**. Left turns use negative values and right turns use positive values. A really sharp turn to the right might use a turn ratio value of `80`.
 

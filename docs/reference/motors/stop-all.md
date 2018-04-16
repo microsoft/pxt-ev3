@@ -10,7 +10,7 @@ The motors stops but any motion caused from previously running the motors contin
 
 ## Example
 
-Tank the @boardname@ forward at half speed for 5 seconds and then stop.
+Tank the @boardnickname@ forward at half speed for 5 seconds and then stop.
 
 ```blocks
 motors.largeAB.tank(50, 50);

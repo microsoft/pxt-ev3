@@ -227,6 +227,6 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 13
 
-Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your @boardnickname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach a Large motor to Port A, and a Medium motor to Port D. Test your program by pressing the different buttons to see whether the correct motors are running as expected.

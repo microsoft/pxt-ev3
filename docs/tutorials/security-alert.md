@@ -100,6 +100,6 @@ In the ``||music:play sound effect until done||`` block, use the drop-down menu 
 
 ## Step 9
 
-Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your @boardnickname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach an Infrared Sensor to Port 1 of your brick. Test your program by putting an object increasingly closer to the Infrared Sensor – your Intruder Alert should trigger when you get too close! 
