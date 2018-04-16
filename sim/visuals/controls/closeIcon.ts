@@ -17,7 +17,6 @@ namespace pxsim.visuals {
             return this.closeGroup;
         }
 
-
         buildDom(): SVGElement {
             this.content = svg.elt("svg", { width: "100%", height: "100%"}) as SVGSVGElement;
             this.content.appendChild(this.getInnerView());

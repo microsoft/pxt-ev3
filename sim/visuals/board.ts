@@ -466,7 +466,7 @@ namespace pxsim.visuals {
                     const isSelected = EV3View.isPreviousInputSelected(index, node.id) || view.getSelected();
                     if (isSelected && !view.getSelected()) view.setSelected(true);
                     const control = isSelected ? this.getControlForNode(node.id, index, !node.modeChange()) : undefined;
-                    const closeIcon = control ? this.getCloseIconView() : undefined;
+                    const closeIcon = control && view.hasClose() ? this.getCloseIconView() : undefined;
                     this.layoutView.setInput(index, view, control, closeIcon);
                     view.updateState();
                     if (control) control.updateState();
