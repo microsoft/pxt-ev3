@@ -38,7 +38,6 @@ namespace pxsim {
                     switch (cmd) {
                         case DAL.opProgramStart: {
                             // init
-                            console.log('init');
                             return 2;
                         }
                         case DAL.opOutputReset: {
@@ -133,15 +132,9 @@ namespace pxsim {
                             console.warn('unknown cmd: ' + cmd);
                             break;
                     }
-
-                    console.log("pwm write");
-                    console.log(buf);
                     return 2
                 },
                 ioctl: (id, buf) => {
-                    console.log("pwm ioctl");
-                    console.log(id);
-                    console.log(buf);
                     return 2;
                 }
             });
