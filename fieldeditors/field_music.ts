@@ -52,6 +52,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
 
         // Create categoies
         console.log(options);
+        
 
         for (let i = 0, option: any; option = options[i]; i++) {
             let content = (options[i] as any)[0]; // Human-readable text or image.
@@ -122,6 +123,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
             contentDiv.appendChild(button);
         }
         contentDiv.style.width = (this as any).width_ + 'px';
+        dropdownDiv.style.maxHeight = `400px`;
         dropdownDiv.appendChild(contentDiv);
 
         Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(), this.sourceBlock_.getColourTertiary());
@@ -152,6 +154,11 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     }
 
     trimOptions_() {
+    }
+
+    protected onHide_() {
+        super.onHide_();
+        Blockly.DropDownDiv.getContentDiv().style.maxHeight = '';
     }
 
     private createTextNode_(content: string) {
