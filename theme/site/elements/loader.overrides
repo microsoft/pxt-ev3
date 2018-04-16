@@ -2,7 +2,8 @@
          Site Overrides
 *******************************/
 
-.ui.loader:before {
+.ui.loader.main:before, 
+.ui.loader.avatar:before {
    border: none;
    border-radius: 0px;
    box-shadow: none;
@@ -10,11 +11,10 @@
    background-size: 100%;
 }
 
-.ui.loader:after {
+.ui.loader.main:after {
    border: none;
    box-shadow: none;
    border-radius: 0px;
-   margin: 40px auto;
    background: transparent @loaderImage no-repeat center center;
    background-size: 100%;
   -webkit-animation: @loaderAnimation @loaderSpeed infinite linear;
@@ -25,7 +25,6 @@
    border: none;
    box-shadow: none;
    border-radius: 0px;
-   margin: 40px auto;
    background: transparent @avatarImage no-repeat center center;
    background-size: 100%;
   -webkit-animation: @loaderAnimation @loaderSpeed infinite linear;
