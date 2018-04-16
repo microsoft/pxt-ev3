@@ -99,7 +99,6 @@
         "betaUrl": "https://makecode.legoeducation.com/about",
         "driveDisplayName": "EV3",
         "boardName": "LEGO® MINDSTORMS® Education EV3",
-        "boardNickname": "EV3 Brick",
         "selectLanguage": true,
         "availableLocales": [
             "en"

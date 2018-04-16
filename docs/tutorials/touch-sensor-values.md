@@ -89,6 +89,6 @@ forever(function () {
 
 ## Step 8
 
-Now, plug your @boardnickname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing the ENTER button. When the motor starts, press the touch sensor. Does the motor stop as expected?

@@ -160,6 +160,6 @@ brick.showString("Guess what animal?", 0)
 
 ## Step 10
 
-Now, plug your @boardnickname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Test your program with a friend by pressing the right, left, up, and down buttons on your brick. Have your friend guess what animal it is!

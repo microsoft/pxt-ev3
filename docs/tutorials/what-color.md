@@ -131,6 +131,6 @@ brick.showString("What color?", 1)
 
 ## Step 9
 
-Now, plug your @boardnickname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach a Color Sensor to Port 3 of your brick. Test your program by flashing Red, Green and Yellow colored paper or use LEGO bricks in front of the Color Sensor.

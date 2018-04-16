@@ -1,10 +1,10 @@
 # Troubleshooting download problems
 
-If your're having trouble getting your code onto the @boardnickname@, try these steps to see if you can fix the problem.
+If your're having trouble getting your code onto the EV3 Brick, try these steps to see if you can fix the problem.
 
 ## Can I see the **@drivename@** drive on my computer?
 
-When your @boardnickname@ is connected to your computer, you should see a new drive called **@drivename@** attached.
+When your EV3 Brick is connected to your computer, you should see a new drive called **@drivename@** attached.
 
 On Windows, it looks like this in Explorer:
 
@@ -43,7 +43,7 @@ To update your firmware, follow these instructions: [Updating and Resetting Firm
 
 **Offline firmware update**
 
-If your @boardnickname@ isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. You need to have the firmware file already downloaded and available on the computer connected to the brick.
+If your EV3 Brick isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. You need to have the firmware file already downloaded and available on the computer connected to the brick.
 
 To do this, read the instructions in the **Manual Firmware Update** section of the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
 
