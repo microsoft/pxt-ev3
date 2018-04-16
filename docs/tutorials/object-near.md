@@ -134,6 +134,6 @@ forever(function () {
 
 ## Step 10
 
-Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach an Ultrasonic Sensor to Port 4 of your brick. Test your program by putting an object at different distances in front of the Ultrasonic Sensor – an object 50 centimeters or closer should be detected. 
