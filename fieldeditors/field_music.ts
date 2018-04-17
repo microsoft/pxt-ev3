@@ -29,7 +29,9 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         this.updateWidth = (Blockly.Field as any).prototype.updateWidth;
         this.updateTextNode_ = Blockly.Field.prototype.updateTextNode_;
 
-        this.soundCache_ = JSON.parse(pxtTargetBundle.bundledpkgs['music']['sounds.jres']);
+        if (!pxt.BrowserUtils.isIE()) {
+            this.soundCache_ = JSON.parse(pxtTargetBundle.bundledpkgs['music']['sounds.jres']);
+        }
     }
 
     /**
@@ -283,13 +285,15 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
      * @private
      */
     protected buttonEnter_ = function (value: any) {
-        const jresValue = value.substring(value.lastIndexOf('.') + 1);
-        const buf = this.soundCache_[jresValue];
-        if (buf) {
-            const refBuf = {
-                data: pxt.U.stringToUint8Array(atob(buf))
+        if (this.soundCache_) {
+            const jresValue = value.substring(value.lastIndexOf('.') + 1);
+            const buf = this.soundCache_[jresValue];
+            if (buf) {
+                const refBuf = {
+                    data: pxt.U.stringToUint8Array(atob(buf))
+                }
+                pxsim.AudioContextManager.playBufferAsync(refBuf as any);
             }
-            pxsim.AudioContextManager.playBufferAsync(refBuf as any);
         }
     };
 
