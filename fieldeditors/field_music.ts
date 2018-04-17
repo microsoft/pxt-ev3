@@ -234,6 +234,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     protected onHide_() {
         super.onHide_();
         Blockly.DropDownDiv.getContentDiv().style.maxHeight = '';
+        this.stopSounds();
     }
 
     private createTextNode_(content: string) {
@@ -276,6 +277,8 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
 
         this.refreshCategories(categoriesDiv, categories);
         this.refreshOptions(contentDiv, options);
+
+        this.stopSounds();
     }
 
     /**
@@ -298,6 +301,10 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     };
 
     protected buttonLeave_ = function () {
-        pxsim.AudioContextManager.stop();
+        this.stopSounds();
     };
+
+    private stopSounds() {
+        pxsim.AudioContextManager.stop();
+    }
 }
