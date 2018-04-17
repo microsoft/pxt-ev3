@@ -17,7 +17,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
 })
 ```
 
-The editor works in [most modern browsers](/browsers). It works [offline](/offline) once loaded and doesn't require any installation.
+The editor works in [most modern browsers](/browsers). It works [offline](/offline) once loaded and doesn't require any installation. Take a look at some of the [features](/about/editor-features) of the editor.
 
 ## Compile and Flash: Your Program!
 
