@@ -9,10 +9,11 @@ export interface FieldMusicOptions extends pxtblockly.FieldImagesOptions {
 
 declare const pxtTargetBundle: any;
 
+let soundCache: any;
+
 export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldCustom {
     public isFieldCustom_ = true;
 
-    private soundCache_: any;
     private selectedCategory_: string;
 
     private categoriesCache_: string[];
@@ -30,7 +31,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         this.updateTextNode_ = Blockly.Field.prototype.updateTextNode_;
 
         if (!pxt.BrowserUtils.isIE()) {
-            this.soundCache_ = JSON.parse(pxtTargetBundle.bundledpkgs['music']['sounds.jres']);
+            soundCache = JSON.parse(pxtTargetBundle.bundledpkgs['music']['sounds.jres']);
         }
     }
 
@@ -288,9 +289,9 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
      * @private
      */
     protected buttonEnter_ = function (value: any) {
-        if (this.soundCache_) {
+        if (soundCache) {
             const jresValue = value.substring(value.lastIndexOf('.') + 1);
-            const buf = this.soundCache_[jresValue];
+            const buf = soundCache[jresValue];
             if (buf) {
                 const refBuf = {
                     data: pxt.U.stringToUint8Array(atob(buf))
