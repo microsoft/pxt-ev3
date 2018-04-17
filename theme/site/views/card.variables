@@ -3,3 +3,4 @@
 *******************************/
 
 @exampleCardFullHeight: true;
+@borderRadius: 0;

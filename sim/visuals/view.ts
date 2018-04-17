@@ -212,6 +212,10 @@ namespace pxsim.visuals {
             }
         }
 
+        public hasClose() {
+            return true;
+        }
+
         protected setChangedState() {
             this.changed = true;
         }

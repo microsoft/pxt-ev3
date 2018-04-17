@@ -136,6 +136,7 @@
         "hasAudio": true,
         "usbHelp": [],
         "extendEditor": true,
+        "extendFieldEditors": true,
         "disableBlockIcons": true,
         "blocklyOptions": {
             "grid": {

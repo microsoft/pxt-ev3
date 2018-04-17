@@ -106,6 +106,6 @@ forever(function () {
 
 ## Step 8
 
-Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach a Color Sensor to Port 3 of your brick, and attach your brick to a driving base with large motors attached to Ports B and C. See the instructions for building a _Driving Base with Color Sensor Down_. Test your program by positioning your robot to the right of a dark, thick line and then let it drive! 
