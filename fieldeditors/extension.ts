@@ -7,6 +7,7 @@ import { FieldSpeed } from "./field_speed";
 import { FieldBrickButtons } from "./field_brickbuttons";
 import { FieldTurnRatio } from "./field_turnratio";
 import { FieldColorEnum } from "./field_color";
+import { FieldMusic } from "./field_music";
 
 pxt.editor.initFieldExtensionsAsync = function (opts: pxt.editor.FieldExtensionOptions): Promise<pxt.editor.FieldExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
@@ -30,6 +31,9 @@ pxt.editor.initFieldExtensionsAsync = function (opts: pxt.editor.FieldExtensionO
         }, {
             selector: "colorenum",
             editor: FieldColorEnum
+        }, {
+            selector: "music",
+            editor: FieldMusic
         }]
     };
     return Promise.resolve<pxt.editor.FieldExtensionResult>(res);

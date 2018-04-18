@@ -21,12 +21,7 @@ namespace pxsim.SoundMethods {
     }
 
     export function stop() {
-        return new Promise<void>(resolve => {
-            if (audio) {
-                audio.pause();
-            }
-            resolve();
-        })
+        pxsim.AudioContextManager.stop();
     }
 
 }
