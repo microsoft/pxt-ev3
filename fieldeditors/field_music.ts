@@ -30,7 +30,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         this.updateWidth = (Blockly.Field as any).prototype.updateWidth;
         this.updateTextNode_ = Blockly.Field.prototype.updateTextNode_;
 
-        if (!pxt.BrowserUtils.isIE()) {
+        if (!pxt.BrowserUtils.isIE() && !soundCache) {
             soundCache = JSON.parse(pxtTargetBundle.bundledpkgs['music']['sounds.jres']);
         }
     }
