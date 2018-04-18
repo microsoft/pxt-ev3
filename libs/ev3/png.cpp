@@ -114,7 +114,7 @@ Image_ unpackPNG(Buffer png) {
             int v = *src++;
             while (mask) {
                 if (!(v & mask))
-                    setPixel(res, i, k++, 1);
+                    ImageMethods::setPixel(res, i, k++, 1);
                 mask >>= 1;
             }
         }
