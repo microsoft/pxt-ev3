@@ -8,7 +8,9 @@
         "images.jres",
         "images.ts",
         "mood.ts",
-        "console.ts"
+        "console.ts",
+        "png.cpp",
+        "shims.d.ts"
     ],
     "testFiles": [
         "test.ts"
