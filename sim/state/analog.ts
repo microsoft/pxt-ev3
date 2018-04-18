@@ -48,19 +48,12 @@ namespace pxsim {
                     let v = "vSIM"
                     for (let i = 0; i < buf.data.length; ++i)
                         buf.data[i] = v.charCodeAt(i) || 0
-                    console.log("analog read");
-                    console.log(buf.data);
                     return buf.data.length
                 },
                 write: buf => {
-                    console.log("analog write");
-                    console.log(buf);
                     return 2
                 },
                 ioctl: (id, buf) => {
-                    console.log("analog ioctl");
-                    console.log(id);
-                    console.log(buf);
                     return 2;
                 }
             })

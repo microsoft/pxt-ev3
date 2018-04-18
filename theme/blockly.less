@@ -4,14 +4,6 @@
 
 @import 'blockly-core';
 
-/* Toolbox icons */
-
-/* Fonts for toolbox icons */
-@font-face {
-    font-family: 'legoIcons';
-    src: data-uri("../docs/static/fonts/icons/iconfont.woff");
-}
-
 .blocklyFlyoutLabel:not(.blocklyFlyoutHeading) .blocklyFlyoutLabelIcon {
     fill: white;
     font-size: 1.7rem;
@@ -19,59 +11,6 @@
 
 .blocklyFlyoutLabel .blocklyFlyoutLabelIcon {
     font-family: 'legoIcons' !important;
-}
-
-span.blocklyTreeIcon {
-    font-family: 'legoIcons' !important;
-}
-
-/* Toolbox padding */
-.blocklyToolboxDiv, .monacoToolboxDiv {
-    padding: 0.5rem;
-    /*box-shadow: inset 0px 0px 0px 2px #D3A805;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;*/
-    box-shadow: 3px 0 1px -2px @legoGreyLight;
-}
-
-div.blocklyTreeRow {
-    border-radius: 0px;
-    margin-bottom: 7px;
-    /*-webkit-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);
-    -moz-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);
-    box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);*/
-
-    border: none !important;
-    border-bottom: 1px solid #EBEBEB !important;
-}
-
-div.blocklyTreeSeparator {
-    border: none;
-    /*border-bottom: solid #CEA403 2px;*/
-}
-
-/* Remove shadow around blockly blocks */
-.blocklyPathDark, .blocklyPathLight {
-    display: none;
-}
-
-/* Blockly Text */
-span.blocklyTreeLabel {
-    font-family: @pageFont !important;
-    font-size:1rem !important;
-    font-weight: bold;
-}
-
-/* Search box */
-#blocklySearchArea {
-    margin: 0.5rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 0.8rem;
-}
-.blocklySearchInputField {
-    border-radius: 1rem !important;
-    border: 1px solid #ebebeb !important;
 }
 
 /* Square shaped corners */
@@ -92,81 +31,34 @@ span.blocklyTreeLabel {
     border-radius: 0px !important;
 }
 
-/* Mobile */
-@media only screen and (max-width: @largestMobileScreen) {
-    #blocklyTrashIcon {
-        margin: 0.2rem;
-    }
+/* Music field editor */
+
+.blocklyDropdownText {
+    display: flex;
+    justify-content: center;
+    line-height: 1.5rem;
+    color: #fff;
 }
 
-span.blocklyTreeIcon.blocklyTreeIconloops::before {
-    content: "\f10b";
+.blocklyMusicFieldCategories {
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+.blocklyMusicFieldOptions {
+    margin-top: 80px;
 }
 
-span.blocklyTreeIcon.blocklyTreeIconlogic::before {
-    content: "\f10a";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconvariables::before {
-    content: "\f111";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconmath::before {
-    content: "\f10c";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconfunctions {
-    font-family: 'legoIcons' !important;
-}
-span.blocklyTreeIcon.blocklyTreeIconfunctions::before {
-    content: "\f108";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconarrays::before {
-    content: "\f109";
-}
-
-span.blocklyTreeIcon.blocklyTreeIcontext::before {
-    content: "\f110";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconaddpackage::before {
-    content: "\f105";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconadvancedcollapsed::before {
-    content: "\f113";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconadvancedexpanded::before {
-    content: "\f114";
-}
-
-span.blocklyTreeIcon.blocklyTreeIconsearch::before {
-    content: "\f11a";
-}
-
-.save-editortools-btn .icon.save:before {
-    font-family: 'legoIcons';
-    content: "\f118";
-}
-
-.download-button .icon.download.icon-and-text:before {
-    font-family: 'legoIcons';
-    content: "\f117";
-}
-
-.button.approve.positive i.icon.checkmark:before {
-    font-family: 'legoIcons';
-    content: "\f116";
-}
-
-.button.approve.cancel i.icon.cancel:before {
-    font-family: 'legoIcons';
-    content: "\f115";
-}
-
-.blocks-menuitem i.icon.blocks:before {
-    font-family: 'legoIcons' !important;
-    content: "\f119" !important;
+.blocklyDropdownTag {
+    padding: 2px;
+    font-weight: bold;
+    margin: 4px;
+    border-radius: 0;
+    outline: none;
+    border: 1px solid;
+    transition: box-shadow .1s;
+    cursor: pointer;
 }

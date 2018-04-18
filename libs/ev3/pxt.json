@@ -7,7 +7,13 @@
         "startup.ts",
         "images.jres",
         "images.ts",
-        "mood.ts"
+        "mood.ts",
+        "console.ts",
+        "png.cpp",
+        "shims.d.ts"
+    ],
+    "testFiles": [
+        "test.ts"
     ],
     "dependencies": {
         "base": "file:../base",

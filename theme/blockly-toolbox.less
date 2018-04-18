@@ -1,0 +1,122 @@
+
+
+/*******************************
+     Blockly Toolbox
+*******************************/
+
+/* Fonts for toolbox icons */
+@font-face {
+    font-family: 'legoIcons';
+    src: data-uri("../docs/static/fonts/icons/iconfont.woff");
+}
+
+span.blocklyTreeIcon {
+    font-family: 'legoIcons' !important;
+}
+
+/* Toolbox padding */
+.blocklyToolboxDiv, .monacoToolboxDiv {
+    padding: 0.5rem;
+    /*box-shadow: inset 0px 0px 0px 2px #D3A805;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;*/
+    box-shadow: 3px 0 1px -2px @legoGreyLight;
+}
+
+div.blocklyTreeRow {
+    border-radius: 0px;
+    margin-bottom: 7px;
+    /*-webkit-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);
+    -moz-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);
+    box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);*/
+
+    border: none !important;
+    border-bottom: 1px solid #EBEBEB !important;
+}
+
+div.blocklyTreeSeparator {
+    border: none;
+    /*border-bottom: solid #CEA403 2px;*/
+}
+
+/* Blockly Text */
+span.blocklyTreeLabel {
+    font-family: @pageFont !important;
+    font-size:1rem !important;
+    font-weight: bold;
+}
+
+/* Search box */
+#blocklySearchArea {
+    margin: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 0.8rem;
+}
+.blocklySearchInputField {
+    border-radius: 1rem !important;
+    border: 1px solid #ebebeb !important;
+}
+
+/* Monaco flyout */
+.monacoFlyout {
+    border: 0 !important;
+}
+
+/* Mobile */
+@media only screen and (max-width: @largestMobileScreen) {
+    #blocklyTrashIcon {
+        margin: 0.2rem;
+    }
+}
+
+/*******************************
+     Custom icons
+*******************************/
+
+span.blocklyTreeIcon.blocklyTreeIconloops::before {
+    content: "\f10b";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconlogic::before {
+    content: "\f10a";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconvariables::before {
+    content: "\f111";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconmath::before {
+    content: "\f10c";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconfunctions {
+    font-family: 'legoIcons' !important;
+}
+span.blocklyTreeIcon.blocklyTreeIconfunctions::before {
+    content: "\f108";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconarrays::before {
+    content: "\f109";
+}
+
+span.blocklyTreeIcon.blocklyTreeIcontext::before {
+    content: "\f110";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconaddpackage::before {
+    content: "\f105";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconadvancedcollapsed::before {
+    content: "\f113";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconadvancedexpanded::before {
+    content: "\f114";
+}
+
+span.blocklyTreeIcon.blocklyTreeIconsearch::before {
+    content: "\f11a";
+}

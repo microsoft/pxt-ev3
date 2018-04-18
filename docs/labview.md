@@ -29,9 +29,9 @@ motors.largeA.stop()
 
 ## Download to the EV3
 
-Before you actually run your program on the @boardname@, you can first try it in the simulator. The MakeCode editor includes a simulator in the browser for you to test your code. You can make changes to your program and check them out it the simulator to make sure your code works the way want. The similator knows when you modify your code and it restarts automatically to run the new code.
+Before you actually run your program on the EV3 Brick, you can first try it in the simulator. The MakeCode editor includes a simulator in the browser for you to test your code. You can make changes to your program and check them out it the simulator to make sure your code works the way want. The similator knows when you modify your code and it restarts automatically to run the new code.
 
-Once you're ready to transfer your program to the @boardname@, click the ``|Download|`` button and follow the instructions.
+Once you're ready to transfer your program to the EV3 Brick, click the ``|Download|`` button and follow the instructions.
 
 ## Single motors
 
