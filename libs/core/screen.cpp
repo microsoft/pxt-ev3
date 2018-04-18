@@ -27,13 +27,13 @@ static void bitBufferToFrameBufferSwap(uint8_t *bitBuffer, uint8_t *fb) {
         while (n--) {
             uint8_t v = 0;
             if (*ptr & mask)
-                v |= 0x03;
+                v |= 0xE0;
             ptr += LCD_HEIGHT / 8;
             if (*ptr & mask)
                 v |= 0x1C;
             ptr += LCD_HEIGHT / 8;
             if (*ptr & mask)
-                v |= 0xE0;
+                v |= 0x03;
             ptr += LCD_HEIGHT / 8;
             *fb++ = v;
         }
