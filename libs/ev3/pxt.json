@@ -7,7 +7,12 @@
         "startup.ts",
         "images.jres",
         "images.ts",
-        "mood.ts"
+        "mood.ts",
+        "console.ts",
+        "shims.d.ts"
+    ],
+    "testFiles": [
+        "test.ts"
     ],
     "dependencies": {
         "base": "file:../base",
@@ -20,5 +25,9 @@
         "gyro-sensor": "file:../gyro-sensor",
         "infrared-sensor": "file:../infrared-sensor"
     },
+    "palette": [
+       "#ffffff",
+       "#000000"
+    ],
     "public": true
 }
