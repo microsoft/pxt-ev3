@@ -26,5 +26,9 @@
         "gyro-sensor": "file:../gyro-sensor",
         "infrared-sensor": "file:../infrared-sensor"
     },
+    "palette": [
+       "#97b5a6",
+       "#000000"
+    ],
     "public": true
 }
