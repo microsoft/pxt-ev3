@@ -1,0 +1,8 @@
+{
+    "blockIdentity": "brick.__imagePicker",
+    "creator": "image.ofBuffer",
+    "star": {
+        "namespace": "images",
+        "mimeType": "image/x-mkcd-f1"
+    }
+}
