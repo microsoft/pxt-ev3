@@ -27,7 +27,7 @@
         "infrared-sensor": "file:../infrared-sensor"
     },
     "palette": [
-       "#97b5a6",
+       "#ffffff",
        "#000000"
     ],
     "public": true
