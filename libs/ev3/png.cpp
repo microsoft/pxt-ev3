@@ -20,7 +20,7 @@ struct PNGHeader {
 } __attribute__((packed));
 
 namespace ImageMethods {
-    void setPixel(Image_ img, int x, int y, int c);
+void setPixel(Image_ img, int x, int y, int c);
 }
 
 namespace image {
@@ -99,7 +99,7 @@ Image_ unpackPNG(Buffer png) {
     }
 
     auto res = mkImage(hd.width, hd.height, 1);
-
+    
     uint8_t *src = tmp;
     for (uint32_t i = 0; i < hd.height; ++i) {
         if (*src++ != 0) {
@@ -113,8 +113,8 @@ Image_ unpackPNG(Buffer png) {
             int mask = 0x80;
             int v = *src++;
             while (mask) {
-                if (!(v & mask))
-                    ImageMethods::setPixel(res, i, k++, 1);
+                ImageMethods::setPixel(res, k, i, !(v & mask) ? 1 : 0);
+                k++;
                 mask >>= 1;
             }
         }
@@ -122,4 +122,4 @@ Image_ unpackPNG(Buffer png) {
     free(tmp);
     return res;
 }
-}
+} // namespace image
