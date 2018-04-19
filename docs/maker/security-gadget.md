@@ -40,9 +40,16 @@ This activity uses sensor inputs. You may want to try the [Use](/getting-started
 
 ## Contemplate
 
-Follow the steps of the [Maker Design Process](/lessons/classroom-management#design-process) for this lesson:
+Follow the steps of the _Maker Design Process_ for this lesson:
 
-![LEGO Education Maker Design Process](/static/lessons/common/lego-maker-design-process.jpg)
+| | |
+|-|-|
+| ![Paper sheet icon](/static/maker/design-process-icons/define-problem.png) | **Define the Problem** |
+| ![Lightbulb icon](/static/maker/design-process-icons/brainstorming.png) | **Brainstorming** |
+| ![Checkmark icon](/static/maker/design-process-icons/define-criteria.png) | **Define the Design Criteria** |
+| ![Connector icon](/static/maker/design-process-icons/go-make.png) | **Go Make** |
+| ![Redo icon](/static/maker/design-process-icons/review-revise.png) | **Review and Revise Your Solution** |
+| ![Speaker icon](/static/maker/design-process-icons/communicate.png) | **Communicate Your Solution** |
 
 ### Defining the Problem
 
@@ -132,8 +139,3 @@ forever(function () {
 ```
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the ``center`` button on the EV3 Brick to run the program.
-
-### Well done!
-
-Click [here](/examples) to try out some more projects!
-
