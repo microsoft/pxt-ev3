@@ -162,7 +162,11 @@
             "variables": "\uf111",
             "text": "\uf110",
             "functions": "\uf108",
-            "arrays": "\uf109"
+            "arrays": "\uf109",
+            "search": "\uf11a",
+            "addpackage": "\uf105",
+            "advancedcollapsed": "\uf113",
+            "advancedexpanded": "\uf114"
         },
         "monacoColors": {
             "editor.background": "#f9f9f9"
