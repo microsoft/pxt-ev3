@@ -19,8 +19,6 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
 
     private categoriesCache_: string[];
 
-    private static MUSIC_DATA_URI = `data:image/svg+xml;base64,PHN2ZyBpZD0ic3ZnNDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDIzIDIzIj48cGF0aCBpZD0ibWVudV9pY25fbXVzaWMiIGQ9Ik0xMy45IDEyLjhjMS43LjMgMy4zIDEuMiA0LjMgMi42aDFzMS41LTQuNC0xLjgtNy41LTkuNy0zLjEtMTIuMSAwYy0xLjcgMi4xLTIuMyA1LTEuNCA3LjVoLjhzMS43LTIuNSA0LjQtMi42QzkgMTcuMiA5IDIxIDkgMjFjLTEuOS0uNC0zLjUtMS42LTQuNC0zLjQtMi0uNC0zLjYtMi4yLTMuNi00LjRDMSA2LjcgNS45IDMgMTEuNSAzczEwLjggNC4zIDEwLjQgMTAuMmMtLjIgNC4xLTMuNiA0LjQtMy42IDQuNC0uOCAxLjgtMi40IDMuMS00LjMgMy40LS4xLTQuNS0uMS04LjItLjEtOC4yeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==`;
-
     constructor(text: string, options: FieldMusicOptions, validator?: Function) {
         super(text, { sort: true, data: options.data }, validator);
 
@@ -316,8 +314,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     private getSoundIcon(category: string) {
         if (soundIconCache && soundIconCache[category]) {
             return soundIconCache[category].icon;
-        } else {
-            return FieldMusic.MUSIC_DATA_URI;
         }
+        return undefined;
     }
 }
