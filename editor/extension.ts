@@ -54,6 +54,14 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="ui one column grid">
+                <div class="column">
+                    <a href="/troubleshoot" target="_blank" class="ui segment container yellow">
+                        <i class="icon exclamation circle large" aria-hidden="true"></i>
+                        ${lf("Something wrong? Click here to troubleshoot..")}
+                    </a>
+                </div>
             </div>`;
 
             return confirmAsync({
@@ -63,20 +71,16 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                 hideCancel: true,
                 hideAgree: false,
                 agreeLbl: lf("I got it"),
-                buttons: [{
-                    label: lf("I don't see the EV3 drive"),
-                    url: '/troubleshoot',
-                    class: 'troubleshoot left floated'
-                }, downloadAgain ? {
+                buttons: [downloadAgain ? {
                     label: fn,
                     icon: "download",
-                    class: "lightgrey focused",
+                    className: "lightgrey focused",
                     url,
                     fileName: fn
                 } : undefined, docUrl ? {
                     label: lf("Help"),
                     icon: "help",
-                    class: "lightgrey",
+                    className: "lightgrey",
                     url: docUrl
                 } : undefined]
                 //timeout: 20000
