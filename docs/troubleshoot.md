@@ -2,6 +2,33 @@
 
 If your're having trouble getting your code onto the EV3 Brick, try these steps to see if you can fix the problem.
 
+## Check your **@drivename@** firmware
+
+MakeCode requires the firmware version **1.10E** or up. 
+
+### ~hint
+
+Firmware is the software that runs all the basic operations on your brick. Your programs run with the firmware to make the @boardname@ do all the things you want it to do. Your brick comes with the firmware already installed. You could have a brick with an older version of firmware that needs updating in order for it to work properly with MakeCode.
+
+### ~
+
+To check the version on your brick,
+
+* go to the **Settings** menu (wrench symbol)
+* select to **Brick Info**
+
+![Brick Info menu](/static/setup/brickinfo.jpg)
+
+* check the version under **Brick FW:**
+
+![Brick Firmware version](/static/setup/brickfw.jpg)
+
+If you cannot find the **brick info** or the version is less than **1.10E**, **you need to upgrade your firmware**.
+
+**To update your firmware, use the [EV3 manager](https://ev3manager.education.lego.com/)** or follow these instructions: [Updating and Resetting Firmware](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/updating-and-resetting-lego-mindstorms-ev3-firmware-408100000007884).
+
+If your EV3 Brick isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. Read the instructions in the **Manual Firmware Update** section of the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
+
 ## Can I see the **@drivename@** drive on my computer?
 
 When your EV3 Brick is connected to your computer, you should see a new drive called **@drivename@** attached.
@@ -30,24 +57,6 @@ If you think your USB connection is good and you still can't see your **@drivena
 4. When the brick says "Starting.." you can let go of the **Left** and **Enter** buttons.
 
 You can also watch this [How to Reset](https://www.lego.com/en-us/videos/themes/mindstorms/how-to-reset-the-ev3-p-brick-fbcbdbed398e4e12a7ce30fa662c54be) video to see how to do a reset.
-
-If you try a reset and the **@drivename@** drive still doesn't appear, or you attempted a download and it didn't copy to the brick, you might need a firmware update.
-
-## What's a firmware update and how do I get one?
-
-Firmware is the software that runs all the basic operations on your brick. Your programs run with the firmware to make the @boardname@ do all the things you want it to do. Your brick comes with the firmware already installed. You could have a brick with an older version of firmware that needs updating in order for it to work properly with MakeCode.
-
-To update your firmware, follow these instructions: [Updating and Resetting Firmware](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/updating-and-resetting-lego-mindstorms-ev3-firmware-408100000007884).
-
-### ~hint
-
-**Offline firmware update**
-
-If your EV3 Brick isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. You need to have the firmware file already downloaded and available on the computer connected to the brick.
-
-To do this, read the instructions in the **Manual Firmware Update** section of the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
-
-### ~
 
 ## LEGO Support
 
