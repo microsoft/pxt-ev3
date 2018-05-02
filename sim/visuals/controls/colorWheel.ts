@@ -15,7 +15,7 @@ namespace pxsim.visuals {
         }
 
         private getReporterHeight() {
-            return 58;
+            return 38;
         }
 
         private getSliderWidth() {
@@ -23,10 +23,10 @@ namespace pxsim.visuals {
         }
 
         private getSliderHeight() {
-            return 111;
+            return 131;
         }
 
-        private getMax() {
+        private getMaxValue() {
             return 100;
         }
 
@@ -36,9 +36,9 @@ namespace pxsim.visuals {
             }
             const node = this.state;
             const percentage = node.getValue();
-            const inversePercentage = this.getMax() - percentage;
+            const inversePercentage = this.getMaxValue() - percentage;
             svg.setGradientValue(this.colorGradient, inversePercentage + "%");
-            this.reporter.textContent = `${parseFloat((percentage).toString()).toFixed(0)}`;
+            this.reporter.textContent = `${parseFloat((percentage).toString()).toFixed(0)}%`;
         }
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
@@ -47,7 +47,7 @@ namespace pxsim.visuals {
             const height = bBox.height;
             let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
             const state = this.state;
-            state.setColor(t * this.getMax());
+            state.setColor(t * this.getMaxValue());
         }
 
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
@@ -60,7 +60,7 @@ namespace pxsim.visuals {
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
             const reporterGroup = pxsim.svg.child(this.group, "g");
-            reporterGroup.setAttribute("transform", `translate(${this.getWidth() / 2}, 50)`);
+            reporterGroup.setAttribute("transform", `translate(${this.getWidth() / 2}, 20)`);
             this.reporter = pxsim.svg.child(reporterGroup, "text", { 'text-anchor': 'middle', 'x': 0, 'y': '0', 'class': 'sim-text number large inverted' }) as SVGTextElement;
 
             const sliderGroup = pxsim.svg.child(this.group, "g");

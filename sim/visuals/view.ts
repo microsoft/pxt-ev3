@@ -130,9 +130,17 @@ namespace pxsim.visuals {
             return this.element;
         }
 
-        public resize(width: number, height: number) {
+        public resize(width: number, height: number, strict?: boolean) {
             this.width = width;
             this.height = height;
+        }
+
+        public getActualHeight() {
+            return this.height;
+        }
+
+        public getActualWidth() {
+            return this.width;
         }
 
         private updateTransform() {
@@ -212,10 +220,6 @@ namespace pxsim.visuals {
             }
         }
 
-        public hasClose() {
-            return true;
-        }
-
         protected setChangedState() {
             this.changed = true;
         }
@@ -224,6 +228,10 @@ namespace pxsim.visuals {
             const res = this.changed;
             this.changed = false;
             return res;
+        }
+
+        public hasBackground() {
+            return false;
         }
     }
 
@@ -272,9 +280,13 @@ namespace pxsim.visuals {
         }
 
         public clear() {
+            const markForRemoval: Element[] = [];
             forEachElement(this.element.childNodes, e => {
-                this.element.removeChild(e);
+                markForRemoval.push(e);
             });
+            markForRemoval.forEach(e => {
+                this.element.removeChild(e);
+            })
         }
 
         public onComponentInjected() {

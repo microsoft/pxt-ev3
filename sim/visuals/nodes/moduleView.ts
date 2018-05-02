@@ -107,7 +107,7 @@ namespace pxsim.visuals {
         public attachEvents() {
         }
 
-        public resize(width: number, height: number) {
+        public resize(width: number, height: number, strict?: boolean) {
             super.resize(width, height);
             this.updateDimensions(width, height);
         }
@@ -120,6 +120,7 @@ namespace pxsim.visuals {
                 const newWidth = currentWidth / currentHeight * height;
                 this.content.setAttribute('width', `${width}`);
                 this.content.setAttribute('height', `${newHeight}`);
+                this.height = newHeight;
             }
         }
 
@@ -138,14 +139,20 @@ namespace pxsim.visuals {
 
         protected updateOpacity() {
             if (this.rendered) {
-                const opacity = this.selected ? 0.2 : 1;
+                const opacity = this.selected && this.fadeWhenSelected() ? 0.2 : 1;
                 if (this.hasClick() && this.opacity != opacity) {
                     this.opacity = opacity;
                     this.setOpacity(this.opacity);
+                }
+                if (this.hasClick()) {
                     if (this.selected) this.content.style.cursor = "";
                     else this.content.style.cursor = "pointer";
                 }
             }
+        }
+
+        protected fadeWhenSelected() {
+            return true;
         }
 
         protected setOpacity(opacity: number) {

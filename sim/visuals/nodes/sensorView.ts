@@ -6,14 +6,16 @@ namespace pxsim.visuals {
 
         constructor(xml: string, prefix: string, id: NodeType, port: NodeType) {
             super(xml, prefix, id, port);
+            // Shown by default
+            this.selected = true;
         }
 
-        public getSelected() {
-            return true;
-        }
-
-        public hasClose() {
+        protected fadeWhenSelected() {
             return false;
+        }
+
+        public hasBackground() {
+            return true;
         }
     }
 }
