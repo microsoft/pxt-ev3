@@ -8,6 +8,8 @@ namespace pxsim.visuals {
         private static colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'grey', 'white'];
         private static colorValue = [5, 4, 2, 3, 1, 7, 6];
 
+        private colorDivs: Element[] = [];
+
         getInnerView() {
             this.group = svg.elt("g") as SVGGElement;
             this.group.setAttribute("transform", `translate(2, 2.5) scale(0.6)`)
@@ -23,6 +25,7 @@ namespace pxsim.visuals {
                     const circle = pxsim.svg.child(this.group, "circle", { 
                         'class': `sim-color-grid-circle sim-color-grid-${colorIds[c]}`,
                         'cx': cx, 'cy': cy, 'r': '2', 'style': `fill: ${colors[c]}` });
+                    this.colorDivs.push(circle);
                     pointerEvents.down.forEach(evid => circle.addEventListener(evid, ev => {
                         this.setColor(ColorGridControl.colorValue[c]);
                     }));
@@ -30,7 +33,8 @@ namespace pxsim.visuals {
             }
 
             const whiteCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'white-cirlce-wrapper' });
-            pxsim.svg.child(whiteCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-white', 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: #fff` });
+            const circle = pxsim.svg.child(whiteCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-white', 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: #fff` });
+            this.colorDivs.push(circle);
             pxsim.svg.child(whiteCircleWrapper, "circle", { 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: none;stroke: #94989b;stroke-width: 0.1px` });
             pointerEvents.down.forEach(evid => whiteCircleWrapper.addEventListener(evid, ev => {
                 this.setColor(6);
@@ -56,7 +60,7 @@ namespace pxsim.visuals {
             for (let c = 0; c < ColorGridControl.colorValue.length; c++) {
                 const colorId = ColorGridControl.colorIds[c];
                 const colorValue = ColorGridControl.colorValue[c];
-                const colorDiv = this.group.getElementsByClassName(`sim-color-grid-${colorId}`)[0] as HTMLElement;
+                const colorDiv = this.colorDivs[c] as HTMLElement;
 
                 if (colorValue == color) {
                     pxsim.U.addClass(colorDiv, 'sim-color-selected');
