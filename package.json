@@ -34,9 +34,6 @@
   "typings": "built/pxtrequire.d.ts",
   "devDependencies": {
     "typescript": "2.6.1",
-    "rtlcss": "^2.1.2",
-    "autoprefixer": "^6.7.6",
-    "less": "2.7.3",
     "semantic-ui-less": "2.2.14",
     "@types/bluebird": "2.0.33",
     "@types/marked": "0.3.0",
