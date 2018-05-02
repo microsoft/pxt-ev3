@@ -46,6 +46,12 @@ brick.showString("Press my button!", 1)
 
 ## Step 5
 
+Try out your code in the EV3 simulator!
+
+Press the ``Enter`` button and check that the image shows up as you expected.
+
+## Step 6
+
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:set status light||`` block onto the Workspace, and drop it into the ``||brick:on button||`` block after the ``||brick:show image||`` block.
 
 ```blocks
@@ -56,6 +62,6 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 brick.showString("Press my button!", 1) 
 ```
 
-## Step 6
+## Step 7
 
-Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
