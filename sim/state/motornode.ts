@@ -17,7 +17,8 @@ namespace pxsim {
         private speedCmdTime: number;
         private _synchedMotor: MotorNode; // non-null if synchronized
 
-        private manualSpeed: number = undefined;
+        private manualReferenceAngle: number = undefined;
+        private manualAngle: number = undefined;
 
         constructor(port: number, large: boolean) {
             super(port);
@@ -103,14 +104,18 @@ namespace pxsim {
         }
 
         manualMotorDown() {
+            this.manualReferenceAngle = this.angle;
+            this.manualAngle = 0;
         }
 
-        manualMotorMove(speed: number) {
-            this.manualSpeed = speed;
+        // position: 0, 360
+        manualMotorAngle(angle: number) {
+            this.manualAngle = angle;
         }
 
         manualMotorUp() {
-            this.manualSpeed = undefined;
+            delete this.manualReferenceAngle;
+            delete this.manualAngle;
         }
 
         updateState(elapsed: number) {
@@ -126,7 +131,7 @@ namespace pxsim {
         }
 
         private updateStateStep(elapsed: number) {
-            if (!this.manualSpeed) {
+            if (this.manualAngle === undefined) {
                 // compute new speed
                 switch (this.speedCmd) {
                     case DAL.opOutputSpeed:
@@ -202,7 +207,10 @@ namespace pxsim {
                 }
             }
             else {
-                this.speed = this.manualSpeed;
+                // the user is holding the handle - so position is the angle
+                this.speed = 0;
+                // rotate by the desired angle change
+                this.angle = this.manualReferenceAngle + this.manualAngle;
             }
             this.speed = Math.round(this.speed); // integer only
 
@@ -217,7 +225,8 @@ namespace pxsim {
 
             // if the motor was stopped or there are no speed commands,
             // let it coast to speed 0
-            if (this.speed && !(this.started || this.speedCmd)) {
+            if ((this.manualReferenceAngle === undefined)
+                && this.speed && !(this.started || this.speedCmd)) {
                 // decay speed 5% per tick
                 this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * sign(this.speed));
             }
