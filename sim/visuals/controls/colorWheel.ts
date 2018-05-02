@@ -93,9 +93,6 @@ namespace pxsim.visuals {
             }, () => {
                 captured = false;
                 rect.setAttribute('cursor', '-webkit-grab');
-            }, () => {
-                captured = false;
-                rect.setAttribute('cursor', '-webkit-grab');
             })
 
             return this.group;
