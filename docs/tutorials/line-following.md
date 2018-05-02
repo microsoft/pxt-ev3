@@ -104,7 +104,7 @@ forever(function () {
 })
 ```
 
-## Step 8
+## Step 8 @fullscreen
 
 Use the EV3 simulator to try out your code. 
 
