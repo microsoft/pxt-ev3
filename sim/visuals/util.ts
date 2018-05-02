@@ -27,6 +27,13 @@ namespace pxsim.visuals {
             ev.stopPropagation();
         } : undefined;
 
+        const enterEvent = move ? (ev: MouseEvent) => {
+            if (ev.buttons != 1) {
+                // cancel all events when we re-enter without a button down
+                upEvent(ev);
+            }
+        } : undefined;
+
         const upEvent = up ? (ev: MouseEvent) => {
             up.call(this, ev);
             ev.preventDefault();
@@ -37,9 +44,11 @@ namespace pxsim.visuals {
                 if (moveEvent) document.removeEventListener("pointermove", moveEvent);
                 if (upEvent) document.removeEventListener("pointerup", upEvent);
                 if (upEvent) document.removeEventListener("pointercancel", upEvent);
+                if (moveEvent) document.removeEventListener("pointerenter", enterEvent);
             } else {
                 if (moveEvent) document.removeEventListener("mousemove", moveEvent);
                 if (upEvent) document.removeEventListener("mouseup", upEvent);
+                if (moveEvent) document.removeEventListener("mouseenter", enterEvent);
                 if (pxsim.svg.isTouchEnabled()) {
                     if (moveEvent) document.removeEventListener("touchmove", moveEvent);
                     if (upEvent) document.removeEventListener("touchend", upEvent);
@@ -58,9 +67,11 @@ namespace pxsim.visuals {
                 if (moveEvent) document.addEventListener("pointermove", moveEvent);
                 if (upEvent) document.addEventListener("pointerup", upEvent);
                 if (upEvent) document.addEventListener("pointercancel", upEvent);
+                if (moveEvent) document.addEventListener("pointerenter", enterEvent);
             } else {
                 if (moveEvent) document.addEventListener("mousemove", moveEvent);
                 if (upEvent) document.addEventListener("mouseup", upEvent);
+                if (moveEvent) document.addEventListener("mouseenter", enterEvent);
 
                 if (pxsim.svg.isTouchEnabled()) {
                     if (moveEvent) document.addEventListener("touchmove", moveEvent);
