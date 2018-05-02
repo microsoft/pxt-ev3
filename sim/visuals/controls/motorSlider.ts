@@ -66,9 +66,6 @@ namespace pxsim.visuals {
             }, () => {
                 captured = false;
                 this.handleSliderUp();
-            }, () => {
-                captured = false;
-                this.handleSliderUp();
             })
 
             return this.group;

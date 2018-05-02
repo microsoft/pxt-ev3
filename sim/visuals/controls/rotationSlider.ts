@@ -47,8 +47,6 @@ namespace pxsim.visuals {
                 }
             }, () => {
                 captured = false;
-            }, () => {
-                captured = false;
             })
 
             return this.group;

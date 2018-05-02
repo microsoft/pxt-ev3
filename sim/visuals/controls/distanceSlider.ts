@@ -67,9 +67,6 @@ namespace pxsim.visuals {
             }, () => {
                 captured = false;
                 dragSurface.setAttribute('cursor', '-webkit-grab');
-            }, () => {
-                captured = false;
-                dragSurface.setAttribute('cursor', '-webkit-grab');
             })
 
             return this.group;
