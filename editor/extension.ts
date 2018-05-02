@@ -33,10 +33,8 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                         </div>
                         <div class="content">
                             <div class="description">
-                                <span class="ui yellow circular label">1</span>
-                                <strong>${lf("Connect EV3 to computer with USB cable")}</strong>
-                                <br/>
-                                ${lf("Use the miniUSB port on top of EV3 brick")}
+                                <span class="ui blue circular label">1</span>
+                                <strong>${lf("Connect the EV3 brick to your computer with a USB cable.")}</strong>
                             </div>
                         </div>
                     </div>
@@ -57,9 +55,9 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
             </div>
             <div class="ui one column grid">
                 <div class="column">
-                    <a href="/troubleshoot" target="_blank" class="ui segment container yellow">
+                    <a href="/troubleshoot" target="_blank" class="ui segment container" style="background:#ffdb90">
                         <i class="icon exclamation circle large" aria-hidden="true"></i>
-                        ${lf("Something wrong? Click here to troubleshoot..")}
+                        ${lf("Did you prepare your EV3 brick for MakeCode?")}
                     </a>
                 </div>
             </div>`;
