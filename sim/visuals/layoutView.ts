@@ -13,6 +13,8 @@ namespace pxsim.visuals {
 
     export const MAX_MODULE_WIDTH = 100;
 
+    export const CLOSE_ICON_GAP_MULTIPLIER = 0.3;
+
     export interface LayoutElement extends View {
         getId(): number;
         getPort(): number;
@@ -32,6 +34,9 @@ namespace pxsim.visuals {
 
         private inputCloseIcons: View[] = [];
         private outputCloseIcons: View[] = [];
+
+        private inputBackgroundViews: View[] = [];
+        private outputBackgroundViews: View[] = [];
 
         private inputWires: WireView[] = [];
         private outputWires: WireView[] = [];
@@ -119,7 +124,7 @@ namespace pxsim.visuals {
             else this.setlectBrick();
         }
 
-        public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
+        public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View, backgroundView?: View) {
             if (this.inputs[port] != view || this.inputControls[port] != control) {
                 if (this.inputs[port]) {
                     // Remove current input
@@ -131,10 +136,12 @@ namespace pxsim.visuals {
                 }
                 this.inputControls[port] = control;
                 this.inputCloseIcons[port] = closeIcon;
+                this.inputBackgroundViews[port] = backgroundView;
 
                 this.inputContainers[port].clear();
-                this.inputContainers[port].addView(view);
 
+                if (control && backgroundView) this.inputContainers[port].addView(backgroundView);
+                this.inputContainers[port].addView(view);
                 if (control) this.inputContainers[port].addView(control);
 
                 if (view.hasClick()) view.registerClick((ev: any) => {
@@ -155,7 +162,7 @@ namespace pxsim.visuals {
             this.position();
         }
 
-        public setOutput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
+        public setOutput(port: number, view: LayoutElement, control?: View, closeIcon?: View, backgroundView?: View) {
             if (this.outputs[port] != view || this.outputControls[port] != control) {
                 if (this.outputs[port]) {
                     // Remove current output
@@ -167,10 +174,12 @@ namespace pxsim.visuals {
                 }
                 this.outputControls[port] = control;
                 this.outputCloseIcons[port] = closeIcon;
+                this.outputBackgroundViews[port] = backgroundView;
 
                 this.outputContainers[port].clear();
-                this.outputContainers[port].addView(view);
 
+                if (control && backgroundView) this.outputContainers[port].addView(backgroundView);
+                this.outputContainers[port].addView(view);
                 if (control) this.outputContainers[port].addView(control);
 
                 if (view.hasClick()) view.registerClick((ev: any) => {
@@ -277,35 +286,48 @@ namespace pxsim.visuals {
 
             const modulePadding = this.getModulePadding();
             const moduleSpacing = contentWidth / 4;
-            const moduleWidth = this.getInnerModuleWidth();
             let currentX = this.getModulePadding();
             let currentY = 0;
             this.outputs.forEach((n, i) => {
-                this.outputContainers[i].translate(currentX, currentY);
+                this.outputContainers[i].translate(currentX + (this.getAbosluteModuleWidth() - this.getInnerModuleWidth()) / 2, currentY);
                 if (this.outputs[i]) {
                     const view = this.outputs[i];
                     const outputPadding = this.getInnerModuleWidth() * view.getPaddingRatio();
-                    const desiredOutputWidth = this.getInnerModuleWidth() - outputPadding * 2;
-                    const outputWidth = Math.min(desiredOutputWidth, MAX_MODULE_WIDTH);
                     const outputHeight = this.getModuleHeight();
+                    const outputWidth = this.getInnerModuleWidth();
 
                     // Translate and resize view
-                    view.resize(outputWidth, outputHeight);
-                    const viewHeight = view.getInnerHeight() / view.getInnerWidth() * outputWidth;
-                    view.translate(outputPadding + ((desiredOutputWidth - outputWidth) / 2), outputHeight - viewHeight, true);
+                    view.resize(outputWidth - outputPadding * 2, outputHeight);
+                    // const viewHeight = view.getInnerHeight() / view.getInnerWidth() * outputWidth;
+                    // view.translate(outputPadding + ((desiredOutputWidth - outputWidth) / 2), outputHeight - viewHeight, true);
+                    const viewHeight = view.getActualHeight();
+                    view.translate(outputPadding, outputHeight - viewHeight, true);
 
                     // Resize control
                     const control = this.outputControls[i];
                     if (control) {
-                        control.resize(this.getInnerModuleWidth(), outputHeight);
+                        const controlWidth = outputWidth;
+                        const closeIconOffset = (this.getCloseIconSize() * (1 + CLOSE_ICON_GAP_MULTIPLIER));
+                        const controlHeight = outputHeight - closeIconOffset;
+                        control.resize(controlWidth, controlHeight);
+                        control.translate((controlWidth - control.getActualWidth()) / 2,
+                            closeIconOffset + ((controlHeight - control.getActualHeight()) / 2), true)
 
-                        // Translate close icon
+                        // Translate and resize close icon
                         const closeIcon = this.outputCloseIcons[i];
                         if (closeIcon) {
-                            const closeIconWidth = closeIcon.getWidth();
-                            closeIcon.translate(this.getInnerModuleWidth() / 2 - closeIconWidth / 2, 0);
+                            const closeIconSize = this.getCloseIconSize();
+                            closeIcon.resize(closeIconSize, closeIconSize);
+                            closeIcon.translate((outputWidth - closeIcon.getActualWidth()) / 2, (CLOSE_ICON_GAP_MULTIPLIER * closeIcon.getActualHeight()), true);
                         }
                     }
+
+                    // Resize background
+                    const backgroundView = this.inputBackgroundViews[i];
+                    if (backgroundView) {
+                        backgroundView.resize(this.getInnerModuleWidth(), outputHeight);
+                        backgroundView.translate(0, 0, true)
+                }
                 }
                 currentX += moduleSpacing;
             })
@@ -341,30 +363,41 @@ namespace pxsim.visuals {
             currentY += brickHeight + this.getWiringHeight();
 
             this.inputs.forEach((n, i) => {
-                this.inputContainers[i].translate(currentX, currentY);
+                this.inputContainers[i].translate(currentX + (this.getAbosluteModuleWidth() - this.getInnerModuleWidth()) / 2, currentY);
                 if (this.inputs[i]) {
                     const view = this.inputs[i];
                     const inputPadding = this.getInnerModuleWidth() * view.getPaddingRatio();
-                    const desiredInputWidth = this.getInnerModuleWidth() - inputPadding * 2;
-                    const inputWidth = Math.min(desiredInputWidth, MAX_MODULE_WIDTH);
                     const inputHeight = this.getModuleHeight();
+                    const inputWidth = this.getInnerModuleWidth();
 
                     // Translate and resize view
-                    view.resize(inputWidth, inputHeight);
-                    view.translate(inputPadding + ((desiredInputWidth - inputWidth) / 2), 0, true);
+                    view.resize(inputWidth - inputPadding * 2, inputHeight);
+                    const viewHeight = view.getActualHeight();
+                    view.translate(inputPadding, 0, true);
 
                     // Resize control
                     const control = this.inputControls[i];
                     if (control) {
-                        control.resize(this.getInnerModuleWidth(), inputHeight);
+                        const controlWidth = inputWidth;
+                        const controlHeight = inputHeight - viewHeight - (this.getCloseIconSize() * (1 + CLOSE_ICON_GAP_MULTIPLIER));
+                        control.resize(controlWidth, controlHeight);
+                        control.translate((controlWidth - control.getActualWidth()) / 2,
+                            viewHeight + ((controlHeight - control.getActualHeight()) / 2), true)
 
                         // Translate and resize close icon
                         const closeIcon = this.inputCloseIcons[i];
                         if (closeIcon) {
-                            const closeIconWidth = closeIcon.getWidth();
-                            const closeIconHeight = closeIcon.getHeight();
-                            closeIcon.translate(this.getInnerModuleWidth() / 2 - closeIconWidth / 2, this.getModuleHeight() - closeIconHeight);
+                            const closeIconSize = this.getCloseIconSize();
+                            closeIcon.resize(closeIconSize, closeIconSize);
+                            closeIcon.translate((inputWidth - closeIcon.getActualWidth()) / 2, inputHeight - ((1 + CLOSE_ICON_GAP_MULTIPLIER) * closeIcon.getActualHeight()), true);
                         }
+                        }
+
+                    // Resize background
+                    const backgroundView = this.inputBackgroundViews[i];
+                    if (backgroundView) {
+                        backgroundView.resize(this.getInnerModuleWidth(), inputHeight, true);
+                        backgroundView.translate(0, 0, true)
                     }
                 }
                 currentX += moduleSpacing;
@@ -394,7 +427,7 @@ namespace pxsim.visuals {
 
         public getModuleBounds() {
             return {
-                width: this.width / 4,
+                width: Math.min(this.getAbosluteModuleWidth(), MAX_MODULE_WIDTH),
                 height: this.getModuleHeight()
             }
         }
@@ -407,8 +440,16 @@ namespace pxsim.visuals {
             return this.getModuleBounds().width - (this.getModulePadding() * 2);
         }
 
+        public getAbosluteModuleWidth() {
+            return this.width / 4;
+        }
+
         public getModuleHeight() {
             return this.height * MODULE_HEIGHT_RATIO;
+        }
+
+        public getCloseIconSize() {
+            return this.getInnerModuleWidth() / 4;
         }
     }
 }

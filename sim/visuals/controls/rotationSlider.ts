@@ -13,10 +13,10 @@ namespace pxsim.visuals {
             this.group = svg.elt("g") as SVGGElement;
 
             const sliderGroup = pxsim.svg.child(this.group, "g");
-            sliderGroup.setAttribute("transform", `translate(5, ${10 + this.getTopPadding()})`)
+            sliderGroup.setAttribute("transform", `translate(10,0)`);
 
             const rotationLine = pxsim.svg.child(sliderGroup, "g");
-            pxsim.svg.child(rotationLine, "path", { 'transform': 'translate(5.11 -31.1)', 'd': 'M68.71,99.5l6.1-8S61.3,79.91,42.69,78.35,12,83.14,6.49,85.63a48.69,48.69,0,0,0-9.6,5.89L3.16,99.3S19.27,87.7,37.51,87.94,68.71,99.5,68.71,99.5Z', 'style': 'fill: #626262' });
+            pxsim.svg.child(rotationLine, "path", { 'transform': 'translate(7.11 -31.1)', 'd': 'M68.71,99.5l6.1-8S61.3,79.91,42.69,78.35,12,83.14,6.49,85.63a48.69,48.69,0,0,0-9.6,5.89L3.16,99.3S19.27,87.7,37.51,87.94,68.71,99.5,68.71,99.5Z', 'style': 'fill: #626262' });
 
             this.slider = pxsim.svg.child(sliderGroup, "g") as SVGGElement;
             const handleInner = pxsim.svg.child(sliderGroup, "g");
@@ -52,8 +52,8 @@ namespace pxsim.visuals {
             return this.group;
         }
 
-        private getTopPadding() {
-            return this.getInnerHeight() / 4;
+        getInnerWidth() {
+            return RotationSliderControl.SLIDER_WIDTH * 1.5;
         }
 
         updateState() {

@@ -2,8 +2,8 @@
 
 namespace pxsim.visuals {
 
-    export const CONTROL_WIDTH = 87.5;
-    export const CONTROL_HEIGHT = 175;
+    export const CONTROL_WIDTH = 76.84;
+    export const CONTROL_HEIGHT = 112.72;
 
     export const CONTROL_TEXT_COLOR = '#000';
 
@@ -43,28 +43,29 @@ namespace pxsim.visuals {
             return this.content;
         }
 
-        public resize(width: number, height: number) {
+        public resize(width: number, height: number, strict?: boolean) {
             super.resize(width, height);
-            this.updateDimensions(width, height);
+            this.updateDimensions(width, height, strict);
         }
 
-        private updateDimensions(width: number, height: number) {
+        private updateDimensions(width: number, height: number, strict?: boolean) {
             if (this.content) {
                 const currentWidth = this.getInnerWidth();
                 const currentHeight = this.getInnerHeight();
                 const newHeight = currentHeight / currentWidth * width;
                 const newWidth = currentWidth / currentHeight * height;
-                if (newHeight > height) {
+                if (strict) {
+                    this.content.setAttribute('width', `${width}`);
+                    this.content.setAttribute('height', `${height}`);
+                } else if (newHeight > height) {
                     // scale width instead
                     this.content.setAttribute('width', `${newWidth}`);
                     this.content.setAttribute('height', `${height}`);
-                    // translate to the middle (width)
-                    this.translate(width / 2 - newWidth / 2, 0);
+                    this.width = newWidth;
                 } else {
                     this.content.setAttribute('width', `${width}`);
                     this.content.setAttribute('height', `${newHeight}`);
-                    // translate to the middle (height)
-                    this.translate(0, height / 2 - newHeight / 2);
+                    this.height = newHeight;
                 }
             }
         }
