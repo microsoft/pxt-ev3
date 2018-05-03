@@ -12,6 +12,7 @@ namespace pxsim.visuals {
     export const MODULE_INNER_PADDING_RATIO = 1 / 35;
 
     export const MAX_MODULE_WIDTH = 100;
+    export const MIN_MODULE_HEIGHT = 40;
 
     export const CLOSE_ICON_GAP_MULTIPLIER = 0.3;
 
@@ -372,7 +373,7 @@ namespace pxsim.visuals {
 
                     // Translate and resize view
                     view.resize(inputWidth - inputPadding * 2, inputHeight);
-                    const viewHeight = view.getActualHeight();
+                    const viewHeight = Math.max(view.getActualHeight(), MIN_MODULE_HEIGHT);
                     view.translate(inputPadding, 0, true);
 
                     // Resize control
