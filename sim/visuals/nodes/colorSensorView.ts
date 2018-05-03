@@ -36,7 +36,10 @@ namespace pxsim.visuals {
 
         private updateSensorLightVisual(color: string) {
             const sensorHole = this.content.getElementById(this.normalizeId(ColorSensorView.sensor_hole_id)) as SVGCircleElement;
-            sensorHole.style.fill = color;
+            sensorHole.style.stroke = color;
+            if (color != '#ffffff') {
+                sensorHole.style.strokeWidth = '2px';
+            }
         }
     }
 }
