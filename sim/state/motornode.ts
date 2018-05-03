@@ -211,6 +211,7 @@ namespace pxsim {
                 this.speed = 0;
                 // rotate by the desired angle change
                 this.angle = this.manualReferenceAngle + this.manualAngle;
+                this.setChangedState();
             }
             this.speed = Math.round(this.speed); // integer only
 
