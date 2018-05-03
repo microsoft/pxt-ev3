@@ -13,7 +13,7 @@ namespace pxsim.visuals {
 
         private static SLIDER_RADIUS = 100;
 
-        private internalSpeed: number = 0;
+        private internalAngle: number = 0;
 
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
             this.group = svg.elt("g") as SVGGElement;
@@ -102,9 +102,9 @@ namespace pxsim.visuals {
             } else if (dx >= 0 && dy <= 0) {
                 deg = 90 - deg;
             }
-            const value = Math.abs(Math.ceil((deg % 360) / 360 * this.getMax()));
+            const value = Math.abs(Math.ceil((deg % 360)));
 
-            this.internalSpeed = value;
+            this.internalAngle = value;
             this.updateDial();
 
             this.prevVal = deg;
@@ -119,7 +119,7 @@ namespace pxsim.visuals {
         private handleSliderMove() {
             this.dial.setAttribute('cursor', '-webkit-grabbing');
             const state = this.state;
-            state.manualMotorMove(this.internalSpeed);
+            state.manualMotorAngle(this.internalAngle);
         }
 
         private handleSliderUp() {
@@ -127,19 +127,18 @@ namespace pxsim.visuals {
             const state = this.state;
             state.manualMotorUp();
 
-            this.internalSpeed = 0;
+            this.internalAngle = 0;
             this.updateDial();
         }
 
         private updateDial() {
-            let speed = this.internalSpeed;
+            let angle = this.internalAngle;
 
             // Update dial position
-            const deg = speed / this.getMax() * 360; // degrees
             const radius = MotorSliderControl.SLIDER_RADIUS;
             const dialRadius = 5;
-            const x = Math.ceil((radius - dialRadius) * Math.sin(deg * Math.PI / 180)) + radius;
-            const y = Math.ceil((radius - dialRadius) * -Math.cos(deg * Math.PI / 180)) + radius;
+            const x = Math.ceil((radius - dialRadius) * Math.sin(angle * Math.PI / 180)) + radius;
+            const y = Math.ceil((radius - dialRadius) * -Math.cos(angle * Math.PI / 180)) + radius;
             this.dial.setAttribute('transform', `translate(${x}, ${y})`);
         }
 
@@ -148,18 +147,10 @@ namespace pxsim.visuals {
                 return;
             }
             const node = this.state;
-            const speed = node.getSpeed();
+            const angle = node.getAngle() % 360;
 
             // Update reporter
-            this.reporter.textContent = `${speed}`;
-        }
-
-        private getMin() {
-            return 0;
-        }
-
-        private getMax() {
-            return 100;
+            this.reporter.textContent = `${angle}°`;
         }
     }
 
