@@ -185,7 +185,7 @@ namespace sensors {
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-light-detected
-        //% block="on **color sensor** %this|detected %mode|%condition"
+        //% block="on **color sensor** %this|%mode|%condition"
         //% blockId=colorOnLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -202,7 +202,7 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-until-light-detected
-        //% block="pause until **color sensor** %this|detected %mode|%condition"
+        //% block="pause until **color sensor** %this|%mode|%condition"
         //% blockId=colorPauseUntilLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
