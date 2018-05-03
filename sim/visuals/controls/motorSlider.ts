@@ -120,7 +120,6 @@ namespace pxsim.visuals {
         }
 
         private handleSliderMove() {
-            console.log('slider move ' + this.internalAngle)
             this.dial.setAttribute('cursor', '-webkit-grabbing');
             const state = this.state;
             state.manualMotorAngle(this.internalAngle);
@@ -147,7 +146,6 @@ namespace pxsim.visuals {
         }
 
         updateState() {
-            console.log('update state')
             if (!this.visible) {
                 return;
             }
