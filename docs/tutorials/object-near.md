@@ -1,6 +1,6 @@
 # Object Near?
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 The digital Ultrasonic Sensor generates sound waves and reads their echoes to detect and measure distance from objects in centimeters. Build a program that will detect when an object is nearby.
 

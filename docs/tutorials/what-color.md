@@ -1,6 +1,6 @@
 # What Color is it?
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Use the Color sensor to detect different colors.
 

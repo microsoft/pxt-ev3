@@ -1,6 +1,6 @@
 # Security Alert
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 The Infrared Sensor uses infrared light waves to detect proximity to the robot. Build an security alert using the infrared sensor. 
  

@@ -1,6 +1,6 @@
 # Touch to Run
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Use the Touch sensor to run a motor.
 

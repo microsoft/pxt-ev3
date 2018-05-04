@@ -1,6 +1,6 @@
 # Music Brick
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Transform your @boardname@ into a musical instrument!
 
