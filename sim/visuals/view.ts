@@ -19,8 +19,9 @@ namespace pxsim.visuals {
         public abstract getInnerWidth(): number;
         public abstract getInnerHeight(): number;
 
-        public inject(parent: SVGElement, width?: number, visible = true) {
+        public inject(parent: SVGElement, theme: IBoardTheme, width?: number, visible = true) {
             this.width = width;
+            this.theme = theme;
             parent.appendChild(this.getView());
 
             if (visible) {
@@ -276,7 +277,7 @@ namespace pxsim.visuals {
         }
 
         public addView(view: View) {
-            view.inject(this.element);
+            view.inject(this.element, this.theme);
         }
 
         public clear() {

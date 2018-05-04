@@ -101,10 +101,13 @@ namespace pxsim.visuals {
     export const SCREEN_HEIGHT = 128;
     export interface IBoardTheme {
         accent?: string;
+        highContrast?: boolean;
         display?: string;
         buttonOuter?: string;
         buttonUps: string[];
         buttonDown?: string;
+        wireColor?: string;
+        backgroundViewColor?: string;
     }
 
     export var themes: IBoardTheme[] = ["#3ADCFE"].map(accent => {
@@ -112,12 +115,21 @@ namespace pxsim.visuals {
             accent: accent,
             buttonOuter: "#979797",
             buttonUps: ["#a8aaa8", "#393939", "#a8aaa8", "#a8aaa8", "#a8aaa8", '#a8aaa8'],
-            buttonDown: "#000"
+            buttonDown: "#000",
+            wireColor: '#5A5A5A',
+            backgroundViewColor: '#d6edff'
         }
     });
 
     export function randomTheme(highContrast?: boolean, light?: boolean): IBoardTheme {
-        return themes[Math.floor(Math.random() * themes.length)];
+        let theme = themes[Math.floor(Math.random() * themes.length)];
+        if (highContrast) {
+            theme = JSON.parse(JSON.stringify(theme)) as IBoardTheme;
+            theme.highContrast = true;
+            theme.wireColor = '#ffffff';
+            theme.backgroundViewColor = '#ffffff';
+        }
+        return theme;
     }
 
     export interface IBoardProps {
@@ -334,7 +346,7 @@ namespace pxsim.visuals {
             this.style.textContent = EV3_STYLE;
 
             this.layoutView = new LayoutView();
-            this.layoutView.inject(this.element);
+            this.layoutView.inject(this.element, this.props.theme);
 
             const brick = new BrickViewPortrait(-1);
             this.layoutView.setBrick(brick);
