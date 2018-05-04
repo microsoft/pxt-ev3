@@ -1,6 +1,6 @@
 # Run motors
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Use the buttons to start and stop the large and medium motors.
  

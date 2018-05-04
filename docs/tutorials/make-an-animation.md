@@ -1,6 +1,6 @@
 # Make a custom animation
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Create a custom animation for your @boardname@.
  

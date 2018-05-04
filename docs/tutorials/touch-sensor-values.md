@@ -1,6 +1,6 @@
 # Using Touch Sensor Values
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Use the Touch sensor value to stop a running motor.
 

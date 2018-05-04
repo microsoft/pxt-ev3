@@ -1,6 +1,6 @@
 # Line Following
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Make a program to follow a line using the Color sensor and reflected light. Let's test reflected light to see if it's white or black (on the line), and drive our robot accordingly. 
 

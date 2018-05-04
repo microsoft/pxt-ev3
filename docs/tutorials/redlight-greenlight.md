@@ -1,6 +1,6 @@
 # Red Light, Green Light
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Use the ``||sensors:pause color sensor||`` block to play Red Light, Green Light with your @boardname@ robot! 
 

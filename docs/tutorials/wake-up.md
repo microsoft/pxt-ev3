@@ -1,6 +1,6 @@
 # Wake Up!
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Show different moods on your @boardname@.
 

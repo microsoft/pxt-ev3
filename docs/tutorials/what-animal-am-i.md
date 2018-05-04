@@ -1,6 +1,6 @@
 # What Animal Am I?
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Create different animal effects with your @boardname@.
 
