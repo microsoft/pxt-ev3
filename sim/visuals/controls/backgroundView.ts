@@ -13,7 +13,7 @@ namespace pxsim.visuals {
                     'x': 0, 'y': 0,
                     'width': '100%',
                     'height': '100%',
-                    'style': `fill: #d6edff; stroke: #A8A9A8; stroke-width: 3px; stroke-opacity: 0.2`
+                    'style': `fill: ${this.theme.backgroundViewColor};stroke: #A8A9A8; stroke-width: 3px; stroke-opacity: 0.2`
                 }) as SVGRectElement;
             return this.backgroundGroup;
         }

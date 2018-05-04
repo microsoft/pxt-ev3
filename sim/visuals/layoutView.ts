@@ -79,8 +79,8 @@ namespace pxsim.visuals {
 
         public setBrick(brick: BrickView) {
             this.brick = brick;
-            this.brick.inject(this.scrollGroup);
-            this.brickLandscape.inject(this.scrollGroup);
+            this.brick.inject(this.scrollGroup, this.theme);
+            this.brickLandscape.inject(this.scrollGroup, this.theme);
             this.brick.setSelected(false);
             this.brickLandscape.setSelected(true);
             this.brickLandscape.setVisible(false);
@@ -212,16 +212,16 @@ namespace pxsim.visuals {
 
             // Inject all wires
             for (let port = 0; port < DAL.NUM_OUTPUTS; port++) {
-                this.outputWires[port].inject(this.scrollGroup);
+                this.outputWires[port].inject(this.scrollGroup, this.theme);
             }
             for (let port = 0; port < DAL.NUM_INPUTS; port++) {
-                this.inputWires[port].inject(this.scrollGroup);
+                this.inputWires[port].inject(this.scrollGroup, this.theme);
             }
 
             // Inject all view containers
             for (let i = 0; i < 4; i++) {
-                this.inputContainers[i].inject(this.scrollGroup);
-                this.outputContainers[i].inject(this.scrollGroup);
+                this.inputContainers[i].inject(this.scrollGroup, this.theme);
+                this.outputContainers[i].inject(this.scrollGroup, this.theme);
             }
 
             // Inject all ports
@@ -253,6 +253,12 @@ namespace pxsim.visuals {
         }
 
         public updateTheme(theme: IBoardTheme) {
+            this.inputWires.forEach(n => {
+                n.updateTheme(theme);
+            })
+            this.outputWires.forEach(n => {
+                n.updateTheme(theme);
+            })
             this.inputs.forEach(n => {
                 n.updateTheme(theme);
             })

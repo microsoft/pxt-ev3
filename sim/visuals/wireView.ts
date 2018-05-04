@@ -41,6 +41,11 @@ namespace pxsim.visuals {
             return this.wire;
         }
 
+        public updateThemeCore() {
+            let theme = this.theme;
+            this.path.setAttribute('stroke', theme.wireColor);
+        }
+
         updatePath() {
             if (!this.hasDimensions) return;
             const height = this.endY - this.startY;
