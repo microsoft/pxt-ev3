@@ -111,7 +111,7 @@ brick.showString("What color?", 1)
 
 ## Step 8
 
-In the ``||music::play sound effect||`` blocks, use the drop-down menu to select the ``colors red``, ``colors green``, and ``colors yellow`` sound effects corresponding to the different colors detected. 
+In the ``||music:play sound effect||`` blocks, use the drop-down menu to select the ``colors red``, ``colors green``, and ``colors yellow`` sound effects corresponding to the different colors detected. 
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
