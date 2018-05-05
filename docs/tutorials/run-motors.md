@@ -66,8 +66,7 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 5
 
-Now, let’s add a Medium motor, and tell it how many rotations we want it to run for. 
-Open the ``||brick:Brick||`` Toolbox drawer. Drag out **2** ``|brick:on button||`` blocks. In the ``||brick:on button||`` blocks, use the drop-down menu to select the ``left`` and ``right`` buttons.
+Now, let’s add a Medium motor, and tell it how many rotations we want it to run for. Open the ``||brick:Brick||`` Toolbox drawer. Drag out **2** ``|brick:on button||`` blocks. In the ``||brick:on button||`` blocks, use the drop-down menu to select the ``left`` and ``right`` buttons.
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
@@ -105,9 +104,11 @@ brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 7
 
-For the ``||motors:run||`` blocks that are in the ``||brick:on button left||`` and ``||brick:on button right||`` blocks, use the drop-down menu to select ``medium motor D``. 
- 
-![Select motor on a port dropdown](/static/tutorials/run-motors/run-motor-dropdown.png)
+For the ``||motors:run||`` blocks that are in the ``||brick:on button left||`` and ``||brick:on button right||`` blocks, use the drop-down menu to select a ``medium motor`` on port ``D``. 
+
+| | | |
+|-|-|-|
+| ![Select a motor type dropdown](/static/tutorials/run-motors/run-motor-dropdown.png) | | | ![Select a motor port dropdown](/static/tutorials/run-motors/motor-port-dropdown.png) |
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
@@ -203,7 +204,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 })
 ```
 
-# Step 12
+## Step 12
 
 Open the ``||motors:Motors||`` Toolbox drawer. Drag out a ``||motors:stop all motors||`` block onto the Workspace, and drop into the ``||brick:on button||`` enter block.
 
