@@ -10,7 +10,7 @@ Create different animal effects with your @boardname@.
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:show string||`` block from the **Screen** section onto the Workspace, and drop it into the ``||loops:on start||`` block. You should hear and see the block click into place.
 
-```block
+```blocks
 brick.showString("Hello world", 1)
 ```
 
