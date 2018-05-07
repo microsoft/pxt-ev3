@@ -95,6 +95,7 @@
         "privacyUrl": "https://go.microsoft.com/fwlink/?LinkId=521839",
         "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
         "githubUrl": "https://github.com/Microsoft/pxt-ev3",
+        "betaUrl": "https://makecode.legoeducation.com/about",
         "driveDisplayName": "EV3",
         "boardName": "LEGO® MINDSTORMS® Education EV3",
         "selectLanguage": true,
