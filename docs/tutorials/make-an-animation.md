@@ -10,7 +10,7 @@ Create a custom animation for your @boardname@.
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:show string||`` block onto the Workspace, and drop it into the ``||loops:on Start||`` block. You should hear and see the block click into place.
 
-```block
+```blocks
 brick.showString("Hello world", 1) 
 ```
 
