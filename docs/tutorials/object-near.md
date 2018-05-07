@@ -4,7 +4,7 @@
 
 The digital Ultrasonic Sensor generates sound waves and reads their echoes to detect and measure distance from objects in centimeters. Build a program that will detect when an object is nearby.
 
-![Simualtor with brick and ultrasonic sensor](/static/tutorials/object-near/ultrasonic-near.gif)
+![Simulator with brick and ultrasonic sensor](/static/tutorials/object-near/ultrasonic-near.gif)
 
 ## Step 1
 
