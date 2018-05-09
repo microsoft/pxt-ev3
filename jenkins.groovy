@@ -24,6 +24,7 @@ def projectName = "pxt-ev3"
                 credentialsBinding {
                     string("PXT_ACCESS_TOKEN", "pxt_access_token")
                     string("PXT_RELEASE_REPO", "pxt_release_repo_ev3")
+                    string("CROWDIN_KEY", "pxt_crowdin_key")
                 }
             }
         }
