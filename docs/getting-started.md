@@ -5,6 +5,14 @@
 ```codecard
 [
 {
+    "name": "Prepare",
+    "imageUrl": "/static/lessons/firmware.png",
+    "description": "To use Microsoft MakeCode with your EV3 brick, you will need to install the latest LEGO MINDSTORMS Education EV3 firmware - version 1.10 or higher. Follow these steps to install the latest firmware from LEGO.",
+    "label": "New? Start Here!",
+    "labelClass": "red ribbon large",
+    "url": "https://makecode.mindstorms.com/troubleshoot"
+},
+{
     "name": "Try",
     "imageUrl": "/static/lessons/try.png",
     "description": "Get a quick introduction to programming.",
