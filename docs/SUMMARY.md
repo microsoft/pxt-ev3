@@ -3,8 +3,8 @@
 ## Support #support
 
 * [Troubleshoot](/troubleshoot)
-* [LEGO Support](http://service.lego.com/)
 * [EV3 Manager](https://ev3manager.education.lego.com/)
+* [LEGO Support](https://www.lego.com/service/)
 
 ## Projects #projects
 
