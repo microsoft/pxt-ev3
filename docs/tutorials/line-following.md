@@ -90,7 +90,7 @@ forever(function () {
 })
 ```
 
-# Step 7
+## Step 7
 
 In the second ``||motors:tank large motors||`` block in the ``||logic:else||`` clause, change the speed values of the motors from ``50%``, ``50%`` to ``15%``, ``5%``.  This slows down the robot, and steers it to the right (because the **B** motor is driving faster than the **C** motor).
 
