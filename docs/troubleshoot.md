@@ -4,7 +4,7 @@ If your're having trouble getting your code onto the EV3 Brick, try these steps 
 
 ## Check your **@drivename@** firmware
 
-MakeCode requires the firmware version **1.10E** or up. 
+MakeCode needs a firmware version of **1.10E** or higher installed on your brick. 
 
 ### ~hint
 
@@ -12,26 +12,22 @@ Firmware is the software that runs all the basic operations on your brick. Your 
 
 ### ~
 
-To check the version on your brick,
+To check the the firmware version on your brick:
 
-* go to the **Settings** menu (wrench symbol)
-* select to **Brick Info**
+1. Go to the **Settings** menu (it's under the wrench tool symbol)
+2. Select to **Brick Info**
 
 ![Brick Info menu](/static/setup/brickinfo.jpg)
 
-* check the version under **Brick FW:**
+3. Check the version number under **Brick FW:**
 
 ![Brick Firmware version](/static/setup/brickfw.jpg)
 
-If you cannot find the **brick info** or the version is less than **1.10E**, **you need to upgrade your firmware**.
+If you can't find the **Brick Info** or you see that the version is less than **1.10E**, **you need to upgrade your firmware**.
 
 ## Upgrade your **@drivename@**
 
-If your firmware is less than **1.10E**, you need to upgrade your firmware. 
-
-Recommended: **[Upgrade with the EV3 manager](https://ev3manager.education.lego.com/)** 
-
-You can also upgrade via EV3 Lab, EV3 Programming or even manually. Learn more at the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
+If your a firmware version level is less than **1.10E**, you need to install an upgraded version. You can upgrade the firmware with the **EV3 Lab** or **EV3 Programming** software. Also, you can do a manual upgrade by downloading the firmware install file. See the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page to learn about the upgrade process.
 
 ### ~
 
