@@ -15,7 +15,7 @@ Firmware is the software that runs all the basic operations on your brick. Your 
 To check the the firmware version on your brick:
 
 1. Go to the **Settings** menu (it's under the wrench tool symbol)
-2. Select to **Brick Info**
+2. Select **Brick Info** and press ENTER.
 
 ![Brick Info menu](/static/setup/brickinfo.jpg)
 
