@@ -25,9 +25,15 @@ To check the version on your brick,
 
 If you cannot find the **brick info** or the version is less than **1.10E**, **you need to upgrade your firmware**.
 
-**To update your firmware, use the [EV3 manager](https://ev3manager.education.lego.com/)** or follow these instructions: [Updating and Resetting Firmware](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/updating-and-resetting-lego-mindstorms-ev3-firmware-408100000007884).
+## Upgrade your **@drivename@**
 
-If your EV3 Brick isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. Read the instructions in the **Manual Firmware Update** section of the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
+If your firmware is less than **1.10E**, you need to upgrade your firmware. 
+
+* **[Upgrade with the EV3 manager](https://ev3manager.education.lego.com/)** 
+
+You can also upgrade via EV3 Lab, EV3 Programming or even manually. Learn more at the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
+
+### ~
 
 ## Can I see the **@drivename@** drive on my computer?
 
