@@ -29,6 +29,10 @@ If you can't find the **Brick Info** or you see that the version is less than **
 
 If your a firmware version level is less than **1.10E**, you need to install an upgraded version. You can upgrade the firmware with the **EV3 Lab** or **EV3 Programming** software. Also, you can do a manual upgrade by downloading the firmware install file. See the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page to learn about the upgrade process.
 
+### ~ hint
+
+**Recommended:** [Upgrade with the EV3 manager](https://ev3manager.education.lego.com/)
+
 ### ~
 
 ## Can I see the **@drivename@** drive on my computer?
