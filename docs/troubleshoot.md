@@ -31,7 +31,7 @@ If your a firmware version level is less than **1.10E**, you need to install an 
 
 ### ~ hint
 
-**Recommended:** [Upgrade with the EV3 manager](https://ev3manager.education.lego.com/)
+**Recommended:** Upgrade with the **[EV3 Manager](https://ev3manager.education.lego.com/)**
 
 ### ~
 
