@@ -21,7 +21,7 @@ namespace pxsim {
                         const output = outputs[port];
                         const speed = output ? outputs[port].getSpeed() : 0;
                         const angle = output ? outputs[port].getAngle() : 0;
-                        const tacho = output ? outouts[port].getTacho() : 0;
+                        const tacho = output ? outputs[port].getTacho() : 0;
                         const tci = MotorDataOff.TachoCounts + port * MotorDataOff.Size;
                         const tsi = MotorDataOff.TachoSensor + port * MotorDataOff.Size;
                         data[tci] = tacho & 0xff
