@@ -29,7 +29,7 @@ If you cannot find the **brick info** or the version is less than **1.10E**, **y
 
 If your firmware is less than **1.10E**, you need to upgrade your firmware. 
 
-* **[Upgrade with the EV3 manager](https://ev3manager.education.lego.com/)** 
+Recommended: **[Upgrade with the EV3 manager](https://ev3manager.education.lego.com/)** 
 
 You can also upgrade via EV3 Lab, EV3 Programming or even manually. Learn more at the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
 
