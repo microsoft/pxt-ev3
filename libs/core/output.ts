@@ -132,6 +132,7 @@ namespace motors {
         protected _port: Output;
         protected _portName: string;
         protected _brake: boolean;
+        protected _pauseOnRun: boolean;
         private _initialized: boolean;
         private _init: () => void;
         private _run: (speed: number) => void;
@@ -142,6 +143,7 @@ namespace motors {
             this._port = port;
             this._portName = outputToName(this._port);
             this._brake = false;
+            this._pauseOnRun = true;
             this._initialized = false;
             this._init = init;
             this._run = run;
@@ -170,6 +172,19 @@ namespace motors {
         setBrake(brake: boolean) {
             this.init();
             this._brake = brake;
+        }
+
+        /**
+         * Indicates to pause while a motor moves for a given distance or duration.
+         * @param value true to pause; false to continue the program execution
+         */
+        //% blockId=outputMotorSetPauseMode block="set %motor|pause on run %brake=toggleOnOff"
+        //% motor.fieldEditor="motors"
+        //% weight=60 blockGap=8
+        //% group="Properties"
+        setPauseOnRun(value: boolean) {
+            this.init();
+            this._pauseOnRun = value;
         }
 
         /** 
@@ -201,10 +216,10 @@ namespace motors {
             this.settle();
         }
 
-        private settle() {
+        protected settle() {            
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
-            if(this._brake)
+            if (this._brake)
                 pause(500);
         }
 
@@ -269,10 +284,12 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
-            // wait till motor is done with this work
-            this.pauseUntilReady();
-            // allow robot to settle
-            this.settle();
+            if (stepsOrTime && this._pauseOnRun) {
+                // wait till motor is done with this work
+                this.pauseUntilReady();
+                // allow robot to settle
+                this.settle();
+            }
         }
 
         /**
@@ -306,12 +323,12 @@ namespace motors {
             (Data8) NO – Port number [0 - 3]  
             (Data8) TYPE – Output device type,  (0x07: Large motor, Medium motor = 0x08) Dispatch status Unchanged 
             Description This function enables specifying the output device type
-            */             
+            */
             for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
                     const b = mkCmd(i, DAL.opOutputSetType, 1)
                     b.setNumber(NumberFormat.Int8LE, 2, large ? 0x07 : 0x08)
-                    writePWM(b)        
+                    writePWM(b)
                 }
             }
         }
@@ -333,7 +350,7 @@ namespace motors {
             motors.__motorUsed(this._port, this._large);
         }
 
-        private __init() {            
+        private __init() {
             this.setOutputType(this._large);
         }
 
@@ -572,6 +589,13 @@ namespace motors {
                 stepsOrTime: stepsOrTime,
                 useBrake: this._brake
             });
+
+            if (stepsOrTime && this._pauseOnRun) {
+                // wait till motor is done with this work
+                this.pauseUntilReady();
+                // allow robot to settle
+                this.settle();
+            }
         }
 
         /**
