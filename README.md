@@ -24,7 +24,6 @@ In a common folder,
 
 ```
 npm install
-typings install
 ```
 
 * go to ``pxt-common-packages`` and run
