@@ -20,7 +20,7 @@ Use the USB cable to connect your EV3 Brick to your device.
 
 ## Create and Run your First Program
 
-**Code it:** Create the program below.
+**Code it:** Create the program shown here.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
