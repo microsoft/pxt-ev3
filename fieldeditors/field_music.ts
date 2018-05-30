@@ -240,7 +240,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         this.stopSounds();
     }
 
-    private createTextNode_(content: string) {
+    protected createTextNode_(content: string) {
         const category = this.parseCategory(content);
         let text = content.substr(content.indexOf(' ') + 1);
         text = text.length > 15 ? text.substr(0, 12) + "..." : text;
