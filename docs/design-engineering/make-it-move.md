@@ -22,7 +22,7 @@ In nature, creatures use many methods to get around. None of them, however, use 
 
 ### Build
 
-Think about a creature’s movement for inspiration. Will you make the robot walk, crawl, hop, or wiggle?  Your mechanism can be attached or unattached to the EV3 brick. You can start by tinkering with the LEGO elements in the picture above and then build on.
+Think about a creature’s movement for inspiration. Will you make the robot walk, crawl, hop, or wiggle?  Your mechanism can be attached or unattached to the EV3 Brick. You can start by tinkering with the LEGO elements in the picture above and then build on.
 
 ### Building Hint
 

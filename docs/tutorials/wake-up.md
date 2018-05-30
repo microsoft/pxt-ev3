@@ -6,7 +6,7 @@ Show different moods on your @boardname@.
 
 ![Show mood on the screen](/static/tutorials/wake-up/show-mood.gif)
 
-## Step 1
+## Step 1 @fullscreen
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:show mood||`` block onto the Workspace, and place it into the ``||loops:on start||`` block. You should hear and see the block click into place. 
 

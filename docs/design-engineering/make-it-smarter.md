@@ -32,7 +32,7 @@ Think about:
  
 ### Build
 
-Think about a creature’s movement for inspiration. Your mechanism can be attached or unattached to the EV3 brick. You can start by tinkering with the LEGO elements in the picture add then build on.
+Think about a creature’s movement for inspiration. Your mechanism can be attached or unattached to the EV3 Brick. You can start by tinkering with the LEGO elements in the picture add then build on.
 
 More building ideas: 
 
@@ -92,7 +92,7 @@ This program checks if the Ultrasonic Sensor senses something near.
 
 The blocks inside the ``||loops:forever||`` loop have these actions: 
 
-1. Turn on the ``green`` EV3 brick Status Light.
+1. Turn on the ``green`` EV3 Brick Status Light.
 2. Wait for Ultrasonic Sensor to detect an object.
 3. Turn on Motors ``A`` and ``D`` in opposite directions.
 4. Wait for one quarter of a second (``1500`` milli seconds).

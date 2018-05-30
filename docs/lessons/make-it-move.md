@@ -38,7 +38,7 @@ Place a ``||motors:tank large B+C||`` block from ``||motors:Motors||`` under ``|
 Change the speed to `-60%` (for motor B) and `+60%` (for motor C).
 Change the rotations to `9`.
 
-The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 brick. The motors are set for the reverse direction because they are mounted upside down in this model.
+The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 Brick. The motors are set for the reverse direction because they are mounted upside down in this model.
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
@@ -48,7 +48,7 @@ motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
 
 Place a ``||motors:stop all motors||`` block under ``||motors:tank large B+C||``.
 
-The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 brick then stop.
+The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 Brick then stop.
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
@@ -60,7 +60,7 @@ motors.largeBC.stop()
 Place a ``||brick:show string||`` block under ``||motors:stop all motors||``.
 Change the `"Hello World"` text to `"30 cm"`.
 
-The ``||motors:tank large B+C||`` will run for `9` rotations when the **center** button is pressed on the EV3 brick then stop and display "30 cm" on the EV3 Brick’s screen.
+The ``||motors:tank large B+C||`` will run for `9` rotations when the **center** button is pressed on the EV3 Brick then stop and display "30 cm" on the EV3 Brick’s screen.
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)

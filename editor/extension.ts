@@ -49,7 +49,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                                     <span class="ui yellow circular label">1</span>
                                                     <strong>${lf("Connect the EV3 to your computer with a USB cable")}</strong>
                                                     <br />
-                                                    <span style="font-size:small">${lf("Use the miniUSB port on the top of the EV3 brick")}</span>
+                                                    <span style="font-size:small">${lf("Use the miniUSB port on the top of the EV3 Brick")}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,7 +62,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                             <div class="content">
                                                 <div class="description">
                                                     <span class="ui yellow circular label">2</span>
-                                                    <strong>${lf("Move the .uf2 file to the EV3 brick")}</strong>
+                                                    <strong>${lf("Move the .uf2 file to the EV3 Brick")}</strong>
                                                     <br />
                                                     <span style="font-size:small">${lf("Locate the downloaded .uf2 file and drag it to the EV3 USB drive")}</span>
                                                 </div>
