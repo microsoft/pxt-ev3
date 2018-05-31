@@ -132,7 +132,7 @@ namespace motors {
         protected _port: Output;
         protected _portName: string;
         protected _brake: boolean;
-        protected _pauseOnRun: boolean;
+        private _pauseOnRun: boolean;
         private _initialized: boolean;
         private _init: () => void;
         private _run: (speed: number) => void;
@@ -216,11 +216,20 @@ namespace motors {
             this.settle();
         }
 
-        protected settle() {            
+        protected settle() {
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
             if (this._brake)
                 pause(500);
+        }
+
+        protected pauseOnRun(stepsOrTime: number) {
+            if (stepsOrTime && this._pauseOnRun) {
+                // wait till motor is done with this work
+                this.pauseUntilReady();
+                // allow robot to settle
+                this.settle();
+            }
         }
 
         /**
@@ -284,12 +293,7 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
-            if (stepsOrTime && this._pauseOnRun) {
-                // wait till motor is done with this work
-                this.pauseUntilReady();
-                // allow robot to settle
-                this.settle();
-            }
+            this._pauseOnRun(stepsOrTime);
         }
 
         /**
@@ -590,12 +594,7 @@ namespace motors {
                 useBrake: this._brake
             });
 
-            if (stepsOrTime && this._pauseOnRun) {
-                // wait till motor is done with this work
-                this.pauseUntilReady();
-                // allow robot to settle
-                this.settle();
-            }
+            this.pauseOnRun(stepsOrTime);
         }
 
         /**
