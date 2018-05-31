@@ -293,7 +293,7 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
-            this._pauseOnRun(stepsOrTime);
+            this.pauseOnRun(stepsOrTime);
         }
 
         /**
