@@ -16,21 +16,21 @@ brick.showString("Hello world", 1)
 
 ## Step 2
 
-In the ``||brick:show string||`` block, type the text ``"Guess what animal?"`` to replace ``"Hello world"``.
+In the ``||brick:show string||`` block, type the text ``"Guess teh animal"`` to replace ``"Hello world"``.
 
 ```blocks
-brick.showString("Guess what animal?", 1)
+brick.showString("Guess the animal", 1)
 ```
 
 ## Step 3
 
-Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block and put it anywhere in the Workspace.
+Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block anywhere onto the Workspace.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
-brick.showString("Guess what animal?", 1)
+brick.showString("Guess the animal", 1)
 ```
 
 ## Step 4
@@ -43,7 +43,7 @@ In the ``||brick:on button||`` block, use the drop-down menu to select the ``lef
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
-brick.showString("Guess what animal?", 1) 
+brick.showString("Guess the animal", 1) 
 ```
 
 ## Step 5
@@ -63,7 +63,7 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
-brick.showString("Guess what animal?", 1) 
+brick.showString("Guess the animal", 1) 
 ```
 
 ## Step 6
@@ -83,7 +83,7 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () { 
     brick.showImage(images.expressionsBigSmile) 
 }) 
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 7
@@ -105,7 +105,7 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsPirate)
 })
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 8
@@ -129,7 +129,7 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsPirate)
     music.playSoundEffect(sounds.animalsCatPurr)
 })
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 9
@@ -155,7 +155,7 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsPirate)
     music.playSoundEffect(sounds.animalsSnakeHiss)
 })
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 10

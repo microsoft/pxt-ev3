@@ -2,7 +2,7 @@
 
 ## Introduction @unplugged
 
-Use the Color sensor to detect different colors.
+Use the Color Sensor to detect different colors.
 
 ![Simulator view with color sensor](/static/tutorials/what-color/color-detector.gif)
 
@@ -24,7 +24,7 @@ brick.showString("What color?", 1)
 
 ## Step 3
 
-Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **3** ``||sensors:on color sensor detected||`` blocks onto the Workspace (you can place these anywhere). 
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **3** ``||sensors:on color sensor detected||`` blocks anywhere onto the Workspace.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Blue, function () {
@@ -57,7 +57,7 @@ brick.showString("What color?", 1)
 
 ## Step 5
 
-Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out a **3** ``||brick:set status light||`` blocks and drop one of them each into the ``||sensors:on color detected||`` blocks.
+Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out **3** ``||brick:set status light||`` blocks and drop one of them each into the ``||sensors:on color sensor detected||`` blocks.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -91,7 +91,7 @@ brick.showString("What color?", 1)
 
 ## Step 7
 
-Open the ``||music:Music||`` Toolbox drawer. Drag out **3** ``||music:play sound effect||`` blocks and drop one of them each into the ``||sensors:on color detected||`` blocks after the ``||brick:set status light||`` block.
+Open the ``||music:Music||`` Toolbox drawer. Drag out **3** ``||music:play sound effect||`` blocks and drop one of them each into the ``||sensors:on color sensor detected||`` blocks after the ``||brick:set status light||`` block.
 
 ```blocks
 sensors.color3.onColorDetected(ColorSensorColor.Red, function () {
@@ -131,6 +131,6 @@ brick.showString("What color?", 1)
 
 ## Step 9
 
-Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the EV3 Brick.
 
-Attach a Color Sensor to Port 3 of your brick. Test your program by flashing Red, Green and Yellow colored paper or use LEGO bricks in front of the Color Sensor.
+Attach a Color Sensor to Port 3 of your EV3 Brick. Test your program by flashing Red, Green and Yellow colored paper or use LEGO bricks in front of the Color Sensor.

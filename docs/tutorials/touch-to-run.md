@@ -2,13 +2,13 @@
 
 ## Introduction @unplugged
 
-Use the Touch sensor to run a motor.
+Use the Touch Sensor to run a motor.
 
 ![Large motor connected to brick](/static/tutorials/touch-to-run/touch-to-run.gif)
 
 ## Step 1
 
-Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **2** ``||sensors:on touch||`` blocks onto the Workspace (you can place these anywhere).
+Open the ``||sensors:Sensors||`` Toolbox drawer. Drag out **2** ``||sensors:on touch||`` blocks anywhere onto the Workspace.
 
 ```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
@@ -62,6 +62,6 @@ sensors.touch1.onEvent(ButtonEvent.Released, function () {
 
 ## Step 5
 
-Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the EV3 Brick.
 
-Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing and releasing the touch sensor – does the motor start and stop as expected?
+Attach a Large Motor to Port A, and a Touch Sensor to Port 1 on your EV3 Brick. Test your program by pressing and releasing the touch sensor – does the motor start and stop as expected?

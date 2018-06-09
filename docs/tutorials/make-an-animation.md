@@ -2,9 +2,9 @@
 
 ## Introduction @unplugged
 
-Create a custom animation for your @boardname@.
+Create a custom animation for your EV3 Brick
  
-![Button press on brick](/static/tutorials/make-an-animation/button-pressed.gif)
+![Button press on EV3 Brick](/static/tutorials/make-an-animation/button-pressed.gif)
 
 ## Step 1
 
@@ -46,7 +46,7 @@ brick.showString("Press my button!", 1)
 
 ## Step 5
 
-Try out your code in the EV3 simulator!
+Try out your code in the EV3 Brick simulator!
 
 Press the ``Enter`` button and check that the image shows up as you expected.
 
@@ -64,4 +64,4 @@ brick.showString("Press my button!", 1)
 
 ## Step 7
 
-Plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the EV3 Brick.
