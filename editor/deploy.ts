@@ -98,11 +98,13 @@ export function deployCoreAsync(resp: pxtc.CompileResult, isCli = false) {
     resp.outfiles[pxtc.BINARY_UF2] = btoa(data)
 
     let saveUF2Async = () => {
-        if (isCli || !pxt.commands.saveOnlyAsync) {
-            return Promise.resolve()
-        } else {
-            return pxt.commands.saveOnlyAsync(resp)
+        if (pxt.commands.electronDeployAsync) {
+            return pxt.commands.electronDeployAsync(resp);
         }
+        if (!isCli && pxt.commands.saveOnlyAsync) {
+            return pxt.commands.saveOnlyAsync(resp);
+        }
+        return Promise.resolve();
     }
 
     if (noHID) return saveUF2Async()

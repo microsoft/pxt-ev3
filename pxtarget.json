@@ -42,7 +42,7 @@
         "useUF2": true,
         "useELF": true,
         "hasHex": true,
-        "deployDrives": ".*",
+        "deployDrives": "EV3",
         "deployFileMarker": "INFO_UF2.TXT",
         "driveName": "EV3",
         "flashCodeAlign": 256,
