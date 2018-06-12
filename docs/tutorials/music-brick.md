@@ -25,7 +25,7 @@ brick.showString("Press my buttons to make music!", 1)
 
 ## Step 3
 
-Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block onto the Workspace (you can put it anywhere).
+Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block anywhere onto the Workspace.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
@@ -68,7 +68,7 @@ brick.showString("Press my buttons to make music!", 1)
 
 ## Step 6
 
-Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the EV3 Brick.
 
 You can add more ``||brick:on button||`` blocks to the Workspace and create other ``||music:play tone||`` melodies when different buttons are pressed to transform your brick into a musical instrument!
  
