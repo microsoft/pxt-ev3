@@ -2,13 +2,13 @@
 
 ## Introduction @unplugged
 
-Use the Touch sensor value to stop a running motor.
+Use the Touch Sensor value to stop a running motor.
 
 ![Touch sensor and motor attached to brick](/static/tutorials/touch-sensor-values/touch-to-stop.gif)
 
 ## Step 1
 
-Open the ``||brick:Brick||`` Toolbox drawer. Drag an ``||brick:on button||`` block onto the Workspace, and place it anywhere on the Workspace.
+Open the ``||brick:Brick||`` Toolbox drawer. Drag an ``||brick:on button||`` block onto the Workspace, and place it anywhere.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
