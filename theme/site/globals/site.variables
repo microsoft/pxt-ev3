@@ -198,3 +198,9 @@
 @serialBackgroundColor: #fff;
 @serialGraphBackground: #F2F2F2;
 @serialConsoleBackground: @serialGraphBackground;
+
+/*-------------------
+   Extensions
+--------------------*/
+
+@extensionsHeaderBackground: #999;
