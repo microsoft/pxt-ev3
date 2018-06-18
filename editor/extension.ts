@@ -28,7 +28,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
             <div class="ui grid stackable">
                 <div class="column five wide" style="background-color: #E2E2E2;">
                     <div class="ui header">${lf("First time here?")}</div>
-                    <strong style="font-size:small">${lf("You must have version 1.10 or above of the firmware")}</strong>
+                    <strong style="font-size:small">${lf("You must have version 1.10E or above of the firmware")}</strong>
                     <div style="justify-content: center;display: flex;padding: 1rem;">
                         <img class="ui image" src="./static/download/firmware.png" style="height:100px;" />
                     </div>
