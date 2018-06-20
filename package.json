@@ -39,8 +39,8 @@
     "webfonts-generator": "^0.4.0"
   },
   "dependencies": {
-    "pxt-common-packages": "0.23.15",
-    "pxt-core": "3.19.4"
+    "pxt-common-packages": "0.23.37",
+    "pxt-core": "3.20.5"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"

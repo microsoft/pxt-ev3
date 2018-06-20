@@ -16,10 +16,8 @@
         "ns.ts",
         "control.cpp",
         "control.ts",
-        "eventcontext.ts",
-        "serial.cpp",
-        "serial.ts",
-        "fieldeditors.ts"
+        "console.ts",
+        "eventcontext.ts"
     ],
     "testFiles": [
         "test.ts"
