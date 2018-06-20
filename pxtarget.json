@@ -51,12 +51,12 @@
         "stackAlign": 2
     },
     "serial": {
-      "vendorId": "0x0694",
-      "productId": "0x0005",
-      "rawHID": true,
-      "useEditor": true,
-      "log": true
-  },
+        "vendorId": "0x0694",
+        "productId": "0x0005",
+        "rawHID": true,
+        "useEditor": true,
+        "log": true
+    },
     "runtime": {
         "mathBlocks": true,
         "loopsBlocks": true,
@@ -105,6 +105,7 @@
             "en"
         ],
         "highContrast": true,
+        "greenScreen": true,
         "docMenu": [
             {
                 "name": "Support",
