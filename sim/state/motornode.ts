@@ -30,7 +30,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return this.speed * (this.polarity == 0 ? -1 : 1);
+            return this.speed * (!this._synchedMotor && this.polarity == 0 ? -1 : 1);
         }
 
         getAngle() {
