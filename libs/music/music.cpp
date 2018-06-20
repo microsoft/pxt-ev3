@@ -144,12 +144,14 @@ void playSample(Buffer buf) {
 //% parts="headphone" async
 //% blockNamespace=music
 //% weight=76 blockGap=8
-void playTone(int frequency, int ms) {
+void playTone(int frequency, int ms) {  
+    // see spec: https://www.mathworks.com/help/supportpkg/legomindstormsev3io/ref/playtone.html  
     if (frequency <= 0) {
         _stopSound();
         if (ms >= 0)
             sleep_ms(ms);
     } else {
+        frequency = max(250, min(10000, frequency));
         if (ms > 0) {
             int d = max(1, ms - NOTE_PAUSE); // allow for short rest
             int r = max(1, ms - d);
