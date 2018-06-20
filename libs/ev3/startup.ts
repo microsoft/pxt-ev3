@@ -5,7 +5,5 @@ pause(100)
 
 // pulse green, play startup sound, turn off light
 brick.setStatusLight(StatusLight.GreenPulse);
-music.playSoundEffect(sounds.systemStartUp);
-brick.showImage(images.eyesAwake, 600);
+music.playSoundEffectUntilDone(sounds.systemStartUp);
 brick.setStatusLight(StatusLight.Off);
-brick.clearScreen();
