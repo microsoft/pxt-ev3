@@ -86,18 +86,6 @@ Step by step guides to coding your @boardname@.
 }]
 ```
 
-## Ultrasonic Sensor
-
-```codecard
-[{
-  "name": "Object Near?",
-  "description": "Build a program that will detect when an object is nearby.",
-  "cardType": "tutorial",
-  "url":"/tutorials/object-near",
-  "imageUrl":"/static/tutorials/object-near.png"
-}]
-```
-
 ## Infrared Sensor
 
 ```codecard
