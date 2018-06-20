@@ -49,7 +49,7 @@ namespace pxsim {
             // new command TODO: values
             this.speedCmd = cmd;
             this.speedCmdValues = values;
-            this.speedCmdTacho = this.angle;
+            this.speedCmdTacho = this.tacho;
             this.speedCmdTime = pxsim.U.now();
             delete this._synchedMotor;
         }
