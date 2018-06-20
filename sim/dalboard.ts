@@ -43,6 +43,9 @@ namespace pxsim {
             this.screenState = new ScreenState(["#97b5a6", "#000000"], visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT);
             this.audioState = new AudioState();
             this.remoteState = new RemoteState();
+
+            AudioContextManager.minFrequency = 250;
+            AudioContextManager.maxFrequency = 10000;
         }
 
         receiveMessage(msg: SimulatorMessage) {
