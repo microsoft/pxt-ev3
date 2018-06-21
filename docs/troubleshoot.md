@@ -1,33 +1,39 @@
 # Troubleshooting download problems
 
-If your're having trouble getting your code onto the EV3 Brick, try these steps to see if you can fix the problem.
+If you're having trouble getting your code onto the EV3 Brick, try these steps to see if you can fix the problem.
 
 ## Check your **@drivename@** firmware
 
-MakeCode requires the firmware version **1.10E** or up. 
+MakeCode needs a firmware version of **1.10E** or higher installed on your brick. 
 
 ### ~hint
 
-Firmware is the software that runs all the basic operations on your brick. Your programs run with the firmware to make the @boardname@ do all the things you want it to do. Your brick comes with the firmware already installed. You could have a brick with an older version of firmware that needs updating in order for it to work properly with MakeCode.
+Firmware is the software that runs all the basic operations on your EV3 Brick. Your programs and the firmware work together to make the EV3 Brick do all things you want it to. Your EV3 Brick comes with firmware pre-installed, but it may need to be updated to work properly with MakeCode.
 
 ### ~
 
-To check the version on your brick,
+To check the the firmware version on your EV3 Brick:
 
-* go to the **Settings** menu (wrench symbol)
-* select to **Brick Info**
+1. Go to the **Settings** menu (it's under the wrench tool symbol)
+2. Select **Brick Info** and press ENTER
 
 ![Brick Info menu](/static/setup/brickinfo.jpg)
 
-* check the version under **Brick FW:**
+3. Check the version number under **Brick FW:**
 
 ![Brick Firmware version](/static/setup/brickfw.jpg)
 
-If you cannot find the **brick info** or the version is less than **1.10E**, **you need to upgrade your firmware**.
+If you can't find the **Brick Info** or you see that the version is less than **1.10E**, **you need to upgrade your firmware**.
 
-**To update your firmware, use the [EV3 manager](https://ev3manager.education.lego.com/)** or follow these instructions: [Updating and Resetting Firmware](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/updating-and-resetting-lego-mindstorms-ev3-firmware-408100000007884).
+## Upgrade your **@drivename@**
 
-If your EV3 Brick isn't connected to the internet through a computer, or with some other mobile device, you'll need to do a manual update of the firmware. Read the instructions in the **Manual Firmware Update** section of the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page.
+If your a firmware version level is less than **1.10E**, you need to install an upgraded version. You can upgrade the firmware with the **EV3 Lab** or **EV3 Programming** software. Also, you can do a manual upgrade by downloading the firmware install file. See the [Firmware Update](https://education.lego.com/en-us/support/mindstorms-ev3/firmware-update) support page to learn about the upgrade process.
+
+### ~ hint
+
+**Recommended:** Upgrade with the **[EV3 Device Manager](https://ev3manager.education.lego.com/)**
+
+### ~
 
 ## Can I see the **@drivename@** drive on my computer?
 
@@ -39,27 +45,27 @@ On Windows, it looks like this in Explorer:
 
 If you don't see the **@drivename@** drive, make sure your brick is powered on and check that your USB connection is good.
 
-## Is my brick charged and powered on?
+## The display on the EV3 Brick is blank
 
-Make sure your brick is charged and powered on. If your brick doesn't turn on, find the charger and plug it into wall power, then connect it to your brick. Does it turn on and start up?
+Make sure your EV3 Brick is charged and powered on. If your it doesn't turn on, find the charger and plug it into wall power, then connect it to your EV3 Brick. Does it turn on and start up?
 
-## Is my USB connection good?
+## I still can't see my @drivename@ drive
 
-Make sure that one end of your USB cable is firmly inserted into the port on the computer and the other end is connected to the brick. If you still can't see the **@drivename@** drive, try a different port on the computer. If that doesn't work then maybe your cable is bad or you need to reset the brick.
+Make sure that one end of your USB cable is firmly inserted into a USB port on the computer and the other end is connected to the EV3 Brick. If you still can't see the **@drivename@** drive, try a different port on the computer. If that doesn't work then maybe your cable is faulty or you need to reset the EV3 Brick.
 
-## How do I reset my brick?
+## How do I reset my EV3 Brick?
 
-If you think your USB connection is good and you still can't see your **@drivename@** drive, try giving the brick a reset. You can follow these steps to reset:
+If you think your USB connection is good and you still can't see your **@drivename@** drive, try giving the EV3 Brick a reset. You can follow these steps to reset:
 
 1. Using a finger from one hand, press the **Back** button. Keep holding it.
-2. With your other hand, use two fingers to hold down both the **Left** button and the **Enter** button. You hold these at the same time while you're still pressing the **Back** button.
+2. With your other hand, use two fingers to hold down both the **Left** button and the **Center** button. You hold these at the same time while you're still pressing the **Back** button.
 3. Now, release your finger from the **Back** button.
-4. When the brick says "Starting.." you can let go of the **Left** and **Enter** buttons.
+4. When the EV3 Brick says "Starting.." you can let go of the **Left** and **Enter** buttons.
 
-You can also watch this [How to Reset](https://www.lego.com/en-us/videos/themes/mindstorms/how-to-reset-the-ev3-p-brick-fbcbdbed398e4e12a7ce30fa662c54be) video to see how to do a reset.
+You can also watch this [How to Reset](https://www.lego.com/en-us/videos/themes/mindstorms/how-to-reset-the-ev3-p-brick-fbcbdbed398e4e12a7ce30fa662c54be) video.
 
 ## LEGO Support
 
-If you've checked everything here and can't get the **@drivename@** drive to show up on your computer, you can't make the brick reset, or your program just won't download, then try the [Troubleshooting Walkthrough](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/lego-mindstorms-ev3-troubleshooting-walkthrough-408100000009798).
+If you've checked everything here and can't get the **@drivename@** drive to show up on your computer, you can't make the EV3 Brick reset, or your program just won't download, then try the [Troubleshooting Walkthrough](https://www.lego.com/en-us/service/help/products/themes-sets/mindstorms/lego-mindstorms-ev3-troubleshooting-walkthrough-408100000009798).
 
 You can also find more help at [LEGO Support](https://www.lego.com/en-us/mindstorms/support).

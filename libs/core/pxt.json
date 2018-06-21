@@ -10,7 +10,6 @@
         "linux.cpp",
         "mmap.cpp",
         "control.cpp",
-        "console.ts",
         "timer.ts",
         "serialnumber.cpp",
         "buttons.ts",
@@ -25,7 +24,8 @@
         "enums.d.ts",
         "dal.d.ts",
         "icons.jres",
-        "ns.ts"
+        "ns.ts",
+        "platform.h"
     ],
     "testFiles": [
         "test.ts"

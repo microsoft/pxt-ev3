@@ -2,7 +2,7 @@
 
 [![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_rainbow/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/job/pxt-ev3_Push/)
 
-This repo contains the editor target hosted at https://makecode.legoeducation.com
+This repo contains the editor target hosted at https://makecode.mindstorms.com
 
 LEGO Auth: https://src.education.lego.com/groups/ev3-makecode (use Google Authenticator)
 LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square
@@ -24,7 +24,6 @@ In a common folder,
 
 ```
 npm install
-typings install
 ```
 
 * go to ``pxt-common-packages`` and run

@@ -23,3 +23,8 @@ namespace motors {
         return turnratio;
     }
 }
+
+//% icon="\uf112"
+namespace console {
+
+}

@@ -30,7 +30,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return this.speed * (this.polarity == 0 ? -1 : 1);
+            return this.speed * (!this._synchedMotor && this.polarity == 0 ? -1 : 1);
         }
 
         getAngle() {
@@ -49,7 +49,7 @@ namespace pxsim {
             // new command TODO: values
             this.speedCmd = cmd;
             this.speedCmdValues = values;
-            this.speedCmdTacho = this.angle;
+            this.speedCmdTacho = this.tacho;
             this.speedCmdTime = pxsim.U.now();
             delete this._synchedMotor;
         }
@@ -150,7 +150,8 @@ namespace pxsim {
                         const step2 = this.speedCmdValues[2];
                         const step3 = this.speedCmdValues[3];
                         const brake = this.speedCmdValues[4];
-                        const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed)
+                        const isTimeCommand = this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed;
+                        const dstep = isTimeCommand
                             ? pxsim.U.now() - this.speedCmdTime
                             : this.tacho - this.speedCmdTacho;
                         if (dstep < step1) // rampup
@@ -161,6 +162,16 @@ namespace pxsim {
                             this.speed = speed * (step1 + step2 + step3 - dstep) / (step1 + step2 + step3);
                         else {
                             if (brake) this.speed = 0;
+                            if (!isTimeCommand) {
+                                // we need to patch the actual position of the motor when
+                                // finishing the move as our integration step introduce errors
+                                const deltaAngle = -Math.sign(speed) * (dstep - (step1 + step2 + step3));
+                                if (deltaAngle) {
+                                    this.angle += deltaAngle;
+                                    this.tacho -= Math.abs(deltaAngle);
+                                    this.setChangedState();
+                                }
+                            }
                             this.clearSpeedCmd();
                         }
                         break;
