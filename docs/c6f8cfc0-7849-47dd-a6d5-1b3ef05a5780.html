@@ -375,7 +375,7 @@
                 else {
                     var props = {};
                     var measures = {};
-                    for (const k in data)
+                    for (var k in data)
                         if (typeof data[k] == "string") props[k] = data[k];
                         else measures[k] = data[k];
                     pxt.aiTrackEvent(id, props, measures);
