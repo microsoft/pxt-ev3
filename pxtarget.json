@@ -87,7 +87,7 @@
         "cardLogo": "./static/icons/android-chrome-192x192.png",
         "appLogo": "./static/icons/android-chrome-192x192.png",
         "organization": "Microsoft MakeCode",
-        "organizationUrl": "https://makecode.com/",
+        "organizationUrl": "https://makecode.com/org",
         "organizationLogo": "./static/Microsoft-logo_rgb_c-gray-square.png",
         "organizationWideLogo": "./static/Microsoft-logo_rgb_c-gray.png",
         "homeUrl": "https://makecode.mindstorms.com/",
