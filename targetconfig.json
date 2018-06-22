@@ -15,6 +15,6 @@
         "Maker": "maker"
     },
     "electronManifest": {
-        "latest": "v0.1.60"
+        "latest": "v0.3.6"
     }
 }
