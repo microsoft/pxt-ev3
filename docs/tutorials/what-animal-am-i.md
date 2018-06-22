@@ -16,7 +16,7 @@ brick.showString("Hello world", 1)
 
 ## Step 2
 
-In the ``||brick:show string||`` block, type the text ``"Guess teh animal"`` to replace ``"Hello world"``.
+In the ``||brick:show string||`` block, type the text ``"Guess the animal"`` to replace ``"Hello world"``.
 
 ```blocks
 brick.showString("Guess the animal", 1)
