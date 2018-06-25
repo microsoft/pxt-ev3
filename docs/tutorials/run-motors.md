@@ -66,7 +66,7 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
 
 ## Step 5
 
-Now, let’s add a Medium motor, and tell it how many rotations we want it to run for. Open the ``||brick:Brick||`` Toolbox drawer. Drag out **2** ``|brick:on button||`` blocks. In the ``||brick:on button||`` blocks, use the drop-down menu to select the ``left`` and ``right`` buttons.
+Open the ``||brick:Brick||`` Toolbox drawer and drag out **2** ``|brick:on button||`` blocks. In the ``||brick:on button||`` blocks, use the drop-down menu to select the ``left`` and ``right`` buttons.
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
