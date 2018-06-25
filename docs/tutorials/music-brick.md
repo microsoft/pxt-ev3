@@ -17,10 +17,10 @@ brick.showString("Hello world", 1)
 
 ## Step 2
 
-In the ``||brick:show string||`` block, type the text ``"Press my buttons to make music!"`` to replace ``"Hello world"``.
+In the ``||brick:show string||`` block, type the text ``"Press my buttons!"`` to replace ``"Hello world"``.
 
 ```blocks
-brick.showString("Press my buttons to make music!", 1)
+brick.showString("Press my buttons!", 1)
 ```
 
 ## Step 3
@@ -31,7 +31,7 @@ Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag 
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 
 })
-brick.showString("Press my buttons to make music!", 1)
+brick.showString("Press my buttons!" 1)
 ```
 
 ## Step 4
@@ -40,13 +40,13 @@ Open the ``||music:Music||`` Toolbox drawer. Drag out **5** ``||music:play tone|
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    music.playTone(0, music.beat(BeatFraction.Half))
-    music.playTone(0, music.beat(BeatFraction.Half))
-    music.playTone(0, music.beat(BeatFraction.Half))
-    music.playTone(0, music.beat(BeatFraction.Half))
-    music.playTone(0, music.beat(BeatFraction.Half))
+    music.playTone(262, music.beat(BeatFraction.Half))
+    music.playTone(262, music.beat(BeatFraction.Half))
+    music.playTone(262, music.beat(BeatFraction.Half))
+    music.playTone(262, music.beat(BeatFraction.Half))
+    music.playTone(262, music.beat(BeatFraction.Half))
 })
-brick.showString("Press my buttons to make music!", 1) 
+brick.showString("Press my buttons!", 1)
 ```
 
 ## Step 5
@@ -63,7 +63,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
     music.playTone(196, music.beat(BeatFraction.Half))
     music.playTone(294, music.beat(BeatFraction.Whole))
 })
-brick.showString("Press my buttons to make music!", 1)
+brick.showString("Press my buttons!", 1)
 ```
 
 ## Step 6
