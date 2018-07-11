@@ -30,6 +30,8 @@ If you want some building help you can follow these instructions.
 
 [![Toddle Bot](/static/lessons/make-it-move/toddle-bot.jpg)](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/toddle%20bot-3dcad146d7f5deac4753f93e9dcc0739.pdf)
 
+Click [here](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/toddle%20bot-3dcad146d7f5deac4753f93e9dcc0739.pdf)
+
 ### Program
 
 Before you program, think about:
