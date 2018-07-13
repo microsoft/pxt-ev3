@@ -14,7 +14,7 @@
         }
 
         .ui.grid {
-            background: rgb(170, 39, 143)!important;
+            background: rgb(170, 39, 143) !important;
         }
 
         .ui.inverted.content {
@@ -388,8 +388,13 @@
         }
         function downloadWin64() {
             // TODO: Keep this link up-to-date with the desired release version
-            window.open("https://makecode.com/api/release/ev3/v0.3.6/win64");
+            window.open("https://makecode.com/api/release/ev3/v0.4.2/win64");
             tickEvent("offlineapp.download", { "target": "ev3", "platform": "win64" });
+        }
+        function downloadMac64() {
+            // TODO: Keep this link up-to-date with the desired release version
+            window.open("https://makecode.com/api/release/ev3/v0.4.2/mac64");
+            tickEvent("offlineapp.download", { "target": "ev3", "platform": "mac64" });
         }
     </script>
 
@@ -421,7 +426,7 @@
                         <span class="c4 c1">MICROSOFT PRE-RELEASE SOFTWARE LICENSE TERMS</span>
                     </p>
                     <p class="c11">
-                        <span class="c4 c1">MICROSOFT MAKECODE SOFTWARE FOR LEGO MINDSTORMS EDUCATION EV3</span>
+                        <span class="c4 c1">MICROSOFT MAKECODE FOR LEGO MINDSTORMS EDUCATION EV3</span>
                     </p>
                     <p class="c7">
                         <span class="c4 c1"></span>
@@ -767,6 +772,11 @@
                 <button class="ui icon button" onclick="downloadWin64()">
                     <i class="download icon"></i>
                     makecode-ev3-setup-win64.exe
+                </button>
+                <h3 class="ui">Mac OS</h3>
+                <button class="ui icon button" onclick="downloadMac64()">
+                    <i class="download icon"></i>
+                    makecode-ev3-mac64.zip
                 </button>
             </div>
         </div>
