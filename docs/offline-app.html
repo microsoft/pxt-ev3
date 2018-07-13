@@ -13,7 +13,7 @@
             color: rgba(0, 0, 0, 0.4);
         }
 
-        .ui.grid {
+        .topbar {
             background: rgb(170, 39, 143) !important;
         }
 
@@ -404,7 +404,7 @@
 
     <div class="ui inverted vertical center aligned segment content">
 
-        <div class="ui grid">
+        <div class="ui grid topbar">
             <div class="three wide column">
                 <img class="ui small image left" src="/static//lego_education_logo_white.png" />
             </div>
@@ -768,16 +768,22 @@
                 </label>
             </div>
             <div id="download-segment" class="ui center aligned segment hidden">
-                <h3 class="ui">Windows</h3>
-                <button class="ui icon button" onclick="downloadWin64()">
-                    <i class="download icon"></i>
-                    makecode-ev3-setup-win64.exe
-                </button>
-                <h3 class="ui">Mac OS</h3>
-                <button class="ui icon button" onclick="downloadMac64()">
-                    <i class="download icon"></i>
-                    makecode-ev3-mac64.zip
-                </button>
+                <div class="ui grid">
+                    <div class="eight wide column">
+                        <h3 class="ui">Windows</h3>
+                        <button class="ui icon button" onclick="downloadWin64()">
+                            <i class="download icon"></i>
+                            makecode-ev3-setup-win64.exe
+                        </button>
+                    </div>
+                    <div class="eight wide column">
+                        <h3 class="ui">Mac OS</h3>
+                        <button class="ui icon button" onclick="downloadMac64()">
+                            <i class="download icon"></i>
+                            makecode-ev3-mac64.zip
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
