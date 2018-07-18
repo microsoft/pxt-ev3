@@ -102,7 +102,11 @@
         "crowdinProject": "kindscript",
         "selectLanguage": true,
         "availableLocales": [
-            "en"
+            "en",
+            "de",
+            "ja",
+            "ru",
+            "zh-CN"
         ],
         "highContrast": true,
         "docMenu": [
