@@ -131,6 +131,7 @@
                 "path": "/reference"
             }
         ],
+        "print": true,
         "showHomeScreen": true,
         "homeScreenHero": "./static/hero.png",
         "invertedMenu": false,
