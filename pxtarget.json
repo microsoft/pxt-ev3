@@ -139,6 +139,7 @@
         "invertedToolbox": false,
         "coloredToolbox": true,
         "hasAudio": true,
+        "saveInMenu": true,
         "usbHelp": [],
         "extendEditor": true,
         "extendFieldEditors": true,
