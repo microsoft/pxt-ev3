@@ -20,7 +20,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     private categoriesCache_: string[];
 
     constructor(text: string, options: FieldMusicOptions, validator?: Function) {
-        super(text, { sort: true, data: options.data }, validator);
+        super(text, { blocksInfo: options.blocksInfo, sort: true, data: options.data }, validator);
 
         this.columns_ = parseInt(options.columns) || 4;
         this.width_ = parseInt(options.width) || 380;

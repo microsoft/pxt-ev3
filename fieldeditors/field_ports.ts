@@ -11,7 +11,7 @@ export class FieldPorts extends pxtblockly.FieldImages implements Blockly.FieldC
     public isFieldCustom_ = true;
 
     constructor(text: string, options: FieldPortsOptions, validator?: Function) {
-        super(text, { sort: true, data: options.data }, validator);
+        super(text, { blocksInfo: options.blocksInfo, sort: true, data: options.data }, validator);
 
         this.columns_ = parseInt(options.columns) || 4;
         this.width_ = parseInt(options.width) || 300;
