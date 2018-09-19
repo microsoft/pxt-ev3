@@ -31,7 +31,7 @@ Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag 
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 
 })
-brick.showString("Press my buttons!" 1)
+brick.showString("Press my buttons!", 1)
 ```
 
 ## Step 4
