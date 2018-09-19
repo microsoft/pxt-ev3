@@ -37,6 +37,10 @@ namespace pxsim {
             return this.angle;
         }
 
+        getTacho() {
+            return this.tacho;
+        }
+
         // returns the slave motor if any
         getSynchedMotor() {
             return this._synchedMotor;

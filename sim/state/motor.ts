@@ -21,9 +21,13 @@ namespace pxsim {
                         const output = outputs[port];
                         const speed = output ? outputs[port].getSpeed() : 0;
                         const angle = output ? outputs[port].getAngle() : 0;
+                        const tacho = output ? outputs[port].getTacho() : 0;
                         const tci = MotorDataOff.TachoCounts + port * MotorDataOff.Size;
                         const tsi = MotorDataOff.TachoSensor + port * MotorDataOff.Size;
-                        data[tci] = data[tci + 1] = data[tci + 2] = data[tci + 3] = 0; // Tacho count
+                        data[tci] = tacho & 0xff
+                        data[tci + 1] = (tacho >> 8) & 0xff
+                        data[tci + 2] = (tacho >> 16) & 0xff
+                        data[tci + 3] = tacho >> 24; // Tacho count
                         data[MotorDataOff.Speed + port * MotorDataOff.Size] = speed; // Speed
                         data[tsi] = angle & 0xff; // Count
                         data[tsi + 1] = (angle >> 8) & 0xff; // Count

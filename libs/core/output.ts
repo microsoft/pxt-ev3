@@ -423,6 +423,20 @@ namespace motors {
         }
 
         /**
+         * Gets the motor tacho count.
+         */
+        //% blockId=motorTacho block="%motor|tacho"
+        //% motor.fieldEditor="motors"
+        //% weight=69
+        //% blockGap=8
+        //% group="Counters"
+        //% help=motors/motor/tacho
+        tacho(): number {
+            this.init();
+            return getMotorData(this._port).tachoCount;
+        }
+
+        /**
          * Clears the motor count
          */
         //% blockId=motorClearCount block="clear %motor|counters"
