@@ -177,7 +177,7 @@
         "monacoColors": {
             "editor.background": "#f9f9f9"
         },
-        "fileNameExclusiveFilter": "[^a-zA-Z]"
+        "fileNameExclusiveFilter": "[^a-zA-Z0-9]"
     },
     "ignoreDocsErrors": true
 }
