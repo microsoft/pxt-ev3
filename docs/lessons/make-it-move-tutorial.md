@@ -1,4 +1,4 @@
-# Make It Move Without Wheels 
+# Make It Move Without Wheels
 
 ## Objective @unplugged
 
@@ -24,7 +24,13 @@ The Walker Bot combines an EV3 Frame and two legs that are mirror-images to crea
 The legs in the Walker Bot are designed to show how to change the rotary motion of a motor to reciprocating motion.
 
 Start by reading [these](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/ev3-dep/building%20instructions/walker-bot-bi-180fc24f9298e1dd6201099627d43903.pdf) instructions first.
- 
+
+### ~hint
+
+If clicking the above image doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
+
 ![@boardname@ Walker Bot](/static/lessons/make-it-move/walker-bot.jpg)
 
  

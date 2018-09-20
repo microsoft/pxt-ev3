@@ -1,6 +1,6 @@
-# Make It Smarter and Faster 
+# Make It Smarter and Faster
 
-## Connect 
+## Connect
 
 ### Design Brief
 
@@ -10,31 +10,31 @@ https://www.youtube.com/watch?v=y9-A_C_08KY
 
 * What do the robots in the video need to be able to sense, plan, and act?
 * What senses do humans have and why are they important to us?
-* How many human-like senses do you see the robots demonstrating? 
+* How many human-like senses do you see the robots demonstrating?
 
-### Brainstorm 
+### Brainstorm
 
 Discuss different solutions to the design brief.
 
-Think about: 
+Think about:
 
-* What kind of creature can it be? 
-* How can it move? 
-* What does it need to be aware so that it stays safe, well fed and warm (or cool)? 
-* Is it looking for food, a safe place to hide or a warm place to soak up the sun? 
-* Will the creature need to move fast or slow? 
-* Will it need to turn? 
+* What kind of creature can it be?
+* How can it move?
+* What does it need to be aware so that it stays safe, well fed and warm (or cool)?
+* Is it looking for food, a safe place to hide or a warm place to soak up the sun?
+* Will the creature need to move fast or slow?
+* Will it need to turn?
 * Will it need to go backward?
 
 ![EV3 and bricks](/static/lessons/make-it-smarter/bricks.png)
 
 ## Construct
- 
+
 ### Build
 
 Think about a creature’s movement for inspiration. Your mechanism can be attached or unattached to the EV3 Brick. You can start by tinkering with the LEGO elements in the picture add then build on.
 
-More building ideas: 
+More building ideas:
 
 | | | | | |
 |-|-|-|-|-|
@@ -53,9 +53,15 @@ More building ideas:
 | [![EV3 Leg 1](/static/lessons/make-it-smarter/ev3-parts-leg-1.jpg)][Leg 1] | | [![EV3 Leg 2](/static/lessons/make-it-smarter/ev3-parts-leg-2.jpg)][Leg 2] | | [![EV3 Leg 3](/static/lessons/make-it-smarter/ev3-parts-leg-3.jpg)][Leg 3] |
 | [Leg 1] | | [Leg 2] | | [Leg 3] |
 
-### Program 
+### ~hint
 
-Before you program, think about:  
+If clicking the above links doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
+
+### Program
+
+Before you program, think about:
 
 * How will you program the robot to sense?
 * How will you program the robot to respond?
@@ -67,7 +73,7 @@ Before you program, think about:
 
 ### ~
 
-### Sample Solution 
+### Sample Solution
 
 The Insect uses its Ultrasonic Sensor to sense danger and move away from a threat.
 
@@ -86,11 +92,17 @@ Building Instructions:
 
 [![Insect robot](/static/lessons/make-it-smarter/insect-bot.jpg)](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/insect-94b8a46f0dc5082c9d78ddb734626dc9.pdf)
 
-### Sample Solution 
+### ~hint
 
-This program checks if the Ultrasonic Sensor senses something near. 
+If clicking the above images or links doesn't open the instructions, right-click on the link and choose "Save link as..." to download the PDF.
 
-The blocks inside the ``||loops:forever||`` loop have these actions: 
+### ~
+
+### Sample Solution
+
+This program checks if the Ultrasonic Sensor senses something near.
+
+The blocks inside the ``||loops:forever||`` loop have these actions:
 
 1. Turn on the ``green`` EV3 Brick Status Light.
 2. Wait for Ultrasonic Sensor to detect an object.
@@ -119,44 +131,44 @@ forever(function () {
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the center button on the EV3 Brick to run the program.
 
-## Contemplate 
+## Contemplate
 
-### Test and Analyze 
+### Test and Analyze
 
-As you work on your solution: 
-1. Describe one part of your design that worked especially well. 
-2. Describe one design change that you had to make. 
-3. What will you try next? 
+As you work on your solution:
+1. Describe one part of your design that worked especially well.
+2. Describe one design change that you had to make.
+3. What will you try next?
 
-### Review and Revise 
+### Review and Revise
 
-Take a moment to reflect on your robot solution. 
+Take a moment to reflect on your robot solution.
 
-Think about: 
+Think about:
 
-* Does your robot move when the sensor is activated? 
-* If not, what will you change to make the robot’s ability to sense and respond more obvious? 
-* What other behaviors can you add to the robot to make it more realistic? 
+* Does your robot move when the sensor is activated?
+* If not, what will you change to make the robot’s ability to sense and respond more obvious?
+* What other behaviors can you add to the robot to make it more realistic?
 
 Describe two ways you could improve your robot.
 
-## Continue 
+## Continue
 
 Personalize your project:
 
-* Add/remove LEGO elements to improve the way your robot moves. 
+* Add/remove LEGO elements to improve the way your robot moves.
 * Click on the JavaScript tab and experiment with changing the values in the code.
 * Add a custom image or sounds by adding blocks from the Brick or Music menus.
 * Does your robot resemble a creature? Maybe add more craft materials to your project.
 
-## Communicate 
+## Communicate
 
-Here are some ideas: 
+Here are some ideas:
 
-* Create a video of your project, especially your final presentation and your robot’s performance. Explain some important features of your software program. 
-* Produce a building guide for your model by taking a series of photographs as you deconstruct it. 
-* Include an image of your program with comments. 
-* Add a team photograph! 
+* Create a video of your project, especially your final presentation and your robot’s performance. Explain some important features of your software program.
+* Produce a building guide for your model by taking a series of photographs as you deconstruct it.
+* Include an image of your program with comments.
+* Add a team photograph!
 
 Congratulations! What will you design next?
 

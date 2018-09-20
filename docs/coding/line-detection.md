@@ -24,6 +24,12 @@ Build red and green “lights” for your robot to detect. You can use LEGO bric
 
 [![IMAGE: Color Squares](/static/coding/line-detection/ev3-color-squares.jpg)](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/color%20squares-0a88dfd98bb2e64b5b8151fc422bae36.pdf)
 
+### ~hint
+
+If clicking the above images doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
+
 ### Check
 
 Before you program, check:
@@ -51,7 +57,7 @@ Consider using these blocks in your solution:
 
 ```block
 loops.forever(function () {
-	
+
 })
 motors.largeBC.steer(0, 50)
 sensors.color3.pauseUntilColorDetected(ColorSensorColor.Red)
@@ -77,9 +83,9 @@ loops.forever(function () {
 
 ### Download and test
 
-Click **Download** and follow the instructions to get your code onto your EV3 Brick. 
+Click **Download** and follow the instructions to get your code onto your EV3 Brick.
 
-Congratulations! Your robot can stop at a red light. 
+Congratulations! Your robot can stop at a red light.
 
 Now add to your program and have your robot to drive forward again when the light changes from red to green.
 
@@ -102,7 +108,7 @@ loops.forever(function () {
 
 ### Download and test
 
-Click **Download** and follow the instructions to get your code onto your EV3 Brick. 
+Click **Download** and follow the instructions to get your code onto your EV3 Brick.
 
 ## Contemplate
 
@@ -116,7 +122,7 @@ Draw a dark line with tape or marker for your robot to cross.
 
 Consider using these blocks in your solution:
 
-```block 
+```block
 motors.largeBC.steer(0, 50)
 music.playSoundEffect(sounds.systemGeneralAlert)
 ```
@@ -143,7 +149,7 @@ loops.forever(function () {
 
 #### Download and test
 
-Click **Download** and follow the instructions to get your code onto your EV3 Brick. 
+Click **Download** and follow the instructions to get your code onto your EV3 Brick.
 
 #### Differentiation
 
@@ -157,7 +163,7 @@ Consider using these blocks in your solution:
 
 ```block
 while (true) {
-	
+
 }
 motors.largeBC.steer(0, 50)
 ```
@@ -166,7 +172,7 @@ motors.largeBC.steer(0, 50)
 
 ```block
 if (true) {
-	
+
 } else {
 
 }
@@ -215,7 +221,7 @@ forever(function () {
 
 ### Download and test
 
-Click **Download** and follow the instructions to get your code onto your EV3 Brick. 
+Click **Download** and follow the instructions to get your code onto your EV3 Brick.
 
 ### Share
 
@@ -232,8 +238,8 @@ Personalize:
 
 * Click on the **JavaScript** tab and experiment with changing the values in the code.
 * Add a custom image or sounds from the ``||brick:Brick||`` or ``||music:Music||`` menus.
-* Create a video of your project, especially your final presentation and your robot’s performance. Explain some important features of your software program. 
-* Include an image of your program with comments. 
-* Add a team photograph! 
+* Create a video of your project, especially your final presentation and your robot’s performance. Explain some important features of your software program.
+* Include an image of your program with comments.
+* Add a team photograph!
 
 Congratulations! What will you design next?

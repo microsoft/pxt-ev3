@@ -20,6 +20,12 @@ Build the robot driving base:
 
 [![EV3 Driving Base](/static/lessons/common/ev3-driving-base.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf)
 
+### ~hint
+
+If clicking the above image doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
+
 ## Make It Move
 
 **Code it:** Create a program that makes the Driving Base move forward and stop at the finish line, which is ``1`` meter away.
@@ -67,6 +73,12 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 Build and attach an Ultrasonic Sensor to your driving base:
 
 [![EV3 Ultrasonic Sensor Driving Base Building Instructions Main Image](/static/lessons/common/ev3-ultrasonic-sensor-driving-base.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-ultrasonic-sensor-driving-base-61ffdfa461aee2470b8ddbeab16e2070.pdf)
+
+### ~hint
+
+If clicking the above image doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
 
 ## Detect an Object
 
