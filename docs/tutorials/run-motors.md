@@ -106,9 +106,9 @@ brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
 
 For the ``||motors:run||`` blocks that are in the ``||brick:on button left||`` and ``||brick:on button right||`` blocks, use the drop-down menu to select a ``medium motor`` on Port ``D``. 
 
-| | | |
-|-|-|-|
-| ![Select a motor type dropdown](/static/tutorials/run-motors/run-motor-dropdown.png) | | | ![Select a motor port dropdown](/static/tutorials/run-motors/motor-port-dropdown.png) |
+![Select a motor type dropdown](/static/tutorials/run-motors/run-motor-dropdown.png)
+<br/>
+![Select a motor port dropdown](/static/tutorials/run-motors/motor-port-dropdown.png)
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
