@@ -83,7 +83,7 @@
         "logoUrl": "https://education.lego.com/",        
         "logo": "./static/lego_education_logo.png",
         "docsLogo": "./static/lego_education_logo.png",
-        "portraitLogo": "./static/lego-logo.svg",
+        "portraitLogo": "./static/lego_education_logo.png",
         "cardLogo": "./static/icons/android-chrome-192x192.png",
         "appLogo": "./static/icons/android-chrome-192x192.png",
         "organization": "Microsoft MakeCode",
