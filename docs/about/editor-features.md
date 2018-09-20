@@ -70,3 +70,12 @@
 | ![Download button](/static/about/download-button.png) |
 | Download Button |
 
+#### #explorer-images
+
+| |
+|-|
+| ![Explorer button](/static/about/explorer-button.png) |
+| Explorer Button |
+| &nbsp; |
+| ![Explorer File View](/static/about/explorer-view.png) |
+| Explorer File View |
