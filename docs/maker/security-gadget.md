@@ -42,14 +42,34 @@ This activity uses sensor inputs. You may want to try the [Use](/getting-started
 
 Follow the steps of the _Maker Design Process_ for this lesson:
 
-| | |
-|-|-|
-| ![Paper sheet icon](/static/maker/design-process-icons/define-problem.png) | **Define the Problem** |
-| ![Lightbulb icon](/static/maker/design-process-icons/brainstorming.png) | **Brainstorming** |
-| ![Checkmark icon](/static/maker/design-process-icons/define-criteria.png) | **Define the Design Criteria** |
-| ![Connector icon](/static/maker/design-process-icons/go-make.png) | **Go Make** |
-| ![Redo icon](/static/maker/design-process-icons/review-revise.png) | **Review and Revise Your Solution** |
-| ![Speaker icon](/static/maker/design-process-icons/communicate.png) | **Communicate Your Solution** |
+```codecard
+[
+    {
+        "name": "Define the Problem",
+        "imageUrl": "/static/maker/design-process-icons/define-problem.png"
+    },
+    {
+        "name": "Brainstorming",
+        "imageUrl": "/static/maker/design-process-icons/define-problem.png"
+    },
+    {
+        "name": "Define the Design Criteria",
+        "imageUrl": "/static/maker/design-process-icons/define-problem.png"
+    },
+    {
+        "name": "Go Make",
+        "imageUrl": "/static/maker/design-process-icons/go-make.png"
+    },
+    {
+        "name": "Review and Revise Your Solution",
+        "imageUrl": "/static/maker/design-process-icons/review-revise.png"
+    },
+    {
+        "name": "Communicate Your Solution",
+        "imageUrl": "/static/maker/design-process-icons/communicate.png"
+    }
+]
+```
 
 ### Defining the Problem
 
