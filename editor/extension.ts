@@ -30,7 +30,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                     <div class="ui header">${lf("First time here?")}</div>
                     <strong style="font-size:small">${lf("You must have version 1.10E or above of the firmware")}</strong>
                     <div style="justify-content: center;display: flex;padding: 1rem;">
-                        <img class="ui image" src="./static/download/firmware.png" style="height:100px;" />
+                        <img class="ui image" src="/static/download/firmware.png" style="height:100px;" />
                     </div>
                     <a href="/troubleshoot" target="_blank">${lf("Check your firmware version here and update if needed")}</a>
                 </div>
@@ -42,7 +42,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                     <div class="column">
                                         <div class="ui">
                                             <div class="image">
-                                                <img class="ui medium rounded image" src="./static/download/connect.svg" style="height:109px;width:261px;margin-bottom:1rem;" />
+                                                <img class="ui medium rounded image" src="/static/download/connect.svg" style="height:109px;width:261px;margin-bottom:1rem;" />
                                             </div>
                                             <div class="content">
                                                 <div class="description">
@@ -57,7 +57,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                     <div class="column">
                                         <div class="ui">
                                             <div class="image">
-                                                <img class="ui medium rounded image" src="./static/download/transfer.svg" style="height:109px;width:261px;margin-bottom:1rem;" />
+                                                <img class="ui medium rounded image" src="/static/download/transfer.svg" style="height:109px;width:261px;margin-bottom:1rem;" />
                                             </div>
                                             <div class="content">
                                                 <div class="description">
