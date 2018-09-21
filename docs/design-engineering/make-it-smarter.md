@@ -36,22 +36,16 @@ Think about a creature’s movement for inspiration. Your mechanism can be attac
 
 More building ideas:
 
-| | | | | |
-|-|-|-|-|-|
-|[![EV3 Frames](/static/lessons/make-it-smarter/ev3-parts-frames.jpg)][EV3 Frames] | |[![EV3 Color Sensor 1](/static/lessons/make-it-smarter/ev3-parts-color-sensor-1.jpg)][Color Sensor 1] | |[![EV3 Gyro Sensor](/static/lessons/make-it-smarter/ev3-parts-gyro-sensor.jpg)][Gyro Sensor] |
-| [EV3 Frames] | | [Color Sensor 1] | | [Gyro Sensor] |
-<br/>
 
-| | | | | |
-|-|-|-|-|-|
-|[![EV3 Ultrasonic Sensor](/static/lessons/make-it-smarter/ev3-parts-ultrasonic-sensor.jpg)][Ultrasonic Sensor] | | [![EV3 Touch Sensor](/static/lessons/make-it-smarter/ev3-parts-touch-sensor.jpg)][Touch Sensor] | | [![EV3 Gyro Sensor](/static/lessons/make-it-smarter/ev3-parts-jaw.jpg)][Jaw] |
-| [Ultrasonic Sensor] | | [Touch Sensor] | | [Jaw] |
-<br/>
-
-| | | | | |
-|-|-|-|-|-|
-| [![EV3 Leg 1](/static/lessons/make-it-smarter/ev3-parts-leg-1.jpg)][Leg 1] | | [![EV3 Leg 2](/static/lessons/make-it-smarter/ev3-parts-leg-2.jpg)][Leg 2] | | [![EV3 Leg 3](/static/lessons/make-it-smarter/ev3-parts-leg-3.jpg)][Leg 3] |
-| [Leg 1] | | [Leg 2] | | [Leg 3] |
+* [EV3 Frames]
+* [Color Sensor 1]
+* [Gyro Sensor]
+* [Ultrasonic Sensor]
+* [Touch Sensor]
+* [Jaw]
+* [Leg 1] 
+* [Leg 2]
+* [Leg 3]
 
 ### ~hint
 
