@@ -455,28 +455,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motor A" jres=icons.portA
+    //% whenUsed fixedInstance block="large motor|A" jres=icons.portA
     export const largeA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large motor B" jres=icons.portB
+    //% whenUsed fixedInstance block="large motor|B" jres=icons.portB
     export const largeB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large motor C" jres=icons.portC
+    //% whenUsed fixedInstance block="large motor|C" jres=icons.portC
     export const largeC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large motor D" jres=icons.portD
+    //% whenUsed fixedInstance block="large motor|D" jres=icons.portD
     export const largeD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium motor A" jres=icons.portA
+    //% whenUsed fixedInstance block="medium motor|A" jres=icons.portA
     export const mediumA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium motor B" jres=icons.portB
+    //% whenUsed fixedInstance block="medium motor|B" jres=icons.portB
     export const mediumB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium motor C" jres=icons.portC
+    //% whenUsed fixedInstance block="medium motor|C" jres=icons.portC
     export const mediumC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium motor D" jres=icons.portD
+    //% whenUsed fixedInstance block="medium motor|D" jres=icons.portD
     export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
