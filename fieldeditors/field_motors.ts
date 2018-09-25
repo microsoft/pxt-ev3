@@ -133,14 +133,27 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         this.setText(text);
     }
 
-    getFirstValue(text: string) {
-        // Get first set of words up until last space
-        return this.normalizeText_(text.substring(0, text.lastIndexOf(' ')));
+    getFirstValue(value: string) {
+        const typeValue = value.indexOf('large') != -1 ? 'large' : 'medium';
+        const portValue = this.getSecondValue(value);
+        const isDual = portValue.length > 1;
+        return `${typeValue} motor${isDual ? 's' : ''}`;
     }
 
-    getSecondValue(text: string) {
-        // Get last word
-        return this.normalizeText_(text.match(/\S*$/)[0]);
+    getSecondValue(value: string) {
+        return (value.indexOf('large') != -1) ?
+            value.substring(value.indexOf('large') + 5) :
+            value.substring(value.indexOf('medium') + 6);
+    }
+
+    getFirstValueI11n(value: string) {
+        const firstValue = this.getFirstValue(value);
+        const motorOptions = {
+            'medium motor': lf('medium motor'),
+            'large motor': lf('large motor'),
+            'large motors': lf('large motors')
+        }
+        return motorOptions[firstValue];
     }
 
     private normalizeText_(text: string) {
@@ -198,8 +211,8 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         if (text === null) {
             return text;
         }
-        if (text.indexOf(' ') == -1) {
-            text = `large motors ${text}`;
+        if (text.indexOf('|') == -1) {
+            text = this.sourceBlock_.RTL ? `${text}|${lf("large motors")}` : `${lf("large motors")}|${text}`;
         }
         return text;
     }
@@ -296,16 +309,14 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             goog.dom.removeChildren(/** @type {!Element} */(this.textElement_));
             goog.dom.removeChildren(/** @type {!Element} */(this.textElement2_));
 
-            var text = this.text_;
-            text = this.patchDualMotorText(text);
-
             // First dropdown
-            const textNode1 = document.createTextNode(this.getFirstValue(text));
+            // Use one of the following options, medium motor, large motor or large motors (translated)
+            const textNode1 = document.createTextNode(this.getFirstValueI11n(this.value_));
             this.textElement_.appendChild(textNode1);
 
-            // Second dropdown
+            // Second dropdown, no need to translate. Only port numbers
             if (this.textElement2_) {
-                const textNode2 = document.createTextNode(this.getSecondValue(text));
+                const textNode2 = document.createTextNode(this.getSecondValue(this.value_));
                 this.textElement2_.appendChild(textNode2);
             }
             this.updateWidth();
@@ -402,29 +413,28 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         contentDiv.setAttribute('aria-haspopup', 'true');
         let options = this.getOptions();
 
-        // Hashmap of options
         let opts = {};
         let conts = {};
         let vals = {};
+        // Go through all option values and split them into groups
         for (let opt = 0; opt < options.length; opt++) {
-            let text = options[opt][0].alt ? options[opt][0].alt : options[opt][0];
-            if (text.indexOf(' ') == -1) {
-                // Patch dual motors as they don't have prefixes.
-                text = this.patchDualMotorText(text);
-                if (options[opt][0].alt) options[opt][0].alt = text;
-            }
             const value = options[opt][1];
-            const firstValue = this.getFirstValue(text);
-            const secondValue = this.getSecondValue(text);
-            if (!opts[firstValue]) opts[firstValue] = [secondValue];
-            else opts[firstValue].push(secondValue);
-            // Store a hash of the original key value pairs for later
+            const motorValue = value.substring(value.indexOf('.') + 1);
+            const typeValue = motorValue.indexOf('large') == 0 ? 'large' : 'medium';
+            const portValue = motorValue.indexOf('large') == 0 ? motorValue.substring(5) : motorValue.substring(6);
+            const isDual = portValue.length > 1;
+
+            const text = `${typeValue} motor${isDual ? 's' : ''}|${portValue}`;
+            const key = `${typeValue} motor${isDual ? 's' : ''}`;
+            if (!opts[key]) opts[key] = [];
+            opts[key].push(portValue);
+
             conts[text] = options[opt][0];
             vals[text] = value;
         }
 
-        const currentFirst = this.getFirstValue(this.text_);
-        const currentSecond = this.getSecondValue(this.text_);
+        const currentFirst = this.getFirstValue(this.value_);
+        const currentSecond = this.getSecondValue(this.value_);
 
         if (!this.isFirst_) {
             options = opts[currentFirst];
@@ -432,9 +442,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             options = Object.keys(opts);
             // Flip the first and second options to make it sorted the way we want it (medium, large, dual)
             if (options.length == 3) {
-                const temp = options[1];
-                options[1] = options[0];
-                options[0] = temp;
+                options = [lf("medium motor"), lf("large motor"), lf("large motors")];
             } else {
                 options.reverse();
             }
@@ -448,7 +456,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         const columns = options.length;
 
         for (let i = 0, option: any; option = options[i]; i++) {
-            let text = this.isFirst_ ? option + ' ' + opts[option][0] : currentFirst + ' ' + option;
+            let text = this.isFirst_ ? option + '|' + (option.indexOf('motors') != -1 ? 'BC' : 'A') : currentFirst + '|' + option;
             text = text.replace(/\xA0/g, ' ');
             const content: any = conts[text];
             const value = vals[text];
@@ -466,7 +474,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             button.setAttribute('id', ':' + i); // For aria-activedescendant
             button.setAttribute('role', 'menuitem');
             button.setAttribute('class', 'blocklyDropDownButton');
-            button.title = this.isFirst_ ? this.getFirstValue(content.alt) : content.alt;
+            button.title = this.isFirst_ ? this.getFirstValueI11n(value) : this.getSecondValue(value);
             button.style.width = ((this.itemWidth_) - 8) + 'px';
             button.style.height = ((this.itemWidth_) - 8) + 'px';
             let backgroundColor = this.backgroundColour_;
@@ -495,7 +503,15 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
                 contentDiv.removeAttribute('aria-activedescendant');
             });
             let buttonImg = document.createElement('img');
-            buttonImg.src = this.isFirst_ ? isFirstUrl[option.replace(/\xA0/g, ' ')] : content.src;
+            let imgSrc = content.src;
+            if (this.isFirst_) {
+                const motorValue = value.substring(value.indexOf('.') + 1);
+                // Find out what kind of motor this is based on it's value, possible values: mediumX, largeX, and largeXY
+                if (motorValue.indexOf('medium') == 0) imgSrc = isFirstUrl['medium motor'];
+                else if (motorValue.length == 6) imgSrc = isFirstUrl['large motor'];
+                else imgSrc = isFirstUrl['large motors'];
+            }
+            buttonImg.src = imgSrc;
             //buttonImg.alt = icon.alt;
             // Upon click/touch, we will be able to get the clicked element as e.target
             // Store a data attribute on all possible click targets so we can match it to the icon.
