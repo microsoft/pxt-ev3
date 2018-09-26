@@ -12,7 +12,8 @@
         "Tutorials": "tutorials",
         "Design Engineering": "design-engineering",
         "Coding": "coding",
-        "Maker": "maker"
+        "Maker": "maker",
+        "Videos": "videos"
     },
     "electronManifest": {
         "latest": "v0.4.2"
