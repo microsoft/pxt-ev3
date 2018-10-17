@@ -23,7 +23,6 @@
         "streams": true,
         "aspectRatio": 0.5,
         "parts": false,
-        "enableTrace": true,
         "boardDefinition": {
             "visual": "ev3"
         }
@@ -178,7 +177,8 @@
         "monacoColors": {
             "editor.background": "#f9f9f9"
         },
-        "fileNameExclusiveFilter": "[^a-zA-Z0-9]"
+        "fileNameExclusiveFilter": "[^a-zA-Z0-9]",
+        "enableTrace": true
     },
     "ignoreDocsErrors": true
 }
