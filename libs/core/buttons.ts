@@ -248,6 +248,15 @@ namespace brick {
     let currPattern: StatusLight = StatusLight.Off;
 
     /**
+     * Gets the current light pattern.
+     */
+    //% weight=99 group="Buttons"
+    //% help=brick/status-light
+    export function statusLight() {
+        return currPattern;
+    }
+
+    /**
      * Set lights.
      * @param pattern the lights pattern to use. eg: StatusLight.Orange
      */

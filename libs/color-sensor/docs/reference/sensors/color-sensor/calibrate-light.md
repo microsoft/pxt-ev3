@@ -13,6 +13,15 @@ Sometimes when external lighting conditions change, the light sensor measures li
 * **mode**: the type of light threshold to calibrate. This is either ``ambient`` or ``reflected`` light.
 * **deviation**: a [number](/types/number) that is the amount of light level change to adjust in a measurement.
 
+## Calibration states
+
+The calibration is divided in the following phases and can be tracked via the brick status light.
+
+* **orange**: sensor initialization. This phase ensures that the sensor is in the desired mode and ready to collect data.
+* **orange pulse**: data collection. Light information is being collected, move the sensor over the various light sources to detect.
+* **green**: calibration success. The calibration data has been saved
+* **red flash**: sensor failure. We were unable to connect to the sensor.
+
 ## Example
 
 Calibrate the ``dark`` and ``light`` thresholds for the ``color 2`` sensor using reflected light.

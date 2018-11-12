@@ -296,10 +296,21 @@ namespace sensors {
         //% help=sensors/color-sensor/calibrate-light
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
+            const statusLight = brick.statusLight(); // save current status light
+
+            brick.setStatusLight(StatusLight.Orange);
 
             this.light(mode); // trigger a read
-            pauseUntil(() => this.isActive()); // ensure sensor is live
+            pauseUntil(() => this.isActive(), 5000); // ensure sensor is live
 
+            if (!this.isActive()) {
+                brick.setStatusLight(StatusLight.RedFlash); // didn't work
+                pause(2000);
+                brick.setStatusLight(statusLight); // restore previous light
+            }
+
+            // calibrating
+            brick.setStatusLight(StatusLight.OrangePulse);
 
             let vold = 0;
             let vcount = 0;
@@ -330,6 +341,10 @@ namespace sensors {
             // apply thresholds
             this.thresholdDetector.setLowThreshold(min);
             this.thresholdDetector.setHighThreshold(max);
+
+            brick.setStatusLight(StatusLight.Green); // success
+            pause(1000);
+            brick.setStatusLight(statusLight); // resture previous light
 
             this.calibrating = false;
         }
