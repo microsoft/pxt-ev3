@@ -17,12 +17,12 @@ For teams participating in the Open Software Platform Pilot utilizing MakeCode, 
 Watch some of the videos at https://makecode.mindstorms.com (at the bottom of the page).
 Try some of the provided tutorials:
 
-* Wake Up! – show your EV3 brick waking up
-* Animation – create a custom animation to show
-* Music Brick – transform your EV3 into a musical instrument
-* Run Motors – control the motors of your robot
-* Red Light, Green Light – play red light, green light with the color sensor
-* Line Following – have your robot follow a line
+* [Wake Up!](@homeurl@#tutorial:tutorials/wake-up) – show your EV3 brick waking up
+* [Animation](@homeurl@#tutorial:tutorials/make-an-animation) – create a custom animation to show
+* [Music Brick](@homeurl@#tutorial:tutorials/music-brick) – transform your EV3 into a musical instrument
+* [Run Motors](@homeurl@#tutorial:tutorials/run-motors) – control the motors of your robot
+* [Red Light, Green Light](@homeurl@#tutorial:tutorials/redlight-greenlight) – play red light, green light with the color sensor
+* [Line Following](@homeurl@#tutorial:tutorials/line-following) – have your robot follow a line
 
 ### Can I load both LEGO MINDSTORMS EV3 Software and MakeCode programs onto my EV3?
 
@@ -36,7 +36,9 @@ You can right-click on any block and select “Help” in the context menu to op
 
 ### How do I program in JavaScript?
 
-Click the **JavaScript** button at the top of the page to get to the JavaScript editor.  Students can drag and drop code snippets from the Toolbox on the left, or type directly in the editor. You can switch back and forth between **Blocks** and **JavaScript** as you program.
+Click the **JavaScript** button at the top of the page to get to the JavaScript editor. Students can drag and drop code snippets from the Toolbox on the left, or type directly in the editor. You can switch back and forth between **Blocks** and **JavaScript** as you program.
+
+![Coding in JavaScript](/static/fll/code-js.gif)
 
 ### How do I use the Simulator?
 
@@ -47,12 +49,8 @@ sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
     motors.largeD.run(50)
 })
 ```
- 
-```sim
-sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
-    motors.largeD.run(50)
-})
-```
+
+![Simulator demonstration](/static/fll/simulator.gif)
 
 Note that the Simulator is also interactive, so you can simulate inputs with any of the sensors.
 
@@ -71,9 +69,12 @@ MakeCode will automatically save your recent projects in the browser. However, y
 
 ### How do I share my programs?
 
-You can share your projects by clicking on the Share button in the top left of the screen.  This will create a URL which you can send others to open and view your project.
+You can share your projects by clicking on the **share** button in the top left of the screen.  This will create a URL which you can send others to open and view your project.
  
-![Share button in editor](/static/fll/share-program.jpg)
+![Share button in editor](/static/fll/share-button.jpg)
+
+![Share button and dialogs demo](/static/fll/share-program.gif)
+
 
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
@@ -92,7 +93,7 @@ Now the firmware version on the EV3 Brick will be **V1.09E**. Also, in the proce
 
 For other common questions, try the FAQ page https://makecode.mindstorms.com/faq.
 
-## Work Around
+## Workarounds
 
 1. Deleting Programs from the EV3 brick
 
@@ -103,4 +104,4 @@ For other common questions, try the FAQ page https://makecode.mindstorms.com/faq
 
 For questions, issues, feedback and community for the Open Software Platform Pilot:
 
-We are using a messaging service called Slack. Slack can be accessed via an app you download to your computer or mobile device, and via a web interface. For more information about Slack, click [here](https://slack.com/). Anyone in the pilot can participate by signing up with Slack first, and then clicking this [FIRST LEGO League Robot SW](https://join.slack.com/t/fllrobotsw/shared_invite/enQtNDU1MjQ5MDU0ODQ5LTY0ZTgzMDk1MThjYjg4NmM5ZTlmMWJhMzg4OWI2ZGQ3ZjBlNjIyY2Q2MDM5NTAyYzIyZTU1NmM0MTdlOTBkMDk) link to join the Slack workspace.
+We are using a messaging service called **Slack**. Slack can be accessed via an app you download to your computer or mobile device, and via a web interface. For more information about Slack, click [here](https://slack.com/). Anyone in the pilot can participate by signing up with Slack first, and then clicking this [FIRST LEGO League Robot SW](https://join.slack.com/t/fllrobotsw/shared_invite/enQtNDU1MjQ5MDU0ODQ5LTY0ZTgzMDk1MThjYjg4NmM5ZTlmMWJhMzg4OWI2ZGQ3ZjBlNjIyY2Q2MDM5NTAyYzIyZTU1NmM0MTdlOTBkMDk) link to join the Slack workspace.
