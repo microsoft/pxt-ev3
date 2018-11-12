@@ -40,6 +40,8 @@ Click the **JavaScript** button at the top of the page to get to the JavaScript 
 
 ![Coding in JavaScript](/static/fll/code-js.gif)
 
+Also, watch the [Text-based Coding](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=3513a83b87fe536b2dc512237465fd1b&source=embed&photo%5fid=35719471) video for more about coding using the JavaScript editor.
+
 ### How do I use the Simulator?
 
 The Simulator will show the physical representation of your code blocks. For example, based on this code snippet, the Simulator will show the touch sensor on Port 1, and a large motor on Port D.
@@ -53,6 +55,8 @@ sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
 ![Simulator demonstration](/static/fll/simulator.gif)
 
 Note that the Simulator is also interactive, so you can simulate inputs with any of the sensors.
+
+See the video [Block-based Coding and Simulation](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=629730c938e452f0fd7653fbc4708166&source=embed&photo%5fid=35719470) for more about using the simulator.
 
 ### How do I save my programs?
 
@@ -75,6 +79,7 @@ You can share your projects by clicking on the **share** button in the top left 
 
 ![Share button and dialogs demo](/static/fll/share-program.gif)
 
+Sharing programs is also shown in the [Tips and Tricks](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=5c594c2373367f7870196f519f3bfc7a&source=embed&photo%5fid=35719472) video.
 
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
