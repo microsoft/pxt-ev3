@@ -47,7 +47,7 @@ Click the **JavaScript** button at the top of the page to get to the JavaScript 
 
 ### How do I use the Simulator?
 
-The Simulator will show the physical representation of your code blocks. For example, based on this code snippet, the Simulator with show the touch sensor on Port 1, and a large motor on Port D.
+The Simulator will show the physical representation of your code blocks. For example, based on this code snippet, the Simulator will show the touch sensor on Port 1, and a large motor on Port D.
 
 ```blocks
 sensors.touch1.onEvent(ButtonEvent.Pressed, function () {
