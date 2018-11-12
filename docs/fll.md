@@ -4,13 +4,6 @@
 
 For teams participating in the Open Software Platform Pilot utilizing MakeCode, we’ve compiled a list of resources and information that we hope will be helpful for you.
 
-## Open Issues
-
-1. Deleting Programs from the EV3 brick
-
->* Description: Unable to delete program files from the EV3 brick after downloading them
->* Status: LEGO Education team is working on a fix, no estimated date yet
-
 ## FAQ
 
 ### How do I use MakeCode with my EV3?
@@ -98,6 +91,13 @@ Follow these steps to downgrade your firmware version, delete the files, and upr
 Now the firmware version on the EV3 Brick will be **V1.09E**. Also, in the process, the downgrade deleted all of the saved programs from the EV3 Brick. To continue to use MakeCode, the firmware version must be at **V1.10E** or above. So, the Brick firmware needs to be upgraded again. If you don't know or do remember how to do this, see the **Upgrade your @drivename@** section in the [troubleshooting](/troubleshoot) page.
 
 For other common questions, try the FAQ page https://makecode.mindstorms.com/faq.
+
+## Work Around
+
+1. Deleting Programs from the EV3 brick
+
+>* Description: Unable to delete program files from the EV3 brick after downloading them
+>* Status: LEGO Education team is working on a fix, no estimated date yet
 
 ## Community connection
 
