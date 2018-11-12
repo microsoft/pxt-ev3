@@ -296,17 +296,19 @@ namespace sensors {
         //% help=sensors/color-sensor/calibrate-light
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
-            const statusLight = brick.statusLight(); // save current status light
 
+            const statusLight = brick.statusLight(); // save current status light
             brick.setStatusLight(StatusLight.Orange);
 
             this.light(mode); // trigger a read
             pauseUntil(() => this.isActive(), 5000); // ensure sensor is live
 
+            // check sensor is ready
             if (!this.isActive()) {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
+                return;
             }
 
             // calibrating
