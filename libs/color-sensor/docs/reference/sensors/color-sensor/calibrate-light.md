@@ -15,11 +15,11 @@ Sometimes when external lighting conditions change, the light sensor measures li
 
 ## Calibration states
 
-The calibration is divided in the following phases and can be tracked via the brick status light.
+Calibration happens in the following phases and each phase is tracked by the brick status light.
 
 * **orange**: sensor initialization. This phase ensures that the sensor is in the desired mode and ready to collect data.
 * **orange pulse**: data collection. Light information is being collected, move the sensor over the various light sources to detect.
-* **green**: calibration success. The calibration data has been saved
+* **green**: calibration success. The calibration data has been saved.
 * **red flash**: sensor failure. We were unable to connect to the sensor.
 
 ## Example
