@@ -138,6 +138,8 @@ namespace motors {
         private _run: (speed: number) => void;
         private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
 
+        protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
+
         constructor(port: Output, init: () => void, run: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
             super();
             this._port = port;
@@ -321,20 +323,25 @@ namespace motors {
         }
 
         protected setOutputType(large: boolean) {
-            /*
-            Instruction opOutput_Set_Type (LAYER, NO, TYPE) 
-            Opcode 0xA1 Arguments (Data8) LAYER – Specify chain layer number [0 - 3]  
-            (Data8) NO – Port number [0 - 3]  
-            (Data8) TYPE – Output device type,  (0x07: Large motor, Medium motor = 0x08) Dispatch status Unchanged 
-            Description This function enables specifying the output device type
-            */
-            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+           for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
-                    const b = mkCmd(i, DAL.opOutputSetType, 1)
-                    b.setNumber(NumberFormat.Int8LE, 2, large ? 0x07 : 0x08)
-                    writePWM(b)
+                    // (0x07: Large motor, Medium motor = 0x08)
+                    MotorBase.output_types[i] = large ? 0x07 : 0x08;
                 }
             }
+            MotorBase.setTypes();
+        }
+
+        // Note, we are having to create our own buffer here as mkCmd creates a buffer with a command
+        // In the case of opOutputSetType, it expects the arguments to be opOutputSetType [type0, type1, type2, type3]
+        static setTypes() {
+            const b = output.createBuffer(5)
+            b.setNumber(NumberFormat.UInt8LE, 0, DAL.opOutputSetType)
+            b.setNumber(NumberFormat.Int8LE, 1, MotorBase.output_types[0]);
+            b.setNumber(NumberFormat.Int8LE, 2, MotorBase.output_types[1]);
+            b.setNumber(NumberFormat.Int8LE, 3, MotorBase.output_types[2]);
+            b.setNumber(NumberFormat.Int8LE, 4, MotorBase.output_types[3]);
+            writePWM(b)
         }
     }
 
@@ -740,18 +747,6 @@ namespace motors {
         control.dmesg('STEP 5')
         writePWM(b)
         control.dmesg('end step')
-    }
-
-    const types = [0, 0, 0, 0]
-    export function setType(out: Output, type: OutputType) {
-        let b = mkCmd(out, DAL.opOutputSetType, 3)
-        for (let i = 0; i < 4; ++i) {
-            if (out & (1 << i)) {
-                types[i] = type
-            }
-            b.setNumber(NumberFormat.UInt8LE, i + 1, types[i])
-        }
-        writePWM(b)
     }
 }
 
