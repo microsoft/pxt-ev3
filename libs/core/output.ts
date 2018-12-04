@@ -325,12 +325,15 @@ namespace motors {
         protected setOutputType(large: boolean) {
            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
+                    // (0x07: Large motor, Medium motor = 0x08)
                     MotorBase.output_types[i] = large ? 0x07 : 0x08;
                 }
             }
             MotorBase.setTypes();
         }
 
+        // Note, we are having to create our own buffer here as mkCmd creates a buffer with a command
+        // In the case of opOutputSetType, it expects the arguments to be opOutputSetType [type0, type1, type2, type3]
         static setTypes() {
             const b = output.createBuffer(5)
             b.setNumber(NumberFormat.UInt8LE, 0, DAL.opOutputSetType)
