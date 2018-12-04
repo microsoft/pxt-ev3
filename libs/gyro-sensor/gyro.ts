@@ -92,6 +92,9 @@ namespace sensors {
         reset(): void {
             if (this.calibrating) return; // already in calibration mode
 
+            const statusLight = brick.statusLight(); // save current status light
+            brick.setStatusLight(StatusLight.Orange);
+
             this.calibrating = true;
             // may be triggered by a button click,
             // give time for robot to settle
@@ -101,9 +104,22 @@ namespace sensors {
             // switch back to the desired mode
             this.setMode(this.mode);
             // wait till sensor is live
-            pauseUntil(() => this.isActive());
+            pauseUntil(() => this.isActive(), 5000);
+
+            // check sensor is ready
+            if (!this.isActive()) {
+                brick.setStatusLight(StatusLight.RedFlash); // didn't work
+                pause(2000);
+                brick.setStatusLight(statusLight); // restore previous light
+                return;
+            }
+
             // give it a bit of time to init
             pause(1000)
+
+            // calibrating
+            brick.setStatusLight(StatusLight.OrangePulse);
+
             // compute drift
             this._drift = 0;
             if (this.mode == GyroSensorMode.Rate) {
@@ -113,6 +129,11 @@ namespace sensors {
                 }
                 this._drift /= 200;
             }
+
+            brick.setStatusLight(StatusLight.Green); // success
+            pause(1000);
+            brick.setStatusLight(statusLight); // resture previous light
+
             // and we're done
             this.calibrating = false;
         }

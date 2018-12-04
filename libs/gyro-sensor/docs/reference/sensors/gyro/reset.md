@@ -22,6 +22,15 @@ To properly reset the gyro, the brick must remain still (undistrurbed) while the
 
 ## ~
 
+## Calibration states
+
+Calibration happens in the following phases and each phase is tracked by the brick status light.
+
+* **orange**: sensor initialization. This phase ensures that the sensor is in the desired mode and ready to collect data.
+* **orange pulse**: data collection. Light information is being collected, move the sensor over the various light sources to detect.
+* **green**: calibration success. The calibration data has been saved.
+* **red flash**: sensor failure. We were unable to connect to the sensor.
+
 ## Example
 Set the brick on a flat surface. Reset `gyro 2` and tilt the brick slighly. Reset it again while it's still tilted. Lay the brick down flat again and display the angle measurement.
 
