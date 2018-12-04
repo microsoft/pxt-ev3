@@ -23,6 +23,7 @@
         "streams": true,
         "aspectRatio": 0.5,
         "parts": false,
+        "enableTrace": true,
         "boardDefinition": {
             "visual": "ev3"
         }
