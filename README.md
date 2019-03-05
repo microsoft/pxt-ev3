@@ -4,9 +4,6 @@
 
 This repo contains the editor target hosted at https://makecode.mindstorms.com
 
-LEGO Auth: https://src.education.lego.com/groups/ev3-makecode (use Google Authenticator)
-LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square
-
 ## Local Dev setup
 
 These instructions assume familiarity with dev tools and languages.
