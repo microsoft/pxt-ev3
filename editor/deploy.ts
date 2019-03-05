@@ -33,7 +33,7 @@ export function initAsync() {
         canHID = false
     } else {
         const forceHexDownload = /forceHexDownload/i.test(window.location.href);
-        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
+        if (pxt.BrowserUtils.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
             canHID = true
     }
 
