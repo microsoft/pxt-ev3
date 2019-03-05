@@ -4,9 +4,6 @@
 
 This repo contains the editor target hosted at https://makecode.mindstorms.com
 
-LEGO Auth: https://src.education.lego.com/groups/ev3-makecode (use Google Authenticator)
-LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square
-
 ## Local Dev setup
 
 These instructions assume familiarity with dev tools and languages.
@@ -62,6 +59,9 @@ https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/
 
 ## License
 MIT
+
+## Trademarks
+MICROSOFT, the Microsoft Logo, and MAKECODE are registered trademarks of Microsoft Corporation. They can only be used for the purposes described in and in accordance with Microsoft’s Trademark and Brand guidelines published at https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general.aspx. If the use is not covered in Microsoft’s published guidelines or you are not sure, please consult your legal counsel or the MakeCode team (makecode@microsoft.com). 
 
 ## Code of Conduct
 
