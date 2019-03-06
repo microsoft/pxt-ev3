@@ -152,9 +152,10 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
      * Callback for when the drop-down is hidden.
      */
     private onHide_ = function () {
-        Blockly.DropDownDiv.content_.removeAttribute('role');
-        Blockly.DropDownDiv.content_.removeAttribute('aria-haspopup');
-        Blockly.DropDownDiv.content_.removeAttribute('aria-activedescendant');
-        Blockly.DropDownDiv.getContentDiv().style.width = '';
+        const content = Blockly.DropDownDiv.getContentDiv();
+        content.removeAttribute('role');
+        content.removeAttribute('aria-haspopup');
+        content.removeAttribute('aria-activedescendant');
+        content.style.width = '';
     };
 }
