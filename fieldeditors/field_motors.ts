@@ -401,7 +401,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         if (Blockly.DropDownDiv.hideIfOwner(this)) {
             return;
         }
-        this.isFirst_ = e.clientX - this.getScaledBBox_().left < ((this as any).width1 * this.sourceBlock_.workspace.scale);
+        this.isFirst_ = e.clientX - this.getScaledBBox_().left < ((this as any).width1 * (<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).scale);
         // If there is an existing drop-down someone else owns, hide it immediately and clear it.
         Blockly.DropDownDiv.hideWithoutAnimation();
         Blockly.DropDownDiv.clearContent();
@@ -538,7 +538,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         let secondaryX = primaryX;
         let secondaryY = position.top;
         // Set bounds to workspace; show the drop-down.
-        (Blockly.DropDownDiv as any).setBoundsElement(this.sourceBlock_.workspace.getParentSvg().parentNode);
+        (Blockly.DropDownDiv as any).setBoundsElement((<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).getParentSvg().parentNode);
         (Blockly.DropDownDiv as any).show(this, primaryX, primaryY, secondaryX, secondaryY,
             this.onHide_.bind(this));
 
