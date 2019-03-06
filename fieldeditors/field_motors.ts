@@ -526,7 +526,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         Blockly.DropDownDiv.setColour(this.backgroundColour_, this.borderColour_);
 
         // Calculate positioning based on the field position.
-        let scale = this.sourceBlock_.workspace.scale;
+        let scale = (<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).scale;
         let width = this.isFirst_ ? (this as any).width1 : (this as any).width2;
         let bBox = { width: this.size_.width, height: this.size_.height };
         width *= scale;
