@@ -93,6 +93,10 @@ namespace sensors {
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
                 return this.getNumber(NumberFormat.UInt8LE, 0)
+            if (this.mode == ColorSensorMode.RgbRaw)
+                return this.getNumber(NumberFormat.UInt16LE, 0)
+            if (this.mode == ColorSensorMode.RefRaw)
+                return this.getNumber(NumberFormat.UInt16LE, 0)
             return 0
         }
 
@@ -118,6 +122,8 @@ namespace sensors {
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
                 this.thresholdDetector.setLevel(curr);
+            if (this.mode == ColorSensorMode.RgbRaw)
+                control.raiseEvent(this._id, this._colorEventValue(curr));
         }
 
         /**
@@ -177,6 +183,28 @@ namespace sensors {
         color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
+        }
+
+        /**
+         * Get the current rgb values from the color sensor.
+         * @param sensor the color sensor to query the request
+         */
+        //% help=sensors/color-sensor/rgbraw
+        //% block="**color sensor** %this| rgbraw"
+        //% blockId=colorGetRgbRawColor
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=98
+        //% group="Color Sensor"
+        //% blockGap=8
+        rgbraw() {
+            this.setMode(ColorSensorMode.RgbRaw);
+            let rgb: number[] = [];
+            rgb[0] = this.getNumber(NumberFormat.UInt16LE, 0);
+            rgb[1] = this.getNumber(NumberFormat.UInt16LE, 2);
+            rgb[2] = this.getNumber(NumberFormat.UInt16LE, 4);
+            return rgb;
         }
 
         /**
