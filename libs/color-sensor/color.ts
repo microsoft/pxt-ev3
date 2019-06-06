@@ -95,8 +95,6 @@ namespace sensors {
                 return this.getNumber(NumberFormat.UInt8LE, 0)
             if (this.mode == ColorSensorMode.RgbRaw)
                 return this.getNumber(NumberFormat.UInt16LE, 0)
-            if (this.mode == ColorSensorMode.RefRaw)
-                return this.getNumber(NumberFormat.UInt16LE, 0)
             return 0
         }
 
