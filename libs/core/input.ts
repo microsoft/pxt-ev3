@@ -207,7 +207,7 @@ namespace sensors.internal {
         constructor(port: number) {
             super(port)
             this.mode = 0
-            this.realmode = -1
+            this.realmode = 0
         }
 
         _activated() {
