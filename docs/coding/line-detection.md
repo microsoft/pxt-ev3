@@ -190,12 +190,10 @@ if (true) {
 
 ```blocks
 forever(function () {
-    while (true) {
-        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Black)
+    while (sensors.color3.color() == ColorSensorColor.Black) {
         motors.largeBC.steer(-30, 50)
     }
-    while (true) {
-        sensors.color3.pauseUntilColorDetected(ColorSensorColor.White)
+    while (sensors.color3.color() == ColorSensorColor.White) {
         motors.largeBC.steer(30, 50)
     }
 })
@@ -209,11 +207,9 @@ Else the Color Sensor detects the color white, start motors ``B`` and ``C`` (dri
 
 ```blocks
 forever(function () {
-    if (true) {
-        sensors.color3.pauseUntilColorDetected(ColorSensorColor.Black)
+    if (sensors.color3.color() == ColorSensorColor.Black) {
         motors.largeBC.steer(-30, 50)
     } else {
-        sensors.color3.pauseUntilColorDetected(ColorSensorColor.White)
         motors.largeBC.steer(30, 50)
     }
 })
