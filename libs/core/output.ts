@@ -220,9 +220,9 @@ namespace motors {
 
         protected settle() {
             // if we've recently completed a motor command with brake
-            // allow 500ms for robot to settle
+            // allow 10ms for robot to settle
             if (this._brake)
-                pause(500);
+                pause(10);
         }
 
         protected pauseOnRun(stepsOrTime: number) {
