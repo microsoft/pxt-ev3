@@ -116,7 +116,7 @@ namespace sensors {
 
         _update(prev: number, curr: number) {
             if (this.calibrating) return; // simply ignore data updates while calibrating
-            if (this.mode == ColorSensorMode.Color || this.mode == ColorSensorMode.RefRaw)
+            if (this.mode == ColorSensorMode.Color || this.mode == ColorSensorMode.RgbRaw || this.mode == ColorSensorMode.RefRaw)
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
                 this.thresholdDetector.setLevel(curr);
