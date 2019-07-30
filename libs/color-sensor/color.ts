@@ -93,6 +93,8 @@ namespace sensors {
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
                 return this.getNumber(NumberFormat.UInt8LE, 0)
+            if (this.mode == ColorSensorMode.RefRaw || this.mode == ColorSensorMode.RgbRaw)
+                return this.getNumber(NumberFormat.UInt16LE, 0)
             return 0
         }
 
@@ -114,7 +116,7 @@ namespace sensors {
 
         _update(prev: number, curr: number) {
             if (this.calibrating) return; // simply ignore data updates while calibrating
-            if (this.mode == ColorSensorMode.Color)
+            if (this.mode == ColorSensorMode.Color || this.mode == ColorSensorMode.RefRaw)
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
                 this.thresholdDetector.setLevel(curr);
@@ -246,6 +248,14 @@ namespace sensors {
         //%
         reflectedLight() {
             return this.light(LightIntensityMode.Reflected);
+        }
+
+        /**
+         * Gets the raw reflection light value
+         */
+        getRefRaw() {
+            this.setMode(ColorSensorMode.RefRaw);
+            return this.getNumber(NumberFormat.UInt16LE, 0);
         }
 
         /**
