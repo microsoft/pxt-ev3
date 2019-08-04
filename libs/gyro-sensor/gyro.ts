@@ -1,5 +1,5 @@
 const enum GyroSensorMode {
-    None = -1,
+    None = 0,
     Angle = 0,
     Rate = 1,
 }

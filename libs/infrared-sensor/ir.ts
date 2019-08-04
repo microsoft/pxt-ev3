@@ -1,5 +1,5 @@
 const enum InfraredSensorMode {
-    None = -1,
+    None = 0,
     Proximity = 0,
     Seek = 1,
     RemoteControl = 2,
