@@ -489,9 +489,9 @@ void runLMS() {
 }
 
 void stopMotors() {
-    uint8_t cmd[2] = { 0xA3, 0x0F };
+    uint8_t cmd[1] = { 0xB4 };
     int fd = open("/dev/lms_pwm", O_RDWR);
-    write(fd, cmd, 2);
+    write(fd, cmd, 1);
     close(fd);
 }
 

@@ -119,6 +119,12 @@ namespace motors {
         writePWM(b)
     }
 
+    export function endProgram() {
+        const b = output.createBuffer(1)
+        b[0] = DAL.opOutputProgramStop
+        writePWM(b)
+    }
+
     /**
      * Resets all motors
      */
