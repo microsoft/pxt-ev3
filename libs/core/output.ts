@@ -120,9 +120,12 @@ namespace motors {
     }
 
     export function endProgram() {
-        const b = output.createBuffer(1)
-        b[0] = DAL.opOutputProgramStop
-        writePWM(b)
+        const b = mkCmd(Output.ALL, DAL.opOutputStop, 1)
+        b.setNumber(NumberFormat.UInt8LE, 2, 0)
+        writePWM(b);
+        const b2 = output.createBuffer(1)
+        b2[0] = DAL.opOutputProgramStop
+        writePWM(b2)
     }
 
     /**
