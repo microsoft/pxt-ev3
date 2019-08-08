@@ -6,6 +6,10 @@
     "title": "LEGO® MINDSTORMS® Education EV3 - Blocks / Javascript editor",
     "description": "A Blocks / JavaScript code editor for the LEGO® MINDSTORMS® Education EV3.",
     "corepkg": "ev3",
+    "versions": {
+        "target": "1.0.11",
+        "pxt": "4.0.9"
+    },
     "bundleddirs": [
         "libs/base",
         "libs/core",
