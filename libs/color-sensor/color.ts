@@ -182,6 +182,24 @@ namespace sensors {
         }
 
         /**
+         * Get the current raw rgb values from the color sensor.
+         * @param sensor the color sensor to query the request
+         */
+        //% help=sensors/color-sensor/rgbraw
+        //% block="**color sensor** %this| rgbraw"
+        //% blockId=colorGetRgbRawColor
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=98
+        //% group="Color Sensor"
+        //% blockGap=8
+        getRgbRaw() {
+            this.setMode(ColorSensorMode.RgbRaw);
+            return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
+        }
+
+        /**
          * Registers code to run when the ambient light changes.
          * @param condition the light condition
          * @param handler the code to run when detected
