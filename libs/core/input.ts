@@ -120,6 +120,7 @@ namespace sensors.internal {
         }
     }
 
+    let nonActivated = 0;
     function detectDevices() {
         let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0
@@ -153,14 +154,16 @@ namespace sensors.internal {
             }
         }
 
-        if (numChanged == 0)
+        if (numChanged == 0 && nonActivated == 0)
             return
 
+        nonActivated = 0;
         for (let si of sensorInfos) {
             if(si.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN){
                 si.sensor = si.sensors.filter(s => s._IICId() == si.iicid)[0]
                 if (!si.sensor) {
                     control.dmesg(`sensor not found for iicid=${si.iicid} at ${si.port}`)
+                    nonActivated++;
                 }else{
                     control.dmesg(`sensor connected iicid=${si.iicid} at ${si.port}`)
                     si.sensor._activated()
@@ -169,6 +172,7 @@ namespace sensors.internal {
                 si.sensor = si.sensors.filter(s => s._deviceType() == si.devType)[0]
                 if (!si.sensor) {
                     control.dmesg(`sensor not found for type=${si.devType} at ${si.port}`)
+                    nonActivated++;
                 }else{    
                     control.dmesg(`sensor connected type=${si.devType} at ${si.port}`)
                     si.sensor._activated()
