@@ -1,5 +1,5 @@
 const enum ColorSensorMode {
-    None = -1,
+    None = 0,
     //% block="reflected light intensity"
     ReflectedLightIntensity = 0,
     //% block="ambient light intensity"

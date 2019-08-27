@@ -212,7 +212,6 @@ namespace sensors.internal {
 
         _activated() {
             this.realmode = 0
-            // uartReset(this.port) // TODO is it ever needed?
             this._setMode(this.mode)
         }
 
