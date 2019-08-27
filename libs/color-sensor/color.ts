@@ -15,7 +15,9 @@ enum LightIntensityMode {
     //% block="reflected light"
     Reflected = ColorSensorMode.ReflectedLightIntensity,
     //% block="ambient light"
-    Ambient = ColorSensorMode.AmbientLightIntensity
+    Ambient = ColorSensorMode.AmbientLightIntensity,
+    //% block="reflected light (raw)"
+    ReflectedRaw = ColorSensorMode.RefRaw
 }
 
 const enum ColorSensorColor {
@@ -186,15 +188,13 @@ namespace sensors {
          * @param sensor the color sensor to query the request
          */
         //% help=sensors/color-sensor/rgbraw
-        //% block="**color sensor** %this| rgbraw"
-        //% blockId=colorGetRgbRawColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=98
         //% group="Color Sensor"
         //% blockGap=8
-        getRgbRaw() {
+        rgbRaw(): number[] {
             this.setMode(ColorSensorMode.RgbRaw);
             return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
         }
@@ -249,7 +249,12 @@ namespace sensors {
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.setMode(<ColorSensorMode><number>mode)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
+            switch(mode) {
+                case LightIntensityMode.ReflectedRaw:
+                    return this.reflectedLightRaw();
+                default:
+                    return this.getNumber(NumberFormat.UInt8LE, 0)
+            }
         }
 
         /**
@@ -271,7 +276,8 @@ namespace sensors {
         /**
          * Gets the raw reflection light value
          */
-        getRefRaw() {
+        //%
+        reflectedLightRaw(): number {
             this.setMode(ColorSensorMode.RefRaw);
             return this.getNumber(NumberFormat.UInt16LE, 0);
         }
