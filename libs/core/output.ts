@@ -134,7 +134,7 @@ namespace motors {
         protected _brake: boolean;
         private _pauseOnRun: boolean;
         private _initialized: boolean;
-        private _settleTime: number;
+        private _brakeSettleTime: number;
         private _init: () => void;
         private _run: (speed: number) => void;
         private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
@@ -148,7 +148,7 @@ namespace motors {
             this._brake = false;
             this._pauseOnRun = true;
             this._initialized = false;
-            this._settleTime = 10;
+            this._brakeSettleTime = 10;
             this._init = init;
             this._run = run;
             this._move = move;
@@ -207,15 +207,17 @@ namespace motors {
         }
 
         /** 
-         * Set the settle time
+         * Set the settle time after braking in milliseconds (default is 10ms).
         */
-        //% blockId=motorSetSettleTime block="set %motor|settle time %time"
+        //% blockId=motorSetBrakeSettleTime block="set %motor|brake settle time %millis|ms"
         //% motor.fieldEditor="motors"
-        //% weight=59 blockGap=8
+        //% weight=1 blockGap=8
         //% group="Properties"
-        setSettleTime(time: number) {
+        //% millis.defl=200 millis.min=0 millis.max=500
+        setBrakeSettleTime(millis: number) {
             this.init();
-            this._settleTime = time
+            // ensure in [0,500]
+            this._brakeSettleTime = Math.max(0, Math.min(500, millis | 0))
         }
 
         /**
@@ -235,8 +237,8 @@ namespace motors {
         protected settle() {
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
-            if (this._brake)
-                pause(this._settleTime);
+            if (this._brake && this._brakeSettleTime > 0)
+                pause(this._brakeSettleTime);
         }
 
         protected pauseOnRun(stepsOrTime: number) {
@@ -410,7 +412,7 @@ namespace motors {
          */
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
         //% motor.fieldEditor="motors"
-        //% weight=58
+        //% weight=58 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-regulated
         setRegulated(value: boolean) {
