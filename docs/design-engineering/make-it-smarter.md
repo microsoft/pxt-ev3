@@ -101,9 +101,9 @@ The blocks inside the ``||loops:forever||`` loop have these actions:
 1. Turn on the ``green`` EV3 Brick Status Light.
 2. Wait for Ultrasonic Sensor to detect an object.
 3. Turn on Motors ``A`` and ``D`` in opposite directions.
-4. Wait for one quarter of a second (``1500`` milli seconds).
+4. Wait for one and a half seconds (``1500`` milli seconds).
 5. Reverse the direction of Motors ``A`` and ``D``.
-6. Wait for one quarter of a second.
+6. Wait for one and a half seconds.
 7. Stop all motors.
 8. Make an insect chirping sound.
 9. Loop continuously so that the insect wanders around when the Ultrasonic Sensor is detects something.
