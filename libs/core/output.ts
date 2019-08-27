@@ -134,6 +134,7 @@ namespace motors {
         protected _brake: boolean;
         private _pauseOnRun: boolean;
         private _initialized: boolean;
+        private _settleTime: number;
         private _init: () => void;
         private _run: (speed: number) => void;
         private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
@@ -147,6 +148,7 @@ namespace motors {
             this._brake = false;
             this._pauseOnRun = true;
             this._initialized = false;
+            this._settleTime = 10;
             this._init = init;
             this._run = run;
             this._move = move;
@@ -204,6 +206,18 @@ namespace motors {
             writePWM(b)
         }
 
+        /** 
+         * Set the settle time
+        */
+        //% blockId=motorSetSettleTime block="set %motor|settle time %time"
+        //% motor.fieldEditor="motors"
+        //% weight=59 blockGap=8
+        //% group="Properties"
+        setSettleTime(time: number) {
+            this.init();
+            this._settleTime = time
+        }
+
         /**
          * Stops the motor(s).
          */
@@ -222,7 +236,7 @@ namespace motors {
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
             if (this._brake)
-                pause(500);
+                pause(this._settleTime);
         }
 
         protected pauseOnRun(stepsOrTime: number) {
