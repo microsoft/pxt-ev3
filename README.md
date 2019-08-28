@@ -2,7 +2,7 @@
 
 This repo contains the editor target hosted at https://makecode.mindstorms.com
 
-## Local Dev setup
+## Local setup
 
 These instructions assume familiarity with dev tools and languages.
 
@@ -10,16 +10,24 @@ These instructions assume familiarity with dev tools and languages.
 * install Docker; make sure `docker` command is in your `PATH`
 * (optional) install [Visual Studio Code](https://code.visualstudio.com/)
 
-In a common folder,
-
-* clone https://github.com/Microsoft/pxt to ``pxt`` folder
-* clone https://github.com/Microsoft/pxt-common-packages to ``pxt-common-packages`` folder
 * clone https://github.com/Microsoft/pxt-ev3 to ``pxt-ev3`` folder
 * go to ``pxt`` and run
 
 ```
 npm install
 ```
+
+* to run the local server,
+```
+pxt serve --cloud
+```
+
+## Local Dev setup
+
+In the common folder,
+
+* clone https://github.com/Microsoft/pxt to ``pxt`` folder
+* clone https://github.com/Microsoft/pxt-common-packages to ``pxt-common-packages`` folder
 
 * go to ``pxt-common-packages`` and run
 
@@ -51,9 +59,6 @@ pxt serve --cloud
 cd libs/core
 pxt deploy
 ```
-
-### Jenkins build
-https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/
 
 ## License
 MIT
