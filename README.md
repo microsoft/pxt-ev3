@@ -1,6 +1,4 @@
-# LEGO® MINDSTORMS® Education EV3 for Microsoft MakeCode
-
-[![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_rainbow/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/job/pxt-ev3_Push/)
+# LEGO® MINDSTORMS® Education EV3 for Microsoft MakeCode [![Build Status](https://travis-ci.org/microsoft/pxt-ev3.svg?branch=master)](https://travis-ci.org/microsoft/pxt-ev3)
 
 This repo contains the editor target hosted at https://makecode.mindstorms.com
 
