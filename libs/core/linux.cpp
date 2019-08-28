@@ -505,12 +505,11 @@ void stopProgram() {
 
 extern "C" void target_reset() {
     stopMotors();
+    stopProgram();
     if (lmsPid)
         runLMS();
-    else {
-        stopProgram();
+    else
         exit(0);
-    }
 }
 
 void screen_init();
