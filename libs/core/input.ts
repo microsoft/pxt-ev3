@@ -363,7 +363,7 @@ namespace sensors.internal {
     }
 
     function uartClearChange(port: number) {
-        control.dmesg(`UART retry set mode`);
+        control.dmesg(`UART clear change`);
         const UART_DATA_READY = 8
         const UART_PORT_CHANGED = 1
         while (true) {
