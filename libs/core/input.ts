@@ -71,20 +71,15 @@ namespace sensors.internal {
         IICMM = control.mmap("/dev/lms_iic", IICOff.Size, 0)
         if(!IICMM) control.fail("no iic sensor")
 
-        forever(() => {
-            detectDevices()
-            pause(500)
-        })
-
-        for (let info_ of sensorInfos) {
-            let info = info_
+        unsafePollForChanges(500, () => { detectDevices(); return 0; }, (prev, curr) => {} );
+        sensorInfos.forEach(info => {
             unsafePollForChanges(50, () => {
                 if (info.sensor) return info.sensor._query()
                 return 0
             }, (prev, curr) => {
                 if (info.sensor) info.sensor._update(prev, curr)
             })
-        }
+        })
 
     }
 
@@ -104,12 +99,12 @@ namespace sensors.internal {
     }
 
     export function readIICID(port: number) {
-        let buf = output.createBuffer(IICStr.Size)
+        const buf = output.createBuffer(IICStr.Size)
         buf[IICStr.Port] = port
         IICMM.ioctl(IO.IIC_READ_TYPE_INFO, buf)
-        let Manufacturer = bufferToString(buf.slice(IICStr.Manufacturer, 8))
-        let SensorType = bufferToString(buf.slice(IICStr.SensorType, 8))
-        return Manufacturer + SensorType ;
+        const manufacturer = bufferToString(buf.slice(IICStr.Manufacturer, 8))
+        const sensorType = bufferToString(buf.slice(IICStr.SensorType, 8))
+        return manufacturer + sensorType ;
     }   
 
     export function getBatteryInfo(): { temp: number; current: number } {
@@ -122,63 +117,68 @@ namespace sensors.internal {
 
     let nonActivated = 0;
     function detectDevices() {
-        let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
-        let numChanged = 0
+        control.dmesg(`detect devices (${nonActivated} na)`)
+        const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
+        let numChanged = 0;
 
-        for (let info of sensorInfos) {
-            let newConn = conns[info.port]
-            if (newConn == info.connType)
-                continue
+        for (const sensorInfo of sensorInfos) {
+            const newConn = conns[sensorInfo.port]
+            if (newConn == sensorInfo.connType) {
+                control.dmesg(`connection unchanged ${newConn} at ${sensorInfo.port}`)
+                continue;
+            }
             numChanged++
-            info.connType = newConn
-            info.devType = DAL.DEVICE_TYPE_NONE
+            sensorInfo.connType = newConn
+            sensorInfo.devType = DAL.DEVICE_TYPE_NONE
             if (newConn == DAL.CONN_INPUT_UART) {
-                control.dmesg(`new UART connection at ${info.port}`)
-                setUartMode(info.port, 0)
-                let uinfo = readUartInfo(info.port, 0)
-                info.devType = uinfo[TypesOff.Type]
-                control.dmesg(`UART type ${info.devType}`)
+                control.dmesg(`new UART connection at ${sensorInfo.port}`)
+                setUartMode(sensorInfo.port, 0)
+                let uinfo = readUartInfo(sensorInfo.port, 0)
+                sensorInfo.devType = uinfo[TypesOff.Type]
+                control.dmesg(`UART type ${sensorInfo.devType}`)
             } else if(newConn == DAL.CONN_NXT_IIC){
-                control.dmesg(`new IIC connection at ${info.port}`)
-                info.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN
-                info.iicid = readIICID(info.port)
-                control.dmesg(`IIC ID ${info.iicid.length}`)
+                control.dmesg(`new IIC connection at ${sensorInfo.port}`)
+                sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN
+                sensorInfo.iicid = readIICID(sensorInfo.port)
+                control.dmesg(`IIC ID ${sensorInfo.iicid.length}`)
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
-                control.dmesg(`new DUMB connection at ${info.port}`)
+                control.dmesg(`new DUMB connection at ${sensorInfo.port}`)
                 // TODO? for now assume touch
-                info.devType = DAL.DEVICE_TYPE_TOUCH
+                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
-                control.dmesg(`disconnect at ${info.port}`)
+                control.dmesg(`disconnect at port ${sensorInfo.port}`)
             } else {
-                control.dmesg(`unknown connection type: ${newConn} at ${info.port}`)
+                control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`)
             }
         }
 
         if (numChanged == 0 && nonActivated == 0)
             return
 
+        control.dmesg(`updating sensor status`)
         nonActivated = 0;
-        for (let si of sensorInfos) {
-            if(si.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN){
-                si.sensor = si.sensors.filter(s => s._IICId() == si.iicid)[0]
-                if (!si.sensor) {
-                    control.dmesg(`sensor not found for iicid=${si.iicid} at ${si.port}`)
+        for (const sensorInfo of sensorInfos) {
+            if(sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN){
+                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0]
+                if (!sensorInfo.sensor) {
+                    control.dmesg(`sensor not found for iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
                     nonActivated++;
                 }else{
-                    control.dmesg(`sensor connected iicid=${si.iicid} at ${si.port}`)
-                    si.sensor._activated()
+                    control.dmesg(`sensor connected iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
+                    sensorInfo.sensor._activated()
                 }
-            }else if (si.devType != DAL.DEVICE_TYPE_NONE) {
-                si.sensor = si.sensors.filter(s => s._deviceType() == si.devType)[0]
-                if (!si.sensor) {
-                    control.dmesg(`sensor not found for type=${si.devType} at ${si.port}`)
+            }else if (sensorInfo.devType != DAL.DEVICE_TYPE_NONE) {
+                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._deviceType() == sensorInfo.devType)[0]
+                if (!sensorInfo.sensor) {
+                    control.dmesg(`sensor not found for type=${sensorInfo.devType} at ${sensorInfo.port}`)
                     nonActivated++;
                 }else{    
-                    control.dmesg(`sensor connected type=${si.devType} at ${si.port}`)
-                    si.sensor._activated()
+                    control.dmesg(`sensor connected type=${sensorInfo.devType} at ${sensorInfo.port}`)
+                    sensorInfo.sensor._activated()
                 }
             }
         }
+        control.dmesg(`detect devices done`)
     }
 
     export class Sensor extends control.Component {
