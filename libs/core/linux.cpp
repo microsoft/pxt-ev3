@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <malloc.h>
+#incude "ev3const.h"
 
 #define THREAD_DBG(...)
 
@@ -489,9 +490,16 @@ void runLMS() {
 }
 
 void stopMotors() {
-    uint8_t cmd[2] = { 0xA3, 0x0F };
+    uint8_t cmd[3] = { opOutputStop, 0x0F, 0 };
     int fd = open("/dev/lms_pwm", O_RDWR);
-    write(fd, cmd, 2);
+    write(fd, cmd, 3);
+    close(fd);
+}
+
+void stopProgram() {
+    uint8_t cmd[1] = { opOutputProgramStop };
+    int fd = open("/dev/lms_pwm", O_RDWR);
+    write(fd, cmd, 1);
     close(fd);
 }
 
@@ -499,8 +507,10 @@ extern "C" void target_reset() {
     stopMotors();
     if (lmsPid)
         runLMS();
-    else
+    else {
+        stopProgram();
         exit(0);
+    }
 }
 
 void screen_init();
