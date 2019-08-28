@@ -27,6 +27,7 @@ namespace pxsim.sensors {
 
     export function __sensorUsed(port: number, type: number) {
         //console.log("SENSOR INIT " + port + ", type: " + type);
+        if (type == DAL.DEVICE_TYPE_IIC_UNKNOWN) return; // Ignore IIC        
         if (!ev3board().hasSensor(port)) {
             const sensor = ev3board().getSensor(port, type);
             runtime.queueDisplayUpdate();

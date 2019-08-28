@@ -25,8 +25,17 @@ namespace sensors.internal {
         })
     }
 
+    export function bufferToString(buf: Buffer): string {
+        let s = ''
+        for (let i = 0; i < buf.length; i++)
+            s += String.fromCharCode(buf[i])
+
+        return s
+    }
+
     let analogMM: MMap
     let uartMM: MMap
+    let IICMM: MMap
     let devcon: Buffer
     let sensorInfos: SensorInfo[]
 
@@ -36,11 +45,13 @@ namespace sensors.internal {
         sensors: Sensor[]
         connType: number
         devType: number
+        iicid: string
 
         constructor(p: number) {
             this.port = p
             this.connType = DAL.CONN_NONE
             this.devType = DAL.DEVICE_TYPE_NONE
+            this.iicid = ''
             this.sensors = []
         }
     }
@@ -56,6 +67,9 @@ namespace sensors.internal {
 
         uartMM = control.mmap("/dev/lms_uart", UartOff.Size, 0)
         if (!uartMM) control.fail("no uart sensor")
+
+        IICMM = control.mmap("/dev/lms_iic", IICOff.Size, 0)
+        if(!IICMM) control.fail("no iic sensor")
 
         forever(() => {
             detectDevices()
@@ -89,6 +103,15 @@ namespace sensors.internal {
         //serial.writeLine("UART " + port + " / " + mode + " - " + info)
     }
 
+    export function readIICID(port: number) {
+        let buf = output.createBuffer(IICStr.Size)
+        buf[IICStr.Port] = port
+        IICMM.ioctl(IO.IIC_READ_TYPE_INFO, buf)
+        let Manufacturer = bufferToString(buf.slice(IICStr.Manufacturer, 8))
+        let SensorType = bufferToString(buf.slice(IICStr.SensorType, 8))
+        return Manufacturer + SensorType ;
+    }   
+
     export function getBatteryInfo(): { temp: number; current: number } {
         init();
         return {
@@ -97,6 +120,7 @@ namespace sensors.internal {
         }
     }
 
+    let nonActivated = 0;
     function detectDevices() {
         let conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0
@@ -114,6 +138,11 @@ namespace sensors.internal {
                 let uinfo = readUartInfo(info.port, 0)
                 info.devType = uinfo[TypesOff.Type]
                 control.dmesg(`UART type ${info.devType}`)
+            } else if(newConn == DAL.CONN_NXT_IIC){
+                control.dmesg(`new IIC connection at ${info.port}`)
+                info.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN
+                info.iicid = readIICID(info.port)
+                control.dmesg(`IIC ID ${info.iicid.length}`)
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
                 control.dmesg(`new DUMB connection at ${info.port}`)
                 // TODO? for now assume touch
@@ -125,19 +154,26 @@ namespace sensors.internal {
             }
         }
 
-        if (numChanged == 0)
+        if (numChanged == 0 && nonActivated == 0)
             return
 
+        nonActivated = 0;
         for (let si of sensorInfos) {
-            if (si.sensor && si.sensor._deviceType() != si.devType) {
-                si.sensor = null
-            }
-            if (si.devType != DAL.DEVICE_TYPE_NONE) {
-                // TODO figure out compiler problem when '|| null' is added here!
+            if(si.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN){
+                si.sensor = si.sensors.filter(s => s._IICId() == si.iicid)[0]
+                if (!si.sensor) {
+                    control.dmesg(`sensor not found for iicid=${si.iicid} at ${si.port}`)
+                    nonActivated++;
+                }else{
+                    control.dmesg(`sensor connected iicid=${si.iicid} at ${si.port}`)
+                    si.sensor._activated()
+                }
+            }else if (si.devType != DAL.DEVICE_TYPE_NONE) {
                 si.sensor = si.sensors.filter(s => s._deviceType() == si.devType)[0]
-                if (si.sensor == null) {
+                if (!si.sensor) {
                     control.dmesg(`sensor not found for type=${si.devType} at ${si.port}`)
-                } else {
+                    nonActivated++;
+                }else{    
                     control.dmesg(`sensor connected type=${si.devType} at ${si.port}`)
                     si.sensor._activated()
                 }
@@ -186,6 +222,10 @@ namespace sensors.internal {
 
         _deviceType() {
             return 0
+        }
+
+        _IICId() {
+            return ''
         }
     }
 
@@ -241,6 +281,55 @@ namespace sensors.internal {
             this.realmode = 0;
         }
     }
+
+    export class IICSensor extends Sensor {
+        protected mode: number // the mode user asked for
+        protected realmode: number // the mode the hardware is in
+        private readLength: number
+
+        constructor(port: number) {
+            super(port)
+            this.mode = 0
+            this.realmode = 0
+            this.readLength = 1;
+        }
+
+        _activated() {
+            this.realmode = 0
+            this._setMode(this.mode)
+        }
+
+        protected _setMode(m: number) {
+            let v = m | 0
+            this.mode = v
+            if (!this.isActive()) return
+            if (this.realmode != this.mode) {
+                this.realmode = v
+                setIICMode(this._port, this._deviceType() ,v)
+            }
+        }
+
+        getBytes(): Buffer {
+            return getIICBytes(this.isActive() ? this._port : -1, this.readLength)
+        }
+
+        getNumber(fmt: NumberFormat, off: number) {
+            if (!this.isActive())
+                return 0
+            return getIICNumber(this.readLength, fmt, off, this._port)
+        }
+
+        transaction(deviceAddress: number, write: number[], read: number){
+            this.readLength = read;
+            transactionIIC(this._port, deviceAddress, write, read)
+        }
+
+        _deviceType (){
+            return DAL.DEVICE_TYPE_IIC_UNKNOWN
+        }
+    }
+
+    export const iicsensor = new IICSensor(3)
 
     function uartReset(port: number) {
         if (port < 0) return
@@ -321,6 +410,48 @@ namespace sensors.internal {
             UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
     }
 
+    export function setIICMode(port: number, type: number, mode: number){
+        if(port < 0)return;
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type) 
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
+        IICMM.ioctl(IO.IIC_SET_CONN, devcon)
+    } 
+
+    export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number){
+        if(port < 0)return;
+        let iicdata = output.createBuffer(IICDat.Size)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.Port, port)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.Repeat, 0)
+        iicdata.setNumber(NumberFormat.Int16LE, IICDat.Time, 0)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrLng, writeBuf.length + 1)
+        for(let i = 0; i< writeBuf.length; i++)
+          iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrData + i + 1, writeBuf[i])
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrData, deviceAddress)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.RdLng, readLen)
+        IICMM.ioctl(IO.IIC_SETUP, iicdata)
+    }
+
+    export function getIICBytes(port: number, length: number) {
+        if (port < 0) return output.createBuffer(length);
+        let index = IICMM.getNumber(NumberFormat.UInt16LE, IICOff.Actual + port * 2);
+        let buf = IICMM.slice(
+            IICOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index,
+            length
+        );
+
+        // Reverse
+        for (let i = 0; i < length / 2; i++) {
+            let c = buf[i]
+            buf[i] = buf[length - i - 1]
+            buf[length - i - 1] = c
+        }
+        return buf;
+    }
+    
+    export function getIICNumber(length: number, format: NumberFormat, off: number, port: number) {
+        return getIICBytes(port, length).getNumber(format, off)
+    }
 
     const enum NxtColOff {
         Calibration = 0, // uint32[4][3]
@@ -402,6 +533,52 @@ namespace sensors.internal {
         Port = 56, // int8
         Mode = 57, // int8
         Size = 58
+    }
+
+    const enum IICOff {
+        TypeData = 0, // Types[8][4]
+        Repeat = 1792, // uint16[300][4]
+        Raw = 4192, // int8[32][300][4]
+        Actual = 42592, // uint16[4]
+        LogIn = 42600, // uint16[4]
+        Status = 42608, // int8[4]
+        Output = 42612, // int8[32][4]
+        OutputLength = 42740, // int8[4]
+        Size = 42744
+    }
+
+    const enum IICCtlOff {
+        TypeData = 0, // Types
+        Port = 56, // int8
+        Mode = 57, // int8
+        Size = 58
+    } 
+
+    const enum IICDat {
+        Result = 0,  // result
+        Port = 4, // int8
+        Repeat = 5, // int8
+        Time = 6, // int16
+        WrLng = 8, // int8
+        WrData = 9, // int8[32]
+        RdLng = 41, // int8
+        RdData = 42, //int8[32]
+        Size = 74,
+    }
+
+    const enum IICStr {
+        Port = 0, // int8
+        Time = 2, // int16
+        Type = 4, // int8
+        Mode = 5, // int8
+        Manufacturer = 6, // int8[9]
+        SensorType = 15, // int[9]
+        SetupLng = 24, // int8
+        SetupString = 28, // ulong
+        PollLng = 32, // int8
+        PollString = 36, // ulong
+        ReadLng = 40, // int8
+        Size = 44
     }
 
     const enum IO {
