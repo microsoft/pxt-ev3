@@ -71,7 +71,10 @@ namespace sensors.internal {
         IICMM = control.mmap("/dev/lms_iic", IICOff.Size, 0)
         if (!IICMM) control.fail("no iic sensor")
 
-        unsafePollForChanges(500, () => { detectDevices(); return 0; }, (prev, curr) => { });
+        unsafePollForChanges(500, 
+            () => { return hashDevices(); }, 
+            (prev, curr) => { detectDevices(); 
+        });
         sensorInfos.forEach(info => {
             unsafePollForChanges(50, () => {
                 if (info.sensor) return info.sensor._query()
@@ -113,6 +116,15 @@ namespace sensors.internal {
             temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
             current: Math.round(analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent) / 10)
         }
+    }
+
+    function hashDevices(): number {
+        const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
+        let r = 0;
+        for(let i = 0; i < conns.length; ++i) {
+            r = (r << 8 | conns[i]);
+        }
+        return r;
     }
 
     let nonActivated = 0;
