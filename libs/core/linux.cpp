@@ -212,6 +212,34 @@ void sleep_us(uint64_t us) {
     sleep_core_us(us);
 }
 
+void *lms_uiMMap;
+void *escButtonThread(void *) {
+    while (true) {
+        uint ret = 0
+        for (int i = 0; i < NUM_BUTTONS; ++i) {
+            if (lms_uiMMap[i])
+                ret |= 1 << i;
+        }
+        if (ret & DAL.BUTTON_ID_ESCAPE)
+            target_reset();
+        sleep_core_us(50000);
+    }
+}
+
+void startEscButtonThread() {
+    int fd = open("/dev/lms_ui", O_RDWR, 0);
+    if (fd < 0)
+        target_panic(906);
+    
+    lms_uiMMap = ::mmap(NULL, NUM_BUTTONS, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (lms_uiMMap == MAP_FAILED)
+        target_panic(906);
+
+    pthread_t pid;
+    pthread_create(&pid, NULL, escButtonThread, NULL);
+    pthread_detach(pid);
+}
+
 uint64_t currTime() {
     struct timeval tv;
     gettimeofday(&tv, NULL);
@@ -519,6 +547,7 @@ void initRuntime() {
     DMESG("runtime starting...");
     stopLMS();
     startUsb();
+    startEscButtonThread();
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
