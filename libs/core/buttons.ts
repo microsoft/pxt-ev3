@@ -159,11 +159,6 @@ namespace brick {
             if (sl[i])
                 ret |= 1 << i
         }
-        // this needs to be done in query(), which is run without the main JS execution mutex
-        // otherwise, while(true){} will lock the device
-        if (ret & DAL.BUTTON_ID_ESCAPE) {
-            control.reset()
-        }
         return ret
     }
 
