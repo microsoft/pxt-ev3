@@ -35,6 +35,12 @@ motors.largeBC.tank(-75, -75)
 
 ## ~
 
+## ~ hint
+
+Only one set of tank/steer motors will run at the same time. Once you launch tank/steer, it will cancel the previous tank/steer command.
+
+## ~
+
 ## Examples
 
 ### Tank forward and backward
