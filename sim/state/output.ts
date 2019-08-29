@@ -80,6 +80,12 @@ namespace pxsim {
                             const brake = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, 12);
 
                             const motors = ev3board().getMotor(port);
+                            // cancel any other sync command
+                            for(const motor of ev3board().getMotors().filter(motor => motors.indexOf(motor) < 0)) {
+                                motor.clearSyncCmd()
+                            }
+
+                            // apply commands to all motors
                             for (const motor of motors) {
                                 const otherMotor = motors.filter(m => m.port != motor.port)[0];
                                 motor.setSyncCmd(

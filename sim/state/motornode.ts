@@ -65,6 +65,11 @@ namespace pxsim {
             delete this._synchedMotor;
         }
 
+        clearSyncCmd() {
+            if (this._synchedMotor)
+                this.clearSpeedCmd();
+        }
+
         setLarge(large: boolean) {
             this.id = large ? NodeType.LargeMotor : NodeType.MediumMotor;
             // large 170 rpm  (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
