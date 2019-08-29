@@ -184,14 +184,15 @@ namespace sensors {
         }
 
         /**
-         * Get the current raw rgb values from the color sensor.
+         * Get the current raw rgb values as an array from the color sensor.
          * @param sensor the color sensor to query the request
          */
         //% help=sensors/color-sensor/rgbraw
+        //% blockId=colorRgbRaw block="**color sensor** %this| RGB raw"
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=98
+        //% weight=1
         //% group="Color Sensor"
         //% blockGap=8
         rgbRaw(): number[] {
@@ -245,7 +246,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=87
+        //% weight=87 blockGap=8
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.setMode(<ColorSensorMode><number>mode)
