@@ -39,6 +39,13 @@ motors.largeBC.steer(-15, -75)
 
 ## ~
 
+## ~ hint
+
+Only one set of synchronized motors will run at the same time. Once you launch tank/steer, it will cancel any existing synchronized speed command.
+
+## ~
+
+
 ## Examples
 
 ### Make a slight right
