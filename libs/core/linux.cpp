@@ -145,6 +145,29 @@ static void startUsb() {
     pthread_detach(pid);
 }
 
+static void *exitThread(void *) {
+    int fd = open("/dev/lms_ui", O_RDWR, 0666);
+    if (fd < 0)
+        return 0;
+    uint8_t *data =
+        (uint8_t *)mmap(NULL, NUM_BUTTONS, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (data == MAP_FAILED) {
+        close(fd);
+        return 0;
+    }
+    for (;;) {
+        if (data[5])
+            target_reset();
+        sleep_core_us(50000);
+    }
+}
+
+static void startExitThread() {
+    pthread_t pid;
+    pthread_create(&pid, NULL, exitThread, NULL);
+    pthread_detach(pid);
+}
+
 void sendUsb(uint16_t code, const char *data, int len) {
     while (len > 0) {
         int sz = len;
@@ -490,14 +513,14 @@ void runLMS() {
 }
 
 void stopMotors() {
-    uint8_t cmd[3] = { opOutputStop, 0x0F, 0 };
+    uint8_t cmd[3] = {opOutputStop, 0x0F, 0};
     int fd = open("/dev/lms_pwm", O_RDWR);
     write(fd, cmd, 3);
     close(fd);
 }
 
 void stopProgram() {
-    uint8_t cmd[1] = { opOutputProgramStop };
+    uint8_t cmd[1] = {opOutputProgramStop};
     int fd = open("/dev/lms_pwm", O_RDWR);
     write(fd, cmd, 1);
     close(fd);
@@ -519,6 +542,7 @@ void initRuntime() {
     DMESG("runtime starting...");
     stopLMS();
     startUsb();
+    startExitThread();
     pthread_t disp;
     pthread_create(&disp, NULL, evtDispatcher, NULL);
     pthread_detach(disp);
