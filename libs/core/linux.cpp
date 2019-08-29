@@ -14,6 +14,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <malloc.h>
+#include <sys/mman.h>
+#include <sys/ioctl.h>
 #include "ev3const.h"
 
 #define THREAD_DBG(...)
