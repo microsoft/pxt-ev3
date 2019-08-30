@@ -8,6 +8,9 @@ sensors.gyro2.calibrate()
 
 To make the gyro measure rotation angle from the current position of the brick, it is recalibrated. That is, the brick's current position is set to `0` degrees and rotation angle measurements start from there.
 
+This function adds a few pauses to ensure that the robot is still. If you only want to reset the sensor, use  [reset](/reference/gyro-sensor/reset).
+
+
 ## ~hint
 
 The current position is considered to be the [_horizon_](https://en.wikipedia.org/wiki/Attitude_indicator) or a place that is the _plane of reference_ (this is possibly someplace that's flat for a horizontal reference).
