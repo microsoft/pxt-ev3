@@ -94,9 +94,19 @@ This program lets you change the values of speed and turn ratio with the buttons
 let speed = 0;
 let turnRatio = 0;
 
+brick.showString(`steer tester`, 1)
+brick.showString(`connect motors BC`, 7)
+brick.showString(`up/down for speed`, 8)
+brick.showString(`left/right for turn ratio`, 9)
+
+forever(function () {
+    brick.showString(`motor B speed ${motors.largeB.speed()}%`, 4)
+    brick.showString(`motor C speed ${motors.largeC.speed()}%`, 5)
+    pause(100)
+})
+
 function updateSteer() {
     motors.largeBC.steer(turnRatio, speed);
-    brick.showString(`steer test (motors BC)`, 1)
     brick.showString(`speed ${speed}%`, 2)
     brick.showString(`turnRatio ${turnRatio}`, 3)
 }

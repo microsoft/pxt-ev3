@@ -90,8 +90,18 @@ This program lets you change the tank values using the brick buttons
 let tankB = 0;
 let tankC = 0;
 
+brick.showString(`tank tester`, 1)
+brick.showString(`connect motors BC`, 7)
+brick.showString(`up/down for tank B`, 8)
+brick.showString(`left/right for tank C`, 9)
+
+forever(function () {
+    brick.showString(`motor B speed ${motors.largeB.speed()}%`, 4)
+    brick.showString(`motor C speed ${motors.largeC.speed()}%`, 5)
+    pause(100)
+})
+
 function updateTank() {
-    brick.showString(`tank tester (motors BC)`, 1)
     brick.showString(`tank A: ${tankB}%`, 2)
     brick.showString(`tank B: ${tankC}%`, 3)
     motors.largeBC.tank(tankB, tankC);
