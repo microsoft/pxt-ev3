@@ -63,7 +63,8 @@ namespace pxsim {
             delete this.speedCmd;
             delete this.speedCmdValues;
             delete this._synchedMotor;
-        }
+            this.setChangedState();
+        }        
 
         clearSyncCmd() {
             if (this._synchedMotor)
