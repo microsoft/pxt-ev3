@@ -14,7 +14,7 @@ namespace sensors {
             super(port)
             this.calibrating = false;
             this._drift = 0;
-            this._drifting = true;
+            this._drifting = false;
             this.setMode(GyroSensorMode.Rate);
         }
 
@@ -70,7 +70,7 @@ namespace sensors {
 
             this.setMode(GyroSensorMode.Rate);
             let curr = this._query();
-            if (Math.abs(curr) < 20) {
+            if (Math.abs(curr) < 16 && this._drifting) {
                 const p = 0.0005;
                 this._drift = (1 - p) * this._drift + p * curr;
                 curr -= this._drift;
@@ -99,6 +99,10 @@ namespace sensors {
             // may be triggered by a button click,
             // give time for robot to settle
             pause(700);
+
+            // calibrating
+            brick.setStatusLight(StatusLight.OrangePulse);
+
             // send a reset command
             super.reset();
             // switch back to the desired mode
@@ -114,24 +118,19 @@ namespace sensors {
                 return;
             }
 
-            // give it a bit of time to init
-            pause(1000)
-
-            // calibrating
-            brick.setStatusLight(StatusLight.OrangePulse);
-
             // compute drift
             this._drift = 0;
             if (this.mode == GyroSensorMode.Rate) {
-                for (let i = 0; i < 200; ++i) {
+                const n = 100;
+                for (let i = 0; i < n; ++i) {
                     this._drift += this._query();
                     pause(4);
                 }
-                this._drift /= 200;
+                this._drift /= n;
             }
 
             brick.setStatusLight(StatusLight.Green); // success
-            pause(1000);
+            pause(500);
             brick.setStatusLight(statusLight); // resture previous light
 
             // and we're done
@@ -153,6 +152,7 @@ namespace sensors {
         //%
         setDriftCorrection(enabled: boolean) {
             this._drifting = enabled;
+            this._drift = 0;
         }
     }
 
