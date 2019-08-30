@@ -27,6 +27,12 @@
   "cardType": "example",
   "url":"/tutorials/reflected-light-measure",
   "imageUrl":"/static/tutorials/reflected-light-measure.png"
+}, {
+  "name": "Reflected Light Calibration",
+  "description": "Use the auto-calibration feature to setup the dark and bright values.",
+  "cardType": "example",
+  "url":"/tutorials/reflected-light-calibration",
+  "imageUrl":"/static/tutorials/reflected-light-calibration.png"
 }]
 ```
 
