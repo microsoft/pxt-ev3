@@ -1,10 +1,10 @@
-# Try 
+# Try
 
 Get a quick introduction to programming with EV3.
 
 ![Display on EV3 Brick with Music Notes](/static/getting-started/01_EyesOn_Intro.png)
 
-We are excited to help you get started with LEGO MINDSTORMS Education EV3. In this project we will guide you through connecting your EV3 brick, creating your first program, controlling a Large Motor, a Touch Sensor and a Color Sensor. These steps can take up to 45 minutes.
+We are excited to help you get started with @boardname@. In this project we will guide you through connecting your EV3 Brick, creating your first program, controlling a Large Motor, a Touch Sensor and a Color Sensor. These steps can take up to 45 minutes.
 
 ## Turn on your EV3 Brick
 
@@ -135,15 +135,15 @@ Keeping the Large Motor connected to **Port D**, connect the Color Sensor to **P
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    sensors.color3.pauseUntilColorDetected(ColorSensorColor.Green)
+    sensors.color4.pauseUntilColorDetected(ColorSensorColor.Green)
     motors.largeD.run(50, 1, MoveUnit.Rotations)
 })
 ```
 
-* Using the same program, replace the ``||sensors:pause until touch 1||`` block with a ``||sensors:pause color sensor 3||`` for color block.
+* Using the same program, replace the ``||sensors:pause until touch 1||`` block with a ``||sensors:pause color sensor 4||`` for color block.
 
 ```block
-sensors.color3.pauseUntilColorDetected(ColorSensorColor.Green)
+sensors.color4.pauseUntilColorDetected(ColorSensorColor.Green)
 ```
 
 * Select the color you want to detect (e.g., green).

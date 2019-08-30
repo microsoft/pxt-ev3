@@ -22,7 +22,7 @@ In nature, creatures use many methods to get around. None of them, however, use 
 
 ### Build
 
-Think about a creature’s movement for inspiration. Will you make the robot walk, crawl, hop, or wiggle?  Your mechanism can be attached or unattached to the EV3 brick. You can start by tinkering with the LEGO elements in the picture above and then build on.
+Think about a creature’s movement for inspiration. Will you make the robot walk, crawl, hop, or wiggle?  Your mechanism can be attached or unattached to the EV3 Brick. You can start by tinkering with the LEGO elements in the picture above and then build on.
 
 ### Building Hint
 
@@ -30,18 +30,26 @@ If you want some building help you can follow these instructions.
 
 [![Toddle Bot](/static/lessons/make-it-move/toddle-bot.jpg)](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/toddle%20bot-3dcad146d7f5deac4753f93e9dcc0739.pdf)
 
+Click [here](https://le-www-live-s.legocdn.com/sc/media/files/support/mindstorms%20ev3/building-instructions/design%20engineering%20projects/toddle%20bot-3dcad146d7f5deac4753f93e9dcc0739.pdf)
+
+### ~hint
+
+If clicking the above image or link doesn't open the instructions, right-click on the link and choose "Save link as..." to download the PDF.
+
+### ~
+
 ### Program
 
 Before you program, think about:
 
-* How will you program the robot to move? 
+* How will you program the robot to move?
 * How will you program the robot to stop?
 * How will you program the robot to display the distance moved?
 
 Which programming blocks will you use:
 
-* To turn on and turn off the motor or motors? 
-* To display the distance moved? 
+* To turn on and turn off the motor or motors?
+* To display the distance moved?
 
 ### Sample Code
 
@@ -49,7 +57,7 @@ Example code of a robot that moves without wheels using one motor:
 
 * The robot moves with ``large motor D`` rotating at ``-100`` speed
 * The robot moves for ``30000`` milliseconds (30 seconds)
-* The robot stops 
+* The robot stops
 * The robot displays the text ``"30cm"``
 
 ```blocks
@@ -65,7 +73,7 @@ brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the center button on the EV3 Brick to run the program.
 
-## Contemplate 
+## Contemplate
 
 ### Test and Analyze
 

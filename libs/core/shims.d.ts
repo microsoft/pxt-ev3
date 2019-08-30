@@ -75,12 +75,6 @@ declare namespace serial {
     //% shim=serial::writeDmesg
     function writeDmesg(): void;
 }
-declare namespace image {
-
-    /** Decompresses a 1-bit gray scale PNG image to image format. */
-    //% shim=image::unpackPNG
-    function unpackPNG(png: Buffer): Image;
-}
 declare namespace output {
 
     /**

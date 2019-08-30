@@ -16,6 +16,36 @@ namespace pxt {
 
 static const uint8_t pixmap[] = {0x00, 0x03, 0x1C, 0x1F, 0xE0, 0xE3, 0xFC, 0xFF};
 
+static void bitBufferToFrameBufferSwap(uint8_t *bitBuffer, uint8_t *fb) {
+    int mask = 0x01;
+    uint8_t *currLine = bitBuffer;
+    
+    for (int line = 0; line < LCD_HEIGHT; line++) {
+        uint8_t *ptr = currLine;
+
+        int n = 60;
+        while (n--) {
+            uint8_t v = 0;
+            if (*ptr & mask)
+                v |= 0xE0;
+            ptr += LCD_HEIGHT / 8;
+            if (*ptr & mask)
+                v |= 0x1C;
+            ptr += LCD_HEIGHT / 8;
+            if (*ptr & mask)
+                v |= 0x03;
+            ptr += LCD_HEIGHT / 8;
+            *fb++ = v;
+        }
+
+        mask <<= 1;
+        if (mask == 0x100) {
+            mask = 0x01;
+            currLine++;
+        }
+    } 
+}
+
 static void bitBufferToFrameBuffer(uint8_t *bitBuffer, uint8_t *fb) {
     uint32_t pixels;
 
@@ -59,7 +89,7 @@ void updateScreen(Image_ img) {
         if (lastImg->bpp() != 1 || lastImg->width() != LCD_WIDTH || lastImg->height() != LCD_HEIGHT)
             target_panic(906);
         lastImg->clearDirty();
-        bitBufferToFrameBuffer(lastImg->pix(), mappedFrameBuffer);
+        bitBufferToFrameBufferSwap(lastImg->pix(), mappedFrameBuffer);
     }
 }
 

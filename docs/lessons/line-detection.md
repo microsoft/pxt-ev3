@@ -3,7 +3,7 @@
 ## Objective
 
 Design ways to improve driving safety by helping to prevent drivers from falling asleep and causing an accident.
- 
+
 ![Car driving on highway](/static/lessons/line-detection/car-driving.jpg)
 
 ## Connect
@@ -19,6 +19,12 @@ Think about what you have learned, then document it. Describe the problem in you
 ## Construct
 
 Start by constructing this model. Read the building instructions [here](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-color-sensor-down-driving-base-d30ed30610c3d6647d56e17bc64cf6e2.pdf) first.
+
+### ~hint
+
+If clicking the above image doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
 
 ![Color sensor on the driving base](/static/lessons/line-detection/color-sensor-driving.jpg)
 
@@ -44,13 +50,13 @@ Create a program that drives the robot forward until the Color Sensor sees red. 
 
 Place a ``||motors:steer large B+C||`` block from ``||motors:Motors||`` under ``||loops:on start||``. Change the speed to 20%.
 
-```blocks 
+```blocks
 motors.largeBC.steer(0, 20)
 ```
 
 ### Step 2
 
-Place a ``||loops:while||`` loop block under ``||motors:steer large B+C||``.  
+Place a ``||loops:while||`` loop block under ``||motors:steer large B+C||``.
 
 ```blocks
 motors.largeBC.steer(0, 20)
@@ -61,7 +67,7 @@ while (true) {
 ### Step 3
 
 Place a ``||sensors:pause until color detected||`` from ``||sensors:Sensors||`` inside the ``||loops:while||`` loop block. Change the color to red.
- 
+
 ```blocks
 motors.largeBC.steer(0, 20)
 while (true) {
@@ -99,7 +105,7 @@ Place a ``||loops:while||`` loop block under ``||loops:on start||``.
 
 ```blocks
 while (true) {
-    
+
 }
 ```
 
@@ -121,7 +127,7 @@ Place a ``||loops:while||`` loop block under the ``||motors:steer large B+C||`` 
 while (true) {
     motors.largeBC.steer(0, 20)
     while (true) {
-        
+
     }
 }
 ```
@@ -141,7 +147,7 @@ while (true) {
 
 ### Step 6
 
-Place a ``||motors:stop all motors||`` block under the ``||sensors:pause until color detected||`` block.  
+Place a ``||motors:stop all motors||`` block under the ``||sensors:pause until color detected||`` block.
 
 ```blocks
 while (true) {
@@ -165,7 +171,7 @@ while (true) {
         motors.stopAll()
     }
     while (true) {
-        
+
     }
 }
 ```
@@ -177,7 +183,7 @@ Place a ``||sensors:pause unril color detected||`` block inside the new ``||loop
 What do you think the program will do?
 
 **Hint:** The motors will run until the Color Sensor detects the color red, then it will stop all motors. The motors will also run and not stop when the color sensor detects the color green.
- 
+
 ```blocks
 while (true) {
     motors.largeBC.steer(0, 20)
@@ -212,7 +218,7 @@ sensors.color3.pauseUntilColorDetected(ColorSensorColor.Yellow)
 music.playSoundEffect(sounds.systemGeneralAlert)
 }
 while (true) {
-    while (true) {      
+    while (true) {
         sensors.color3.pauseUntilLightDetected(LightIntensityMode.Reflected, Light.Bright)
         motors.largeB.run(10)
         motors.largeC.run(-10)
@@ -235,7 +241,7 @@ You will need to constantly debug your program in order to make your robot trave
 
 ```blocks
 while (true) {
-    while (true) {   
+    while (true) {
         sensors.color3.pauseUntilLightDetected(LightIntensityMode.Reflected, Light.Bright)
         motors.largeB.run(10)
         motors.largeC.run(-10)
@@ -252,10 +258,10 @@ while (true) {
 
 Consider the following questions:
 
-1. What challenged you? 
-2. Where there any surprises? 
+1. What challenged you?
+2. Where there any surprises?
 3. How could you improve your program?
-4. Could your program have been more streamlined? 
+4. Could your program have been more streamlined?
 5. Have you used too many blocks?
 6. Is there a more efficient way of building your program?
 7. How could your program be used in real-world scenarios?

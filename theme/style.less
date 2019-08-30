@@ -1,6 +1,7 @@
 /* Import all components */
-@import 'semantic';
+@import 'pxtsemantic';
 @import 'pxt';
+@import 'blockly-toolbox';
 @import 'themes/default/globals/site.variables';
 @import 'themes/pxt/globals/site.variables';
 @import 'site/globals/site.variables';
@@ -79,6 +80,9 @@
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item {
     border-radius: 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
     color: white;
@@ -104,6 +108,19 @@
 
 #downloadArea {
     background: @legoGreyLight;
+}
+
+/* Editor download dialog */
+.ui.downloaddialog.modal>.content {
+    padding: 1rem;
+}
+.ui.downloaddialog.modal>.actions {
+    background-color: #FAFAFA;
+}
+
+/* Tutorial */
+#tutorialcard .ui.tutorialsegment {
+    border-radius: 0;
 }
 
 /* Mobile */
@@ -140,17 +157,31 @@
     }
 }
 
-/** high contrast **/
-.hc {
-    .ui.menu, #downloadArea,
-    .menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
-        background-color: black !important;
-        color: white !important;
-    }
-    .ui.red.corner.label {
-        border-color: #d4000d!important;
-    }
-    .menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
-        border-color: white !important;
-    }
+/*******************************
+     Custom icons
+*******************************/
+
+.save-editortools-btn .icon.save:before {
+    font-family: 'legoIcons';
+    content: "\f118";
+}
+
+.download-button .icon.download.icon-and-text:before {
+    font-family: 'legoIcons';
+    content: "\f117";
+}
+
+.button.approve.positive i.icon.checkmark:before {
+    font-family: 'legoIcons';
+    content: "\f116";
+}
+
+.button.approve.cancel i.icon.cancel:before {
+    font-family: 'legoIcons';
+    content: "\f115";
+}
+
+.blocks-menuitem i.icon.blocks:before {
+    font-family: 'legoIcons' !important;
+    content: "\f119" !important;
 }

@@ -2,9 +2,9 @@
     "id": "ev3",
     "platformid": "linux",
     "nickname": "lego",
-    "name": "LEGO Mindstorms EV3",
-    "title": "LEGO Mindstorms EV3 - Blocks / Javascript editor",
-    "description": "A Blocks / JavaScript code editor for the LEGO Mindstorms EV3.",
+    "name": "LEGO® MINDSTORMS® Education EV3",
+    "title": "LEGO® MINDSTORMS® Education EV3 - Blocks / Javascript editor",
+    "description": "A Blocks / JavaScript code editor for the LEGO® MINDSTORMS® Education EV3.",
     "corepkg": "ev3",
     "bundleddirs": [
         "libs/base",
@@ -16,7 +16,8 @@
         "libs/infrared-sensor",
         "libs/gyro-sensor",
         "libs/screen",
-        "libs/ev3"
+        "libs/ev3",
+        "libs/storage"
     ],
     "simulator": {
         "autoRun": true,
@@ -42,9 +43,9 @@
         "useUF2": true,
         "useELF": true,
         "hasHex": true,
-        "deployDrives": ".*",
+        "deployDrives": "EV3",
         "deployFileMarker": "INFO_UF2.TXT",
-        "driveName": "LEGO",
+        "driveName": "EV3",
         "flashCodeAlign": 256,
         "floatingPoint": true,
         "taggedInts": true,
@@ -66,6 +67,7 @@
         "listsBlocks": true,
         "functionBlocks": true,
         "onStartNamespace": "loops",
+        "onStartWeight": 100,
         "onStartColor": "#58AB41",
         "pauseUntilBlock": {
             "category": "loops"
@@ -78,42 +80,44 @@
     },
     "appTheme": {
         "accentColor": "#0089BF",
-        "logoUrl": "https://education.lego.com/",
+        "logoWide": true,
+        "logoUrl": "https://education.lego.com/",        
         "logo": "./static/lego_education_logo.png",
-        "highContrastLogo": "./static/lego_education_logo_white.png",
-        "docsLogo": "./static/lego-logo.svg",
-        "portraitLogo": "./static/lego-logo.svg",
-        "footerLogo": "./static/lego-logo.svg",
+        "docsLogo": "./static/lego_education_logo.png",
+        "portraitLogo": "./static/lego_education_logo.png",
         "cardLogo": "./static/icons/android-chrome-192x192.png",
         "appLogo": "./static/icons/android-chrome-192x192.png",
         "organization": "Microsoft MakeCode",
-        "organizationUrl": "https://makecode.com/",
+        "organizationUrl": "https://makecode.com/org",
         "organizationLogo": "./static/Microsoft-logo_rgb_c-gray-square.png",
         "organizationWideLogo": "./static/Microsoft-logo_rgb_c-gray.png",
-        "homeUrl": "https://makecode.legoeducation.com/",
-        "embedUrl": "https://makecode.legoeducation.com/",
+        "homeUrl": "https://makecode.mindstorms.com/",
+        "embedUrl": "https://makecode.mindstorms.com/",
         "privacyUrl": "https://go.microsoft.com/fwlink/?LinkId=521839",
         "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
         "githubUrl": "https://github.com/Microsoft/pxt-ev3",
-        "betaUrl": "https://makecode.legoeducation.com/about",
-        "boardName": "LEGO Mindstorms EV3 Brick",
+        "driveDisplayName": "EV3",
+        "boardName": "LEGO® MINDSTORMS® Education EV3",
+        "copyrightText": "LEGO, the LEGO logo, MINDSTORMS and the MINDSTORMS EV3 logo are trademarks and/ or copyrights of the LEGO Group. ©2018 The LEGO Group. All rights reserved.",
+        "crowdinProject": "kindscript",
         "selectLanguage": true,
         "availableLocales": [
-            "en"
+            "en",
+            "de",
+            "ja",
+            "ru",
+            "zh-CN"
         ],
         "highContrast": true,
+        "lightToc": true,
         "docMenu": [
             {
                 "name": "Support",
-                "path": "http://service.lego.com"
+                "path": "https://www.lego.com/service/"
             },
             {
-                "name": "About",
-                "path": "/about"
-            },
-            {
-                "name": "Upgrade Firmware",
-                "path": "https://ev3manager.education.lego.com/"
+                "name": "Troubleshoot",
+                "path": "https://makecode.mindstorms.com/troubleshoot"
             },
             {
                 "name": "Blocks",
@@ -128,6 +132,7 @@
                 "path": "/reference"
             }
         ],
+        "print": true,
         "showHomeScreen": true,
         "homeScreenHero": "./static/hero.png",
         "invertedMenu": false,
@@ -136,8 +141,10 @@
         "invertedToolbox": false,
         "coloredToolbox": true,
         "hasAudio": true,
+        "saveInMenu": true,
         "usbHelp": [],
         "extendEditor": true,
+        "extendFieldEditors": true,
         "disableBlockIcons": true,
         "blocklyOptions": {
             "grid": {
@@ -163,11 +170,17 @@
             "variables": "\uf111",
             "text": "\uf110",
             "functions": "\uf108",
-            "arrays": "\uf109"
+            "arrays": "\uf109",
+            "search": "\uf11a",
+            "addpackage": "\uf105",
+            "advancedcollapsed": "\uf113",
+            "advancedexpanded": "\uf114"
         },
         "monacoColors": {
             "editor.background": "#f9f9f9"
-        }
+        },
+        "fileNameExclusiveFilter": "[^a-zA-Z0-9]",
+        "enableTrace": true
     },
     "ignoreDocsErrors": true
 }

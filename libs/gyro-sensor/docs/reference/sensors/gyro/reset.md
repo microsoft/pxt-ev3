@@ -1,12 +1,14 @@
 # reset
 
-Reset the zero reference for the gyro to current position of the brick.
+Reset the gyro sensor.
 
 ```sig
 sensors.gyro2.reset()
 ```
 
 To make the gyro measure rotation angle from the current position of the brick, it is recalibrated. That is, the brick's current position is set to `0` degrees and rotation angle measurements start from there.
+
+This function only resets the sensor; if you wish to have progress indication and a more robust calibration sequence, use [calibrate](/reference/gyro-sensor/calibrate).
 
 ## ~hint
 
@@ -18,18 +20,18 @@ The current position is considered to be the [_horizon_](https://en.wikipedia.or
 
 **Important**
 
-To properly reset the gyro, the brick must remain still (undistrurbed) while the reset operation takes place.
+To properly reset the gyro, the brick must remain still (undisturbed) while the reset operation takes place.
 
 ## ~
 
 ## Example
-Set the brick on a flat surface. Reset `gyro 2` and tilt the brick slighly. Reset it again while it's still tilted. Lay the brick down flat again and display the angle measurement.
+Set the brick on a flat surface. Reset `gyro 2` and tilt the brick slightly. Reset it again while it's still tilted. Lay the brick down flat again and display the angle measurement.
 
 ```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
     sensors.gyro2.reset()
 })
-brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
+forever(function() {
     brick.showNumber(sensors.gyro2.angle(), 1)
 })
 ```

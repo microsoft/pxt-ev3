@@ -83,10 +83,6 @@ namespace pxsim.control {
         if (!impl) impl = {}
         return new MMapMethods.MMap(impl, size)
     }
-
-    export function dmesg(s: string) {
-        console.log("DMESG: " + s)
-    }
 }
 
 namespace pxsim.output {

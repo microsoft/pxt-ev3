@@ -1,6 +1,6 @@
 # What Animal Am I?
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
 Create different animal effects with your @boardname@.
 
@@ -10,27 +10,27 @@ Create different animal effects with your @boardname@.
 
 Open the ``||brick:Brick||`` Toolbox drawer. Drag out a ``||brick:show string||`` block from the **Screen** section onto the Workspace, and drop it into the ``||loops:on start||`` block. You should hear and see the block click into place.
 
-```block
+```blocks
 brick.showString("Hello world", 1)
 ```
 
 ## Step 2
 
-In the ``||brick:show string||`` block, type the text ``"Guess what animal?"`` to replace ``"Hello world"``.
+In the ``||brick:show string||`` block, type the text ``"Guess the animal"`` to replace ``"Hello world"``.
 
 ```blocks
-brick.showString("Guess what animal?", 1)
+brick.showString("Guess the animal", 1)
 ```
 
 ## Step 3
 
-Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block and put it anywhere in the Workspace.
+Open the ``||brick:Brick||`` Toolbox drawer. From the **Buttons** section, drag out an ``||brick:on button||`` block anywhere onto the Workspace.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
-brick.showString("Guess what animal?", 1)
+brick.showString("Guess the animal", 1)
 ```
 
 ## Step 4
@@ -43,7 +43,7 @@ In the ``||brick:on button||`` block, use the drop-down menu to select the ``lef
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
-brick.showString("Guess what animal?", 1) 
+brick.showString("Guess the animal", 1) 
 ```
 
 ## Step 5
@@ -63,7 +63,7 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () { 
      
 }) 
-brick.showString("Guess what animal?", 1) 
+brick.showString("Guess the animal", 1) 
 ```
 
 ## Step 6
@@ -83,7 +83,7 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () { 
     brick.showImage(images.expressionsBigSmile) 
 }) 
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 7
@@ -105,7 +105,7 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsPirate)
 })
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 8
@@ -129,7 +129,7 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsPirate)
     music.playSoundEffect(sounds.animalsCatPurr)
 })
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 9
@@ -155,11 +155,11 @@ brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
     brick.showImage(images.objectsPirate)
     music.playSoundEffect(sounds.animalsSnakeHiss)
 })
-brick.showString("Guess what animal?", 0)
+brick.showString("Guess the animal", 0)
 ```
 
 ## Step 10
 
-Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Test your program with a friend by pressing the right, left, up, and down buttons on your brick. Have your friend guess what animal it is!

@@ -101,32 +101,28 @@ namespace pxsim {
                     let v = "vSIM"
                     // for (let i = 0; i < buf.data.length; ++i)
                     //     buf.data[i] = v.charCodeAt(i) || 0
-                    console.log("uart read");
-                    console.log(buf.data);
                     return buf.data.length
                 },
                 write: buf => {
-                    console.log("uart write");
-                    console.log(buf);
                     return 2
                 },
                 ioctl: (id, buf) => {
                     switch (id) {
                         case IO.UART_SET_CONN: {
                             // Set mode
-                            console.log("IO.UART_SET_CONN");
+                            //console.log("IO.UART_SET_CONN");
                             for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                                 const connection = buf.data[DevConOff.Connection + port]; // CONN_NONE, CONN_INPUT_UART
                                 const type = buf.data[DevConOff.Type + port];
                                 const mode = buf.data[DevConOff.Mode + port];
-                                console.log(`${port}, mode: ${mode}`)
+                                //console.log(`${port}, mode: ${mode}`)
                                 const node = ev3board().getInputNodes()[port];
                                 if (node) node.setMode(mode);
                             }
                             return 2;
                         }
                         case IO.UART_CLEAR_CHANGED: {
-                            console.log("IO.UART_CLEAR_CHANGED")
+                            //console.log("IO.UART_CLEAR_CHANGED")
                             for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                                 const connection = buf.data[DevConOff.Connection + port]; // CONN_NONE, CONN_INPUT_UART
                                 const type = buf.data[DevConOff.Type + port];
@@ -137,7 +133,7 @@ namespace pxsim {
                             return 2;
                         }
                         case IO.UART_READ_MODE_INFO: {
-                            console.log("IO.UART_READ_MODE_INFO")
+                            //console.log("IO.UART_READ_MODE_INFO")
                             const port = buf.data[UartCtlOff.Port];
                             const mode = buf.data[UartCtlOff.Mode];
                             const node = ev3board().getInputNodes()[port];
@@ -145,9 +141,6 @@ namespace pxsim {
                             return 2;
                         }
                     }
-                    console.log("uart ioctl");
-                    console.log(id);
-                    console.log(buf);
                     return 2;
                 }
             })

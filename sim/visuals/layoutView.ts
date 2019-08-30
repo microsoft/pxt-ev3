@@ -12,6 +12,9 @@ namespace pxsim.visuals {
     export const MODULE_INNER_PADDING_RATIO = 1 / 35;
 
     export const MAX_MODULE_WIDTH = 100;
+    export const MIN_MODULE_HEIGHT = 40;
+
+    export const CLOSE_ICON_GAP_MULTIPLIER = 0.3;
 
     export interface LayoutElement extends View {
         getId(): number;
@@ -33,11 +36,15 @@ namespace pxsim.visuals {
         private inputCloseIcons: View[] = [];
         private outputCloseIcons: View[] = [];
 
+        private inputBackgroundViews: View[] = [];
+        private outputBackgroundViews: View[] = [];
+
         private inputWires: WireView[] = [];
         private outputWires: WireView[] = [];
 
-        private brick: BrickView;
-        private brickCloseIcon: View = undefined;
+        private brick: BrickViewPortrait;
+        private brickLandscape: BrickViewLandscape;
+        private brickInLandscape: boolean;
 
         private offsets: number[];
         private contentGroup: SVGGElement;
@@ -51,7 +58,8 @@ namespace pxsim.visuals {
             this.outputContainers = [new ViewContainer(), new ViewContainer, new ViewContainer(), new ViewContainer()];
             this.inputContainers = [new ViewContainer(), new ViewContainer, new ViewContainer(), new ViewContainer()];
 
-            this.brick = new BrickView(0);
+            this.brick = new BrickViewPortrait(0);
+            this.brickLandscape = new BrickViewLandscape(0);
 
             for (let port = 0; port < DAL.NUM_OUTPUTS; port++) {
                 this.outputWires[port] = new WireView(port);
@@ -69,33 +77,55 @@ namespace pxsim.visuals {
             this.position();
         }
 
-        public setBrick(brick: BrickView, brickCloseIcon: View) {
+        public setBrick(brick: BrickView) {
             this.brick = brick;
-            this.brick.inject(this.scrollGroup);
+            this.brick.inject(this.scrollGroup, this.theme);
+            this.brickLandscape.inject(this.scrollGroup, this.theme);
+            this.brick.setSelected(false);
+            this.brickLandscape.setSelected(true);
+            this.brickLandscape.setVisible(false);
+            this.position();
+        }
 
-            this.brickCloseIcon = brickCloseIcon;
-            this.addView(this.brickCloseIcon);
-            this.brickCloseIcon.setVisible(this.brick.getSelected());
-            this.position();            
+        public isBrickLandscape() {
+            return this.brickInLandscape;
         }
 
         public getBrick() {
+            return this.brickInLandscape ? this.getLandscapeBrick() : this.getPortraitBrick();
+        }
+
+        public getPortraitBrick() {
             return this.brick;
+        }
+
+        public getLandscapeBrick() {
+            return this.brickLandscape;
         }
 
         public unselectBrick() {
             this.brick.setSelected(false);
-            this.brickCloseIcon.setVisible(false);
+            this.brickLandscape.setSelected(true);
+            this.brickLandscape.setVisible(false);
+            this.brickInLandscape = false;
             this.position();
         }
 
-        public selectBrick() {
+        public setlectBrick() {
             this.brick.setSelected(true);
-            this.brickCloseIcon.setVisible(true);
+            this.brickLandscape.setSelected(false);
+            this.brickLandscape.setVisible(true);
+            this.brickInLandscape = true;
             this.position();
         }
 
-        public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
+        public toggleBrickSelect() {
+            const selected = this.brickInLandscape;
+            if (selected) this.unselectBrick();
+            else this.setlectBrick();
+        }
+
+        public setInput(port: number, view: LayoutElement, control?: View, closeIcon?: View, backgroundView?: View) {
             if (this.inputs[port] != view || this.inputControls[port] != control) {
                 if (this.inputs[port]) {
                     // Remove current input
@@ -107,10 +137,12 @@ namespace pxsim.visuals {
                 }
                 this.inputControls[port] = control;
                 this.inputCloseIcons[port] = closeIcon;
+                this.inputBackgroundViews[port] = backgroundView;
 
                 this.inputContainers[port].clear();
-                this.inputContainers[port].addView(view);
 
+                if (control && backgroundView) this.inputContainers[port].addView(backgroundView);
+                this.inputContainers[port].addView(view);
                 if (control) this.inputContainers[port].addView(control);
 
                 if (view.hasClick()) view.registerClick((ev: any) => {
@@ -131,7 +163,7 @@ namespace pxsim.visuals {
             this.position();
         }
 
-        public setOutput(port: number, view: LayoutElement, control?: View, closeIcon?: View) {
+        public setOutput(port: number, view: LayoutElement, control?: View, closeIcon?: View, backgroundView?: View) {
             if (this.outputs[port] != view || this.outputControls[port] != control) {
                 if (this.outputs[port]) {
                     // Remove current output
@@ -143,10 +175,12 @@ namespace pxsim.visuals {
                 }
                 this.outputControls[port] = control;
                 this.outputCloseIcons[port] = closeIcon;
+                this.outputBackgroundViews[port] = backgroundView;
 
                 this.outputContainers[port].clear();
-                this.outputContainers[port].addView(view);
 
+                if (control && backgroundView) this.outputContainers[port].addView(backgroundView);
+                this.outputContainers[port].addView(view);
                 if (control) this.outputContainers[port].addView(control);
 
                 if (view.hasClick()) view.registerClick((ev: any) => {
@@ -178,16 +212,16 @@ namespace pxsim.visuals {
 
             // Inject all wires
             for (let port = 0; port < DAL.NUM_OUTPUTS; port++) {
-                this.outputWires[port].inject(this.scrollGroup);
+                this.outputWires[port].inject(this.scrollGroup, this.theme);
             }
             for (let port = 0; port < DAL.NUM_INPUTS; port++) {
-                this.inputWires[port].inject(this.scrollGroup);
+                this.inputWires[port].inject(this.scrollGroup, this.theme);
             }
 
             // Inject all view containers
             for (let i = 0; i < 4; i++) {
-                this.inputContainers[i].inject(this.scrollGroup);
-                this.outputContainers[i].inject(this.scrollGroup);
+                this.inputContainers[i].inject(this.scrollGroup, this.theme);
+                this.outputContainers[i].inject(this.scrollGroup, this.theme);
             }
 
             // Inject all ports
@@ -219,10 +253,17 @@ namespace pxsim.visuals {
         }
 
         public updateTheme(theme: IBoardTheme) {
+            this.inputWires.forEach(n => {
+                n.updateTheme(theme);
+            })
+            this.outputWires.forEach(n => {
+                n.updateTheme(theme);
+            })
             this.inputs.forEach(n => {
                 n.updateTheme(theme);
             })
             this.brick.updateTheme(theme);
+            this.brickLandscape.updateTheme(theme);
             this.outputs.forEach(n => {
                 n.updateTheme(theme);
             })
@@ -242,22 +283,6 @@ namespace pxsim.visuals {
 
             const noConnections = this.outputs.concat(this.inputs).filter(m => m.getId() != NodeType.Port).length == 0;
 
-            // render the full brick layout, even when there are not connection
-            // otherwise, it creates flickering of the simulator.
-            if (this.brick.getSelected()) {
-                // render output button
-                const closeIconWidth = this.brickCloseIcon.getWidth();
-                const closeIconHeight = this.brickCloseIcon.getHeight();
-                this.brickCloseIcon.translate(contentWidth / 2 - closeIconWidth / 2, 0);
-
-                // render the entire board
-                this.brick.resize(contentWidth, contentHeight - closeIconHeight * 2);
-                this.brick.translate(0, closeIconHeight * 2);
-
-                // Hide all other connections
-                this.outputs.concat(this.inputs).forEach(m => m.setVisible(false));
-                return;
-            }
             this.outputs.concat(this.inputs).forEach(m => m.setVisible(true));
 
             const moduleHeight = this.getModuleHeight();
@@ -268,35 +293,48 @@ namespace pxsim.visuals {
 
             const modulePadding = this.getModulePadding();
             const moduleSpacing = contentWidth / 4;
-            const moduleWidth = this.getInnerModuleWidth();
             let currentX = this.getModulePadding();
             let currentY = 0;
             this.outputs.forEach((n, i) => {
-                this.outputContainers[i].translate(currentX, currentY);
+                this.outputContainers[i].translate(currentX + (this.getAbosluteModuleWidth() - this.getInnerModuleWidth()) / 2, currentY);
                 if (this.outputs[i]) {
                     const view = this.outputs[i];
                     const outputPadding = this.getInnerModuleWidth() * view.getPaddingRatio();
-                    const desiredOutputWidth = this.getInnerModuleWidth() - outputPadding * 2;
-                    const outputWidth = Math.min(desiredOutputWidth, MAX_MODULE_WIDTH);
                     const outputHeight = this.getModuleHeight();
+                    const outputWidth = this.getInnerModuleWidth();
 
                     // Translate and resize view
-                    view.resize(outputWidth, outputHeight);
-                    const viewHeight = view.getInnerHeight() / view.getInnerWidth() * outputWidth;
-                    view.translate(outputPadding + ((desiredOutputWidth - outputWidth) / 2), outputHeight - viewHeight, true);
+                    view.resize(outputWidth - outputPadding * 2, outputHeight);
+                    // const viewHeight = view.getInnerHeight() / view.getInnerWidth() * outputWidth;
+                    // view.translate(outputPadding + ((desiredOutputWidth - outputWidth) / 2), outputHeight - viewHeight, true);
+                    const viewHeight = view.getActualHeight();
+                    view.translate(outputPadding, outputHeight - viewHeight, true);
 
                     // Resize control
                     const control = this.outputControls[i];
                     if (control) {
-                        control.resize(this.getInnerModuleWidth(), outputHeight);
+                        const controlWidth = outputWidth;
+                        const closeIconOffset = (this.getCloseIconSize() * (1 + CLOSE_ICON_GAP_MULTIPLIER));
+                        const controlHeight = outputHeight - closeIconOffset;
+                        control.resize(controlWidth, controlHeight);
+                        control.translate((controlWidth - control.getActualWidth()) / 2,
+                            closeIconOffset + ((controlHeight - control.getActualHeight()) / 2), true)
 
-                        // Translate close icon
+                        // Translate and resize close icon
                         const closeIcon = this.outputCloseIcons[i];
                         if (closeIcon) {
-                            const closeIconWidth = closeIcon.getWidth();
-                            closeIcon.translate(this.getInnerModuleWidth() / 2 - closeIconWidth / 2, 0);
+                            const closeIconSize = this.getCloseIconSize();
+                            closeIcon.resize(closeIconSize, closeIconSize);
+                            closeIcon.translate((outputWidth - closeIcon.getActualWidth()) / 2, (CLOSE_ICON_GAP_MULTIPLIER * closeIcon.getActualHeight()), true);
                         }
                     }
+
+                    // Resize background
+                    const backgroundView = this.inputBackgroundViews[i];
+                    if (backgroundView) {
+                        backgroundView.resize(this.getInnerModuleWidth(), outputHeight);
+                        backgroundView.translate(0, 0, true)
+                }
                 }
                 currentX += moduleSpacing;
             })
@@ -325,35 +363,48 @@ namespace pxsim.visuals {
             // Render the brick in the middle
             this.brick.resize(brickWidth, brickHeight);
             this.brick.translate(currentX, currentY);
+            this.brickLandscape.resize(contentWidth, brickHeight);
+            this.brickLandscape.translate((contentWidth - this.brickLandscape.getContentWidth()) / 2, currentY);
 
             currentX = modulePadding;
             currentY += brickHeight + this.getWiringHeight();
 
             this.inputs.forEach((n, i) => {
-                this.inputContainers[i].translate(currentX, currentY);
+                this.inputContainers[i].translate(currentX + (this.getAbosluteModuleWidth() - this.getInnerModuleWidth()) / 2, currentY);
                 if (this.inputs[i]) {
                     const view = this.inputs[i];
                     const inputPadding = this.getInnerModuleWidth() * view.getPaddingRatio();
-                    const desiredInputWidth = this.getInnerModuleWidth() - inputPadding * 2;
-                    const inputWidth = Math.min(desiredInputWidth, MAX_MODULE_WIDTH);
                     const inputHeight = this.getModuleHeight();
+                    const inputWidth = this.getInnerModuleWidth();
 
                     // Translate and resize view
-                    view.resize(inputWidth, inputHeight);
-                    view.translate(inputPadding + ((desiredInputWidth - inputWidth) / 2), 0, true);
+                    view.resize(inputWidth - inputPadding * 2, inputHeight);
+                    const viewHeight = Math.max(view.getActualHeight(), MIN_MODULE_HEIGHT);
+                    view.translate(inputPadding, 0, true);
 
                     // Resize control
                     const control = this.inputControls[i];
                     if (control) {
-                        control.resize(this.getInnerModuleWidth(), inputHeight);
+                        const controlWidth = inputWidth;
+                        const controlHeight = inputHeight - viewHeight - (this.getCloseIconSize() * (1 + CLOSE_ICON_GAP_MULTIPLIER));
+                        control.resize(controlWidth, controlHeight);
+                        control.translate((controlWidth - control.getActualWidth()) / 2,
+                            viewHeight + ((controlHeight - control.getActualHeight()) / 2), true)
 
                         // Translate and resize close icon
                         const closeIcon = this.inputCloseIcons[i];
                         if (closeIcon) {
-                            const closeIconWidth = closeIcon.getWidth();
-                            const closeIconHeight = closeIcon.getHeight();
-                            closeIcon.translate(this.getInnerModuleWidth() / 2 - closeIconWidth / 2, this.getModuleHeight() - closeIconHeight);
+                            const closeIconSize = this.getCloseIconSize();
+                            closeIcon.resize(closeIconSize, closeIconSize);
+                            closeIcon.translate((inputWidth - closeIcon.getActualWidth()) / 2, inputHeight - ((1 + CLOSE_ICON_GAP_MULTIPLIER) * closeIcon.getActualHeight()), true);
                         }
+                        }
+
+                    // Resize background
+                    const backgroundView = this.inputBackgroundViews[i];
+                    if (backgroundView) {
+                        backgroundView.resize(this.getInnerModuleWidth(), inputHeight, true);
+                        backgroundView.translate(0, 0, true)
                     }
                 }
                 currentX += moduleSpacing;
@@ -383,7 +434,7 @@ namespace pxsim.visuals {
 
         public getModuleBounds() {
             return {
-                width: this.width / 4,
+                width: Math.min(this.getAbosluteModuleWidth(), MAX_MODULE_WIDTH),
                 height: this.getModuleHeight()
             }
         }
@@ -396,8 +447,16 @@ namespace pxsim.visuals {
             return this.getModuleBounds().width - (this.getModulePadding() * 2);
         }
 
+        public getAbosluteModuleWidth() {
+            return this.width / 4;
+        }
+
         public getModuleHeight() {
             return this.height * MODULE_HEIGHT_RATIO;
+        }
+
+        public getCloseIconSize() {
+            return this.getInnerModuleWidth() / 4;
         }
     }
 }

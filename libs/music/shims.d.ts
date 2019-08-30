@@ -26,7 +26,7 @@ declare namespace music {
     function playTone(frequency: int32, ms: int32): void;
 
     /**
-     * Play a tone through the speaker for some amount of time.
+     * Stop all sounds.
      */
     //% help=music/stop-all-sounds
     //% blockId=music_stop_all_sounds block="stop all sounds"

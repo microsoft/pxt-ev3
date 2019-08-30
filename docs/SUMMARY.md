@@ -1,5 +1,12 @@
 # @extends
 
+## Support #support
+
+* [Troubleshoot](/troubleshoot)
+* [EV3 Manager](https://ev3manager.education.lego.com/)
+* [LEGO Support](https://www.lego.com/service/)
+* [FIRST LEGO League](/fll)
+
 ## Projects #projects
 
 * [Getting Started](/getting-started)
@@ -10,13 +17,15 @@
     * [Wake Up!](/tutorials/wake-up)
     * [Make An Animation](/tutorials/make-an-animation)
     * [What Animal Am I?](/tutorials/what-animal-am-i)
-    * [Music Brick](/tutorials/mindstorms-music)
+    * [Music Brick](/tutorials/music-brick)
     * [Run Motors](/tutorials/run-motors)
     * [Touch to Run](/tutorials/touch-to-run)
     * [Touch Sensor Values](/tutorials/touch-sensor-values)
     * [What Color?](/tutorials/what-color)
     * [Line Following](/tutorials/line-following)
-    * [Green Light, Red Light](/tutorials/greenlight-redlight)
+    * [Red Light, Green Light](/tutorials/redlight-greenlight)
+    * [Object Near?](/tutorials/object-near)
+    * [Security Alert](/tutorials/security-alert)
 
 * [Coding](/coding)
     * [Autonomous Parking](/coding/autonomous-parking)
@@ -74,12 +83,12 @@
             * [reset](/reference/sensors/gyro/reset)
         * [Ultrasonic](/reference/sensors/ultrasonic)
             * [on event](/reference/sensors/ultrasonic/on-event)
-            * [distance](reference/sensors/ultrasonic/distance)
-            * [pause until](reference/sensors/ultrasonic/pause-until)
+            * [distance](/reference/sensors/ultrasonic/distance)
+            * [pause until](/reference/sensors/ultrasonic/pause-until)
         * [Infrared](/reference/sensors/infrared)
             * [on event](/reference/sensors/infrared/on-event)
-            * [distance](reference/sensors/infrared/proximity)
-            * [pause until](reference/sensors/infrared/pause-until)
+            * [distance](/reference/sensors/infrared/proximity)
+            * [pause until](/reference/sensors/infrared/pause-until)
         * [Infrared beacon](/reference/sensors/beacon)
             * [on event](/reference/sensors/beacon/on-event)
             * [pause until](/reference/sensors/beacon/pause-until)
@@ -115,3 +124,7 @@
         * [log](/reference/console/log)
         * [log value](/reference/console/log-value)
         * [send to screen](/reference/console/send-to-screen)
+
+## #misc
+
+## devs

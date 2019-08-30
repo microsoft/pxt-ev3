@@ -35,6 +35,12 @@ motors.largeBC.tank(-75, -75)
 
 ## ~
 
+## ~ hint
+
+Only one set of synchronized motors will run at the same time. Once you launch tank/steer, it will cancel any existing synchronized speed command.
+
+## ~
+
 ## Examples
 
 ### Tank forward and backward
@@ -74,6 +80,51 @@ Run both motors in opposite directions to spin the brick around to the left.
 motors.largeAB.tank(-30, 30)
 pause(5000)
 motors.stopAll()
+```
+
+### Tank tester
+
+This program lets you change the tank values using the brick buttons
+
+```typescript
+let tankB = 0;
+let tankC = 0;
+
+brick.showString(`tank tester`, 1)
+brick.showString(`connect motors BC`, 7)
+brick.showString(`up/down for tank B`, 8)
+brick.showString(`left/right for tank C`, 9)
+
+forever(function () {
+    brick.showString(`motor B speed ${motors.largeB.speed()}%`, 4)
+    brick.showString(`motor C speed ${motors.largeC.speed()}%`, 5)
+    pause(100)
+})
+
+function updateTank() {
+    brick.showString(`tank A: ${tankB}%`, 2)
+    brick.showString(`tank B: ${tankC}%`, 3)
+    motors.largeBC.tank(tankB, tankC);
+}
+
+brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
+    tankB += 10
+    updateTank();
+})
+brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
+    tankB -= 10
+    updateTank();
+})
+brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
+    tankC += 10
+    updateTank();
+})
+brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
+    tankC -= 10
+    updateTank();
+})
+
+updateTank();
 ```
 
 ## See also

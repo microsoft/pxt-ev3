@@ -19,7 +19,7 @@ Look at the photos and think about:
 
 ### Things You’ll Need
 
-* [LEGO MINDSTORMS Education EV3 Core Set](https://education.lego.com/enus/products/legomindstormseducationev3coreset/5003400)
+* [@boardname@ Core Set](https://education.lego.com/enus/products/legomindstormseducationev3coreset/5003400)
 
 Additional materials to add to your Sound Machine:
 
@@ -39,9 +39,14 @@ This activity uses motor rotations and sensor inputs. You may want to try the [U
 
 ## Contemplate
 
-Follow the steps of the [Maker Design Process](/lessons/classroom-management#design-process) for this lesson:
+Follow the steps of the _Maker Design Process_ for this lesson:
 
-![LEGO Education Maker Design Process](/static/lessons/common/lego-maker-design-process.jpg)
+* Define the Problem
+* Brainstorming
+* Define the Design Criteria
+* Go Make
+* Review and Revise Your Solution
+* Communicate Your Solution
 
 ### Defining the Problem
 
@@ -71,7 +76,7 @@ Some things to do while brainstorming:
 
 It is time to start making!
 
-* Use the components from the LEGO® MINDSTORMS EV3 Core Set and additional materials to make your chosen solution. 
+* Use the components from the @boardname@ Core Set and additional materials to make your chosen solution. 
 * Test and analyze your design as you go and record any improvements that you make. 
 
 ### Review and Revise Your Solution
@@ -156,9 +161,3 @@ forever(function () {
 ```
 
 Click **Download** and follow the instructions to get your code onto your EV3 Brick. Press the ``center`` button on the EV3 Brick to run the program.
-
-### Well done!
-
-Click [here](/examples) to try out some more projects!
-
-

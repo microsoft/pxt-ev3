@@ -9,6 +9,7 @@
         "melodies.ts",
         "music.ts",
         "piano.ts",
+        "icons.jres",
         "sounds.jres",
         "sounds.ts",
         "ns.ts"

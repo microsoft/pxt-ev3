@@ -12,13 +12,19 @@ Design cars that can park themselves safely without driver intervention.
 * What would it take to ensure that autonomous cars are safe?
 * What types of movements do autonomous cars need to perform?
 
-## Construct 
+## Construct
 
 ### Build
 
-Build a LEGO MINDSTORMS vehicle that can park itself safely without driver intervention. Start by constructing this model:
+Build a @boardname@ vehicle that can park itself safely without driver intervention. Start by constructing this model:
 
 [![EV3- Robot Driving Base](/static/coding/autonomous-parking/ev3-robot-driving-base.jpg)](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf)
+
+### ~hint
+
+If clicking the above image doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
 
 ### Check
 
@@ -28,7 +34,7 @@ Before you program, check:
 * Are the wheels correctly installed?
 * Are the wheels rotating freely?
 
-### Program 
+### Program
 
 Write a program that will make the robot turn three times in various ways.
 
@@ -109,7 +115,7 @@ Click Download and follow the instructions to get your code onto your EV3 Brick.
 
 ### Differentiation
 
-Create a program that simulates displaying appropriate warning lights while parking. 
+Create a program that simulates displaying appropriate warning lights while parking.
 
 ### ~hint
 
@@ -164,8 +170,8 @@ Click Download and follow the instructions to get your code onto your EV3 Brick.
 
 * Click on the JavaScript tab and experiment with changing the values in the code.
 * Add a custom image or sounds from the Brick or Music menus.
-* Create a video of your project, especially your final presentation and your robot’s performance. Explain some important features of your software program. 
-* Include an image of your program with comments. 
-* Add a team photograph! 
+* Create a video of your project, especially your final presentation and your robot’s performance. Explain some important features of your software program.
+* Include an image of your program with comments.
+* Add a team photograph!
 
 Congratulations! What will you design next?

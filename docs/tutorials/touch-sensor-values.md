@@ -1,14 +1,14 @@
 # Using Touch Sensor Values
 
-## Introduction @fullscreen
+## Introduction @unplugged
 
-Use the Touch sensor value to stop a running motor.
+Use the Touch Sensor value to stop a running motor.
 
 ![Touch sensor and motor attached to brick](/static/tutorials/touch-sensor-values/touch-to-stop.gif)
 
 ## Step 1
 
-Open the ``||brick:Brick||`` Toolbox drawer. Drag an ``||brick:on button||`` block onto the Workspace, and place it anywhere on the Workspace.
+Open the ``||brick:Brick||`` Toolbox drawer. Drag an ``||brick:on button||`` block onto the Workspace, and place it anywhere.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
@@ -89,6 +89,6 @@ forever(function () {
 
 ## Step 8
 
-Now, plug your @boardname@ into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
+Now, plug your EV3 Brick into the computer with the USB cable, and click the **Download** button at the bottom of your screen. Follow the directions to save your program to the brick.
 
 Attach a Large motor to Port A, and a Touch sensor to Port 1 on your brick. Test your program by pressing the ENTER button. When the motor starts, press the touch sensor. Does the motor stop as expected?

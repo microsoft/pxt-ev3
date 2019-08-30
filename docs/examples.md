@@ -21,11 +21,11 @@ Here are some fun programs for your @boardname@!
   "imageUrl": "/static/maker/security-gadget.png"
 },
 {
-  "name": "Intruder Detector",
-  "description": "Raise the alarm when an intruder sneaks in",
-  "url":"/maker/intruder-detector",
+  "name": "Movement Detector",
+  "description": "Raise the alarm when an movement sneaks in",
+  "url":"/maker/movement-detector",
   "cardType": "example",
-  "imageUrl": "/static/maker/intruder-detector.png"
+  "imageUrl": "/static/maker/movement-detector.png"
 },
 {
   "name": "Puppet",

@@ -1,5 +1,5 @@
 const enum InfraredSensorMode {
-    None = -1,
+    None = 0,
     Proximity = 0,
     Seek = 1,
     RemoteControl = 2,
@@ -261,7 +261,7 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=irSetThreshold block="set **infrared** %this|%condition|to %value"
-        //% group="Threshold" blockGap=8 weight=49
+        //% group="Calibration" blockGap=8 weight=49
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
         setPromixityThreshold(condition: InfraredSensorEvent, value: number) {
@@ -276,10 +276,10 @@ namespace sensors {
          * @param condition the proximity condition
          */
         //% blockId=irGetThreshold block="**infrared** %this|%condition"
-        //% group="Threshold" blockGap=8 weight=49
+        //% group="Calibration" weight=49
         //% this.fieldEditor="ports"
         proximityThreshold(condition: InfraredSensorEvent): number {
-            return this._proximityThreshold.threshold(<ThresholdState><number>Light.Dark);
+            return this._proximityThreshold.threshold(<ThresholdState><number>condition);
         }
 
         // TODO

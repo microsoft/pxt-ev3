@@ -1,4 +1,4 @@
-# Make It Move Without Wheels 
+# Make It Move Without Wheels
 
 ## Objective
 
@@ -10,7 +10,7 @@ Your robot will:
 * Use at least one motor
 * Use NO wheels for locomotion
 
-![LECG Mindstorms brick with parts](/static/lessons/make-it-move/locomotion-no-wheels.jpg)
+![@boardname@ with parts](/static/lessons/make-it-move/locomotion-no-wheels.jpg)
 
 ## Construct
 
@@ -23,8 +23,14 @@ The Walker Bot combines an EV3 Frame and two legs that are mirror-images to crea
 The legs in the Walker Bot are designed to show how to change the rotary motion of a motor to reciprocating motion.
 
 Start by reading [these](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/ev3-dep/building%20instructions/walker-bot-bi-180fc24f9298e1dd6201099627d43903.pdf) instructions first.
- 
-![LEGO Mindstorms Walker Bot](/static/lessons/make-it-move/walker-bot.jpg)
+
+### ~hint
+
+If clicking the above image doesn't open the instructions, right-click on the image and choose "Save link as..." to download the PDF.
+
+### ~
+
+![@boardname@ Walker Bot](/static/lessons/make-it-move/walker-bot.jpg)
 
  
 ## Program
@@ -38,7 +44,7 @@ Place a ``||motors:tank large B+C||`` block from ``||motors:Motors||`` under ``|
 Change the speed to `-60%` (for motor B) and `+60%` (for motor C).
 Change the rotations to `9`.
 
-The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 brick. The motors are set for the reverse direction because they are mounted upside down in this model.
+The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 Brick. The motors are set for the reverse direction because they are mounted upside down in this model.
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
@@ -48,7 +54,7 @@ motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
 
 Place a ``||motors:stop all motors||`` block under ``||motors:tank large B+C||``.
 
-The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 brick then stop.
+The ``||motors:tank large B+C||`` block will run for `9` rotations when the **center** button is pressed on the EV3 Brick then stop.
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)
@@ -60,7 +66,7 @@ motors.largeBC.stop()
 Place a ``||brick:show string||`` block under ``||motors:stop all motors||``.
 Change the `"Hello World"` text to `"30 cm"`.
 
-The ``||motors:tank large B+C||`` will run for `9` rotations when the **center** button is pressed on the EV3 brick then stop and display "30 cm" on the EV3 Brick’s screen.
+The ``||motors:tank large B+C||`` will run for `9` rotations when the **center** button is pressed on the EV3 Brick then stop and display "30 cm" on the EV3 Brick’s screen.
 
 ```blocks
 motors.largeBC.tank(-60, 60, 9, MoveUnit.Rotations)

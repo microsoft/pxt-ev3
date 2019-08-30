@@ -164,7 +164,7 @@ void playTone(int frequency, int ms) {
 }
 
 /**
-* Play a tone through the speaker for some amount of time.
+* Stop all sounds.
 */
 //% help=music/stop-all-sounds
 //% blockId=music_stop_all_sounds block="stop all sounds"

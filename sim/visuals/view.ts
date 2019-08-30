@@ -19,8 +19,9 @@ namespace pxsim.visuals {
         public abstract getInnerWidth(): number;
         public abstract getInnerHeight(): number;
 
-        public inject(parent: SVGElement, width?: number, visible = true) {
+        public inject(parent: SVGElement, theme: IBoardTheme, width?: number, visible = true) {
             this.width = width;
+            this.theme = theme;
             parent.appendChild(this.getView());
 
             if (visible) {
@@ -130,9 +131,17 @@ namespace pxsim.visuals {
             return this.element;
         }
 
-        public resize(width: number, height: number) {
+        public resize(width: number, height: number, strict?: boolean) {
             this.width = width;
             this.height = height;
+        }
+
+        public getActualHeight() {
+            return this.height;
+        }
+
+        public getActualWidth() {
+            return this.width;
         }
 
         private updateTransform() {
@@ -221,6 +230,10 @@ namespace pxsim.visuals {
             this.changed = false;
             return res;
         }
+
+        public hasBackground() {
+            return false;
+        }
     }
 
     export abstract class SimView<T extends BaseNode> extends View implements LayoutElement {
@@ -264,13 +277,17 @@ namespace pxsim.visuals {
         }
 
         public addView(view: View) {
-            view.inject(this.element);
+            view.inject(this.element, this.theme);
         }
 
         public clear() {
+            const markForRemoval: Element[] = [];
             forEachElement(this.element.childNodes, e => {
-                this.element.removeChild(e);
+                markForRemoval.push(e);
             });
+            markForRemoval.forEach(e => {
+                this.element.removeChild(e);
+            })
         }
 
         public onComponentInjected() {

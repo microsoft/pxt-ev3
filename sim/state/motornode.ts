@@ -17,7 +17,8 @@ namespace pxsim {
         private speedCmdTime: number;
         private _synchedMotor: MotorNode; // non-null if synchronized
 
-        private manualSpeed: number = undefined;
+        private manualReferenceAngle: number = undefined;
+        private manualAngle: number = undefined;
 
         constructor(port: number, large: boolean) {
             super(port);
@@ -29,7 +30,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return this.speed * (this.polarity == 0 ? -1 : 1);
+            return this.speed * (!this._synchedMotor && this.polarity == 0 ? -1 : 1);
         }
 
         getAngle() {
@@ -48,7 +49,7 @@ namespace pxsim {
             // new command TODO: values
             this.speedCmd = cmd;
             this.speedCmdValues = values;
-            this.speedCmdTacho = this.angle;
+            this.speedCmdTacho = this.tacho;
             this.speedCmdTime = pxsim.U.now();
             delete this._synchedMotor;
         }
@@ -62,6 +63,12 @@ namespace pxsim {
             delete this.speedCmd;
             delete this.speedCmdValues;
             delete this._synchedMotor;
+            this.setChangedState();
+        }        
+
+        clearSyncCmd() {
+            if (this._synchedMotor)
+                this.clearSpeedCmd();
         }
 
         setLarge(large: boolean) {
@@ -103,14 +110,18 @@ namespace pxsim {
         }
 
         manualMotorDown() {
+            this.manualReferenceAngle = this.angle;
+            this.manualAngle = 0;
         }
 
-        manualMotorMove(speed: number) {
-            this.manualSpeed = speed;
+        // position: 0, 360
+        manualMotorAngle(angle: number) {
+            this.manualAngle = angle;
         }
 
         manualMotorUp() {
-            this.manualSpeed = undefined;
+            delete this.manualReferenceAngle;
+            delete this.manualAngle;
         }
 
         updateState(elapsed: number) {
@@ -126,7 +137,7 @@ namespace pxsim {
         }
 
         private updateStateStep(elapsed: number) {
-            if (!this.manualSpeed) {
+            if (this.manualAngle === undefined) {
                 // compute new speed
                 switch (this.speedCmd) {
                     case DAL.opOutputSpeed:
@@ -145,7 +156,8 @@ namespace pxsim {
                         const step2 = this.speedCmdValues[2];
                         const step3 = this.speedCmdValues[3];
                         const brake = this.speedCmdValues[4];
-                        const dstep = (this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed)
+                        const isTimeCommand = this.speedCmd == DAL.opOutputTimePower || this.speedCmd == DAL.opOutputTimeSpeed;
+                        const dstep = isTimeCommand
                             ? pxsim.U.now() - this.speedCmdTime
                             : this.tacho - this.speedCmdTacho;
                         if (dstep < step1) // rampup
@@ -156,6 +168,16 @@ namespace pxsim {
                             this.speed = speed * (step1 + step2 + step3 - dstep) / (step1 + step2 + step3);
                         else {
                             if (brake) this.speed = 0;
+                            if (!isTimeCommand) {
+                                // we need to patch the actual position of the motor when
+                                // finishing the move as our integration step introduce errors
+                                const deltaAngle = -Math.sign(speed) * (dstep - (step1 + step2 + step3));
+                                if (deltaAngle) {
+                                    this.angle += deltaAngle;
+                                    this.tacho -= Math.abs(deltaAngle);
+                                    this.setChangedState();
+                                }
+                            }
                             this.clearSpeedCmd();
                         }
                         break;
@@ -163,11 +185,13 @@ namespace pxsim {
                     case DAL.opOutputStepSync:
                     case DAL.opOutputTimeSync: {
                         const otherMotor = this._synchedMotor;
-                        if (otherMotor.port < this.port) // handled in other motor code
-                            break;
-
                         const speed = this.speedCmdValues[0];
                         const turnRatio = this.speedCmdValues[1];
+                        // if turnratio is negative, right motor at power level
+                        // right motor -> this.port > otherMotor.port
+                        if (Math.sign(this.port - otherMotor.port)
+                            == Math.sign(turnRatio))
+                            break; // handled in other motor code
                         const stepsOrTime = this.speedCmdValues[2];
                         const brake = this.speedCmdValues[3];
                         const dstep = this.speedCmd == DAL.opOutputTimeSync
@@ -183,12 +207,7 @@ namespace pxsim {
 
                         // turn ratio is a bit weird to interpret
                         // see https://communities.theiet.org/blogs/698/1706
-                        if (turnRatio < 0) {
-                            otherMotor.speed = speed;
-                            this.speed *= (100 + turnRatio) / 100;
-                        } else {
-                            otherMotor.speed = this.speed * (100 - turnRatio) / 100;
-                        }
+                        otherMotor.speed = this.speed * (100 - Math.abs(turnRatio)) / 100;
 
                         // clamp
                         this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
@@ -202,7 +221,11 @@ namespace pxsim {
                 }
             }
             else {
-                this.speed = this.manualSpeed;
+                // the user is holding the handle - so position is the angle
+                this.speed = 0;
+                // rotate by the desired angle change
+                this.angle = this.manualReferenceAngle + this.manualAngle;
+                this.setChangedState();
             }
             this.speed = Math.round(this.speed); // integer only
 
@@ -217,7 +240,8 @@ namespace pxsim {
 
             // if the motor was stopped or there are no speed commands,
             // let it coast to speed 0
-            if (this.speed && !(this.started || this.speedCmd)) {
+            if ((this.manualReferenceAngle === undefined)
+                && this.speed && !(this.started || this.speedCmd)) {
                 // decay speed 5% per tick
                 this.speed = Math.round(Math.max(0, Math.abs(this.speed) - 10) * sign(this.speed));
             }

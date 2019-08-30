@@ -7,9 +7,6 @@
 @headerFont        : "Open Sans","Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
 @pageFont          : "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 
-@emSize      : 14px;
-@fontSize    : 13px;
-
 @primaryColor: @blue;
 @secondaryColor: @yellow;
 
@@ -31,6 +28,7 @@
 @legoGreyDark: #f4f7f9;
 
 @grey: @legoGreyLight;
+@darkGrey: #999;
 
 /* Lego official colors */
 
@@ -108,8 +106,8 @@
    Menu
 --------------------*/
 
-@mainMenuBackground: #ffffff;
-@mainMenuInvertedBackground: @yellow;
+@mainMenuBackground: @legoGreyLight;
+@mainMenuInvertedBackground: #FFFFFF;
 @mainMenuTutorialBackground: @orange;
 
 
@@ -152,6 +150,8 @@
 @homeScreenBackground: #F2F2F2;
 @homeCardBorderColor: #F2F2F2;
 
+@homeDetailCloseBackground: @darkGrey;
+
 /*-------------------
    Editor
 --------------------*/
@@ -184,3 +184,23 @@
 @blocklyFlyoutColor: #3B3C3D;
 @blocklyFlyoutColorOpacity: 1.0;
 @monacoFlyoutColor: rgba(59, 60, 61, 1.0);
+
+/*-------------------
+   Tutorial
+--------------------*/
+
+@tutorialSegmentBackground: #f2f2f2;
+
+/*-------------------
+   Serial
+--------------------*/
+
+@serialBackgroundColor: #fff;
+@serialGraphBackground: #F2F2F2;
+@serialConsoleBackground: @serialGraphBackground;
+
+/*-------------------
+   Extensions
+--------------------*/
+
+@extensionsHeaderBackground: @darkGrey;

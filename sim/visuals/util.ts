@@ -10,33 +10,85 @@ namespace pxsim.visuals {
 
     export type TouchCallback = (event: MouseEvent | TouchEvent | PointerEvent) => void;
 
-    export function touchEvents(e: SVGElement | SVGElement[], move?: TouchCallback, down?: TouchCallback, up?: TouchCallback, leave?: TouchCallback) {
+    export function touchEvents(e: SVGElement | SVGElement[], move?: TouchCallback, down?: TouchCallback, up?: TouchCallback) {
         if (Array.isArray(e)) {
-            e.forEach(el => bindEvents(el, move, down, up, leave));
+            e.forEach(el => bindEvents(el, move, down, up));
         }
         else {
-            bindEvents(e, move, down, up, leave);
+            bindEvents(e, move, down, up);
         }
     }
 
-    function bindEvents(e: SVGElement, move?: TouchCallback, down?: TouchCallback, up?: TouchCallback, leave?: TouchCallback) {
+    function bindEvents(e: SVGElement, move?: TouchCallback, down?: TouchCallback, up?: TouchCallback) {
+
+        const moveEvent = move ? (ev: MouseEvent) => {
+            move.call(this, ev);
+            ev.preventDefault();
+            ev.stopPropagation();
+        } : undefined;
+
+        const enterEvent = move ? (ev: MouseEvent) => {
+            if (ev.buttons != 1) {
+                // cancel all events when we re-enter without a button down
+                upEvent(ev);
+            }
+        } : undefined;
+
+        const upEvent = up ? (ev: MouseEvent) => {
+            up.call(this, ev);
+            ev.preventDefault();
+            ev.stopPropagation();
+
+            // Unregister document up and move events
+            if ((window as any).PointerEvent) {
+                if (moveEvent) document.removeEventListener("pointermove", moveEvent);
+                if (upEvent) document.removeEventListener("pointerup", upEvent);
+                if (upEvent) document.removeEventListener("pointercancel", upEvent);
+                if (moveEvent) document.removeEventListener("pointerenter", enterEvent);
+            } else {
+                if (moveEvent) document.removeEventListener("mousemove", moveEvent);
+                if (upEvent) document.removeEventListener("mouseup", upEvent);
+                if (moveEvent) document.removeEventListener("mouseenter", enterEvent);
+                if (pxsim.svg.isTouchEnabled()) {
+                    if (moveEvent) document.removeEventListener("touchmove", moveEvent);
+                    if (upEvent) document.removeEventListener("touchend", upEvent);
+                    if (upEvent) document.removeEventListener("touchcancel", upEvent);
+                }
+            }
+        } : undefined;
+
+        const downEvent = down ? (ev: MouseEvent) => {
+            down.call(this, ev);
+            ev.preventDefault();
+            ev.stopPropagation();
+
+            // Register document up and move events
+            if ((window as any).PointerEvent) {
+                if (moveEvent) document.addEventListener("pointermove", moveEvent);
+                if (upEvent) document.addEventListener("pointerup", upEvent);
+                if (upEvent) document.addEventListener("pointercancel", upEvent);
+                if (moveEvent) document.addEventListener("pointerenter", enterEvent);
+            } else {
+                if (moveEvent) document.addEventListener("mousemove", moveEvent);
+                if (upEvent) document.addEventListener("mouseup", upEvent);
+                if (moveEvent) document.addEventListener("mouseenter", enterEvent);
+
+                if (pxsim.svg.isTouchEnabled()) {
+                    if (moveEvent) document.addEventListener("touchmove", moveEvent);
+                    if (upEvent) document.addEventListener("touchend", upEvent);
+                    if (upEvent) document.addEventListener("touchcancel", upEvent);
+                }
+            }
+        } : undefined;
+
         if ((window as any).PointerEvent) {
-            if (down) e.addEventListener("pointerdown", down);
-            if (up) e.addEventListener("pointerup", up);
-            if (leave) e.addEventListener("pointerleave", leave);
-            if (move) e.addEventListener("pointermove", move);
+            if (downEvent) e.addEventListener("pointerdown", downEvent);
         }
         else {
-            if (down) e.addEventListener("mousedown", down);
-            if (up) e.addEventListener("mouseup", up);
-            if (leave) e.addEventListener("mouseleave", leave);
-            if (move) e.addEventListener("mousemove", move);
+            if (downEvent) e.addEventListener("mousedown", downEvent);
 
             if (pxsim.svg.isTouchEnabled()) {
-                if (down) e.addEventListener("touchstart", down);
-                if (up) e.addEventListener("touchend", up);
-                if (leave) e.addEventListener("touchcancel", leave);
-                if (move) e.addEventListener("touchmove", move);
+                if (downEvent) e.addEventListener("touchstart", downEvent);
             }
         }
     }

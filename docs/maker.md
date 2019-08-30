@@ -1,9 +1,5 @@
 # Maker Activites
 
-These six activities require the [LEGO® MINDSTORMS® Education EV3 Core Set (45544)](https://education.lego.com/en-us/products/lego-mindstorms-education-ev3-core-set-/5003400). Supporting materials for teachers and middle school students are provided, offering everything teachers and students need to explore their inner makers as they follow the design process to solve open-ended, themed challenges...
-
-* [Download Curriculum Materials](https://education.lego.com/en-us/downloads/mindstorms-ev3/curriculum)
-
 ## Activites
 
 ```codecard

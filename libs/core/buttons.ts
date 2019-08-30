@@ -159,12 +159,6 @@ namespace brick {
             if (sl[i])
                 ret |= 1 << i
         }
-        // this needs to be done in query(), which is run without the main JS execution mutex
-        // otherwise, while(true){} will lock the device
-        if (ret & DAL.BUTTON_ID_ESCAPE) {
-            motors.stopAll(); // ensuring that all motors are off
-            control.reset()
-        }
         return ret
     }
 
@@ -245,7 +239,16 @@ namespace control {
 
 namespace brick {
     // the brick starts with the red color
-    let currPattern: StatusLight = StatusLight.Red;
+    let currPattern: StatusLight = StatusLight.Off;
+
+    /**
+     * Gets the current light pattern.
+     */
+    //% weight=99 group="Buttons"
+    //% help=brick/status-light
+    export function statusLight() {
+        return currPattern;
+    }
 
     /**
      * Set lights.

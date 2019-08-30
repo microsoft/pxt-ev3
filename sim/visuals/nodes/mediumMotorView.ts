@@ -13,7 +13,11 @@ namespace pxsim.visuals {
         }
 
         public getPaddingRatio() {
-            return 1 / 5;
+            return 1 / 8;
+        }
+
+        getWiringRatio() {
+            return 0.5;
         }
 
         protected renderMotorAngle(holeEl: Element, angle: number) {
@@ -21,6 +25,11 @@ namespace pxsim.visuals {
             const height = 44.45;
             const transform = `translate(2 1.84) rotate(${angle} ${width / 2} ${height / 2})`;
             holeEl.setAttribute("transform", transform);
+        }
+
+        protected positionMotorLabel() {
+            this.motorLabelGroup.setAttribute('transform', 'translate(25 13)');
+            this.motorLabel.style.fontSize = '11px';
         }
     }
 }

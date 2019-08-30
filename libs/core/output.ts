@@ -132,17 +132,23 @@ namespace motors {
         protected _port: Output;
         protected _portName: string;
         protected _brake: boolean;
+        private _pauseOnRun: boolean;
         private _initialized: boolean;
+        private _brakeSettleTime: number;
         private _init: () => void;
         private _run: (speed: number) => void;
         private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
+
+        protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
 
         constructor(port: Output, init: () => void, run: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
             super();
             this._port = port;
             this._portName = outputToName(this._port);
             this._brake = false;
+            this._pauseOnRun = true;
             this._initialized = false;
+            this._brakeSettleTime = 10;
             this._init = init;
             this._run = run;
             this._move = move;
@@ -163,6 +169,7 @@ namespace motors {
          * @param brake a value indicating if the motor should break when off
          */
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
+        //% motor.fieldEditor="motors"
         //% weight=60 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-brake
@@ -171,10 +178,24 @@ namespace motors {
             this._brake = brake;
         }
 
+        /**
+         * Indicates to pause while a motor moves for a given distance or duration.
+         * @param value true to pause; false to continue the program execution
+         */
+        //% blockId=outputMotorSetPauseMode block="set %motor|pause on run %brake=toggleOnOff"
+        //% motor.fieldEditor="motors"
+        //% weight=60 blockGap=8
+        //% group="Properties"
+        setPauseOnRun(value: boolean) {
+            this.init();
+            this._pauseOnRun = value;
+        }
+
         /** 
          * Inverts the motor polarity
         */
         //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
+        //% motor.fieldEditor="motors"
         //% weight=59 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-inverted
@@ -185,6 +206,20 @@ namespace motors {
             writePWM(b)
         }
 
+        /** 
+         * Set the settle time after braking in milliseconds (default is 10ms).
+        */
+        //% blockId=motorSetBrakeSettleTime block="set %motor|brake settle time %millis|ms"
+        //% motor.fieldEditor="motors"
+        //% weight=1 blockGap=8
+        //% group="Properties"
+        //% millis.defl=200 millis.min=0 millis.max=500
+        setBrakeSettleTime(millis: number) {
+            this.init();
+            // ensure in [0,500]
+            this._brakeSettleTime = Math.max(0, Math.min(500, millis | 0))
+        }
+
         /**
          * Stops the motor(s).
          */
@@ -192,17 +227,27 @@ namespace motors {
         //% group="Move"
         //% help=motors/motor/stop
         //% blockId=motorStop block="stop %motors|"
+        //% motors.fieldEditor="motors"
         stop() {
             this.init();
             stop(this._port, this._brake);
             this.settle();
         }
 
-        private settle() {
+        protected settle() {
             // if we've recently completed a motor command with brake
             // allow 500ms for robot to settle
-            if(this._brake)
-                pause(500);
+            if (this._brake && this._brakeSettleTime > 0)
+                pause(this._brakeSettleTime);
+        }
+
+        protected pauseOnRun(stepsOrTime: number) {
+            if (stepsOrTime && this._pauseOnRun) {
+                // wait till motor is done with this work
+                this.pauseUntilReady();
+                // allow robot to settle
+                this.settle();
+            }
         }
 
         /**
@@ -212,6 +257,7 @@ namespace motors {
         //% group="Move"
         //% help=motors/motor/reset
         //% blockId=motorReset block="reset %motors|"
+        //% motors.fieldEditor="motors"
         reset() {
             this.init();
             reset(this._port);
@@ -226,6 +272,7 @@ namespace motors {
         //% blockId=motorRun block="run %motor at %speed=motorSpeedPicker|\\%||for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
+        //% motor.fieldEditor="motors"
         //% expandableArgumentMode=toggle
         //% help=motors/motor/run
         run(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
@@ -264,10 +311,7 @@ namespace motors {
             }
 
             this._move(useSteps, stepsOrTime, speed);
-            // wait till motor is done with this work
-            this.pauseUntilReady();
-            // allow robot to settle
-            this.settle();
+            this.pauseOnRun(stepsOrTime);
         }
 
         /**
@@ -287,10 +331,33 @@ namespace motors {
          * @param timeOut optional maximum pausing time in milliseconds
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
+        //% motor.fieldEditor="motors"
         //% weight=90
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
+        }
+
+        protected setOutputType(large: boolean) {
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+                if (this._port & (1 << i)) {
+                    // (0x07: Large motor, Medium motor = 0x08)
+                    MotorBase.output_types[i] = large ? 0x07 : 0x08;
+                }
+            }
+            MotorBase.setTypes();
+        }
+
+        // Note, we are having to create our own buffer here as mkCmd creates a buffer with a command
+        // In the case of opOutputSetType, it expects the arguments to be opOutputSetType [type0, type1, type2, type3]
+        static setTypes() {
+            const b = output.createBuffer(5)
+            b.setNumber(NumberFormat.UInt8LE, 0, DAL.opOutputSetType)
+            b.setNumber(NumberFormat.Int8LE, 1, MotorBase.output_types[0]);
+            b.setNumber(NumberFormat.Int8LE, 2, MotorBase.output_types[1]);
+            b.setNumber(NumberFormat.Int8LE, 3, MotorBase.output_types[2]);
+            b.setNumber(NumberFormat.Int8LE, 4, MotorBase.output_types[3]);
+            writePWM(b)
         }
     }
 
@@ -311,10 +378,7 @@ namespace motors {
         }
 
         private __init() {
-            // specify motor size on this port            
-            const b = mkCmd(outOffset(this._port), DAL.opOutputSetType, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, this._large ? 0x07 : 0x08)
-            writePWM(b)
+            this.setOutputType(this._large);
         }
 
         private __setSpeed(speed: number) {
@@ -327,7 +391,8 @@ namespace motors {
         }
 
         private __move(steps: boolean, stepsOrTime: number, speed: number) {
-            step(this._port, {
+            control.dmesg("motor.__move")
+            const p = {
                 useSteps: steps,
                 step1: 0,
                 step2: stepsOrTime,
@@ -335,7 +400,10 @@ namespace motors {
                 speed: this._regulated ? speed : undefined,
                 power: this._regulated ? undefined : speed,
                 useBrake: this._brake
-            })
+            };
+            control.dmesg("motor.1")
+            step(this._port, p)
+            control.dmesg("motor.__move end")
         }
 
         /**
@@ -343,7 +411,8 @@ namespace motors {
          * @param value true for regulated motor
          */
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
-        //% weight=58
+        //% motor.fieldEditor="motors"
+        //% weight=58 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-regulated
         setRegulated(value: boolean) {
@@ -355,6 +424,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorSpeed block="%motor|speed"
+        //% motor.fieldEditor="motors"
         //% weight=72 
         //% blockGap=8
         //% group="Counters"
@@ -369,6 +439,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorAngle block="%motor|angle"
+        //% motor.fieldEditor="motors"
         //% weight=70
         //% blockGap=8
         //% group="Counters"
@@ -382,6 +453,7 @@ namespace motors {
          * Clears the motor count
          */
         //% blockId=motorClearCount block="clear %motor|counters"
+        //% motor.fieldEditor="motors"
         //% weight=68
         //% blockGap=8
         //% group="Counters"
@@ -406,28 +478,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motor A"
+    //% whenUsed fixedInstance block="large motor A" jres=icons.portA
     export const largeA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large motor B"
+    //% whenUsed fixedInstance block="large motor B" jres=icons.portB
     export const largeB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large motor C"
+    //% whenUsed fixedInstance block="large motor C" jres=icons.portC
     export const largeC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large motor D"
+    //% whenUsed fixedInstance block="large motor D" jres=icons.portD
     export const largeD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium motor A"
+    //% whenUsed fixedInstance block="medium motor A" jres=icons.portA
     export const mediumA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium motor B"
+    //% whenUsed fixedInstance block="medium motor B" jres=icons.portB
     export const mediumB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium motor C"
+    //% whenUsed fixedInstance block="medium motor C" jres=icons.portC
     export const mediumC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium motor D"
+    //% whenUsed fixedInstance block="medium motor D" jres=icons.portD
     export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
@@ -443,13 +515,7 @@ namespace motors {
         }
 
         private __init() {
-            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
-                if (this._port & (1 << i)) {
-                    const b = mkCmd(outOffset(1 << i), DAL.opOutputSetType, 1)
-                    b.setNumber(NumberFormat.Int8LE, 2, 0x07) // large motor
-                    writePWM(b)
-                }
-            }
+            this.setOutputType(true);
         }
 
         private __setSpeed(speed: number) {
@@ -481,7 +547,8 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairTank block="tank %motors %speedLeft=motorSpeedPicker|\\% %speedRight=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorPairTank block="tank **motors** %motors %speedLeft=motorSpeedPicker|\\% %speedRight=motorSpeedPicker|\\%||for %value %unit"
+        //% motors.fieldEditor="ports"
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
         //% group="Move"
@@ -494,10 +561,12 @@ namespace motors {
             speedRight = Math.clamp(-100, 100, speedRight >> 0);
 
             const speed = Math.abs(speedLeft) > Math.abs(speedRight) ? speedLeft : speedRight;
-            const turnRatio = speedLeft == speed
-                ? (100 - speedRight / speedLeft * 100)
-                : (speedLeft / speedRight * 100 - 100);
+            let turnRatio = speedLeft == speed
+                ? speedLeft == 0 ? 0 : (100 - speedRight / speedLeft * 100)
+                : speedRight == 0 ? 0 : (speedLeft / speedRight * 100 - 100);
+            turnRatio = Math.floor(turnRatio);
 
+            //control.dmesg(`tank ${speedLeft} ${speedRight} => ${turnRatio} ${speed}`)
             this.steer(turnRatio, speed, value, unit);
         }
 
@@ -508,7 +577,8 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairSteer block="steer %chassis turn ratio %turnRatio=motorTurnRatioPicker speed %speed=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorPairSteer block="steer **motors** %chassis turn ratio %turnRatio=motorTurnRatioPicker speed %speed=motorSpeedPicker|\\%||for %value %unit"
+        //% chassis.fieldEditor="ports"
         //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
@@ -552,6 +622,8 @@ namespace motors {
                 stepsOrTime: stepsOrTime,
                 useBrake: this._brake
             });
+
+            this.pauseOnRun(stepsOrTime);
         }
 
         /**
@@ -571,16 +643,16 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motors B+C"
+    //% whenUsed fixedInstance block="B+C" jres=icons.portBC
     export const largeBC = new SynchedMotorPair(Output.BC);
 
-    //% whenUsed fixedInstance block="large motors A+D"
+    //% whenUsed fixedInstance block="A+D" jres=icons.portAD
     export const largeAD = new SynchedMotorPair(Output.AD);
 
-    //% whenUsed fixedInstance block="large motors A+B"
+    //% whenUsed fixedInstance block="A+B" jres=icons.portAB
     export const largeAB = new SynchedMotorPair(Output.AB);
 
-    //% whenUsed fixedInstance block="large motors C+D"
+    //% whenUsed fixedInstance block="C+D" jres=icons.portCD
     export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {
@@ -663,36 +735,36 @@ namespace motors {
     }
 
     function step(out: Output, opts: StepOptions) {
+        control.dmesg('step')
         let op = opts.useSteps ? DAL.opOutputStepSpeed : DAL.opOutputTimeSpeed
         let speed = opts.speed
-        if (speed == null) {
+        if (undefined == speed) {
             speed = opts.power
             op = opts.useSteps ? DAL.opOutputStepPower : DAL.opOutputTimePower
-            if (speed == null)
+            if (undefined == speed)
                 return
         }
         speed = Math.clamp(-100, 100, speed)
+        control.dmesg('speed: ' + speed)
 
         let b = mkCmd(out, op, 15)
+        control.dmesg('STEP 5')
         b.setNumber(NumberFormat.Int8LE, 2, speed)
         // note that b[3] is padding
+        control.dmesg('STEP 1')
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 0, opts.step1)
+        control.dmesg('STEP 2')
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 1, opts.step2)
+        control.dmesg('STEP 3')
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 2, opts.step3)
-        b.setNumber(NumberFormat.Int8LE, 4 + 4 * 3, opts.useBrake ? 1 : 0)
+        control.dmesg('STEP 4')
+        control.dmesg('br ' + opts.useBrake);
+        const br = !!opts.useBrake ? 1 : 0;
+        control.dmesg('Step 4.5 ' + br)
+        b.setNumber(NumberFormat.Int8LE, 4 + 4 * 3, br)
+        control.dmesg('STEP 5')
         writePWM(b)
-    }
-
-    const types = [0, 0, 0, 0]
-    export function setType(out: Output, type: OutputType) {
-        let b = mkCmd(out, DAL.opOutputSetType, 3)
-        for (let i = 0; i < 4; ++i) {
-            if (out & (1 << i)) {
-                types[i] = type
-            }
-            b.setNumber(NumberFormat.UInt8LE, i + 1, types[i])
-        }
-        writePWM(b)
+        control.dmesg('end step')
     }
 }
 

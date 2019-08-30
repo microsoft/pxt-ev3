@@ -1,13 +1,8 @@
-# LEGO Mindstorms EV3 target for PXT
+# LEGO® MINDSTORMS® Education EV3 for Microsoft MakeCode [![Build Status](https://travis-ci.org/microsoft/pxt-ev3.svg?branch=master)](https://travis-ci.org/microsoft/pxt-ev3)
 
-[![Build Status](https://ci2.dot.net/buildStatus/icon?job=Private/pxt_project_rainbow/master/pxt-ev3_Push)](https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/job/pxt-ev3_Push/)
+This repo contains the editor target hosted at https://makecode.mindstorms.com
 
-This repo contains the editor target hosted at https://makecode.legoeducation.com
-
-LEGO Auth: https://src.education.lego.com/groups/ev3-makecode (use Google Authenticator)
-LEGO Chat: https://chat.internal.education.lego.com/make-code/channels/town-square
-
-## Local Dev setup
+## Local setup
 
 These instructions assume familiarity with dev tools and languages.
 
@@ -15,17 +10,24 @@ These instructions assume familiarity with dev tools and languages.
 * install Docker; make sure `docker` command is in your `PATH`
 * (optional) install [Visual Studio Code](https://code.visualstudio.com/)
 
-In a common folder,
-
-* clone https://github.com/Microsoft/pxt to ``pxt`` folder
-* clone https://github.com/Microsoft/pxt-common-packages to ``pxt-common-packages`` folder
 * clone https://github.com/Microsoft/pxt-ev3 to ``pxt-ev3`` folder
 * go to ``pxt`` and run
 
 ```
 npm install
-typings install
 ```
+
+* to run the local server,
+```
+pxt serve --cloud
+```
+
+## Local Dev setup
+
+In the common folder,
+
+* clone https://github.com/Microsoft/pxt to ``pxt`` folder
+* clone https://github.com/Microsoft/pxt-common-packages to ``pxt-common-packages`` folder
 
 * go to ``pxt-common-packages`` and run
 
@@ -58,11 +60,11 @@ cd libs/core
 pxt deploy
 ```
 
-### Jenkins build
-https://ci2.dot.net/job/Private/job/pxt_project_rainbow/job/master/
-
 ## License
 MIT
+
+## Trademarks
+MICROSOFT, the Microsoft Logo, and MAKECODE are registered trademarks of Microsoft Corporation. They can only be used for the purposes described in and in accordance with Microsoft’s Trademark and Brand guidelines published at https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general.aspx. If the use is not covered in Microsoft’s published guidelines or you are not sure, please consult your legal counsel or the MakeCode team (makecode@microsoft.com). 
 
 ## Code of Conduct
 

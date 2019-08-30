@@ -38,7 +38,6 @@ namespace pxsim {
                     switch (cmd) {
                         case DAL.opProgramStart: {
                             // init
-                            console.log('init');
                             return 2;
                         }
                         case DAL.opOutputReset: {
@@ -81,6 +80,12 @@ namespace pxsim {
                             const brake = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, 12);
 
                             const motors = ev3board().getMotor(port);
+                            // cancel any other sync command
+                            for(const motor of ev3board().getMotors().filter(motor => motors.indexOf(motor) < 0)) {
+                                motor.clearSyncCmd()
+                            }
+
+                            // apply commands to all motors
                             for (const motor of motors) {
                                 const otherMotor = motors.filter(m => m.port != motor.port)[0];
                                 motor.setSyncCmd(
@@ -122,25 +127,20 @@ namespace pxsim {
                             return 2;
                         }
                         case DAL.opOutputSetType: {
-                            const port = buf.data[1];
+                            const portIndex = buf.data[1]; // not a port but a port index 0..3
                             const large = buf.data[2] == 0x07;
-                            const motors = ev3board().getMotor(port);
-                            motors.forEach(motor => motor.setLarge(large));
+                            const motor = ev3board().getMotors()[portIndex];
+                            if (motor)
+                                motor.setLarge(large);
                             return 2;
                         }
                         default:
                             console.warn('unknown cmd: ' + cmd);
                             break;
                     }
-
-                    console.log("pwm write");
-                    console.log(buf);
                     return 2
                 },
                 ioctl: (id, buf) => {
-                    console.log("pwm ioctl");
-                    console.log(id);
-                    console.log(buf);
                     return 2;
                 }
             });

@@ -60,7 +60,7 @@ const rbfTemplate = `
 4c45474f580000006d000100000000001c000000000000000e000000821b038405018130813e8053
 74617274696e672e2e2e0084006080XX00448581644886488405018130813e80427965210084000a
 `
-export function deployCoreAsync(resp: pxtc.CompileResult, isCli = false) {
+export function deployCoreAsync(resp: pxtc.CompileResult) {
     let w: pxt.editor.Ev3Wrapper
 
     let filename = resp.downloadFileBaseName || "pxt"
@@ -98,11 +98,13 @@ export function deployCoreAsync(resp: pxtc.CompileResult, isCli = false) {
     resp.outfiles[pxtc.BINARY_UF2] = btoa(data)
 
     let saveUF2Async = () => {
-        if (isCli || !pxt.commands.saveOnlyAsync) {
-            return Promise.resolve()
-        } else {
-            return pxt.commands.saveOnlyAsync(resp)
+        if (pxt.commands && pxt.commands.electronDeployAsync) {
+            return pxt.commands.electronDeployAsync(resp);
         }
+        if (pxt.commands && pxt.commands.saveOnlyAsync) {
+            return pxt.commands.saveOnlyAsync(resp);
+        }
+        return Promise.resolve();
     }
 
     if (noHID) return saveUF2Async()
@@ -119,10 +121,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult, isCli = false) {
         .then(() => w.flashAsync(rbfPath, rbfBIN))
         .then(() => w.runAsync(rbfPath))
         .then(() => {
-            if (isCli)
-                return w.disconnectAsync()
-            else
-                return Promise.resolve()
+            return w.disconnectAsync()
             //return Promise.delay(1000).then(() => w.dmesgAsync())
         }).catch(e => {
             // if we failed to initalize, retry

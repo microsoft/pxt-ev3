@@ -22,6 +22,13 @@ namespace _screen_internal {
 namespace brick {
     const textOffset = 4;
     const lineOffset = 2;
+    enum ScreenMode {
+        None,
+        ShowLines,
+        Image,
+        Custom
+    }
+    let screenMode = ScreenMode.None;
     export let font = image.font8;
 
     /**
@@ -50,6 +57,11 @@ namespace brick {
     //% help=brick/show-string
     //% line.min=1 line.max=10
     export function showString(text: string, line: number) {
+        if (screenMode != ScreenMode.ShowLines) {
+            screenMode = ScreenMode.ShowLines;
+            screen.fill(0);
+        }
+
         // line indexing starts at 1.
         line = (line - 1) >> 0;
         const nlines = lineCount();
@@ -91,13 +103,18 @@ namespace brick {
     /**
      * Show an image on the screen
      * @param image image to draw
+     * @param duration duration in milliseconds to display the image, eg: 400
      */
     //% blockId=screen_show_image block="show image %image=screen_image_picker"
     //% weight=100 group="Screen" blockGap=8
     //% help=brick/show-image
-    export function showImage(image: Image) {
+    export function showImage(image: Image, duration: number = 400) {
         if (!image) return;
-        screen.drawImage(image, 0, 0)
+        screenMode = ScreenMode.Image;
+        screen.fill(0);
+        screen.drawImage(image, 0, 0);
+        if (duration > 0)
+            pause(duration);
     }
 
     /**
@@ -107,6 +124,8 @@ namespace brick {
     //% help=brick/show-ports blockGap=8
     //% weight=10 group="Screen"
     export function showPorts() {
+        screenMode = ScreenMode.Custom;
+
         const col = 44;
         const lineHeight8 = image.font8.charHeight + 2;
         clearScreen();

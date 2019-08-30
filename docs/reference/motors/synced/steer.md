@@ -8,7 +8,7 @@ motors.largeAB.steer(0, 0)
 
 A brick driving with two motors can steer itself by changing the speed of one motor compared to the speed of the other. To make a slow turn to the left, you might make the right motor run slightly faster than the left one. To make a fast, or sharp, turn to the right, the left motor could run at least twice as fast as the right one.
 
-The @boardname@ steers by using a percentage value of _follow_ for one of the motors. This means that the motor in the turn direction will rotate slower than the other. It is the _follower_ motor and the other motor is the _drive_ motor. The drive motor runs at a percentage of full speed set in **speed**. The follower motor runs at a percentage of speed of the drive motor. So, it runs at a percentage of a percentage of full speed.
+The EV3 Brick steers by using a percentage value of _follow_ for one of the motors. This means that the motor in the turn direction will rotate slower than the other. It is the _follower_ motor and the other motor is the _drive_ motor. The drive motor runs at a percentage of full speed set in **speed**. The follower motor runs at a percentage of speed of the drive motor. So, it runs at a percentage of a percentage of full speed.
 
 To make the turn happen you give a _turn ratio_ which is a percentage value of steer to the left or right. If you want to steer to the left at 30% of the of the drive motor speed, use the value of `-30` for **turnRatio**. Left turns use negative values and right turns use positive values. A really sharp turn to the right might use a turn ratio value of `80`.
 
@@ -38,6 +38,13 @@ motors.largeBC.steer(-15, -75)
 ```
 
 ## ~
+
+## ~ hint
+
+Only one set of synchronized motors will run at the same time. Once you launch tank/steer, it will cancel any existing synchronized speed command.
+
+## ~
+
 
 ## Examples
 
@@ -77,6 +84,51 @@ for (let i = 0; i < 4; i++) {
     pause(5000)
 }
 motors.stopAll()
+```
+
+### Steer tester
+
+This program lets you change the values of speed and turn ratio with the buttons.
+
+```typescript
+let speed = 0;
+let turnRatio = 0;
+
+brick.showString(`steer tester`, 1)
+brick.showString(`connect motors BC`, 7)
+brick.showString(`up/down for speed`, 8)
+brick.showString(`left/right for turn ratio`, 9)
+
+forever(function () {
+    brick.showString(`motor B speed ${motors.largeB.speed()}%`, 4)
+    brick.showString(`motor C speed ${motors.largeC.speed()}%`, 5)
+    pause(100)
+})
+
+function updateSteer() {
+    motors.largeBC.steer(turnRatio, speed);
+    brick.showString(`speed ${speed}%`, 2)
+    brick.showString(`turnRatio ${turnRatio}`, 3)
+}
+
+brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
+    speed += 10
+    updateSteer()
+})
+brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
+    speed -= 10
+    updateSteer()
+})
+brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
+    turnRatio -= 10
+    updateSteer()
+})
+brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
+    turnRatio += 10
+    updateSteer()
+})
+
+updateSteer()
 ```
 
 ## See also

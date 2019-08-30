@@ -15,14 +15,10 @@
         "Color Sensor Tutorials": "tutorials/color-sensor",
         "Design Engineering": "design-engineering",
         "Coding": "coding",
-        "Maker": "maker"
+        "Maker": "maker",
+        "Videos": "videos"
     },
     "electronManifest": {
-        "majorReleases": {
-            "0": {
-                "latest": "v0.1.5",
-                "promptVersion": "v0.1.5"
-            }
-        }
+        "latest": "v1.0.11"
     }
 }

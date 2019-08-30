@@ -35,21 +35,14 @@ namespace pxsim {
                     let v = "vSIM"
                     for (let i = 0; i < buf.data.length; ++i)
                         buf.data[i] = v.charCodeAt(i) || 0
-                    console.log("motor read");
-                    console.log(buf.data);
                     return buf.data.length
                 },
                 write: buf => {
                     if (buf.data.length == 0) return 2;
                     const cmd = buf.data[0];
-                    console.log("motor write");
-                    console.log(buf);
                     return 2
                 },
                 ioctl: (id, buf) => {
-                    console.log("motor ioctl");
-                    console.log(id);
-                    console.log(buf);
                     return 2;
                 }
             });

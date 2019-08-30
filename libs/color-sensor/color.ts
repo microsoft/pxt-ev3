@@ -1,5 +1,5 @@
 const enum ColorSensorMode {
-    None = -1,
+    None = 0,
     //% block="reflected light intensity"
     ReflectedLightIntensity = 0,
     //% block="ambient light intensity"
@@ -15,7 +15,9 @@ enum LightIntensityMode {
     //% block="reflected light"
     Reflected = ColorSensorMode.ReflectedLightIntensity,
     //% block="ambient light"
-    Ambient = ColorSensorMode.AmbientLightIntensity
+    Ambient = ColorSensorMode.AmbientLightIntensity,
+    //% block="reflected light (raw)"
+    ReflectedRaw = ColorSensorMode.RefRaw
 }
 
 const enum ColorSensorColor {
@@ -93,6 +95,8 @@ namespace sensors {
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
                 return this.getNumber(NumberFormat.UInt8LE, 0)
+            if (this.mode == ColorSensorMode.RefRaw || this.mode == ColorSensorMode.RgbRaw)
+                return this.getNumber(NumberFormat.UInt16LE, 0)
             return 0
         }
 
@@ -114,7 +118,7 @@ namespace sensors {
 
         _update(prev: number, curr: number) {
             if (this.calibrating) return; // simply ignore data updates while calibrating
-            if (this.mode == ColorSensorMode.Color)
+            if (this.mode == ColorSensorMode.Color || this.mode == ColorSensorMode.RgbRaw || this.mode == ColorSensorMode.RefRaw)
                 control.raiseEvent(this._id, this._colorEventValue(curr));
             else
                 this.thresholdDetector.setLevel(curr);
@@ -180,12 +184,29 @@ namespace sensors {
         }
 
         /**
+         * Get the current raw rgb values as an array from the color sensor.
+         * @param sensor the color sensor to query the request
+         */
+        //% help=sensors/color-sensor/rgbraw
+        //% blockId=colorRgbRaw block="**color sensor** %this| RGB raw"
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=1
+        //% group="Color Sensor"
+        //% blockGap=8
+        rgbRaw(): number[] {
+            this.setMode(ColorSensorMode.RgbRaw);
+            return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
+        }
+
+        /**
          * Registers code to run when the ambient light changes.
          * @param condition the light condition
          * @param handler the code to run when detected
          */
         //% help=sensors/color-sensor/on-light-detected
-        //% block="on **color sensor** %this|detected %mode|%condition"
+        //% block="on **color sensor** %this|%mode|%condition"
         //% blockId=colorOnLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -202,7 +223,7 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/pause-until-light-detected
-        //% block="pause until **color sensor** %this|detected %mode|%condition"
+        //% block="pause until **color sensor** %this|%mode|%condition"
         //% blockId=colorPauseUntilLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
@@ -225,34 +246,59 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=87
+        //% weight=87 blockGap=8
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.setMode(<ColorSensorMode><number>mode)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
+            switch(mode) {
+                case LightIntensityMode.ReflectedRaw:
+                    return this.reflectedLightRaw();
+                default:
+                    return this.getNumber(NumberFormat.UInt8LE, 0)
+            }
         }
 
+        /**
+         * Gets the ambient light
+         */
         //%
         ambientLight() {
             return this.light(LightIntensityMode.Ambient);
         }
 
+        /**
+         * Gets the reflected light value
+         */
         //%
         reflectedLight() {
             return this.light(LightIntensityMode.Reflected);
         }
 
         /**
+         * Gets the raw reflection light value
+         */
+        //%
+        reflectedLightRaw(): number {
+            this.setMode(ColorSensorMode.RefRaw);
+            return this.getNumber(NumberFormat.UInt16LE, 0);
+        }
+
+        /**
          * Set a threshold value
          * @param condition the dark or bright light condition
-         * @param value the value threshold
+         * @param value the value threshold, eg: 10
          */
         //% blockId=colorSetThreshold block="set **color sensor** %this|%condition|to %value"
-        //% group="Threshold" blockGap=8 weight=90
+        //% group="Calibration" blockGap=8 weight=90
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/set-threshold
         setThreshold(condition: Light, value: number) {
+            // threshold is used in ambient or reflected modes
+            if (this.mode != LightIntensityMode.Ambient &&
+                this.mode != LightIntensityMode.Reflected)
+                this.setMode(ColorSensorMode.ReflectedLightIntensity);
+
             if (condition == Light.Dark)
                 this.thresholdDetector.setLowThreshold(value)
             else
@@ -264,26 +310,44 @@ namespace sensors {
          * @param condition the light condition
          */
         //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
-        //% group="Threshold" blockGap=8 weight=89
+        //% group="Calibration" weight=89
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
         threshold(condition: Light): number {
-            return this.thresholdDetector.threshold(<ThresholdState><number>Light.Dark);
+            // threshold is used in ambient or reflected modes
+            if (this.mode != LightIntensityMode.Ambient &&
+                this.mode != LightIntensityMode.Reflected)
+                this.setMode(ColorSensorMode.ReflectedLightIntensity);
+
+            return this.thresholdDetector.threshold(<ThresholdState><number>condition);
         }
 
         /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
         //% blockId=colorCalibrateLight block="calibrate **color sensor** %this|for %mode"
-        //% group="Threshold" weight=91 blockGap=8
+        //% group="Calibration" weight=91 blockGap=8
         //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/calibrate-light
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
 
-            this.light(mode); // trigger a read
-            pauseUntil(() => this.isActive()); // ensure sensor is live
+            const statusLight = brick.statusLight(); // save current status light
+            brick.setStatusLight(StatusLight.Orange);
 
+            this.light(mode); // trigger a read
+            pauseUntil(() => this.isActive(), 5000); // ensure sensor is live
+
+            // check sensor is ready
+            if (!this.isActive()) {
+                brick.setStatusLight(StatusLight.RedFlash); // didn't work
+                pause(2000);
+                brick.setStatusLight(statusLight); // restore previous light
+                return;
+            }
+
+            // calibrating
+            brick.setStatusLight(StatusLight.OrangePulse);
 
             let vold = 0;
             let vcount = 0;
@@ -314,6 +378,10 @@ namespace sensors {
             // apply thresholds
             this.thresholdDetector.setLowThreshold(min);
             this.thresholdDetector.setHighThreshold(max);
+
+            brick.setStatusLight(StatusLight.Green); // success
+            pause(1000);
+            brick.setStatusLight(statusLight); // resture previous light
 
             this.calibrating = false;
         }
