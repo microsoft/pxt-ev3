@@ -12,7 +12,7 @@ When the brick changes its position, it's moved in the direction of one of the a
 
 ## Accuracy and calibration
 
-Gyro sensors aren't perfectly accurate. Sometimes, because of temperature and changes in the way elecricity behaves in the sensor, the gyro returns a small error in it's measurement. This causes the gyro sensor to return an incorrect value for the amount of angle it detected. This might make your robot drive off course and not go to where you want it to.
+Gyro sensors aren't perfectly accurate. Sometimes, because of temperature and changes in the way electricity behaves in the sensor, the gyro returns a small error in it's measurement. This causes the gyro sensor to return an incorrect value for the amount of angle it detected. This might make your robot drive off course and not go to where you want it to.
 
 ### Drift
 
@@ -20,7 +20,7 @@ If you want to turn the tank or robot you built to the left by 45 degrees, you m
 
 The problem is that when you need to read the angle measurement frequently, the amount of error in the angle measurement may continue to increase. If the sensor thought it moved by 45 degrees the first time instead of really 49 degrees, your second turn will put you at 98 degrees when the sensor said 90 degrees. If you want a robot to turn right 90 degrees and drive for 5 meters, it might actually turn 98 degrees and drive 0.7 meters off course before it stops. This error in the sensor's measurement is called _drift_.
 
-### Time to reset
+### Calibration
 
 If errors in the angle values returned by the gyro sensor are making your project not work right, then it's time to **[reset](/reference/sensors/gyro/reset)**. A reset will return the gyro sensor's current angle value back to `0` and _calibrate_ for drift. Calibration is the process of finding out how much error there is in a sensor's measurement and then removing the error from the value returned to your program.
 
@@ -42,7 +42,14 @@ Turn the brick and press ENTER to see the current rotation angle of `gyro 2`.
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    brick.showNumber(sensors.gyro2.angle(), 1)
+    sensors.gyro2.reset()
+})
+brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
+    sensors.gyro2.calibrate()
+})
+forever(function () {
+    brick.showNumber(control.millis(), 1)
+    brick.showNumber(sensors.gyro2.angle(), 2)
 })
 ```
 

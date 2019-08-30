@@ -79,17 +79,18 @@ namespace sensors {
         }
 
         /**
-         * Forces a calibration of the gyro. Must be called when the sensor is completely still.
+         * Forces a calibration of the with light progress indicators. 
+         * Must be called when the sensor is completely still.
          */
-        //% help=sensors/gyro/reset
-        //% block="reset **gyro** %this|"
-        //% blockId=gyroReset
+        //% help=sensors/gyro/calibrate
+        //% block="calibrate **gyro** %this|"
+        //% blockId=gyroCalibrate
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=50
+        //% weight=51 blockGap=8
         //% group="Gyro Sensor"
-        reset(): void {
+        calibrate(): void {
             if (this.calibrating) return; // already in calibration mode
 
             const statusLight = brick.statusLight(); // save current status light
@@ -105,16 +106,20 @@ namespace sensors {
 
             // send a reset command
             super.reset();
+            // wait till sensor is live
+            pauseUntil(() => this.isActive(), 7000);
+            // mode toggling
+            this.setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Angle);
             // switch back to the desired mode
             this.setMode(this.mode);
-            // wait till sensor is live
-            pauseUntil(() => this.isActive(), 5000);
 
             // check sensor is ready
             if (!this.isActive()) {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
+                this.calibrating = false;
                 return;
             }
 
@@ -130,10 +135,31 @@ namespace sensors {
             }
 
             brick.setStatusLight(StatusLight.Green); // success
-            pause(500);
+            pause(1000);
             brick.setStatusLight(statusLight); // resture previous light
 
             // and we're done
+            this.calibrating = false;
+        }
+
+        /**
+         * Forces a calibration of the gyro. Must be called when the sensor is completely still.
+         */
+        //% help=sensors/gyro/reset
+        //% block="reset **gyro** %this|"
+        //% blockId=gyroReset
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=50
+        //% group="Gyro Sensor"
+        reset(): void {
+            if (this.calibrating) return; // already in calibration mode
+
+            this.calibrating = true;
+            // send a reset command
+            super.reset();
+            // and done
             this.calibrating = false;
         }
 
