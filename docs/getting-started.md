@@ -25,6 +25,12 @@
     "description": "Build a robot and drive into the world of robotics!",
     "url": "/getting-started/use",
     "cardType": "side"
+},
+{
+    "name": "First LEGO League",
+    "imageUrl": "/static/fll/fll-big.png",
+    "description": "Information about using MakeCode in FLL competitions",
+    "url": "/fll"
 }
 ]
 ```
