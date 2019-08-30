@@ -339,7 +339,7 @@ namespace motors {
         }
 
         protected setOutputType(large: boolean) {
-           for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
+            for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
                     // (0x07: Large motor, Medium motor = 0x08)
                     MotorBase.output_types[i] = large ? 0x07 : 0x08;
@@ -561,10 +561,12 @@ namespace motors {
             speedRight = Math.clamp(-100, 100, speedRight >> 0);
 
             const speed = Math.abs(speedLeft) > Math.abs(speedRight) ? speedLeft : speedRight;
-            const turnRatio = speedLeft == speed
-                ? (100 - speedRight / speedLeft * 100)
-                : (speedLeft / speedRight * 100 - 100);
+            let turnRatio = speedLeft == speed
+                ? speedLeft == 0 ? 0 : (100 - speedRight / speedLeft * 100)
+                : speedRight == 0 ? 0 : (speedLeft / speedRight * 100 - 100);
+            turnRatio = Math.floor(turnRatio);
 
+            //control.dmesg(`tank ${speedLeft} ${speedRight} => ${turnRatio} ${speed}`)
             this.steer(turnRatio, speed, value, unit);
         }
 

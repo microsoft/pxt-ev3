@@ -86,6 +86,51 @@ for (let i = 0; i < 4; i++) {
 motors.stopAll()
 ```
 
+### Steer tester
+
+This program lets you change the values of speed and turn ratio with the buttons.
+
+```typescript
+let speed = 0;
+let turnRatio = 0;
+
+brick.showString(`steer tester`, 1)
+brick.showString(`connect motors BC`, 7)
+brick.showString(`up/down for speed`, 8)
+brick.showString(`left/right for turn ratio`, 9)
+
+forever(function () {
+    brick.showString(`motor B speed ${motors.largeB.speed()}%`, 4)
+    brick.showString(`motor C speed ${motors.largeC.speed()}%`, 5)
+    pause(100)
+})
+
+function updateSteer() {
+    motors.largeBC.steer(turnRatio, speed);
+    brick.showString(`speed ${speed}%`, 2)
+    brick.showString(`turnRatio ${turnRatio}`, 3)
+}
+
+brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
+    speed += 10
+    updateSteer()
+})
+brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
+    speed -= 10
+    updateSteer()
+})
+brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
+    turnRatio -= 10
+    updateSteer()
+})
+brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
+    turnRatio += 10
+    updateSteer()
+})
+
+updateSteer()
+```
+
 ## See also
 
 [tank](/reference/motors/synced/tank), [run](/reference/motors/motor/run)

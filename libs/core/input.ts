@@ -129,7 +129,7 @@ namespace sensors.internal {
 
     let nonActivated = 0;
     function detectDevices() {
-        control.dmesg(`detect devices (${nonActivated} na)`)
+        //control.dmesg(`detect devices (${nonActivated} na)`)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0;
         const uartSensors: SensorInfo[] = [];
@@ -198,7 +198,7 @@ namespace sensors.internal {
                 }
             }
         }
-        control.dmesg(`detect devices done`)
+        //control.dmesg(`detect devices done`)
     }
 
     export class Sensor extends control.Component {

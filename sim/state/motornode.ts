@@ -63,7 +63,8 @@ namespace pxsim {
             delete this.speedCmd;
             delete this.speedCmdValues;
             delete this._synchedMotor;
-        }
+            this.setChangedState();
+        }        
 
         clearSyncCmd() {
             if (this._synchedMotor)
@@ -184,11 +185,13 @@ namespace pxsim {
                     case DAL.opOutputStepSync:
                     case DAL.opOutputTimeSync: {
                         const otherMotor = this._synchedMotor;
-                        if (otherMotor.port < this.port) // handled in other motor code
-                            break;
-
                         const speed = this.speedCmdValues[0];
                         const turnRatio = this.speedCmdValues[1];
+                        // if turnratio is negative, right motor at power level
+                        // right motor -> this.port > otherMotor.port
+                        if (Math.sign(this.port - otherMotor.port)
+                            == Math.sign(turnRatio))
+                            break; // handled in other motor code
                         const stepsOrTime = this.speedCmdValues[2];
                         const brake = this.speedCmdValues[3];
                         const dstep = this.speedCmd == DAL.opOutputTimeSync
@@ -204,12 +207,7 @@ namespace pxsim {
 
                         // turn ratio is a bit weird to interpret
                         // see https://communities.theiet.org/blogs/698/1706
-                        if (turnRatio < 0) {
-                            otherMotor.speed = speed;
-                            this.speed *= (100 + turnRatio) / 100;
-                        } else {
-                            otherMotor.speed = this.speed * (100 - turnRatio) / 100;
-                        }
+                        otherMotor.speed = this.speed * (100 - Math.abs(turnRatio)) / 100;
 
                         // clamp
                         this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
