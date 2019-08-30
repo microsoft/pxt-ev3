@@ -25,7 +25,7 @@
   "name": "Music Brick",
   "description": "Transform your @boardname@ into a musical instrument!",
   "cardType": "tutorial",
-  "url":"/tutorials/mindstorms-music",
-  "imageUrl":"/static/tutorials/mindstorms-music.png"
+  "url":"/tutorials/music-brick",
+  "imageUrl":"/static/tutorials/music-brick.png"
 }]
 ```
