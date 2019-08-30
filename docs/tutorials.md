@@ -2,113 +2,41 @@
 
 Step by step guides to coding your @boardname@.
 
-## Brick
+## Tutorials
 
 ```codecard
 [{
-  "name": "Wake Up!",
-  "description": "Show different moods on the screen. Is it tired, sleepy, or awake?",
-  "cardType": "tutorial",
-  "url":"/tutorials/wake-up",
+  "name": "Brick",
+  "description": "Learn how to use the screen and the buttons",
+  "url":"/tutorials/brick",
   "imageUrl":"/static/tutorials/wake-up.png"
 }, {
-  "name": "Make an Animation",
-  "description": "Create a custom animation on your EV3 Brick Display.",
-  "cardType": "tutorial",
-  "url":"/tutorials/make-an-animation",
-  "imageUrl":"/static/tutorials/make-an-animation.png"
-}, {
-  "name": "What Animal Am I?",
-  "description": "Create different animal effects and have someone guess what the animal is.",
-  "cardType": "tutorial",
-  "url":"/tutorials/what-animal-am-i",
-  "imageUrl":"/static/tutorials/what-animal-am-i.png"
-}, {
-  "name": "Music Brick",
-  "description": "Transform the brick into a musical instrument!",
-  "cardType": "tutorial",
-  "url":"/tutorials/music-brick",
-  "imageUrl":"/static/tutorials/music-brick.png"
-}]
-```
-
-## Motors
-
-```codecard
-[{
-  "name": "Run Motors",
-  "description": "Use the EV3 Brick buttons to start and stop the Large Motor and Medium Motor.",
-  "cardType": "tutorial",
-  "url":"/tutorials/run-motors",
+  "name": "Motors",
+  "description": "User motors to move the brick.",
+  "url":"/tutorials/motors",
   "imageUrl":"/static/tutorials/run-motors.png"
-}]
-```
-
-## Touch Sensor
-
-```codecard
-[{
-  "name": "Touch to Run",
-  "description": "Press the Touch Sensor and run a motor.",
-  "cardType": "tutorial",
-  "url":"/tutorials/touch-to-run",
+}, {
+  "name": "Touch Sensor",
+  "description": "Use touch sensors in your robot.",
+  "url":"/tutorials/touch-sensor",
   "imageUrl":"/static/tutorials/touch-to-run.png"
 }, {
-  "name": "Touch Sensor Values",
-  "description": "Check the value of a Touch Sensor and stop a motor if pressed.",
-  "cardType": "tutorial",
-  "url":"/tutorials/touch-sensor-values",
-  "imageUrl":"/static/tutorials/touch-sensor-values.png"
-}]
-```
-
-## Color Sensor
-
-```codecard
-[{
-  "name": "What Color?",
-  "description": "Use the Color Sensor to detect different colors.",
-  "cardType": "tutorial",
-  "url":"/tutorials/what-color",
+  "name": "Color Sensor",
+  "description": "Use the color sensor to follow line or detect colors",
+  "url":"/tutorials/color-sensor",
   "imageUrl":"/static/tutorials/what-color.png"
 }, {
-  "name": "Line Following",
-  "description": "Use the Color Sensor to make a robot follow a line.",
-  "cardType": "tutorial",
-  "url":"/tutorials/line-following",
-  "imageUrl":"/static/tutorials/line-following.png"
-}, {
-  "name": "Red Light, Green Light",
-  "description": "Play Red Light, Green Light using the Color Sensor and the robot.",
-  "cardType": "tutorial",
-  "url":"/tutorials/redlight-greenlight",
-  "imageUrl":"/static/tutorials/redlight-greenlight.png"
-}]
-```
-
-## Infrared Sensor
-
-```codecard
-[{
-  "name": "Security Alert",
-  "description": "Build an security alert using the Infrared Sensor.",
-  "cardType": "tutorial",
-  "url":"/tutorials/security-alert",
+  "name": "Infrared Sensor",
+  "description": "Use the infrared sensor to detect objects",
+  "url":"/tutorials/infrared-sensor",
   "imageUrl":"/static/tutorials/security-alert.png"
 }]
 ```
 
 ## See Also
 
-[Wake Up!](/tutorials/wake-up),
-[Make An Animation](/tutorials/make-an-animation),
-[What Animal Am I?](/tutorials/what-animal-am-i),
-[Music Brick](/tutorials/music-brick),
-[Run Motors](/tutorials/run-motors),
-[Touch to Run](/tutorials/touch-to-run),
-[Touch Sensor Values](/tutorials/touch-sensor-values),
-[What Color?](/tutorials/what-color),
-[Line Following](/tutorials/line-following),
-[Red Light, Green Light](/tutorials/redlight-greenlight),
-[Object Near?](/tutorials/object-near),
-[Security Alert](/tutorials/security-alert)
+[Brick tutorials](/tutorials/brick),
+[Motors tutorials](/tutorials/motors),
+[Touch sensor tutorials](/tutorials/touch-sensor),
+[Color sensor tutorials](/tutorials/color-sensor),
+[Infrared sensor tutorials](/tutorials/infrared-sensor)
