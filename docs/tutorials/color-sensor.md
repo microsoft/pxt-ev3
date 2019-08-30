@@ -21,6 +21,12 @@
   "cardType": "tutorial",
   "url":"/tutorials/redlight-greenlight",
   "imageUrl":"/static/tutorials/redlight-greenlight.png"
+}, {
+  "name": "Reflected Light Measure",
+  "description": "Teach the sensor what light or dark is.",
+  "cardType": "example",
+  "url":"/tutorials/reflected-light-measure",
+  "imageUrl":"/static/tutorials/reflected-light-measure.png"
 }]
 ```
 
