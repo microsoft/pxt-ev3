@@ -4,11 +4,13 @@
 
 For teams participating in the Open Software Platform Pilot utilizing MakeCode, we’ve compiled a list of resources and information that we hope will be helpful for you.
 
+* **Got a question? Post it on the forums** at https://forum.makecode.com/
+
 ## FAQ
 
 ### I found a bug what do I do?
 
-If you found a bug, please try if it hasn't been fixed yet! Go to https://makecode.mindstorms.com/beta and try if the bug is corrected. Otherwise, please open an issue at https://github.com/microsoft/pxt-ev3/issues.
+If you found a bug, please try if it hasn't been fixed yet! Go to https://makecode.mindstorms.com/beta and try if the bug is corrected. Otherwise, please tell us at https://forum.makecode.com/.
 
 ### How do I use MakeCode with my EV3?
 
@@ -108,9 +110,3 @@ For other common questions, try the FAQ page https://makecode.mindstorms.com/faq
 
 >* Description: Unable to delete program files from the EV3 brick after downloading them
 >* Status: LEGO Education team is working on a fix, no estimated date yet
-
-## Community connection
-
-For questions, issues, feedback and community for the Open Software Platform Pilot:
-
-We are using a messaging service called **Slack**. Slack can be accessed via an app you download to your computer or mobile device, and via a web interface. For more information about Slack, click [here](https://slack.com/). Anyone in the pilot can participate by signing up with Slack first, and then clicking this [FIRST LEGO League Robot SW](https://fllrobotsw.slack.com/join/shared_invite/enQtNDgxOTQ5MDc2OTkyLTg2ZTRkYzQ4OGMyZTg1OTZmMDFhMWNlOTQ1OWRlNDdmNzNmMjlhMmZiM2M3OWUxYjU1ODEwY2FmODJkNjZkOTA) link to join the Slack workspace.
