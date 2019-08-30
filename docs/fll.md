@@ -6,6 +6,10 @@ For teams participating in the Open Software Platform Pilot utilizing MakeCode, 
 
 ## FAQ
 
+### I found a bug what do I do?
+
+If you found a bug, please try if it hasn't been fixed yet! Go to https://makecode.mindstorms.com/beta and try if the bug is corrected. Otherwise, please open an issue at https://github.com/microsoft/pxt-ev3/issues.
+
 ### How do I use MakeCode with my EV3?
 
 * You will need to install the latest EV3 firmware on your brick. Instructions on how to do that are located here: https://makecode.mindstorms.com/troubleshoot.
