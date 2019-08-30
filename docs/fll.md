@@ -2,7 +2,7 @@
 
 ![FIRST LEGO League logo](/static/fll/fll-logo.png)
 
-For teams participating in the Open Software Platform Pilot utilizing MakeCode, we’ve compiled a list of resources and information that we hope will be helpful for you.
+**For teams participating in the Open Software Platform Pilot utilizing MakeCode**, we’ve compiled a list of resources and information that we hope will be helpful for you.
 
 * **Got a question? Post it on the forums** at https://forum.makecode.com/
 
