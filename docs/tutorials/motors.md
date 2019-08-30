@@ -9,6 +9,12 @@
   "cardType": "tutorial",
   "url":"/tutorials/run-motors",
   "imageUrl":"/static/tutorials/run-motors.png"
+}, {
+  "name": "Tank ZigZag",
+  "description": "Use the tank block to keep motors in sync.",
+  "cardType": "example",
+  "url":"/tutorials/tank-zigzag",
+  "imageUrl":"/static/tutorials/tank-zigzag.png"
 }]
 ```
 
