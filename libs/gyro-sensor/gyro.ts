@@ -9,12 +9,12 @@ namespace sensors {
     export class GyroSensor extends internal.UartSensor {
         private calibrating: boolean;
         private _drift: number;
-        private _drifting: boolean;
+        private _driftCorrection: boolean;
         constructor(port: number) {
             super(port)
             this.calibrating = false;
             this._drift = 0;
-            this._drifting = false;
+            this._driftCorrection = false;
             this.setMode(GyroSensorMode.Rate);
         }
 
@@ -70,10 +70,10 @@ namespace sensors {
 
             this.setMode(GyroSensorMode.Rate);
             let curr = this._query();
-            if (Math.abs(curr) < 16 && this._drifting) {
-                const p = 0.0005;
+            if (Math.abs(curr) < 4 && this._driftCorrection) {
+                const p = 0.01;
                 this._drift = (1 - p) * this._drift + p * curr;
-                curr -= this._drift;
+                curr = Math.round(curr - this._drift);
             }
             return curr;
         }
@@ -120,7 +120,7 @@ namespace sensors {
 
             // compute drift
             this._drift = 0;
-            if (this.mode == GyroSensorMode.Rate) {
+            if (this._driftCorrection && this.mode == GyroSensorMode.Rate) {
                 const n = 100;
                 for (let i = 0; i < n; ++i) {
                     this._drift += this._query();
@@ -151,7 +151,7 @@ namespace sensors {
          */
         //%
         setDriftCorrection(enabled: boolean) {
-            this._drifting = enabled;
+            this._driftCorrection = enabled;
             this._drift = 0;
         }
     }
