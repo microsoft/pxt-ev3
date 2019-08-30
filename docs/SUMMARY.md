@@ -19,11 +19,13 @@
     * [What Animal Am I?](/tutorials/what-animal-am-i)
     * [Music Brick](/tutorials/music-brick)
     * [Run Motors](/tutorials/run-motors)
+    * [Tank ZigZag](/tutorials/tank-zigzag)
     * [Touch to Run](/tutorials/touch-to-run)
     * [Touch Sensor Values](/tutorials/touch-sensor-values)
     * [What Color?](/tutorials/what-color)
     * [Line Following](/tutorials/line-following)
     * [Red Light, Green Light](/tutorials/redlight-greenlight)
+    * [Reflected Light Measure](/tutorials/reflected-light-measure)
     * [Object Near?](/tutorials/object-near)
     * [Security Alert](/tutorials/security-alert)
 
