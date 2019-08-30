@@ -82,6 +82,41 @@ pause(5000)
 motors.stopAll()
 ```
 
+### Tank tester
+
+This program lets you change the tank values using the brick buttons
+
+```typescript
+let tankB = 0;
+let tankC = 0;
+
+function updateTank() {
+    brick.showString(`tank tester (motors BC)`, 1)
+    brick.showString(`tank A: ${tankB}%`, 2)
+    brick.showString(`tank B: ${tankC}%`, 3)
+    motors.largeBC.tank(tankB, tankC);
+}
+
+brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
+    tankB += 10
+    updateTank();
+})
+brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
+    tankB -= 10
+    updateTank();
+})
+brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
+    tankC += 10
+    updateTank();
+})
+brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
+    tankC -= 10
+    updateTank();
+})
+
+updateTank();
+```
+
 ## See also
 
 [steer](/reference/motors/synced/steer), [run](/reference/motors/motor/run)

@@ -562,8 +562,8 @@ namespace motors {
 
             const speed = Math.abs(speedLeft) > Math.abs(speedRight) ? speedLeft : speedRight;
             const turnRatio = speedLeft == speed
-                ? (50 - speedRight / speedLeft * 50)
-                : (speedLeft / speedRight * 50 - 50);
+                ? (100 - speedRight / speedLeft * 100)
+                : (speedLeft / speedRight * 100 - 100);
 
             this.steer(turnRatio, speed, value, unit);
         }

@@ -207,7 +207,7 @@ namespace pxsim {
 
                         // turn ratio is a bit weird to interpret
                         // see https://communities.theiet.org/blogs/698/1706
-                        otherMotor.speed = this.speed * (50 - Math.abs(turnRatio)) / 50;
+                        otherMotor.speed = this.speed * (100 - Math.abs(turnRatio)) / 100;
 
                         // clamp
                         this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
