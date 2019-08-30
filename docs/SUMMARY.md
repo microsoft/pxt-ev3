@@ -26,6 +26,7 @@
     * [Line Following](/tutorials/line-following)
     * [Red Light, Green Light](/tutorials/redlight-greenlight)
     * [Reflected Light Measure](/tutorials/reflected-light-measure)
+    * [Reflected Light Calibration](/tutorials/reflected-light-calibration)
     * [Object Near?](/tutorials/object-near)
     * [Security Alert](/tutorials/security-alert)
 
