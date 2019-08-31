@@ -34,7 +34,7 @@
   "url":"/tutorials/tank-zigzag",
   "imageUrl":"/static/tutorials/tank-zigzag.png"
 }, {
-  "name": "Coast Or Brake ZigZag",
+  "name": "Coast Or Brake",
   "description": "Tell motors to coast or brake once the run command is done.",
   "cardType": "example",
   "url":"/tutorials/coast-or-brake",
