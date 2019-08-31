@@ -332,7 +332,7 @@ namespace motors {
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
         //% motor.fieldEditor="motors"
-        //% weight=90
+        //% weight=90 blockGap=8
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
@@ -482,8 +482,7 @@ namespace motors {
          */
         //% blockId=motorPauseUntilStall block="pause until %motor|stalled"
         //% motor.fieldEditor="motors"
-        //% weight=1
-        //% blockGap=8
+        //% weight=89
         //% group="Move"
         //% help=motors/motor/pause-until-stalled
         pauseUntilStalled(timeOut?: number): void {
