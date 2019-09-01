@@ -30,11 +30,11 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return this.speed * (!this._synchedMotor && this.polarity == 0 ? -1 : 1);
+            return Math.round(this.speed * (!this._synchedMotor && this.polarity == 0 ? -1 : 1));
         }
 
         getAngle() {
-            return this.angle;
+            return Math.round(this.angle);
         }
 
         // returns the slave motor if any
@@ -161,7 +161,7 @@ namespace pxsim {
                             ? pxsim.U.now() - this.speedCmdTime
                             : this.tacho - this.speedCmdTacho;
                         if (dstep < step1) // rampup
-                            this.speed = Math.max(1, speed * dstep / step1);
+                            this.speed = Math.max(2, Math.min(speed, speed * dstep / step1));
                         else if (dstep < step1 + step2) // run
                             this.speed = speed;
                         else if (dstep < step1 + step2 + step3)
@@ -227,11 +227,10 @@ namespace pxsim {
                 this.angle = this.manualReferenceAngle + this.manualAngle;
                 this.setChangedState();
             }
-            this.speed = Math.round(this.speed); // integer only
-
+            // don't round speed
             // compute delta angle
-            const rotations = this.getSpeed() / 100 * this.rotationsPerMilliSecond * elapsed;
-            const deltaAngle = Math.round(rotations * 360);
+            const rotations = this.speed / 100 * this.rotationsPerMilliSecond * elapsed;
+            const deltaAngle = rotations * 360;
             if (deltaAngle) {
                 this.angle += deltaAngle;
                 this.tacho += Math.abs(deltaAngle);
