@@ -385,6 +385,12 @@ namespace motors {
         }
 
         private _run(speed: number) {
+            // ramp up acceleration
+            if (this._accelerationTime) {
+                this._schedule(false, speed, this._accelerationTime, 100, 0);
+                pause(this._accelerationTime);
+            }
+            // keep going
             const b = mkCmd(this._port, this._regulated ? DAL.opOutputSpeed : DAL.opOutputPower, 1)
             b.setNumber(NumberFormat.Int8LE, 2, speed)
             writePWM(b)
