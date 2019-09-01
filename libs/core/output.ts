@@ -308,7 +308,12 @@ namespace motors {
                     break;
             }
 
-            this._schedule(useSteps, speed, 0, stepsOrTime, 0);
+            // compute ramp up and down
+            let accelStepsOrTime = 0;
+            let decelStepsOrTime = 0;
+            stepsOrTime -= (accelStepsOrTime + decelStepsOrTime);
+
+            this._schedule(useSteps, speed, accelStepsOrTime, stepsOrTime, decelStepsOrTime);
             this.pauseOnRun(stepsOrTime);
         }
 
@@ -369,6 +374,10 @@ namespace motors {
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
+        }
+
+        setRunSmoothness(accelerationPercent: number, decelerationPercent: number) {
+
         }
 
         protected setOutputType(large: boolean) {
