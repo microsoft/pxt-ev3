@@ -65,6 +65,10 @@ motors.largeB.run(-25)
 
 When using **run** with multiple motors, there is no guarantee that their speed will stay in sync. Use [tank](/reference/motors/tank) or [steer](/reference/motors/steer) for synchronized motor operations.
 
+```blocks
+motors.largeBC.run(50)
+```
+
 ## Examples
 
 ### Drive the motor for 20 seconds
