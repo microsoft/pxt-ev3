@@ -745,26 +745,15 @@ namespace motors {
                 return
         }
         speed = Math.clamp(-100, 100, speed)
-        control.dmesg('speed: ' + speed)
-
         let b = mkCmd(out, op, 15)
-        control.dmesg('STEP 5')
         b.setNumber(NumberFormat.Int8LE, 2, speed)
         // note that b[3] is padding
-        control.dmesg('STEP 1')
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 0, opts.step1)
-        control.dmesg('STEP 2')
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 1, opts.step2)
-        control.dmesg('STEP 3')
         b.setNumber(NumberFormat.Int32LE, 4 + 4 * 2, opts.step3)
-        control.dmesg('STEP 4')
-        control.dmesg('br ' + opts.useBrake);
         const br = !!opts.useBrake ? 1 : 0;
-        control.dmesg('Step 4.5 ' + br)
         b.setNumber(NumberFormat.Int8LE, 4 + 4 * 3, br)
-        control.dmesg('STEP 5')
         writePWM(b)
-        control.dmesg('end step')
     }
 }
 
