@@ -391,7 +391,6 @@ namespace motors {
         }
 
         private __move(steps: boolean, stepsOrTime: number, speed: number) {
-            control.dmesg("motor.__move")
             const p = {
                 useSteps: steps,
                 step1: 0,
@@ -401,9 +400,7 @@ namespace motors {
                 power: this._regulated ? undefined : speed,
                 useBrake: this._brake
             };
-            control.dmesg("motor.1")
             step(this._port, p)
-            control.dmesg("motor.__move end")
         }
 
         /**
