@@ -132,26 +132,24 @@ namespace motors {
         protected _port: Output;
         protected _portName: string;
         protected _brake: boolean;
+        protected _regulated: boolean;
         private _pauseOnRun: boolean;
         private _initialized: boolean;
         private _brakeSettleTime: number;
         private _init: () => void;
-        private _run: (speed: number) => void;
-        private _move: (steps: boolean, stepsOrTime: number, speed: number) => void;
 
         protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
 
-        constructor(port: Output, init: () => void, run: (speed: number) => void, move: (steps: boolean, stepsOrTime: number, speed: number) => void) {
+        constructor(port: Output, init: () => void) {
             super();
             this._port = port;
             this._portName = outputToName(this._port);
             this._brake = false;
+            this._regulated = true;
             this._pauseOnRun = true;
             this._initialized = false;
             this._brakeSettleTime = 10;
             this._init = init;
-            this._run = run;
-            this._move = move;
         }
 
         /**
@@ -314,6 +312,41 @@ namespace motors {
             this.pauseOnRun(stepsOrTime);
         }
 
+        private _run(speed: number) {
+            const b = mkCmd(this._port, this._regulated ? DAL.opOutputSpeed : DAL.opOutputPower, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, speed)
+            writePWM(b)
+            if (speed) {
+                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))
+            }
+        }
+
+        private _move(steps: boolean, stepsOrTime: number, speed: number) {
+            const p = {
+                useSteps: steps,
+                step1: 0,
+                step2: stepsOrTime,
+                step3: 0,
+                speed: this._regulated ? speed : undefined,
+                power: this._regulated ? undefined : speed,
+                useBrake: this._brake
+            };
+            step(this._port, p)
+        }
+
+        /**
+         * Indicates if the motor(s) speed should be regulated. Default is true.
+         * @param value true for regulated motor
+         */
+        //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
+        //% motor.fieldEditor="motors"
+        //% weight=58 blockGap=8
+        //% group="Properties"
+        //% help=motors/motor/set-regulated
+        setRegulated(value: boolean) {
+            this._regulated = value;
+        }
+
         /**
          * Returns a value indicating if the motor is still running a previous command.
          */
@@ -364,12 +397,10 @@ namespace motors {
     //% fixedInstances
     export class Motor extends MotorBase {
         private _large: boolean;
-        private _regulated: boolean;
 
         constructor(port: Output, large: boolean) {
-            super(port, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
+            super(port, () => this.__init());
             this._large = large;
-            this._regulated = true;
             this.markUsed();
         }
 
@@ -379,41 +410,6 @@ namespace motors {
 
         private __init() {
             this.setOutputType(this._large);
-        }
-
-        private __setSpeed(speed: number) {
-            const b = mkCmd(this._port, this._regulated ? DAL.opOutputSpeed : DAL.opOutputPower, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, speed)
-            writePWM(b)
-            if (speed) {
-                writePWM(mkCmd(this._port, DAL.opOutputStart, 0))
-            }
-        }
-
-        private __move(steps: boolean, stepsOrTime: number, speed: number) {
-            const p = {
-                useSteps: steps,
-                step1: 0,
-                step2: stepsOrTime,
-                step3: 0,
-                speed: this._regulated ? speed : undefined,
-                power: this._regulated ? undefined : speed,
-                useBrake: this._brake
-            };
-            step(this._port, p)
-        }
-
-        /**
-         * Indicates if the motor speed should be regulated. Default is true.
-         * @param value true for regulated motor
-         */
-        //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
-        //% motor.fieldEditor="motors"
-        //% weight=58 blockGap=8
-        //% group="Properties"
-        //% help=motors/motor/set-regulated
-        setRegulated(value: boolean) {
-            this._regulated = value;
         }
 
         /**
@@ -503,7 +499,7 @@ namespace motors {
     export class SynchedMotorPair extends MotorBase {
 
         constructor(ports: Output) {
-            super(ports, () => this.__init(), (speed) => this.__setSpeed(speed), (steps, stepsOrTime, speed) => this.__move(steps, stepsOrTime, speed));
+            super(ports, () => this.__init());
             this.markUsed();
         }
 
@@ -513,24 +509,6 @@ namespace motors {
 
         private __init() {
             this.setOutputType(true);
-        }
-
-        private __setSpeed(speed: number) {
-            syncMotors(this._port, {
-                speed: speed,
-                turnRatio: 0, // same speed
-                useBrake: !!this._brake
-            })
-        }
-
-        private __move(steps: boolean, stepsOrTime: number, speed: number) {
-            syncMotors(this._port, {
-                useSteps: steps,
-                speed: speed,
-                turnRatio: 0, // same speed
-                stepsOrTime: stepsOrTime,
-                useBrake: this._brake
-            });
         }
 
         /**
