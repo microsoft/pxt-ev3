@@ -161,7 +161,7 @@ namespace pxsim {
                             ? pxsim.U.now() - this.speedCmdTime
                             : this.tacho - this.speedCmdTacho;
                         if (dstep < step1) // rampup
-                            this.speed = speed * dstep / step1;
+                            this.speed = Math.max(1, speed * dstep / step1);
                         else if (dstep < step1 + step2) // run
                             this.speed = speed;
                         else if (dstep < step1 + step2 + step3)

@@ -137,6 +137,10 @@ namespace motors {
         private _initialized: boolean;
         private _brakeSettleTime: number;
         private _init: () => void;
+        private _accelerationSteps: number;
+        private _accelerationTime: number;
+        private _decelerationSteps: number;
+        private _decelerationTime: number;
 
         protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
 
@@ -150,6 +154,10 @@ namespace motors {
             this._initialized = false;
             this._brakeSettleTime = 10;
             this._init = init;
+            this._accelerationSteps = 360;
+            this._accelerationTime = 1000;
+            this._decelerationSteps = 180;
+            this._decelerationTime = 500;
         }
 
         /**
@@ -309,12 +317,71 @@ namespace motors {
             }
 
             // compute ramp up and down
-            let accelStepsOrTime = 0;
-            let decelStepsOrTime = 0;
+            let accelStepsOrTime = useSteps ? this._accelerationSteps : this._accelerationTime;
+            let decelStepsOrTime = useSteps ? this._decelerationSteps : this._decelerationTime;
+            if (accelStepsOrTime + decelStepsOrTime > stepsOrTime) {
+                // rescale
+                const r = stepsOrTime / (accelStepsOrTime + decelStepsOrTime);
+                accelStepsOrTime = Math.floor(accelStepsOrTime * r);
+                decelStepsOrTime *= Math.floor(decelStepsOrTime * r);
+            }
             stepsOrTime -= (accelStepsOrTime + decelStepsOrTime);
 
+            // send ramped command
             this._schedule(useSteps, speed, accelStepsOrTime, stepsOrTime, decelStepsOrTime);
             this.pauseOnRun(stepsOrTime);
+        }
+
+        /**
+         * Specifies the amount of rotation or time for the acceleration
+         * of run commands.
+         */
+        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration $value $unit"
+        //% motor.fieldEditor="motors"
+        //% weight=21 blockGap=8
+        //% group="Properties"
+        //% help=motors/motor/set-run-acceleration
+        setRunAcceleration(value: number, unit: MoveUnit) {
+            switch (unit) {
+                case MoveUnit.Rotations:
+                    this._accelerationSteps = Math.max(0, (value * 360) | 0);
+                    break;
+                case MoveUnit.Degrees:
+                    this._accelerationSteps = Math.max(0, value | 0);
+                    break;
+                case MoveUnit.Seconds:
+                    this._accelerationTime = Math.max(0, (value * 1000) | 0);
+                    break;
+                case MoveUnit.MilliSeconds:
+                    this._accelerationTime = Math.max(0, value | 0);
+                    break;
+            }
+        }
+
+        /**
+         * Specifies the amount of rotation or time for the acceleration
+         * of run commands.
+         */
+        //% blockId=outputMotorsetRunDeceleration block="set %motor|run deceleration $value $unit"
+        //% motor.fieldEditor="motors"
+        //% weight=20 blockGap=8
+        //% group="Properties"
+        //% help=motors/motor/set-run-deceleration
+        setRunDeceleration(value: number, unit: MoveUnit) {
+            switch (unit) {
+                case MoveUnit.Rotations:
+                    this._decelerationSteps = Math.max(0, (value * 360) | 0);
+                    break;
+                case MoveUnit.Degrees:
+                    this._decelerationSteps = Math.max(0, value | 0);
+                    break;
+                case MoveUnit.Seconds:
+                    this._decelerationTime = Math.max(0, (value * 1000) | 0);
+                    break;
+                case MoveUnit.MilliSeconds:
+                    this._decelerationTime = Math.max(0, value | 0);
+                    break;
+            }
         }
 
         private _run(speed: number) {
