@@ -317,8 +317,8 @@ namespace motors {
             }
 
             // compute ramp up and down
-            let accelStepsOrTime = useSteps ? this._accelerationSteps : this._accelerationTime;
-            let decelStepsOrTime = useSteps ? this._decelerationSteps : this._decelerationTime;
+            let accelStepsOrTime = (useSteps ? this._accelerationSteps : this._accelerationTime) || 0;
+            let decelStepsOrTime = (useSteps ? this._decelerationSteps : this._decelerationTime) || 0;
             if (accelStepsOrTime + decelStepsOrTime > stepsOrTime) {
                 // rescale
                 const r = stepsOrTime / (accelStepsOrTime + decelStepsOrTime);
