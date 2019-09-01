@@ -6,9 +6,9 @@ Set the rotation speed of the motor as a percentage of maximum speed.
 motors.largeA.run(50)
 ```
 
-The speed setting is a pecentage of the motor's full speed. Full speed is the speed that the motor runs when the brick supplies maximum output voltage to the port.
+The speed setting is a percentage of the motor's full speed. Full speed is the speed that the motor runs when the brick supplies maximum output voltage to the port.
 
-If you use just the **speed** number, the motor runs continously and won't stop unless you tell it to. You can also give a value for a certain amount of distance you want the motor to rotate for. The **value** can be an amount of time, a turn angle in degrees, or a number of full rotations.
+If you use just the **speed** number, the motor runs continuously and won't stop unless you tell it to. You can also give a value for a certain amount of distance you want the motor to rotate for. The **value** can be an amount of time, a turn angle in degrees, or a number of full rotations.
 
 If you decide to use a **value** of rotation distance, you need to choose a type of movement **unit**.
 
@@ -30,8 +30,8 @@ Here is how you use each different movement unit to run the motor for a fixed ro
 // Run motor for 700 Milliseconds. 
 motors.largeA.run(25, 700, MoveUnit.MilliSeconds);
 
-// Run motor for 700 Milliseconds again but no units specified. 
-motors.largeA.run(25, 700);
+// Run motors B and C for 700 Milliseconds again but no units specified. 
+motors.largeBC.run(25, 700);
 
 // Run the motor for 45 seconds
 motors.largeA.run(50, 45, MoveUnit.Seconds);
@@ -60,6 +60,10 @@ motors.largeB.run(-25)
 ```
 
 ## ~
+
+## Multiple motors
+
+When using **run** with multiple motors, there is no guarantee that their speed will stay in sync. Use [tank](/reference/motors/tank) or [steer](/reference/motors/steer) for synchronized motor operations.
 
 ## Examples
 
