@@ -308,7 +308,7 @@ namespace motors {
                     break;
             }
 
-            this._move(useSteps, stepsOrTime, speed);
+            this._schedule(useSteps, speed, 0, stepsOrTime, 0);
             this.pauseOnRun(stepsOrTime);
         }
 
@@ -321,12 +321,12 @@ namespace motors {
             }
         }
 
-        private _move(steps: boolean, stepsOrTime: number, speed: number) {
+        private _schedule(steps: boolean, speed: number, accelStepsOrTime: number, stepsOrTime: number, decelStepsOrTime: number) {
             const p = {
                 useSteps: steps,
-                step1: 0,
+                step1: accelStepsOrTime,
                 step2: stepsOrTime,
-                step3: 0,
+                step3: decelStepsOrTime,
                 speed: this._regulated ? speed : undefined,
                 power: this._regulated ? undefined : speed,
                 useBrake: this._brake
