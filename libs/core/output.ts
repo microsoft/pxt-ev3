@@ -351,6 +351,11 @@ namespace motors {
 
         /**
          * Schedules a run of the motor with an acceleration, constant and deceleration phase.
+         * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
+         * @param acceleration acceleration phase measured distance or rotation
+         * @param value measured distance or rotation
+         * @param deceleration deceleration phase measured distance or rotation
+         * @param unit (optional) unit of the value
          */
         //% blockId=motorSchedule block="schedule %motor at %speed=motorSpeedPicker|\\%|for %acceleration|%value|%deceleration||%unit"
         //% weight=99 blockGap=8
