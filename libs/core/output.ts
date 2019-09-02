@@ -336,12 +336,12 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration $value $unit"
+        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration to $value $unit"
         //% motor.fieldEditor="motors"
         //% weight=21 blockGap=8
         //% group="Properties"
-        //% help=motors/motor/set-run-acceleration
-        setRunAcceleration(value: number, unit: MoveUnit) {
+        //% help=motors/motor/set-run-acceleration-ramp
+        setRunAccelerationRamp(value: number, unit: MoveUnit) {
             switch (unit) {
                 case MoveUnit.Rotations:
                     this._accelerationSteps = Math.max(0, (value * 360) | 0);
@@ -362,12 +362,12 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunDeceleration block="set %motor|run deceleration $value $unit"
+        //% blockId=outputMotorsetRunDeceleration block="set %motor|run deceleration ramp to $value $unit"
         //% motor.fieldEditor="motors"
         //% weight=20 blockGap=8
         //% group="Properties"
-        //% help=motors/motor/set-run-deceleration
-        setRunDeceleration(value: number, unit: MoveUnit) {
+        //% help=motors/motor/set-run-deceleration-ramp
+        setRunDecelerationRamp(value: number, unit: MoveUnit) {
             switch (unit) {
                 case MoveUnit.Rotations:
                     this._decelerationSteps = Math.max(0, (value * 360) | 0);
