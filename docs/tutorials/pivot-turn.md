@@ -2,7 +2,7 @@
 
 A **pivot turn** happens when a [EV3 Driving Base](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf) turns around the wheel on the inside of the turn by spinning just the single wheel at the outside of the turn.
 
-You can achieve turn with a ``tank`` or a ``steer`` block.
+You can make a turn happen with either a ``||motors:tank||`` or a ``||motors:steer||`` block.
 
 ```blocks
 forever(function() {
