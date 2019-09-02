@@ -84,7 +84,7 @@ motors.stopAll()
 
 ### Tank tester
 
-This program lets you change the tank values using the brick buttons
+This program lets you change the tank values using the brick buttons.
 
 ```typescript
 let tankB = 0;

@@ -23,7 +23,7 @@
   "imageUrl":"/static/tutorials/pivot-turn.png"
 }, {
   "name": "Smooth Turn",
-  "description": "Turn the driving base in a smooth motion.",
+  "description": "Turn the driving base in a smooth, steering motion.",
   "cardType": "example",
   "url":"/tutorials/smooth-turn",
   "imageUrl":"/static/tutorials/smooth-turn.png"

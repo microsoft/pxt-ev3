@@ -1,6 +1,6 @@
 # Reflected light calibration
 
-The ``calibrateLight`` blocks allows you to calibrate the reflected light of the color sensor in one block. Start the block and move the sensor over the dark and bright surface; then stop moving it.
+The ``||sensors:calibrateLight||`` blocks allows you to calibrate the reflected light of the color sensor in one block. At the time you run the block, move the sensor over a dark surface and a bright surface; then stop moving it.
 
 ```blocks
 sensors.color3.onLightDetected(LightIntensityMode.Reflected, Light.Dark, function () {

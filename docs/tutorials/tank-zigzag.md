@@ -1,7 +1,7 @@
 # Tank ZigZag
 
-This example shows how to use the [tank](/reference/motors/tank) block to keep the speed of 2 large motors synchronized. In this example, a [EV3 Driving Base](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf)
-) will move on a zig zag pattern.
+This example shows how to use the [tank](/reference/motors/tank) block to keep the speed of 2 large motors synchronized. The [EV3 Driving Base](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-rem-driving-base-79bebfc16bd491186ea9c9069842155e.pdf)
+) will move in a zig zag pattern.
 
 ```blocks
 /**

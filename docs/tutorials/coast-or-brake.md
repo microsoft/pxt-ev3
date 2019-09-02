@@ -1,4 +1,6 @@
-# Coast Or Brake
+# Coast or Brake
+
+This code example will set the brake when button **A** is pressed or let the motor coast (turn freely when not running) when button **B** is pressed. The motor is turned by one rotation to cause motion.
 
 ```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
