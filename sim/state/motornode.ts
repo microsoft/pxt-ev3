@@ -1,4 +1,5 @@
 namespace pxsim {
+    const MIN_RAMP_SPEED = 3;
 
     export class MotorNode extends BaseNode {
         isOutput = true;
@@ -64,7 +65,7 @@ namespace pxsim {
             delete this.speedCmdValues;
             delete this._synchedMotor;
             this.setChangedState();
-        }        
+        }
 
         clearSyncCmd() {
             if (this._synchedMotor)
@@ -160,13 +161,19 @@ namespace pxsim {
                         const dstep = isTimeCommand
                             ? pxsim.U.now() - this.speedCmdTime
                             : this.tacho - this.speedCmdTacho;
-                        if (dstep < step1) // rampup
+                        if (step1 && dstep < step1) { // rampup
                             this.speed = speed * dstep / step1;
+                            // ensure non-zero speed
+                            this.speed = Math.max(MIN_RAMP_SPEED, Math.ceil(Math.abs(this.speed))) * Math.sign(speed);
+                        }
                         else if (dstep < step1 + step2) // run
                             this.speed = speed;
-                        else if (dstep < step1 + step2 + step3)
-                            this.speed = speed * (step1 + step2 + step3 - dstep) / (step1 + step2 + step3);
-                        else {
+                        else if (step2 && dstep < step1 + step2 + step3) {
+                            this.speed = speed * (step1 + step2 + step3 - dstep)
+                                / (step1 + step2 + step3) + 5;
+                            // ensure non-zero speed
+                            this.speed = Math.max(MIN_RAMP_SPEED, Math.ceil(Math.abs(this.speed))) * Math.sign(speed);
+                        } else {
                             if (brake) this.speed = 0;
                             if (!isTimeCommand) {
                                 // we need to patch the actual position of the motor when
@@ -229,6 +236,7 @@ namespace pxsim {
             }
             // don't round speed
             // compute delta angle
+            control.dmesg(`speed ${this.speed}`)
             const rotations = this.speed / 100 * this.rotationsPerMilliSecond * elapsed;
             const deltaAngle = rotations * 360;
             if (deltaAngle) {
