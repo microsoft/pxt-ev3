@@ -127,6 +127,12 @@ namespace motors {
         reset(Output.ALL)
     }
 
+    interface MoveSchedule {
+        speed: number;
+        useSteps: boolean;
+        steps: number[];
+    }
+
     //% fixedInstances
     export class MotorBase extends control.Component {
         protected _port: Output;
@@ -269,6 +275,34 @@ namespace motors {
             reset(this._port);
         }
 
+        private normalizeSchedule(speed: number, step1: number, step2: number, step3: number, unit: MoveUnit): MoveSchedule {
+            const r: MoveSchedule = {
+                speed: Math.clamp(-100, 100, speed >> 0),
+                useSteps: true,
+                steps: [step1, step2, step3]
+            }
+            let scale = 1;
+            switch (unit) {
+                case MoveUnit.Rotations:
+                    scale = 360;
+                    r.useSteps = true;
+                    break;
+                case MoveUnit.Degrees:
+                    r.useSteps = true;
+                    break;
+                case MoveUnit.Seconds:
+                    scale = 1000;
+                    r.useSteps = false;
+                    break;
+                default:
+                    r.useSteps = false;
+                    break;
+            }
+            for (let i = 0; i < r.steps.length; ++i)
+                r.steps[i] = Math.max(0, (r.steps[i] * scale) | 0);
+            return r;
+        }
+
         /**
          * Runs the motor at a given speed for limited time or distance.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
@@ -283,65 +317,76 @@ namespace motors {
         //% help=motors/motor/run
         run(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
-            speed = Math.clamp(-100, 100, speed >> 0);
+            const schedule = this.normalizeSchedule(speed, 0, value, 0, unit);
             // stop if speed is 0
-            if (!speed) {
+            if (!schedule.speed) {
                 this.stop();
                 return;
             }
             // special: 0 is infinity
-            if (value == 0) {
-                this._run(speed);
+            if (schedule.steps[0] + schedule.steps[1] + schedule.steps[2] == 0) {
+                this._run(schedule.speed);
+                return;
+            }
+
+            // timed motor moves
+            const steps = schedule.steps;
+            const useSteps = schedule.useSteps;
+
+            // compute ramp up and down
+            steps[0] = (useSteps ? this._accelerationSteps : this._accelerationTime) || 0;
+            steps[2] = (useSteps ? this._decelerationSteps : this._decelerationTime) || 0;
+            if (steps[0] + steps[2] > steps[1]) {
+                // rescale
+                const r = steps[1] / (steps[0] + steps[2]);
+                steps[0] = Math.floor(steps[0] * r);
+                steps[2] *= Math.floor(steps[2] * r);
+            }
+            steps[1] -= (steps[0] + steps[2]);
+
+            // send ramped command
+            this._schedule(schedule);
+            this.pauseOnRun(steps[0] + steps[1] + steps[2]);
+        }
+
+        /**
+         * Schedules a run of the motor with an acceleration, constant and deceleration phase.
+         */
+        //% blockId=motorSchedule block="schedule %motor at %speed=motorSpeedPicker|\\%|for %acceleration|%value|%deceleration||%unit"
+        //% weight=99 blockGap=8
+        //% group="Move"
+        //% motor.fieldEditor="motors"
+        //% help=motors/motor/schedule
+        //% inlineInputMode=inline
+        schedule(speed: number, acceleration: number, value: number, deceleration: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
+            this.init();
+            const schedule = this.normalizeSchedule(speed, acceleration, value, deceleration, unit);
+            // stop if speed is 0
+            if (!schedule.speed) {
+                this.stop();
+                return;
+            }
+            // special case: do nothing
+            if (schedule.steps[0] + schedule.steps[1] + schedule.steps[2] == 0) {
                 return;
             }
             // timed motor moves
-            let useSteps: boolean;
-            let stepsOrTime: number;
-            switch (unit) {
-                case MoveUnit.Rotations:
-                    stepsOrTime = (value * 360) >> 0;
-                    useSteps = true;
-                    break;
-                case MoveUnit.Degrees:
-                    stepsOrTime = value >> 0;
-                    useSteps = true;
-                    break;
-                case MoveUnit.Seconds:
-                    stepsOrTime = (value * 1000) >> 0;
-                    useSteps = false;
-                    break;
-                default:
-                    stepsOrTime = value;
-                    useSteps = false;
-                    break;
-            }
-
-            // compute ramp up and down
-            let accelStepsOrTime = (useSteps ? this._accelerationSteps : this._accelerationTime) || 0;
-            let decelStepsOrTime = (useSteps ? this._decelerationSteps : this._decelerationTime) || 0;
-            if (accelStepsOrTime + decelStepsOrTime > stepsOrTime) {
-                // rescale
-                const r = stepsOrTime / (accelStepsOrTime + decelStepsOrTime);
-                accelStepsOrTime = Math.floor(accelStepsOrTime * r);
-                decelStepsOrTime *= Math.floor(decelStepsOrTime * r);
-            }
-            stepsOrTime -= (accelStepsOrTime + decelStepsOrTime);
-
+            const steps = schedule.steps;
             // send ramped command
-            this._schedule(useSteps, speed, accelStepsOrTime, stepsOrTime, decelStepsOrTime);
-            this.pauseOnRun(stepsOrTime);
+            this._schedule(schedule);
+            this.pauseOnRun(steps[0] + steps[1] + steps[2]);
         }
 
         /**
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration to $value $unit"
+        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration to $value||$unit"
         //% motor.fieldEditor="motors"
         //% weight=21 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-run-acceleration-ramp
-        setRunAccelerationRamp(value: number, unit: MoveUnit) {
+        setRunAccelerationRamp(value: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
             switch (unit) {
                 case MoveUnit.Rotations:
                     this._accelerationSteps = Math.max(0, (value * 360) | 0);
@@ -362,12 +407,12 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunDeceleration block="set %motor|run deceleration ramp to $value $unit"
+        //% blockId=outputMotorsetRunDeceleration block="set %motor|run deceleration ramp to $value||$unit"
         //% motor.fieldEditor="motors"
         //% weight=20 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-run-deceleration-ramp
-        setRunDecelerationRamp(value: number, unit: MoveUnit) {
+        setRunDecelerationRamp(value: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
             switch (unit) {
                 case MoveUnit.Rotations:
                     this._decelerationSteps = Math.max(0, (value * 360) | 0);
@@ -387,7 +432,7 @@ namespace motors {
         private _run(speed: number) {
             // ramp up acceleration
             if (this._accelerationTime) {
-                this._schedule(false, speed, this._accelerationTime, 100, 0);
+                this._schedule({ speed: speed, useSteps: false, steps: [this._accelerationTime, 100, 0] });
                 pause(this._accelerationTime);
             }
             // keep going
@@ -399,14 +444,14 @@ namespace motors {
             }
         }
 
-        private _schedule(steps: boolean, speed: number, accelStepsOrTime: number, stepsOrTime: number, decelStepsOrTime: number) {
+        private _schedule(schedule: MoveSchedule) {
             const p = {
-                useSteps: steps,
-                step1: accelStepsOrTime,
-                step2: stepsOrTime,
-                step3: decelStepsOrTime,
-                speed: this._regulated ? speed : undefined,
-                power: this._regulated ? undefined : speed,
+                useSteps: schedule.useSteps,
+                step1: schedule.steps[0],
+                step2: schedule.steps[1],
+                step3: schedule.steps[2],
+                speed: this._regulated ? schedule.speed : undefined,
+                power: this._regulated ? undefined : schedule.speed,
                 useBrake: this._brake
             };
             step(this._port, p)
