@@ -1,6 +1,6 @@
 # Pause Until Pressed
 
-This is an example of code using a touch sensor to detect a wall or other obstacle. The motors are running until the sensor is pressed.
+This is a code example to detect contact or collision with another object. It uses a touch sensor to detect hitting a wall or other obstacle. The motors are run and then stopped when the sensor is pressed.
 
 ```blocks
 motors.largeBC.tank(50, 50)

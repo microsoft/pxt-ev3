@@ -1,7 +1,7 @@
 # Reflected light measure
 
-This example uses a color sensor to measure the reflected light on the dark and light surface
-and set the light/dark thresholds.
+This example uses a color sensor to measure the reflected light from a dark and light surface
+and sets the light/dark thresholds.
 
 ```blocks
 sensors.color3.onLightDetected(LightIntensityMode.Reflected, Light.Dark, function () {
