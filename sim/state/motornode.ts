@@ -236,7 +236,6 @@ namespace pxsim {
             }
             // don't round speed
             // compute delta angle
-            control.dmesg(`speed ${this.speed}`)
             const rotations = this.speed / 100 * this.rotationsPerMilliSecond * elapsed;
             const deltaAngle = rotations * 360;
             if (deltaAngle) {
