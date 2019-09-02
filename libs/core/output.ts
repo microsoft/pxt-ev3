@@ -154,10 +154,10 @@ namespace motors {
             this._initialized = false;
             this._brakeSettleTime = 10;
             this._init = init;
-            this._accelerationSteps = 180;
-            this._accelerationTime = 1000;
-            this._decelerationSteps = 90;
-            this._decelerationTime = 500;
+            this._accelerationSteps = 0;
+            this._accelerationTime = 0;
+            this._decelerationSteps = 0;
+            this._decelerationTime = 0;
         }
 
         /**
