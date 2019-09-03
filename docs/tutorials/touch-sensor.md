@@ -15,7 +15,7 @@
   "cardType": "tutorial",
   "url":"/tutorials/touch-sensor-values",
   "imageUrl":"/static/tutorials/touch-sensor-values.png"
-},
+}, {
   "name": "Pause Until Pressed",
   "description": "Waits for the sensor to be pressed before continuing the program",
   "cardType": "tutorial",
