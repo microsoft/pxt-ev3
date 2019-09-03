@@ -23,6 +23,10 @@
 #define MALLOC_LIMIT (8 * 1024 * 1024)
 #define MALLOC_CHECK_PERIOD (1024 * 1024)
 
+namespace Array_ {
+RefCollection *mk(unsigned flags);
+}
+
 void *xmalloc(size_t sz) {
     static size_t allocBytes = 0;
     allocBytes += sz;
@@ -476,7 +480,7 @@ void stopLMS() {
         if (!pid)
             continue;
         char namebuf[100];
-        snprintf(namebuf, 1000, "/proc/%d/cmdline", pid);
+        snprintf(namebuf, 100, "/proc/%d/cmdline", pid);
         FILE *f = fopen(namebuf, "r");
         if (f) {
             fread(namebuf, 1, 99, f);
@@ -590,4 +594,66 @@ void dmesg(const char *format, ...) {
     fflush(dmesgFile);
     fdatasync(fileno(dmesgFile));
 }
+
+const char *progPath = "/mnt/ramdisk/prjs/BrkProg_SAVE";
+
+//%
+void deleteAllPrograms() {
+    char buf[1024];
+
+    struct dirent *ent;
+    DIR *dir;
+
+    dir = opendir(progPath);
+    if (dir == NULL)
+        return;
+
+    while ((ent = readdir(dir)) != NULL) {
+        if (ent->d_name[0] == '.')
+            continue;
+        snprintf(buf, sizeof(buf), "%s/%s", progPath, ent->d_name);
+        DMESG("FN: %s", ent->d_name);
+        // unlink(buf);
+    }
+
+    closedir(dir);
+}
+
+
+//%
+void deletePrjFile(String filename) {
+    if (strlen(filename->data) > 500 || strchr(filename->data, '/'))
+        return;
+    char buf[1024];
+    snprintf(buf, sizeof(buf), "%s/%s", progPath, filename->data);
+    unlink(buf);
+}
+
+//%
+RefCollection *listPrjFiles() {
+    auto res = Array_::mk(0);
+    //registerGCObj(res);
+
+    auto dp = opendir(progPath);
+
+    for (;;) {
+        dirent *ep = dp ? readdir(dp) : NULL;
+        if (!ep)
+            break;
+        if (ep->d_name[0] == '.')
+            continue;
+        auto str = mkString(ep->d_name, -1);
+        //registerGCObj(str);
+        res->push((TValue)str);
+        //unregisterGCObj(str);
+    }
+    if (dp)
+        closedir(dp);
+    //unregisterGCObj(res);
+
+    return res;
+}
+
+
+
 } // namespace pxt
