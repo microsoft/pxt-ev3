@@ -89,9 +89,16 @@ Sharing programs is also shown in the [Tips and Tricks](https://legoeducation.vi
 
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
-There's a bug in the firmware which prevents you from deleting the programs (``*.uf2`` files) from your EV3 Brick. There isn't a firmware update to fix this yet. As a workaround, you can temporarily downgrade your firmware version, delete the files, and then upgrade back to the version that works with MakeCode.
+There's a bug in the firmware which prevents you from deleting the programs (``*.uf2`` files) from your EV3 Brick. There isn't a firmware update to fix this yet.
 
-Follow these steps to downgrade your firmware version, delete the files, and uprgade back again:
+We have prepared a special program that lets you delete UF2 files from the brick.
+Download [these PDF instructions](/file-manager.pdf) and drop the PDF on the brick drive.
+This will present you with an menu for deleting files.
+
+If this does not work for you, you can try this older workaround:
+you can temporarily downgrade your firmware version, delete the files, and then upgrade back to the version that works with MakeCode.
+
+Follow these steps to downgrade your firmware version, delete the files, and upgrade back again:
 
 1. Go into **EV3 LabVIEW** - if it's not installed get it [here](https://education.lego.com/en-us/downloads/mindstorms-ev3/software)
 2. Plug in your EV3 Brick and start a new project
