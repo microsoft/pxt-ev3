@@ -63,7 +63,9 @@ const rbfTemplate = `
 export function deployCoreAsync(resp: pxtc.CompileResult) {
     let w: pxt.editor.Ev3Wrapper
 
-    let filename = resp.downloadFileBaseName || "pxt"
+    const origElfUF2 = UF2.parseFile(pxt.U.stringToUint8Array(ts.pxtc.decodeBase64(resp.outfiles[pxt.outputName()])))
+    
+    let filename = resp.downloadFileBaseName || (origElfUF2[0].filename || "").replace(/^Projects\//, "").replace(/\.elf$/, "") || "pxt"
     filename = filename.replace(/^lego-/, "")
 
     let fspath = "../prjs/BrkProg_SAVE/"
@@ -76,8 +78,6 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
         .replace("XX", pxt.U.toHex(pxt.U.stringToUint8Array(elfPath)))
     let rbfBIN = pxt.U.fromHex(rbfHex)
     pxt.HF2.write16(rbfBIN, 4, rbfBIN.length)
-
-    let origElfUF2 = UF2.parseFile(pxt.U.stringToUint8Array(ts.pxtc.decodeBase64(resp.outfiles[pxt.outputName()])))
 
     let mkFile = (ext: string, data: Uint8Array = null) => {
         let f = UF2.newBlockFile()
