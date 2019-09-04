@@ -1,36 +1,40 @@
 
 namespace brick {
+    // lms2012
+    const BATT_INDICATOR_HIGH = 7500          //!< Battery indicator high [mV]
+    const BATT_INDICATOR_LOW = 6200          //!< Battery indicator low [mV]
+
+    const ACCU_INDICATOR_HIGH = 7500          //!< Rechargeable battery indicator high [mV]
+    const ACCU_INDICATOR_LOW = 7100          //!< Rechargeable battery indicator low [mV]    
     /**
      * Returns the current battery level
      */
     //% blockId=brickBatteryLevel block="battery level"
-    //% group="More"
+    //% group="Battery"
     //% help=brick/battery-level
     export function batteryLevel(): number {
         const info = sensors.internal.getBatteryInfo();
-        return Math.round(info.CinCnt / 10);
+        return info.level;
     }
 
     /**
      * Returns the battery current
      */
     //% blockId=brickBatteryCurrent block="battery current"
-    //% group="More"
+    //% group="Battery"
     export function batteryCurrent(): number {
         const info = sensors.internal.getBatteryInfo();
-        const CinV = info.CinCnt / 22
-        return CinV / 0.11;
+        return info.Ibatt;
     }
 
     /**
      * Returns the battery voltage
      */
-    //% blockId=brickBatteryVoltage block="battery voltage"
-    //% group="More"
+    //% blockId=brickBatteryVoltage block="battery voltage (V)"
+    //% group="Battery"
     export function batteryVoltage(): number {
         const info = sensors.internal.getBatteryInfo();
-        const CinV = info.CinCnt / 22
-        return (info.VinCnt / 0.5) + CinV + 0.05;
+        return info.Vbatt;
     }
 
     /**
@@ -40,7 +44,7 @@ namespace brick {
     //% group="More"
     export function motorCurrent(): number {
         const info = sensors.internal.getBatteryInfo();
-        const CoutV = info.CoutCnt / 19
-        return CoutV / 0.055;
+        const CoutV = info.CoutCnt / AMP_COUT;
+        return CoutV / SHUNT_OUT;
     }
 }

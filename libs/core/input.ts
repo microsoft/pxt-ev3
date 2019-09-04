@@ -71,10 +71,11 @@ namespace sensors.internal {
         IICMM = control.mmap("/dev/lms_iic", IICOff.Size, 0)
         if (!IICMM) control.fail("no iic sensor")
 
-        unsafePollForChanges(500, 
-            () => { return hashDevices(); }, 
-            (prev, curr) => { detectDevices(); 
-        });
+        unsafePollForChanges(500,
+            () => { return hashDevices(); },
+            (prev, curr) => {
+                detectDevices();
+            });
         sensorInfos.forEach(info => {
             unsafePollForChanges(50, () => {
                 if (info.sensor) return info.sensor._query()
@@ -110,20 +111,90 @@ namespace sensors.internal {
         return manufacturer + sensorType;
     }
 
-    export function getBatteryInfo(): { temp: number; CinCnt: number, CoutCnt: number, VinCnt: number } {
+    const ADC_REF = 5000                  //!< [mV]  maximal value on ADC
+    const ADC_RES = 4095                  //!< [CNT] maximal count on ADC
+    // see c_ui.c
+    const SHUNT_IN = 0.11              //  [Ohm]
+    const AMP_CIN = 22.0              //  [Times]
+
+    const EP2_SHUNT_IN = 0.05              //  [Ohm]
+    const EP2_AMP_CIN = 15.0              //  [Times]
+
+    const SHUNT_OUT = 0.055             //  [Ohm]
+    const AMP_COUT = 19.0              //  [Times]
+
+    const VCE = 0.05              //  [V]
+    const AMP_VIN = 0.5               //  [Times]
+
+    const AVR_CIN = 300
+    const AVR_COUT = 30
+    const AVR_VIN = 30
+
+    function CNT_V(C: number) {
+        return ((C * ADC_REF) / (ADC_RES * 1000.0))
+    }
+    export function getBatteryInfo(): { temp: number; level: number; Ibatt: number, Vbatt: number, Imotor: number } {
         init();
+        const temp = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp);
+        const CinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent);
+        const CoutCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent);
+        const VinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456);
+        /*
+void      cUiUpdatePower(void)
+{
+#ifndef Linux_X86
+  DATAF   CinV;
+  DATAF   CoutV;
+
+  if ((UiInstance.Hw == FINAL) || (UiInstance.Hw == FINALB))
+  {
+    CinV                =  CNT_V(UiInstance.CinCnt) / AMP_CIN;
+    UiInstance.Vbatt    =  (CNT_V(UiInstance.VinCnt) / AMP_VIN) + CinV + VCE;
+
+    UiInstance.Ibatt    =  CinV / SHUNT_IN;
+    CoutV               =  CNT_V(UiInstance.CoutCnt) / AMP_COUT;
+    UiInstance.Imotor   =  CoutV / SHUNT_OUT;
+
+  }
+  else
+  {
+    CinV                =  CNT_V(UiInstance.CinCnt) / EP2_AMP_CIN;
+    UiInstance.Vbatt    =  (CNT_V(UiInstance.VinCnt) / AMP_VIN) + CinV + VCE;
+
+    UiInstance.Ibatt    =  CinV / EP2_SHUNT_IN;
+    UiInstance.Imotor   =  0;
+
+  }
+
+#endif
+#ifdef DEBUG_TEMP_SHUTDOWN
+
+  UiInstance.Vbatt  =  7.0;
+  UiInstance.Ibatt  =  5.0;
+
+#endif
+}        
+        */
+       const level = Math.floor(CinCnt / 10);
+       const CinV = CNT_V(CinCnt) / AMP_CIN;
+       const Vbatt = CNT_V(VinCnt) / AMP_VIN + CinV + VCE;
+       const Ibatt = CinV / SHUNT_IN;
+       const CoutV = CNT_V(CoutCnt) / AMP_COUT;
+       const Imotor = CoutV / SHUNT_OUT;
+
         return {
-            temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
-            CinCnt: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent),
-            CoutCnt: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent),
-            VinCnt: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456)
-        }
+            temp: temp,
+            level: level,
+            Vbatt: Vbatt,
+            Ibatt: Ibatt,
+            Imotor: Imotor
+        };
     }
 
     function hashDevices(): number {
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let r = 0;
-        for(let i = 0; i < conns.length; ++i) {
+        for (let i = 0; i < conns.length; ++i) {
             r = (r << 8 | conns[i]);
         }
         return r;
