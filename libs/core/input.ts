@@ -187,12 +187,13 @@ void      cUiUpdatePower(void)
 #endif
 }        
         */
-       const level = Math.floor(CinCnt / 10);
        const CinV = CNT_V(CinCnt) / AMP_CIN;
        const Vbatt = CNT_V(VinCnt) / AMP_VIN + CinV + VCE;
        const Ibatt = CinV / SHUNT_IN;
        const CoutV = CNT_V(CoutCnt) / AMP_COUT;
        const Imotor = CoutV / SHUNT_OUT;
+       const level   = Math.floor((Vbatt * 1000.0 - BATT_INDICATOR_LOW)
+        / (BATT_INDICATOR_HIGH - BATT_INDICATOR_LOW) * 100);
 
         return {
             temp: temp,
