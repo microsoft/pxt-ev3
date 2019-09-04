@@ -38,6 +38,11 @@ namespace sensors.internal {
     let IICMM: MMap
     let devcon: Buffer
     let sensorInfos: SensorInfo[]
+    let batteryInfo: {
+        CinCnt: number;
+        CoutCnt: number;
+        VinCnt: number;
+    };
 
     class SensorInfo {
         port: number
@@ -83,8 +88,8 @@ namespace sensors.internal {
             }, (prev, curr) => {
                 if (info.sensor) info.sensor._update(prev, curr)
             })
-        })
-    }
+        })        
+   }
 
     export function getActiveSensors(): Sensor[] {
         init();
@@ -139,18 +144,35 @@ namespace sensors.internal {
         return ((C * ADC_REF) / (ADC_RES * 1000.0))
     }
 
+    function updateBatteryInfo() {
+        let CinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent);
+        let CoutCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent);
+        let VinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456);
+        if (!batteryInfo) {
+            batteryInfo = { 
+                CinCnt: CinCnt, 
+                CoutCnt: CoutCnt,
+                VinCnt: VinCnt
+            };
+            forever(updateBatteryInfo); // update in background
+        } else {
+            CinCnt = batteryInfo.CinCnt = ((batteryInfo.CinCnt * (AVR_CIN - 1)) + CinCnt) / AVR_CIN;
+            CoutCnt = batteryInfo.CoutCnt = ((batteryInfo.CoutCnt * (AVR_COUT - 1)) + CoutCnt) / AVR_COUT;
+            VinCnt = batteryInfo.VinCnt = ((batteryInfo.VinCnt * (AVR_VIN - 1)) + VinCnt) / AVR_VIN;
+        }
+    }
+
     export function getBatteryInfo(): { 
-        temp: number; 
         level: number; 
         Ibatt: number, 
         Vbatt: number, 
         Imotor: number 
     } {
         init();
-        const temp = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp);
-        const CinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent);
-        const CoutCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent);
-        const VinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456);
+        if (!batteryInfo) updateBatteryInfo();
+        const CinCnt = batteryInfo.CinCnt;
+        const CoutCnt = batteryInfo.CoutCnt;
+        const VinCnt = batteryInfo.VinCnt;
         /*
 void      cUiUpdatePower(void)
 {
@@ -196,7 +218,6 @@ void      cUiUpdatePower(void)
         / (BATT_INDICATOR_HIGH - BATT_INDICATOR_LOW) * 100);
 
         return {
-            temp: temp,
             level: level,
             Vbatt: Vbatt,
             Ibatt: Ibatt,
