@@ -1,11 +1,5 @@
 
 namespace brick {
-    // lms2012
-    const BATT_INDICATOR_HIGH = 7500          //!< Battery indicator high [mV]
-    const BATT_INDICATOR_LOW = 6200          //!< Battery indicator low [mV]
-
-    const ACCU_INDICATOR_HIGH = 7500          //!< Rechargeable battery indicator high [mV]
-    const ACCU_INDICATOR_LOW = 7100          //!< Rechargeable battery indicator low [mV]    
     /**
      * Returns the current battery level
      */
@@ -44,7 +38,6 @@ namespace brick {
     //% group="More"
     export function motorCurrent(): number {
         const info = sensors.internal.getBatteryInfo();
-        const CoutV = info.CoutCnt / AMP_COUT;
-        return CoutV / SHUNT_OUT;
+        return info.Imotor;
     }
 }

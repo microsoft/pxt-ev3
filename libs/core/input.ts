@@ -129,11 +129,23 @@ namespace sensors.internal {
     const AVR_CIN = 300
     const AVR_COUT = 30
     const AVR_VIN = 30
+    // lms2012
+    const BATT_INDICATOR_HIGH = 7500          //!< Battery indicator high [mV]
+    const BATT_INDICATOR_LOW = 6200          //!< Battery indicator low [mV]
+
+    const ACCU_INDICATOR_HIGH = 7500          //!< Rechargeable battery indicator high [mV]
+    const ACCU_INDICATOR_LOW = 7100          //!< Rechargeable battery indicator low [mV]    
 
     function CNT_V(C: number) {
         return ((C * ADC_REF) / (ADC_RES * 1000.0))
     }
-    export function getBatteryInfo(): { temp: number; level: number; Ibatt: number, Vbatt: number, Imotor: number } {
+    export function getBatteryInfo(): { 
+        temp: number; 
+        level: number; 
+        Ibatt: number, 
+        Vbatt: number, 
+        Imotor: number 
+    } {
         init();
         const temp = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp);
         const CinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent);
