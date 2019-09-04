@@ -36,8 +36,17 @@ namespace sensors.internal {
     let analogMM: MMap
     let uartMM: MMap
     let IICMM: MMap
+    let powerMM: MMap
     let devcon: Buffer
-    let sensorInfos: SensorInfo[]
+    let sensorInfos: SensorInfo[];
+
+    let batteryInfo: {
+        CinCnt: number;
+        CoutCnt: number;
+        VinCnt: number;
+    };
+    let batteryVMin: number;
+    let batteryVMax: number;
 
     class SensorInfo {
         port: number
@@ -71,10 +80,13 @@ namespace sensors.internal {
         IICMM = control.mmap("/dev/lms_iic", IICOff.Size, 0)
         if (!IICMM) control.fail("no iic sensor")
 
-        unsafePollForChanges(500, 
-            () => { return hashDevices(); }, 
-            (prev, curr) => { detectDevices(); 
-        });
+        powerMM = control.mmap("/dev/lms_power", 2, 0)
+
+        unsafePollForChanges(500,
+            () => { return hashDevices(); },
+            (prev, curr) => {
+                detectDevices();
+            });
         sensorInfos.forEach(info => {
             unsafePollForChanges(50, () => {
                 if (info.sensor) return info.sensor._query()
@@ -82,9 +94,8 @@ namespace sensors.internal {
             }, (prev, curr) => {
                 if (info.sensor) info.sensor._update(prev, curr)
             })
-        })
-
-    }
+        })        
+   }
 
     export function getActiveSensors(): Sensor[] {
         init();
@@ -110,18 +121,130 @@ namespace sensors.internal {
         return manufacturer + sensorType;
     }
 
-    export function getBatteryInfo(): { temp: number; current: number } {
-        init();
-        return {
-            temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
-            current: Math.round(analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent) / 10)
+    const ADC_REF = 5000                  //!< [mV]  maximal value on ADC
+    const ADC_RES = 4095                  //!< [CNT] maximal count on ADC
+    // see c_ui.c
+    const SHUNT_IN = 0.11              //  [Ohm]
+    const AMP_CIN = 22.0              //  [Times]
+
+    const EP2_SHUNT_IN = 0.05              //  [Ohm]
+    const EP2_AMP_CIN = 15.0              //  [Times]
+
+    const SHUNT_OUT = 0.055             //  [Ohm]
+    const AMP_COUT = 19.0              //  [Times]
+
+    const VCE = 0.05              //  [V]
+    const AMP_VIN = 0.5               //  [Times]
+
+    const AVR_CIN = 300
+    const AVR_COUT = 30
+    const AVR_VIN = 30
+    // lms2012
+    const BATT_INDICATOR_HIGH = 7500          //!< Battery indicator high [mV]
+    const BATT_INDICATOR_LOW = 6200          //!< Battery indicator low [mV]
+    const ACCU_INDICATOR_HIGH = 7500          //!< Rechargeable battery indicator high [mV]
+    const ACCU_INDICATOR_LOW = 7100          //!< Rechargeable battery indicator low [mV]    
+
+    function CNT_V(C: number) {
+        return ((C * ADC_REF) / (ADC_RES * 1000.0))
+    }
+
+    function updateBatteryInfo() {
+        let CinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent);
+        let CoutCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent);
+        let VinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456);
+        if (!batteryInfo) {
+            batteryVMin = BATT_INDICATOR_LOW;
+            batteryVMax = BATT_INDICATOR_HIGH;
+            if (powerMM) {
+                const accu = powerMM.getNumber(NumberFormat.UInt8LE, 0);
+                if (accu > 0) {
+                    control.dmesg("rechargeable battery")
+                    batteryVMin = ACCU_INDICATOR_LOW;
+                    batteryVMax = ACCU_INDICATOR_HIGH;
+                }
+            }
+            batteryInfo = { 
+                CinCnt: CinCnt, 
+                CoutCnt: CoutCnt,
+                VinCnt: VinCnt
+            };
+            // update in background
+            control.runInParallel(() => forever(updateBatteryInfo)); 
+        } else {
+            CinCnt = batteryInfo.CinCnt = ((batteryInfo.CinCnt * (AVR_CIN - 1)) + CinCnt) / AVR_CIN;
+            CoutCnt = batteryInfo.CoutCnt = ((batteryInfo.CoutCnt * (AVR_COUT - 1)) + CoutCnt) / AVR_COUT;
+            VinCnt = batteryInfo.VinCnt = ((batteryInfo.VinCnt * (AVR_VIN - 1)) + VinCnt) / AVR_VIN;
         }
+    }
+
+    export function getBatteryInfo(): { 
+        level: number; 
+        Ibatt: number, 
+        Vbatt: number, 
+        Imotor: number 
+    } {
+        init();
+        if (!batteryInfo) updateBatteryInfo();
+        const CinCnt = batteryInfo.CinCnt;
+        const CoutCnt = batteryInfo.CoutCnt;
+        const VinCnt = batteryInfo.VinCnt;
+        /*
+void      cUiUpdatePower(void)
+{
+#ifndef Linux_X86
+  DATAF   CinV;
+  DATAF   CoutV;
+
+  if ((UiInstance.Hw == FINAL) || (UiInstance.Hw == FINALB))
+  {
+    CinV                =  CNT_V(UiInstance.CinCnt) / AMP_CIN;
+    UiInstance.Vbatt    =  (CNT_V(UiInstance.VinCnt) / AMP_VIN) + CinV + VCE;
+
+    UiInstance.Ibatt    =  CinV / SHUNT_IN;
+    CoutV               =  CNT_V(UiInstance.CoutCnt) / AMP_COUT;
+    UiInstance.Imotor   =  CoutV / SHUNT_OUT;
+
+  }
+  else
+  {
+    CinV                =  CNT_V(UiInstance.CinCnt) / EP2_AMP_CIN;
+    UiInstance.Vbatt    =  (CNT_V(UiInstance.VinCnt) / AMP_VIN) + CinV + VCE;
+
+    UiInstance.Ibatt    =  CinV / EP2_SHUNT_IN;
+    UiInstance.Imotor   =  0;
+
+  }
+
+#endif
+#ifdef DEBUG_TEMP_SHUTDOWN
+
+  UiInstance.Vbatt  =  7.0;
+  UiInstance.Ibatt  =  5.0;
+
+#endif
+}        
+        */
+       const CinV = CNT_V(CinCnt) / AMP_CIN;
+       const Vbatt = CNT_V(VinCnt) / AMP_VIN + CinV + VCE;
+       const Ibatt = CinV / SHUNT_IN;
+       const CoutV = CNT_V(CoutCnt) / AMP_COUT;
+       const Imotor = CoutV / SHUNT_OUT;
+       const level   = Math.max(0, Math.min(100, Math.floor((Vbatt * 1000.0 - batteryVMin)
+        / (batteryVMax - batteryVMin) * 100)));
+
+        return {
+            level: level,
+            Vbatt: Vbatt,
+            Ibatt: Ibatt,
+            Imotor: Imotor
+        };
     }
 
     function hashDevices(): number {
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let r = 0;
-        for(let i = 0; i < conns.length; ++i) {
+        for (let i = 0; i < conns.length; ++i) {
             r = (r << 8 | conns[i]);
         }
         return r;
