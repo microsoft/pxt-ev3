@@ -279,7 +279,7 @@ namespace motors {
             const r: MoveSchedule = {
                 speed: Math.clamp(-100, 100, speed >> 0),
                 useSteps: true,
-                steps: [step1, step2, step3]
+                steps: [step1 || 0, step2 || 0, step3 || 0]
             }
             let scale = 1;
             switch (unit) {
@@ -352,18 +352,20 @@ namespace motors {
         /**
          * Schedules a run of the motor with an acceleration, constant and deceleration phase.
          * @param speed the speed from ``100`` full forward to ``-100`` full backward, eg: 50
-         * @param acceleration acceleration phase measured distance or rotation
-         * @param value measured distance or rotation
-         * @param deceleration deceleration phase measured distance or rotation
-         * @param unit (optional) unit of the value
+         * @param value measured distance or rotation, eg: 500
+         * @param unit (optional) unit of the value, eg: MoveUnit.MilliSeconds
+         * @param acceleration acceleration phase measured distance or rotation, eg: 500
+         * @param deceleration deceleration phase measured distance or rotation, eg: 500
          */
-        //% blockId=motorSchedule block="schedule %motor at %speed=motorSpeedPicker|\\%|for %acceleration|%value|%deceleration||%unit"
+        //% blockId=motorSchedule block="ramp %motor at %speed=motorSpeedPicker|\\%|for %value|%unit||accelerate %acceleration|decelerate %deceleration"
         //% weight=99 blockGap=8
         //% group="Move"
         //% motor.fieldEditor="motors"
-        //% help=motors/motor/schedule
+        //% help=motors/motor/ramp
         //% inlineInputMode=inline
-        schedule(speed: number, acceleration: number, value: number, deceleration: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
+        //% expandableArgumentMode=toggle
+        //% value.defl=500
+        ramp(speed: number, value: number = 500, unit: MoveUnit = MoveUnit.MilliSeconds, acceleration?: number, deceleration?: number) {
             this.init();
             const schedule = this.normalizeSchedule(speed, acceleration, value, deceleration, unit);
             // stop if speed is 0

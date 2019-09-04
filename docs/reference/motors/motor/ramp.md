@@ -1,9 +1,9 @@
-# Schedule
+# Ramp
 
 Schedules an acceleration, constant and deceleration phase at a given speed.
 
 ```sig
-motors.largeA.schedule(50, 100, 500, 100)
+motors.largeA.ramp(50, 100, 500, 100)
 ```
 
 The speed setting is a percentage of the motor's full speed. Full speed is the speed that the motor runs when the brick supplies maximum output voltage to the port.
@@ -30,7 +30,7 @@ brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
     acc += -100
 })
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    motors.largeB.schedule(50, acc, steady, dec, MoveUnit.MilliSeconds)
+    motors.largeB.ramp(50, acc, steady, dec, MoveUnit.MilliSeconds)
 })
 brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
     acc += 100
