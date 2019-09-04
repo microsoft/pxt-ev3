@@ -30,7 +30,7 @@ brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
     acc += -100
 })
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    motors.largeB.ramp(50, acc, steady, dec, MoveUnit.MilliSeconds)
+    motors.largeB.ramp(50, steady, MoveUnit.MilliSeconds, acc, dec)
 })
 brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
     acc += 100
