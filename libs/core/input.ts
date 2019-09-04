@@ -36,13 +36,17 @@ namespace sensors.internal {
     let analogMM: MMap
     let uartMM: MMap
     let IICMM: MMap
+    let powerMM: MMap
     let devcon: Buffer
-    let sensorInfos: SensorInfo[]
+    let sensorInfos: SensorInfo[];
+
     let batteryInfo: {
         CinCnt: number;
         CoutCnt: number;
         VinCnt: number;
     };
+    let batteryVMin: number;
+    let batteryVMax: number;
 
     class SensorInfo {
         port: number
@@ -75,6 +79,8 @@ namespace sensors.internal {
 
         IICMM = control.mmap("/dev/lms_iic", IICOff.Size, 0)
         if (!IICMM) control.fail("no iic sensor")
+
+        powerMM = control.mmap("/dev/lms_power", 2, 0)
 
         unsafePollForChanges(500,
             () => { return hashDevices(); },
@@ -136,7 +142,6 @@ namespace sensors.internal {
     // lms2012
     const BATT_INDICATOR_HIGH = 7500          //!< Battery indicator high [mV]
     const BATT_INDICATOR_LOW = 6200          //!< Battery indicator low [mV]
-
     const ACCU_INDICATOR_HIGH = 7500          //!< Rechargeable battery indicator high [mV]
     const ACCU_INDICATOR_LOW = 7100          //!< Rechargeable battery indicator low [mV]    
 
@@ -149,12 +154,23 @@ namespace sensors.internal {
         let CoutCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent);
         let VinCnt = analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456);
         if (!batteryInfo) {
+            batteryVMin = BATT_INDICATOR_LOW;
+            batteryVMax = BATT_INDICATOR_HIGH;
+            if (powerMM) {
+                const accu = powerMM.getNumber(NumberFormat.UInt8LE, 0);
+                if (accu > 0) {
+                    control.dmesg("rechargeable battery")
+                    batteryVMin = ACCU_INDICATOR_LOW;
+                    batteryVMax = ACCU_INDICATOR_HIGH;
+                }
+            }
             batteryInfo = { 
                 CinCnt: CinCnt, 
                 CoutCnt: CoutCnt,
                 VinCnt: VinCnt
             };
-            forever(updateBatteryInfo); // update in background
+            // update in background
+            control.runInParallel(() => forever(updateBatteryInfo)); 
         } else {
             CinCnt = batteryInfo.CinCnt = ((batteryInfo.CinCnt * (AVR_CIN - 1)) + CinCnt) / AVR_CIN;
             CoutCnt = batteryInfo.CoutCnt = ((batteryInfo.CoutCnt * (AVR_COUT - 1)) + CoutCnt) / AVR_COUT;
@@ -214,8 +230,8 @@ void      cUiUpdatePower(void)
        const Ibatt = CinV / SHUNT_IN;
        const CoutV = CNT_V(CoutCnt) / AMP_COUT;
        const Imotor = CoutV / SHUNT_OUT;
-       const level   = Math.floor((Vbatt * 1000.0 - BATT_INDICATOR_LOW)
-        / (BATT_INDICATOR_HIGH - BATT_INDICATOR_LOW) * 100);
+       const level   = Math.max(0, Math.min(100, Math.floor((Vbatt * 1000.0 - batteryVMin)
+        / (batteryVMax - batteryVMin) * 100)));
 
         return {
             level: level,
