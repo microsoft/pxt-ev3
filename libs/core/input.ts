@@ -110,11 +110,13 @@ namespace sensors.internal {
         return manufacturer + sensorType;
     }
 
-    export function getBatteryInfo(): { temp: number; current: number } {
+    export function getBatteryInfo(): { temp: number; CinCnt: number, CoutCnt: number, VinCnt: number } {
         init();
         return {
             temp: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryTemp),
-            current: Math.round(analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent) / 10)
+            CinCnt: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.BatteryCurrent),
+            CoutCnt: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.MotorCurrent),
+            VinCnt: analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.Cell123456)
         }
     }
 
