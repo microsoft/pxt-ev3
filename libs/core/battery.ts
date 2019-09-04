@@ -1,4 +1,13 @@
 
+const enum BatteryProperty {
+    //% level (%)
+    Level,
+    //% block="current (I)"
+    Current,
+    //% block="voltage (V)"
+    Voltage
+} 
+
 namespace brick {
     /**
      * Returns the current battery level
@@ -6,38 +15,26 @@ namespace brick {
     //% blockId=brickBatteryLevel block="battery level"
     //% group="Battery"
     //% help=brick/battery-level
+    //% deprecated blockHidden=1
     export function batteryLevel(): number {
         const info = sensors.internal.getBatteryInfo();
         return info.level;
     }
 
     /**
-     * Returns the battery current
+     * Returns information about the battery
      */
-    //% blockId=brickBatteryCurrent block="battery current"
+    //% blockId=brickBatteryProperty block="battery %property"
     //% group="Battery"
-    export function batteryCurrent(): number {
+    //% help=brick/battery-property
+    export function batteryInfo(property: BatteryProperty): number {
         const info = sensors.internal.getBatteryInfo();
-        return info.Ibatt;
-    }
+        switch(property) {
+            case BatteryProperty.Level: return info.level;
+            case BatteryProperty.Current: return info.Ibatt;
+            case BatteryProperty.Voltage: return info.Vbatt;
+            default: return 0;
+        }
 
-    /**
-     * Returns the battery voltage
-     */
-    //% blockId=brickBatteryVoltage block="battery voltage (V)"
-    //% group="Battery"
-    export function batteryVoltage(): number {
-        const info = sensors.internal.getBatteryInfo();
-        return info.Vbatt;
-    }
-
-    /**
-     * Returns the motor current
-     */
-    //% blockId=brickMotorCurrent block="motor current"
-    //% group="More"
-    export function motorCurrent(): number {
-        const info = sensors.internal.getBatteryInfo();
-        return info.Imotor;
     }
 }

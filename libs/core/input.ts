@@ -84,7 +84,6 @@ namespace sensors.internal {
                 if (info.sensor) info.sensor._update(prev, curr)
             })
         })
-
     }
 
     export function getActiveSensors(): Sensor[] {
@@ -139,6 +138,7 @@ namespace sensors.internal {
     function CNT_V(C: number) {
         return ((C * ADC_REF) / (ADC_RES * 1000.0))
     }
+
     export function getBatteryInfo(): { 
         temp: number; 
         level: number; 
