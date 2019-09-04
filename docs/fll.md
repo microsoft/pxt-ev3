@@ -95,20 +95,6 @@ We have prepared a special program that lets you delete UF2 files from the brick
 Download [these PDF instructions](/file-manager.pdf) and drop the PDF on the brick drive.
 This will present you with an menu for deleting files.
 
-If this does not work for you, you can try this older workaround:
-you can temporarily downgrade your firmware version, delete the files, and then upgrade back to the version that works with MakeCode.
-
-Follow these steps to downgrade your firmware version, delete the files, and upgrade back again:
-
-1. Go into **EV3 LabVIEW** - if it's not installed get it [here](https://education.lego.com/en-us/downloads/mindstorms-ev3/software)
-2. Plug in your EV3 Brick and start a new project
-3. Go to the **Tools** menu in the upper right corner, select **Firmware Update**
-4. In the **Firmware Update** dialog box, click on the **Show Details** button
-5. From the **Available Firmware Files** list, select **EV3 Firmware V1.09E**
-6. Click the **Update Firmware** button and wait for the update to complete
-
-Now the firmware version on the EV3 Brick will be **V1.09E**. Also, in the process, the downgrade deleted all of the saved programs from the EV3 Brick. To continue to use MakeCode, the firmware version must be at **V1.10E** or above. So, the Brick firmware needs to be upgraded again. If you don't know or do remember how to do this, see the **Upgrade your @drivename@** section in the [troubleshooting](/troubleshoot) page.
-
 For other common questions, try the FAQ page https://makecode.mindstorms.com/faq.
 
 ## Workarounds
