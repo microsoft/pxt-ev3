@@ -386,7 +386,7 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration to $value||$unit"
+        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration ramp to $value||$unit"
         //% motor.fieldEditor="motors"
         //% weight=21 blockGap=8
         //% group="Properties"
