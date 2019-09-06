@@ -83,6 +83,10 @@ namespace pxsim.control {
         if (!impl) impl = {}
         return new MMapMethods.MMap(impl, size)
     }
+
+    export function __logToFile(msg: string) {
+        // ignore
+    }
 }
 
 namespace pxsim.output {

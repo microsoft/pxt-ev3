@@ -1,4 +1,8 @@
 #include "pxt.h"
+namespace pxt {
+void writeToConsoleFile(const char *buf);
+}
+
 
 namespace control {
 
@@ -27,6 +31,12 @@ int allocateNotifyEvent() {
 //%
 void dmesg(String s) {
     DMESG("# %s", s->data);
+}
+
+/** Internal helper */
+//%
+void __logToFile(String s) {
+    writeToConsoleFile(s->data);
 }
 
 }

@@ -555,6 +555,19 @@ void initRuntime() {
 }
 
 static FILE *dmesgFile;
+static FILE *consoleFile;
+
+//%
+void writeToConsoleFile(const char *buf) {
+    if (!consoleFile) {
+        consoleFile = fopen("/tmp/console.txt", "w");
+        if (!consoleFile)
+            consoleFile = stdout;
+    }    
+    fwrite(buf, 1, sizeof(buf), consoleFile);
+    fflush(consoleFile);
+    fdatasync(fileno(consoleFile));
+}
 
 void dmesgRaw(const char *buf, uint32_t len) {
     if (!dmesgFile) {

@@ -68,6 +68,10 @@ declare namespace control {
     /** Write data to DMESG debugging buffer. */
     //% shim=control::dmesg
     function dmesg(s: string): void;
+
+    /** Internal helper */
+    //% shim=control::__logToFile
+    function __logToFile(s: string): void;
 }
 declare namespace serial {
 
