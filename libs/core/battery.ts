@@ -1,6 +1,6 @@
 
 const enum BatteryProperty {
-    //% level (%)
+    //% block="level (%)"
     Level,
     //% block="current (I)"
     Current,
