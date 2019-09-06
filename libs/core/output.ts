@@ -36,6 +36,13 @@ enum MoveUnit {
     MilliSeconds
 }
 
+enum MovePhase {
+    //% block="acceleration"
+    Acceleration,
+    //% block="deceleration"
+    Deceleration
+}
+
 namespace motors {
     let pwmMM: MMap
     let motorMM: MMap
@@ -388,50 +395,41 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunAcceleration block="set %motor|run acceleration ramp to $value||$unit"
+        //% blockId=outputMotorsetRunRamp block="set %motor|run %ramp to $value||$unit"
         //% motor.fieldEditor="motors"
         //% weight=21 blockGap=8
         //% group="Properties"
-        //% help=motors/motor/set-run-acceleration-ramp
-        setRunAccelerationRamp(value: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
+        //% help=motors/motor/set-run-phase
+        setRunPhase(phase: MovePhase, value: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
+            let temp: number;
             switch (unit) {
                 case MoveUnit.Rotations:
-                    this._accelerationSteps = Math.max(0, (value * 360) | 0);
+                    temp = Math.max(0, (value * 360) | 0);
+                    if (phase == MovePhase.Acceleration)
+                        this._accelerationSteps = temp;
+                    else 
+                        this._decelerationSteps = temp;
                     break;
                 case MoveUnit.Degrees:
-                    this._accelerationSteps = Math.max(0, value | 0);
+                    temp = Math.max(0, value | 0);
+                    if (phase == MovePhase.Acceleration)
+                        this._accelerationSteps = temp;
+                    else 
+                        this._decelerationSteps = temp;
                     break;
                 case MoveUnit.Seconds:
-                    this._accelerationTime = Math.max(0, (value * 1000) | 0);
+                    temp = Math.max(0, (value * 1000) | 0);
+                    if (phase == MovePhase.Acceleration)
+                        this._accelerationTime = temp;
+                    else 
+                        this._decelerationTime = temp;
                     break;
                 case MoveUnit.MilliSeconds:
-                    this._accelerationTime = Math.max(0, value | 0);
-                    break;
-            }
-        }
-
-        /**
-         * Specifies the amount of rotation or time for the acceleration
-         * of run commands.
-         */
-        //% blockId=outputMotorsetRunDeceleration block="set %motor|run deceleration ramp to $value||$unit"
-        //% motor.fieldEditor="motors"
-        //% weight=20 blockGap=8
-        //% group="Properties"
-        //% help=motors/motor/set-run-deceleration-ramp
-        setRunDecelerationRamp(value: number, unit: MoveUnit = MoveUnit.MilliSeconds) {
-            switch (unit) {
-                case MoveUnit.Rotations:
-                    this._decelerationSteps = Math.max(0, (value * 360) | 0);
-                    break;
-                case MoveUnit.Degrees:
-                    this._decelerationSteps = Math.max(0, value | 0);
-                    break;
-                case MoveUnit.Seconds:
-                    this._decelerationTime = Math.max(0, (value * 1000) | 0);
-                    break;
-                case MoveUnit.MilliSeconds:
-                    this._decelerationTime = Math.max(0, value | 0);
+                    temp = Math.max(0, value | 0);
+                    if (phase == MovePhase.Acceleration)
+                        this._accelerationTime = temp;
+                    else 
+                        this._decelerationTime = temp;
                     break;
             }
         }
