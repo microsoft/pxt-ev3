@@ -24,6 +24,8 @@ If you found a bug, please try if it hasn't been fixed yet! Go to https://makeco
 
 Go to https://makecode.mindstorms.com. The home screen is filled with videos, tutorials and examples that might be relevant for your missions.
 
+On the home page, scroll down to the **FLL / City Shaper / Crane Mission** section for specific lessons related to Mission 2.
+
 ### Can I load both LEGO MINDSTORMS EV3 Software and MakeCode programs onto my EV3?
 
 Yes.
