@@ -23,7 +23,7 @@
   "imageUrl":"/static/tutorials/pivot-turn.png"
 }, {
   "name": "Smooth Turn",
-  "description": "Turn the driving base in a smooth motion.",
+  "description": "Turn the driving base in a smooth, steering motion.",
   "cardType": "example",
   "url":"/tutorials/smooth-turn",
   "imageUrl":"/static/tutorials/smooth-turn.png"
@@ -33,6 +33,12 @@
   "cardType": "example",
   "url":"/tutorials/tank-zigzag",
   "imageUrl":"/static/tutorials/tank-zigzag.png"
+}, {
+  "name": "Coast Or Brake",
+  "description": "Tell motors to coast or brake once the run command is done.",
+  "cardType": "example",
+  "url":"/tutorials/coast-or-brake",
+  "imageUrl":"/static/tutorials/coast-or-brake.png"
 }]
 ```
 
@@ -43,3 +49,4 @@
 [Pivot Turn](/tutorials/pivot-turn),
 [Smooth Turn](/tutorials/smooth-turn),
 [Tank ZigZag](/tutorials/tank-zigzag),
+[Coast Or Brake](/tutorials/coast-or-brake)

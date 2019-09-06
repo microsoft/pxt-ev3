@@ -26,6 +26,11 @@ Step by step guides to coding your @boardname@.
   "url":"/tutorials/color-sensor",
   "imageUrl":"/static/tutorials/what-color.png"
 }, {
+  "name": "Ultrasonic Sensor",
+  "description": "Use the ultrasonic sensor to detect obstacles",
+  "url":"/tutorials/ultrasonic-sensor",
+  "imageUrl":"/static/tutorials/object-near.png"
+}, {
   "name": "Infrared Sensor",
   "description": "Use the infrared sensor to detect objects",
   "url":"/tutorials/infrared-sensor",
