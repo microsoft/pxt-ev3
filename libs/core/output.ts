@@ -233,6 +233,7 @@ namespace motors {
         //% weight=1 blockGap=8
         //% group="Properties"
         //% millis.defl=200 millis.min=0 millis.max=500
+        //% help=motors/motor/set-brake-settle-time
         setBrakeSettleTime(millis: number) {
             this.init();
             // ensure in [0,500]
