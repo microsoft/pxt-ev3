@@ -37,3 +37,5 @@ motors.largeBC.steer(0, 50, 1, MoveUnit.Rotations)
 
 Whenever you make a code change, the simulator will restart and you can preview what your code will do there.
 When you are ready, click **DOWNLOAD** and follow the instructions to transfer the code into your brick.
+
+**Remember** Take the driving base apart at the end of the session, so the other group can build it next time
