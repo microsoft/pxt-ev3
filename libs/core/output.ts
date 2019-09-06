@@ -612,6 +612,8 @@ namespace motors {
         //% group="Move"
         //% help=motors/motor/pause-until-stalled
         pauseUntilStalled(timeOut?: number): void {
+            // let it start
+            pause(50);
             let previous = this.angle();
             let stall = 0;
             pauseUntil(() => {
