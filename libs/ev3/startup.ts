@@ -1,6 +1,6 @@
 // This is the last thing executed before user code
-console.addListener(function(msg: string) { 
-    control.dmesg(msg);
+console.addListener(function(msg: string) {
+    control.dmesg(msg.substr(0, msg.length - 1))
 })
 // pulse green, play startup sound, turn off light
 brick.setStatusLight(StatusLight.GreenPulse);
