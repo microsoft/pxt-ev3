@@ -20,6 +20,10 @@ If you found a bug, please try if it hasn't been fixed yet! Go to https://makeco
 * You will need a computer with a USB port to connect to the EV3 in order to download your programs.
 * You will need internet access and a browser on your computer to get to https://makecode.mindstorms.com.
 
+### I know LabView, how is MakeCode different?
+
+We have compiled a guide for EV3 LabView users at https://makecode.mindstorms.com/labview.
+
 ### What’s the best way to get started with MakeCode?
 
 Go to https://makecode.mindstorms.com. The home screen is filled with videos, tutorials and examples that might be relevant for your missions.
