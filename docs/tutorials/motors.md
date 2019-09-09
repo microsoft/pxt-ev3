@@ -39,6 +39,11 @@
   "cardType": "example",
   "url":"/tutorials/coast-or-brake",
   "imageUrl":"/static/tutorials/coast-or-brake.png"
+}, {
+  "name": "Turtle",
+  "description": "Encode moves and run them on a driving base",
+  "url":"/examples/turtle",
+  "cardType": "example"
 }]
 ```
 
@@ -49,4 +54,5 @@
 [Pivot Turn](/tutorials/pivot-turn),
 [Smooth Turn](/tutorials/smooth-turn),
 [Tank ZigZag](/tutorials/tank-zigzag),
-[Coast Or Brake](/tutorials/coast-or-brake)
+[Coast Or Brake](/tutorials/coast-or-brake),
+[Turtle](/tutorials/turtle)
