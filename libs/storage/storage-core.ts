@@ -199,4 +199,10 @@ namespace storage {
             return '/' + filename;
         }
     }
+
+    /**
+     * Permanent storage on the brick, must be deleted with code.
+     */
+    //% whenUsed fixedInstance block="permanent"
+    export const permanent: Storage = new PermanentStorage();
 }
