@@ -22,6 +22,6 @@
         "Videos": "videos"
     },
     "electronManifest": {
-        "latest": "v1.0.11"
+        "latest": "v1.1.20"
     }
 }
