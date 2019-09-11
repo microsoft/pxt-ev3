@@ -42,7 +42,7 @@
 }, {
   "name": "Turtle",
   "description": "Encode moves and run them on a driving base",
-  "url":"/examples/turtle",
+  "url":"/tutorials/turtle",
   "cardType": "example"
 }]
 ```
