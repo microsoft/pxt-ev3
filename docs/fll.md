@@ -19,6 +19,7 @@ If you found a bug, please try if it hasn't been fixed yet! Go to https://makeco
 * You will need to install the latest EV3 firmware on your brick. Instructions on how to do that are located here: https://makecode.mindstorms.com/troubleshoot.
 * You will need a computer with a USB port to connect to the EV3 in order to download your programs.
 * You will need internet access and a browser on your computer to get to https://makecode.mindstorms.com.
+* You can [install the app](/offline-app) to use the editor offline.
 
 ### I know LabView, how is MakeCode different?
 
@@ -33,6 +34,10 @@ On the home page, scroll down to the **FLL / City Shaper / Crane Mission** secti
 ### Can I load both LEGO MINDSTORMS EV3 Software and MakeCode programs onto my EV3?
 
 Yes.
+
+### Does it work without internet?
+
+To make sure the editor works without internet, install the [offline app](/offline-app)!
 
 ### How do I figure out what a block does?
 
