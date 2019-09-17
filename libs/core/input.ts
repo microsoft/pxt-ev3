@@ -90,6 +90,10 @@ namespace sensors.internal {
             this.poller = new Poller(50, () => this.query(), (prev, curr) => this.update(prev, curr));
         }
 
+        poke() {
+            this.poller.poke();
+        }
+
         private query() {
             if (this.sensor) return this.sensor._query();
             return 0;
@@ -361,6 +365,11 @@ void      cUiUpdatePower(void)
             init()
             sensorInfos[this._port].sensors.push(this)
             this.markUsed();
+        }
+
+        poke() {
+            if (this.isActive())
+                sensorInfos[this._port].poke();
         }
 
         markUsed() {
