@@ -267,6 +267,9 @@ namespace motors {
                 this.pauseUntilReady();
                 // allow robot to settle
                 this.settle();
+            } else {
+                // give a breather to the event system in tight loops
+                pause(1);
             }
         }
 
