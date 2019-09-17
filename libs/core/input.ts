@@ -36,7 +36,7 @@ namespace sensors.internal {
 
         private poll() {
             control.runInBackground(() => {
-                this.lastQuery = this.lastQuery = control.millis();
+                this.lastQuery = this.lastPause = control.millis();
                 this.previousValue = this.currentValue = this.query();
                 this.update(this.previousValue, this.currentValue);
                 while (true) {
