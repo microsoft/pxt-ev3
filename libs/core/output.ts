@@ -502,7 +502,7 @@ namespace motors {
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
         //% motor.fieldEditor="motors"
-        //% weight=90
+        //% weight=90 blockGap=8
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
@@ -609,6 +609,33 @@ namespace motors {
         //%
         toString(): string {
             return `${this._large ? "" : "M"}${this._portName} ${this.speed()}% ${this.angle()}>`;
+        }
+
+        /**
+         * Pauses the program until the motor is stalled.
+         */
+        //% blockId=motorPauseUntilStall block="pause until %motor|stalled"
+        //% motor.fieldEditor="motors"
+        //% weight=89
+        //% group="Move"
+        //% help=motors/motor/pause-until-stalled
+        pauseUntilStalled(timeOut?: number): void {
+            // let it start
+            pause(50);
+            let previous = this.angle();
+            let stall = 0;
+            pauseUntil(() => {
+                let current = this.angle();
+                if (Math.abs(current - previous) < 1) {
+                    if (stall++ > 2) {
+                        return true; // not moving
+                    }
+                } else {
+                    stall = 0;
+                    previous = current;
+                }
+                return false;
+            }, timeOut)
         }
     }
 
