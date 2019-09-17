@@ -84,6 +84,7 @@ namespace sensors {
         //% weight=65
         //% group="Ultrasonic Sensor"
         distance(): number {
+            this.poke();
             // it supposedly also has an inch mode, but we stick to cm
             this._setMode(0)
             return this._query();

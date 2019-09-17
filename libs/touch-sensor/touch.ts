@@ -73,6 +73,7 @@ namespace sensors {
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isPressed() {
+            this.poke();
             return this.button.isPressed();
         }
 
@@ -90,6 +91,7 @@ namespace sensors {
         //% weight=81
         //% group="Touch Sensor"
         wasPressed() {
+            this.poke();
             return this.button.wasPressed();
         }
     }
