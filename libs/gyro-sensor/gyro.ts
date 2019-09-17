@@ -45,6 +45,7 @@ namespace sensors {
         //% weight=64 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
+            this.poke();
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
@@ -65,6 +66,7 @@ namespace sensors {
         //% weight=65 blockGap=8
         //% group="Gyro Sensor"
         rate(): number {
+            this.poke();
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 

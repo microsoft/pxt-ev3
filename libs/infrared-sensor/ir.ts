@@ -235,6 +235,7 @@ namespace sensors {
         //% group="Infrared Sensor"
         //% this.fieldEditor="ports"
         proximity(): number {
+            this.poke();
             this._setMode(InfraredSensorMode.Proximity)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -284,6 +285,7 @@ namespace sensors {
 
         // TODO
         private getDirectionAndDistance() {
+            this.poke();
             this._setMode(InfraredSensorMode.Seek)
             return this.getNumber(NumberFormat.UInt16LE, this._channel * 2)
         }
