@@ -627,7 +627,7 @@ namespace motors {
             pauseUntil(() => {
                 let current = this.angle();
                 if (Math.abs(current - previous) < 1) {
-                    if (stall++ > 3) {
+                    if (stall++ > 2) {
                         return true; // not moving
                     }
                 } else {
