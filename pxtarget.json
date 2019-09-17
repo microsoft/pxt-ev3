@@ -101,6 +101,7 @@
         "copyrightText": "LEGO, the LEGO logo, MINDSTORMS and the MINDSTORMS EV3 logo are trademarks and/ or copyrights of the LEGO Group. ©2018 The LEGO Group. All rights reserved.",
         "crowdinProject": "kindscript",
         "selectLanguage": true,
+        "greenScreen": true,
         "availableLocales": [
             "en",
             "de",
@@ -130,6 +131,10 @@
             {
                 "name": "Reference",
                 "path": "/reference"
+            },
+            {
+                "name": "FIRST LEGO League",
+                "path": "/fll"
             }
         ],
         "print": true,

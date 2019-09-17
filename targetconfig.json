@@ -15,12 +15,13 @@
         "Color Sensor Tutorials": "tutorials/color-sensor",
         "Ultrasonic Sensor Tutorials": "tutorials/ultrasonic-sensor",
         "Infrared Sensor Tutorials": "tutorials/infrared-sensor",
+        "FLL / City Shaper / Crane Mission": "tutorials/city-shaper/crane-mission",
         "Design Engineering": "design-engineering",
         "Coding": "coding",
         "Maker": "maker",
         "Videos": "videos"
     },
     "electronManifest": {
-        "latest": "v1.0.11"
+        "latest": "v1.1.20"
     }
 }

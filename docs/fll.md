@@ -2,7 +2,9 @@
 
 ![FIRST LEGO League logo](/static/fll/fll-logo.png)
 
-**For teams participating in the Open Software Platform Pilot utilizing MakeCode**, we’ve compiled a list of resources and information that we hope will be helpful for you.
+**For teams participating in City Shaper challenge**, you can use MakeCode for your challenge (see [City Shaper Challenge, page 7 bottom](https://firstinspiresst01.blob.core.windows.net/fll/2020/city-shaper-game-guide-pdf.pdf)!
+
+We’ve compiled a list of resources and information that we hope will be helpful for you.
 
 * **Got a question? Post it on the forums** at https://forum.makecode.com/
 
@@ -17,22 +19,25 @@ If you found a bug, please try if it hasn't been fixed yet! Go to https://makeco
 * You will need to install the latest EV3 firmware on your brick. Instructions on how to do that are located here: https://makecode.mindstorms.com/troubleshoot.
 * You will need a computer with a USB port to connect to the EV3 in order to download your programs.
 * You will need internet access and a browser on your computer to get to https://makecode.mindstorms.com.
+* You can [install the app](/offline-app) to use the editor offline.
+
+### I know LabView, how is MakeCode different?
+
+We have compiled a guide for EV3 LabView users at https://makecode.mindstorms.com/labview.
 
 ### What’s the best way to get started with MakeCode?
 
-Watch some of the videos at https://makecode.mindstorms.com (at the bottom of the page).
-Try some of the provided tutorials:
+Go to https://makecode.mindstorms.com. The home screen is filled with videos, tutorials and examples that might be relevant for your missions.
 
-* [Wake Up!](@homeurl@#tutorial:tutorials/wake-up) – show your EV3 brick waking up
-* [Animation](@homeurl@#tutorial:tutorials/make-an-animation) – create a custom animation to show
-* [Music Brick](@homeurl@#tutorial:tutorials/music-brick) – transform your EV3 into a musical instrument
-* [Run Motors](@homeurl@#tutorial:tutorials/run-motors) – control the motors of your robot
-* [Red Light, Green Light](@homeurl@#tutorial:tutorials/redlight-greenlight) – play red light, green light with the color sensor
-* [Line Following](@homeurl@#tutorial:tutorials/line-following) – have your robot follow a line
+On the home page, scroll down to the **FLL / City Shaper / Crane Mission** section for specific lessons related to Mission 2.
 
 ### Can I load both LEGO MINDSTORMS EV3 Software and MakeCode programs onto my EV3?
 
 Yes.
+
+### Does it work without internet?
+
+To make sure the editor works without internet, install the [offline app](/offline-app)!
 
 ### How do I figure out what a block does?
 

@@ -123,7 +123,8 @@ namespace motors {
     //% help=motors/stop-all
     export function stopAll() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
-        writePWM(b)
+        writePWM(b);
+        pause(1);
     }
 
     /**
@@ -132,6 +133,7 @@ namespace motors {
     //% group="Move"
     export function resetAllMotors() {
         reset(Output.ALL)
+        pause(1);
     }
 
     interface MoveSchedule {
@@ -259,6 +261,8 @@ namespace motors {
             // allow 500ms for robot to settle
             if (this._brake && this._brakeSettleTime > 0)
                 pause(this._brakeSettleTime);
+            else
+                pause(1); // give a tiny breather
         }
 
         protected pauseOnRun(stepsOrTime: number) {
@@ -267,6 +271,9 @@ namespace motors {
                 this.pauseUntilReady();
                 // allow robot to settle
                 this.settle();
+            } else {
+                // give a breather to the event system in tight loops
+                pause(1);
             }
         }
 
@@ -334,6 +341,7 @@ namespace motors {
             // special: 0 is infinity
             if (schedule.steps[0] + schedule.steps[1] + schedule.steps[2] == 0) {
                 this._run(schedule.speed);
+                pause(1);
                 return;
             }
 
@@ -724,7 +732,7 @@ namespace motors {
             this.init();
             speed = Math.clamp(-100, 100, speed >> 0);
             if (!speed) {
-                stop(this._port, this._brake);
+                this.stop();
                 return;
             }
 

@@ -179,6 +179,7 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         color(): ColorSensorColor {
+            this.poke();
             this.setMode(ColorSensorMode.Color)
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
@@ -196,6 +197,7 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         rgbRaw(): number[] {
+            this.poke();
             this.setMode(ColorSensorMode.RgbRaw);
             return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
         }
@@ -249,6 +251,7 @@ namespace sensors {
         //% weight=87 blockGap=8
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
+            this.poke();
             this.setMode(<ColorSensorMode><number>mode)
             switch(mode) {
                 case LightIntensityMode.ReflectedRaw:
@@ -279,6 +282,7 @@ namespace sensors {
          */
         //%
         reflectedLightRaw(): number {
+            this.poke();
             this.setMode(ColorSensorMode.RefRaw);
             return this.getNumber(NumberFormat.UInt16LE, 0);
         }

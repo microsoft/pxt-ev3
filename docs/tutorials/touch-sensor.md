@@ -16,10 +16,10 @@
   "url":"/tutorials/touch-sensor-values",
   "imageUrl":"/static/tutorials/touch-sensor-values.png"
 }, {
-  "name": "Pause Until Pressed",
+  "name": "Stop At Object",
   "description": "Waits for the sensor to be pressed before continuing the program",
   "cardType": "tutorial",
-  "url":"/tutorials/pause-until-pressed",
+  "url":"/tutorials/stop-at-object",
   "imageUrl":"/static/tutorials/pause-until-pressed.png"
 }]
 ```
@@ -28,4 +28,4 @@
 
 [Touch to Run](/tutorials/touch-to-run),
 [Touch Sensor Values](/tutorials/touch-sensor-values),
-[Pause Until Pressed](/tutorials/pause-until-pressed)
+[Stop At Object](/tutorials/stop-at-object)

@@ -213,6 +213,12 @@ Here are some fun programs for your @boardname@!
   "url":"/examples/happy-unhappy",
   "cardType": "example"
 }, {
+{
+  "name": "Turtle",
+  "description": "Encode moves and run them on a driving base",
+  "url":"/examples/turtle",
+  "cardType": "example"
+}, {
   "name": "Distance Measurer",
   "description": "Use a motor to measure angle and distance",
   "url": "/examples/distance-measurer",
