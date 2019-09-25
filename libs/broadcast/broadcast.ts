@@ -2,7 +2,7 @@
  * Message broadcasting
  */
 //% weight=70
-//% color="#00ac00"
+//% color="#58AB41"
 namespace broadcast {
     const broadcastEventId = control.allocateNotifyEvent();
     const broadcastDoneEventId = control.allocateNotifyEvent();
