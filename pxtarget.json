@@ -17,7 +17,8 @@
         "libs/gyro-sensor",
         "libs/screen",
         "libs/ev3",
-        "libs/storage"
+        "libs/storage",
+        "libs/broadcast"
     ],
     "simulator": {
         "autoRun": true,
