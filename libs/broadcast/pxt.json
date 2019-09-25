@@ -1,0 +1,11 @@
+{
+    "name": "broadcast",
+    "description": "Broadcasting messages - beta",
+    "files": [
+        "broadcast.ts"
+    ],
+    "public": true,
+    "dependencies": {
+            "core": "file:../core"
+    }
+}
