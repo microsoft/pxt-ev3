@@ -27,6 +27,12 @@
   "cardType": "tutorial",
   "url":"/tutorials/music-brick",
   "imageUrl":"/static/tutorials/music-brick.png"
+}, {
+  "name": "Pause On Start",
+  "description": "Don't start running immediately!",
+  "cardType": "tutorial",
+  "url":"/tutorials/pause-on-start",
+  "imageUrl":"/static/tutorials/pause-on-start.png"
 }]
 ```
 

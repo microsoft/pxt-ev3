@@ -29,7 +29,7 @@ We have compiled a guide for EV3 LabView users at https://makecode.mindstorms.co
 
 Go to https://makecode.mindstorms.com. The home screen is filled with videos, tutorials and examples that might be relevant for your missions.
 
-On the home page, scroll down to the **FLL / City Shaper / Crane Mission** section for specific lessons related to Mission 2.
+On the home page, scroll down to the **FLL / City Shaper** section for specific lessons related to Mission 2.
 
 ### Can I load both LEGO MINDSTORMS EV3 Software and MakeCode programs onto my EV3?
 
@@ -37,7 +37,7 @@ Yes.
 
 ### Does it work without internet?
 
-To make sure the editor works without internet, install the [offline app](/offline-app)!
+No, the editor is cached in your browser cache. However, you can also download the [offline app](/offline-app) in case you need to install it on a computer.
 
 ### How do I figure out what a block does?
 
