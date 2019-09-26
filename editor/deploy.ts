@@ -6,7 +6,7 @@ import UF2 = pxtc.UF2;
 export let ev3: pxt.editor.Ev3Wrapper
 
 export function debug() {
-    return initAsync()
+    return initHidAsync()
         .then(w => w.downloadFileAsync("/tmp/dmesg.txt", v => console.log(pxt.Util.uint8ArrayToString(v))))
 }
 
@@ -35,9 +35,10 @@ type SerialPortInfo = pxt.Map<string>;
 type SerialPortRequestOptions = any;
 declare class SerialPort {
     open(options?: SerialOptions): Promise<void>;
+    close(): void;
     readonly in: any;
     readonly out: any;
-    getInfo(): SerialPortInfo;
+    //getInfo(): SerialPortInfo;
 }
 declare interface Serial extends EventTarget {
     onconnect: any;
@@ -64,16 +65,15 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         const serial = (<any>navigator).serial;
         if (serial) {
             console.log(`web serial detected`)
-            const requestOptions = {
-                // Filter on devices with the Arduino USB vendor ID.
-                filters: [{ vendorId: 0x2341 }],
-            };
-            const port = await serial.requestPort(requestOptions);
-            const info = port.getInfo();
-            console.log(`port info`, info);
-            if (port) return new WebSerialPackageIO(port, {
-                baudrate: 115200,
-            });
+            try {
+                const requestOptions: SerialPortRequestOptions = {};
+                const port = await serial.requestPort(requestOptions);
+                if (port) return new WebSerialPackageIO(port, {
+                    baudrate: 9600,
+                });
+            } catch (e) { 
+                console.log(`connection error`, e)
+            }
         }
 
         return undefined;
@@ -92,6 +92,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
     async disconnectAsync(): Promise<void> {
         console.log(`serial: disconnect`);
+        this.port.close();
         return Promise.resolve();
     }
 
@@ -102,7 +103,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 }
 
 function hf2Async() {
-    const pktIOAsync = WebSerialPackageIO.isSupported() 
+    const pktIOAsync = WebSerialPackageIO.isSupported()
         ? WebSerialPackageIO.mkPacketIOAsync() : pxt.HF2.mkPacketIOAsync()
     return pktIOAsync
         .then(h => {
@@ -114,13 +115,8 @@ function hf2Async() {
 }
 
 let noHID = false
-
-let initPromise: Promise<pxt.editor.Ev3Wrapper>
-export function initAsync() {
-    if (initPromise)
-        return initPromise
-
-    let canHID = false
+let canHID = false;
+export function initAsync(): Promise<void> {
     if (pxt.U.isNodeJS) {
         // doesn't seem to work ATM
         canHID = false
@@ -135,6 +131,14 @@ export function initAsync() {
     if (noHID)
         canHID = false
 
+    console.log(`nohid ${noHID} canHID ${canHID}`)
+    return Promise.resolve();
+}
+
+let initPromise: Promise<pxt.editor.Ev3Wrapper>
+function initHidAsync() { // needs to run within a click handler
+    if (initPromise)
+        return initPromise
     if (canHID) {
         initPromise = hf2Async()
             .catch(err => {
@@ -146,8 +150,7 @@ export function initAsync() {
         noHID = true
         initPromise = Promise.reject(new Error("no HID"))
     }
-
-    return initPromise
+    return initPromise;
 }
 
 // this comes from aux/pxt.lms
@@ -204,7 +207,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
 
     if (noHID) return saveUF2Async()
 
-    return initAsync()
+    return initHidAsync()
         .then(w_ => {
             w = w_
             if (w.isStreaming)
