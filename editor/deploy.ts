@@ -69,7 +69,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         let buffer: Uint8Array;
         while (!!this._reader) {
             const { done, value } = await this._reader.read()
-            console.log(`serial: ${done}`, value)
             if (!buffer) buffer = value;
             else { // concat
                 let tmp = new Uint8Array(buffer.length + value.byteLength)
@@ -91,7 +90,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     static async mkPacketIOAsync(): Promise<pxt.HF2.PacketIO> {
         const serial = (<any>navigator).serial;
         if (serial) {
-            console.log(`web serial detected`)
             try {
                 const requestOptions: SerialPortRequestOptions = {};
                 const port = await serial.requestPort(requestOptions);
@@ -108,7 +106,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
             }
         }
 
-        console.log(`unable to setup serial`)
         return undefined;
     }
 
@@ -118,7 +115,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     async reconnectAsync(): Promise<void> {
-        console.log(`serial: reconnect`);
         if (!this._reader) {
             await this.port.open(this.options);
             this.readSerialAsync();
@@ -127,7 +123,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     async disconnectAsync(): Promise<void> {
-        console.log(`serial: disconnect`);
         this.port.close();
         this._reader = undefined;
         this._writer = undefined;
@@ -135,7 +130,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
-        console.log(`serial: send ${pkt.length} bytes`)
         if (!this._writer)
             this._writer = this.port.writable.getWriter();
         return this._writer.write(pkt);
