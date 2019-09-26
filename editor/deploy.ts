@@ -66,10 +66,21 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
     async readSerialAsync() {
         this._reader = this.port.readable.getReader();
+        let buffer: Uint8Array;
         while(!!this._reader) {
             const { done, value } = await this._reader.read()
             console.log(`serial: ${done}`, value)
-            if (this.onData) this.onData(new Uint8Array(value));
+            if (!buffer) buffer = value;
+            else { // concat
+                let tmp = new Uint8Array(buffer.length + value.byteLength)
+                tmp.set(buffer, 0)
+                tmp.set(value, buffer.length)
+                buffer = tmp;
+            }
+            if (buffer.length >= 6) {
+                this.onData(new Uint8Array(buffer));
+                buffer = undefined;
+            }
         }
     }
 
@@ -86,6 +97,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                 const port = await serial.requestPort(requestOptions);
                 const options: SerialOptions = {
                     baudrate: 115200,
+                    buffersize: 1024    
                 };
                 await port.open(options);
                 if (port) {
