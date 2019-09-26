@@ -13,6 +13,7 @@ export function debug() {
 
 
 // Web Serial API https://wicg.github.io/serial/
+// chromium bug https://bugs.chromium.org/p/chromium/issues/detail?id=884928
 // Under experimental features in Chrome Desktop 77+
 enum ParityType {
     "none",
@@ -54,8 +55,22 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     onEvent: (v: Uint8Array) => void;
     onSerial: (v: Uint8Array, isErr: boolean) => void;
     sendSerialAsync: (buf: Uint8Array, useStdErr: boolean) => Promise<void>;
+    private _reader: any;
+    private _writer: any;
 
     constructor(private port: SerialPort, private options: SerialOptions) {
+
+        // start reading
+        this.readSerialAsync();
+    }
+
+    async readSerialAsync() {
+        this._reader = this.port.readable.getReader();
+        while(!!this._reader) {
+            const { done, value } = await this._reader.read()
+            console.log(`serial: ${done}`, value)
+            if (this.onData) this.onData(new Uint8Array(value));
+        }
     }
 
     static isSupported(): boolean {
@@ -70,7 +85,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                 const requestOptions: SerialPortRequestOptions = {};
                 const port = await serial.requestPort(requestOptions);
                 const options: SerialOptions = {
-                    baudrate: 460800,
+                    baudrate: 115200,
                 };
                 await port.open(options);
                 if (port) {
@@ -93,18 +108,23 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     async reconnectAsync(): Promise<void> {
         console.log(`serial: reconnect`)
         await this.port.open(this.options);
+        this.readSerialAsync();
         return Promise.resolve();
     }
 
     async disconnectAsync(): Promise<void> {
         console.log(`serial: disconnect`);
         this.port.close();
+        this._reader = undefined;
+        this._writer = undefined;
         return Promise.resolve();
     }
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
         console.log(`serial: send ${pkt.length} bytes`)
-        return this.port.writable.getWriter().write(pkt);
+        if (!this._writer)
+            this._writer = this.port.writable.getWriter();
+        return this._writer.write(pkt);
     }
 }
 
@@ -217,9 +237,6 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             w = w_
             if (w.isStreaming)
                 pxt.U.userError("please stop the program first")
-            return debug();
-        })
-        .then(() => {
             return w.stopAsync()
         })
         .then(() => w.rmAsync(elfPath))
