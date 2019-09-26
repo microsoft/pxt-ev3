@@ -1,28 +1,18 @@
 /// <reference path="../node_modules/pxt-core/built/pxteditor.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
-import { deployCoreAsync, initAsync } from "./deploy";
+import { deployCoreAsync, initAsync, canUseWebSerial, enableWebSerial } from "./deploy";
 
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
     const res: pxt.editor.ExtensionResult = {
         deployCoreAsync,
         showUploadInstructionsAsync: (fn: string, url: string, confirmAsync: (options: any) => Promise<number>) => {
-            let resolve: (thenableOrResult?: void | PromiseLike<void>) => void;
-            let reject: (error: any) => void;
-            const deferred = new Promise<void>((res, rej) => {
-                resolve = res;
-                reject = rej;
-            });
-            const boardName = pxt.appTarget.appTheme.boardName || "???";
-            const boardDriveName = pxt.appTarget.appTheme.driveDisplayName || pxt.appTarget.compile.driveName || "???";
-
             // https://msdn.microsoft.com/en-us/library/cc848897.aspx
             // "For security reasons, data URIs are restricted to downloaded resources. 
             // Data URIs cannot be used for navigation, for scripting, or to populate frame or iframe elements"
             const downloadAgain = !pxt.BrowserUtils.isIE() && !pxt.BrowserUtils.isEdge();
             const docUrl = pxt.appTarget.appTheme.usbDocs;
-            const saveAs = pxt.BrowserUtils.hasSaveAs();
 
             const htmlBody = `
             <div class="ui grid stackable">
@@ -84,7 +74,14 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                 hideAgree: false,
                 agreeLbl: lf("I got it"),
                 className: 'downloaddialog',
-                buttons: [downloadAgain ? {
+                buttons: [canUseWebSerial ? {
+                    label: lf("Use Bluetooth (beta)"),
+                    icon: "bluetooth",
+                    className: "bluetooth focused",
+                    onclick: () => {
+                        enableWebSerial();
+                    }
+                } : undefined, downloadAgain ? {
                     label: fn,
                     icon: "download",
                     className: "lightgrey focused",

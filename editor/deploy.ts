@@ -98,15 +98,13 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                     buffersize: 4096
                 };
                 await port.open(options);
-                if (port) {
+                if (port)
                     return new WebSerialPackageIO(port, options);
-                }
             } catch (e) {
                 console.log(`connection error`, e)
             }
         }
-
-        return undefined;
+        throw new Error("could not open serial port");
     }
 
     error(msg: string): any {
@@ -137,7 +135,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 }
 
 function hf2Async() {
-    const pktIOAsync: Promise<pxt.HF2.PacketIO> = WebSerialPackageIO.isSupported()
+    const pktIOAsync: Promise<pxt.HF2.PacketIO> = useWebSerial
         ? WebSerialPackageIO.mkPacketIOAsync() : pxt.HF2.mkPacketIOAsync()
     return pktIOAsync.then(h => {
         let w = new Ev3Wrapper(h)
@@ -148,19 +146,27 @@ function hf2Async() {
 }
 
 let useHID = false;
+let useWebSerial = false;
 export function initAsync(): Promise<void> {
     if (pxt.U.isNodeJS) {
         // doesn't seem to work ATM
         useHID = false
     } else {
-        const forceHexDownload = /forceHexDownload/i.test(window.location.href);
-        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
-            useHID = true;
-        else if (WebSerialPackageIO.isSupported())
+        const nodehid = /nodehid/i.test(window.location.href);
+        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && nodehid)
             useHID = true;
     }
 
     return Promise.resolve();
+}
+
+export function canUseWebSerial() {
+    return WebSerialPackageIO.isSupported();
+}
+
+export function enableWebSerial() {
+    initPromise = undefined;
+    useHID = useWebSerial = WebSerialPackageIO.isSupported();
 }
 
 let initPromise: Promise<Ev3Wrapper>
@@ -176,7 +182,7 @@ function initHidAsync() { // needs to run within a click handler
                 return Promise.reject(err)
             })
     } else {
-        useHID = true
+        useHID = false
         initPromise = Promise.reject(new Error("no HID"))
     }
     return initPromise;
