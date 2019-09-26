@@ -62,11 +62,14 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     static async mkPacketIOAsync(): Promise<WebSerialPackageIO> {
         const serial = (<any>navigator).serial;
         if (serial) {
+            console.log(`web serial detected`)
             const requestOptions = {
                 // Filter on devices with the Arduino USB vendor ID.
                 filters: [{ vendorId: 0x2341 }],
             };
             const port = await serial.requestPort(requestOptions);
+            const info = port.getInfo();
+            console.log(`port info`, info);
             if (port) return new WebSerialPackageIO(port, {
                 baudrate: 115200,
             });
@@ -76,6 +79,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     error(msg: string): any {
+        console.error(msg);
         throw new Error(lf("error on brick ({0})", msg))
     }
 
@@ -91,6 +95,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
+        console(`serial: send ${pkt.length} bytes`)
         return this.port.out.getWriter().write(pkt);
     }
 }
