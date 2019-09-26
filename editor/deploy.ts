@@ -10,8 +10,94 @@ export function debug() {
         .then(w => w.downloadFileAsync("/tmp/dmesg.txt", v => console.log(pxt.Util.uint8ArrayToString(v))))
 }
 
+
+// Web Serial API
+enum ParityType {
+    "none",
+    "even",
+    "odd",
+    "mark",
+    "space"
+}
+declare interface SerialOptions {
+    baudrate?: number;
+    databits?: number;
+    stopbits?: number;
+    parity?: ParityType;
+    buffersize?: number;
+    rtscts?: boolean;
+    xon?: boolean;
+    xoff?: boolean;
+    xany?: boolean;
+}
+type SerialPortInfo = pxt.Map<string>;
+declare class SerialPort {
+    open(options?: SerialOptions): Promise<void>;
+    readonly in: ReadableStream;
+    readonly out: WritableStream;
+    getInfo(): SerialPortInfo;
+}
+declare interface Serial extends EventTarget {
+    onconnect: EventHandler;
+    ondisconnect: EventHandler;
+    getPorts(): Promise<SerialPort[]>
+    requestPort(options: SerialPortRequestOptions): Promise<SerialPort>;
+}
+
+class WebSerialPackageIO implements pxt.HF2.PacketIO {
+    onData: (v: Uint8Array) => void;
+    onError: (e: Error) => void;
+    onEvent: (v: Uint8Array) => void;
+    onSerial: (v: Uint8Array, isErr: boolean) => void;
+    sendSerialAsync: (buf: Uint8Array, useStdErr: boolean) => Promise<void>;
+
+    constructor(private port: SerialPort, private options: SerialOptions) {
+    }
+
+    static isSupported(): boolean {
+        return !!(<any>navigator).serial;
+    }
+
+    static async mkPacketIOAsync(): Promise<WebSerialPackageIO> {
+        const serial = (<any>navigator).serial;
+        if (serial) {
+            const requestOptions = {
+                // Filter on devices with the Arduino USB vendor ID.
+                filters: [{ vendorId: 0x2341 }],
+            };
+            const port = await serial.requestPort(requestOptions);
+            if (port) return new WebSerialPackageIO(port, {
+                baudrate: 115200,
+            });
+        }
+
+        return undefined;
+    }
+
+    error(msg: string): any {
+        throw new Error(lf("error on brick ({0})", msg))
+    }
+
+    async reconnectAsync(): Promise<void> {
+        console.log(`serial: reconnect`)
+        await this.port.open(this.options);
+        return Promise.resolve();
+    }
+
+    async disconnectAsync(): Promise<void> {
+        console.log(`serial: disconnect`);
+        return Promise.resolve();
+    }
+
+    sendPacketAsync(pkt: Uint8Array): Promise<void> {
+        return this.port.out.getWriter().write(pkt);
+    }
+}
+
 function hf2Async() {
-    return pxt.HF2.mkPacketIOAsync()
+    const pktIOAsync = WebSerialPackageIO.isSupported() 
+        ? WebSerialPackageIO.mkPacketIOAsync() : pxt.HF2.mkPacketIOAsync()
+    return pktIOAsync
         .then(h => {
             let w = new pxt.editor.Ev3Wrapper(h)
             ev3 = w
@@ -34,7 +120,9 @@ export function initAsync() {
     } else {
         const forceHexDownload = /forceHexDownload/i.test(window.location.href);
         if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
-            canHID = true
+            canHID = true;
+        else if (WebSerialPackageIO.isSupported())
+            canHID = true;
     }
 
     if (noHID)
