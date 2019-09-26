@@ -178,11 +178,15 @@ function initHidAsync() { // needs to run within a click handler
             .catch(err => {
                 console.error(err);
                 initPromise = null
-                useHID = true
-                return Promise.reject(err)
+                useHID = false;
+                useWebSerial = false;
+                // cleanup
+                let p = ev3  ? ev3.disconnectAsync().catch(e => {}) : Promise.resolve();
+                return p.then(() => Promise.reject(err))
             })
     } else {
         useHID = false
+        useWebSerial = false;
         initPromise = Promise.reject(new Error("no HID"))
     }
     return initPromise;
@@ -257,10 +261,9 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             return w.disconnectAsync()
             //return Promise.delay(1000).then(() => w.dmesgAsync())
         }).catch(e => {
-            // if we failed to initalize, retry
-            if (!useHID)
-                return saveUF2Async()
-            else
-                return Promise.reject(e)
+            useHID = false;
+            useWebSerial = false;
+            // if we failed to initalize, tell the user to retry
+            return Promise.reject(e)
         })
 }
