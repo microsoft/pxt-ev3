@@ -15,7 +15,7 @@ At first, it's nice to know that your program is running. Plug in a ``||brick:sh
 into the ``||loops:on start||`` block. Change the image to something else if you want!
 
 ```blocks
-brick.showMood(moods.neutral)
+brick.showMood(moods.sleeping)
 ```
 
 ## Step 3 - Try your code @fullscreen
@@ -29,7 +29,7 @@ As you may have noticed, the code starts running immediately once you download i
 from rolling away, add a ``||brick:pause until enter pressed||`` button to wait for the user to press enter.
 
 ```blocks
-brick.showMood(moods.neutral)
+brick.showMood(moods.sleeping)
 brick.buttonEnter.pauseUntil(ButtonEvent.Pressed)
 ```
 
@@ -39,8 +39,9 @@ Drag a ``||motors:steer motors||`` block from the **MOTORS** toolbox drawer and 
 Click on the **(+)** symbol and make sure to tell your motors to turn **1** rotation.
 
 ```blocks
-brick.showMood(moods.neutral)
+brick.showMood(moods.sleeping)
 brick.buttonEnter.pauseUntil(ButtonEvent.Pressed)
+brick.showMood(moods.neutral)
 motors.largeBC.steer(0, 50, 1, MoveUnit.Rotations)
 ```
 
