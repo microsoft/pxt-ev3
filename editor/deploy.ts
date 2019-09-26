@@ -31,6 +31,7 @@ declare interface SerialOptions {
     xany?: boolean;
 }
 type SerialPortInfo = pxt.Map<string>;
+type SerialPortRequestOptions = any;
 declare class SerialPort {
     open(options?: SerialOptions): Promise<void>;
     readonly in: ReadableStream;
@@ -38,8 +39,8 @@ declare class SerialPort {
     getInfo(): SerialPortInfo;
 }
 declare interface Serial extends EventTarget {
-    onconnect: EventHandler;
-    ondisconnect: EventHandler;
+    onconnect: any;
+    ondisconnect: any;
     getPorts(): Promise<SerialPort[]>
     requestPort(options: SerialPortRequestOptions): Promise<SerialPort>;
 }
