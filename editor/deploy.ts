@@ -147,24 +147,19 @@ function hf2Async() {
     })
 }
 
-let noHID = false
-let canHID = false;
+let useHID = false;
 export function initAsync(): Promise<void> {
     if (pxt.U.isNodeJS) {
         // doesn't seem to work ATM
-        canHID = false
+        useHID = false
     } else {
         const forceHexDownload = /forceHexDownload/i.test(window.location.href);
         if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
-            canHID = true;
+            useHID = true;
         else if (WebSerialPackageIO.isSupported())
-            canHID = true;
+            useHID = true;
     }
 
-    if (noHID)
-        canHID = false
-
-    console.log(`nohid ${noHID} canHID ${canHID}`)
     return Promise.resolve();
 }
 
@@ -172,16 +167,16 @@ let initPromise: Promise<Ev3Wrapper>
 function initHidAsync() { // needs to run within a click handler
     if (initPromise)
         return initPromise
-    if (canHID) {
+    if (useHID) {
         initPromise = hf2Async()
             .catch(err => {
                 console.error(err);
                 initPromise = null
-                noHID = true
+                useHID = true
                 return Promise.reject(err)
             })
     } else {
-        noHID = true
+        useHID = true
         initPromise = Promise.reject(new Error("no HID"))
     }
     return initPromise;
@@ -237,7 +232,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
         return Promise.resolve();
     }
 
-    if (noHID) return saveUF2Async()
+    if (!useHID) return saveUF2Async()
 
     let w: Ev3Wrapper;
     return initHidAsync()
@@ -257,7 +252,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             //return Promise.delay(1000).then(() => w.dmesgAsync())
         }).catch(e => {
             // if we failed to initalize, retry
-            if (noHID)
+            if (!useHID)
                 return saveUF2Async()
             else
                 return Promise.reject(e)
