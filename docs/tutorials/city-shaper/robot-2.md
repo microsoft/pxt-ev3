@@ -25,6 +25,7 @@ After downloading your code, press **UP** to move the robot.
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
+    brick.showMood(moods.awake)
     motors.largeBC.steer(0, 50, 1, MoveUnit.Rotations)
 })
 brick.showMood(moods.neutral)
@@ -38,6 +39,7 @@ Drag a ``||motors:set brake||`` block into the ``||loops:on start||`` and set it
 
 ```blocks
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
+    brick.showMood(moods.awake)
     motors.largeBC.steer(0, 50, 1, MoveUnit.Rotations)
 })
 brick.showMood(moods.neutral)
@@ -53,9 +55,11 @@ Put a ``||motors:steer motors||`` in for that button and set the turn ratio to d
 
 ```blocks
 brick.buttonLeft.onEvent(ButtonEvent.Pressed, function () {
+    brick.showMood(moods.middleLeft)
     motors.largeBC.steer(-50, 50, 1, MoveUnit.Rotations)
 })
 brick.buttonRight.onEvent(ButtonEvent.Pressed, function () {
+    brick.showMood(moods.middleRight)
     motors.largeBC.steer(50, 50, 1, MoveUnit.Rotations)
 })
 ```
@@ -67,6 +71,7 @@ Add a ``||motors:steer motors||`` to an ``||brick:on button||`` block and change
 
 ```blocks
 brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
+    brick.showMood(moods.knockedOut)
     motors.largeBC.steer(0, -50, 1, MoveUnit.Rotations)
 })
 ```
@@ -85,6 +90,7 @@ Create a program that moves the Driving Base and makes it stop 6 cm from the Cub
 
 ```blocks
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
+    brick.showMood(moods.dizzy)
     motors.largeBC.steer(0, 50)
     pauseUntil(() => sensors.ultrasonic4.distance() < 6)
     motors.largeBC.stop()
