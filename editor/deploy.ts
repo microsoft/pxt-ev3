@@ -77,7 +77,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                 tmp.set(value, buffer.length)
                 buffer = tmp;
             }
-            if (buffer.length >= 6) {
+            if (buffer && buffer.length >= 6) {
                 this.onData(new Uint8Array(buffer));
                 buffer = undefined;
             }
