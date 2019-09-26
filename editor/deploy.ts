@@ -96,8 +96,8 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                 const requestOptions: SerialPortRequestOptions = {};
                 const port = await serial.requestPort(requestOptions);
                 const options: SerialOptions = {
-                    baudrate: 115200,
-                    buffersize: 1024    
+                    baudrate: 460800,
+                    buffersize: 4096    
                 };
                 await port.open(options);
                 if (port) {
@@ -249,7 +249,8 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             w = w_
             if (w.isStreaming)
                 pxt.U.userError("please stop the program first")
-            return w.stopAsync()
+                w.reconnectAsync(true)
+                return w.stopAsync()
         })
         .then(() => w.rmAsync(elfPath))
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))
