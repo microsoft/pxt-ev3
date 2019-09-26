@@ -11,7 +11,8 @@ export function debug() {
 }
 
 
-// Web Serial API
+// Web Serial API https://wicg.github.io/serial/
+// Under experimental features in Chrome Desktop 77+
 enum ParityType {
     "none",
     "even",
@@ -34,8 +35,8 @@ type SerialPortInfo = pxt.Map<string>;
 type SerialPortRequestOptions = any;
 declare class SerialPort {
     open(options?: SerialOptions): Promise<void>;
-    readonly in: ReadableStream;
-    readonly out: WritableStream;
+    readonly in: ReadableStream<any>;
+    readonly out: WritableStream<any>;
     getInfo(): SerialPortInfo;
 }
 declare interface Serial extends EventTarget {
@@ -95,7 +96,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
-        console(`serial: send ${pkt.length} bytes`)
+        console.log(`serial: send ${pkt.length} bytes`)
         return this.port.out.getWriter().write(pkt);
     }
 }
