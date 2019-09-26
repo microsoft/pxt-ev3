@@ -67,7 +67,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     async readSerialAsync() {
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
-        while(!!this._reader) {
+        while (!!this._reader) {
             const { done, value } = await this._reader.read()
             console.log(`serial: ${done}`, value)
             if (!buffer) buffer = value;
@@ -97,7 +97,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                 const port = await serial.requestPort(requestOptions);
                 const options: SerialOptions = {
                     baudrate: 460800,
-                    buffersize: 4096    
+                    buffersize: 4096
                 };
                 await port.open(options);
                 if (port) {
@@ -118,9 +118,11 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     async reconnectAsync(): Promise<void> {
-        console.log(`serial: reconnect`)
-        await this.port.open(this.options);
-        this.readSerialAsync();
+        console.log(`serial: reconnect`);
+        if (!this._reader) {
+            await this.port.open(this.options);
+            this.readSerialAsync();
+        }
         return Promise.resolve();
     }
 
@@ -249,9 +251,9 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             w = w_
             if (w.isStreaming)
                 pxt.U.userError("please stop the program first")
-                w.reconnectAsync(true)
-                return w.stopAsync()
+            return w.reconnectAsync(false)
         })
+        .then(() => w.stopAsync())
         .then(() => w.rmAsync(elfPath))
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))
         .then(() => w.flashAsync(rbfPath, rbfBIN))
