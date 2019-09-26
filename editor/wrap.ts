@@ -2,7 +2,7 @@ import HF2 = pxt.HF2
 import U = pxt.U
 
 function log(msg: string) {
-    pxt.log("EWRAP: " + msg)
+    pxt.debug("EWRAP: " + msg)
 }
 
 export interface DirEntry {
@@ -30,7 +30,7 @@ export class Ev3Wrapper {
                 if (code == 1) {
                     let str = U.uint8ArrayToString(payload)
                     if (U.isNodeJS)
-                        console.log("SERIAL: " + str.replace(/\n+$/, ""))
+                        pxt.debug("SERIAL: " + str.replace(/\n+$/, ""))
                     else
                         window.postMessage({
                             type: 'serial',
@@ -38,7 +38,7 @@ export class Ev3Wrapper {
                             data: str
                         }, "*")
                 } else
-                    console.log("Magic: " + code + ": " + U.toHex(payload))
+                    pxt.debug("Magic: " + code + ": " + U.toHex(payload))
                 return
             }
             if (this.dataDump)
