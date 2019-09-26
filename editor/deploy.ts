@@ -2,8 +2,9 @@
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
 import UF2 = pxtc.UF2;
+import { Ev3Wrapper } from "./wrap";
 
-export let ev3: pxt.editor.Ev3Wrapper
+export let ev3: Ev3Wrapper
 
 export function debug() {
     return initHidAsync()
@@ -36,8 +37,8 @@ type SerialPortRequestOptions = any;
 declare class SerialPort {
     open(options?: SerialOptions): Promise<void>;
     close(): void;
-    readonly in: any;
-    readonly out: any;
+    readonly readable: any;
+    readonly writable: any;
     //getInfo(): SerialPortInfo;
 }
 declare interface Serial extends EventTarget {
@@ -61,21 +62,25 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         return !!(<any>navigator).serial;
     }
 
-    static async mkPacketIOAsync(): Promise<WebSerialPackageIO> {
+    static async mkPacketIOAsync(): Promise<pxt.HF2.PacketIO> {
         const serial = (<any>navigator).serial;
         if (serial) {
             console.log(`web serial detected`)
             try {
                 const requestOptions: SerialPortRequestOptions = {};
                 const port = await serial.requestPort(requestOptions);
-                if (port) return new WebSerialPackageIO(port, {
+                const options: SerialOptions = {
                     baudrate: 9600,
-                });
-            } catch (e) { 
+                };
+                await port.open(options);
+                if (port)
+                    return new WebSerialPackageIO(port, options);
+            } catch (e) {
                 console.log(`connection error`, e)
             }
         }
 
+        console.log(`unable to setup serial`)
         return undefined;
     }
 
@@ -98,20 +103,19 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
         console.log(`serial: send ${pkt.length} bytes`)
-        return this.port.out.getWriter().write(pkt);
+        return this.port.writable.getWriter().write(pkt);
     }
 }
 
 function hf2Async() {
-    const pktIOAsync = WebSerialPackageIO.isSupported()
+    const pktIOAsync: Promise<pxt.HF2.PacketIO> = WebSerialPackageIO.isSupported()
         ? WebSerialPackageIO.mkPacketIOAsync() : pxt.HF2.mkPacketIOAsync()
-    return pktIOAsync
-        .then(h => {
-            let w = new pxt.editor.Ev3Wrapper(h)
-            ev3 = w
-            return w.reconnectAsync(true)
-                .then(() => w)
-        })
+    return pktIOAsync.then(h => {
+        let w = new Ev3Wrapper(h)
+        ev3 = w
+        return w.reconnectAsync(true)
+            .then(() => w)
+    })
 }
 
 let noHID = false
@@ -135,13 +139,14 @@ export function initAsync(): Promise<void> {
     return Promise.resolve();
 }
 
-let initPromise: Promise<pxt.editor.Ev3Wrapper>
+let initPromise: Promise<Ev3Wrapper>
 function initHidAsync() { // needs to run within a click handler
     if (initPromise)
         return initPromise
     if (canHID) {
         initPromise = hf2Async()
             .catch(err => {
+                console.error(err);
                 initPromise = null
                 noHID = true
                 return Promise.reject(err)
@@ -159,8 +164,6 @@ const rbfTemplate = `
 74617274696e672e2e2e0084006080XX00448581644886488405018130813e80427965210084000a
 `
 export function deployCoreAsync(resp: pxtc.CompileResult) {
-    let w: pxt.editor.Ev3Wrapper
-
     let filename = resp.downloadFileBaseName || "pxt"
     filename = filename.replace(/^lego-/, "")
 
@@ -207,6 +210,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
 
     if (noHID) return saveUF2Async()
 
+    let w: Ev3Wrapper;
     return initHidAsync()
         .then(w_ => {
             w = w_
