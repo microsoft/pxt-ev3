@@ -166,7 +166,8 @@ export function canUseWebSerial() {
 
 export function enableWebSerial() {
     initPromise = undefined;
-    useHID = useWebSerial = WebSerialPackageIO.isSupported();
+    useWebSerial = WebSerialPackageIO.isSupported();
+    useHID = useWebSerial;
 }
 
 let initPromise: Promise<Ev3Wrapper>

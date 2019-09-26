@@ -74,7 +74,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                 hideAgree: false,
                 agreeLbl: lf("I got it"),
                 className: 'downloaddialog',
-                buttons: [canUseWebSerial ? {
+                buttons: [canUseWebSerial() ? {
                     label: lf("Bluetooth"),
                     icon: "bluetooth",
                     className: "bluetooth focused",
