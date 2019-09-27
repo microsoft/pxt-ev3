@@ -3,6 +3,8 @@
 This page describes the procedure to download MakeCode program to the EV3 brick 
 over Bluetooth.
 
+## ~ hint
+
 ### WARNING: EXPERIMENTAL FEATURES AHEAD! 
 
 Support for Bluetooth download relies on [Web Serial](https://wicg.github.io/serial/),
@@ -12,10 +14,12 @@ it may change or be removed in future versions without notice.
 By enabling these experimental browser features, you could lose browser data or compromise your security 
 or privacy.
 
+## ~
+
 ## Supported browsers
 
-* Chrome desktop, version 77 and higher
-* [Edge Insider desktop](https://www.microsoftedgeinsider.com), version 77 and higher
+* Chrome desktop, version 77 and higher, Windows 10
+* [Edge Insider desktop](https://www.microsoftedgeinsider.com), version 77 and higher, Windows 10
 
 ## Machine Setup
 
