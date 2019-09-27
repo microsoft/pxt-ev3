@@ -128,6 +128,7 @@ namespace brick {
         if (screenMode == ScreenMode.Ports) return;
 
         screenMode = ScreenMode.Ports;
+        renderPorts();
         control.runInParallel(function() {
             while(screenMode == ScreenMode.Ports) {
                 renderPorts();
