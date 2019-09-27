@@ -11,7 +11,7 @@ Support for Bluetooth download relies on [Web Serial](https://wicg.github.io/ser
 an experimental browser feature. Web Serial is a work [in progress](https://www.chromestatus.com/feature/6577673212002304); 
 it may change or be removed in future versions without notice.
 
-By enabling these experimental browser features, you could lose browser data or compromise your security 
+By enabling these experimental browser features, you could lose browser data or compromise your device security 
 or privacy.
 
 ## ~
