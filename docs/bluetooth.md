@@ -29,6 +29,8 @@ To make sure your browser is up to date, go to the '...' menu, click "Help" then
 * go to [chrome://flags/#enable-experimental-web-platform-features](chrome://flags/#enable-experimental-web-platform-features) and **enable** 
 **Experimental Web Platform features**
 
+![A screenshot of the flags page in chrome](/static/bluetooth/experimental.png)
+
 ## Download over Bluetooth
 
 * go to the **beta** editor https://makecode.mindstorms.com/beta
