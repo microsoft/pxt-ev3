@@ -59,14 +59,10 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     private _writer: any;
 
     constructor(private port: SerialPort, private options: SerialOptions) {
-
-        // start reading
-        this.readSerialAsync();
+        this.openAsync();
     }
 
     async readSerialAsync() {
-        if (this._reader) return;
-
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
         const reader = this._reader;
@@ -100,10 +96,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                     baudrate: 460800,
                     buffersize: 4096
                 };
-                if (!port.readable)
-                    await port.open(options);
-                if (port)
-                    return new WebSerialPackageIO(port, options);
+                return new WebSerialPackageIO(port, options);
             } catch (e) {
                 console.log(`connection error`, e)
             }
@@ -116,29 +109,32 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         throw new Error(lf("error on brick ({0})", msg))
     }
 
-    private close() {
-        if (this.port.readable) {// it's open
-            console.log(`serial: closing port`);
-            this.port.close();
-            this._reader = undefined;
-            this._writer = undefined;
-        }
+    private openAsync() {
+        console.log(`serial: opening port`)
+        if (!!this._reader) return Promise.resolve();
+        this._reader = undefined;
+        this._writer = undefined;
+        return this.port.open(this.options)
+            .then(() => {
+                this.readSerialAsync();
+                return Promise.resolve();
+            });
     }
 
-    async reconnectAsync(): Promise<void> {
-        if (!this.port.readable) {
-            console.log(`serial: opening port`)
-            this._reader = undefined;
-            this._writer = undefined;
-            await this.port.open(this.options);
-            this.readSerialAsync();
-        }
-        return Promise.resolve();
+    private closeAsync() {
+        console.log(`serial: closing port`);
+        this.port.close();
+        this._reader = undefined;
+        this._writer = undefined;
+        return Promise.delay(500);
     }
 
-    async disconnectAsync(): Promise<void> {
-        this.close();
-        return Promise.resolve();
+    reconnectAsync(): Promise<void> {
+        return this.openAsync();
+    }
+
+    disconnectAsync(): Promise<void> {
+        return this.closeAsync();
     }
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
