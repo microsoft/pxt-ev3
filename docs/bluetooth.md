@@ -55,6 +55,7 @@ have multiple of those if you've paired different bricks.
 ## Known issues
 
 * We do not detect properly that the program is running on the brick. Make sure to stop the program before starting the download procedure.
+* The list of programs on the brick screen is not updated when uploading via bluetooth.
 
 ## Feedback
 
