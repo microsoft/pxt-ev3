@@ -301,9 +301,17 @@ namespace motors {
                 case MoveUnit.Rotations:
                     scale = 360;
                     r.useSteps = true;
+                    if (r.steps[1] < 0) {
+                        r.speed = -r.speed;
+                        r.steps[1] = -r.steps[1];
+                    }
                     break;
                 case MoveUnit.Degrees:
                     r.useSteps = true;
+                    if (r.steps[1] < 0) {
+                        r.speed = -r.speed;
+                        r.steps[1] = -r.steps[1];
+                    }
                     break;
                 case MoveUnit.Seconds:
                     scale = 1000;
