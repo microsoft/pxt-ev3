@@ -26,6 +26,7 @@ namespace brick {
         None,
         ShowLines,
         Image,
+        Ports,
         Custom
     }
     let screenMode = ScreenMode.None;
@@ -124,8 +125,18 @@ namespace brick {
     //% help=brick/show-ports blockGap=8
     //% weight=10 group="Screen"
     export function showPorts() {
-        screenMode = ScreenMode.Custom;
+        if (screenMode == ScreenMode.Ports) return;
 
+        screenMode = ScreenMode.Ports;
+        control.runInParallel(function() {
+            while(screenMode == ScreenMode.Ports) {
+                renderPorts();
+                pause(50);
+            }
+        })
+    }
+
+    function renderPorts() {
         const col = 44;
         const lineHeight8 = image.font8.charHeight + 2;
         clearScreen();
