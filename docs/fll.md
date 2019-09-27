@@ -96,6 +96,7 @@ Sharing programs is also shown in the [Tips and Tricks](https://legoeducation.vi
 
 The official answer is currently no. That being said, we have **Experimental support** for Bluetooth download. Please read the [Bluetooth](/bluetooth) page for more information.
 
+https://youtu.be/VIq8-6Egtqs
 
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
