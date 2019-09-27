@@ -92,7 +92,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                             }],
                             htmlBody: `
 <p>
-${lf("Please download again to send your code to the EV3 over Bluetooth.")}
+${lf("Download again to send your code to the EV3 over Bluetooth. Make sure to stop your program!")}
 </p>
 <p>
 ${lf("You will be prompted to select a serial port.")}

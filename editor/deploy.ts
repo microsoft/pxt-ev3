@@ -69,7 +69,8 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
-        while (!!this._reader) {
+        const reader = this._reader;
+        while (reader === this._reader) { // will change if we recycle the connection
             const { done, value } = await this._reader.read()
             if (!buffer) buffer = value;
             else { // concat
