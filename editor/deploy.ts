@@ -2,57 +2,198 @@
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
 import UF2 = pxtc.UF2;
+import { Ev3Wrapper } from "./wrap";
 
-export let ev3: pxt.editor.Ev3Wrapper
+export let ev3: Ev3Wrapper
 
 export function debug() {
-    return initAsync()
+    return initHidAsync()
         .then(w => w.downloadFileAsync("/tmp/dmesg.txt", v => console.log(pxt.Util.uint8ArrayToString(v))))
 }
 
-function hf2Async() {
-    return pxt.HF2.mkPacketIOAsync()
-        .then(h => {
-            let w = new pxt.editor.Ev3Wrapper(h)
-            ev3 = w
-            return w.reconnectAsync(true)
-                .then(() => w)
-        })
+
+// Web Serial API https://wicg.github.io/serial/
+// chromium bug https://bugs.chromium.org/p/chromium/issues/detail?id=884928
+// Under experimental features in Chrome Desktop 77+
+enum ParityType {
+    "none",
+    "even",
+    "odd",
+    "mark",
+    "space"
+}
+declare interface SerialOptions {
+    baudrate?: number;
+    databits?: number;
+    stopbits?: number;
+    parity?: ParityType;
+    buffersize?: number;
+    rtscts?: boolean;
+    xon?: boolean;
+    xoff?: boolean;
+    xany?: boolean;
+}
+type SerialPortInfo = pxt.Map<string>;
+type SerialPortRequestOptions = any;
+declare class SerialPort {
+    open(options?: SerialOptions): Promise<void>;
+    close(): void;
+    readonly readable: any;
+    readonly writable: any;
+    //getInfo(): SerialPortInfo;
+}
+declare interface Serial extends EventTarget {
+    onconnect: any;
+    ondisconnect: any;
+    getPorts(): Promise<SerialPort[]>
+    requestPort(options: SerialPortRequestOptions): Promise<SerialPort>;
 }
 
-let noHID = false
+class WebSerialPackageIO implements pxt.HF2.PacketIO {
+    onData: (v: Uint8Array) => void;
+    onError: (e: Error) => void;
+    onEvent: (v: Uint8Array) => void;
+    onSerial: (v: Uint8Array, isErr: boolean) => void;
+    sendSerialAsync: (buf: Uint8Array, useStdErr: boolean) => Promise<void>;
+    private _reader: any;
+    private _writer: any;
 
-let initPromise: Promise<pxt.editor.Ev3Wrapper>
-export function initAsync() {
-    if (initPromise)
-        return initPromise
+    constructor(private port: SerialPort, private options: SerialOptions) {
 
-    let canHID = false
+        // start reading
+        this.readSerialAsync();
+    }
+
+    async readSerialAsync() {
+        this._reader = this.port.readable.getReader();
+        let buffer: Uint8Array;
+        while (!!this._reader) {
+            const { done, value } = await this._reader.read()
+            if (!buffer) buffer = value;
+            else { // concat
+                let tmp = new Uint8Array(buffer.length + value.byteLength)
+                tmp.set(buffer, 0)
+                tmp.set(value, buffer.length)
+                buffer = tmp;
+            }
+            if (buffer && buffer.length >= 6) {
+                this.onData(new Uint8Array(buffer));
+                buffer = undefined;
+            }
+        }
+    }
+
+    static isSupported(): boolean {
+        return !!(<any>navigator).serial;
+    }
+
+    static async mkPacketIOAsync(): Promise<pxt.HF2.PacketIO> {
+        const serial = (<any>navigator).serial;
+        if (serial) {
+            try {
+                const requestOptions: SerialPortRequestOptions = {};
+                const port = await serial.requestPort(requestOptions);
+                const options: SerialOptions = {
+                    baudrate: 460800,
+                    buffersize: 4096
+                };
+                await port.open(options);
+                if (port)
+                    return new WebSerialPackageIO(port, options);
+            } catch (e) {
+                console.log(`connection error`, e)
+            }
+        }
+        throw new Error("could not open serial port");
+    }
+
+    error(msg: string): any {
+        console.error(msg);
+        throw new Error(lf("error on brick ({0})", msg))
+    }
+
+    async reconnectAsync(): Promise<void> {
+        if (!this._reader) {
+            await this.port.open(this.options);
+            this.readSerialAsync();
+        }
+        return Promise.resolve();
+    }
+
+    async disconnectAsync(): Promise<void> {
+        this.port.close();
+        this._reader = undefined;
+        this._writer = undefined;
+        return Promise.resolve();
+    }
+
+    sendPacketAsync(pkt: Uint8Array): Promise<void> {
+        if (!this._writer)
+            this._writer = this.port.writable.getWriter();
+        return this._writer.write(pkt);
+    }
+}
+
+function hf2Async() {
+    const pktIOAsync: Promise<pxt.HF2.PacketIO> = useWebSerial
+        ? WebSerialPackageIO.mkPacketIOAsync() : pxt.HF2.mkPacketIOAsync()
+    return pktIOAsync.then(h => {
+        let w = new Ev3Wrapper(h)
+        ev3 = w
+        return w.reconnectAsync(true)
+            .then(() => w)
+    })
+}
+
+let useHID = false;
+let useWebSerial = false;
+export function initAsync(): Promise<void> {
     if (pxt.U.isNodeJS) {
         // doesn't seem to work ATM
-        canHID = false
+        useHID = false
     } else {
-        const forceHexDownload = /forceHexDownload/i.test(window.location.href);
-        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && !forceHexDownload)
-            canHID = true
+        const nodehid = /nodehid/i.test(window.location.href);
+        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && nodehid)
+            useHID = true;
     }
 
-    if (noHID)
-        canHID = false
+    if(WebSerialPackageIO.isSupported())
+        pxt.tickEvent("bluetooth.supported");
 
-    if (canHID) {
+    return Promise.resolve();
+}
+
+export function canUseWebSerial() {
+    return WebSerialPackageIO.isSupported();
+}
+
+export function enableWebSerial() {
+    initPromise = undefined;
+    useWebSerial = WebSerialPackageIO.isSupported();
+    useHID = useWebSerial;
+}
+
+let initPromise: Promise<Ev3Wrapper>
+function initHidAsync() { // needs to run within a click handler
+    if (initPromise)
+        return initPromise
+    if (useHID) {
         initPromise = hf2Async()
             .catch(err => {
+                console.error(err);
                 initPromise = null
-                noHID = true
-                return Promise.reject(err)
+                useHID = false;
+                useWebSerial = false;
+                // cleanup
+                let p = ev3  ? ev3.disconnectAsync().catch(e => {}) : Promise.resolve();
+                return p.then(() => Promise.reject(err))
             })
     } else {
-        noHID = true
+        useHID = false
+        useWebSerial = false;
         initPromise = Promise.reject(new Error("no HID"))
     }
-
-    return initPromise
+    return initPromise;
 }
 
 // this comes from aux/pxt.lms
@@ -61,8 +202,6 @@ const rbfTemplate = `
 74617274696e672e2e2e0084006080XX00448581644886488405018130813e80427965210084000a
 `
 export function deployCoreAsync(resp: pxtc.CompileResult) {
-    let w: pxt.editor.Ev3Wrapper
-
     let filename = resp.downloadFileBaseName || "pxt"
     filename = filename.replace(/^lego-/, "")
 
@@ -107,27 +246,31 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
         return Promise.resolve();
     }
 
-    if (noHID) return saveUF2Async()
+    if (!useHID) return saveUF2Async()
 
-    return initAsync()
+    pxt.tickEvent("bluetooth.flash");
+    let w: Ev3Wrapper;
+    return initHidAsync()
         .then(w_ => {
             w = w_
             if (w.isStreaming)
                 pxt.U.userError("please stop the program first")
-            return w.stopAsync()
+            return w.reconnectAsync(false)
         })
+        .then(() => w.stopAsync())
         .then(() => w.rmAsync(elfPath))
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))
         .then(() => w.flashAsync(rbfPath, rbfBIN))
         .then(() => w.runAsync(rbfPath))
         .then(() => {
+            pxt.tickEvent("bluetooth.success");
             return w.disconnectAsync()
             //return Promise.delay(1000).then(() => w.dmesgAsync())
         }).catch(e => {
-            // if we failed to initalize, retry
-            if (noHID)
-                return saveUF2Async()
-            else
-                return Promise.reject(e)
+            pxt.tickEvent("bluetooth.fail");
+            useHID = false;
+            useWebSerial = false;
+            // if we failed to initalize, tell the user to retry
+            return Promise.reject(e)
         })
 }

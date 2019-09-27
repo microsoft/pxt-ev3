@@ -28,7 +28,7 @@ program to a **.uf2** file, which you then copy to the **@drivename@** drive. Th
 
 ### ~ hint
 
-Not seeing the **@drivename@** drive? Make sure to upgrade your firmware at https://ev3manager.education.lego.com/. Try these [troubleshooting](/troubleshoot) tips if you still have trouble getting the drive to appear.
+**Experimental support** for Bluetooth download is now available. Please read the [Bluetooth](/bluetooth) page for more information.
 
 ### ~
 
