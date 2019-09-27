@@ -24,12 +24,12 @@ or privacy.
 ## Machine Setup
 
 * pair your EV3 brick with your computer over Bluetooth. This is the usual pairing procedure.
-* go to chrome://flags/#enable-experimental-web-platform-features and **enable** 
+* go to [chrome://flags/#enable-experimental-web-platform-features](chrome://flags/#enable-experimental-web-platform-features) and **enable** 
 **Experimental Web Platform features**
 
 ## Download over Bluetooth
 
-* go to the beta editor https://makecode.mindstorms.com/beta (note the /beta)
+* go to the **beta** editor https://makecode.mindstorms.com/beta
 * click on **Download** to start a file download as usual
 * on the download dialog, you should see a **Bluetooth** button. Click on the
 **Bluetooth** button to enable the mode.
