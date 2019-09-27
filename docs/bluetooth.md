@@ -21,6 +21,8 @@ or privacy.
 * Chrome desktop, version 77 and higher, Windows 10
 * [Edge Insider desktop](https://www.microsoftedgeinsider.com), version 77 and higher, Windows 10
 
+To make sure your browser is up to date, go to the '...' menu, click "Help" then "About".
+
 ## Machine Setup
 
 * pair your EV3 brick with your computer over Bluetooth. This is the usual pairing procedure.
