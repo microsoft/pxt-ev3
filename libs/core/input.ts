@@ -310,7 +310,7 @@ void      cUiUpdatePower(void)
                 // TODO? for now assume touch
                 sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
-                control.dmesg(`disconnect at port ${sensorInfo.port}`)
+                //control.dmesg(`disconnect at port ${sensorInfo.port}`)
             } else {
                 control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`)
             }
@@ -328,7 +328,7 @@ void      cUiUpdatePower(void)
         if (numChanged == 0 && nonActivated == 0)
             return
 
-        control.dmesg(`updating sensor status`)
+        //control.dmesg(`updating sensor status`)
         nonActivated = 0;
         for (const sensorInfo of sensorInfos) {
             if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {

@@ -65,9 +65,12 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     async readSerialAsync() {
+        if (this._reader) return;
+
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
-        while (!!this._reader) {
+        const reader = this._reader;
+        while (reader === this._reader) { // will change if we recycle the connection
             const { done, value } = await this._reader.read()
             if (!buffer) buffer = value;
             else { // concat
@@ -112,8 +115,18 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         throw new Error(lf("error on brick ({0})", msg))
     }
 
+    private close() {
+        if (this.port.readable) {// it's open
+            this.port.close();
+            this._reader = undefined;
+            this._writer = undefined;
+        }
+    }
+
     async reconnectAsync(): Promise<void> {
-        if (!this._reader) {
+        if (!this.port.readable) {
+            this._reader = undefined;
+            this._writer = undefined;
             await this.port.open(this.options);
             this.readSerialAsync();
         }
@@ -121,9 +134,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     async disconnectAsync(): Promise<void> {
-        this.port.close();
-        this._reader = undefined;
-        this._writer = undefined;
+        this.close();
         return Promise.resolve();
     }
 
@@ -157,7 +168,7 @@ export function initAsync(): Promise<void> {
             useHID = true;
     }
 
-    if(WebSerialPackageIO.isSupported())
+    if (WebSerialPackageIO.isSupported())
         pxt.tickEvent("bluetooth.supported");
 
     return Promise.resolve();
@@ -171,6 +182,8 @@ export function enableWebSerial() {
     initPromise = undefined;
     useWebSerial = WebSerialPackageIO.isSupported();
     useHID = useWebSerial;
+    if (useWebSerial)
+        initHidAsync().done();
 }
 
 let initPromise: Promise<Ev3Wrapper>
@@ -185,7 +198,7 @@ function initHidAsync() { // needs to run within a click handler
                 useHID = false;
                 useWebSerial = false;
                 // cleanup
-                let p = ev3  ? ev3.disconnectAsync().catch(e => {}) : Promise.resolve();
+                let p = ev3 ? ev3.disconnectAsync().catch(e => { }) : Promise.resolve();
                 return p.then(() => Promise.reject(err))
             })
     } else {
