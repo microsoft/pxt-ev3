@@ -21,8 +21,8 @@
     "description": "A video of the Robot 1 tutorial",
     "youTubeId": "IqL0Pyeu5Ng"
 }, {
-    "name": "Bluetooth download",
-    "description": "Learn how to download code via Bluetooth",
+    "name": "Bluetooth download (beta)",
+    "description": "EXPERIMENTAL! Learn how to download code via Bluetooth.",
     "youTubeId": "VIq8-6Egtqs"
 }]
 ```
