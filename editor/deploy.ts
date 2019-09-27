@@ -100,7 +100,8 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                     baudrate: 460800,
                     buffersize: 4096
                 };
-                await port.open(options);
+                if (!port.readable)
+                    await port.open(options);
                 if (port)
                     return new WebSerialPackageIO(port, options);
             } catch (e) {
@@ -117,6 +118,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
     private close() {
         if (this.port.readable) {// it's open
+            console.log(`serial: closing port`);
             this.port.close();
             this._reader = undefined;
             this._writer = undefined;
@@ -125,6 +127,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
     async reconnectAsync(): Promise<void> {
         if (!this.port.readable) {
+            console.log(`serial: opening port`)
             this._reader = undefined;
             this._writer = undefined;
             await this.port.open(this.options);
@@ -186,20 +189,29 @@ export function enableWebSerial() {
         initHidAsync().done();
 }
 
+function cleanupAsync() {
+    if (ev3) {
+        console.log('cleanup previous port')
+        return ev3.disconnectAsync()
+            .catch(e => { })
+            .finally(() => { ev3 = undefined; });
+    }
+    return Promise.resolve();
+}
+
 let initPromise: Promise<Ev3Wrapper>
 function initHidAsync() { // needs to run within a click handler
     if (initPromise)
         return initPromise
     if (useHID) {
-        initPromise = hf2Async()
+        initPromise = cleanupAsync()
+            .then(() => hf2Async())
             .catch(err => {
                 console.error(err);
                 initPromise = null
                 useHID = false;
                 useWebSerial = false;
-                // cleanup
-                let p = ev3 ? ev3.disconnectAsync().catch(e => { }) : Promise.resolve();
-                return p.then(() => Promise.reject(err))
+                return Promise.reject(err);
             })
     } else {
         useHID = false

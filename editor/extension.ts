@@ -3,6 +3,7 @@
 
 import { deployCoreAsync, initAsync, canUseWebSerial, enableWebSerial } from "./deploy";
 
+let bluetoothDialogShown = false;
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     pxt.debug('loading pxt-ev3 target extensions...')
     const res: pxt.editor.ExtensionResult = {
@@ -80,17 +81,21 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                     className: "bluetooth focused",
                     onclick: () => {
                         pxt.tickEvent("bluetooth.enable");
-                        confirmAsync({
-                            header: lf("Bluetooth enabled"),
-                            hasCloseIcon: true,
-                            hideCancel: true,
-                            buttons: [{
-                                label: lf("Help"),
-                                icon: "question circle",
-                                className: "lightgrey",
-                                url: "/bluetooth"
-                            }],
-                            htmlBody: `
+                        if (bluetoothDialogShown) {
+                            enableWebSerial();
+                        } else {
+                            bluetoothDialogShown = true;
+                            confirmAsync({
+                                header: lf("Bluetooth pairing"),
+                                hasCloseIcon: true,
+                                hideCancel: true,
+                                buttons: [{
+                                    label: lf("Help"),
+                                    icon: "question circle",
+                                    className: "lightgrey",
+                                    url: "/bluetooth"
+                                }],
+                                htmlBody: `
 <p>
 ${lf("Download again to send your code to the EV3 over Bluetooth. Make sure to stop your program!")}
 </p>
@@ -100,9 +105,10 @@ ${lf("On Windows, look for 'Standard Serial over Bluetooth link'.")}
 ${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
 </p>
 `
-                        }).then(() => {
-                            enableWebSerial();
-                        })
+                            }).then(() => {
+                                enableWebSerial();
+                            })
+                        }
                     }
                 } : undefined, downloadAgain ? {
                     label: fn,
