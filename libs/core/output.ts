@@ -424,28 +424,28 @@ namespace motors {
                     temp = Math.max(0, (value * 360) | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationSteps = temp;
-                    else 
+                    else
                         this._decelerationSteps = temp;
                     break;
                 case MoveUnit.Degrees:
                     temp = Math.max(0, value | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationSteps = temp;
-                    else 
+                    else
                         this._decelerationSteps = temp;
                     break;
                 case MoveUnit.Seconds:
                     temp = Math.max(0, (value * 1000) | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationTime = temp;
-                    else 
+                    else
                         this._decelerationTime = temp;
                     break;
                 case MoveUnit.MilliSeconds:
                     temp = Math.max(0, value | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationTime = temp;
-                    else 
+                    else
                         this._decelerationTime = temp;
                     break;
             }
@@ -749,10 +749,18 @@ namespace motors {
             let stepsOrTime: number;
             switch (unit) {
                 case MoveUnit.Rotations:
+                    if (value < 0) {
+                        value = -value;
+                        speed = -speed;
+                    }
                     stepsOrTime = (value * 360) >> 0;
                     useSteps = true;
                     break;
                 case MoveUnit.Degrees:
+                    if (value < 0) {
+                        value = -value;
+                        speed = -speed;
+                    }
                     stepsOrTime = value >> 0;
                     useSteps = true;
                     break;
