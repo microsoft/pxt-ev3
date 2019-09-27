@@ -28,11 +28,11 @@ Next you need to enable the experimental features (this may change in the future
 * go to **chrome://flags/#enable-experimental-web-platform-features** and **enable** 
 **Experimental Web Platform features**
 
+![A screenshot of the flags page in chrome](/static/bluetooth/experimental.png)
+
 ## Machine Setup
 
 * pair your EV3 brick with your computer over Bluetooth. This is the usual pairing procedure.
-
-![A screenshot of the flags page in chrome](/static/bluetooth/experimental.png)
 
 ## Download over Bluetooth
 
