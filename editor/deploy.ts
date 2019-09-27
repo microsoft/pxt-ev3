@@ -4,7 +4,12 @@
 import UF2 = pxtc.UF2;
 import { Ev3Wrapper } from "./wrap";
 
-export let ev3: Ev3Wrapper
+export let ev3: Ev3Wrapper;
+let confirmAsync: (options: any) => Promise<number>;
+
+export function setConfirmAsync(cf: (options: any) => Promise<number>) {
+    confirmAsync = cf;
+}
 
 export function debug() {
     return initHidAsync()
@@ -59,14 +64,10 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     private _writer: any;
 
     constructor(private port: SerialPort, private options: SerialOptions) {
-
-        // start reading
-        this.readSerialAsync();
+        this.openAsync();
     }
 
     async readSerialAsync() {
-        if (this._reader) return;
-
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
         const reader = this._reader;
@@ -100,9 +101,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                     baudrate: 460800,
                     buffersize: 4096
                 };
-                await port.open(options);
-                if (port)
-                    return new WebSerialPackageIO(port, options);
+                return new WebSerialPackageIO(port, options);
             } catch (e) {
                 console.log(`connection error`, e)
             }
@@ -115,27 +114,32 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         throw new Error(lf("error on brick ({0})", msg))
     }
 
-    private close() {
-        if (this.port.readable) {// it's open
-            this.port.close();
-            this._reader = undefined;
-            this._writer = undefined;
-        }
+    private openAsync() {
+        console.log(`serial: opening port`)
+        if (!!this._reader) return Promise.resolve();
+        this._reader = undefined;
+        this._writer = undefined;
+        return this.port.open(this.options)
+            .then(() => {
+                this.readSerialAsync();
+                return Promise.resolve();
+            });
     }
 
-    async reconnectAsync(): Promise<void> {
-        if (!this.port.readable) {
-            this._reader = undefined;
-            this._writer = undefined;
-            await this.port.open(this.options);
-            this.readSerialAsync();
-        }
-        return Promise.resolve();
+    private closeAsync() {
+        console.log(`serial: closing port`);
+        this.port.close();
+        this._reader = undefined;
+        this._writer = undefined;
+        return Promise.delay(500);
     }
 
-    async disconnectAsync(): Promise<void> {
-        this.close();
-        return Promise.resolve();
+    reconnectAsync(): Promise<void> {
+        return this.openAsync();
+    }
+
+    disconnectAsync(): Promise<void> {
+        return this.closeAsync();
     }
 
     sendPacketAsync(pkt: Uint8Array): Promise<void> {
@@ -178,12 +182,23 @@ export function canUseWebSerial() {
     return WebSerialPackageIO.isSupported();
 }
 
-export function enableWebSerial() {
+export function enableWebSerialAsync() {
     initPromise = undefined;
     useWebSerial = WebSerialPackageIO.isSupported();
     useHID = useWebSerial;
     if (useWebSerial)
-        initHidAsync().done();
+        return initHidAsync().then(() => { });
+    else return Promise.resolve();
+}
+
+function cleanupAsync() {
+    if (ev3) {
+        console.log('cleanup previous port')
+        return ev3.disconnectAsync()
+            .catch(e => { })
+            .finally(() => { ev3 = undefined; });
+    }
+    return Promise.resolve();
 }
 
 let initPromise: Promise<Ev3Wrapper>
@@ -191,15 +206,14 @@ function initHidAsync() { // needs to run within a click handler
     if (initPromise)
         return initPromise
     if (useHID) {
-        initPromise = hf2Async()
+        initPromise = cleanupAsync()
+            .then(() => hf2Async())
             .catch(err => {
                 console.error(err);
                 initPromise = null
                 useHID = false;
                 useWebSerial = false;
-                // cleanup
-                let p = ev3 ? ev3.disconnectAsync().catch(e => { }) : Promise.resolve();
-                return p.then(() => Promise.reject(err))
+                return Promise.reject(err);
             })
     } else {
         useHID = false
@@ -210,6 +224,7 @@ function initHidAsync() { // needs to run within a click handler
 }
 
 // this comes from aux/pxt.lms
+const fspath = "../prjs/BrkProg_SAVE/"
 const rbfTemplate = `
 4c45474f580000006d000100000000001c000000000000000e000000821b038405018130813e8053
 74617274696e672e2e2e0084006080XX00448581644886488405018130813e80427965210084000a
@@ -217,8 +232,6 @@ const rbfTemplate = `
 export function deployCoreAsync(resp: pxtc.CompileResult) {
     let filename = resp.downloadFileBaseName || "pxt"
     filename = filename.replace(/^lego-/, "")
-
-    let fspath = "../prjs/BrkProg_SAVE/"
 
     let elfPath = fspath + filename + ".elf"
     let rbfPath = fspath + filename + ".rbf"
@@ -269,6 +282,26 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             if (w.isStreaming)
                 pxt.U.userError("please stop the program first")
             return w.reconnectAsync(false)
+                .catch(e => {
+                    // user easily forgets to stop robot
+                    if (confirmAsync)
+                        return confirmAsync({
+                            header: lf("Bluetooth download failed..."),
+                            htmlBody:
+                                `<ul>
+<li>${lf("Make sure to stop your program on the EV3.")}</li>
+<li>${lf("Check your battery level.")}</li>
+</ul>`,
+                            hasCloseIcon: true,
+                            hideCancel: true,
+                            hideAgree: false,
+                            agreeLbl: lf("Try again"),
+                        }).then(() => w.disconnectAsync())
+                            .then(() => w.reconnectAsync());
+
+                    // nothing we can do
+                    return Promise.reject(e);
+                })
         })
         .then(() => w.stopAsync())
         .then(() => w.rmAsync(elfPath))
