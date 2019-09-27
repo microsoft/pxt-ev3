@@ -23,6 +23,8 @@ or privacy.
 
 To make sure your browser is up to date, go to the '...' menu, click "Help" then "About".
 
+* MakeCode for EV3 **v1.2.8 or higher**. This feature is currently only available in the beta version of the editor at https://makecode.mindstorms.com/beta.
+
 ## Machine Setup
 
 * pair your EV3 brick with your computer over Bluetooth. This is the usual pairing procedure.
