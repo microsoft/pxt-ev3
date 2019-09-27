@@ -79,6 +79,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                     icon: "bluetooth",
                     className: "bluetooth focused",
                     onclick: () => {
+                        pxt.tickEvent("bluetooth.enable");
                         enableWebSerial();
                     }
                 } : undefined, downloadAgain ? {

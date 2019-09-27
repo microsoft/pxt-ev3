@@ -157,6 +157,9 @@ export function initAsync(): Promise<void> {
             useHID = true;
     }
 
+    if(WebSerialPackageIO.isSupported())
+        pxt.tickEvent("bluetooth.supported");
+
     return Promise.resolve();
 }
 
@@ -245,6 +248,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
 
     if (!useHID) return saveUF2Async()
 
+    pxt.tickEvent("bluetooth.flash");
     let w: Ev3Wrapper;
     return initHidAsync()
         .then(w_ => {
@@ -259,9 +263,11 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
         .then(() => w.flashAsync(rbfPath, rbfBIN))
         .then(() => w.runAsync(rbfPath))
         .then(() => {
+            pxt.tickEvent("bluetooth.success");
             return w.disconnectAsync()
             //return Promise.delay(1000).then(() => w.dmesgAsync())
         }).catch(e => {
+            pxt.tickEvent("bluetooth.fail");
             useHID = false;
             useWebSerial = false;
             // if we failed to initalize, tell the user to retry
