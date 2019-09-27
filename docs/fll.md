@@ -92,6 +92,11 @@ You can share your projects by clicking on the **share** button in the top left 
 
 Sharing programs is also shown in the [Tips and Tricks](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=5c594c2373367f7870196f519f3bfc7a&source=embed&photo%5fid=35719472) video.
 
+### Can I use Bluetooth to transfer my program?
+
+The official answer is currently no. That being said, we have **Experimental support** for Bluetooth download. Please read the [Bluetooth](/bluetooth) page for more information.
+
+
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
 There's a bug in the firmware which prevents you from deleting the programs (``*.uf2`` files) from your EV3 Brick. There isn't a firmware update to fix this yet.
