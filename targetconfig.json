@@ -5,6 +5,10 @@
             "LEGO"
         ],
         "approvedRepos": [
+            "microsoft/pxt-automation"
+        ],
+        "preferredRepos": [
+            "microsoft/pxt-automation"
         ]
     },
     "galleries": {
