@@ -80,7 +80,6 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                     className: "bluetooth focused",
                     onclick: () => {
                         pxt.tickEvent("bluetooth.enable");
-                        enableWebSerial();
                         confirmAsync({
                             header: lf("Bluetooth enabled"),
                             hasCloseIcon: true,
@@ -101,6 +100,8 @@ ${lf("On Windows, look for 'Standard Serial over Bluetooth link'.")}
 ${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
 </p>
 `
+                        }).then(() => {
+                            enableWebSerial();
                         })
                     }
                 } : undefined, downloadAgain ? {
