@@ -4,7 +4,12 @@
 import UF2 = pxtc.UF2;
 import { Ev3Wrapper } from "./wrap";
 
-export let ev3: Ev3Wrapper
+export let ev3: Ev3Wrapper;
+let confirmAsync: (options: any) => Promise<number>;
+
+export function setConfirmAsync(cf: (options: any) => Promise<number>) {
+    confirmAsync = cf;
+}
 
 export function debug() {
     return initHidAsync()
@@ -177,12 +182,13 @@ export function canUseWebSerial() {
     return WebSerialPackageIO.isSupported();
 }
 
-export function enableWebSerial() {
+export function enableWebSerialAsync() {
     initPromise = undefined;
     useWebSerial = WebSerialPackageIO.isSupported();
     useHID = useWebSerial;
     if (useWebSerial)
-        initHidAsync().done();
+        return initHidAsync().then(() => { });
+    else return Promise.resolve();
 }
 
 function cleanupAsync() {
@@ -218,6 +224,7 @@ function initHidAsync() { // needs to run within a click handler
 }
 
 // this comes from aux/pxt.lms
+const fspath = "../prjs/BrkProg_SAVE/"
 const rbfTemplate = `
 4c45474f580000006d000100000000001c000000000000000e000000821b038405018130813e8053
 74617274696e672e2e2e0084006080XX00448581644886488405018130813e80427965210084000a
@@ -225,8 +232,6 @@ const rbfTemplate = `
 export function deployCoreAsync(resp: pxtc.CompileResult) {
     let filename = resp.downloadFileBaseName || "pxt"
     filename = filename.replace(/^lego-/, "")
-
-    let fspath = "../prjs/BrkProg_SAVE/"
 
     let elfPath = fspath + filename + ".elf"
     let rbfPath = fspath + filename + ".rbf"
@@ -277,6 +282,26 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             if (w.isStreaming)
                 pxt.U.userError("please stop the program first")
             return w.reconnectAsync(false)
+                .catch(e => {
+                    // user easily forgets to stop robot
+                    if (confirmAsync)
+                        return confirmAsync({
+                            header: lf("Bluetooth download failed..."),
+                            htmlBody:
+                                `<ul>
+<li>${lf("Make sure to stop your program on the EV3.")}</li>
+<li>${lf("Check your battery level.")}</li>
+</ul>`,
+                            hasCloseIcon: true,
+                            hideCancel: true,
+                            hideAgree: false,
+                            agreeLbl: lf("Try again"),
+                        }).then(() => w.disconnectAsync())
+                            .then(() => w.reconnectAsync());
+
+                    // nothing we can do
+                    return Promise.reject(e);
+                })
         })
         .then(() => w.stopAsync())
         .then(() => w.rmAsync(elfPath))

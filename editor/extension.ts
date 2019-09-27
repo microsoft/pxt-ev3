@@ -1,7 +1,7 @@
 /// <reference path="../node_modules/pxt-core/built/pxteditor.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
-import { deployCoreAsync, initAsync, canUseWebSerial, enableWebSerial } from "./deploy";
+import { deployCoreAsync, initAsync, canUseWebSerial, enableWebSerialAsync, setConfirmAsync } from "./deploy";
 
 let bluetoothDialogShown = false;
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
@@ -9,6 +9,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
     const res: pxt.editor.ExtensionResult = {
         deployCoreAsync,
         showUploadInstructionsAsync: (fn: string, url: string, confirmAsync: (options: any) => Promise<number>) => {
+            setConfirmAsync(confirmAsync);
             // https://msdn.microsoft.com/en-us/library/cc848897.aspx
             // "For security reasons, data URIs are restricted to downloaded resources. 
             // Data URIs cannot be used for navigation, for scripting, or to populate frame or iframe elements"
@@ -82,7 +83,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                     onclick: () => {
                         pxt.tickEvent("bluetooth.enable");
                         if (bluetoothDialogShown) {
-                            enableWebSerial();
+                            enableWebSerialAsync().done();
                         } else {
                             bluetoothDialogShown = true;
                             confirmAsync({
@@ -95,19 +96,22 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                     className: "lightgrey",
                                     url: "/bluetooth"
                                 }],
-                                htmlBody: `
-<p>
-${lf("Download again to send your code to the EV3 over Bluetooth. Make sure to stop your program!")}
-</p>
-<p>
+                                htmlBody: `<p>
 ${lf("You will be prompted to select a serial port.")}
 ${lf("On Windows, look for 'Standard Serial over Bluetooth link'.")}
 ${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
 </p>
 `
-                            }).then(() => {
-                                enableWebSerial();
-                            })
+                            }).then(() => enableWebSerialAsync())
+                                .then(() => confirmAsync({
+                                    header: lf("Bluetooth is ready!"),
+                                    hasCloseIcon: true,
+                                    hideCancel: true,
+                                    htmlBody: `<p>
+                                    ${lf("Click Download again to send your code to the EV3 over Bluetooth.")}
+                                    </p>
+                                    `
+                                }))
                         }
                     }
                 } : undefined, downloadAgain ? {
