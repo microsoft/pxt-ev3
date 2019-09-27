@@ -143,7 +143,7 @@ namespace brick {
         clearScreen();
 
         function scale(x: number) {
-            if (Math.abs(x) > 2000) {
+            if (Math.abs(x) >= 5000) {
                 const k = Math.floor(x / 1000);
                 const r = Math.round((x - 1000 * k) / 100);
                 return `${k}.${r}k`
