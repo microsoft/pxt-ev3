@@ -23,19 +23,23 @@ or privacy.
 
 To make sure your browser is up to date, go to the '...' menu, click "Help" then "About".
 
-* MakeCode for EV3 **v1.2.8 or higher**. This feature is currently only available in the beta version of the editor at https://makecode.mindstorms.com/beta.
+Next you need to enable the experimental features (this may change in the future)
+
+* go to **chrome://flags/#enable-experimental-web-platform-features** and **enable** 
+**Experimental Web Platform features**
 
 ## Machine Setup
 
 * pair your EV3 brick with your computer over Bluetooth. This is the usual pairing procedure.
-* go to [chrome://flags/#enable-experimental-web-platform-features](chrome://flags/#enable-experimental-web-platform-features) and **enable** 
-**Experimental Web Platform features**
 
 ![A screenshot of the flags page in chrome](/static/bluetooth/experimental.png)
 
 ## Download over Bluetooth
 
 * go to the **beta** editor https://makecode.mindstorms.com/beta
+
+This feature is not yet released so make sure to use the beta editor.
+
 * click on **Download** to start a file download as usual
 * on the download dialog, you should see a **Bluetooth** button. Click on the
 **Bluetooth** button to enable the mode.
@@ -44,9 +48,13 @@ To make sure your browser is up to date, go to the '...' menu, click "Help" then
 
 ## Choosing the correct serial port
 
-Unforunately, the browser dialog does not make it easy to select which serial port is the brick.
+Unfortunately, the browser dialog does not make it easy to select which serial port is the brick.
 On Windows, it typically reads "Standard Serial over Bluetooth" and you may 
 have multiple of those if you've paired different bricks.
+
+## Known issues
+
+* We do not detect properly that the program is running on the brick. Make sure to stop the program before starting the download procedure.
 
 ## Feedback
 
