@@ -20,8 +20,8 @@ https://youtu.be/VIq8-6Egtqs
 
 ## Supported browsers
 
-* Chrome desktop, version 77 and higher, Windows 10
-* [Edge Insider desktop](https://www.microsoftedgeinsider.com), version 77 and higher, Windows 10
+* Chrome desktop, version 77 and higher, Windows 10 or Mac OS.
+* [Edge Insider desktop](https://www.microsoftedgeinsider.com), version 77 and higher, Windows 10 or Mac OS.
 
 To make sure your browser is up to date, go to the '...' menu, click "Help" then "About".
 
