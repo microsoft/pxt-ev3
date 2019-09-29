@@ -10,12 +10,12 @@ You can find out what's connected to the ports on the brick and show its status.
 
 ## Example
 
-Show the status of the ports on the brick when the ``enter`` button is pressed.
+Show the status of the ports on the brick. Resets all motors when ENTER is pressed.
 
 ```blocks
-brick.showString("Press ENTER for port status", 1)
+brick.showPorts()
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    brick.showPorts()
+    motors.resetAll()
 })
 ```
 

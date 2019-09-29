@@ -111,6 +111,9 @@ namespace sensors {
                         "red",
                         "white",
                         "brown"][this._query()];
+                case ColorSensorMode.AmbientLightIntensity:
+                case ColorSensorMode.ReflectedLightIntensity:
+                    return `${this._query()}%`;
                 default:
                     return this._query().toString();
             }
@@ -253,7 +256,7 @@ namespace sensors {
         light(mode: LightIntensityMode) {
             this.poke();
             this.setMode(<ColorSensorMode><number>mode)
-            switch(mode) {
+            switch (mode) {
                 case LightIntensityMode.ReflectedRaw:
                     return this.reflectedLightRaw();
                 default:

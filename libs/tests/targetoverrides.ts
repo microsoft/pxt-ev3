@@ -4,9 +4,9 @@ tests.onEvent(TestEvent.RunSetUp, function() {
 })
 tests.onEvent(TestEvent.TestSetUp, function() {
     motors.stopAll();
-    motors.resetAllMotors();
+    motors.resetAll();
 })
 tests.onEvent(TestEvent.TestTearDown, function() {
     motors.stopAll();
-    motors.resetAllMotors();
+    motors.resetAll();
 })

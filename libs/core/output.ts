@@ -62,7 +62,7 @@ namespace motors {
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
         if (!motorMM) control.fail("no motor file")
 
-        resetAllMotors()
+        resetAll()
 
         const buf = output.createBuffer(1)
         buf[0] = DAL.opProgramStart
@@ -118,7 +118,7 @@ namespace motors {
      * Stops all motors
      */
     //% blockId=motorStopAll block="stop all motors"
-    //% weight=1
+    //% weight=2
     //% group="Move"
     //% help=motors/stop-all
     export function stopAll() {
@@ -130,8 +130,11 @@ namespace motors {
     /**
      * Resets all motors
      */
+    //% blockId=motorResetAll block="reset all motors"
+    //% weight=1
     //% group="Move"
-    export function resetAllMotors() {
+    //% help=motors/reset-all
+    export function resetAll() {
         reset(Output.ALL)
         pause(1);
     }
