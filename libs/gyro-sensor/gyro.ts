@@ -194,6 +194,22 @@ namespace sensors {
             }
             this._drift = d / n;
         }
+
+        _info(): string {
+            if (this.calibrating)
+                return "cal...";
+
+            switch (this.mode) {
+                case GyroSensorMode.Angle:
+                    return `${this._query()}>`;
+                case GyroSensorMode.Rate:
+                    let r = `${this._query()}>/s`;
+                    if (this._drift)
+                        r += `-${this._drift | 0}`;
+                    return r;
+            }
+            return "";
+        }
     }
 
     //% fixedInstance whenUsed block="2" weight=95 jres=icons.port2
