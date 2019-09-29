@@ -9,12 +9,10 @@ namespace sensors {
     export class GyroSensor extends internal.UartSensor {
         private calibrating: boolean;
         private _drift: number;
-        private _driftCorrection: boolean;
         constructor(port: number) {
             super(port)
             this.calibrating = false;
             this._drift = 0;
-            this._driftCorrection = false;
             this.setMode(GyroSensorMode.Rate);
         }
 
@@ -42,7 +40,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=64 blockGap=8
+        //% weight=64
         //% group="Gyro Sensor"
         angle(): number {
             this.poke();
@@ -71,13 +69,7 @@ namespace sensors {
                 pauseUntil(() => !this.calibrating, 2000);
 
             this.setMode(GyroSensorMode.Rate);
-            let curr = this._query();
-            if (Math.abs(curr) < 4 && this._driftCorrection) {
-                const p = 0.01;
-                this._drift = (1 - p) * this._drift + p * curr;
-                curr = Math.round(curr - this._drift);
-            }
-            return curr;
+            return this._query() - this._drift;
         }
 
         /**
@@ -113,8 +105,6 @@ namespace sensors {
             // mode toggling
             this.setMode(GyroSensorMode.Rate);
             this.setMode(GyroSensorMode.Angle);
-            // switch back to the desired mode
-            this.setMode(this.mode);
 
             // check sensor is ready
             if (!this.isActive()) {
@@ -125,17 +115,12 @@ namespace sensors {
                 return;
             }
 
-            // compute drift
-            this._drift = 0;
-            if (this._driftCorrection && this.mode == GyroSensorMode.Rate) {
-                const n = 100;
-                for (let i = 0; i < n; ++i) {
-                    this._drift += this._query();
-                    pause(4);
-                }
-                this._drift /= n;
-            }
+            // switch to rate mode
+            this.computeDriftNoCalibration();
+            // switch back to the desired mode
+            this.setMode(this.mode);
 
+            // and done
             brick.setStatusLight(StatusLight.Green); // success
             pause(1000);
             brick.setStatusLight(statusLight); // resture previous light
@@ -153,7 +138,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=50
+        //% weight=50 blockGap=8
         //% group="Gyro Sensor"
         reset(): void {
             if (this.calibrating) return; // already in calibration mode
@@ -168,19 +153,46 @@ namespace sensors {
         /**
          * Gets the computed rate drift
          */
-        //%
+        //% help=sensors/gyro/drift
+        //% block="**gyro** %this|drift"
+        //% blockId=gyroDrift
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=9 blockGap=8
+        //% group="Gyro Sensor"
         drift(): number {
             return this._drift;
         }
 
         /**
-         * Enables or disable drift correction
-         * @param enabled
+         * Computes the current sensor drift when using rate measurements.
          */
-        //%
-        setDriftCorrection(enabled: boolean) {
-            this._driftCorrection = enabled;
+        //% help=sensors/gyro/compute-drift
+        //% block="compute **gyro** %this|drift"
+        //% blockId=gyroComputeDrift
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=10 blockGap=8
+        //% group="Gyro Sensor"
+        computeDrift() {
+            if (this.calibrating)
+                pauseUntil(() => !this.calibrating, 2000);
+            this.computeDriftNoCalibration();
+        }
+
+        private computeDriftNoCalibration() {
+            // clear drift
+            this.setMode(GyroSensorMode.Rate);
             this._drift = 0;
+            const n = 100;
+            let d = 0;
+            for (let i = 0; i < n; ++i) {
+                d += this._query();
+                pause(4);
+            }
+            this._drift = d / n;
         }
     }
 
