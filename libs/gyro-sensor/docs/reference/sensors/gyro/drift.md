@@ -6,7 +6,7 @@ Get the computed rate drift
 sensors.gyro2.drift()
 ```
 
-The gyroscope sensor is subject to rate drifiting. This means that the measurement reported by the sensor is off by a few degrees per second over time: it is drifting.
+The gyroscope sensor is subject to rate drifting. This means that the measurement reported by the sensor is off by a few degrees per second over time: it is drifting.
 
 To counter the effect of drifting, call the ``||sensors:compute drift||`` block when the sensor is still to compute the current drift. The rate meansurements will automatically be corrected based on that drift.
 
