@@ -23,7 +23,7 @@ export class Ev3Wrapper {
     private cmdSeq = U.randomUint32() & 0xffff;
     private lock = new U.PromiseQueue();
     isStreaming = false;
-    dataDump = false;
+    dataDump = /talkdbg=1/.test(window.location.href);
 
     constructor(public io: pxt.HF2.PacketIO) {
         io.onData = buf => {
@@ -84,7 +84,7 @@ export class Ev3Wrapper {
             })
     }
 
-    setStatusLight(pattern: number) {
+    setStatusLightAsync(pattern: number) {
         // see StatusLight enum
         return this.isVmAsync()
             .then(vm => {
@@ -92,6 +92,7 @@ export class Ev3Wrapper {
                 log(`setting LED pattern`)
                 // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L333
                 // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L527                
+                // UI_WRITE(LED,LED_GREEN)
                 const UI_WRITE = 0x82;
                 const LED = 27;
                 let buf = this.allocSystem(2, UI_WRITE);
