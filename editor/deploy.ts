@@ -304,7 +304,6 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
                     return Promise.reject(e);
                 })
         })
-        .then(() => w.setStatusLightAsync(4)) // green flash
         .then(() => w.stopAsync())
         .then(() => w.rmAsync(elfPath))
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))

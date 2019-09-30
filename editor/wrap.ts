@@ -17,6 +17,8 @@ export interface DirEntry {
 
 const runTemplate = "C00882010084XX0060640301606400"
 const usbMagic = 0x3d3f
+const DIRECT_COMMAND_REPLY = 0x00 // Direct command, reply required
+const DIRECT_COMMAND_NO_REPLY = 0x80 // Direct command, reply not require
 
 export class Ev3Wrapper {
     msgs = new U.PromiseBuffer<Uint8Array>()
@@ -82,25 +84,6 @@ export class Ev3Wrapper {
                 return this.justSendAsync(buf)
                     .then(() => Promise.delay(500))
             })
-    }
-
-    setStatusLightAsync(pattern: number) {
-        // see StatusLight enum
-        return this.isVmAsync()
-            .then(vm => {
-                if (!vm) return Promise.resolve();
-                log(`setting LED pattern`)
-                // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L333
-                // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L527                
-                // UI_WRITE(LED,LED_GREEN)
-                const UI_WRITE = 0x82;
-                const LED = 27;
-                let buf = this.allocSystem(2, UI_WRITE);
-                buf[6] = LED;
-                buf[7] = pattern;
-                return this.justSendAsync(buf);
-            })
-
     }
 
     dmesgAsync() {
