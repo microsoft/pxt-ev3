@@ -61,6 +61,12 @@ motors.largeBC.steer(0, 50, 1, MoveUnit.Rotations);
 motors.largeBC.stop();
 ```
 
+### ~ hint
+
+The **turn ratio range is -200, 200** unlike LabView who used -100,100.
+
+### ~
+
 ## Tank
 
 The **tank** blocks control the speed of two motors. These are commonly used for a differential drive robot. The blocks can also specify the duration, angle, or number of rotations.

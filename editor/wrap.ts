@@ -1,8 +1,12 @@
+/**
+ * See https://www.lego.com/cdn/cs/set/assets/blt6879b00ae6951482/LEGO_MINDSTORMS_EV3_Communication_Developer_Kit.pdf
+ * https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L146
+ */
 import HF2 = pxt.HF2
 import U = pxt.U
 
 function log(msg: string) {
-    pxt.debug("EWRAP: " + msg)
+    pxt.log("serial: " + msg)
 }
 
 export interface DirEntry {
@@ -19,7 +23,7 @@ export class Ev3Wrapper {
     private cmdSeq = U.randomUint32() & 0xffff;
     private lock = new U.PromiseQueue();
     isStreaming = false;
-    dataDump = false;
+    dataDump = /talkdbg=1/.test(window.location.href);
 
     constructor(public io: pxt.HF2.PacketIO) {
         io.onData = buf => {
