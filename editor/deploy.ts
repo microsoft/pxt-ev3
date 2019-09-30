@@ -289,7 +289,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
                             header: lf("Bluetooth download failed..."),
                             htmlBody:
                                 `<ul>
-<li>${lf("Make sure to stop your program on the EV3.")}</li>
+<li>${lf("Make sure to stop your program or exit portview on the EV3.")}</li>
 <li>${lf("Check your battery level.")}</li>
 </ul>`,
                             hasCloseIcon: true,
