@@ -77,8 +77,6 @@ export class FieldSpeed extends Blockly.FieldSlider implements Blockly.FieldCust
 
     setReadout_(readout: Element, value: string) {
         let x = parseFloat(value) || 0;
-        // snap on multiple of 5
-        x = Math.round(x / 5) * 5;
         this.updateSpeed(x);
         // Update reporter
         this.reporter.textContent = `${x}%`;

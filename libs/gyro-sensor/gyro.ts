@@ -179,6 +179,7 @@ namespace sensors {
         computeDrift() {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
+            pause(1000); // let the robot settle
             this.computeDriftNoCalibration();
         }
 
