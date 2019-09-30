@@ -192,7 +192,7 @@ namespace sensors {
                 d += this._query();
                 pause(4);
             }
-            this._drift = d / n;
+            this._drift = Math.round(d / n);
         }
 
         _info(): string {
@@ -203,8 +203,8 @@ namespace sensors {
                 case GyroSensorMode.Angle:
                     return `${this._query()}>`;
                 case GyroSensorMode.Rate:
-                    let r = `${this._query()}>/s`;
-                    if (this._drift)
+                    let r = `${this._query()}r`;
+                    if (this._drift != 0)
                         r += `-${this._drift | 0}`;
                     return r;
             }
