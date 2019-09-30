@@ -99,7 +99,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                                 }],
                                 htmlBody: `<p>
 ${lf("You will be prompted to select a serial port.")}
-${lf("On Windows, look for 'Standard Serial over Bluetooth link'.")}
+${pxt.BrowserUtils.isWindows() ? lf("Look for 'Standard Serial over Bluetooth link'.") : lf("Loop for 'tty.EV3-SerialPort' or 'cu.EV3-SerialPort'")}
 ${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
 </p>
 `
