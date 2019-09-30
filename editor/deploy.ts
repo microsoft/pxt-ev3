@@ -297,6 +297,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
                             hideAgree: false,
                             agreeLbl: lf("Try again"),
                         }).then(() => w.disconnectAsync())
+                            .then(() => Promise.delay(1000))
                             .then(() => w.reconnectAsync());
 
                     // nothing we can do
