@@ -7,6 +7,13 @@ let bluetoothDialogShown = false;
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
     const projectView = opts.projectView;
     pxt.debug('loading pxt-ev3 target extensions...')
+
+    function enableWebSerialAndCompileAsync() {
+        return enableWebSerialAsync()
+        .then(() => Promise.delay(500))
+        .then(() => projectView.compile());
+    }
+
     const res: pxt.editor.ExtensionResult = {
         deployCoreAsync,
         showUploadInstructionsAsync: (fn: string, url: string, confirmAsync: (options: any) => Promise<number>) => {
@@ -84,7 +91,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                     onclick: () => {
                         pxt.tickEvent("bluetooth.enable");
                         if (bluetoothDialogShown) {
-                            enableWebSerialAsync().done();
+                            enableWebSerialAndCompileAsync().done();
                         } else {
                             bluetoothDialogShown = true;
                             confirmAsync({
@@ -103,9 +110,7 @@ ${lf("On Windows, look for 'Standard Serial over Bluetooth link'.")}
 ${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
 </p>
 `
-                            }).then(() => enableWebSerialAsync())
-                                .then(() => Promise.delay(500))
-                                .then(() => projectView.compile())
+                            }).then(() => enableWebSerialAndCompileAsync())
                         }
                     }
                 } : undefined, downloadAgain ? {

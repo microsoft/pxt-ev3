@@ -94,9 +94,9 @@ export class Ev3Wrapper {
                 // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L527                
                 const UI_WRITE = 0x82;
                 const LED = 27;
-                let buf = this.allocCustom(0x82, 2);
-                buf[1] = LED;
-                buf[2] = pattern;
+                let buf = this.allocSystem(2, UI_WRITE);
+                buf[6] = LED;
+                buf[7] = pattern;
                 return this.justSendAsync(buf);
             })
 
