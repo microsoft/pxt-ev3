@@ -6,7 +6,7 @@ import HF2 = pxt.HF2
 import U = pxt.U
 
 function log(msg: string) {
-    pxt.debug("EWRAP: " + msg)
+    pxt.log("serial: " + msg)
 }
 
 export interface DirEntry {
@@ -17,8 +17,6 @@ export interface DirEntry {
 
 const runTemplate = "C00882010084XX0060640301606400"
 const usbMagic = 0x3d3f
-const DIRECT_COMMAND_REPLY = 0x00 // Direct command, reply required
-const DIRECT_COMMAND_NO_REPLY = 0x80 // Direct command, reply not require
 
 export class Ev3Wrapper {
     msgs = new U.PromiseBuffer<Uint8Array>()
