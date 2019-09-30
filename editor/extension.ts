@@ -5,6 +5,7 @@ import { deployCoreAsync, initAsync, canUseWebSerial, enableWebSerialAsync, setC
 
 let bluetoothDialogShown = false;
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
+    const projectView = opts.projectView;
     pxt.debug('loading pxt-ev3 target extensions...')
     const res: pxt.editor.ExtensionResult = {
         deployCoreAsync,
@@ -103,15 +104,8 @@ ${lf("If you have paired multiple EV3, you might have to try out multiple ports 
 </p>
 `
                             }).then(() => enableWebSerialAsync())
-                                .then(() => confirmAsync({
-                                    header: lf("Bluetooth is ready!"),
-                                    hasCloseIcon: true,
-                                    hideCancel: true,
-                                    htmlBody: `<p>
-                                    ${lf("Click Download again to send your code to the EV3 over Bluetooth.")}
-                                    </p>
-                                    `
-                                }))
+                                .then(() => Promise.delay(500))
+                                .then(() => projectView.compile())
                         }
                     }
                 } : undefined, downloadAgain ? {
