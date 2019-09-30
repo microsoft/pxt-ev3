@@ -1,3 +1,7 @@
+/**
+ * See https://www.lego.com/cdn/cs/set/assets/blt6879b00ae6951482/LEGO_MINDSTORMS_EV3_Communication_Developer_Kit.pdf
+ * https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L146
+ */
 import HF2 = pxt.HF2
 import U = pxt.U
 
@@ -78,6 +82,24 @@ export class Ev3Wrapper {
                 return this.justSendAsync(buf)
                     .then(() => Promise.delay(500))
             })
+    }
+
+    setStatusLight(pattern: number) {
+        // see StatusLight enum
+        return this.isVmAsync()
+            .then(vm => {
+                if (!vm) return Promise.resolve();
+                log(`setting LED pattern`)
+                // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L333
+                // https://github.com/mindboards/ev3sources/blob/master/lms2012/lms2012/source/bytecodes.h#L527                
+                const UI_WRITE = 0x82;
+                const LED = 27;
+                let buf = this.allocCustom(0x82, 2);
+                buf[1] = LED;
+                buf[2] = pattern;
+                return this.justSendAsync(buf);
+            })
+
     }
 
     dmesgAsync() {

@@ -173,7 +173,7 @@ export function initAsync(): Promise<void> {
     }
 
     if (WebSerialPackageIO.isSupported())
-        pxt.tickEvent("bluetooth.supported");
+        pxt.tickEvent("webserial.supported");
 
     return Promise.resolve();
 }
@@ -274,7 +274,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
 
     if (!useHID) return saveUF2Async()
 
-    pxt.tickEvent("bluetooth.flash");
+    pxt.tickEvent("webserial.flash");
     let w: Ev3Wrapper;
     return initHidAsync()
         .then(w_ => {
@@ -291,6 +291,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
                                 `<ul>
 <li>${lf("Make sure to stop your program or exit portview on the EV3.")}</li>
 <li>${lf("Check your battery level.")}</li>
+<li>${lf("Close EV3 LabView or other MakeCode editor tabs.")}
 </ul>`,
                             hasCloseIcon: true,
                             hideCancel: true,
@@ -303,17 +304,18 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
                     return Promise.reject(e);
                 })
         })
+     //   .then(() => w.setStatusLight(7)) // green pulse
         .then(() => w.stopAsync())
         .then(() => w.rmAsync(elfPath))
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))
         .then(() => w.flashAsync(rbfPath, rbfBIN))
         .then(() => w.runAsync(rbfPath))
         .then(() => {
-            pxt.tickEvent("bluetooth.success");
+            pxt.tickEvent("webserial.success");
             return w.disconnectAsync()
             //return Promise.delay(1000).then(() => w.dmesgAsync())
         }).catch(e => {
-            pxt.tickEvent("bluetooth.fail");
+            pxt.tickEvent("webserial.fail");
             useHID = false;
             useWebSerial = false;
             // if we failed to initalize, tell the user to retry
