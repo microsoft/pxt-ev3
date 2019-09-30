@@ -64,7 +64,6 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     private _writer: any;
 
     constructor(private port: SerialPort, private options: SerialOptions) {
-        this.openAsync();
     }
 
     async readSerialAsync() {
