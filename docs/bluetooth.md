@@ -38,10 +38,7 @@ Next you need to enable the experimental features (this may change in the future
 
 ## Download over Bluetooth
 
-* go to the **beta** editor https://makecode.mindstorms.com/beta
-
-This feature is not yet released so make sure to use the beta editor.
-
+* go to https://makecode.mindstorms.com/
 * click on **Download** to start a file download as usual
 * on the download dialog, you should see a **Bluetooth** button. Click on the
 **Bluetooth** button to enable the mode.
