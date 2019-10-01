@@ -24,6 +24,14 @@
     "name": "Bluetooth download (beta)",
     "description": "EXPERIMENTAL! Learn how to download code via Bluetooth.",
     "youTubeId": "VIq8-6Egtqs"
+}, {
+    "name": "Turn with Gyro",
+    "description": "Use the gyro for precise turns.",
+    "youTubeId": "pTRAs1we51Y"
+}, {
+    "name": "Moving with Gyro",
+    "description": "Use the gyro for correct the robot trajectory.",
+    "youTubeId": "ufiOPvW37xc"
 }]
 ```
 
