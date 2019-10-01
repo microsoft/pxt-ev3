@@ -200,13 +200,13 @@ namespace sensors {
             // clear drift
             this.setMode(GyroSensorMode.Rate);
             this._drift = 0;
-            const n = 100;
+            const n = 10;
             let d = 0;
             for (let i = 0; i < n; ++i) {
                 d += this._query();
-                pause(4);
+                pause(20);
             }
-            this._drift = Math.round(d / n);
+            this._drift = d / n;
         }
 
         _info(): string {

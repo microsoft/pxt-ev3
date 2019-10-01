@@ -309,6 +309,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))
         .then(() => w.flashAsync(rbfPath, rbfBIN))
         .then(() => w.runAsync(rbfPath))
+        .then(() => Promise.delay(500))
         .then(() => {
             pxt.tickEvent("webserial.success");
             return w.disconnectAsync()

@@ -17,6 +17,7 @@ export interface DirEntry {
 
 const runTemplate = "C00882010084XX0060640301606400"
 const usbMagic = 0x3d3f
+const DIRECT_COMMAND_NO_REPLY = 0x80
 
 export class Ev3Wrapper {
     msgs = new U.PromiseBuffer<Uint8Array>()
@@ -93,7 +94,7 @@ export class Ev3Wrapper {
     runAsync(path: string) {
         let codeHex = runTemplate.replace("XX", U.toHex(U.stringToUint8Array(path)))
         let code = U.fromHex(codeHex)
-        let pkt = this.allocCore(2 + code.length, 0)
+        let pkt = this.allocCore(2 + code.length, DIRECT_COMMAND_NO_REPLY)
         HF2.write16(pkt, 5, 0x0800)
         U.memcpy(pkt, 7, code)
         log(`run ${path}`)
