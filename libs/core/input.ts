@@ -814,10 +814,10 @@ namespace sensors {
 
     export class ThresholdDetector {
         public id: number;
-        public min: number;
-        public max: number;
-        public lowThreshold: number;
-        public highThreshold: number;
+        private min: number;
+        private max: number;
+        private lowThreshold: number;
+        private highThreshold: number;
         public level: number;
         public state: ThresholdState;
 
