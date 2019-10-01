@@ -7,12 +7,12 @@ const enum GyroSensorMode {
 namespace sensors {
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
-        private calibrating: boolean;
+        private _calibrating: boolean;
         private _drift: number;
         private _angle: control.EulerIntegrator;
         constructor(port: number) {
             super(port)
-            this.calibrating = false;
+            this._calibrating = false;
             this._drift = 0;
             this._angle = new control.EulerIntegrator();
             this._setMode(GyroSensorMode.Rate);
@@ -33,6 +33,10 @@ namespace sensors {
             // decrecated
         }
 
+        isCalibrating(): boolean {
+            return this._calibrating;
+        }
+
         /**
          * Get the current angle from the gyroscope.
          * @param sensor the gyroscope to query the request
@@ -47,8 +51,8 @@ namespace sensors {
         //% group="Gyro Sensor"
         angle(): number {
             this.poke();
-            if (this.calibrating)
-                pauseUntil(() => !this.calibrating, 2000);
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
 
             return Math.round(this._angle.value);
         }
@@ -67,8 +71,8 @@ namespace sensors {
         //% group="Gyro Sensor"
         rate(): number {
             this.poke();
-            if (this.calibrating)
-                pauseUntil(() => !this.calibrating, 2000);
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
             return this._query() - this._drift;
         }
 
@@ -85,12 +89,12 @@ namespace sensors {
         //% weight=51 blockGap=8
         //% group="Gyro Sensor"
         calibrate(): void {
-            if (this.calibrating) return; // already in calibration mode
+            if (this._calibrating) return; // already in calibration mode
 
             const statusLight = brick.statusLight(); // save current status light
             brick.setStatusLight(StatusLight.Orange);
 
-            this.calibrating = true;
+            this._calibrating = true;
             // may be triggered by a button click,
             // give time for robot to settle
             pause(700);
@@ -104,7 +108,8 @@ namespace sensors {
                 brick.setStatusLight(statusLight); // resture previous light
 
                 // and we're done
-                this.calibrating = false;
+                this._angle.reset();
+                this._calibrating = false;
                 return;
             }
 
@@ -113,8 +118,6 @@ namespace sensors {
 
             // send a reset command
             super.reset();
-            this._drift = 0;
-            this._angle.reset();
             // wait till sensor is live
             pauseUntil(() => this.isActive(), 7000);
             // mode toggling
@@ -127,7 +130,8 @@ namespace sensors {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
-                this.calibrating = false;
+                this._angle.reset();
+                this._calibrating = false;
                 return;
             }
 
@@ -140,7 +144,8 @@ namespace sensors {
             brick.setStatusLight(statusLight); // resture previous light
 
             // and we're done
-            this.calibrating = false;
+            this._angle.reset();
+            this._calibrating = false;
         }
 
         /**
@@ -155,17 +160,37 @@ namespace sensors {
         //% weight=50 blockGap=8
         //% group="Gyro Sensor"
         reset(): void {
-            if (this.calibrating) return; // already in calibration mode
+            if (this._calibrating) return; // already in calibration mode
 
-            this.calibrating = true;
+            this._calibrating = true;
+            const statusLight = brick.statusLight(); // save current status light
+            brick.setStatusLight(StatusLight.Orange);
+
             // send a reset command
             super.reset();
             this._drift = 0;
             this._angle.reset();
             pauseUntil(() => this.isActive(), 7000);
+
+            // check sensor is ready
+            if (!this.isActive()) {
+                brick.setStatusLight(StatusLight.RedFlash); // didn't work
+                pause(2000);
+                brick.setStatusLight(statusLight); // restore previous light
+                this._angle.reset();
+                this._calibrating = false;
+                return;
+            }
+
             this._setMode(GyroSensorMode.Rate);
+
             // and done
-            this.calibrating = false;
+            brick.setStatusLight(StatusLight.Green); // success
+            pause(1000);
+            brick.setStatusLight(statusLight); // resture previous light
+            // and done
+            this._angle.reset();
+            this._calibrating = false;
         }
 
         /**
@@ -195,8 +220,8 @@ namespace sensors {
         //% weight=10 blockGap=8
         //% group="Gyro Sensor"
         computeDrift() {
-            if (this.calibrating)
-                pauseUntil(() => !this.calibrating, 2000);
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
             pause(1000); // let the robot settle
             this.computeDriftNoCalibration();
         }
@@ -214,7 +239,7 @@ namespace sensors {
         }
 
         _info(): string {
-            if (this.calibrating)
+            if (this._calibrating)
                 return "cal...";
 
             let r = `${this._query()}r`;

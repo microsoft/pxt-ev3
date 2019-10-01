@@ -29,5 +29,9 @@ namespace pxsim {
         getRate() {
             return this.rate;
         }
+
+        getValue() {
+            return this.getRate();
+        }
     }
 }
