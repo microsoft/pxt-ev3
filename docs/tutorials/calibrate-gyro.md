@@ -13,16 +13,25 @@ recalibrate on every run.
 * [EV3 Driving Base with Gyro](https://le-www-live-s.legocdn.com/sc/media/lessons/mindstorms-ev3/building-instructions/ev3-gyro-sensor-driving-base-a521f8ebe355c281c006418395309e15.pdf)
 
 
-## Step 1 Calibration
+## Step 1 Show ports
 
-Add a ``||sensors:calibrate gyro||`` block in a ``||brick:on button enter pressed||`` block so that you can manually start a calibration process.
+Add the ``||brick:show ports||`` to see the status of the gyroscope.
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    sensors.gyro2.calibrate()
-})
+brick.showPorts()
 ```
 
-## Step 2 Download and run @fullscreen
+
+## Step 2 Calibration
+
+Add a ``||sensors:calibrate gyro||`` block to calibrate the gyro. The block
+detects if the sensor is present and does a full reset of the sensor if necessary.
+
+```blocks
+brick.showPorts()
+sensors.gyro2.calibrate()
+```
+
+## Step 3 Download and run @fullscreen
 
 Download this program to your brick and press the ENTER button.

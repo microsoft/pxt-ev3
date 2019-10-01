@@ -16,20 +16,11 @@ Add a ``||sensors:calibrate gyro||`` block in a ``||brick:on button enter presse
 at least once after connecting the gyro.
 
 ```blocks
-brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
-    sensors.gyro2.calibrate()
-})
-```
-
-## Step 2 Show Ports
-
-Download this program to your brick and press the ENTER button.
-
-```blocks
 brick.showPorts()
+sensors.gyro2.calibrate()
 ```
 
-## Step 3 Compute the error
+## Step 2 Compute the error
 
 Make a new **error** variable and drag the ``||sensors:gyro rate||``
 and multiply it by -1. Since the rate shows the rotation rate, we will
@@ -38,26 +29,33 @@ counter it by negating it.
 ```blocks
 let error = 0
 brick.showPorts()
+sensors.gyro2.calibrate()
 while (true) {
     error = sensors.gyro2.rate() * -1
 }
 ```
 
-## Step 4 Steer
+## Step 3 Steer with feedback
 
 Drag a ``||motors:steer motors||`` block under the variable and pass
 the **error** variable into the turn ratio section.
 
+If the robot is turning right, the gyro will report a positive rotation rate
+and the turn ratio will be negative which will the turn the robot left!
+
 ```blocks
 let error = 0
 brick.showPorts()
+sensors.gyro2.calibrate()
 while (true) {
     error = sensors.gyro2.rate() * -1
     motors.largeBC.steer(error, 50)
-    pause(20)
 }
 ```
 
-## Step 5 Run it!
+## Step 4 Run it!
 
-Download to your brick and test out if the
+Download to your brick and test out if the robot is going straight.
+
+This kind of technique is called a proportional controller; 
+it corrects the inputs (motor speed) with a feedback proportional to the output (rotation rate).
