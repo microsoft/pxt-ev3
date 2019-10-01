@@ -29,7 +29,7 @@ Step by step guides to coding your @boardname@.
   "name": "Gyro",
   "description": "Drive straight or turn more precisely with the gyro",
   "url":"/tutorials/gyro",
-  "imageUrl":"/static/tutorials/gyro.png"
+  "imageUrl":"/static/tutorials/calibrate-gyro.png"
 }, {
   "name": "Ultrasonic Sensor",
   "description": "Use the ultrasonic sensor to detect obstacles",
