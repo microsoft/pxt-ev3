@@ -264,8 +264,9 @@ namespace motors {
             // allow 500ms for robot to settle
             if (this._brake && this._brakeSettleTime > 0)
                 pause(this._brakeSettleTime);
-            else
-                pause(1); // give a tiny breather
+            else {
+                pause(1);
+            }
         }
 
         protected pauseOnRun(stepsOrTime: number) {
@@ -275,7 +276,6 @@ namespace motors {
                 // allow robot to settle
                 this.settle();
             } else {
-                // give a breather to the event system in tight loops
                 pause(1);
             }
         }

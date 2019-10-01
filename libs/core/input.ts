@@ -87,7 +87,7 @@ namespace sensors.internal {
             this.devType = DAL.DEVICE_TYPE_NONE
             this.iicid = ''
             this.sensors = []
-            this.poller = new Poller(50, () => this.query(), (prev, curr) => this.update(prev, curr));
+            this.poller = new Poller(25, () => this.query(), (prev, curr) => this.update(prev, curr));
         }
 
         poke() {
@@ -121,7 +121,7 @@ namespace sensors.internal {
 
         powerMM = control.mmap("/dev/lms_power", 2, 0)
 
-        devPoller = new Poller(500, () => { return hashDevices(); },
+        devPoller = new Poller(250, () => { return hashDevices(); },
             (prev, curr) => {
                 detectDevices();
             });

@@ -8,7 +8,6 @@ namespace pxsim {
     export class GyroSensorNode extends UartSensorNode {
         id = NodeType.GyroSensor;
 
-        private angle: number = 0;
         private rate: number = 0;
 
         constructor(port: number) {
@@ -19,14 +18,6 @@ namespace pxsim {
             return DAL.DEVICE_TYPE_GYRO;
         }
 
-        setAngle(angle: number) {
-            angle = angle | 0;
-            if (this.angle != angle) {
-                this.angle = angle;
-                this.setChangedState();
-            }
-        }
-
         setRate(rate: number) {
             rate = rate | 0;
             if (this.rate != rate) {
@@ -35,9 +26,12 @@ namespace pxsim {
             }
         }
 
+        getRate() {
+            return this.rate;
+        }
+
         getValue() {
-            return this.mode == GyroSensorMode.Angle ? this.angle :
-                this.mode == GyroSensorMode.Rate ? this.rate : 0;
+            return this.getRate();
         }
     }
 }

@@ -15,5 +15,11 @@
   "cardType": "tutorial",
   "url":"/tutorials/move-straight-with-gyro",
   "imageUrl":"/static/tutorials/move-straight-with-gyro.png"
+}, {
+  "name": "Drifter",
+  "description": "Explore how the gyro is drifting",
+  "cardType": "example",
+  "url":"/tutorials/drifter",
+  "imageUrl":"/static/tutorials/drifter.png"
 }]
 ```

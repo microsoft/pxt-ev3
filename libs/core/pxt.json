@@ -25,7 +25,8 @@
         "dal.d.ts",
         "icons.jres",
         "ns.ts",
-        "platform.h"
+        "platform.h",
+        "integrator.ts"
     ],
     "testFiles": [
         "test.ts"

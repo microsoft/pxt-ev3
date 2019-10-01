@@ -2,12 +2,11 @@
 
 namespace pxsim.visuals {
     const MAX_RATE = 40;
-    const MAX_ANGLE = 360;
 
     export class RotationSliderControl extends ControlView<GyroSensorNode> {
         private group: SVGGElement;
         private slider: SVGGElement;
-        private text: SVGTextElement;
+        private rateText: SVGTextElement;
 
         private static SLIDER_WIDTH = 70;
         //private static SLIDER_HEIGHT = 78;
@@ -26,8 +25,8 @@ namespace pxsim.visuals {
             pxsim.svg.child(this.slider, "circle", { 'cx': 9, 'cy': 50, 'r': 13, 'style': 'fill: #f12a21' });
             pxsim.svg.child(this.slider, "circle", { 'cx': 9, 'cy': 50, 'r': 12.5, 'style': 'fill: none;stroke: #b32e29' });
 
-            this.text = pxsim.svg.child(this.group, "text", {
-                'x': RotationSliderControl.SLIDER_WIDTH / 2, 
+            this.rateText = pxsim.svg.child(this.group, "text", {
+                'x': this.getInnerWidth() / 2,
                 'y': RotationSliderControl.SLIDER_WIDTH * 1.2,
                 'text-anchor': 'middle', 'dominant-baseline': 'middle',
                 'style': 'font-size: 16px',
@@ -72,17 +71,10 @@ namespace pxsim.visuals {
                 return;
             }
             const node = this.state;
-            let percentage = 50;
-            if (node.getMode() == GyroSensorMode.Rate) {
-                const rate = node.getValue();
-                this.text.textContent = `${rate}°/s`
-                // cap rate at 40deg/s
-                percentage = 50 + Math.sign(rate) * Math.min(MAX_RATE, Math.abs(rate)) / MAX_RATE * 50;
-            } else {  //angle
-                const angle = node.getValue();
-                this.text.textContent = `${angle}°`
-                percentage = 50 + Math.sign(angle) * Math.min(MAX_ANGLE, Math.abs(angle)) / MAX_ANGLE * 50;
-            }
+            const rate = node.getRate();
+            this.rateText.textContent = `${rate}°/s`
+            // cap rate at 40deg/s
+            const percentage = 50 + Math.sign(rate) * Math.min(MAX_RATE, Math.abs(rate)) / MAX_RATE * 50;
             const x = RotationSliderControl.SLIDER_WIDTH * percentage / 100;
             const y = Math.abs((percentage - 50) / 50) * 10;
             this.slider.setAttribute("transform", `translate(${x}, ${y})`);
@@ -97,11 +89,7 @@ namespace pxsim.visuals {
             t = -(t - 0.5) * 2; // [-1,1]
 
             const state = this.state;
-            if (state.getMode() == GyroSensorMode.Rate) {
-                state.setRate(MAX_RATE * t);
-            } else {
-                state.setAngle(MAX_ANGLE * t)
-            }
+            state.setRate(MAX_RATE * t);
         }
     }
 
