@@ -73,13 +73,7 @@ namespace sensors {
         }
 
         setMode(m: ColorSensorMode) {
-            if (m == ColorSensorMode.AmbientLightIntensity) {
-                this.thresholdDetector.setLowThreshold(5);
-                this.thresholdDetector.setHighThreshold(20);
-            } else {
-                this.thresholdDetector.setLowThreshold(20);
-                this.thresholdDetector.setHighThreshold(80);
-            }
+            // don't change threshold after initialization
             this._setMode(m)
         }
 
