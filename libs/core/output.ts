@@ -265,7 +265,7 @@ namespace motors {
             if (this._brake && this._brakeSettleTime > 0)
                 pause(this._brakeSettleTime);
             else {
-                // breather not needed anymore
+                pause(1);
             }
         }
 
@@ -276,7 +276,7 @@ namespace motors {
                 // allow robot to settle
                 this.settle();
             } else {
-                // breather not needed anymore
+                pause(1);
             }
         }
 
