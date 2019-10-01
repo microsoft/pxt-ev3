@@ -27,7 +27,7 @@
 }, {
     "name": "Turn with Gyro",
     "description": "Use the gyro for precise turns.",
-    "youTubeId": "pTRAs1we51Y"
+    "youTubeId": "I7ncuXAfBwk"
 }, {
     "name": "Moving with Gyro",
     "description": "Use the gyro for correct the robot trajectory.",

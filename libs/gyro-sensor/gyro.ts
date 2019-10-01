@@ -229,14 +229,15 @@ namespace sensors {
         /**
          * Pauses the program until the gyro detected
          * that the angle changed by the desired amount of degrees.
-         * @param degrees the degrees to turn 
+         * @param degrees the degrees to turn
          */
         //% help=sensors/gyro/pause-until-rotated
-        //% block="pause **gyro** %this|until rotated %degrees|degrees"
+        //% block="pause until **gyro** %this|rotated %degrees=rotationPicker|degrees"
         //% blockId=gyroPauseUntilRotated
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
+        //% degrees.defl=90
         //% weight=63
         //% group="Gyro Sensor"
         pauseUntilRotated(degrees: number, timeOut?: number): void {
@@ -281,4 +282,17 @@ namespace sensors {
 
     //% fixedInstance whenUsed block="4" jres=icons.port4
     export const gyro4: GyroSensor = new GyroSensor(4)
+
+    /**
+      * Get the rotation angle field editor
+      * @param degrees angle in degrees, eg: 90
+      */
+    //% blockId=rotationPicker block="%degrees"
+    //% blockHidden=true shim=TD_ID
+    //% colorSecondary="#FFFFFF"
+    //% degrees.fieldEditor="numberdropdown" degrees.fieldOptions.decompileLiterals=true
+    //% degrees.fieldOptions.data='[["30", 30], ["45", 45], ["60", 60], ["90", 90], ["180", 180], ["-30", -30], ["-45", -45], ["-60", -60], ["-90", -90], ["-180", -180]]'
+    export function __rotationPicker(degrees: number): number {
+        return degrees;
+    }
 }
