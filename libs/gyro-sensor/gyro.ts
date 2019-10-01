@@ -236,6 +236,7 @@ namespace sensors {
                 pause(20);
             }
             this._drift = d / n;
+            this._angle.reset();
         }
 
         _info(): string {
