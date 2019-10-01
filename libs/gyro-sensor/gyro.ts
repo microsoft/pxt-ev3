@@ -9,10 +9,13 @@ namespace sensors {
     export class GyroSensor extends internal.UartSensor {
         private calibrating: boolean;
         private _drift: number;
+        private _angle: control.EulerIntegrator;
         constructor(port: number) {
             super(port)
             this.calibrating = false;
             this._drift = 0;
+            this._angle = new control.EulerIntegrator();
+            this._setMode(GyroSensorMode.Rate);
             this.setMode(GyroSensorMode.Rate);
         }
 
@@ -21,13 +24,13 @@ namespace sensors {
         }
 
         _query(): number {
-            return this.getNumber(NumberFormat.Int16LE, 0);
+            const v = this.getNumber(NumberFormat.Int16LE, 0);
+            this._angle.integrate(v - this._drift);
+            return v;
         }
 
         setMode(m: GyroSensorMode) {
-            if (m == GyroSensorMode.Rate && this.mode != m)
-                this._drift = 0;
-            this._setMode(m)
+            // decrecated
         }
 
         /**
@@ -47,8 +50,7 @@ namespace sensors {
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
 
-            this.setMode(GyroSensorMode.Angle);
-            return this._query();
+            return Math.round(this._angle.value);
         }
 
         /**
@@ -67,8 +69,6 @@ namespace sensors {
             this.poke();
             if (this.calibrating)
                 pauseUntil(() => !this.calibrating, 2000);
-
-            this.setMode(GyroSensorMode.Rate);
             return this._query() - this._drift;
         }
 
@@ -113,11 +113,14 @@ namespace sensors {
 
             // send a reset command
             super.reset();
+            this._drift = 0;
+            this._angle.reset();
             // wait till sensor is live
             pauseUntil(() => this.isActive(), 7000);
             // mode toggling
-            this.setMode(GyroSensorMode.Rate);
-            this.setMode(GyroSensorMode.Angle);
+            this._setMode(GyroSensorMode.Rate);
+            this._setMode(GyroSensorMode.Angle);
+            this._setMode(GyroSensorMode.Rate);
 
             // check sensor is ready
             if (!this.isActive()) {
@@ -130,8 +133,6 @@ namespace sensors {
 
             // switch to rate mode
             this.computeDriftNoCalibration();
-            // switch back to the desired mode
-            this.setMode(this.mode);
 
             // and done
             brick.setStatusLight(StatusLight.Green); // success
@@ -159,6 +160,10 @@ namespace sensors {
             this.calibrating = true;
             // send a reset command
             super.reset();
+            this._drift = 0;
+            this._angle.reset();
+            pauseUntil(() => this.isActive(), 7000);
+            this._setMode(GyroSensorMode.Rate);
             // and done
             this.calibrating = false;
         }
@@ -198,7 +203,6 @@ namespace sensors {
 
         private computeDriftNoCalibration() {
             // clear drift
-            this.setMode(GyroSensorMode.Rate);
             this._drift = 0;
             const n = 10;
             let d = 0;
@@ -213,16 +217,10 @@ namespace sensors {
             if (this.calibrating)
                 return "cal...";
 
-            switch (this.mode) {
-                case GyroSensorMode.Angle:
-                    return `${this._query()}>`;
-                case GyroSensorMode.Rate:
-                    let r = `${this._query()}r`;
-                    if (this._drift != 0)
-                        r += `-${this._drift | 0}`;
-                    return r;
-            }
-            return "";
+            let r = `${this._query()}r`;
+            if (this._drift != 0)
+                r += `-${this._drift | 0}`;
+            return r;
         }
     }
 
