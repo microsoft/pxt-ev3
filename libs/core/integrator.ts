@@ -10,7 +10,7 @@ namespace control {
 
         public integrate(derivative: number): void {
             let now = control.millis();
-            let dt = (this.t - now) / 1000.0;
+            let dt = (now -this.t) / 1000.0;
             this.value += dt * (this.v + derivative) / 2;
 
             this.t = now;
