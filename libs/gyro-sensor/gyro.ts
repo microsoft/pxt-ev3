@@ -47,7 +47,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=64
+        //% weight=64 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
             this.poke();
@@ -224,6 +224,26 @@ namespace sensors {
                 pauseUntil(() => !this._calibrating, 2000);
             pause(1000); // let the robot settle
             this.computeDriftNoCalibration();
+        }
+
+        /**
+         * Pauses the program until the gyro detected
+         * that the angle changed by the desired amount of degrees.
+         * @param degrees the degrees to turn 
+         */
+        //% help=sensors/gyro/pause-until-rotated
+        //% block="pause **gyro** %this|until rotated %degrees|degrees"
+        //% blockId=gyroPauseUntilRotated
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=63
+        //% group="Gyro Sensor"
+        pauseUntilRotated(degrees: number, timeOut?: number): void {
+            let a = this.angle();
+            const end = a + degrees;
+            const direction = (end - a) > 0 ? 1 : -1;
+            pauseUntil(() => (end - this.angle()) * direction <= 0, timeOut);
         }
 
         private computeDriftNoCalibration() {
