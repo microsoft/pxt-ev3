@@ -32,6 +32,10 @@
     "name": "Moving with Gyro",
     "description": "Use the gyro for correct the robot trajectory.",
     "youTubeId": "ufiOPvW37xc"
+}, {
+    "name": "Line following with 1 color sensor",
+    "description": "Simple line following using the color sensor.",
+    "youTubeId": "_LeduyKQVjg"
 }]
 ```
 
