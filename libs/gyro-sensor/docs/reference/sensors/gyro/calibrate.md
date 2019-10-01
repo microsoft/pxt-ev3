@@ -1,6 +1,6 @@
 # calibrate
 
-Reset the zero reference for the gyro to current position of the brick.
+Detects if the gyro is drifting and performs a full reset if needed.
 
 ```sig
 sensors.gyro2.calibrate()

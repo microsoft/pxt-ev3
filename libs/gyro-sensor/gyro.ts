@@ -73,7 +73,7 @@ namespace sensors {
         }
 
         /**
-         * Forces a calibration of the with light progress indicators. 
+         * Detects if calibration is necessary and performs a full reset, drift computation.
          * Must be called when the sensor is completely still.
          */
         //% help=sensors/gyro/calibrate
@@ -94,6 +94,19 @@ namespace sensors {
             // may be triggered by a button click,
             // give time for robot to settle
             pause(700);
+
+            // compute drift
+            this.computeDriftNoCalibration();
+            if (Math.abs(this.drift()) < 0.1) {
+                // no drift, skipping calibration
+                brick.setStatusLight(StatusLight.Green); // success
+                pause(1000);
+                brick.setStatusLight(statusLight); // resture previous light
+
+                // and we're done
+                this.calibrating = false;
+                return;
+            }
 
             // calibrating
             brick.setStatusLight(StatusLight.OrangePulse);

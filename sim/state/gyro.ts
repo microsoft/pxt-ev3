@@ -1,5 +1,5 @@
 namespace pxsim {
-    const enum GyroSensorMode {
+    export const enum GyroSensorMode {
         None = -1,
         Angle = 0,
         Rate = 1,
@@ -20,6 +20,7 @@ namespace pxsim {
         }
 
         setAngle(angle: number) {
+            angle = angle | 0;
             if (this.angle != angle) {
                 this.angle = angle;
                 this.setChangedState();
@@ -27,6 +28,7 @@ namespace pxsim {
         }
 
         setRate(rate: number) {
+            rate = rate | 0;
             if (this.rate != rate) {
                 this.rate = rate;
                 this.setChangedState();
