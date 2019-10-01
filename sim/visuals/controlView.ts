@@ -49,6 +49,8 @@ namespace pxsim.visuals {
         }
 
         private updateDimensions(width: number, height: number, strict?: boolean) {
+            width = Math.max(0, width);
+            height = Math.max(0, height);
             if (this.content) {
                 const currentWidth = this.getInnerWidth();
                 const currentHeight = this.getInnerHeight();
