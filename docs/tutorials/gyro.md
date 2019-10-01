@@ -10,6 +10,12 @@
   "url":"/tutorials/calibrate-gyro",
   "imageUrl":"/static/tutorials/calibrate-gyro.png"
 }, {
+  "name": "Turn",
+  "description": "Use the gyro to turn precisely",
+  "cardType": "tutorial",
+  "url":"/tutorials/turn-with-gyro",
+  "imageUrl":"/static/tutorials/turn-with-gyro.png"
+}, {
   "name": "Move Straight",
   "description": "Use the gyro to correct the trajectory of the robot",
   "cardType": "tutorial",
