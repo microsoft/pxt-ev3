@@ -48,8 +48,9 @@ Next you need to enable the experimental features (this may change in the future
 ## Choosing the correct serial port
 
 Unfortunately, the browser dialog does not make it easy to select which serial port is the brick.
-On Windows, it typically reads "Standard Serial over Bluetooth" and you may 
-have multiple of those if you've paired different bricks.
+
+* On Windows, choose ``Standard Serial over Bluetooth``. There might be multiple of those but only one works. Try your luck! Once you know the COM port number, remember it for the next time around.
+* On Mac OS, choose ``cu.BRICKNAME-SerialPort``
 
 ## Known issues
 
