@@ -27,9 +27,13 @@ class MMap : public RefObject {
     MMap();
     void destroy();
     void print();
+
+    static void scan(MMap *);
+    static unsigned gcsize(MMap *);
 };
 
 extern volatile bool paniced;
+void target_exit();
 
 // Buffer, Sound, and Image share representation.
 typedef Buffer Sound;

@@ -25,13 +25,20 @@ PXT_VTABLE_CTOR(MMap) {
 }
 
 void MMap::print() {
-    DMESG("MMap %p r=%d len=%d fd=%d data=%p", this, refcnt, length, fd, data);
+    DMESG("MMap %p len=%d fd=%d data=%p", this, length, fd, data);
 }
 
 void MMap::destroy() {
     munmap(data, length);
     close(fd);
 }
+
+void MMap::scan(MMap *) {}
+
+unsigned MMap::gcsize(MMap *) {
+    return TOWORDS(sizeof(MMap));
+}
+
 }
 
 namespace control {
@@ -39,8 +46,8 @@ namespace control {
 /** Create new file mapping in memory */
 //%
 MMap *mmap(String filename, int size, int offset) {
-    DMESG("mmap %s len=%d off=%d", filename->data, size, offset);
-    int fd = open(filename->data, O_RDWR, 0);
+    DMESG("mmap %s len=%d off=%d", filename->getUTF8Data(), size, offset);
+    int fd = open(filename->getUTF8Data(), O_RDWR, 0);
     if (fd < 0)
         return 0;
     
