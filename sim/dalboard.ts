@@ -84,7 +84,7 @@ namespace pxsim {
                 highContrast: msg.highContrast,
                 light: msg.light
             };
-            const viewHost = new visuals.BoardHost(pxsim.visuals.mkBoardView({
+            this.viewHost = new visuals.BoardHost(pxsim.visuals.mkBoardView({
                 boardDef,
                 visual: boardDef.visual,
                 highContrast: msg.highContrast,
