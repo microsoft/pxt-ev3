@@ -25,8 +25,8 @@ struct hci_dev_list_req {
     hci_dev_req dev_req[2];
 };
 
-static uint32_t bt_addr() {
-    uint32_t res = -1;
+static uint64_t bt_addr() {
+    uint64_t res = -1;
 
     int fd = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI);
     if (fd < 0) {
@@ -50,11 +50,8 @@ static uint32_t bt_addr() {
         goto done;
     }
 
-    memcpy(&res, di.bdaddr, 4);
-    res *= 0x1000193;
-    res += di.bdaddr[4];
-    res *= 0x1000193;
-    res += di.bdaddr[5];
+    res = 0;
+    memcpy(&res, di.bdaddr, 6);
 
 done:
     close(fd);
@@ -63,14 +60,10 @@ done:
 
 namespace pxt {
 
-int getSerialNumber() {
-    static int serial;
-
-    if (serial != 0)
-        return serial;
-
-    serial = bt_addr() & 0x7fffffff;
-
+uint64_t getLongSerialNumber() {
+    static uint64_t serial;
+    if (serial == 0)
+        serial = bt_addr();
     return serial;
 }
 
