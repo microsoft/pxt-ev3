@@ -49,11 +49,13 @@ namespace pxsim.visuals {
         }
 
         private updateDimensions(width: number, height: number, strict?: boolean) {
+            width = Math.max(0, width);
+            height = Math.max(0, height);
             if (this.content) {
                 const currentWidth = this.getInnerWidth();
                 const currentHeight = this.getInnerHeight();
-                const newHeight = currentHeight / currentWidth * width;
-                const newWidth = currentWidth / currentHeight * height;
+                const newHeight = Math.max(0, currentHeight / currentWidth * width);
+                const newWidth = Math.max(0, currentWidth / currentHeight * height);
                 if (strict) {
                     this.content.setAttribute('width', `${width}`);
                     this.content.setAttribute('height', `${height}`);

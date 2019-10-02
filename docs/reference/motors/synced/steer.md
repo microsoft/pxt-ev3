@@ -22,7 +22,7 @@ If you decide to use a **value** of rotation distance, you need to choose a type
 
 ## Parameters
 
-* **turnRatio**: a [number](/types/number) that is the percentage of speed of the drive motor. The follower motor runs at this speed. A negative number steers to the left and a positive number steers to the right. This is a number between `-100` and `100`.
+* **turnRatio**: a [number](/types/number) that is the percentage of speed of the drive motor. The follower motor runs at this speed. A negative number steers to the left and a positive number steers to the right. This is a number between `-200` and `200`.
 * **speed**: a [number](/types/number) that is the percentage of full speed. A negative value runs the motors in the reverse direction. This is the speed that the drive motor runs at.
 * **value**: the [number](/types/number) of movement units to rotate for. A value of `0` means run the motor continuously.
 * **unit**: the movement unit of rotation. This can be `milliseconds`, `seconds`, `degrees`, or `rotations`. If the number for **value** is `0`, this parameter isn't used.

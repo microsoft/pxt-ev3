@@ -5,6 +5,10 @@
             "LEGO"
         ],
         "approvedRepos": [
+            "microsoft/pxt-automation"
+        ],
+        "preferredRepos": [
+            "microsoft/pxt-automation"
         ]
     },
     "galleries": {
@@ -14,8 +18,9 @@
         "Touch Sensor Tutorials": "tutorials/touch-sensor",
         "Color Sensor Tutorials": "tutorials/color-sensor",
         "Ultrasonic Sensor Tutorials": "tutorials/ultrasonic-sensor",
+        "Gyro Tutorials": "tutorials/gyro",
         "Infrared Sensor Tutorials": "tutorials/infrared-sensor",
-        "FLL / City Shaper / Crane Mission": "tutorials/city-shaper/crane-mission",
+        "FLL / City Shaper": "tutorials/city-shaper",
         "Design Engineering": "design-engineering",
         "Coding": "coding",
         "Maker": "maker",

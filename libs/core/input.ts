@@ -1,28 +1,51 @@
 namespace sensors.internal {
-    //% shim=pxt::unsafePollForChanges
-    export function unsafePollForChanges(
-        periodMs: number,
-        query: () => number,
-        changeHandler: (prev: number, curr: number) => void
-    ) {
-        // This is implemented in C++ without blocking the regular JS when query() is runnning
-        // which is generally unsafe. Query should not update globally visible state, and cannot
-        // call any yielding functions, like sleep().
+    export class Poller {
+        private query: () => number;
+        private update: (previous: number, current: number) => void;
+        public interval: number;
 
-        // This is implementation for the simulator.
+        private previousValue: number;
+        private currentValue: number;
+        private lastQuery: number; // track down the last time we did a query/update cycle
+        private lastPause: number;  // track down the last time we pause in the sensor polling loop
 
-        control.runInParallel(() => {
-            let prev = query()
-            changeHandler(prev, prev)
-            while (true) {
-                pause(periodMs)
-                let curr = query()
-                if (prev !== curr) {
-                    changeHandler(prev, curr)
-                    prev = curr
-                }
+        constructor(interval: number, query: () => number, update: (previous: number, current: number) => void) {
+            this.interval = interval | 0;
+            this.query = query;
+            this.update = update;
+
+            this.poll();
+        }
+
+        poke(): void {
+            const now = control.millis();
+            if (now - this.lastQuery >= this.interval * 2)
+                this.queryAndUpdate(); // sensor poller is not allowed to run
+            if (now - this.lastPause >= this.interval * 5)
+                pause(1); // allow events to trigger
+        }
+
+        private queryAndUpdate() {
+            this.lastQuery = control.millis();
+            this.currentValue = this.query();
+            if (this.previousValue != this.currentValue) {
+                this.update(this.previousValue, this.currentValue);
+                this.previousValue = this.currentValue;
             }
-        })
+        }
+
+        private poll() {
+            control.runInBackground(() => {
+                this.lastQuery = this.lastPause = control.millis();
+                this.previousValue = this.currentValue = this.query();
+                this.update(this.previousValue, this.currentValue);
+                while (true) {
+                    this.lastPause = control.millis();
+                    pause(this.interval);
+                    this.queryAndUpdate();
+                }
+            })
+        }
     }
 
     export function bufferToString(buf: Buffer): string {
@@ -38,6 +61,7 @@ namespace sensors.internal {
     let IICMM: MMap
     let powerMM: MMap
     let devcon: Buffer
+    let devPoller: Poller
     let sensorInfos: SensorInfo[];
 
     let batteryInfo: {
@@ -55,6 +79,7 @@ namespace sensors.internal {
         connType: number
         devType: number
         iicid: string
+        poller: Poller;
 
         constructor(p: number) {
             this.port = p
@@ -62,6 +87,20 @@ namespace sensors.internal {
             this.devType = DAL.DEVICE_TYPE_NONE
             this.iicid = ''
             this.sensors = []
+            this.poller = new Poller(25, () => this.query(), (prev, curr) => this.update(prev, curr));
+        }
+
+        poke() {
+            this.poller.poke();
+        }
+
+        private query() {
+            if (this.sensor) return this.sensor._query();
+            return 0;
+        }
+
+        private update(prev: number, curr: number) {
+            if (this.sensor) this.sensor._update(prev, curr)
         }
     }
 
@@ -82,20 +121,11 @@ namespace sensors.internal {
 
         powerMM = control.mmap("/dev/lms_power", 2, 0)
 
-        unsafePollForChanges(500,
-            () => { return hashDevices(); },
+        devPoller = new Poller(250, () => { return hashDevices(); },
             (prev, curr) => {
                 detectDevices();
             });
-        sensorInfos.forEach(info => {
-            unsafePollForChanges(50, () => {
-                if (info.sensor) return info.sensor._query()
-                return 0
-            }, (prev, curr) => {
-                if (info.sensor) info.sensor._update(prev, curr)
-            })
-        })        
-   }
+    }
 
     export function getActiveSensors(): Sensor[] {
         init();
@@ -164,13 +194,13 @@ namespace sensors.internal {
                     batteryVMax = ACCU_INDICATOR_HIGH;
                 }
             }
-            batteryInfo = { 
-                CinCnt: CinCnt, 
+            batteryInfo = {
+                CinCnt: CinCnt,
                 CoutCnt: CoutCnt,
                 VinCnt: VinCnt
             };
             // update in background
-            control.runInParallel(() => forever(updateBatteryInfo)); 
+            control.runInParallel(() => forever(updateBatteryInfo));
         } else {
             CinCnt = batteryInfo.CinCnt = ((batteryInfo.CinCnt * (AVR_CIN - 1)) + CinCnt) / AVR_CIN;
             CoutCnt = batteryInfo.CoutCnt = ((batteryInfo.CoutCnt * (AVR_COUT - 1)) + CoutCnt) / AVR_COUT;
@@ -178,11 +208,11 @@ namespace sensors.internal {
         }
     }
 
-    export function getBatteryInfo(): { 
-        level: number; 
-        Ibatt: number, 
-        Vbatt: number, 
-        Imotor: number 
+    export function getBatteryInfo(): {
+        level: number;
+        Ibatt: number,
+        Vbatt: number,
+        Imotor: number
     } {
         init();
         if (!batteryInfo) updateBatteryInfo();
@@ -225,13 +255,13 @@ void      cUiUpdatePower(void)
 #endif
 }        
         */
-       const CinV = CNT_V(CinCnt) / AMP_CIN;
-       const Vbatt = CNT_V(VinCnt) / AMP_VIN + CinV + VCE;
-       const Ibatt = CinV / SHUNT_IN;
-       const CoutV = CNT_V(CoutCnt) / AMP_COUT;
-       const Imotor = CoutV / SHUNT_OUT;
-       const level   = Math.max(0, Math.min(100, Math.floor((Vbatt * 1000.0 - batteryVMin)
-        / (batteryVMax - batteryVMin) * 100)));
+        const CinV = CNT_V(CinCnt) / AMP_CIN;
+        const Vbatt = CNT_V(VinCnt) / AMP_VIN + CinV + VCE;
+        const Ibatt = CinV / SHUNT_IN;
+        const CoutV = CNT_V(CoutCnt) / AMP_COUT;
+        const Imotor = CoutV / SHUNT_OUT;
+        const level = Math.max(0, Math.min(100, Math.floor((Vbatt * 1000.0 - batteryVMin)
+            / (batteryVMax - batteryVMin) * 100)));
 
         return {
             level: level,
@@ -280,7 +310,7 @@ void      cUiUpdatePower(void)
                 // TODO? for now assume touch
                 sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
-                control.dmesg(`disconnect at port ${sensorInfo.port}`)
+                //control.dmesg(`disconnect at port ${sensorInfo.port}`)
             } else {
                 control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`)
             }
@@ -298,7 +328,7 @@ void      cUiUpdatePower(void)
         if (numChanged == 0 && nonActivated == 0)
             return
 
-        control.dmesg(`updating sensor status`)
+        //control.dmesg(`updating sensor status`)
         nonActivated = 0;
         for (const sensorInfo of sensorInfos) {
             if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {
@@ -335,6 +365,11 @@ void      cUiUpdatePower(void)
             init()
             sensorInfos[this._port].sensors.push(this)
             this.markUsed();
+        }
+
+        poke() {
+            if (this.isActive())
+                sensorInfos[this._port].poke();
         }
 
         markUsed() {
@@ -779,10 +814,10 @@ namespace sensors {
 
     export class ThresholdDetector {
         public id: number;
-        public min: number;
-        public max: number;
-        public lowThreshold: number;
-        public highThreshold: number;
+        private min: number;
+        private max: number;
+        private lowThreshold: number;
+        private highThreshold: number;
         public level: number;
         public state: ThresholdState;
 

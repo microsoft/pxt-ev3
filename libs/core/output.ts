@@ -62,7 +62,7 @@ namespace motors {
         motorMM = control.mmap("/dev/lms_motor", MotorDataOff.Size * DAL.NUM_OUTPUTS, 0)
         if (!motorMM) control.fail("no motor file")
 
-        resetAllMotors()
+        resetAll()
 
         const buf = output.createBuffer(1)
         buf[0] = DAL.opProgramStart
@@ -118,7 +118,7 @@ namespace motors {
      * Stops all motors
      */
     //% blockId=motorStopAll block="stop all motors"
-    //% weight=1
+    //% weight=2
     //% group="Move"
     //% help=motors/stop-all
     export function stopAll() {
@@ -130,8 +130,11 @@ namespace motors {
     /**
      * Resets all motors
      */
+    //% blockId=motorResetAll block="reset all motors"
+    //% weight=1
     //% group="Move"
-    export function resetAllMotors() {
+    //% help=motors/reset-all
+    export function resetAll() {
         reset(Output.ALL)
         pause(1);
     }
@@ -261,8 +264,9 @@ namespace motors {
             // allow 500ms for robot to settle
             if (this._brake && this._brakeSettleTime > 0)
                 pause(this._brakeSettleTime);
-            else
-                pause(1); // give a tiny breather
+            else {
+                pause(1);
+            }
         }
 
         protected pauseOnRun(stepsOrTime: number) {
@@ -272,7 +276,6 @@ namespace motors {
                 // allow robot to settle
                 this.settle();
             } else {
-                // give a breather to the event system in tight loops
                 pause(1);
             }
         }
@@ -301,9 +304,17 @@ namespace motors {
                 case MoveUnit.Rotations:
                     scale = 360;
                     r.useSteps = true;
+                    if (r.steps[1] < 0) {
+                        r.speed = -r.speed;
+                        r.steps[1] = -r.steps[1];
+                    }
                     break;
                 case MoveUnit.Degrees:
                     r.useSteps = true;
+                    if (r.steps[1] < 0) {
+                        r.speed = -r.speed;
+                        r.steps[1] = -r.steps[1];
+                    }
                     break;
                 case MoveUnit.Seconds:
                     scale = 1000;
@@ -416,28 +427,28 @@ namespace motors {
                     temp = Math.max(0, (value * 360) | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationSteps = temp;
-                    else 
+                    else
                         this._decelerationSteps = temp;
                     break;
                 case MoveUnit.Degrees:
                     temp = Math.max(0, value | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationSteps = temp;
-                    else 
+                    else
                         this._decelerationSteps = temp;
                     break;
                 case MoveUnit.Seconds:
                     temp = Math.max(0, (value * 1000) | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationTime = temp;
-                    else 
+                    else
                         this._decelerationTime = temp;
                     break;
                 case MoveUnit.MilliSeconds:
                     temp = Math.max(0, value | 0);
                     if (phase == MovePhase.Acceleration)
                         this._accelerationTime = temp;
-                    else 
+                    else
                         this._decelerationTime = temp;
                     break;
             }
@@ -502,7 +513,7 @@ namespace motors {
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
         //% motor.fieldEditor="motors"
-        //% weight=90
+        //% weight=90 blockGap=8
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
@@ -610,6 +621,33 @@ namespace motors {
         toString(): string {
             return `${this._large ? "" : "M"}${this._portName} ${this.speed()}% ${this.angle()}>`;
         }
+
+        /**
+         * Pauses the program until the motor is stalled.
+         */
+        //% blockId=motorPauseUntilStall block="pause until %motor|stalled"
+        //% motor.fieldEditor="motors"
+        //% weight=89
+        //% group="Move"
+        //% help=motors/motor/pause-until-stalled
+        pauseUntilStalled(timeOut?: number): void {
+            // let it start
+            pause(50);
+            let previous = this.angle();
+            let stall = 0;
+            pauseUntil(() => {
+                let current = this.angle();
+                if (Math.abs(current - previous) < 1) {
+                    if (stall++ > 2) {
+                        return true; // not moving
+                    }
+                } else {
+                    stall = 0;
+                    previous = current;
+                }
+                return false;
+            }, timeOut)
+        }
     }
 
     //% whenUsed fixedInstance block="large motor A" jres=icons.portA
@@ -714,10 +752,18 @@ namespace motors {
             let stepsOrTime: number;
             switch (unit) {
                 case MoveUnit.Rotations:
+                    if (value < 0) {
+                        value = -value;
+                        speed = -speed;
+                    }
                     stepsOrTime = (value * 360) >> 0;
                     useSteps = true;
                     break;
                 case MoveUnit.Degrees:
+                    if (value < 0) {
+                        value = -value;
+                        speed = -speed;
+                    }
                     stepsOrTime = value >> 0;
                     useSteps = true;
                     break;

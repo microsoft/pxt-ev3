@@ -55,6 +55,10 @@ namespace brick {
             this._wasPressed = false
         }
 
+        protected poke() {
+
+        }
+
         //% hidden
         _update(curr: boolean) {
             if (this == null) return
@@ -85,6 +89,7 @@ namespace brick {
         //% group="Buttons"
         //% button.fieldEditor="brickbuttons"
         isPressed() {
+            this.poke();
             return this._isPressed
         }
 
@@ -102,6 +107,7 @@ namespace brick {
         //% group="Buttons"
         //% button.fieldEditor="brickbuttons"
         wasPressed() {
+            this.poke();
             const r = this._wasPressed
             this._wasPressed = false
             return r
@@ -144,6 +150,7 @@ namespace brick {
 namespace brick {
     let btnsMM: MMap
     let buttons: DevButton[]
+    let buttonPoller: sensors.internal.Poller;
 
     export namespace internal {
         export function getBtnsMM() {
@@ -167,7 +174,7 @@ namespace brick {
         btnsMM = control.mmap("/dev/lms_ui", DAL.NUM_BUTTONS, 0)
         if (!btnsMM) control.fail("no buttons?")
         buttons = []
-        sensors.internal.unsafePollForChanges(50, readButtons, (prev, curr) => {
+        buttonPoller = new sensors.internal.Poller(50, readButtons, (prev, curr) => {
             for (let b of buttons)
                 b._update(!!(curr & b.mask))
         })
@@ -181,6 +188,10 @@ namespace brick {
             this.mask = mask
             initBtns()
             buttons.push(this)
+        }
+
+        protected poke() {
+            buttonPoller.poke();
         }
     }    
 

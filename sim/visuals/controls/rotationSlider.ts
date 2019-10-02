@@ -1,13 +1,15 @@
 
 
 namespace pxsim.visuals {
+    const MAX_RATE = 40;
 
     export class RotationSliderControl extends ControlView<GyroSensorNode> {
         private group: SVGGElement;
         private slider: SVGGElement;
+        private rateText: SVGTextElement;
 
         private static SLIDER_WIDTH = 70;
-        private static SLIDER_HEIGHT = 78;
+        //private static SLIDER_HEIGHT = 78;
 
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
             this.group = svg.elt("g") as SVGGElement;
@@ -22,6 +24,14 @@ namespace pxsim.visuals {
             const handleInner = pxsim.svg.child(sliderGroup, "g");
             pxsim.svg.child(this.slider, "circle", { 'cx': 9, 'cy': 50, 'r': 13, 'style': 'fill: #f12a21' });
             pxsim.svg.child(this.slider, "circle", { 'cx': 9, 'cy': 50, 'r': 12.5, 'style': 'fill: none;stroke: #b32e29' });
+
+            this.rateText = pxsim.svg.child(this.group, "text", {
+                'x': this.getInnerWidth() / 2,
+                'y': RotationSliderControl.SLIDER_WIDTH * 1.2,
+                'text-anchor': 'middle', 'dominant-baseline': 'middle',
+                'style': 'font-size: 16px',
+                'class': 'sim-text inverted number'
+            }) as SVGTextElement;
 
             const dragSurface = svg.child(this.group, "rect", {
                 x: 0,
@@ -61,7 +71,10 @@ namespace pxsim.visuals {
                 return;
             }
             const node = this.state;
-            const percentage = node.getValue();
+            const rate = node.getRate();
+            this.rateText.textContent = `${rate}°/s`
+            // cap rate at 40deg/s
+            const percentage = 50 + Math.sign(rate) * Math.min(MAX_RATE, Math.abs(rate)) / MAX_RATE * 50;
             const x = RotationSliderControl.SLIDER_WIDTH * percentage / 100;
             const y = Math.abs((percentage - 50) / 50) * 10;
             this.slider.setAttribute("transform", `translate(${x}, ${y})`);
@@ -73,8 +86,10 @@ namespace pxsim.visuals {
             const bBox = this.content.getBoundingClientRect();
             let t = Math.max(0, Math.min(1, (width + bBox.left / this.scaleFactor - cur.x / this.scaleFactor) / width))
 
+            t = -(t - 0.5) * 2; // [-1,1]
+
             const state = this.state;
-            state.setRate((1 - t) * (100));
+            state.setRate(MAX_RATE * t);
         }
     }
 

@@ -22,4 +22,5 @@ motors.stopAll();
 
 [stop](/reference/motors/motor/stop), 
 [reset](/reference/motors/motor/reset),
+[reset-all](/reference/motors/motor/reset-all),
 [set brake](/reference/motors/motor/set-brake)

@@ -27,7 +27,8 @@
         "ns.ts",
         "platform.h",
         "platform.cpp",
-        "dmesg.cpp"
+        "dmesg.cpp",
+        "integrator.ts"
     ],
     "testFiles": [
         "test.ts"

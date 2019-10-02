@@ -26,6 +26,7 @@ namespace brick {
         None,
         ShowLines,
         Image,
+        Ports,
         Custom
     }
     let screenMode = ScreenMode.None;
@@ -124,15 +125,30 @@ namespace brick {
     //% help=brick/show-ports blockGap=8
     //% weight=10 group="Screen"
     export function showPorts() {
-        screenMode = ScreenMode.Custom;
+        if (screenMode == ScreenMode.Ports) return;
 
+        screenMode = ScreenMode.Ports;
+        renderPorts();
+        control.runInParallel(function() {
+            while(screenMode == ScreenMode.Ports) {
+                renderPorts();
+                pause(50);
+            }
+        })
+    }
+
+    function renderPorts() {
         const col = 44;
         const lineHeight8 = image.font8.charHeight + 2;
         clearScreen();
 
         function scale(x: number) {
-            if (Math.abs(x) > 1000) return Math.round(x / 100) / 10 + "k";
-            return ("" + (x >> 0));
+            if (Math.abs(x) >= 5000) {
+                const k = Math.floor(x / 1000);
+                const r = Math.round((x - 1000 * k) / 100);
+                return `${k}.${r}k`
+            }
+            return ("" + (x || 0));
         }
 
         // motors
@@ -143,7 +159,7 @@ namespace brick {
             const x = i * col;
             screen.print("ABCD"[i], x + 2, 1 * lineHeight8, 1, image.font8)
             screen.print(`${scale(data.actualSpeed)}%`, x + 2, 3 * lineHeight8, 1, image.font8)
-            screen.print(`${scale(data.count)}>`, x + 2, 4 * lineHeight8, 1, image.font5)
+            screen.print(`${scale(data.count)}>`, x + 2, 4 * lineHeight8, 1, image.font8)
         }
         screen.drawLine(0, 5 * lineHeight8, screen.width, 5 * lineHeight8, 1);
 

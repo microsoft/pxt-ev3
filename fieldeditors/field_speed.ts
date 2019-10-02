@@ -76,9 +76,10 @@ export class FieldSpeed extends Blockly.FieldSlider implements Blockly.FieldCust
     };
 
     setReadout_(readout: Element, value: string) {
-        this.updateSpeed(parseFloat(value));
+        let x = parseFloat(value) || 0;
+        this.updateSpeed(x);
         // Update reporter
-        this.reporter.textContent = `${value}%`;
+        this.reporter.textContent = `${x}%`;
     }
 
     private updateSpeed(speed: number) {

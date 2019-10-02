@@ -29,7 +29,7 @@ We have compiled a guide for EV3 LabView users at https://makecode.mindstorms.co
 
 Go to https://makecode.mindstorms.com. The home screen is filled with videos, tutorials and examples that might be relevant for your missions.
 
-On the home page, scroll down to the **FLL / City Shaper / Crane Mission** section for specific lessons related to Mission 2.
+On the home page, scroll down to the **FLL / City Shaper** section for specific lessons related to Mission 2.
 
 ### Can I load both LEGO MINDSTORMS EV3 Software and MakeCode programs onto my EV3?
 
@@ -37,7 +37,7 @@ Yes.
 
 ### Does it work without internet?
 
-To make sure the editor works without internet, install the [offline app](/offline-app)!
+No, the editor is cached in your browser cache. However, you can also download the [offline app](/offline-app) in case you need to install it on a computer.
 
 ### How do I figure out what a block does?
 
@@ -91,6 +91,12 @@ You can share your projects by clicking on the **share** button in the top left 
 ![Share button and dialogs demo](/static/fll/share-program.gif)
 
 Sharing programs is also shown in the [Tips and Tricks](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=5c594c2373367f7870196f519f3bfc7a&source=embed&photo%5fid=35719472) video.
+
+### Can I use Bluetooth to transfer my program?
+
+The official answer is currently no. That being said, we have **Experimental support** for Bluetooth download. Please read the [Bluetooth](/bluetooth) page for more information.
+
+https://youtu.be/VIq8-6Egtqs
 
 ### Why can't I delete my program (*.uf2) files from the Brick?
 

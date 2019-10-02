@@ -22,6 +22,12 @@
   "url":"/tutorials/redlight-greenlight",
   "imageUrl":"/static/tutorials/redlight-greenlight.png"
 }, {
+  "name": "Move To Color",
+  "description": "Move straight until a color is detected.",
+  "cardType": "tutorial",
+  "url":"/tutorials/move-to-color",
+  "imageUrl":"/static/tutorials/move-to-color.png"
+}, {
   "name": "Reflected Light Measure",
   "description": "Teach the sensor what light or dark is.",
   "cardType": "example",

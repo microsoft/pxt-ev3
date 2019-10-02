@@ -1,28 +1,28 @@
 /// <reference path="../node_modules/pxt-core/built/pxteditor.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
-import { deployCoreAsync, initAsync } from "./deploy";
+import { deployCoreAsync, initAsync, canUseWebSerial, enableWebSerialAsync, setConfirmAsync } from "./deploy";
 
+let bluetoothDialogShown = false;
 pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): Promise<pxt.editor.ExtensionResult> {
+    const projectView = opts.projectView;
     pxt.debug('loading pxt-ev3 target extensions...')
+
+    function enableWebSerialAndCompileAsync() {
+        return enableWebSerialAsync()
+        .then(() => Promise.delay(500))
+        .then(() => projectView.compile());
+    }
+
     const res: pxt.editor.ExtensionResult = {
         deployCoreAsync,
         showUploadInstructionsAsync: (fn: string, url: string, confirmAsync: (options: any) => Promise<number>) => {
-            let resolve: (thenableOrResult?: void | PromiseLike<void>) => void;
-            let reject: (error: any) => void;
-            const deferred = new Promise<void>((res, rej) => {
-                resolve = res;
-                reject = rej;
-            });
-            const boardName = pxt.appTarget.appTheme.boardName || "???";
-            const boardDriveName = pxt.appTarget.appTheme.driveDisplayName || pxt.appTarget.compile.driveName || "???";
-
+            setConfirmAsync(confirmAsync);
             // https://msdn.microsoft.com/en-us/library/cc848897.aspx
             // "For security reasons, data URIs are restricted to downloaded resources. 
             // Data URIs cannot be used for navigation, for scripting, or to populate frame or iframe elements"
             const downloadAgain = !pxt.BrowserUtils.isIE() && !pxt.BrowserUtils.isEdge();
             const docUrl = pxt.appTarget.appTheme.usbDocs;
-            const saveAs = pxt.BrowserUtils.hasSaveAs();
 
             const htmlBody = `
             <div class="ui grid stackable">
@@ -84,7 +84,38 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
                 hideAgree: false,
                 agreeLbl: lf("I got it"),
                 className: 'downloaddialog',
-                buttons: [downloadAgain ? {
+                buttons: [canUseWebSerial() ? {
+                    label: lf("Bluetooth"),
+                    icon: "bluetooth",
+                    className: "bluetooth focused",
+                    onclick: () => {
+                        pxt.tickEvent("bluetooth.enable");
+                        if (bluetoothDialogShown) {
+                            enableWebSerialAndCompileAsync().done();
+                        } else {
+                            bluetoothDialogShown = true;
+                            confirmAsync({
+                                header: lf("Bluetooth pairing"),
+                                hasCloseIcon: true,
+                                hideCancel: true,
+                                buttons: [{
+                                    label: lf("Help"),
+                                    icon: "question circle",
+                                    className: "lightgrey",
+                                    url: "/bluetooth"
+                                }],
+                                htmlBody: `<p>
+${lf("You will be prompted to select a serial port.")}
+${pxt.BrowserUtils.isWindows() 
+    ? lf("Look for 'Standard Serial over Bluetooth link'.") 
+    : lf("Loop for 'cu.EV3-SerialPort'.")}
+${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
+</p>
+`
+                            }).then(() => enableWebSerialAndCompileAsync())
+                        }
+                    }
+                } : undefined, downloadAgain ? {
                     label: fn,
                     icon: "download",
                     className: "lightgrey focused",
