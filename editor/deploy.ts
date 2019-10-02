@@ -167,7 +167,7 @@ export function initAsync(): Promise<void> {
         useHID = false
     } else {
         const nodehid = /nodehid/i.test(window.location.href);
-        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && nodehid)
+        if (pxt.BrowserUtils.isLocalHost() && pxt.Cloud.localToken && nodehid)
             useHID = true;
     }
 

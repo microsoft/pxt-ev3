@@ -15,7 +15,7 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
     }
 
     const res: pxt.editor.ExtensionResult = {
-        deployCoreAsync,
+        deployAsync: deployCoreAsync,
         showUploadInstructionsAsync: (fn: string, url: string, confirmAsync: (options: any) => Promise<number>) => {
             setConfirmAsync(confirmAsync);
             // https://msdn.microsoft.com/en-us/library/cc848897.aspx

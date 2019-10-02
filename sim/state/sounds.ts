@@ -1,7 +1,7 @@
 
 namespace pxsim.music {
     export function fromWAV(buf: RefBuffer) {
-        return incr(buf)
+        return buf
     }
 
     export function stopAllSounds() {
@@ -13,7 +13,7 @@ namespace pxsim.SoundMethods {
     let audio: HTMLAudioElement;
 
     export function buffer(buf: RefBuffer) {
-        return incr(buf)
+        return buf
     }
 
     export function play(buf: RefBuffer) {
