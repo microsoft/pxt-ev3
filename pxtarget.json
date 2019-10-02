@@ -187,6 +187,10 @@
             "editor.background": "#f9f9f9"
         },
         "fileNameExclusiveFilter": "[^a-zA-Z0-9]",
+        "qrCode": true,
+        "shareFinishedTutorials": true,
+        "nameProjectFirst": true,
+        "alwaysGithubItem": true,
         "enableTrace": true
     },
     "ignoreDocsErrors": true
