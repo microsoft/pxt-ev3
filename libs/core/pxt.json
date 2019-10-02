@@ -25,11 +25,14 @@
         "dal.d.ts",
         "icons.jres",
         "ns.ts",
-        "platform.h"
+        "platform.h",
+        "platform.cpp",
+        "dmesg.cpp"
     ],
     "testFiles": [
         "test.ts"
     ],
+    "additionalFilePath": "../../node_modules/pxt-common-packages/libs/core---linux",
     "npmDependencies": {},
     "public": true,
     "dependencies": {

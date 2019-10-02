@@ -49,7 +49,8 @@
         "flashCodeAlign": 256,
         "floatingPoint": true,
         "taggedInts": true,
-        "stackAlign": 2
+        "stackAlign": 2,
+        "gc": true
     },
     "serial": {
       "vendorId": "0x0694",
