@@ -5,6 +5,7 @@
 namespace pxsim {
 
     export class EV3Board extends CoreBoard {
+        viewHost: visuals.BoardHost;
         view: SVGSVGElement;
 
         outputState: EV3OutputState;
@@ -86,13 +87,14 @@ namespace pxsim {
             const viewHost = new visuals.BoardHost(pxsim.visuals.mkBoardView({
                 boardDef,
                 visual: boardDef.visual,
+                boardDef,
                 highContrast: msg.highContrast,
                 light: msg.light
             }), opts);
 
             document.body.innerHTML = ""; // clear children
             document.body.className = msg.light ? "light" : "";
-            document.body.appendChild(this.view = viewHost.getView() as SVGSVGElement);
+            document.body.appendChild(this.view = this.viewHost.getView() as SVGSVGElement);
 
             this.inputNodes = [];
             this.outputNodes = [];
@@ -103,8 +105,8 @@ namespace pxsim {
             return Promise.resolve();
         }
 
-        screenshot(): string {
-            return svg.toDataUri(new XMLSerializer().serializeToString(this.view));
+        screenshotAsync(width?: number): Promise<ImageData> {
+            return this.viewHost.screenshotAsync(width);
         }
 
         getBrickNode() {
