@@ -36,6 +36,10 @@
     "name": "Line following with 1 color sensor",
     "description": "Simple line following using the color sensor.",
     "youTubeId": "_LeduyKQVjg"
+}, {
+    "name": "Proportional line following with 1 color sensor",
+    "description": "Proportional line following using the color sensor.",
+    "youTubeId": "-AirqwC9DL4"
 }]
 ```
 
