@@ -524,6 +524,7 @@ void stopProgram() {
 }
 
 extern "C" void target_reset() {
+    pthread_mutex_trylock(&execMutex);
     stopMotors();
     stopProgram();
     if (lmsPid)
