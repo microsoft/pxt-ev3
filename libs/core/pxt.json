@@ -33,6 +33,11 @@
     "testFiles": [
         "test.ts"
     ],
+    "dalDTS": {
+        "includeDirs": [
+            "pxtapp"
+        ]
+    },
     "additionalFilePath": "../../node_modules/pxt-common-packages/libs/core---linux",
     "npmDependencies": {},
     "public": true,
