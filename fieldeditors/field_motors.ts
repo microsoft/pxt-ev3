@@ -46,23 +46,23 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         (this as any).arrowX_ = 0;
         /** @type {Number} */
         this.arrowY_ = 11;
-        this.arrow_ = Blockly.utils.createSvgElement('image', {
+        this.arrow_ = Blockly.utils.dom.createSvgElement('image', {
             'height': (this as any).arrowSize_ + 'px',
             'width': (this as any).arrowSize_ + 'px'
-        });
+        }, null);
         this.arrow_.setAttributeNS('http://www.w3.org/1999/xlink',
             'xlink:href', (Blockly.FieldDropdown as any).DROPDOWN_SVG_DATAURI);
 
-        this.arrow2_ = <SVGImageElement>Blockly.utils.createSvgElement('image', {
+        this.arrow2_ = <SVGImageElement>Blockly.utils.dom.createSvgElement('image', {
             'height': (this as any).arrowSize_ + 'px',
             'width': (this as any).arrowSize_ + 'px'
-        });
+        }, null);
         this.arrow2_.setAttributeNS('http://www.w3.org/1999/xlink',
             'xlink:href', (Blockly.FieldDropdown as any).DROPDOWN_SVG_DATAURI);
         (this as any).className_ += ' blocklyDropdownText';
 
         // Build the DOM.
-        this.fieldGroup_ = Blockly.utils.createSvgElement('g', {}, null);
+        this.fieldGroup_ = Blockly.utils.dom.createSvgElement('g', {}, null);
         if (!this.visible_) {
             (this.fieldGroup_ as any).style.display = 'none';
         }
@@ -70,7 +70,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         var size = this.getSize();
         var fieldX = (this.sourceBlock_.RTL) ? -size.width / 2 : size.width / 2;
         /** @type {!Element} */
-        this.textElement_ = Blockly.utils.createSvgElement('text',
+        this.textElement_ = Blockly.utils.dom.createSvgElement('text',
             {
                 'class': (this as any).className_,
                 'x': fieldX,
@@ -79,7 +79,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             },
             this.fieldGroup_);
         fieldX += 10; // size of first group.
-        this.textElement2_ = <SVGTextElement>Blockly.utils.createSvgElement('text',
+        this.textElement2_ = <SVGTextElement>Blockly.utils.dom.createSvgElement('text',
             {
                 'class': (this as any).className_,
                 'x': fieldX,
@@ -99,7 +99,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
 
         // Add second dropdown 
         if (this.shouldShowRect_()) {
-            this.box_ = <SVGRectElement>Blockly.utils.createSvgElement('rect', {
+            this.box_ = <SVGRectElement>Blockly.utils.dom.createSvgElement('rect', {
                 'rx': (Blockly.BlockSvg as any).CORNER_RADIUS,
                 'ry': (Blockly.BlockSvg as any).CORNER_RADIUS,
                 'x': 0,
@@ -112,7 +112,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
                 'fill-opacity': 1
             }, null);
             this.fieldGroup_.insertBefore(this.box_, this.textElement_);
-            this.box2_ = <SVGRectElement>Blockly.utils.createSvgElement('rect', {
+            this.box2_ = <SVGRectElement>Blockly.utils.dom.createSvgElement('rect', {
                 'rx': (Blockly.BlockSvg as any).CORNER_RADIUS,
                 'ry': (Blockly.BlockSvg as any).CORNER_RADIUS,
                 'x': 0,
@@ -263,7 +263,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         return addedWidth;
     };
 
-    updateWidth() {
+    updateSize_() {
         // Calculate width of field
         var width = Blockly.Field.getCachedWidth(this.textElement_);
         var width2 = Blockly.Field.getCachedWidth(this.textElement2_);
@@ -319,7 +319,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
                 const textNode2 = document.createTextNode(this.getSecondValue(<string>this.value_));
                 this.textElement2_.appendChild(textNode2);
             }
-            this.updateWidth();
+            this.updateSize_();
 
             // Update text centering, based on newly calculated width.
             let centerTextX = ((this as any).width1 - this.arrowWidth_) / 2;
@@ -439,10 +439,10 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         if (!this.isFirst_) {
             options = opts[currentFirst];
         } else {
-            options = Object.keys(opts);
+            options = Object.keys(opts).map(k => [k]);
             // Flip the first and second options to make it sorted the way we want it (medium, large, dual)
             if (options.length == 3) {
-                options = [lf("medium motor"), lf("large motor"), lf("large motors")];
+                options = [[lf("medium motor")], [lf("large motor")], [lf("large motors")]];
             } else {
                 options.reverse();
             }
@@ -565,7 +565,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         content.removeAttribute('role');
         content.removeAttribute('aria-haspopup');
         content.removeAttribute('aria-activedescendant');
-        content.style.width = '';
+        (content as HTMLElement).style.width = '';
         if (this.isFirst_ && this.box_) {
             this.box_.setAttribute('fill', this.sourceBlock_.getColour());
         } else if (!this.isFirst_ && this.box2_) {

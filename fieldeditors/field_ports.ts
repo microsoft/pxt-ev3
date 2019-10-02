@@ -17,7 +17,7 @@ export class FieldPorts extends pxtblockly.FieldImages implements Blockly.FieldC
         this.width_ = parseInt(options.width) || 300;
 
         this.setText = Blockly.FieldDropdown.prototype.setText;
-        this.updateWidth = (Blockly.Field as any).prototype.updateWidth;
+        this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
         this.updateTextNode_ = Blockly.Field.prototype.updateTextNode_;
     }
 

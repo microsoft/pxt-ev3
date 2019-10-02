@@ -26,7 +26,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         this.width_ = parseInt(options.width) || 380;
 
         this.setText = Blockly.FieldDropdown.prototype.setText;
-        this.updateWidth = (Blockly.Field as any).prototype.updateWidth;
+        this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
         this.updateTextNode_ = Blockly.Field.prototype.updateTextNode_;
 
         if (!pxt.BrowserUtils.isIE() && !soundCache) {
@@ -78,7 +78,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         contentDiv.style.width = (this as any).width_ + 'px';
         contentDiv.style.cssFloat = 'left';
 
-        dropdownDiv.style.maxHeight = `410px`;
+        (dropdownDiv as HTMLElement).style.maxHeight = `410px`;
         dropdownDiv.appendChild(categoriesDiv);
         dropdownDiv.appendChild(contentDiv);
 
@@ -236,7 +236,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
 
     protected onHide_() {
         super.onHide_();
-        Blockly.DropDownDiv.getContentDiv().style.maxHeight = '';
+        (Blockly.DropDownDiv.getContentDiv() as HTMLElement).style.maxHeight = '';
         this.stopSounds();
     }
 

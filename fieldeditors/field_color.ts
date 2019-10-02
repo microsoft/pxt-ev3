@@ -44,7 +44,7 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
      * @return {string} Current colour in '#rrggbb' format.
      */
     getValue(opt_asHex?: boolean) {
-        var colour = this.mapColour(this.colour_);
+        const colour = this.mapColour(this.value_);
         if (!opt_asHex && colour.indexOf('#') > -1) {
             return `0x${colour.replace(/^#/, '')}`;
         }
@@ -58,11 +58,11 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
     setValue(colorStr: string) {
         var colour = this.mapEnum(colorStr);
         if (this.sourceBlock_ && Blockly.Events.isEnabled() &&
-            this.colour_ != colour) {
+            this.value_ != colour) {
             Blockly.Events.fire(new (Blockly as any).Events.BlockChange(
-                this.sourceBlock_, 'field', this.name, this.colour_, colour));
+                this.sourceBlock_, 'field', this.name, this.value_, colour));
         }
-        this.colour_ = colour;
+        this.value_ = colour;
         if (this.sourceBlock_) {
             this.sourceBlock_.setColour(colour, colour, colour);
         }
