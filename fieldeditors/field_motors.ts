@@ -411,14 +411,14 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         // Accessibility properties
         contentDiv.setAttribute('role', 'menu');
         contentDiv.setAttribute('aria-haspopup', 'true');
-        let options = this.getOptions();
+        const foptions = this.getOptions(); // [img info, text]
 
         let opts = {};
         let conts = {};
         let vals = {};
         // Go through all option values and split them into groups
-        for (let opt = 0; opt < options.length; opt++) {
-            const value = options[opt][1];
+        for (let opt = 0; opt < foptions.length; opt++) {
+            const value = foptions[opt][1];
             const motorValue = value.substring(value.indexOf('.') + 1);
             const typeValue = motorValue.indexOf('large') == 0 ? 'large' : 'medium';
             const portValue = motorValue.indexOf('large') == 0 ? motorValue.substring(5) : motorValue.substring(6);
@@ -429,20 +429,21 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             if (!opts[key]) opts[key] = [];
             opts[key].push(portValue);
 
-            conts[text] = options[opt][0];
+            conts[text] = foptions[opt][0];
             vals[text] = value;
         }
 
         const currentFirst = this.getFirstValue(<string>this.value_);
-        const currentSecond = this.getSecondValue(<string>this.value_);
+        //const currentSecond = this.getSecondValue(<string>this.value_);
 
+        let options: string[];
         if (!this.isFirst_) {
             options = opts[currentFirst];
         } else {
-            options = Object.keys(opts).map(k => [k]);
+            options = Object.keys(opts);
             // Flip the first and second options to make it sorted the way we want it (medium, large, dual)
             if (options.length == 3) {
-                options = [[lf("medium motor")], [lf("large motor")], [lf("large motors")]];
+                options = [lf("medium motor"), lf("large motor"), lf("large motors")];
             } else {
                 options.reverse();
             }
