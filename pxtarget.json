@@ -54,12 +54,12 @@
         "gc": true
     },
     "serial": {
-      "vendorId": "0x0694",
-      "productId": "0x0005",
-      "rawHID": true,
-      "useEditor": true,
-      "log": true
-  },
+        "vendorId": "0x0694",
+        "productId": "0x0005",
+        "rawHID": true,
+        "useEditor": true,
+        "log": true
+    },
     "runtime": {
         "mathBlocks": true,
         "loopsBlocks": true,
@@ -73,7 +73,10 @@
         "onStartColor": "#58AB41",
         "pauseUntilBlock": {
             "category": "loops"
-        }
+        },
+        "bannedCategories": [
+            "image"
+        ]
     },
     "compileService": {
         "buildEngine": "dockermake",
@@ -83,7 +86,7 @@
     "appTheme": {
         "accentColor": "#0089BF",
         "logoWide": true,
-        "logoUrl": "https://education.lego.com/",        
+        "logoUrl": "https://education.lego.com/",
         "logo": "./static/lego_education_logo.png",
         "docsLogo": "./static/lego_education_logo.png",
         "portraitLogo": "./static/lego_education_logo.png",
