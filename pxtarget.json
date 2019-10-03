@@ -155,6 +155,12 @@
         "usbHelp": [],
         "extendEditor": true,
         "extendFieldEditors": true,
+        "scriptManager": true,
+        "importExtensionFiles": true,
+        "experiments": [
+            "python",
+            "alwaysGithubItemBlocks"
+        ],
         "disableBlockIcons": true,
         "blocklyOptions": {
             "grid": {
