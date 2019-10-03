@@ -1,3 +1,7 @@
+/// <reference path="../node_modules/pxt-core/localtypings/pxtarget.d.ts" />
+/// <reference path="../node_modules/pxt-core/built/pxtblocks.d.ts" />
+/// <reference path="../node_modules/pxt-core/built/pxtcompiler.d.ts" />
+/// <reference path="../node_modules/pxt-core/built/pxtlib.d.ts" />
 /// <reference path="../node_modules/pxt-core/built/pxteditor.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
@@ -20,9 +24,3 @@ pxt.editor.initExtensionsAsync = function (opts: pxt.editor.ExtensionOptions): P
     })
     return Promise.resolve<pxt.editor.ExtensionResult>(res);
 }
-
-// When require()d from node, bind the global pxt namespace
-// namespace pxt {
-//     export const dummyExport = 1;
-// }
-// eval("if (typeof process === 'object' && process + '' === '[object process]') pxt = global.pxt")
