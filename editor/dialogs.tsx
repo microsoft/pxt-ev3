@@ -8,9 +8,9 @@ export function bluetoothTryAgainAsync(): Promise<void> {
     return confirmAsync({
         header: lf("Bluetooth download failed..."),
         jsx: <ul>
-            <li>${lf("Make sure to stop your program or exit portview on the EV3.")}</li>
-            <li>${lf("Check your battery level.")}</li>
-            <li>${lf("Close EV3 LabView or other MakeCode editor tabs.")}</li>
+            <li>{lf("Make sure to stop your program or exit portview on the EV3.")}</li>
+            <li>{lf("Check your battery level.")}</li>
+            <li>{lf("Close EV3 LabView or other MakeCode editor tabs.")}</li>
         </ul>,
         hasCloseIcon: false,
         hideCancel: true,
@@ -41,11 +41,11 @@ function explainWebSerialPairingAsync(): Promise<void> {
             url: "/bluetooth"
         }],
         jsx: <p>
-            ${lf("You will be prompted to select a serial port.")}
-            ${pxt.BrowserUtils.isWindows()
+            {lf("You will be prompted to select a serial port.")}
+            {pxt.BrowserUtils.isWindows()
                 ? lf("Look for 'Standard Serial over Bluetooth link'.")
                 : lf("Loop for 'cu.EV3-SerialPort'.")}
-            ${lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
+            {lf("If you have paired multiple EV3, you might have to try out multiple ports until you find the correct one.")}
         </p>
     }).then(() => { })
 }
@@ -61,12 +61,12 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
     const jsx =
         <div className="ui grid stackable">
             <div className="column five wide" style={{ backgroundColor: "#E2E2E2" }}>
-                <div className="ui header">${lf("First time here?")}</div>
-                <strong style={{ fontSize: "small" }}>${lf("You must have version 1.10E or above of the firmware")}</strong>
+                <div className="ui header">{lf("First time here?")}</div>
+                <strong style={{ fontSize: "small" }}>{lf("You must have version 1.10E or above of the firmware")}</strong>
                 <div style={{ justifyContent: "center", display: "flex", padding: "1rem" }}>
                     <img className="ui image" src="/static/download/firmware.png" style={{ height: "100px" }} />
                 </div>
-                <a href="/troubleshoot" target="_blank">${lf("Check your firmware version here and update if needed")}</a>
+                <a href="/troubleshoot" target="_blank">{lf("Check your firmware version here and update if needed")}</a>
             </div>
             <div className="column eleven wide">
                 <div className="ui grid">
@@ -81,9 +81,9 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
                                         <div className="content">
                                             <div className="description">
                                                 <span className="ui yellow circular label">1</span>
-                                                <strong>${lf("Connect the EV3 to your computer with a USB cable")}</strong>
+                                                <strong>{lf("Connect the EV3 to your computer with a USB cable")}</strong>
                                                 <br />
-                                                <span style={{ fontSize: "small" }}>${lf("Use the miniUSB port on the top of the EV3 Brick")}</span>
+                                                <span style={{ fontSize: "small" }}>{lf("Use the miniUSB port on the top of the EV3 Brick")}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -96,9 +96,9 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
                                         <div className="content">
                                             <div className="description">
                                                 <span className="ui yellow circular label">2</span>
-                                                <strong>${lf("Move the .uf2 file to the EV3 Brick")}</strong>
+                                                <strong>{lf("Move the .uf2 file to the EV3 Brick")}</strong>
                                                 <br />
-                                                <span style={{ fontSize: "small" }}>${lf("Locate the downloaded .uf2 file and drag it to the EV3 USB drive")}</span>
+                                                <span style={{ fontSize: "small" }}>{lf("Locate the downloaded .uf2 file and drag it to the EV3 USB drive")}</span>
                                             </div>
                                         </div>
                                     </div>
