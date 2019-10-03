@@ -4,7 +4,7 @@ import { projectView } from "./extension";
 
 let confirmAsync: (options: any) => Promise<number>;
 
-export function bluetoothTryAgainAsync() {
+export function bluetoothTryAgainAsync(): Promise<void> {
     return confirmAsync({
         header: lf("Bluetooth download failed..."),
         jsx: <ul>
@@ -16,7 +16,7 @@ export function bluetoothTryAgainAsync() {
         hideCancel: true,
         hideAgree: false,
         agreeLbl: lf("Try again")
-    });
+    }).then(r => {});
 }
 
 function enableWebSerialAndCompileAsync() {
@@ -58,7 +58,7 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
     const downloadAgain = !pxt.BrowserUtils.isIE() && !pxt.BrowserUtils.isEdge();
     const docUrl = pxt.appTarget.appTheme.usbDocs;
 
-    const htmlBody =
+    const jsx =
         <div className="ui grid stackable">
             <div className="column five wide" style={{ backgroundColor: "#E2E2E2" }}>
                 <div className="ui header">${lf("First time here?")}</div>
@@ -112,7 +112,7 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
 
     return confirmAsync({
         header: lf("Download to your EV3"),
-        htmlBody,
+        jsx,
         hasCloseIcon: true,
         hideCancel: true,
         hideAgree: false,
@@ -124,7 +124,6 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
             className: "bluetooth focused",
             onclick: () => {
                 pxt.tickEvent("bluetooth.enable");
-                enableWebSerialAndCompileAsync().done();
                 explainWebSerialPairingAsync()
                     .then(() => enableWebSerialAndCompileAsync())
                     .done();
