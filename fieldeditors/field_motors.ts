@@ -92,7 +92,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         (this.sourceBlock_ as Blockly.BlockSvg).getSvgRoot().appendChild(this.fieldGroup_);
         // Force a render.
         this.render_();
-        this.size_.width = 0;
+        this.isDirty_ = true;
         (this as any).mouseDownWrapper_ =
             Blockly.bindEventWithChecks_((this as any).getClickTarget_(), 'mousedown', this,
                 (this as any).onMouseDown_);
@@ -204,7 +204,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         this.textElement2_.appendChild(textNode);
 
         // Cached width is obsolete.  Clear it.
-        this.size_.width = 0;
+        this.isDirty_ = true;
     };
 
     patchDualMotorText(text: string) {
