@@ -105,6 +105,12 @@ The official answer is currently no. That being said, we have **Experimental sup
 
 https://youtu.be/VIq8-6Egtqs
 
+## Are there YouTube videos on MakeCode for EV3?
+
+The MakeCode has a [FLL / City Shaper YouTube Channel](https://www.youtube.com/watch?v=IqL0Pyeu5Ng&list=PLMMBk9hE-SeqkOObethhlZtBTEK6FYx3n) with useful videos.
+
+https://youtu.be/-AirqwC9DL4
+
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
 There's a bug in the firmware which prevents you from deleting the programs (``*.uf2`` files) from your EV3 Brick. There isn't a firmware update to fix this yet.
