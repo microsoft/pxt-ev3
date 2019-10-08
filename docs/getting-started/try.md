@@ -54,6 +54,12 @@ Verify that the program you just created shows eyes on the Brick Display, and th
 
 **Well done!**
 
+## Run it Again
+
+![EV3 Brick with Try in BrkProg_Save Folder in File Manager](/static/getting-started/try-in-file-manager.png)
+
+Use the Brick Buttons and navigate to the File Manager tab.  Open the **BrkProg_SAVE** folder, select **Try** and click the center button to run it again.
+
 ## Connect a Large Motor
 
 Now you will learn to control the Large Motor.

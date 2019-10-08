@@ -35,6 +35,13 @@ On the home page, scroll down to the **FLL / City Shaper** section for specific 
 
 Yes.
 
+### Can I run the program again on the brick?
+
+![EV3 Brick with Try in BrkProg_Save Folder in File Manager](/static/getting-started/try-in-file-manager.png)
+
+Use the Brick Buttons and navigate to the File Manager tab.  Open the **BrkProg_SAVE** folder, 
+select your program and click the center button to run it again.
+
 ### Does it work without internet?
 
 No, the editor is cached in your browser cache. However, you can also download the [offline app](/offline-app) in case you need to install it on a computer.
@@ -97,6 +104,12 @@ Sharing programs is also shown in the [Tips and Tricks](https://legoeducation.vi
 The official answer is currently no. That being said, we have **Experimental support** for Bluetooth download. Please read the [Bluetooth](/bluetooth) page for more information.
 
 https://youtu.be/VIq8-6Egtqs
+
+## Are there YouTube videos on MakeCode for EV3?
+
+The MakeCode has a [FLL / City Shaper YouTube Channel](https://www.youtube.com/watch?v=IqL0Pyeu5Ng&list=PLMMBk9hE-SeqkOObethhlZtBTEK6FYx3n) with useful videos.
+
+https://youtu.be/-AirqwC9DL4
 
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
