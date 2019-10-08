@@ -63,7 +63,7 @@
         "imageUrl": "/static/lessons/make-a-sound-machine.png"
     },
     {
-        "name": "Videos",
+        "name": "Tutorial Videos",
         "url": "/videos",
         "imageUrl": "https://legoeducation.videomarketingplatform.co/27288170/35719444/5d009e5f93fbf479c2e5ed2bf87a7990/thumbnail.png"
     }
@@ -84,5 +84,5 @@
 [Design Engineering](/design-engineering),
 [Coding](/coding),
 [Maker](/maker),
-[Videos](/videos)
+[Tutorial Videos](/videos)
 

@@ -61,7 +61,7 @@
 * [Maker](/maker)
   * [Make A Sound Machine](/maker/sound-machine)
   * [Make A Security Gadget](/maker/security-gadget)
-* [Videos](/videos)
+* [Tutorial Videos](/videos)
   * [undefined](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=5d009e5f93fbf479c2e5ed2bf87a7990&source=embed&photo%5fid=35719444)
   * [undefined](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=2008a566f1fb034d58d5ebe19ba8621f&source=embed&photo%5fid=35719467)
   * [undefined](https://legoeducation.videomarketingplatform.co/v.ihtml/player.html?token=629730c938e452f0fd7653fbc4708166&source=embed&photo%5fid=35719470)
