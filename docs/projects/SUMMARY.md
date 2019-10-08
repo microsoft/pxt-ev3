@@ -48,6 +48,8 @@
   * [Turn with Gyro](https://youtu.be/I7ncuXAfBwk)
   * [Moving with Gyro](https://youtu.be/ufiOPvW37xc)
   * [Line following with 1 color sensor](https://youtu.be/_LeduyKQVjg)
+  * [Proportional line following with 1 color sensor](https://youtu.be/-AirqwC9DL4)
+  * [Proportional line following with 2 color sensors](https://youtu.be/QWOflBuu9Oo)
 * [Design Engineering](/design-engineering)
   * [Make It Move Without Wheels](/design-engineering/make-it-move)
   * [Make It Smarter and Faster](/design-engineering/make-it-smarter)

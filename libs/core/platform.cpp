@@ -173,6 +173,7 @@ void stopProgram() {
 }
 
 extern "C" void target_reset() {
+    tryLockUser();
     stopMotors();
     stopProgram();
     if (lmsPid)
