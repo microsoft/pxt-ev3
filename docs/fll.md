@@ -35,6 +35,13 @@ On the home page, scroll down to the **FLL / City Shaper** section for specific 
 
 Yes.
 
+### Can I run the program again on the brick?
+
+![EV3 Brick with Try in BrkProg_Save Folder in File Manager](/static/getting-started/try-in-file-manager.png)
+
+Use the Brick Buttons and navigate to the File Manager tab.  Open the **BrkProg_SAVE** folder, 
+select your program and click the center button to run it again.
+
 ### Does it work without internet?
 
 No, the editor is cached in your browser cache. However, you can also download the [offline app](/offline-app) in case you need to install it on a computer.
