@@ -11,7 +11,7 @@ int allocateNotifyEvent();
 void sleep_core_us(uint64_t us);
 void startUser();
 void stopUser();
-void tryLockUser();
+int tryLockUser();
 
 class Button;
 typedef Button *Button_;
