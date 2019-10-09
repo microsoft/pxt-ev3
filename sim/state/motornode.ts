@@ -93,7 +93,9 @@ namespace pxsim {
         }
 
         private polarityFactor() {
-            return this.polarity == 0 ? -1 : 1;
+            // polarity is supported at the firmware level for single motor
+            // overriden for synched motors
+            return (this.polarity == 0 && !!this._synchedMotor) ? -1 : 1;
         }
 
         reset() {
@@ -149,7 +151,7 @@ namespace pxsim {
                     case DAL.opOutputPower:
                         // assume power == speed
                         // TODO: PID
-                        this.speed = this.speedCmdValues[0];
+                        this.speed = this.speedCmdValues[0] * this.polarityFactor();
                         break;
                     case DAL.opOutputTimeSpeed:
                     case DAL.opOutputTimePower:
