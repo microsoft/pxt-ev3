@@ -20,7 +20,7 @@ namespace console._screen {
             lines = [];
             console.addListener(log);
             brick.buttonUp.onEvent(ButtonEvent.Bumped, () => scroll(-3))
-            brick.buttonDown.onEvent(ButtonEvent.Bumped, () => scroll(3))                
+            brick.buttonDown.onEvent(ButtonEvent.Bumped, () => scroll(3))
         }
     }
 
@@ -44,7 +44,7 @@ namespace console._screen {
         printLog();
     }
 
-    function log(msg: string): void {    
+    function log(priority: ConsolePriority, msg: string): void {
         lines.push(msg);
         if (lines.length + 5 > maxLines) {
             lines.splice(0, maxLines - lines.length);

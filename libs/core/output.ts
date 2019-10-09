@@ -918,9 +918,3 @@ namespace motors {
         writePWM(b)
     }
 }
-
-
-interface Buffer {
-    [index: number]: number;
-    // rest defined in buffer.cpp
-}

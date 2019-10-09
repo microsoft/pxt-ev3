@@ -22,7 +22,7 @@
     ],
     "simulator": {
         "autoRun": true,
-        "streams": true,
+        "autoRunLight": false,
         "aspectRatio": 0.5,
         "parts": false,
         "enableTrace": true,
@@ -50,15 +50,16 @@
         "flashCodeAlign": 256,
         "floatingPoint": true,
         "taggedInts": true,
-        "stackAlign": 2
+        "stackAlign": 2,
+        "gc": true
     },
     "serial": {
-      "vendorId": "0x0694",
-      "productId": "0x0005",
-      "rawHID": true,
-      "useEditor": true,
-      "log": true
-  },
+        "vendorId": "0x0694",
+        "productId": "0x0005",
+        "rawHID": true,
+        "useEditor": true,
+        "log": true
+    },
     "runtime": {
         "mathBlocks": true,
         "loopsBlocks": true,
@@ -72,7 +73,10 @@
         "onStartColor": "#58AB41",
         "pauseUntilBlock": {
             "category": "loops"
-        }
+        },
+        "bannedCategories": [
+            "image"
+        ]
     },
     "compileService": {
         "buildEngine": "dockermake",
@@ -82,7 +86,7 @@
     "appTheme": {
         "accentColor": "#0089BF",
         "logoWide": true,
-        "logoUrl": "https://education.lego.com/",        
+        "logoUrl": "https://education.lego.com/",
         "logo": "./static/lego_education_logo.png",
         "docsLogo": "./static/lego_education_logo.png",
         "portraitLogo": "./static/lego_education_logo.png",
@@ -151,6 +155,12 @@
         "usbHelp": [],
         "extendEditor": true,
         "extendFieldEditors": true,
+        "scriptManager": true,
+        "importExtensionFiles": true,
+        "experiments": [
+            "python",
+            "alwaysGithubItemBlocks"
+        ],
         "disableBlockIcons": true,
         "blocklyOptions": {
             "grid": {
@@ -186,6 +196,10 @@
             "editor.background": "#f9f9f9"
         },
         "fileNameExclusiveFilter": "[^a-zA-Z0-9]",
+        "qrCode": true,
+        "shareFinishedTutorials": true,
+        "nameProjectFirst": true,
+        "alwaysGithubItem": true,
         "enableTrace": true
     },
     "ignoreDocsErrors": true

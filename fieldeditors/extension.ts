@@ -3,9 +3,7 @@
 
 import { FieldPorts } from "./field_ports";
 import { FieldMotors } from "./field_motors";
-import { FieldSpeed } from "./field_speed";
 import { FieldBrickButtons } from "./field_brickbuttons";
-import { FieldTurnRatio } from "./field_turnratio";
 import { FieldColorEnum } from "./field_color";
 import { FieldMusic } from "./field_music";
 
@@ -20,14 +18,8 @@ pxt.editor.initFieldExtensionsAsync = function (opts: pxt.editor.FieldExtensionO
             selector: "motors",
             editor: FieldMotors
         }, {
-            selector: "speed",
-            editor: FieldSpeed
-        }, {
             selector: "brickbuttons",
             editor: FieldBrickButtons
-        }, {
-            selector: "turnratio",
-            editor: FieldTurnRatio
         }, {
             selector: "colorenum",
             editor: FieldColorEnum

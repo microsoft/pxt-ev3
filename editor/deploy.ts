@@ -3,19 +3,14 @@
 
 import UF2 = pxtc.UF2;
 import { Ev3Wrapper } from "./wrap";
+import { bluetoothTryAgainAsync } from "./dialogs";
 
 export let ev3: Ev3Wrapper;
-let confirmAsync: (options: any) => Promise<number>;
-
-export function setConfirmAsync(cf: (options: any) => Promise<number>) {
-    confirmAsync = cf;
-}
 
 export function debug() {
     return initHidAsync()
         .then(w => w.downloadFileAsync("/tmp/dmesg.txt", v => console.log(pxt.Util.uint8ArrayToString(v))))
 }
-
 
 // Web Serial API https://wicg.github.io/serial/
 // chromium bug https://bugs.chromium.org/p/chromium/issues/detail?id=884928
@@ -167,7 +162,7 @@ export function initAsync(): Promise<void> {
         useHID = false
     } else {
         const nodehid = /nodehid/i.test(window.location.href);
-        if (pxt.Cloud.isLocalHost() && pxt.Cloud.localToken && nodehid)
+        if (pxt.BrowserUtils.isLocalHost() && pxt.Cloud.localToken && nodehid)
             useHID = true;
     }
 
@@ -283,22 +278,9 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
             return w.reconnectAsync(false)
                 .catch(e => {
                     // user easily forgets to stop robot
-                    if (confirmAsync)
-                        return confirmAsync({
-                            header: lf("Bluetooth download failed..."),
-                            htmlBody:
-                                `<ul>
-<li>${lf("Make sure to stop your program or exit portview on the EV3.")}</li>
-<li>${lf("Check your battery level.")}</li>
-<li>${lf("Close EV3 LabView or other MakeCode editor tabs.")}
-</ul>`,
-                            hasCloseIcon: true,
-                            hideCancel: true,
-                            hideAgree: false,
-                            agreeLbl: lf("Try again"),
-                        }).then(() => w.disconnectAsync())
-                            .then(() => Promise.delay(1000))
-                            .then(() => w.reconnectAsync());
+                    bluetoothTryAgainAsync().then(() => w.disconnectAsync())
+                        .then(() => Promise.delay(1000))
+                        .then(() => w.reconnectAsync());
 
                     // nothing we can do
                     return Promise.reject(e);

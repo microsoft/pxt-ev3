@@ -17,6 +17,7 @@ clients/**/bin/**
 clients/**/obj/**
 clients/electron/projects
 libs/**/_locales/**
+package-lock.json
 
 videos/**
 

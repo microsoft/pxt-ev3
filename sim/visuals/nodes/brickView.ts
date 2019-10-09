@@ -24,7 +24,7 @@ namespace pxsim.visuals {
         protected buildDomCore() {
             // Setup buttons
             this.buttons = this.btnids.map(n => this.content.getElementById(this.normalizeId(n)) as SVGElement);
-            this.buttons.forEach(b => svg.addClass(b, "sim-button"));
+            this.buttons.forEach(b => U.addClass(b, "sim-button"));
 
             this.light = this.content.getElementById(this.normalizeId(BrickView.EV3_LIGHT_ID)) as SVGElement;
         }

@@ -11,6 +11,7 @@ int allocateNotifyEvent();
 void sleep_core_us(uint64_t us);
 void startUser();
 void stopUser();
+int tryLockUser();
 
 class Button;
 typedef Button *Button_;
@@ -27,9 +28,13 @@ class MMap : public RefObject {
     MMap();
     void destroy();
     void print();
+
+    static void scan(MMap *);
+    static unsigned gcsize(MMap *);
 };
 
 extern volatile bool paniced;
+void target_exit();
 
 // Buffer, Sound, and Image share representation.
 typedef Buffer Sound;

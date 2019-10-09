@@ -121,17 +121,17 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
         Blockly.DropDownDiv.setColour('#ffffff', '#dddddd');
 
         // Calculate positioning based on the field position.
-        var scale = this.sourceBlock_.workspace.scale;
-        var bBox = { width: this.size_.width, height: this.size_.height };
+        let scale = (<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).scale;
+        let bBox = { width: this.size_.width, height: this.size_.height };
         bBox.width *= scale;
         bBox.height *= scale;
-        var position = this.fieldGroup_.getBoundingClientRect();
-        var primaryX = position.left + bBox.width / 2;
-        var primaryY = position.top + bBox.height;
-        var secondaryX = primaryX;
-        var secondaryY = position.top;
+        let position = this.fieldGroup_.getBoundingClientRect();
+        let primaryX = position.left + bBox.width / 2;
+        let primaryY = position.top + bBox.height;
+        let secondaryX = primaryX;
+        let secondaryY = position.top;
         // Set bounds to workspace; show the drop-down.
-        (Blockly.DropDownDiv as any).setBoundsElement(this.sourceBlock_.workspace.getParentSvg().parentNode);
+        (Blockly.DropDownDiv as any).setBoundsElement((<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).getParentSvg().parentNode);
         (Blockly.DropDownDiv as any).show(this, primaryX, primaryY, secondaryX, secondaryY,
             this.onHide_.bind(this));
     }
@@ -152,9 +152,10 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
      * Callback for when the drop-down is hidden.
      */
     private onHide_ = function () {
-        Blockly.DropDownDiv.content_.removeAttribute('role');
-        Blockly.DropDownDiv.content_.removeAttribute('aria-haspopup');
-        Blockly.DropDownDiv.content_.removeAttribute('aria-activedescendant');
-        Blockly.DropDownDiv.getContentDiv().style.width = '';
+        const content = Blockly.DropDownDiv.getContentDiv();
+        content.removeAttribute('role');
+        content.removeAttribute('aria-haspopup');
+        content.removeAttribute('aria-activedescendant');
+        (content as HTMLElement).style.width = '';
     };
 }

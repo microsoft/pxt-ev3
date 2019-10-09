@@ -176,7 +176,7 @@ namespace pxsim.visuals {
             const dalBoard = board();
             dalBoard.updateSubscribers.push(() => this.updateState());
             if (props && props.wireframe)
-                svg.addClass(this.element, "sim-wireframe");
+                U.addClass(this.element, "sim-wireframe");
 
             if (props && props.theme)
                 this.updateTheme();

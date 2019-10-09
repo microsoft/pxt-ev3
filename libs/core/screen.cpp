@@ -85,10 +85,9 @@ void updateScreen(Image_ img) {
         lastImg = img;
     }
 
-    if (lastImg && lastImg->isDirty() && mappedFrameBuffer != MAP_FAILED) {
+    if (lastImg && mappedFrameBuffer != MAP_FAILED) {
         if (lastImg->bpp() != 1 || lastImg->width() != LCD_WIDTH || lastImg->height() != LCD_HEIGHT)
             target_panic(906);
-        lastImg->clearDirty();
         bitBufferToFrameBufferSwap(lastImg->pix(), mappedFrameBuffer);
     }
 }

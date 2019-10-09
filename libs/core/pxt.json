@@ -26,11 +26,19 @@
         "icons.jres",
         "ns.ts",
         "platform.h",
+        "platform.cpp",
+        "dmesg.cpp",
         "integrator.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
+    "dalDTS": {
+        "includeDirs": [
+            "pxtapp"
+        ]
+    },
+    "additionalFilePath": "../../node_modules/pxt-common-packages/libs/core---linux",
     "npmDependencies": {},
     "public": true,
     "dependencies": {
