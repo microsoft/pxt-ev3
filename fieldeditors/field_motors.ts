@@ -67,8 +67,8 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             (this.fieldGroup_ as any).style.display = 'none';
         }
         // Adjust X to be flipped for RTL. Position is relative to horizontal start of source block.
-        var size = this.getSize();
-        var fieldX = (this.sourceBlock_.RTL) ? -size.width / 2 : size.width / 2;
+        let size = this.getSize();
+        let fieldX = (this.sourceBlock_.RTL) ? -size.width / 2 : size.width / 2;
         /** @type {!Element} */
         this.textElement_ = Blockly.utils.dom.createSvgElement('text',
             {
@@ -128,7 +128,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
         }
 
         // Force a reset of the text to add the arrow.
-        var text = this.text_;
+        let text = this.text_;
         this.text_ = null;
         this.setText(text);
     }
@@ -179,7 +179,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             // Not rendered yet.
             return;
         }
-        var text = this.text_;
+        let text = this.text_;
         if (text.length > this.maxDisplayLength) {
             // Truncate displayed string and add an ellipsis ('...').
             text = text.substring(0, this.maxDisplayLength - 2) + '\u2026';
@@ -200,7 +200,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             // Prevent the field from disappearing if empty.
             text = Blockly.Field.NBSP;
         }
-        var textNode = document.createTextNode(text);
+        let textNode = document.createTextNode(text);
         this.textElement2_.appendChild(textNode);
 
         // Cached width is obsolete.  Clear it.
@@ -244,7 +244,7 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             return 0;
         }
 
-        var addedWidth = 0;
+        let addedWidth = 0;
         if (this.sourceBlock_.RTL) {
             (this as any).arrow2X_ = (this as any).arrowSize_ - (Blockly.BlockSvg as any).DROPDOWN_ARROW_PADDING;
             addedWidth = (this as any).arrowSize_ + (Blockly.BlockSvg as any).DROPDOWN_ARROW_PADDING;
@@ -265,8 +265,8 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
 
     updateSize_() {
         // Calculate width of field
-        var width = Blockly.Field.getCachedWidth(this.textElement_);
-        var width2 = Blockly.Field.getCachedWidth(this.textElement2_);
+        let width = Blockly.Field.getCachedWidth(this.textElement_);
+        let width2 = Blockly.Field.getCachedWidth(this.textElement2_);
 
         // Add padding to left and right of text.
         if (this.EDITABLE) {
@@ -347,8 +347,8 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             }
 
             // Apply new text element x position.
-            var width = Blockly.Field.getCachedWidth(this.textElement_);
-            var newX = centerTextX - width / 2;
+            let width = Blockly.Field.getCachedWidth(this.textElement_);
+            let newX = centerTextX - width / 2;
             this.textElement_.setAttribute('x', `${newX}`);
 
             // Update text centering, based on newly calculated width.
@@ -377,8 +377,8 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
             }
 
             // Apply new text element x position.
-            var width2 = Blockly.Field.getCachedWidth(this.textElement2_);
-            var newX2 = centerTextX2 - width2 / 2;
+            let width2 = Blockly.Field.getCachedWidth(this.textElement2_);
+            let newX2 = centerTextX2 - width2 / 2;
             this.textElement2_.setAttribute('x', `${newX2 + (this as any).width1 + Blockly.BlockSvg.BOX_FIELD_PADDING}`);
         }
 

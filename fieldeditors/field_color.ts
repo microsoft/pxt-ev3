@@ -56,7 +56,7 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
      * @param {string} colour The new colour in '#rrggbb' format.
      */
     setValue(colorStr: string) {
-        var colour = this.mapEnum(colorStr);
+        let colour = this.mapEnum(colorStr);
         if (this.sourceBlock_ && Blockly.Events.isEnabled() &&
             this.value_ != colour) {
             Blockly.Events.fire(new (Blockly as any).Events.BlockChange(
