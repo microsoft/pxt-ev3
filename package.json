@@ -6,7 +6,8 @@
   "keywords": [
     "JavaScript",
     "education",
-    "lego",
+    "LEGO",
+    "EV3",
     "pxt",
     "MakeCode",
     "Microsoft"
@@ -45,7 +46,7 @@
   },
   "dependencies": {
     "pxt-common-packages": "6.16.7",
-    "pxt-core": "5.25.3"
+    "pxt-core": "5.25.5"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"
