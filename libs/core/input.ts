@@ -208,12 +208,14 @@ namespace sensors.internal {
         }
     }
 
-    export function getBatteryInfo(): {
+    export interface BatteryInfo {
         level: number;
         Ibatt: number,
         Vbatt: number,
         Imotor: number
-    } {
+    }
+
+    export function getBatteryInfo(): BatteryInfo {
         init();
         if (!batteryInfo) updateBatteryInfo();
         const CinCnt = batteryInfo.CinCnt;
