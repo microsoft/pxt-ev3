@@ -1,13 +1,13 @@
 namespace brick {
     /**
-     * Stops the program. (in the simulator restarts it)
+     * Exits the program to the main menu. (in the simulator restarts it)
      */
-    //% blockId=loopstop block="stop program"
-    //% help=reference/brick/stop-program
+    //% blockId=loopstop block="exit program"
+    //% help=reference/brick/exit-program
     //% weight=10
     //% blockGap=8
-    //% group="Power"
-    export function stopProgram() {
+    //% group="Buttons"
+    export function exitProgram() {
         control.reset();
     }
 }

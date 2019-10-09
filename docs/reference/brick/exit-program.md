@@ -1,9 +1,9 @@
-# stop Program
+# exit Program
 
 Stops the program and returns to the brick menu
 
 ```sig
-brick.stopProgram();
+brick.exitProgram();
 ```
 
 ## Example
@@ -14,5 +14,5 @@ Do a sequence of motor commands and stop the program.
 motors.largeA.run(50)
 pause(500)
 motors.stopAll()
-brick.stopProgram();
+brick.exitProgram();
 ```

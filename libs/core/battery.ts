@@ -25,7 +25,7 @@ namespace brick {
      * Returns information about the battery
      */
     //% blockId=brickBatteryProperty block="battery %property"
-    //% group="Power"
+    //% group="Battery"
     //% blockGap=8
     //% help=brick/battery-property
     export function batteryInfo(property: BatteryProperty): number {
