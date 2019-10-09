@@ -120,7 +120,7 @@ void stopLMS() {
         if (!pid)
             continue;
         char namebuf[100];
-        snprintf(namebuf, 1000, "/proc/%d/cmdline", pid);
+        snprintf(namebuf, 100, "/proc/%d/cmdline", pid);
         FILE *f = fopen(namebuf, "r");
         if (f) {
             fread(namebuf, 1, 99, f);
@@ -195,5 +195,42 @@ void target_startup() {
 
 void initKeys() {}
 
+static const char *progPath = "/mnt/ramdisk/prjs/BrkProg_SAVE";
+
+// These are disabled except when building File_manager.pdf
+// %
+void deletePrjFile(String filename) {
+    const char *d = filename->getUTF8Data();
+    if (strlen(d) > 500 || strchr(d, '/'))
+        return;
+    char buf[1024];
+    snprintf(buf, sizeof(buf), "%s/%s", progPath, d);
+    unlink(buf);
+}
+
+// %
+RefCollection *listPrjFiles() {
+    auto res = Array_::mk();
+    registerGCObj(res);
+
+    auto dp = opendir(progPath);
+
+    for (;;) {
+        dirent *ep = dp ? readdir(dp) : NULL;
+        if (!ep)
+            break;
+        if (ep->d_name[0] == '.')
+            continue;
+        auto str = mkString(ep->d_name, -1);
+        registerGCObj(str);
+        res->head.push((TValue)str);
+        unregisterGCObj(str);
+    }
+    if (dp)
+        closedir(dp);
+    unregisterGCObj(res);
+
+    return res;
+}
 
 }
