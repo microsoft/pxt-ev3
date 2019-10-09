@@ -19,8 +19,7 @@
         "libs/ev3",
         "libs/storage",
         "libs/broadcast",
-        "libs/settings",
-        "libs/settings---files"
+        "libs/settings"
     ],
     "simulator": {
         "autoRun": true,
