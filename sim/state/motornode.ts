@@ -94,8 +94,8 @@ namespace pxsim {
 
         private polarityFactor() {
             // polarity is supported at the firmware level for single motor
-            // overriden for synched motors
-            return (this.polarity == 0 && !!this._synchedMotor) ? -1 : 1;
+            // but ignored for double motors
+            return (this.polarity == 0 && !this._synchedMotor) ? -1 : 1;
         }
 
         reset() {
