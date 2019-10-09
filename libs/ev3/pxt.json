@@ -2,8 +2,9 @@
     "name": "ev3",
     "description": "The EV3 library",
     "files": [
-        "README.md",
+        "README.md",        
         "ns.ts",
+        "brick.ts",
         "startup.ts",
         "images.jres",
         "images.ts",
