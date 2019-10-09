@@ -26,6 +26,7 @@ namespace brick {
      */
     //% blockId=brickBatteryProperty block="battery %property"
     //% group="Battery"
+    //% blockGap=8
     //% help=brick/battery-property
     export function batteryInfo(property: BatteryProperty): number {
         const info = sensors.internal.getBatteryInfo();
