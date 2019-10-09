@@ -149,9 +149,9 @@ export class FieldMotors extends Blockly.FieldDropdown implements Blockly.FieldC
     getFirstValueI11n(value: string) {
         const firstValue = this.getFirstValue(value);
         const motorOptions = {
-            'medium motor': lf('medium motor'),
-            'large motor': lf('large motor'),
-            'large motors': lf('large motors')
+            'medium motor': lf("medium motor"),
+            'large motor': lf("large motor"),
+            'large motors': lf("large motors")
         }
         return motorOptions[firstValue];
     }
