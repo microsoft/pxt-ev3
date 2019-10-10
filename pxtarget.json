@@ -75,7 +75,6 @@
             "category": "loops"
         },
         "bannedCategories": [
-            "image"
         ]
     },
     "compileService": {
