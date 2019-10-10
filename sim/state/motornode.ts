@@ -9,7 +9,6 @@ namespace pxsim {
         private angle: number = 0;
         private tacho: number = 0;
         private speed: number = 0;
-        private polarity: number = 1; // -1, 1 or -1
 
         private started: boolean;
         private speedCmd: DAL;
@@ -31,7 +30,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return Math.round(this.speed * this.polarityFactor());
+            return Math.round(this.speed);
         }
 
         getAngle() {
@@ -80,22 +79,6 @@ namespace pxsim {
 
         isLarge(): boolean {
             return this.id == NodeType.LargeMotor;
-        }
-
-        setPolarity(polarity: number) {
-            // Either 1 or 255 (reverse)
-            /*
-                -1 : Motor will run backward  
-                0 : Motor will run opposite direction  
-                1 : Motor will run forward             
-            */
-            this.polarity = polarity;
-        }
-
-        private polarityFactor() {
-            // polarity is supported at the firmware level for single motor
-            // but ignored for double motors
-            return this.polarity == 0 ? -1 : 1;
         }
 
         reset() {
@@ -151,14 +134,14 @@ namespace pxsim {
                     case DAL.opOutputPower:
                         // assume power == speed
                         // TODO: PID
-                        this.speed = this.speedCmdValues[0] * this.polarityFactor();
+                        this.speed = this.speedCmdValues[0];
                         break;
                     case DAL.opOutputTimeSpeed:
                     case DAL.opOutputTimePower:
                     case DAL.opOutputStepPower:
                     case DAL.opOutputStepSpeed: {
                         // ramp up, run, ramp down, <brake> using time
-                        const speed = this.speedCmdValues[0] * this.polarityFactor();
+                        const speed = this.speedCmdValues[0];
                         const step1 = this.speedCmdValues[1];
                         const step2 = this.speedCmdValues[2];
                         const step3 = this.speedCmdValues[3];
@@ -198,7 +181,7 @@ namespace pxsim {
                     case DAL.opOutputStepSync:
                     case DAL.opOutputTimeSync: {
                         const otherMotor = this._synchedMotor;
-                        const speed = this.speedCmdValues[0] * this.polarityFactor();
+                        const speed = this.speedCmdValues[0];
                         const turnRatio = this.speedCmdValues[1];
                         // if turnratio is negative, right motor at power level
                         // right motor -> this.port > otherMotor.port

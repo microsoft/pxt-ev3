@@ -159,6 +159,7 @@ namespace motors {
         private _accelerationTime: number;
         private _decelerationSteps: number;
         private _decelerationTime: number;
+        private _inverted: boolean;
 
         protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
 
@@ -176,6 +177,7 @@ namespace motors {
             this._accelerationTime = 0;
             this._decelerationSteps = 0;
             this._decelerationTime = 0;
+            this._inverted = false;
         }
 
         /**
@@ -225,14 +227,11 @@ namespace motors {
         //% help=motors/motor/set-inverted
         setInverted(inverted: boolean) {
             this.init();
-            this.internalSetInverted(inverted);
-        }
-
-        protected internalSetInverted(inverted: boolean) {
+            this._inverted = inverted;
         }
 
         protected invertedFactor(): number {
-            return 1;
+            return this._inverted ? -1 : 1;
         }
 
         /** 
@@ -571,12 +570,6 @@ namespace motors {
             this.setInverted(false);
         }
 
-        protected internalSetInverted(inverted: boolean) {
-            const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, inverted ? 0 : 1);
-            writePWM(b);
-        }
-
         /**
          * Gets motor actual speed.
          * @param motor the port which connects to the motor
@@ -689,12 +682,10 @@ namespace motors {
 
     //% fixedInstances
     export class SynchedMotorPair extends MotorBase {
-        private _inverted: boolean;
 
         constructor(ports: Output) {
             super(ports, () => this.__init());
             this.markUsed();
-            this._inverted = false;
         }
 
         markUsed() {
@@ -703,14 +694,6 @@ namespace motors {
 
         private __init() {
             this.setOutputType(true);
-        }
-
-        protected internalSetInverted(inverted: boolean) {
-            this._inverted = inverted;
-        }
-
-        protected invertedFactor(): number {
-            return this._inverted ? -1 : 1;
         }
 
         /**
