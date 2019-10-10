@@ -145,9 +145,9 @@ namespace brick {
         clearScreen();
 
         for (let i = 0; i < 4; ++i) {
-            const x = i * col;
-            screen.print("ABCD"[i], x + 2, 1 * lineHeight8, 1, image.font8)
-            screen.print((i + 1).toString(), x + 2, h - lineHeight8, 1, image.font8)
+            const x = i * col + 2;
+            screen.print("ABCD"[i], x, 1 * lineHeight8, 1, image.font8)
+            screen.print((i + 1).toString(), x, h - lineHeight8, 1, image.font8)
         }
         screen.drawLine(0, 5 * lineHeight8, screen.width, 5 * lineHeight8, 1);
         screen.drawLine(0, h - 5 * lineHeight8, screen.width, h - 5 * lineHeight8, 1)
@@ -165,19 +165,18 @@ namespace brick {
         const datas = motors.getAllMotorData();
         for (let i = 0; i < datas.length; ++i) {
             const data = datas[i];
-            const x = i * col;
+            const x = i * col + 2;
             if (!data.actualSpeed && !data.count) continue;
-            screen.print(`${scale(data.actualSpeed)}%`, x + 2, 3 * lineHeight8, 1, image.font8)
-            screen.print(`${scale(data.count)}>`, x + 2, 4 * lineHeight8, 1, image.font8)
+            screen.print(`${scale(data.actualSpeed)}%`, x, 3 * lineHeight8, 1, image.font8)
+            screen.print(`${scale(data.count)}>`, x, 4 * lineHeight8, 1, image.font8)
         }
 
         // sensors
         const sis = sensors.internal.getActiveSensors();
         for (let i = 0; i < sis.length; ++i) {
             const si = sis[i];
-            const x = (si.port() - 1) * col;
+            const x = (si.port() - 1) * col + 2;
             const inf = si._info();
-            screen.print(si.port() + "", x, h - 4 * lineHeight8, 1, image.font8)
             if (inf)
                 screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
         }
