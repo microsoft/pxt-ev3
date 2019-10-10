@@ -119,11 +119,7 @@ namespace pxsim {
                             return 2;
                         }
                         case DAL.opOutputPolarity: {
-                            // reverse
-                            const port = buf.data[1];
-                            const polarity = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, 2);
-                            const motors = ev3board().getMotor(port);
-                            motors.forEach(motor => motor.setPolarity(polarity));
+                            console.error("opOutputPolarity not supported");
                             return 2;
                         }
                         case DAL.opOutputSetType: {
