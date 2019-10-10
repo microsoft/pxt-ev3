@@ -9,7 +9,6 @@ namespace pxsim {
         private angle: number = 0;
         private tacho: number = 0;
         private speed: number = 0;
-        private polarity: number = 1; // -1, 1 or -1
 
         private started: boolean;
         private speedCmd: DAL;
@@ -31,7 +30,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return Math.round(this.speed * (!this._synchedMotor && this.polarity == 0 ? -1 : 1));
+            return Math.round(this.speed);
         }
 
         getAngle() {
@@ -80,16 +79,6 @@ namespace pxsim {
 
         isLarge(): boolean {
             return this.id == NodeType.LargeMotor;
-        }
-
-        setPolarity(polarity: number) {
-            // Either 1 or 255 (reverse)
-            /*
-                -1 : Motor will run backward  
-                0 : Motor will run opposite direction  
-                1 : Motor will run forward             
-            */
-            this.polarity = polarity;
         }
 
         reset() {
