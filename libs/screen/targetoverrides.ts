@@ -163,7 +163,6 @@ namespace brick {
 
         // motors
         const datas = motors.getAllMotorData();
-        console.log(datas);
         for (let i = 0; i < datas.length; ++i) {
             const data = datas[i];
             const x = i * col;
@@ -174,13 +173,13 @@ namespace brick {
 
         // sensors
         const sis = sensors.internal.getActiveSensors();
-        console.log(sis);
         for (let i = 0; i < sis.length; ++i) {
             const si = sis[i];
             const x = (si.port() - 1) * col;
             const inf = si._info();
             screen.print(si.port() + "", x, h - 4 * lineHeight8, 1, image.font8)
-            screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
+            if (inf)
+                screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
         }
     }
 
