@@ -159,7 +159,6 @@ namespace motors {
         private _accelerationTime: number;
         private _decelerationSteps: number;
         private _decelerationTime: number;
-        private _inverted: boolean;
 
         protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
 
@@ -177,7 +176,6 @@ namespace motors {
             this._accelerationTime = 0;
             this._decelerationSteps = 0;
             this._decelerationTime = 0;
-            this._inverted = false;
         }
 
         /**
@@ -227,10 +225,14 @@ namespace motors {
         //% help=motors/motor/set-inverted
         setInverted(inverted: boolean) {
             this.init();
-            const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
-            b.setNumber(NumberFormat.Int8LE, 2, inverted ? 0 : 1);
-            writePWM(b);
-            this._inverted = inverted;
+            this.internalSetInverted(inverted);
+        }
+
+        protected internalSetInverted(inverted: boolean) {
+        }
+
+        protected invertedFactor(): number {
+            return 1;
         }
 
         /** 
@@ -299,7 +301,7 @@ namespace motors {
         private normalizeSchedule(speed: number, step1: number, step2: number, step3: number, unit: MoveUnit): MoveSchedule {
             // motor polarity is not supported at the firmware level for sync motor operations
             const r: MoveSchedule = {
-                speed: Math.clamp(-100, 100, speed >> 0) * (this._inverted ? -1 : 1),
+                speed: Math.clamp(-100, 100, speed | 0) * this.invertedFactor(),
                 useSteps: true,
                 steps: [step1 || 0, step2 || 0, step3 || 0]
             }
@@ -569,6 +571,12 @@ namespace motors {
             this.setInverted(false);
         }
 
+        protected internalSetInverted(inverted: boolean) {
+            const b = mkCmd(this._port, DAL.opOutputPolarity, 1)
+            b.setNumber(NumberFormat.Int8LE, 2, inverted ? 0 : 1);
+            writePWM(b);
+        }
+
         /**
          * Gets motor actual speed.
          * @param motor the port which connects to the motor
@@ -681,10 +689,12 @@ namespace motors {
 
     //% fixedInstances
     export class SynchedMotorPair extends MotorBase {
+        private _inverted: boolean;
 
         constructor(ports: Output) {
             super(ports, () => this.__init());
             this.markUsed();
+            this._inverted = false;
         }
 
         markUsed() {
@@ -693,6 +703,14 @@ namespace motors {
 
         private __init() {
             this.setOutputType(true);
+        }
+
+        protected internalSetInverted(inverted: boolean) {
+            this._inverted = inverted;
+        }
+
+        protected invertedFactor(): number {
+            return this._inverted ? -1 : 1;
         }
 
         /**
@@ -746,7 +764,7 @@ namespace motors {
         //% help=motors/synced/steer
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
-            speed = Math.clamp(-100, 100, speed >> 0);
+            speed = Math.clamp(-100, 100, speed >> 0) * this.invertedFactor();
             if (!speed) {
                 this.stop();
                 return;

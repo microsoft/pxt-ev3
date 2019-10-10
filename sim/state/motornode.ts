@@ -31,7 +31,7 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return Math.round(this.speed * (!this._synchedMotor && this.polarityFactor()));
+            return Math.round(this.speed * this.polarityFactor());
         }
 
         getAngle() {
@@ -95,7 +95,7 @@ namespace pxsim {
         private polarityFactor() {
             // polarity is supported at the firmware level for single motor
             // but ignored for double motors
-            return (this.polarity == 0 && !this._synchedMotor) ? -1 : 1;
+            return this.polarity == 0 ? -1 : 1;
         }
 
         reset() {
