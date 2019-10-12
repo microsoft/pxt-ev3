@@ -284,7 +284,7 @@ void      cUiUpdatePower(void)
 
     let nonActivated = 0;
     function detectDevices() {
-        //control.dmesg(`detect devices (${nonActivated} na)`)
+        control.dmesg(`detect devices (${nonActivated} na)`)
         const inDcm = analogMM.slice(AnalogOff.InDcm, DAL.NUM_INPUTS)
         const inConn = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0;
@@ -334,44 +334,44 @@ void      cUiUpdatePower(void)
                     break;
                 }
             }
-
-            if (uartSensors.length > 0) {
-                setUartModes();
-                for (const sensorInfo of uartSensors) {
-                    let uinfo = readUartInfo(sensorInfo.port, 0)
-                    sensorInfo.devType = uinfo[TypesOff.Type]
-                    control.dmesg(`UART type ${sensorInfo.devType}`)
-                }
-            }
-
-            if (numChanged == 0 && nonActivated == 0)
-                return
-
-            //control.dmesg(`updating sensor status`)
-            nonActivated = 0;
-            for (const sensorInfo of sensorInfos) {
-                if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {
-                    sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0]
-                    if (!sensorInfo.sensor) {
-                        control.dmesg(`sensor not found for iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
-                        nonActivated++;
-                    } else {
-                        control.dmesg(`sensor connected iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
-                        sensorInfo.sensor._activated()
-                    }
-                } else if (sensorInfo.devType != DAL.DEVICE_TYPE_NONE) {
-                    sensorInfo.sensor = sensorInfo.sensors.filter(s => s._deviceType() == sensorInfo.devType)[0]
-                    if (!sensorInfo.sensor) {
-                        control.dmesg(`sensor not found for type=${sensorInfo.devType} at ${sensorInfo.port}`)
-                        nonActivated++;
-                    } else {
-                        control.dmesg(`sensor connected type=${sensorInfo.devType} at ${sensorInfo.port}`)
-                        sensorInfo.sensor._activated()
-                    }
-                }
-            }
-            //control.dmesg(`detect devices done`)
         }
+
+        if (uartSensors.length > 0) {
+            setUartModes();
+            for (const sensorInfo of uartSensors) {
+                let uinfo = readUartInfo(sensorInfo.port, 0)
+                sensorInfo.devType = uinfo[TypesOff.Type]
+                control.dmesg(`UART type ${sensorInfo.devType}`)
+            }
+        }
+
+        if (numChanged == 0 && nonActivated == 0)
+            return
+
+        //control.dmesg(`updating sensor status`)
+        nonActivated = 0;
+        for (const sensorInfo of sensorInfos) {
+            if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {
+                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0]
+                if (!sensorInfo.sensor) {
+                    control.dmesg(`sensor not found for iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
+                    nonActivated++;
+                } else {
+                    control.dmesg(`sensor connected iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
+                    sensorInfo.sensor._activated()
+                }
+            } else if (sensorInfo.devType != DAL.DEVICE_TYPE_NONE) {
+                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._deviceType() == sensorInfo.devType)[0]
+                if (!sensorInfo.sensor) {
+                    control.dmesg(`sensor not found for type=${sensorInfo.devType} at ${sensorInfo.port}`)
+                    nonActivated++;
+                } else {
+                    control.dmesg(`sensor connected type=${sensorInfo.devType} at ${sensorInfo.port}`)
+                    sensorInfo.sensor._activated()
+                }
+            }
+        }
+        //control.dmesg(`detect devices done`)
     }
 
     export class Sensor extends control.Component {
@@ -588,12 +588,12 @@ void      cUiUpdatePower(void)
         while (ports.length) {
             const port = ports.pop();
             const status = waitNonZeroUartStatus(port)
-            control.dmesg(`UART set mode ${status} at ${port}`);
+            control.dmesg(`UART status ${status} at ${port}`);
         }
     }
 
     function updateUartMode(port: number, mode: number) {
-        control.dmesg(`UART set mode to ${mode} at ${port}`)
+        control.dmesg(`UART update mode to ${mode} at ${port}`)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
@@ -610,7 +610,7 @@ void      cUiUpdatePower(void)
                 control.dmesg(`UART clear changed at ${port}`)
                 uartClearChange(port)
             } else {
-                control.dmesg(`UART status ${status}`);
+                control.dmesg(`UART status ${status} at ${port}`);
                 break;
             }
             pause(10)
