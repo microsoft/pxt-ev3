@@ -911,3 +911,4 @@ void      cUiUpdatePower(void)
             }
         }
     }
+}
