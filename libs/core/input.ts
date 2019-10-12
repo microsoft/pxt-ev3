@@ -372,542 +372,542 @@ void      cUiUpdatePower(void)
             }
             //control.dmesg(`detect devices done`)
         }
+    }
 
-        export class Sensor extends control.Component {
-            protected _port: number // this is 0-based
+    export class Sensor extends control.Component {
+        protected _port: number // this is 0-based
 
-            constructor(port_: number) {
-                super()
-                if (!(1 <= port_ && port_ <= DAL.NUM_INPUTS))
-                    control.panic(120)
-                this._port = port_ - 1
-                init()
-                sensorInfos[this._port].sensors.push(this)
-                this.markUsed();
-            }
-
-            poke() {
-                if (this.isActive())
-                    sensorInfos[this._port].poke();
-            }
-
-            markUsed() {
-                sensors.__sensorUsed(this._port, this._deviceType());
-            }
-
-            _activated() { }
-
-            // 1-based
-            port() {
-                return this._port + 1
-            }
-
-            isActive() {
-                return sensorInfos[this._port].sensor == this
-            }
-
-            _query() {
-                return 0
-            }
-
-            _info(): string {
-                return this._query().toString();
-            }
-
-            _update(prev: number, curr: number) {
-            }
-
-            _deviceType() {
-                return 0
-            }
-
-            _IICId() {
-                return ''
-            }
+        constructor(port_: number) {
+            super()
+            if (!(1 <= port_ && port_ <= DAL.NUM_INPUTS))
+                control.panic(120)
+            this._port = port_ - 1
+            init()
+            sensorInfos[this._port].sensors.push(this)
+            this.markUsed();
         }
 
-        export class AnalogSensor extends Sensor {
-            constructor(port: number) {
-                super(port)
-            }
-
-            _readPin6() {
-                if (!this.isActive()) return 0
-                return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port)
-            }
+        poke() {
+            if (this.isActive())
+                sensorInfos[this._port].poke();
         }
 
-        export class UartSensor extends Sensor {
-            protected mode: number // the mode user asked for
-            protected realmode: number // the mode the hardware is in
-
-            constructor(port: number) {
-                super(port)
-                this.mode = 0
-                this.realmode = 0
-            }
-
-            _activated() {
-                this.realmode = 0
-                this._setMode(this.mode)
-            }
-
-            protected _setMode(m: number) {
-                //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
-                let v = m | 0
-                this.mode = v
-                if (!this.isActive()) return
-                if (this.realmode != this.mode) {
-                    this.realmode = v
-                    setUartMode(this._port, v)
-                }
-            }
-
-            getBytes(): Buffer {
-                return getUartBytes(this.isActive() ? this._port : -1)
-            }
-
-            getNumber(fmt: NumberFormat, off: number) {
-                if (!this.isActive())
-                    return 0
-                return getUartNumber(fmt, off, this._port)
-            }
-
-            reset() {
-                if (this.isActive()) uartReset(this._port);
-                this.realmode = 0;
-            }
+        markUsed() {
+            sensors.__sensorUsed(this._port, this._deviceType());
         }
 
-        export class IICSensor extends Sensor {
-            protected mode: number // the mode user asked for
-            protected realmode: number // the mode the hardware is in
-            private readLength: number
+        _activated() { }
 
-            constructor(port: number) {
-                super(port)
-                this.mode = 0
-                this.realmode = 0
-                this.readLength = 1;
-            }
-
-            _activated() {
-                this.realmode = 0
-                this._setMode(this.mode)
-            }
-
-            protected _setMode(m: number) {
-                let v = m | 0
-                this.mode = v
-                if (!this.isActive()) return
-                if (this.realmode != this.mode) {
-                    this.realmode = v
-                    setIICMode(this._port, this._deviceType(), v)
-                }
-            }
-
-            getBytes(): Buffer {
-                return getIICBytes(this.isActive() ? this._port : -1, this.readLength)
-            }
-
-            getNumber(fmt: NumberFormat, off: number) {
-                if (!this.isActive())
-                    return 0
-                return getIICNumber(this.readLength, fmt, off, this._port)
-            }
-
-            transaction(deviceAddress: number, write: number[], read: number) {
-                this.readLength = read;
-                transactionIIC(this._port, deviceAddress, write, read)
-            }
-
-            _deviceType() {
-                return DAL.DEVICE_TYPE_IIC_UNKNOWN
-            }
+        // 1-based
+        port() {
+            return this._port + 1
         }
 
-        export const iicsensor = new IICSensor(3)
-
-        function uartReset(port: number) {
-            if (port < 0) return
-            control.dmesg(`UART reset at ${port}`)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NONE)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
-            uartMM.ioctl(IO.UART_SET_CONN, devcon)
+        isActive() {
+            return sensorInfos[this._port].sensor == this
         }
 
-        function getUartStatus(port: number) {
-            if (port < 0) return 0
-            return uartMM.getNumber(NumberFormat.Int8LE, UartOff.Status + port)
+        _query() {
+            return 0
         }
 
-        function waitNonZeroUartStatus(port: number) {
-            while (true) {
-                if (port < 0) return 0
-                let s = getUartStatus(port)
-                if (s) return s
-                pause(25)
-            }
+        _info(): string {
+            return this._query().toString();
         }
 
-        function uartClearChange(port: number) {
-            control.dmesg(`UART clear change`);
-            const UART_DATA_READY = 8
-            const UART_PORT_CHANGED = 1
-            while (true) {
-                let status = getUartStatus(port)
-                if (port < 0) break
-
-                if ((status & UART_DATA_READY) != 0 && (status & UART_PORT_CHANGED) == 0)
-                    break
-
-                devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
-                devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
-                devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
-
-                uartMM.ioctl(IO.UART_CLEAR_CHANGED, devcon)
-
-                uartMM.setNumber(NumberFormat.Int8LE, UartOff.Status + port,
-                    getUartStatus(port) & 0xfffe)
-                pause(10)
-            }
+        _update(prev: number, curr: number) {
         }
 
-        function setUartModes() {
-            control.dmesg(`UART set modes`)
-            uartMM.ioctl(IO.UART_SET_CONN, devcon)
-            const ports: number[] = [];
-            for (let port = 0; port < DAL.NUM_INPUTS; ++port) {
-                if (devcon.getNumber(NumberFormat.Int8LE, DevConOff.Connection + port) == DAL.CONN_INPUT_UART) {
-                    ports.push(port);
-                }
-            }
-
-            while (ports.length) {
-                const port = ports.pop();
-                const status = waitNonZeroUartStatus(port)
-                control.dmesg(`UART set mode ${status} at ${port}`);
-            }
+        _deviceType() {
+            return 0
         }
 
-        function updateUartMode(port: number, mode: number) {
-            control.dmesg(`UART set mode to ${mode} at ${port}`)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
-        }
-
-        function setUartMode(port: number, mode: number) {
-            const UART_PORT_CHANGED = 1
-            while (true) {
-                if (port < 0) return
-                updateUartMode(port, mode);
-                uartMM.ioctl(IO.UART_SET_CONN, devcon)
-                let status = waitNonZeroUartStatus(port)
-                if (status & UART_PORT_CHANGED) {
-                    control.dmesg(`UART clear changed at ${port}`)
-                    uartClearChange(port)
-                } else {
-                    control.dmesg(`UART status ${status}`);
-                    break;
-                }
-                pause(10)
-            }
-        }
-
-        function getUartBytes(port: number): Buffer {
-            if (port < 0) return output.createBuffer(DAL.MAX_DEVICE_DATALENGTH)
-            let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
-            return uartMM.slice(
-                UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index,
-                DAL.MAX_DEVICE_DATALENGTH)
-        }
-
-        function getUartNumber(fmt: NumberFormat, off: number, port: number) {
-            if (port < 0) return 0
-            let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
-            return uartMM.getNumber(fmt,
-                UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
-        }
-
-        export function setIICMode(port: number, type: number, mode: number) {
-            if (port < 0) return;
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
-            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
-            IICMM.ioctl(IO.IIC_SET_CONN, devcon)
-        }
-
-        export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number) {
-            if (port < 0) return;
-            let iicdata = output.createBuffer(IICDat.Size)
-            iicdata.setNumber(NumberFormat.Int8LE, IICDat.Port, port)
-            iicdata.setNumber(NumberFormat.Int8LE, IICDat.Repeat, 0)
-            iicdata.setNumber(NumberFormat.Int16LE, IICDat.Time, 0)
-            iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrLng, writeBuf.length + 1)
-            for (let i = 0; i < writeBuf.length; i++)
-                iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrData + i + 1, writeBuf[i])
-            iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrData, deviceAddress)
-            iicdata.setNumber(NumberFormat.Int8LE, IICDat.RdLng, readLen)
-            IICMM.ioctl(IO.IIC_SETUP, iicdata)
-        }
-
-        export function getIICBytes(port: number, length: number) {
-            if (port < 0) return output.createBuffer(length);
-            let index = IICMM.getNumber(NumberFormat.UInt16LE, IICOff.Actual + port * 2);
-            let buf = IICMM.slice(
-                IICOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index,
-                length
-            );
-
-            // Reverse
-            for (let i = 0; i < length / 2; i++) {
-                let c = buf[i]
-                buf[i] = buf[length - i - 1]
-                buf[length - i - 1] = c
-            }
-            return buf;
-        }
-
-        export function getIICNumber(length: number, format: NumberFormat, off: number, port: number) {
-            return getIICBytes(port, length).getNumber(format, off)
-        }
-
-        const enum NxtColOff {
-            Calibration = 0, // uint32[4][3]
-            CalLimits = 48, // uint16[2]
-            Crc = 52, // uint16
-            ADRaw = 54, // uint16[4]
-            SensorRaw = 62, // uint16[4]
-            Padding = 70,
-            Size = 72
-        }
-        const enum AnalogOff {
-            InPin1 = 0, // int16[4]
-            InPin6 = 8, // int16[4]
-            OutPin5 = 16, // int16[4]
-            BatteryTemp = 24, // int16
-            MotorCurrent = 26, // int16
-            BatteryCurrent = 28, // int16
-            Cell123456 = 30, // int16
-            Pin1 = 32, // int16[300][4]
-            Pin6 = 2432, // int16[300][4]
-            Actual = 4832, // uint16[4]
-            LogIn = 4840, // uint16[4]
-            LogOut = 4848, // uint16[4]
-            NxtCol = 4856, // uint16[36][4] - NxtColor*4
-            OutPin5Low = 5144, // int16[4]
-            Updated = 5152, // int8[4]
-            InDcm = 5156, // int8[4]
-            InConn = 5160, // int8[4]
-            OutDcm = 5164, // int8[4]
-            OutConn = 5168, // int8[4]
-            Size = 5172
-        }
-
-        const enum DevConOff {
-            Connection = 0, // int8[4]
-            Type = 4, // int8[4]
-            Mode = 8, // int8[4]
-            Size = 12
-        }
-
-        const enum TypesOff {
-            Name = 0, // int8[12]
-            Type = 12, // int8
-            Connection = 13, // int8
-            Mode = 14, // int8
-            DataSets = 15, // int8
-            Format = 16, // int8
-            Figures = 17, // int8
-            Decimals = 18, // int8
-            Views = 19, // int8
-            RawMin = 20, // float32
-            RawMax = 24, // float32
-            PctMin = 28, // float32
-            PctMax = 32, // float32
-            SiMin = 36, // float32
-            SiMax = 40, // float32
-            InvalidTime = 44, // uint16
-            IdValue = 46, // uint16
-            Pins = 48, // int8
-            Symbol = 49, // int8[5]
-            Align = 54, // uint16
-            Size = 56
-        }
-
-        const enum UartOff {
-            TypeData = 0, // Types[8][4]
-            Repeat = 1792, // uint16[300][4]
-            Raw = 4192, // int8[32][300][4]
-            Actual = 42592, // uint16[4]
-            LogIn = 42600, // uint16[4]
-            Status = 42608, // int8[4]
-            Output = 42612, // int8[32][4]
-            OutputLength = 42740, // int8[4]
-            Size = 42744
-        }
-
-        const enum UartCtlOff {
-            TypeData = 0, // Types
-            Port = 56, // int8
-            Mode = 57, // int8
-            Size = 58
-        }
-
-        const enum IICOff {
-            TypeData = 0, // Types[8][4]
-            Repeat = 1792, // uint16[300][4]
-            Raw = 4192, // int8[32][300][4]
-            Actual = 42592, // uint16[4]
-            LogIn = 42600, // uint16[4]
-            Status = 42608, // int8[4]
-            Output = 42612, // int8[32][4]
-            OutputLength = 42740, // int8[4]
-            Size = 42744
-        }
-
-        const enum IICCtlOff {
-            TypeData = 0, // Types
-            Port = 56, // int8
-            Mode = 57, // int8
-            Size = 58
-        }
-
-        const enum IICDat {
-            Result = 0,  // result
-            Port = 4, // int8
-            Repeat = 5, // int8
-            Time = 6, // int16
-            WrLng = 8, // int8
-            WrData = 9, // int8[32]
-            RdLng = 41, // int8
-            RdData = 42, //int8[32]
-            Size = 74,
-        }
-
-        const enum IICStr {
-            Port = 0, // int8
-            Time = 2, // int16
-            Type = 4, // int8
-            Mode = 5, // int8
-            Manufacturer = 6, // int8[9]
-            SensorType = 15, // int[9]
-            SetupLng = 24, // int8
-            SetupString = 28, // ulong
-            PollLng = 32, // int8
-            PollString = 36, // ulong
-            ReadLng = 40, // int8
-            Size = 44
-        }
-
-        const enum IO {
-            UART_SET_CONN = 0xc00c7500,
-            UART_READ_MODE_INFO = 0xc03c7501,
-            UART_NACK_MODE_INFO = 0xc03c7502,
-            UART_CLEAR_CHANGED = 0xc03c7503,
-            IIC_SET_CONN = 0xc00c6902,
-            IIC_READ_TYPE_INFO = 0xc03c6903,
-            IIC_SETUP = 0xc04c6905,
-            IIC_SET = 0xc02c6906,
-            TST_PIN_ON = 0xc00b7401,
-            TST_PIN_OFF = 0xc00b7402,
-            TST_PIN_READ = 0xc00b7403,
-            TST_PIN_WRITE = 0xc00b7404,
-            TST_UART_ON = 0xc0487405,
-            TST_UART_OFF = 0xc0487406,
-            TST_UART_EN = 0xc0487407,
-            TST_UART_DIS = 0xc0487408,
-            TST_UART_READ = 0xc0487409,
-            TST_UART_WRITE = 0xc048740a,
+        _IICId() {
+            return ''
         }
     }
 
-    namespace sensors {
-        export enum ThresholdState {
-            Normal = 1,
-            High = 2,
-            Low = 3,
+    export class AnalogSensor extends Sensor {
+        constructor(port: number) {
+            super(port)
         }
 
-        export class ThresholdDetector {
-            public id: number;
-            private min: number;
-            private max: number;
-            private lowThreshold: number;
-            private highThreshold: number;
-            public level: number;
-            public state: ThresholdState;
+        _readPin6() {
+            if (!this.isActive()) return 0
+            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port)
+        }
+    }
 
-            constructor(id: number, min = 0, max = 100, lowThreshold = 20, highThreshold = 80) {
-                this.id = id;
-                this.min = min;
-                this.max = max;
-                this.lowThreshold = lowThreshold;
-                this.highThreshold = highThreshold;
-                this.level = Math.ceil((max - min) / 2);
-                this.state = ThresholdState.Normal;
+    export class UartSensor extends Sensor {
+        protected mode: number // the mode user asked for
+        protected realmode: number // the mode the hardware is in
+
+        constructor(port: number) {
+            super(port)
+            this.mode = 0
+            this.realmode = 0
+        }
+
+        _activated() {
+            this.realmode = 0
+            this._setMode(this.mode)
+        }
+
+        protected _setMode(m: number) {
+            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
+            let v = m | 0
+            this.mode = v
+            if (!this.isActive()) return
+            if (this.realmode != this.mode) {
+                this.realmode = v
+                setUartMode(this._port, v)
             }
+        }
 
-            public setLevel(level: number) {
-                if (this == null) return
-                this.level = this.clampValue(level);
+        getBytes(): Buffer {
+            return getUartBytes(this.isActive() ? this._port : -1)
+        }
 
-                if (this.level >= this.highThreshold) {
-                    this.setState(ThresholdState.High);
-                }
-                else if (this.level <= this.lowThreshold) {
-                    this.setState(ThresholdState.Low);
-                }
-                else {
-                    const interval = (this.highThreshold - this.lowThreshold) / 6;
-                    if ((this.state == ThresholdState.High && this.level < this.highThreshold - interval) ||
-                        (this.state == ThresholdState.Low && this.level > this.lowThreshold + interval))
-                        this.setState(ThresholdState.Normal);
-                }
+        getNumber(fmt: NumberFormat, off: number) {
+            if (!this.isActive())
+                return 0
+            return getUartNumber(fmt, off, this._port)
+        }
+
+        reset() {
+            if (this.isActive()) uartReset(this._port);
+            this.realmode = 0;
+        }
+    }
+
+    export class IICSensor extends Sensor {
+        protected mode: number // the mode user asked for
+        protected realmode: number // the mode the hardware is in
+        private readLength: number
+
+        constructor(port: number) {
+            super(port)
+            this.mode = 0
+            this.realmode = 0
+            this.readLength = 1;
+        }
+
+        _activated() {
+            this.realmode = 0
+            this._setMode(this.mode)
+        }
+
+        protected _setMode(m: number) {
+            let v = m | 0
+            this.mode = v
+            if (!this.isActive()) return
+            if (this.realmode != this.mode) {
+                this.realmode = v
+                setIICMode(this._port, this._deviceType(), v)
             }
+        }
 
-            public threshold(t: ThresholdState): number {
-                switch (t) {
-                    case ThresholdState.High: return this.highThreshold;
-                    case ThresholdState.Low: return this.lowThreshold;
-                    default: return (this.max - this.min) / 2;
-                }
+        getBytes(): Buffer {
+            return getIICBytes(this.isActive() ? this._port : -1, this.readLength)
+        }
+
+        getNumber(fmt: NumberFormat, off: number) {
+            if (!this.isActive())
+                return 0
+            return getIICNumber(this.readLength, fmt, off, this._port)
+        }
+
+        transaction(deviceAddress: number, write: number[], read: number) {
+            this.readLength = read;
+            transactionIIC(this._port, deviceAddress, write, read)
+        }
+
+        _deviceType() {
+            return DAL.DEVICE_TYPE_IIC_UNKNOWN
+        }
+    }
+
+    export const iicsensor = new IICSensor(3)
+
+    function uartReset(port: number) {
+        if (port < 0) return
+        control.dmesg(`UART reset at ${port}`)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NONE)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
+        uartMM.ioctl(IO.UART_SET_CONN, devcon)
+    }
+
+    function getUartStatus(port: number) {
+        if (port < 0) return 0
+        return uartMM.getNumber(NumberFormat.Int8LE, UartOff.Status + port)
+    }
+
+    function waitNonZeroUartStatus(port: number) {
+        while (true) {
+            if (port < 0) return 0
+            let s = getUartStatus(port)
+            if (s) return s
+            pause(25)
+        }
+    }
+
+    function uartClearChange(port: number) {
+        control.dmesg(`UART clear change`);
+        const UART_DATA_READY = 8
+        const UART_PORT_CHANGED = 1
+        while (true) {
+            let status = getUartStatus(port)
+            if (port < 0) break
+
+            if ((status & UART_DATA_READY) != 0 && (status & UART_PORT_CHANGED) == 0)
+                break
+
+            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
+            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
+            devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
+
+            uartMM.ioctl(IO.UART_CLEAR_CHANGED, devcon)
+
+            uartMM.setNumber(NumberFormat.Int8LE, UartOff.Status + port,
+                getUartStatus(port) & 0xfffe)
+            pause(10)
+        }
+    }
+
+    function setUartModes() {
+        control.dmesg(`UART set modes`)
+        uartMM.ioctl(IO.UART_SET_CONN, devcon)
+        const ports: number[] = [];
+        for (let port = 0; port < DAL.NUM_INPUTS; ++port) {
+            if (devcon.getNumber(NumberFormat.Int8LE, DevConOff.Connection + port) == DAL.CONN_INPUT_UART) {
+                ports.push(port);
             }
+        }
 
-            public setLowThreshold(value: number) {
-                this.lowThreshold = this.clampValue(value);
-                this.highThreshold = Math.max(this.lowThreshold + 1, this.highThreshold);
+        while (ports.length) {
+            const port = ports.pop();
+            const status = waitNonZeroUartStatus(port)
+            control.dmesg(`UART set mode ${status} at ${port}`);
+        }
+    }
+
+    function updateUartMode(port: number, mode: number) {
+        control.dmesg(`UART set mode to ${mode} at ${port}`)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
+    }
+
+    function setUartMode(port: number, mode: number) {
+        const UART_PORT_CHANGED = 1
+        while (true) {
+            if (port < 0) return
+            updateUartMode(port, mode);
+            uartMM.ioctl(IO.UART_SET_CONN, devcon)
+            let status = waitNonZeroUartStatus(port)
+            if (status & UART_PORT_CHANGED) {
+                control.dmesg(`UART clear changed at ${port}`)
+                uartClearChange(port)
+            } else {
+                control.dmesg(`UART status ${status}`);
+                break;
             }
+            pause(10)
+        }
+    }
 
-            public setHighThreshold(value: number) {
-                this.highThreshold = this.clampValue(value);
-                this.lowThreshold = Math.min(this.highThreshold - 1, this.lowThreshold);
+    function getUartBytes(port: number): Buffer {
+        if (port < 0) return output.createBuffer(DAL.MAX_DEVICE_DATALENGTH)
+        let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
+        return uartMM.slice(
+            UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index,
+            DAL.MAX_DEVICE_DATALENGTH)
+    }
+
+    function getUartNumber(fmt: NumberFormat, off: number, port: number) {
+        if (port < 0) return 0
+        let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
+        return uartMM.getNumber(fmt,
+            UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
+    }
+
+    export function setIICMode(port: number, type: number, mode: number) {
+        if (port < 0) return;
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
+        IICMM.ioctl(IO.IIC_SET_CONN, devcon)
+    }
+
+    export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number) {
+        if (port < 0) return;
+        let iicdata = output.createBuffer(IICDat.Size)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.Port, port)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.Repeat, 0)
+        iicdata.setNumber(NumberFormat.Int16LE, IICDat.Time, 0)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrLng, writeBuf.length + 1)
+        for (let i = 0; i < writeBuf.length; i++)
+            iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrData + i + 1, writeBuf[i])
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.WrData, deviceAddress)
+        iicdata.setNumber(NumberFormat.Int8LE, IICDat.RdLng, readLen)
+        IICMM.ioctl(IO.IIC_SETUP, iicdata)
+    }
+
+    export function getIICBytes(port: number, length: number) {
+        if (port < 0) return output.createBuffer(length);
+        let index = IICMM.getNumber(NumberFormat.UInt16LE, IICOff.Actual + port * 2);
+        let buf = IICMM.slice(
+            IICOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index,
+            length
+        );
+
+        // Reverse
+        for (let i = 0; i < length / 2; i++) {
+            let c = buf[i]
+            buf[i] = buf[length - i - 1]
+            buf[length - i - 1] = c
+        }
+        return buf;
+    }
+
+    export function getIICNumber(length: number, format: NumberFormat, off: number, port: number) {
+        return getIICBytes(port, length).getNumber(format, off)
+    }
+
+    const enum NxtColOff {
+        Calibration = 0, // uint32[4][3]
+        CalLimits = 48, // uint16[2]
+        Crc = 52, // uint16
+        ADRaw = 54, // uint16[4]
+        SensorRaw = 62, // uint16[4]
+        Padding = 70,
+        Size = 72
+    }
+    const enum AnalogOff {
+        InPin1 = 0, // int16[4]
+        InPin6 = 8, // int16[4]
+        OutPin5 = 16, // int16[4]
+        BatteryTemp = 24, // int16
+        MotorCurrent = 26, // int16
+        BatteryCurrent = 28, // int16
+        Cell123456 = 30, // int16
+        Pin1 = 32, // int16[300][4]
+        Pin6 = 2432, // int16[300][4]
+        Actual = 4832, // uint16[4]
+        LogIn = 4840, // uint16[4]
+        LogOut = 4848, // uint16[4]
+        NxtCol = 4856, // uint16[36][4] - NxtColor*4
+        OutPin5Low = 5144, // int16[4]
+        Updated = 5152, // int8[4]
+        InDcm = 5156, // int8[4]
+        InConn = 5160, // int8[4]
+        OutDcm = 5164, // int8[4]
+        OutConn = 5168, // int8[4]
+        Size = 5172
+    }
+
+    const enum DevConOff {
+        Connection = 0, // int8[4]
+        Type = 4, // int8[4]
+        Mode = 8, // int8[4]
+        Size = 12
+    }
+
+    const enum TypesOff {
+        Name = 0, // int8[12]
+        Type = 12, // int8
+        Connection = 13, // int8
+        Mode = 14, // int8
+        DataSets = 15, // int8
+        Format = 16, // int8
+        Figures = 17, // int8
+        Decimals = 18, // int8
+        Views = 19, // int8
+        RawMin = 20, // float32
+        RawMax = 24, // float32
+        PctMin = 28, // float32
+        PctMax = 32, // float32
+        SiMin = 36, // float32
+        SiMax = 40, // float32
+        InvalidTime = 44, // uint16
+        IdValue = 46, // uint16
+        Pins = 48, // int8
+        Symbol = 49, // int8[5]
+        Align = 54, // uint16
+        Size = 56
+    }
+
+    const enum UartOff {
+        TypeData = 0, // Types[8][4]
+        Repeat = 1792, // uint16[300][4]
+        Raw = 4192, // int8[32][300][4]
+        Actual = 42592, // uint16[4]
+        LogIn = 42600, // uint16[4]
+        Status = 42608, // int8[4]
+        Output = 42612, // int8[32][4]
+        OutputLength = 42740, // int8[4]
+        Size = 42744
+    }
+
+    const enum UartCtlOff {
+        TypeData = 0, // Types
+        Port = 56, // int8
+        Mode = 57, // int8
+        Size = 58
+    }
+
+    const enum IICOff {
+        TypeData = 0, // Types[8][4]
+        Repeat = 1792, // uint16[300][4]
+        Raw = 4192, // int8[32][300][4]
+        Actual = 42592, // uint16[4]
+        LogIn = 42600, // uint16[4]
+        Status = 42608, // int8[4]
+        Output = 42612, // int8[32][4]
+        OutputLength = 42740, // int8[4]
+        Size = 42744
+    }
+
+    const enum IICCtlOff {
+        TypeData = 0, // Types
+        Port = 56, // int8
+        Mode = 57, // int8
+        Size = 58
+    }
+
+    const enum IICDat {
+        Result = 0,  // result
+        Port = 4, // int8
+        Repeat = 5, // int8
+        Time = 6, // int16
+        WrLng = 8, // int8
+        WrData = 9, // int8[32]
+        RdLng = 41, // int8
+        RdData = 42, //int8[32]
+        Size = 74,
+    }
+
+    const enum IICStr {
+        Port = 0, // int8
+        Time = 2, // int16
+        Type = 4, // int8
+        Mode = 5, // int8
+        Manufacturer = 6, // int8[9]
+        SensorType = 15, // int[9]
+        SetupLng = 24, // int8
+        SetupString = 28, // ulong
+        PollLng = 32, // int8
+        PollString = 36, // ulong
+        ReadLng = 40, // int8
+        Size = 44
+    }
+
+    const enum IO {
+        UART_SET_CONN = 0xc00c7500,
+        UART_READ_MODE_INFO = 0xc03c7501,
+        UART_NACK_MODE_INFO = 0xc03c7502,
+        UART_CLEAR_CHANGED = 0xc03c7503,
+        IIC_SET_CONN = 0xc00c6902,
+        IIC_READ_TYPE_INFO = 0xc03c6903,
+        IIC_SETUP = 0xc04c6905,
+        IIC_SET = 0xc02c6906,
+        TST_PIN_ON = 0xc00b7401,
+        TST_PIN_OFF = 0xc00b7402,
+        TST_PIN_READ = 0xc00b7403,
+        TST_PIN_WRITE = 0xc00b7404,
+        TST_UART_ON = 0xc0487405,
+        TST_UART_OFF = 0xc0487406,
+        TST_UART_EN = 0xc0487407,
+        TST_UART_DIS = 0xc0487408,
+        TST_UART_READ = 0xc0487409,
+        TST_UART_WRITE = 0xc048740a,
+    }
+}
+
+namespace sensors {
+    export enum ThresholdState {
+        Normal = 1,
+        High = 2,
+        Low = 3,
+    }
+
+    export class ThresholdDetector {
+        public id: number;
+        private min: number;
+        private max: number;
+        private lowThreshold: number;
+        private highThreshold: number;
+        public level: number;
+        public state: ThresholdState;
+
+        constructor(id: number, min = 0, max = 100, lowThreshold = 20, highThreshold = 80) {
+            this.id = id;
+            this.min = min;
+            this.max = max;
+            this.lowThreshold = lowThreshold;
+            this.highThreshold = highThreshold;
+            this.level = Math.ceil((max - min) / 2);
+            this.state = ThresholdState.Normal;
+        }
+
+        public setLevel(level: number) {
+            if (this == null) return
+            this.level = this.clampValue(level);
+
+            if (this.level >= this.highThreshold) {
+                this.setState(ThresholdState.High);
             }
-
-            private clampValue(value: number) {
-                if (value < this.min) {
-                    return this.min;
-                }
-                else if (value > this.max) {
-                    return this.max;
-                }
-                return value;
+            else if (this.level <= this.lowThreshold) {
+                this.setState(ThresholdState.Low);
             }
+            else {
+                const interval = (this.highThreshold - this.lowThreshold) / 6;
+                if ((this.state == ThresholdState.High && this.level < this.highThreshold - interval) ||
+                    (this.state == ThresholdState.Low && this.level > this.lowThreshold + interval))
+                    this.setState(ThresholdState.Normal);
+            }
+        }
 
-            private setState(state: ThresholdState) {
-                if (this.state == state) return;
+        public threshold(t: ThresholdState): number {
+            switch (t) {
+                case ThresholdState.High: return this.highThreshold;
+                case ThresholdState.Low: return this.lowThreshold;
+                default: return (this.max - this.min) / 2;
+            }
+        }
 
-                this.state = state;
-                switch (state) {
-                    case ThresholdState.High:
-                        control.raiseEvent(this.id, ThresholdState.High);
-                        break;
-                    case ThresholdState.Low:
-                        control.raiseEvent(this.id, ThresholdState.Low);
-                        break;
-                }
+        public setLowThreshold(value: number) {
+            this.lowThreshold = this.clampValue(value);
+            this.highThreshold = Math.max(this.lowThreshold + 1, this.highThreshold);
+        }
+
+        public setHighThreshold(value: number) {
+            this.highThreshold = this.clampValue(value);
+            this.lowThreshold = Math.min(this.highThreshold - 1, this.lowThreshold);
+        }
+
+        private clampValue(value: number) {
+            if (value < this.min) {
+                return this.min;
+            }
+            else if (value > this.max) {
+                return this.max;
+            }
+            return value;
+        }
+
+        private setState(state: ThresholdState) {
+            if (this.state == state) return;
+
+            this.state = state;
+            switch (state) {
+                case ThresholdState.High:
+                    control.raiseEvent(this.id, ThresholdState.High);
+                    break;
+                case ThresholdState.Low:
+                    control.raiseEvent(this.id, ThresholdState.Low);
+                    break;
             }
         }
     }
