@@ -600,6 +600,7 @@ void      cUiUpdatePower(void)
     }
 
     function setUartMode(port: number, mode: number) {
+        control.dmesg(`UART set mode ${mode} at ${port}`);
         const UART_PORT_CHANGED = 1
         while (true) {
             if (port < 0) return
@@ -625,9 +626,9 @@ void      cUiUpdatePower(void)
             DAL.MAX_DEVICE_DATALENGTH)
     }
 
-    function getUartNumber(fmt: NumberFormat, off: number, port: number) {
+    function getUartNumber(fmt: NumberFormat, off: number, port: number): number {
         if (port < 0) return 0
-        let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
+        const index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
         return uartMM.getNumber(fmt,
             UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
     }
