@@ -82,7 +82,7 @@ namespace sensors.internal {
         poller: Poller;
 
         constructor(p: number) {
-            this.port = p
+            this.port = p; // 0-based
             this.connType = DAL.CONN_NONE
             this.devType = DAL.DEVICE_TYPE_NONE
             this.iicid = ''
@@ -279,6 +279,7 @@ void      cUiUpdatePower(void)
         for (let i = 0; i < conns.length; ++i) {
             r = (r << 8 | conns[i]);
         }
+        //control.dmesg(`devices hash: ${r}`);
         return r;
     }
 
@@ -445,20 +446,20 @@ void      cUiUpdatePower(void)
         constructor(port: number) {
             super(port)
             this.mode = 0
-            this.realmode = 0
+            this.realmode = 0;
         }
 
         _activated() {
-            this.realmode = 0
+            this.realmode = 0;
             this._setMode(this.mode)
         }
 
         protected _setMode(m: number) {
-            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
             let v = m | 0
             this.mode = v
             if (!this.isActive()) return
             if (this.realmode != this.mode) {
+                control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`)
                 this.realmode = v
                 setUartMode(this._port, v)
             }

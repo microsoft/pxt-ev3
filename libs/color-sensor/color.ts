@@ -59,9 +59,9 @@ namespace sensors {
 
         constructor(port: number) {
             super(port)
-            this._setMode(ColorSensorMode.None);
             this.thresholdDetector = new sensors.ThresholdDetector(this.id());
             this.calibrating = false;
+            this.setMode(ColorSensorMode.ReflectedLightIntensity);
         }
 
         _colorEventValue(value: number) {
@@ -176,8 +176,8 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         color(): ColorSensorColor {
-            this.poke();
             this.setMode(ColorSensorMode.Color)
+            this.poke();
             return this.getNumber(NumberFormat.UInt8LE, 0)
         }
 
@@ -194,8 +194,8 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         rgbRaw(): number[] {
-            this.poke();
             this.setMode(ColorSensorMode.RgbRaw);
+            this.poke();
             return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
         }
 
@@ -248,8 +248,8 @@ namespace sensors {
         //% weight=87 blockGap=8
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
-            this.poke();
             this.setMode(<ColorSensorMode><number>mode)
+            this.poke();
             switch (mode) {
                 case LightIntensityMode.ReflectedRaw:
                     return this.reflectedLightRaw();
@@ -279,8 +279,8 @@ namespace sensors {
          */
         //%
         reflectedLightRaw(): number {
-            this.poke();
             this.setMode(ColorSensorMode.RefRaw);
+            this.poke();
             return this.getNumber(NumberFormat.UInt16LE, 0);
         }
 
