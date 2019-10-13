@@ -1,5 +1,4 @@
 const enum ColorSensorMode {
-    None = 0,
     //% block="reflected light intensity"
     ReflectedLightIntensity = 0,
     //% block="ambient light intensity"
@@ -59,7 +58,6 @@ namespace sensors {
 
         constructor(port: number) {
             super(port)
-            this._setMode(ColorSensorMode.None);
             this.thresholdDetector = new sensors.ThresholdDetector(this.id());
             this.calibrating = false;
         }
