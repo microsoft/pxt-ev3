@@ -283,7 +283,7 @@ void      cUiUpdatePower(void)
 
     let nonActivated = 0;
     function detectDevices() {
-        //control.dmesg(`detect devices (${nonActivated} na)`)
+        control.dmesg(`detect devices (hash ${hashDevices()})`)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0;
         const uartSensors: SensorInfo[] = [];
