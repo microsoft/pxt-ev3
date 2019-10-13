@@ -121,7 +121,7 @@ namespace sensors.internal {
 
         powerMM = control.mmap("/dev/lms_power", 2, 0)
 
-        devPoller = new Poller(250, () => { return hashDevices(); },
+        devPoller = new Poller(500, () => { return hashDevices(); },
             (prev, curr) => {
                 detectDevices();
             });
