@@ -3,7 +3,6 @@
 namespace pxsim {
 
     export enum ColorSensorMode {
-        None = -1,
         Reflected = 0,
         Ambient = 1,
         Colors = 2,

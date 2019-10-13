@@ -44,7 +44,6 @@ namespace pxsim {
     }
 
     export enum InfraredSensorMode {
-        None = -1,
         Proximity = 0,
         Seek = 1,
         RemoteControl = 2

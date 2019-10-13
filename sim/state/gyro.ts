@@ -1,6 +1,5 @@
 namespace pxsim {
     export const enum GyroSensorMode {
-        None = -1,
         Angle = 0,
         Rate = 1,
     }

@@ -121,10 +121,9 @@ namespace sensors.internal {
 
         powerMM = control.mmap("/dev/lms_power", 2, 0)
 
-        devPoller = new Poller(250, () => { return hashDevices(); },
-            (prev, curr) => {
-                detectDevices();
-            });
+        devPoller = new Poller(500,
+            () => { return hashDevices(); },
+            (prev, curr) => { detectDevices(); });
     }
 
     export function getActiveSensors(): Sensor[] {
@@ -277,7 +276,7 @@ void      cUiUpdatePower(void)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let r = 0;
         for (let i = 0; i < conns.length; ++i) {
-            r = (r << 8 | conns[i]);
+            r = conns[i] + (r << 6) + (r << 16) - r;
         }
         return r;
     }
@@ -291,7 +290,9 @@ void      cUiUpdatePower(void)
 
         for (const sensorInfo of sensorInfos) {
             const newConn = conns[sensorInfo.port]
-            if (newConn == sensorInfo.connType) {
+            if (newConn == sensorInfo.connType
+                && sensorInfo.sensor
+                && sensorInfo.sensor.isActive()) {
                 // control.dmesg(`connection unchanged ${newConn} at ${sensorInfo.port}`)
                 continue;
             }
@@ -427,11 +428,11 @@ void      cUiUpdatePower(void)
         constructor(port: number) {
             super(port)
             this.mode = 0
-            this.realmode = 0
+            this.realmode = -1
         }
 
         _activated() {
-            this.realmode = 0
+            this.realmode = -1
             this._setMode(this.mode)
         }
 
@@ -458,7 +459,7 @@ void      cUiUpdatePower(void)
 
         reset() {
             if (this.isActive()) uartReset(this._port);
-            this.realmode = 0;
+            this.realmode = -1;
         }
     }
 
@@ -570,7 +571,7 @@ void      cUiUpdatePower(void)
         while (ports.length) {
             const port = ports.pop();
             const status = waitNonZeroUartStatus(port)
-            control.dmesg(`UART set mode ${status} at ${port}`);
+            control.dmesg(`UART status ${status} at ${port}`);
         }
     }
 
