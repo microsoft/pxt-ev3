@@ -277,21 +277,23 @@ void      cUiUpdatePower(void)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let r = 0;
         for (let i = 0; i < conns.length; ++i) {
-            r = (r << 8 | conns[i]);
+            r = conns[i] + (r << 6) + (r << 16) - r;
         }
         return r;
     }
 
     let nonActivated = 0;
     function detectDevices() {
-        //control.dmesg(`detect devices (${nonActivated} na)`)
+        control.dmesg(`detect devices (hash ${hashDevices()})`)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
         let numChanged = 0;
         const uartSensors: SensorInfo[] = [];
 
         for (const sensorInfo of sensorInfos) {
             const newConn = conns[sensorInfo.port]
-            if (newConn == sensorInfo.connType) {
+            if (newConn == sensorInfo.connType
+                && sensorInfo.sensor
+                && sensorInfo.sensor.isActive()) {
                 // control.dmesg(`connection unchanged ${newConn} at ${sensorInfo.port}`)
                 continue;
             }
@@ -427,11 +429,11 @@ void      cUiUpdatePower(void)
         constructor(port: number) {
             super(port)
             this.mode = 0
-            this.realmode = 0
+            this.realmode = -1
         }
 
         _activated() {
-            this.realmode = 0
+            this.realmode = -1
             this._setMode(this.mode)
         }
 
@@ -458,7 +460,7 @@ void      cUiUpdatePower(void)
 
         reset() {
             if (this.isActive()) uartReset(this._port);
-            this.realmode = 0;
+            this.realmode = -1;
         }
     }
 
