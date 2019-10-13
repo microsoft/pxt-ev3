@@ -540,8 +540,6 @@ void      cUiUpdatePower(void)
 
     function uartClearChange(port: number) {
         control.dmesg(`UART clear change`);
-        const UART_DATA_READY = 8
-        const UART_PORT_CHANGED = 1
         while (true) {
             let status = getUartStatus(port)
             if (port < 0) break
@@ -575,6 +573,8 @@ void      cUiUpdatePower(void)
             const port = ports.pop();
             const status = waitNonZeroUartStatus(port)
             control.dmesg(`UART status ${status} at ${port}`);
+            if (!(status & UART_DATA_READY))
+                setUartMode(port, devcon[DevConOff.Mode + port]);
         }
     }
 
@@ -585,8 +585,9 @@ void      cUiUpdatePower(void)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
     }
 
+    const UART_PORT_CHANGED = 1
+    const UART_DATA_READY = 8
     function setUartMode(port: number, mode: number) {
-        const UART_PORT_CHANGED = 1
         while (true) {
             if (port < 0) return
             updateUartMode(port, mode);
@@ -598,7 +599,8 @@ void      cUiUpdatePower(void)
                 uartClearChange(port)
             } else {
                 control.dmesg(`UART status ${status}`);
-                break;
+                if (status & UART_DATA_READY)
+                    break;
             }
             pause(10)
         }
