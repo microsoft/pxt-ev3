@@ -294,7 +294,8 @@ void      cUiUpdatePower(void)
             if (newConn == sensorInfo.connType
                 && sensorInfo.sensor
                 && sensorInfo.sensor.isActive()) {
-                // control.dmesg(`connection unchanged ${newConn} at ${sensorInfo.port}`)
+                if (newConn == DAL.CONN_INPUT_UART)
+                    uartSensors.push(sensorInfo);
                 continue;
             }
             numChanged++
@@ -325,7 +326,8 @@ void      cUiUpdatePower(void)
             for (const sensorInfo of uartSensors) {
                 let uinfo = readUartInfo(sensorInfo.port, 0)
                 sensorInfo.devType = uinfo[TypesOff.Type]
-                control.dmesg(`UART type ${sensorInfo.devType}`)
+                const mode = uinfo[TypesOff.Mode];
+                control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
             }
         }
 
@@ -429,11 +431,11 @@ void      cUiUpdatePower(void)
         constructor(port: number) {
             super(port)
             this.mode = 0
-            this.realmode = -1
+            this.realmode = 0
         }
 
         _activated() {
-            this.realmode = -1
+            this.realmode = 0
             this._setMode(this.mode)
         }
 
@@ -560,7 +562,7 @@ void      cUiUpdatePower(void)
     }
 
     function setUartModes() {
-        control.dmesg(`UART set modes`)
+        control.dmesg(`UART set modes 0x${devcon.toHex()}`)
         uartMM.ioctl(IO.UART_SET_CONN, devcon)
         const ports: number[] = [];
         for (let port = 0; port < DAL.NUM_INPUTS; ++port) {
@@ -572,12 +574,12 @@ void      cUiUpdatePower(void)
         while (ports.length) {
             const port = ports.pop();
             const status = waitNonZeroUartStatus(port)
-            control.dmesg(`UART set mode ${status} at ${port}`);
+            control.dmesg(`UART status ${status} at ${port}`);
         }
     }
 
     function updateUartMode(port: number, mode: number) {
-        control.dmesg(`UART set mode to ${mode} at ${port}`)
+        control.dmesg(`UART update mode to ${mode} at ${port}`)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
@@ -588,6 +590,7 @@ void      cUiUpdatePower(void)
         while (true) {
             if (port < 0) return
             updateUartMode(port, mode);
+            control.dmesg(`UART set mode 0x${devcon.toHex()}`)
             uartMM.ioctl(IO.UART_SET_CONN, devcon)
             let status = waitNonZeroUartStatus(port)
             if (status & UART_PORT_CHANGED) {
