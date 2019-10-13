@@ -634,6 +634,7 @@ void      cUiUpdatePower(void)
 
     export function setIICMode(port: number, type: number, mode: number) {
         if (port < 0) return;
+        control.dmesg(`iic set type ${type} mode ${mode} at ${port}`)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
