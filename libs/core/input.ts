@@ -282,11 +282,9 @@ void      cUiUpdatePower(void)
         return r;
     }
 
-    let nonActivated = 0;
     function detectDevices() {
         control.dmesg(`detect devices (hash ${hashDevices()})`)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
-        let numChanged = 0;
 
         for (const sensorInfo of sensorInfos) {
             const newConn = conns[sensorInfo.port]
@@ -294,7 +292,6 @@ void      cUiUpdatePower(void)
                 && sensorInfo.sensor) {
                 continue;
             }
-            numChanged++
             sensorInfo.connType = newConn
             sensorInfo.devType = DAL.DEVICE_TYPE_NONE
             if (newConn == DAL.CONN_INPUT_UART) {
@@ -330,17 +327,12 @@ void      cUiUpdatePower(void)
             control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
         }
 
-        if (numChanged == 0 && nonActivated == 0)
-            return
-
         //control.dmesg(`updating sensor status`)
-        nonActivated = 0;
-        for (const sensorInfo of sensorInfos) {
+        for (const sensorInfo of sensorInfos.filter(si => !si.sensor)) {
             if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {
                 sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0]
                 if (!sensorInfo.sensor) {
                     control.dmesg(`sensor not found for iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
-                    nonActivated++;
                 } else {
                     control.dmesg(`sensor connected iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
                     sensorInfo.sensor._activated()
@@ -349,7 +341,6 @@ void      cUiUpdatePower(void)
                 sensorInfo.sensor = sensorInfo.sensors.filter(s => s._deviceType() == sensorInfo.devType)[0]
                 if (!sensorInfo.sensor) {
                     control.dmesg(`sensor not found for type=${sensorInfo.devType} at ${sensorInfo.port}`)
-                    nonActivated++;
                 } else {
                     control.dmesg(`sensor connected type=${sensorInfo.devType} at ${sensorInfo.port}`)
                     sensorInfo.sensor._activated()
