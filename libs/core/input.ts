@@ -36,6 +36,7 @@ namespace sensors.internal {
 
         private poll() {
             control.runInBackground(() => {
+                pause(this.interval);
                 this.lastQuery = this.lastPause = control.millis();
                 this.previousValue = this.currentValue = this.query();
                 this.update(this.previousValue, this.currentValue);
@@ -279,6 +280,12 @@ void      cUiUpdatePower(void)
         for (let i = 0; i < conns.length; ++i) {
             r = conns[i] + (r << 6) + (r << 16) - r;
         }
+
+        for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
+            const status = getUartStatus(sensorInfo.port);
+            r = status + (r << 6) + (r << 16) - r;
+        }
+
         return r;
     }
 
@@ -290,7 +297,14 @@ void      cUiUpdatePower(void)
             const newConn = conns[sensorInfo.port]
             if (newConn == sensorInfo.connType
                 && sensorInfo.sensor) {
-                continue;
+                    if (newConn == DAL.CONN_INPUT_UART && 
+                        !getUartStatus(sensorInfo.port)) {
+                        sensorInfo.sensor = undefined;
+                        sensorInfo.devType = DAL.DEVICE_TYPE_NONE;
+                        control.dmesg(`UART status 0 at ${sensorInfo.port}`)
+                    }        
+                    else 
+                        continue;
             }
             sensorInfo.connType = newConn
             sensorInfo.devType = DAL.DEVICE_TYPE_NONE
@@ -524,6 +538,7 @@ void      cUiUpdatePower(void)
             if (port < 0) return 0
             let s = getUartStatus(port)
             if (s) return s
+            control.dmesg(`UART status 0, waiting...`)
             pause(25)
         }
     }
@@ -540,7 +555,7 @@ void      cUiUpdatePower(void)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
-            control.dmesg(`UART_CLEAR_CHANGED ${devcon.toHex()}`)
+            control.dmesg(`UART_CLEAR_CHANGED status ${status} ${devcon.toHex()}`)
             uartMM.ioctl(IO.UART_CLEAR_CHANGED, devcon)
 
             uartMM.setNumber(NumberFormat.Int8LE, UartOff.Status + port,
