@@ -141,9 +141,15 @@ namespace brick {
         const col = 44;
         const lineHeight8 = image.font8.charHeight + 2;
         const h = screen.height;
+        const w = screen.width;
+        const blink = (control.millis() >> 5) % (w - 1);
 
         clearScreen();
 
+        screen.setPixel(blink, 0, 1);
+        screen.setPixel(blink, 1, 1);
+        screen.setPixel(blink + 1, 0, 1);
+        screen.setPixel(blink + 1, 1, 1);
         for (let i = 0; i < 4; ++i) {
             const x = i * col + 2;
             screen.print("ABCD"[i], x, 1 * lineHeight8, 1, image.font8)
