@@ -1,4 +1,7 @@
 namespace sensors.internal {
+    const UART_PORT_CHANGED = 1
+    const UART_DATA_READY = 8
+
     export class Poller {
         private query: () => number;
         private update: (previous: number, current: number) => void;
@@ -128,19 +131,6 @@ namespace sensors.internal {
     export function getActiveSensors(): Sensor[] {
         init();
         return sensorInfos.filter(si => si.sensor && si.sensor.isActive()).map(si => si.sensor);
-    }
-
-    // this function will return a meaningful result only when stats & CHANGED
-    // it is cleared afterwards
-    function readUartInfo(port: number, mode: number) {
-        const buf = output.createBuffer(UartCtlOff.Size)
-        buf[UartCtlOff.Port] = port
-        buf[UartCtlOff.Mode] = mode
-        uartMM.ioctl(IO.UART_READ_MODE_INFO, buf)
-        control.dmesg(`UART_READ_MODE ${buf.toHex()}`)
-        return buf
-        //let info = `t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`
-        //serial.writeLine("UART " + port + " / " + mode + " - " + info)
     }
 
     export function readIICID(port: number) {
@@ -316,11 +306,9 @@ void      cUiUpdatePower(void)
             setUartModes(devcon);
             for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
                 const uinfo = readUartInfo(sensorInfo.port, 0);
-                if (uinfo[TypesOff.Name]) { // the device info has data
-                    sensorInfo.devType = uinfo[TypesOff.Type]
-                    const mode = uinfo[TypesOff.Mode];
-                    control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
-                }
+                sensorInfo.devType = uinfo[TypesOff.Type]
+                const mode = uinfo[TypesOff.Mode];
+                control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
             }
         }
 
@@ -350,6 +338,18 @@ void      cUiUpdatePower(void)
             const status = getUartStatus(sensorInfo.port);
             control.dmesg(`UART status ${status} at ${sensorInfo.port}`)
         }
+    }
+
+    // this function will return a meaningful result only when stats & CHANGED
+    // it is cleared afterwards
+    function readUartInfo(port: number, mode: number) {
+        const buf = output.createBuffer(UartCtlOff.Size)
+        buf[UartCtlOff.Port] = port
+        buf[UartCtlOff.Mode] = mode
+        uartMM.ioctl(IO.UART_READ_MODE_INFO, buf)
+        control.dmesg(`UART_READ_MODE ${buf.toHex()}`)
+        control.dmesg(`t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`);
+        return buf
     }
 
     export class Sensor extends control.Component {
@@ -577,9 +577,8 @@ void      cUiUpdatePower(void)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
     }
 
-    const UART_PORT_CHANGED = 1
-    const UART_DATA_READY = 8
     function setUartMode(port: number, mode: number) {
+        control.dmesg(`UART set mode ${mode} at ${port}`);
         while (true) {
             const devcon = output.createBuffer(DevConOff.Size)
             updateUartMode(devcon, port, mode);

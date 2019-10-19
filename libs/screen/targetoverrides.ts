@@ -146,10 +146,6 @@ namespace brick {
 
         clearScreen();
 
-        screen.setPixel(w - 1, blink, 1);
-        screen.setPixel(w - 1, blink, 1);
-        screen.setPixel(w - 2, blink + 1, 1);
-        screen.setPixel(w - 2, blink + 1, 1);
         for (let i = 0; i < 4; ++i) {
             const x = i * col + 2;
             screen.print("ABCD"[i], x, 1 * lineHeight8, 1, image.font8)
@@ -186,6 +182,12 @@ namespace brick {
             if (inf)
                 screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
         }
+
+        // alive dot
+        screen.setPixel(w - 1, blink, 1);
+        screen.setPixel(w - 1, blink - 1, 1);
+        screen.setPixel(w - 2, blink - 1, 1);
+        screen.setPixel(w - 2, blink, 1);
     }
 
     export function showBoot() {
