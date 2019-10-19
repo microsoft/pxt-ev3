@@ -61,8 +61,6 @@ namespace sensors.internal {
     let uartMM: MMap
     let IICMM: MMap
     let powerMM: MMap
-    let devcon: Buffer
-    let devPoller: Poller
     let sensorInfos: SensorInfo[];
 
     let batteryInfo: {
@@ -109,7 +107,6 @@ namespace sensors.internal {
         if (sensorInfos) return
         sensorInfos = []
         for (let i = 0; i < DAL.NUM_INPUTS; ++i) sensorInfos.push(new SensorInfo(i))
-        devcon = output.createBuffer(DevConOff.Size)
 
         analogMM = control.mmap("/dev/lms_analog", AnalogOff.Size, 0)
         if (!analogMM) control.fail("no analog sensor")
@@ -122,10 +119,10 @@ namespace sensors.internal {
 
         powerMM = control.mmap("/dev/lms_power", 2, 0)
 
-        devPoller = new Poller(250, () => { return hashDevices(); },
-            (prev, curr) => {
-                detectDevices();
-            });
+        forever(function () {
+            pause(500)
+            detectDevices();
+        })
     }
 
     export function getActiveSensors(): Sensor[] {
@@ -133,11 +130,14 @@ namespace sensors.internal {
         return sensorInfos.filter(si => si.sensor && si.sensor.isActive()).map(si => si.sensor);
     }
 
+    // this function will return a meaningful result only when stats & CHANGED
+    // it is cleared afterwards
     function readUartInfo(port: number, mode: number) {
-        let buf = output.createBuffer(UartCtlOff.Size)
+        const buf = output.createBuffer(UartCtlOff.Size)
         buf[UartCtlOff.Port] = port
         buf[UartCtlOff.Mode] = mode
         uartMM.ioctl(IO.UART_READ_MODE_INFO, buf)
+        control.dmesg(`UART_READ_MODE ${buf.toHex()}`)
         return buf
         //let info = `t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`
         //serial.writeLine("UART " + port + " / " + mode + " - " + info)
@@ -274,43 +274,24 @@ void      cUiUpdatePower(void)
         };
     }
 
-    function hashDevices(): number {
-        const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
-        let r = 0;
-        for (let i = 0; i < conns.length; ++i) {
-            r = conns[i] + (r << 6) + (r << 16) - r;
-        }
-
-        for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
-            const status = getUartStatus(sensorInfo.port);
-            r = status + (r << 6) + (r << 16) - r;
-        }
-
-        return r;
-    }
-
     function detectDevices() {
-        control.dmesg(`detect devices (hash ${hashDevices()})`)
+        control.dmesg(`detect devices`)
         const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
-
+        let devcon: Buffer = undefined;
         for (const sensorInfo of sensorInfos) {
             const newConn = conns[sensorInfo.port]
-            if (newConn == sensorInfo.connType
-                && sensorInfo.sensor) {
-                    if (newConn == DAL.CONN_INPUT_UART && 
-                        !getUartStatus(sensorInfo.port)) {
-                        sensorInfo.sensor = undefined;
-                        sensorInfo.devType = DAL.DEVICE_TYPE_NONE;
-                        control.dmesg(`UART status 0 at ${sensorInfo.port}`)
-                    }        
-                    else 
-                        continue;
+            if (newConn == sensorInfo.connType) {
+                continue;
             }
+
             sensorInfo.connType = newConn
             sensorInfo.devType = DAL.DEVICE_TYPE_NONE
+            sensorInfo.sensor = undefined;
+
             if (newConn == DAL.CONN_INPUT_UART) {
                 control.dmesg(`new UART connection at ${sensorInfo.port}`)
-                updateUartMode(sensorInfo.port, 0);
+                if (!devcon) devcon = output.createBuffer(DevConOff.Size)
+                updateUartMode(devcon, sensorInfo.port, 0);
             } else if (newConn == DAL.CONN_NXT_IIC) {
                 control.dmesg(`new IIC connection at ${sensorInfo.port}`)
                 sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN
@@ -324,24 +305,26 @@ void      cUiUpdatePower(void)
                 control.dmesg(`disconnected port ${sensorInfo.port}`)
                 // clear sensor
                 sensorInfo.sensor = undefined;
-                clearMode(sensorInfo.port);
             } else {
                 control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`)
                 // clear sensor
                 sensorInfo.sensor = undefined;
-                clearMode(sensorInfo.port);
             }
         }
 
-        setUartModes();
-        for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
-            let uinfo = readUartInfo(sensorInfo.port, 0)
-            sensorInfo.devType = uinfo[TypesOff.Type]
-            const mode = uinfo[TypesOff.Mode];
-            control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
+        if (devcon) {
+            setUartModes(devcon);
+            for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
+                const uinfo = readUartInfo(sensorInfo.port, 0);
+                if (uinfo[TypesOff.Name]) { // the device info has data
+                    sensorInfo.devType = uinfo[TypesOff.Type]
+                    const mode = uinfo[TypesOff.Mode];
+                    control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
+                }
+            }
         }
 
-        //control.dmesg(`updating sensor status`)
+        // assign sensors
         for (const sensorInfo of sensorInfos.filter(si => !si.sensor)) {
             if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {
                 sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0]
@@ -361,7 +344,12 @@ void      cUiUpdatePower(void)
                 }
             }
         }
-        //control.dmesg(`detect devices done`)
+
+        // check uart sensors
+        for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART && !!si.sensor)) {
+            const status = getUartStatus(sensorInfo.port);
+            control.dmesg(`UART status ${status} at ${sensorInfo.port}`)
+        }
     }
 
     export class Sensor extends control.Component {
@@ -520,8 +508,8 @@ void      cUiUpdatePower(void)
     export const iicsensor = new IICSensor(3)
 
     function uartReset(port: number) {
-        if (port < 0) return
         control.dmesg(`UART reset at ${port}`)
+        const devcon = output.createBuffer(DevConOff.Size)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NONE)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
@@ -529,18 +517,19 @@ void      cUiUpdatePower(void)
     }
 
     function getUartStatus(port: number) {
-        if (port < 0) return 0
+        control.dmesg(`UART status ${uartMM.slice(UartOff.Status, 4).toHex()}`)
         return uartMM.getNumber(NumberFormat.Int8LE, UartOff.Status + port)
     }
 
-    function waitNonZeroUartStatus(port: number) {
-        while (true) {
-            if (port < 0) return 0
-            let s = getUartStatus(port)
-            if (s) return s
+    function waitNonZeroUartStatus(port: number): number {
+        let retry = 20;
+        while (retry-- > 0) {
+            const s = getUartStatus(port)
+            if (s) return s;
             control.dmesg(`UART status 0, waiting...`)
             pause(25)
         }
+        return 0
     }
 
     function uartClearChange(port: number) {
@@ -552,6 +541,7 @@ void      cUiUpdatePower(void)
             if ((status & UART_DATA_READY) != 0 && (status & UART_PORT_CHANGED) == 0)
                 break
 
+            const devcon = output.createBuffer(DevConOff.Size)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
@@ -564,7 +554,7 @@ void      cUiUpdatePower(void)
         }
     }
 
-    function setUartModes() {
+    function setUartModes(devcon: Buffer) {
         control.dmesg(`UART_SET_CONN ${devcon.toHex()}`)
         uartMM.ioctl(IO.UART_SET_CONN, devcon)
         const ports: number[] = [];
@@ -578,30 +568,22 @@ void      cUiUpdatePower(void)
             const port = ports.pop();
             const status = waitNonZeroUartStatus(port)
             control.dmesg(`UART status ${status} at ${port}`);
-            if (!(status & UART_DATA_READY))
-                setUartMode(port, devcon[DevConOff.Mode + port]);
         }
     }
 
-    function updateUartMode(port: number, mode: number) {
+    function updateUartMode(devcon: Buffer, port: number, mode: number) {
         control.dmesg(`UART update mode to ${mode} at ${port}`)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
     }
 
-    function clearMode(port: number) {
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, 0)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
-    }
-
     const UART_PORT_CHANGED = 1
     const UART_DATA_READY = 8
     function setUartMode(port: number, mode: number) {
         while (true) {
-            if (port < 0) return
-            updateUartMode(port, mode);
+            const devcon = output.createBuffer(DevConOff.Size)
+            updateUartMode(devcon, port, mode);
             control.dmesg(`UART_SET_CONN ${devcon.toHex()}`)
             uartMM.ioctl(IO.UART_SET_CONN, devcon)
             let status = waitNonZeroUartStatus(port)
@@ -634,6 +616,7 @@ void      cUiUpdatePower(void)
 
     export function setIICMode(port: number, type: number, mode: number) {
         if (port < 0) return;
+        const devcon = output.createBuffer(DevConOff.Size)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
@@ -642,7 +625,7 @@ void      cUiUpdatePower(void)
 
     export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number) {
         if (port < 0) return;
-        let iicdata = output.createBuffer(IICDat.Size)
+        const iicdata = output.createBuffer(IICDat.Size)
         iicdata.setNumber(NumberFormat.Int8LE, IICDat.Port, port)
         iicdata.setNumber(NumberFormat.Int8LE, IICDat.Repeat, 0)
         iicdata.setNumber(NumberFormat.Int16LE, IICDat.Time, 0)
