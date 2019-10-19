@@ -270,9 +270,8 @@ void      cUiUpdatePower(void)
         let devcon: Buffer = undefined;
         for (const sensorInfo of sensorInfos) {
             const newConn = conns[sensorInfo.port]
-            if (newConn == sensorInfo.connType) {
+            if (newConn == sensorInfo.connType)
                 continue;
-            }
 
             sensorInfo.connType = newConn
             sensorInfo.devType = DAL.DEVICE_TYPE_NONE
@@ -305,10 +304,9 @@ void      cUiUpdatePower(void)
         if (devcon) {
             setUartModes(devcon);
             for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
-                const uinfo = readUartInfo(sensorInfo.port, 0);
-                sensorInfo.devType = uinfo[TypesOff.Type]
-                const mode = uinfo[TypesOff.Mode];
-                control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
+                const uinfo = readUartInfo(sensorInfo.port, devcon[DevConOff.Mode + sensorInfo.port]);
+                sensorInfo.devType = uinfo[TypesOff.Type];
+                control.dmesg(`UART type ${sensorInfo.devType}`)
             }
         }
 
@@ -347,8 +345,7 @@ void      cUiUpdatePower(void)
         buf[UartCtlOff.Port] = port
         buf[UartCtlOff.Mode] = mode
         uartMM.ioctl(IO.UART_READ_MODE_INFO, buf)
-        control.dmesg(`UART_READ_MODE ${buf.toHex()}`)
-        control.dmesg(`t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`);
+        control.dmesg(`UART_READ_MODE t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`);
         return buf
     }
 
