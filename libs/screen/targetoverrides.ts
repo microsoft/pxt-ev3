@@ -199,11 +199,6 @@ namespace brick {
         pause(800);
         // and we're ready
         brick.setStatusLight(StatusLight.Off);
-        control.runInParallel(function() {
-            pause(100)
-            if (screenMode == ScreenMode.None)
-                showPorts();
-        })
     }
 
     /**
