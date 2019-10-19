@@ -194,15 +194,11 @@ namespace brick {
         // pulse green, play startup sound, turn off light
         brick.setStatusLight(StatusLight.GreenPulse);
         // We pause for 100ms to give time to read sensor values, so they work in on_start block
-        pause(400)
+        sensors.internal.init();
+        motors.init();
+        pause(800)
         // and we're ready
         brick.setStatusLight(StatusLight.Off);
-        // always show port by default if no UI is set
-        control.runInParallel(function () {
-            // show ports if nothing is has been shown
-            if (screenMode != ScreenMode.None) return;
-            showPorts();
-        })
     }
 
     /**

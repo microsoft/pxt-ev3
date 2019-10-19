@@ -106,7 +106,7 @@ namespace sensors.internal {
         }
     }
 
-    function init() {
+    export function init() {
         if (sensorInfos) return
         sensorInfos = []
         for (let i = 0; i < DAL.NUM_INPUTS; ++i) sensorInfos.push(new SensorInfo(i))
