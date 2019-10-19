@@ -517,7 +517,6 @@ void      cUiUpdatePower(void)
     }
 
     function getUartStatus(port: number) {
-        control.dmesg(`UART status ${uartMM.slice(UartOff.Status, 4).toHex()}`)
         return uartMM.getNumber(NumberFormat.Int8LE, UartOff.Status + port)
     }
 
