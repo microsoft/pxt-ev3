@@ -279,8 +279,11 @@ void      cUiUpdatePower(void)
 
             if (newConn == DAL.CONN_INPUT_UART) {
                 control.dmesg(`new UART connection at ${sensorInfo.port}`)
-                if (!devcon) devcon = output.createBuffer(DevConOff.Size)
-                updateUartMode(devcon, sensorInfo.port, 0);
+                const status = getUartStatus(sensorInfo.port);
+                if (status & UART_PORT_CHANGED) {
+                    if (!devcon) devcon = output.createBuffer(DevConOff.Size)
+                    updateUartMode(devcon, sensorInfo.port, 0);
+                }
             } else if (newConn == DAL.CONN_NXT_IIC) {
                 control.dmesg(`new IIC connection at ${sensorInfo.port}`)
                 sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN
@@ -301,13 +304,13 @@ void      cUiUpdatePower(void)
             }
         }
 
-        if (devcon) {
+        if (devcon)
             setUartModes(devcon);
-            for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART)) {
-                const uinfo = readUartInfo(sensorInfo.port, devcon[DevConOff.Mode + sensorInfo.port]);
-                sensorInfo.devType = uinfo[TypesOff.Type];
-                control.dmesg(`UART type ${sensorInfo.devType}`)
-            }
+
+        for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART && si.devType == DAL.CONN_NONE)) {
+            const uinfo = readUartInfo(sensorInfo.port, 0);
+            sensorInfo.devType = uinfo[TypesOff.Type];
+            control.dmesg(`UART type ${sensorInfo.devType}`)
         }
 
         // assign sensors
