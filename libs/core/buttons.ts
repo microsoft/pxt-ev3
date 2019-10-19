@@ -85,7 +85,7 @@ namespace brick {
         //% blockId=buttonIsPressed
         //% parts="brick"
         //% blockNamespace=brick
-        //% weight=81 blockGap=8
+        //% weight=81
         //% group="Buttons"
         //% button.fieldEditor="brickbuttons"
         isPressed() {

@@ -104,7 +104,7 @@ namespace sensors.internal {
         }
     }
 
-    function init() {
+    export function init() {
         if (sensorInfos) return
         sensorInfos = []
         for (let i = 0; i < DAL.NUM_INPUTS; ++i) sensorInfos.push(new SensorInfo(i))
@@ -137,6 +137,7 @@ namespace sensors.internal {
         buf[UartCtlOff.Port] = port
         buf[UartCtlOff.Mode] = mode
         uartMM.ioctl(IO.UART_READ_MODE_INFO, buf)
+        control.dmesg(`UART_READ_MODE_INFO ${buf.toHex()}`)
         return buf
         //let info = `t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`
         //serial.writeLine("UART " + port + " / " + mode + " - " + info)
@@ -558,7 +559,7 @@ void      cUiUpdatePower(void)
     }
 
     function setUartModes() {
-        control.dmesg(`UART set modes`)
+        control.dmesg(`UART set modes ${devcon.toHex()}`)
         uartMM.ioctl(IO.UART_SET_CONN, devcon)
         const ports: number[] = [];
         for (let port = 0; port < DAL.NUM_INPUTS; ++port) {
@@ -570,7 +571,7 @@ void      cUiUpdatePower(void)
         while (ports.length) {
             const port = ports.pop();
             const status = waitNonZeroUartStatus(port)
-            control.dmesg(`UART set mode ${status} at ${port}`);
+            control.dmesg(`UART status ${status} at ${port}`);
         }
     }
 
@@ -586,6 +587,7 @@ void      cUiUpdatePower(void)
         while (true) {
             if (port < 0) return
             updateUartMode(port, mode);
+            control.dmesg(`UART_SET_CONN ${devcon.toHex()}`)
             uartMM.ioctl(IO.UART_SET_CONN, devcon)
             let status = waitNonZeroUartStatus(port)
             if (status & UART_PORT_CHANGED) {
