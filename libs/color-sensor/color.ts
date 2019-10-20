@@ -184,7 +184,7 @@ namespace sensors {
          * @param color the color to detect
          */
         //% help=sensors/color-sensor/is-color-detected
-        //% block="is **color sensor** %this|%color=colorEnumPicker|detected"
+        //% block="is **color sensor** %this|detected|%color=colorEnumPicker"
         //% blockId=colorisColorDetectedDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
