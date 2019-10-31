@@ -1,6 +1,6 @@
 {
   "name": "pxt-ev3",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "LEGO MINDSTORMS EV3 for Microsoft MakeCode",
   "private": false,
   "keywords": [
@@ -45,8 +45,8 @@
     "@types/web-bluetooth": "0.0.4"
   },
   "dependencies": {
-    "pxt-common-packages": "6.16.10",
-    "pxt-core": "5.25.13"
+    "pxt-common-packages": "6.16.18",
+    "pxt-core": "5.28.8"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"

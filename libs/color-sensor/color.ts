@@ -183,6 +183,22 @@ namespace sensors {
         }
 
         /**
+         * Checks the color is being detected
+         * @param color the color to detect
+         */
+        //% help=sensors/color-sensor/is-color-detected
+        //% block="is **color sensor** %this|detected|%color=colorEnumPicker"
+        //% blockId=colorisColorDetectedDetected
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=99 blockGap=8
+        //% group="Color Sensor"
+        isColorDetected(color: number) {
+            return this.color() == color;
+        }
+
+        /**
          * Get the current raw rgb values as an array from the color sensor.
          * @param sensor the color sensor to query the request
          */
