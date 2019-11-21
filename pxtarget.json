@@ -201,5 +201,6 @@
         "alwaysGithubItem": true,
         "enableTrace": true
     },
-    "ignoreDocsErrors": true
+    "ignoreDocsErrors": true,
+    "uploadDocs": true
 }
