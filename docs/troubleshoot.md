@@ -55,7 +55,7 @@ Make sure your EV3 Brick is charged and powered on. If your it doesn't turn on, 
 
 Make sure that one end of your USB cable is firmly inserted into a USB port on the computer and the other end is connected to the EV3 Brick. If you still can't see the **@drivename@** drive, try a different port on the computer. If that doesn't work then maybe your cable is faulty or you need to reset the EV3 Brick.
 
-## Why can't I delete my program (*.uf2) files from the Brick?
+## Why can't I delete my program (*.uf2) files from the Brick? #deletefiles
 
 There's a bug in the firmware which prevents you from deleting the programs (``*.uf2`` files) from your EV3 Brick. There isn't a firmware update to fix this yet.
 
