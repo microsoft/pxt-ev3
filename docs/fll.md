@@ -111,6 +111,11 @@ The MakeCode has a [FLL / City Shaper YouTube Channel](https://www.youtube.com/w
 
 https://youtu.be/-AirqwC9DL4
 
+## Do you have examples of program used in competitions?
+
+The MakeCode team ran a team with friends and family in South Seattle and scored 175 points.
+The programs used for the crane, swing, red blocks and ramp are at https://github.com/lego-marshmallows (the robot build is not detailled).
+
 ### Why can't I delete my program (*.uf2) files from the Brick?
 
 There's a bug in the firmware which prevents you from deleting the programs (``*.uf2`` files) from your EV3 Brick. There isn't a firmware update to fix this yet.
