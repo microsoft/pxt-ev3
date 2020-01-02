@@ -28,6 +28,8 @@ program to a **.uf2** file, which you then copy to the **@drivename@** drive. Th
 
 ### ~ hint
 
+#### Bluetooth support
+
 **Experimental support** for Bluetooth download is now available. Please read the [Bluetooth](/bluetooth) page for more information.
 
 ### ~
