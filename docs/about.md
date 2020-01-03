@@ -19,6 +19,14 @@ brick.buttonEnter.onEvent(ButtonEvent.Bumped, () => {
 
 The editor works in [most modern browsers](/browsers). It works [offline](/offline) once loaded and doesn't require any installation. Take a look at some of the [features](/about/editor-features) of the editor.
 
+### ~ hint
+
+#### Using LEGO® MINDSTORMS® Education NXT
+
+The MakeCode editor works with @boardname@. To create code for LEGO® MINDSTORMS® Education NXT, you need to [download](https://education.lego.com/downloads/retiredproducts/nxt/software) the software to program it.
+
+### ~
+
 ## Compile and Flash: Your Program!
 
 When you have your code ready, you connect your EV3 Brick to a computer with a USB cable so it appears as an attached drive (named **@drivename@**). 
