@@ -1,10 +1,10 @@
 # Coding in MakeCode
 
-This guide helps users who are used to work with @boardname@ to get familiar with using blocks in MakeCode.
+This guide helps users who are used to working with @boardname@ become familiar with using blocks in MakeCode.
 
 ## Snap together the blocks
 
-Just like with LabView, blocks in the MakeCode editor can be dragged from the cabinet and snapped together
+Just like in LabView, blocks in the MakeCode editor can be dragged from the cabinet and snapped together
 to create a sequence of program instructions.
 
 Take a look a the LabView program below: it **starts**, turns on motor A, waits a second, and finally stops motor A.
@@ -133,7 +133,7 @@ brick.setStatusLight(StatusLight.OrangePulse);
 
 ## Waiting (pausing)
 
-It is quite common to have to wait for a task to finish or for a sensor state to change, such as a touch button pressed. The ``||loops:pause||`` and ``||sensors:pause until||`` blocks provide a way for your program to wait for a period of time.
+It is quite common to have to wait for a task to finish or for a sensor state to change, such as when a touch button pressed. The ``||loops:pause||`` and ``||sensors:pause until||`` blocks provide a way for your program to wait for a period of time.
 
 ![pause for time](/static/labview/pausefortime.png)      
 
@@ -207,7 +207,7 @@ forever(function () {
 
 ## Concurrent loops
 
-You can start up multiple ``||loops:forever||`` loops that will run at the same time. Actually, only the code in just one of the loops is really running at any exact moment in time. Each loop, though, gets a turn to run all of its code and this makes them run [_concurrently_](https://en.wikipedia.org/wiki/Concurrent_computing).
+You can start up multiple ``||loops:forever||`` loops that run at the same time. Actually, only the code in just one of the loops is really running at any exact moment in time. Each loop, though, gets a turn to run all of its code and this makes them run [_concurrently_](https://en.wikipedia.org/wiki/Concurrent_computing).
 
 ![Multiple loops running at the same time](/static/labview/multipleloops.png)
 
