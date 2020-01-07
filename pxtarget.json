@@ -201,8 +201,8 @@
         "qrCode": true,
         "shareFinishedTutorials": true,
         "nameProjectFirst": true,
-        "githubEditor": true,
-        "enableTrace": true
+        "enableTrace": true,
+        "githubEditor": true
     },
     "ignoreDocsErrors": true,
     "uploadDocs": true
