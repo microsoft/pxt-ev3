@@ -18,7 +18,7 @@
 }, {
   "name": "Stop At Object",
   "description": "Waits for the sensor to be pressed before continuing the program",
-  "cardType": "tutorial",
+  "cardType": "example",
   "url":"/tutorials/stop-at-object",
   "imageUrl":"/static/tutorials/pause-until-pressed.png"
 }]
