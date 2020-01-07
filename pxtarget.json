@@ -201,7 +201,7 @@
         "qrCode": true,
         "shareFinishedTutorials": true,
         "nameProjectFirst": true,
-        "alwaysGithubItem": true,
+        "githubEditor": true,
         "enableTrace": true
     },
     "ignoreDocsErrors": true,
