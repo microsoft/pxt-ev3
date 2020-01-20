@@ -64,6 +64,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     private _writer: any;
 
     constructor(private port: SerialPort, private options: SerialOptions) {
+        console.log(`serial: new io`)
     }
 
     async readSerialAsync() {
@@ -90,17 +91,24 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
         return !!(<any>navigator).serial;
     }
 
+    static portIos: WebSerialPackageIO[] = [];
     static async mkPacketIOAsync(): Promise<pxt.HF2.PacketIO> {
         const serial = (<any>navigator).serial;
         if (serial) {
             try {
                 const requestOptions: SerialPortRequestOptions = {};
                 const port = await serial.requestPort(requestOptions);
-                const options: SerialOptions = {
-                    baudrate: 460800,
-                    buffersize: 4096
-                };
-                return new WebSerialPackageIO(port, options);
+
+                let io = WebSerialPackageIO.portIos.filter(i => i.port == port)[0];
+                if (!io) {
+                    const options: SerialOptions = {
+                        baudrate: 460800,
+                        buffersize: 4096
+                    };
+                    io = new WebSerialPackageIO(port, options);
+                    WebSerialPackageIO.portIos.push(io);
+                }
+                return io;
             } catch (e) {
                 console.log(`connection error`, e)
             }
@@ -125,11 +133,8 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
             });
     }
 
-    private closeAsync() {
-        console.log(`serial: closing port`);
-        this.port.close();
-        this._reader = undefined;
-        this._writer = undefined;
+    private async closeAsync() {
+        // don't close port
         return Promise.delay(500);
     }
 
