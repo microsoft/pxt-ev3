@@ -128,14 +128,6 @@
                 "path": "https://makecode.mindstorms.com/troubleshoot"
             },
             {
-                "name": "Blocks",
-                "path": "/blocks"
-            },
-            {
-                "name": "JavaScript",
-                "path": "/javascript"
-            },
-            {
                 "name": "Reference",
                 "path": "/reference"
             },
