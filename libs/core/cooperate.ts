@@ -4,8 +4,8 @@ namespace control {
     export function cooperate() {
         const now = control.millis()
         if (now - lastPause > COOPERATION_INTERVAL) {
-            pause(1)
             lastPause = now
+            pause(1)
         }
     }
 }
