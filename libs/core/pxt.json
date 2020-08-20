@@ -26,7 +26,8 @@
         "icons.jres",
         "ns.ts",
         "platform.h",
-        "integrator.ts"
+        "integrator.ts",
+        "cooperate.ts"
     ],
     "testFiles": [
         "test.ts"

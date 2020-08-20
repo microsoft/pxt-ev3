@@ -27,7 +27,6 @@ while (true) {
         music.playSoundEffectUntilDone(sounds.mechanicalMotorStart)
         music.playSoundEffectUntilDone(sounds.mechanicalMotorIdle);
     }
-    pause(1);
 }
 ```
 
@@ -43,6 +42,5 @@ while (true) {
         music.playSoundEffectUntilDone(sounds.mechanicalMotorStart)
         music.playSoundEffectUntilDone(sounds.mechanicalMotorIdle);
     }
-    pause(1);
 }
 ```
