@@ -21,8 +21,7 @@ namespace sensors.internal {
             const now = control.millis();
             if (now - this.lastQuery >= this.interval * 2)
                 this.queryAndUpdate(); // sensor poller is not allowed to run
-            if (now - this.lastPause >= this.interval * 5)
-                pause(1); // allow events to trigger
+            control.cooperate(); // allow events to trigger
         }
 
         private queryAndUpdate() {

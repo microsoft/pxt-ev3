@@ -124,7 +124,7 @@ namespace motors {
     export function stopAll() {
         const b = mkCmd(Output.ALL, DAL.opOutputStop, 0)
         writePWM(b);
-        pause(1);
+        control.cooperate();
     }
 
     /**
@@ -136,7 +136,7 @@ namespace motors {
     //% help=motors/reset-all
     export function resetAll() {
         reset(Output.ALL)
-        pause(1);
+        control.cooperate();
     }
 
     interface MoveSchedule {
@@ -269,7 +269,7 @@ namespace motors {
             if (this._brake && this._brakeSettleTime > 0)
                 pause(this._brakeSettleTime);
             else {
-                pause(1);
+                control.cooperate();
             }
         }
 
@@ -280,7 +280,7 @@ namespace motors {
                 // allow robot to settle
                 this.settle();
             } else {
-                pause(1);
+                control.cooperate();
             }
         }
 
@@ -357,7 +357,7 @@ namespace motors {
             // special: 0 is infinity
             if (schedule.steps[0] + schedule.steps[1] + schedule.steps[2] == 0) {
                 this._run(schedule.speed);
-                pause(1);
+                control.cooperate();
                 return;
             }
 

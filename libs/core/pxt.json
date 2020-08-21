@@ -28,7 +28,8 @@
         "platform.h",
         "platform.cpp",
         "dmesg.cpp",
-        "integrator.ts"
+        "integrator.ts",
+        "cooperate.ts"
     ],
     "testFiles": [
         "test.ts"
