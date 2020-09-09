@@ -14,6 +14,16 @@ declare namespace music {
     function setVolume(volume: int32): void;
 
     /**
+     * Return the output volume of the sound synthesizer.
+     */
+    //% weight=96
+    //% blockId=synth_get_volume block="volume"
+    //% parts="speaker" blockGap=8
+    //% help=music/volume
+    //% weight=1 shim=music::volume
+    function volume(): int32;
+
+    /**
      * Play a tone through the speaker for some amount of time.
      * @param frequency pitch of the tone to play in Hertz (Hz), eg: Note.C
      * @param ms tone duration in milliseconds (ms), eg: BeatFraction.Half

@@ -13,7 +13,22 @@
 
 namespace music {
 
-uint8_t currVolume = 50;
+int _readSystemVolume() {
+    char ParBuf[8];
+    int volume;
+
+    int fd = open("../sys/settings/Volume.rtf", O_RDONLY);
+    read(fd, ParBuf, sizeof(ParBuf));
+    close(fd);
+    if (sscanf(ParBuf,"%d",&volume) > 0) {
+        if ((volume >= 0) && (volume <= 100)) {
+            return volume;
+        }
+    }
+    return 50;
+}
+
+uint8_t currVolume = _readSystemVolume();
 uint8_t *lmsSoundMMap;
 
 int writeDev(void *data, int size) {
@@ -35,6 +50,18 @@ int writeDev(void *data, int size) {
 //% weight=1
 void setVolume(int volume) {
     currVolume = max(0, min(100, volume));
+}
+
+/**
+* Return the output volume of the sound synthesizer.
+*/
+//% weight=96
+//% blockId=synth_get_volume block="volume"
+//% parts="speaker" blockGap=8
+//% help=music/volume
+//% weight=1
+int volume() {
+    return currVolume;
 }
 
 #define SOUND_CMD_BREAK 0
