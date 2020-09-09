@@ -7,6 +7,14 @@ namespace pxsim.music {
     export function stopAllSounds() {
         SoundMethods.stop()
     }
+
+    pxsim.music.setVolume = (volume: number): void => {
+        pxsim.getAudioState().volume = volume;
+    };
+
+    export function volume() {
+        return pxsim.getAudioState().volume;
+    }
 }
 
 namespace pxsim.SoundMethods {

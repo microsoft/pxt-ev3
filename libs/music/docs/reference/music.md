@@ -12,4 +12,5 @@ music.setTempo(120)
 music.noteFrequency(Note.C)
 music.beat()
 music.setVolume(50)
+music.volume()
 ```
