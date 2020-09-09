@@ -45,7 +45,7 @@ void setVolume(int volume) {
 
 struct ToneCmd {
     uint8_t cmd;
-    uint8_t vol;
+    uint8_t lvl;
     uint16_t freq;
     uint16_t duration;
 };
@@ -55,10 +55,26 @@ static void _stopSound() {
     writeDev(&cmd, sizeof(cmd));
 }
 
+static uint8_t _getVolumeLevel(uint8_t volume, uint8_t levels) {
+    uint8_t level;
+    uint8_t step = (uint8_t) (100 / (levels - 1));
+    if (volume < step) {
+        level = 0;
+    } else if (volume > step * (levels - 1)) {
+        level = levels;
+    } else {
+        level = (uint8_t) (volume / step);
+    }
+    return level;
+}
+
 static void _playTone(uint16_t frequency, uint16_t duration, uint8_t volume) {
+    // https://github.com/mindboards/ev3sources/blob/78ebaf5b6f8fe31cc17aa5dce0f8e4916a4fc072/lms2012/c_sound/source/c_sound.c#L471
+    uint8_t level = _getVolumeLevel(volume, 13);
+
     ToneCmd cmd;
     cmd.cmd = SOUND_CMD_TONE;
-    cmd.vol = volume;
+    cmd.lvl = level;
     cmd.freq = frequency;
     cmd.duration = duration;
     //   (*SoundInstance.pSound).Busy = TRUE;
@@ -122,7 +138,8 @@ void playSample(Buffer buf) {
     stopUser();
     pthread_mutex_lock(&pumpMutex);
     *lmsSoundMMap = 1; // BUSY
-    uint8_t cmd[] = {SOUND_CMD_PLAY, (uint8_t)((currVolume / 33) + 1)};
+    // https://github.com/mindboards/ev3sources/blob/78ebaf5b6f8fe31cc17aa5dce0f8e4916a4fc072/lms2012/c_sound/source/c_sound.c#L605
+    uint8_t cmd[] = {SOUND_CMD_PLAY, _getVolumeLevel(currVolume, 8)};
     writeDev(cmd, 2);
     decrRC(currentSample);
     currentSample = buf;
