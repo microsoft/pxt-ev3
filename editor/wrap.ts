@@ -116,7 +116,7 @@ export class Ev3Wrapper {
             if (this.dataDump)
                 log("TALK: " + U.toHex(buf))
             return this.io.sendPacketAsync(buf)
-                .then(() => this.msgs.shiftAsync(1000))
+                .then(() => this.msgs.shiftAsync(5000))
                 .then(resp => {
                     if (resp[2] != buf[2] || resp[3] != buf[3])
                         U.userError("msg count de-sync")
