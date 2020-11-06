@@ -2,16 +2,16 @@
 
 ## Example #example
 
-Use the a wait and the timer to generate a crazy number.
+Use a wait and the timer to generate a number.
 
 ```blocks
-let crazy = 0
+let something = 0
 for (let i = 0; i < 100; i++) {
     control.waitMicros(100)
-    crazy = control.millis()
-    crazy += control.deviceSerialNumber()
-    if (crazy != 0) {
-        crazy = crazy / 1000000
+    something = control.millis()
+    something += control.deviceSerialNumber()
+    if (something != 0) {
+        something = something / 1000000
     }
 }
 ```
