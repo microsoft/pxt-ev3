@@ -37,7 +37,7 @@ namespace pxsim {
             return Math.round(this.angle);
         }
 
-        // returns the slave motor if any
+        // returns the secondary motor if any
         getSynchedMotor() {
             return this._synchedMotor;
         }
