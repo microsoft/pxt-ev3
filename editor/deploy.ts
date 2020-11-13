@@ -59,8 +59,8 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
                 let io = WebSerialPackageIO.portIos.filter(i => i.port == port)[0];
                 if (!io) {
                     const options: SerialOptions = {
-                        baudrate: 460800,
-                        buffersize: 4096
+                        baudRate: 460800,
+                        bufferSize: 4096
                     };
                     io = new WebSerialPackageIO(port, options);
                     WebSerialPackageIO.portIos.push(io);
