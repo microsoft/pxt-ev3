@@ -2,7 +2,6 @@
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
 import { FieldPorts } from "./field_ports";
-import { FieldMotors } from "./field_motors";
 import { FieldBrickButtons } from "./field_brickbuttons";
 import { FieldColorEnum } from "./field_color";
 import { FieldMusic } from "./field_music";
@@ -14,9 +13,6 @@ pxt.editor.initFieldExtensionsAsync = function (opts: pxt.editor.FieldExtensionO
         fieldEditors: [{
             selector: "ports",
             editor: FieldPorts
-        }, {
-            selector: "motors",
-            editor: FieldMotors
         }, {
             selector: "brickbuttons",
             editor: FieldBrickButtons

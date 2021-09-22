@@ -64,7 +64,7 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
         }
         this.value_ = colour;
         if (this.sourceBlock_) {
-            this.sourceBlock_.setColour(colour, colour, colour);
+            this.sourceBlock_.setColour(colour);
         }
     }
 }

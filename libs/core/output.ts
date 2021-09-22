@@ -195,7 +195,8 @@ namespace motors {
          * @param brake a value indicating if the motor should break when off
          */
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=60 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-brake
@@ -209,7 +210,8 @@ namespace motors {
          * @param value true to pause; false to continue the program execution
          */
         //% blockId=outputMotorSetPauseMode block="set %motor|pause on run %brake=toggleOnOff"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=60 blockGap=8
         //% group="Properties"
         setPauseOnRun(value: boolean) {
@@ -217,11 +219,12 @@ namespace motors {
             this._pauseOnRun = value;
         }
 
-        /** 
+        /**
          * Inverts the motor polarity
         */
         //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=59 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-inverted
@@ -234,11 +237,12 @@ namespace motors {
             return this._inverted ? -1 : 1;
         }
 
-        /** 
+        /**
          * Set the settle time after braking in milliseconds (default is 10ms).
         */
         //% blockId=motorSetBrakeSettleTime block="set %motor|brake settle time %millis|ms"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=1 blockGap=8
         //% group="Properties"
         //% millis.defl=200 millis.min=0 millis.max=500
@@ -343,7 +347,8 @@ namespace motors {
         //% blockId=motorRun block="run %motor at %speed=motorSpeedPicker|\\%||for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% expandableArgumentMode=toggle
         //% help=motors/motor/run
         run(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
@@ -392,7 +397,8 @@ namespace motors {
         //% blockId=motorSchedule block="ramp %motor at %speed=motorSpeedPicker|\\%|for %value|%unit||accelerate %acceleration|decelerate %deceleration"
         //% weight=99 blockGap=8
         //% group="Move"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% help=motors/motor/ramp
         //% inlineInputMode=inline
         //% expandableArgumentMode=toggle
@@ -421,7 +427,8 @@ namespace motors {
          * of run commands.
          */
         //% blockId=outputMotorsetRunRamp block="set %motor|run %ramp to $value||$unit"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=21 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-run-phase
@@ -492,7 +499,8 @@ namespace motors {
          * @param value true for regulated motor
          */
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=58 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-regulated
@@ -517,7 +525,8 @@ namespace motors {
          * @param timeOut optional maximum pausing time in milliseconds
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=90 blockGap=8
         //% group="Move"
         pauseUntilReady(timeOut?: number) {
@@ -575,8 +584,9 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorSpeed block="%motor|speed"
-        //% motor.fieldEditor="motors"
-        //% weight=72 
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
+        //% weight=72
         //% blockGap=8
         //% group="Counters"
         //% help=motors/motor/speed
@@ -590,7 +600,8 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorAngle block="%motor|angle"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=70
         //% blockGap=8
         //% group="Counters"
@@ -604,7 +615,8 @@ namespace motors {
          * Clears the motor count
          */
         //% blockId=motorClearCount block="clear %motor|counters"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=68
         //% blockGap=8
         //% group="Counters"
@@ -632,7 +644,8 @@ namespace motors {
          * Pauses the program until the motor is stalled.
          */
         //% blockId=motorPauseUntilStall block="pause until %motor|stalled"
-        //% motor.fieldEditor="motors"
+        //% motor.fieldEditor="speed"
+        //% motor.fieldOptions.decompileLiterals=1
         //% weight=89
         //% group="Move"
         //% help=motors/motor/pause-until-stalled
@@ -697,10 +710,10 @@ namespace motors {
         }
 
         /**
-         * The Move Tank block can make a robot drive forward, backward, turn, or stop. 
-         * Use the Move Tank block for robot vehicles that have two Large Motors, 
-         * with one motor driving the left side of the vehicle and the other the right side. 
-         * You can make the two motors go at different speeds or in different directions 
+         * The Move Tank block can make a robot drive forward, backward, turn, or stop.
+         * Use the Move Tank block for robot vehicles that have two Large Motors,
+         * with one motor driving the left side of the vehicle and the other the right side.
+         * You can make the two motors go at different speeds or in different directions
          * to make your robot turn.
          * @param speedLeft the speed on the left motor, eg: 50
          * @param speedRight the speed on the right motor, eg: 50

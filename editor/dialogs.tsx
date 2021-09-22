@@ -21,7 +21,7 @@ export function bluetoothTryAgainAsync(): Promise<void> {
 
 function enableWebSerialAndCompileAsync() {
     return enableWebSerialAsync()
-        .then(() => Promise.delay(500))
+        .then(() => pxt.U.delay(500))
         .then(() => projectView.compile());
 }
 
@@ -53,7 +53,7 @@ function explainWebSerialPairingAsync(): Promise<void> {
 export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (options: any) => Promise<number>): Promise<void> {
     confirmAsync = _confirmAsync;
     // https://msdn.microsoft.com/en-us/library/cc848897.aspx
-    // "For security reasons, data URIs are restricted to downloaded resources. 
+    // "For security reasons, data URIs are restricted to downloaded resources.
     // Data URIs cannot be used for navigation, for scripting, or to populate frame or iframe elements"
     const downloadAgain = !pxt.BrowserUtils.isIE() && !pxt.BrowserUtils.isEdge();
     const docUrl = pxt.appTarget.appTheme.usbDocs;
@@ -126,7 +126,6 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
                 pxt.tickEvent("bluetooth.enable");
                 explainWebSerialPairingAsync()
                     .then(() => enableWebSerialAndCompileAsync())
-                    .done();
             }
         } : undefined, downloadAgain ? {
             label: fn,
