@@ -27,7 +27,6 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
 
         this.setText = Blockly.FieldDropdown.prototype.setText;
         this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
-        this.updateTextNode_ = Blockly.Field.prototype.updateTextNode_;
 
         if (!pxt.BrowserUtils.isIE() && !soundCache) {
             soundCache = JSON.parse(pxtTargetBundle.bundledpkgs['music']['sounds.jres']);
@@ -68,7 +67,8 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         // Accessibility properties
         categoriesDiv.setAttribute('role', 'menu');
         categoriesDiv.setAttribute('aria-haspopup', 'true');
-        categoriesDiv.style.backgroundColor = this.sourceBlock_.getColourTertiary();
+        // FIXME: tertiary color?
+        categoriesDiv.style.backgroundColor = this.sourceBlock_.getColour();
         categoriesDiv.className = 'blocklyMusicFieldCategories';
 
         this.refreshCategories(categoriesDiv, categories);
@@ -82,7 +82,9 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         dropdownDiv.appendChild(categoriesDiv);
         dropdownDiv.appendChild(contentDiv);
 
-        Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(), this.sourceBlock_.getColourTertiary());
+        Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(),
+        // FIXME: tertiary color?
+        this.sourceBlock_.getColour());
 
         // Calculate positioning based on the field position.
         let scale = (<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).scale;
@@ -102,10 +104,9 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         // Update colour to look selected.
         if (this.sourceBlock_.isShadow()) {
             this.savedPrimary_ = this.sourceBlock_.getColour();
-            this.sourceBlock_.setColour(this.sourceBlock_.getColourTertiary(),
-                this.sourceBlock_.getColourSecondary(), this.sourceBlock_.getColourTertiary());
-        } else if (this.box_) {
-            this.box_.setAttribute('fill', this.sourceBlock_.getColourTertiary());
+            // FIXME
+            // this.sourceBlock_.setColour(this.sourceBlock_.getColourTertiary(),
+            //     this.sourceBlock_.getColourSecondary(), this.sourceBlock_.getColourTertiary());
         }
     }
 
@@ -122,7 +123,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     }
 
     refreshCategories(categoriesDiv: Element, categories: string[]) {
-        // Show category dropdown. 
+        // Show category dropdown.
         for (let i = 0; i < categories.length; i++) {
             const category = categories[i];
 
@@ -186,11 +187,13 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
             let backgroundColor = this.savedPrimary_ || this.sourceBlock_.getColour();
             if (value == this.getValue()) {
                 // This icon is selected, show it in a different colour
-                backgroundColor = this.sourceBlock_.getColourTertiary();
+                // FIXME: tertiary color?
+                backgroundColor = this.sourceBlock_.getColour();
                 button.setAttribute('aria-selected', 'true');
             }
             button.style.backgroundColor = backgroundColor;
-            button.style.borderColor = this.sourceBlock_.getColourTertiary();
+            // FIXME: tertiary color?
+            button.style.borderColor = this.sourceBlock_.getColour();
             Blockly.bindEvent_(button, 'click', this, this.buttonClick_);
             Blockly.bindEvent_(button, 'mouseup', this, this.buttonClick_);
             // These are applied manually instead of using the :hover pseudoclass

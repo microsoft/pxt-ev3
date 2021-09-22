@@ -49,7 +49,7 @@ declare interface Serial extends EventTarget {
     requestPort(options: SerialPortRequestOptions): Promise<SerialPort>;
 }
 
-class WebSerialPackageIO implements pxt.HF2.PacketIO {
+class WebSerialPackageIO implements pxt.packetio.PacketIO {
     onData: (v: Uint8Array) => void;
     onError: (e: Error) => void;
     onEvent: (v: Uint8Array) => void;
@@ -87,7 +87,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
     }
 
     static portIos: WebSerialPackageIO[] = [];
-    static async mkPacketIOAsync(): Promise<pxt.HF2.PacketIO> {
+    static async mkPacketIOAsync(): Promise<pxt.packetio.PacketIO> {
         const serial = (<any>navigator).serial;
         if (serial) {
             try {
@@ -130,7 +130,7 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
 
     private async closeAsync() {
         // don't close port
-        return Promise.delay(500);
+        return pxt.U.delay(500);
     }
 
     reconnectAsync(): Promise<void> {
@@ -146,11 +146,33 @@ class WebSerialPackageIO implements pxt.HF2.PacketIO {
             this._writer = this.port.writable.getWriter();
         return this._writer.write(pkt);
     }
+
+    onDeviceConnectionChanged(connect: boolean) {
+        throw new Error("onDeviceConnectionChanged not implemented");
+    }
+
+    onConnectionChanged() {
+        throw new Error("onConnectionChanged not implemented");
+    }
+
+    isConnecting() {
+        throw new Error("isConnecting not implemented");
+        return false;
+    }
+
+    isConnected() {
+        throw new Error("isConnected not implemented");
+        return false;
+    }
+
+    disposeAsync() {
+        return Promise.reject("disposeAsync not implemented")
+    }
 }
 
 function hf2Async() {
-    const pktIOAsync: Promise<pxt.HF2.PacketIO> = useWebSerial
-        ? WebSerialPackageIO.mkPacketIOAsync() : pxt.HF2.mkPacketIOAsync()
+    const pktIOAsync: Promise<pxt.packetio.PacketIO> = useWebSerial
+        ? WebSerialPackageIO.mkPacketIOAsync() : pxt.packetio.mkPacketIOAsync()
     return pktIOAsync.then(h => {
         let w = new Ev3Wrapper(h)
         ev3 = w
@@ -190,14 +212,19 @@ export function enableWebSerialAsync() {
     else return Promise.resolve();
 }
 
-function cleanupAsync() {
+async function cleanupAsync() {
     if (ev3) {
         console.log('cleanup previous port')
-        return ev3.disconnectAsync()
-            .catch(e => { })
-            .finally(() => { ev3 = undefined; });
+        try {
+            await ev3.disconnectAsync()
+        }
+        catch (e) {
+
+        }
+        finally {
+            ev3 = undefined;
+        }
     }
-    return Promise.resolve();
 }
 
 let initPromise: Promise<Ev3Wrapper>
@@ -207,7 +234,7 @@ function initHidAsync() { // needs to run within a click handler
     if (useHID) {
         initPromise = cleanupAsync()
             .then(() => hf2Async())
-            .catch(err => {
+            .catch((err: any) => {
                 console.error(err);
                 initPromise = null
                 useHID = false;
@@ -284,7 +311,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
                 .catch(e => {
                     // user easily forgets to stop robot
                     bluetoothTryAgainAsync().then(() => w.disconnectAsync())
-                        .then(() => Promise.delay(1000))
+                        .then(() => pxt.U.delay(1000))
                         .then(() => w.reconnectAsync());
 
                     // nothing we can do
@@ -296,7 +323,7 @@ export function deployCoreAsync(resp: pxtc.CompileResult) {
         .then(() => w.flashAsync(elfPath, UF2.readBytes(origElfUF2, 0, origElfUF2.length * 256)))
         .then(() => w.flashAsync(rbfPath, rbfBIN))
         .then(() => w.runAsync(rbfPath))
-        .then(() => Promise.delay(500))
+        .then(() => pxt.U.delay(500))
         .then(() => {
             pxt.tickEvent("webserial.success");
             return w.disconnectAsync()
