@@ -26,7 +26,7 @@ export class Ev3Wrapper {
     isStreaming = false;
     dataDump = /talkdbg=1/.test(window.location.href);
 
-    constructor(public io: pxt.HF2.PacketIO) {
+    constructor(public io: pxt.packetio.PacketIO) {
         io.onData = buf => {
             buf = buf.slice(0, HF2.read16(buf, 0) + 2)
             if (HF2.read16(buf, 4) == usbMagic) {
@@ -81,7 +81,7 @@ export class Ev3Wrapper {
                 log(`stopping PXT app`)
                 let buf = this.allocCustom(2)
                 return this.justSendAsync(buf)
-                    .then(() => Promise.delay(500))
+                    .then(() => pxt.U.delay(500))
             })
     }
 
@@ -236,7 +236,7 @@ export class Ev3Wrapper {
             let contFileReq = this.allocSystem(1 + 2, 0x97)
             HF2.write16(contFileReq, 7, 1000) // maxRead
             contFileReq[6] = handle
-            return Promise.delay(data.length > 0 ? 0 : 500)
+            return pxt.U.delay(data.length > 0 ? 0 : 500)
                 .then(() => this.talkAsync(contFileReq, -1))
                 .then(resp)
         }
@@ -251,7 +251,7 @@ export class Ev3Wrapper {
         let loop = (): Promise<void> =>
             this.lock.enqueue("file", () =>
                 this.streamFileOnceAsync(path, cb))
-                .then(() => Promise.delay(500))
+                .then(() => pxt.U.delay(500))
                 .then(loop)
         return loop()
     }

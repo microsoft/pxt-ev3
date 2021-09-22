@@ -19,7 +19,7 @@ namespace pxsim.visuals {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            user-select: none;                        
+            user-select: none;
         }
         .sim-button {
             cursor: pointer;
@@ -381,7 +381,7 @@ namespace pxsim.visuals {
             this.screenCanvas = document.createElement("canvas");
             this.screenCanvas.id = "board-screen-canvas";
             this.screenCanvas.style.userSelect = "none";
-            this.screenCanvas.style.msUserSelect = "none";
+            (this.screenCanvas.style as any).msUserSelect = "none";
             this.screenCanvas.style.webkitUserSelect = "none";
             (this.screenCanvas.style as any).MozUserSelect = "none";
             this.screenCanvas.style.position = "absolute";
