@@ -77,8 +77,9 @@
         "pauseUntilBlock": {
             "category": "loops"
         },
-        "bannedCategories": [
-        ]
+        "breakBlock": true,
+        "continueBlock": true,
+        "bannedCategories": []
     },
     "compileService": {
         "buildEngine": "dockermake",
@@ -119,8 +120,7 @@
         ],
         "highContrast": true,
         "lightToc": true,
-        "docMenu": [
-            {
+        "docMenu": [{
                 "name": "Support",
                 "path": "https://forum.makecode.com/"
             },
