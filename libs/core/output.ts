@@ -195,7 +195,7 @@ namespace motors {
          * @param brake a value indicating if the motor should break when off
          */
         //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=60 blockGap=8
         //% group="Properties"
@@ -210,7 +210,7 @@ namespace motors {
          * @param value true to pause; false to continue the program execution
          */
         //% blockId=outputMotorSetPauseMode block="set %motor|pause on run %brake=toggleOnOff"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=60 blockGap=8
         //% group="Properties"
@@ -223,7 +223,7 @@ namespace motors {
          * Inverts the motor polarity
         */
         //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=59 blockGap=8
         //% group="Properties"
@@ -241,7 +241,7 @@ namespace motors {
          * Set the settle time after braking in milliseconds (default is 10ms).
         */
         //% blockId=motorSetBrakeSettleTime block="set %motor|brake settle time %millis|ms"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=1 blockGap=8
         //% group="Properties"
@@ -347,7 +347,7 @@ namespace motors {
         //% blockId=motorRun block="run %motor at %speed=motorSpeedPicker|\\%||for %value %unit"
         //% weight=100 blockGap=8
         //% group="Move"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% expandableArgumentMode=toggle
         //% help=motors/motor/run
@@ -397,7 +397,7 @@ namespace motors {
         //% blockId=motorSchedule block="ramp %motor at %speed=motorSpeedPicker|\\%|for %value|%unit||accelerate %acceleration|decelerate %deceleration"
         //% weight=99 blockGap=8
         //% group="Move"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% help=motors/motor/ramp
         //% inlineInputMode=inline
@@ -427,7 +427,7 @@ namespace motors {
          * of run commands.
          */
         //% blockId=outputMotorsetRunRamp block="set %motor|run %ramp to $value||$unit"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=21 blockGap=8
         //% group="Properties"
@@ -499,7 +499,7 @@ namespace motors {
          * @param value true for regulated motor
          */
         //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=58 blockGap=8
         //% group="Properties"
@@ -525,7 +525,7 @@ namespace motors {
          * @param timeOut optional maximum pausing time in milliseconds
          */
         //% blockId=motorPauseUntilRead block="pause until %motor|ready"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=90 blockGap=8
         //% group="Move"
@@ -584,7 +584,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorSpeed block="%motor|speed"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=72
         //% blockGap=8
@@ -600,7 +600,7 @@ namespace motors {
          * @param motor the port which connects to the motor
          */
         //% blockId=motorAngle block="%motor|angle"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=70
         //% blockGap=8
@@ -615,7 +615,7 @@ namespace motors {
          * Clears the motor count
          */
         //% blockId=motorClearCount block="clear %motor|counters"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=68
         //% blockGap=8
@@ -644,7 +644,7 @@ namespace motors {
          * Pauses the program until the motor is stalled.
          */
         //% blockId=motorPauseUntilStall block="pause until %motor|stalled"
-        //% motor.fieldEditor="speed"
+        //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=89
         //% group="Move"
