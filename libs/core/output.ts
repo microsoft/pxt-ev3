@@ -825,16 +825,16 @@ namespace motors {
     }
 
     //% whenUsed fixedInstance block="large motors B+C" jres=icons.portBC
-    export const largeBC = new SynchedMotorPair(Output.BC, true);
+    export const largeBC = new SynchedMotorPair(Output.BC);
 
     //% whenUsed fixedInstance block="large motors A+D" jres=icons.portAD
-    export const largeAD = new SynchedMotorPair(Output.AD, true);
+    export const largeAD = new SynchedMotorPair(Output.AD);
 
     //% whenUsed fixedInstance block="large motors A+B" jres=icons.portAB
-    export const largeAB = new SynchedMotorPair(Output.AB, true);
+    export const largeAB = new SynchedMotorPair(Output.AB);
 
     //% whenUsed fixedInstance block="large motors C+D" jres=icons.portCD
-    export const largeCD = new SynchedMotorPair(Output.CD, true);
+    export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {
         writePWM(mkCmd(out, DAL.opOutputReset, 0))
