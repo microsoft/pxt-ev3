@@ -721,7 +721,7 @@ namespace motors {
          * @param unit (optional) unit of the value
          */
         //% blockId=motorPairTank block="tank **motors** %motors %speedLeft=motorSpeedPicker|\\% %speedRight=motorSpeedPicker|\\%||for %value %unit"
-        //% motors.fieldEditor="ports"
+        //% motors.fieldEditor="motors"
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
         //% group="Move"
@@ -751,7 +751,7 @@ namespace motors {
          * @param unit (optional) unit of the value
          */
         //% blockId=motorPairSteer block="steer **motors** %chassis turn ratio %turnRatio=motorTurnRatioPicker speed %speed=motorSpeedPicker|\\%||for %value %unit"
-        //% chassis.fieldEditor="ports"
+        //% chassis.fieldEditor="motors"
         //% weight=95
         //% turnRatio.min=-200 turnRatio=200
         //% inlineInputMode=inline
@@ -824,17 +824,17 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="B+C" jres=icons.portBC
-    export const largeBC = new SynchedMotorPair(Output.BC);
+    //% whenUsed fixedInstance block="large motors B+C" jres=icons.portBC
+    export const largeBC = new SynchedMotorPair(Output.BC, true);
 
-    //% whenUsed fixedInstance block="A+D" jres=icons.portAD
-    export const largeAD = new SynchedMotorPair(Output.AD);
+    //% whenUsed fixedInstance block="large motors A+D" jres=icons.portAD
+    export const largeAD = new SynchedMotorPair(Output.AD, true);
 
-    //% whenUsed fixedInstance block="A+B" jres=icons.portAB
-    export const largeAB = new SynchedMotorPair(Output.AB);
+    //% whenUsed fixedInstance block="large motors A+B" jres=icons.portAB
+    export const largeAB = new SynchedMotorPair(Output.AB, true);
 
-    //% whenUsed fixedInstance block="C+D" jres=icons.portCD
-    export const largeCD = new SynchedMotorPair(Output.CD);
+    //% whenUsed fixedInstance block="large motors C+D" jres=icons.portCD
+    export const largeCD = new SynchedMotorPair(Output.CD, true);
 
     function reset(out: Output) {
         writePWM(mkCmd(out, DAL.opOutputReset, 0))
