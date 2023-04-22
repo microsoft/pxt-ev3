@@ -120,20 +120,17 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
 
         Blockly.DropDownDiv.setColour('#ffffff', '#dddddd');
 
-        // Calculate positioning based on the field position.
-        let scale = (<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).scale;
-        let bBox = { width: this.size_.width, height: this.size_.height };
-        bBox.width *= scale;
-        bBox.height *= scale;
-        let position = this.fieldGroup_.getBoundingClientRect();
-        let primaryX = position.left + bBox.width / 2;
-        let primaryY = position.top + bBox.height;
-        let secondaryX = primaryX;
-        let secondaryY = position.top;
-        // Set bounds to workspace; show the drop-down.
-        (Blockly.DropDownDiv as any).setBoundsElement((<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).getParentSvg().parentNode);
-        (Blockly.DropDownDiv as any).show(this, primaryX, primaryY, secondaryX, secondaryY,
-            this.onHide_.bind(this));
+        // Position based on the field position.
+        Blockly.DropDownDiv.showPositionedByField(this, this.onHide_.bind(this));
+
+        // Update colour to look selected.
+        let source = this.sourceBlock_ as Blockly.BlockSvg;
+        this.savedPrimary_ = source?.getColour();
+        if (source?.isShadow()) {
+            source.setColour(source.getColourTertiary());
+        } else if (this.borderRect_) {
+            this.borderRect_.setAttribute('fill', (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary());
+        }
     }
 
     /**
@@ -157,5 +154,12 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
         content.removeAttribute('aria-haspopup');
         content.removeAttribute('aria-activedescendant');
         (content as HTMLElement).style.width = '';
+        // Update color (deselect) on dropdown hide
+        let source = this.sourceBlock_ as Blockly.BlockSvg;
+        if (source?.isShadow()) {
+            source.setColour(this.savedPrimary_);
+        } else if (this.borderRect_) {
+            this.borderRect_.setAttribute('fill', this.savedPrimary_);
+        }
     };
 }
