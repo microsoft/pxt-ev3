@@ -669,28 +669,28 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motor A" jres=icons.portA
+    //% whenUsed fixedInstance block="large motor A" jres=icons.motorLargePortA
     export const largeA = new Motor(Output.A, true);
 
-    //% whenUsed fixedInstance block="large motor B" jres=icons.portB
+    //% whenUsed fixedInstance block="large motor B" jres=icons.motorLargePortB
     export const largeB = new Motor(Output.B, true);
 
-    //% whenUsed fixedInstance block="large motor C" jres=icons.portC
+    //% whenUsed fixedInstance block="large motor C" jres=icons.motorLargePortC
     export const largeC = new Motor(Output.C, true);
 
-    //% whenUsed fixedInstance block="large motor D" jres=icons.portD
+    //% whenUsed fixedInstance block="large motor D" jres=icons.motorLargePortD
     export const largeD = new Motor(Output.D, true);
 
-    //% whenUsed fixedInstance block="medium motor A" jres=icons.portA
+    //% whenUsed fixedInstance block="medium motor A" jres=icons.motorMeduimPortA
     export const mediumA = new Motor(Output.A, false);
 
-    //% whenUsed fixedInstance block="medium motor B" jres=icons.portB
+    //% whenUsed fixedInstance block="medium motor B" jres=icons.motorMeduimPortB
     export const mediumB = new Motor(Output.B, false);
 
-    //% whenUsed fixedInstance block="medium motor C" jres=icons.portC
+    //% whenUsed fixedInstance block="medium motor C" jres=icons.motorMeduimPortC
     export const mediumC = new Motor(Output.C, false);
 
-    //% whenUsed fixedInstance block="medium motor D" jres=icons.portD
+    //% whenUsed fixedInstance block="medium motor D" jres=icons.motorMeduimPortD
     export const mediumD = new Motor(Output.D, false);
 
     //% fixedInstances
@@ -824,16 +824,16 @@ namespace motors {
         }
     }
 
-    //% whenUsed fixedInstance block="large motors B+C" jres=icons.portBC
+    //% whenUsed fixedInstance block="large motors B+C" jres=icons.dualMotorLargePortBC
     export const largeBC = new SynchedMotorPair(Output.BC);
 
-    //% whenUsed fixedInstance block="large motors A+D" jres=icons.portAD
+    //% whenUsed fixedInstance block="large motors A+D" jres=icons.dualMotorLargePortAD
     export const largeAD = new SynchedMotorPair(Output.AD);
 
-    //% whenUsed fixedInstance block="large motors A+B" jres=icons.portAB
+    //% whenUsed fixedInstance block="large motors A+B" jres=icons.dualMotorLargePortAB
     export const largeAB = new SynchedMotorPair(Output.AB);
 
-    //% whenUsed fixedInstance block="large motors C+D" jres=icons.portCD
+    //% whenUsed fixedInstance block="large motors C+D" jres=icons.dualMotorLargePortCD
     export const largeCD = new SynchedMotorPair(Output.CD);
 
     function reset(out: Output) {

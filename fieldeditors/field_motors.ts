@@ -16,7 +16,7 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         super(text, options, validator);
 
         this.columns_ = parseInt(options.columns) || 4;
-        this.width_ = parseInt(options.width) || 300;
+        this.width_ = parseInt(options.width) || 400;
         //this.shouldSort_ = options.sort;
         this.addLabel_ = true;
 
@@ -100,7 +100,7 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
                 buttonText.setAttribute('data-value', value);
                 buttonText.style.whiteSpace = 'inherit';
                 buttonText.style.width = 'auto';
-                buttonText.style.padding = '0 5px';
+                buttonText.style.padding = '0 10px';
                 button.appendChild(buttonText);
             }
             contentDiv.appendChild(button);
