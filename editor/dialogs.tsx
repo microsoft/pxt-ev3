@@ -142,5 +142,5 @@ export function showUploadDialogAsync(fn: string, url: string, _confirmAsync: (o
             url: docUrl
         }]
         //timeout: 20000
-    }).then(() => { });;
+    }).then(() => { });
 }
