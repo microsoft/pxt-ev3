@@ -81,23 +81,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         dropdownDiv.appendChild(categoriesDiv);
         dropdownDiv.appendChild(contentDiv);
 
-        Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(), (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary()); // FIXME: tertiary color?
-
-        /*
-        // Calculate positioning based on the field position.
-        let scale = (<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).scale;
-        let bBox = { width: this.size_.width, height: this.size_.height };
-        bBox.width *= scale;
-        bBox.height *= scale;
-        let position = this.fieldGroup_.getBoundingClientRect();
-        let primaryX = (position.left + bBox.width) / 2;
-        let primaryY = position.top + bBox.height;
-        let secondaryX = primaryX;
-        let secondaryY = position.top;
-        // Set bounds to workspace; show the drop-down.
-        (Blockly.DropDownDiv as any).setBoundsElement((<Blockly.WorkspaceSvg>this.sourceBlock_.workspace).getParentSvg().parentNode);
-        (Blockly.DropDownDiv as any).show(this, primaryX, primaryY, secondaryX, secondaryY, this.onHide_.bind(this));
-        */
+        Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(), (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary());
         
         // Position based on the field position.
         Blockly.DropDownDiv.showPositionedByField(this, this.onHide_.bind(this));
