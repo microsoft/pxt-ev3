@@ -159,6 +159,7 @@
         "extendEditor": true,
         "extendFieldEditors": true,
         "scriptManager": true,
+        "debugger": true,
         "importExtensionFiles": true,
         "experiments": [
             "python",
