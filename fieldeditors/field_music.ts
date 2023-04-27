@@ -11,6 +11,7 @@ declare const pxtTargetBundle: any;
 
 let soundCache: any;
 let soundIconCache: any;
+let soundIconCacheArray: any;
 
 export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldCustom {
     public isFieldCustom_ = true;
@@ -33,6 +34,8 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         }
         if (!soundIconCache) {
             soundIconCache = JSON.parse(pxtTargetBundle.bundledpkgs['music']['icons.jres']);
+            soundIconCacheArray = Object.entries(soundIconCache);
+            soundIconCacheArray.shift(); // Delete first elem
         }
     }
 
@@ -56,7 +59,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         contentDiv.setAttribute('aria-haspopup', 'true');
         contentDiv.className = 'blocklyMusicFieldOptions';
         const options = this.getOptions();
-        options.sort();
+        //options.sort(); // Do not need to use to not apply sorting in different languages
 
         // Create categoies
         const categories = this.getCategories(options);
@@ -138,7 +141,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     }
 
     refreshOptions(contentDiv: Element, options: any) {
-
+        const categories = this.getCategories(options);
         // Show options
         for (let i = 0, option: any; option = options[i]; i++) {
             let content = (options[i] as any)[0]; // Human-readable text or image.
@@ -202,9 +205,13 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
                 this.setAttribute('class', 'blocklyDropDownButton');
                 contentDiv.removeAttribute('aria-activedescendant');
             });
+
+            // Find index in array by category name
+            const categoryIndex = categories.indexOf(category);
+
             let buttonImg = document.createElement('img');
-            buttonImg.src = this.getSoundIcon(category);
-            //buttonImg.alt = icon.alt;
+            buttonImg.src = this.getSoundIcon(categoryIndex);
+
             // Upon click/touch, we will be able to get the clicked element as e.target
             // Store a data attribute on all possible click targets so we can match it to the icon.
             const textNode = this.createTextNode_(content);
@@ -305,9 +312,9 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         pxsim.AudioContextManager.stop();
     }
 
-    private getSoundIcon(category: string) {
-        if (soundIconCache && soundIconCache[category]) {
-            return soundIconCache[category].icon;
+    private getSoundIcon(indexCategory: number) {
+        if (soundIconCacheArray && soundIconCacheArray[indexCategory]) {
+            return soundIconCacheArray[indexCategory][1].icon;
         }
         return undefined;
     }
