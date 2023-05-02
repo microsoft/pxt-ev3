@@ -66,28 +66,6 @@ namespace brick {
     }
 
     /**
-     * Clear on the screen at a specific line.
-     * @param line the line number to clear at (starting at 1), eg: 1
-     */
-    //% blockId=clearLine block="clear line %line"
-    //% weight=95 group="Screen" inlineInputMode="inline" blockGap=8
-    //% line.min=1 line.max=12
-    export function clearLine(line: number) {
-        if (screenMode != ScreenMode.ShowLines) {
-            screenMode = ScreenMode.ShowLines;
-            screen.fill(0);
-        }
-
-        line = (line - 1) >> 0; // line indexing starts at 1
-        const nlines = lineCount();
-        if (line < 0 || line > nlines) return; // out of screen by line
-
-        const h = lineHeight();
-        const y = textOffset + h * line;
-        screen.fillRect(0, y, screen.width, h, 0); // clear background
-    }
-
-    /**
      * Show text on the screen on a specific line and starting at a column and the selected print style.
      * @param text the text to print on the screen, eg: "Hello world"
      * @param line the line number to print the text at (starting at 1), eg: 1
@@ -156,7 +134,7 @@ namespace brick {
      * @param printStyle print style black on white or white on black
      */
     //% blockId=screenPrintNumber block="show number %name|at line %line||and column %column|with style %printStyle"
-    //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% weight=97 group="Screen" inlineInputMode="inline" blockGap=8
     //% expandableArgumentMode="enabled"
     //% help=brick/show-number
     //% line.min=1 line.max=12
@@ -171,7 +149,7 @@ namespace brick {
      * @param line the line number to print the text at, eg: 1
      */
     //% blockId=screenShowNumber block="show number %name|at line %line"
-    //% weight=96 group="Screen" inlineInputMode="inline" blockGap=8
+    //% weight=97 group="Screen" inlineInputMode="inline" blockGap=8
     //% help=brick/show-number
     //% line.min=1 line.max=12
     //% deprecated=true
@@ -235,7 +213,7 @@ namespace brick {
     */
     //% blockId=brickShowPorts block="show ports"
     //% help=brick/show-ports blockGap=8
-    //% weight=10 group="Screen"
+    //% weight=95 group="Screen"
     export function showPorts() {
         if (screenMode == ScreenMode.Ports) return;
 
@@ -323,10 +301,32 @@ namespace brick {
     }
 
     /**
+     * Clear on the screen at a specific line.
+     * @param line the line number to clear at (starting at 1), eg: 1
+     */
+    //% blockId=clearLine block="clear line %line"
+    //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
+    //% line.min=1 line.max=12
+    export function clearLine(line: number) {
+        if (screenMode != ScreenMode.ShowLines) {
+            screenMode = ScreenMode.ShowLines;
+            screen.fill(0);
+        }
+
+        line = (line - 1) >> 0; // line indexing starts at 1
+        const nlines = lineCount();
+        if (line < 0 || line > nlines) return; // out of screen by line
+
+        const h = lineHeight();
+        const y = textOffset + h * line;
+        screen.fillRect(0, y, screen.width, h, 0); // clear background
+    }
+
+    /**
      * Clear the screen
      */
     //% blockId=screen_clear_screen block="clear screen"
-    //% weight=90 group="Screen"
+    //% weight=93 group="Screen"
     //% help=brick/clear-screen weight=1
     export function clearScreen() {
         screen.fill(0)
