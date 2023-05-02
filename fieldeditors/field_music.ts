@@ -222,7 +222,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
             buttonImg.setAttribute('data-value', value);
             buttonImg.style.height = "auto";
             textNode.setAttribute('data-value', value);
-            //textNode.setAttribute('lang', "ru"); // for hyphens, here you need to set the correct abbreviation of the selected language 
+            textNode.setAttribute('lang', pxt.Util.userLanguage()); // for hyphens, here you need to set the correct abbreviation of the selected language 
             textNode.style.display = "block";
             textNode.style.lineHeight = "1rem";
             textNode.style.marginBottom = "5%";
