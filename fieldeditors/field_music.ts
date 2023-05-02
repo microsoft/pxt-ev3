@@ -34,8 +34,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         }
         if (!soundIconCache) {
             soundIconCache = JSON.parse(pxtTargetBundle.bundledpkgs['music']['icons.jres']);
-            soundIconCacheArray = Object.entries(soundIconCache);
-            soundIconCacheArray.shift(); // Delete first elem
+            soundIconCacheArray = Object.entries(soundIconCache).filter(el => el[0] !== "*");
         }
     }
 
