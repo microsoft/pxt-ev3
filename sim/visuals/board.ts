@@ -241,6 +241,8 @@ namespace pxsim.visuals {
                         view = new ColorGridControl(this.element, this.defs, state, port);
                     } else if (state.getMode() == ColorSensorMode.Reflected) {
                         view = new ColorWheelControl(this.element, this.defs, state, port);
+                    } else if (state.getMode() == ColorSensorMode.RefRaw) {
+                        view = new ColorWheelControl(this.element, this.defs, state, port);
                     } else if (state.getMode() == ColorSensorMode.Ambient) {
                         view = new ColorWheelControl(this.element, this.defs, state, port);
                     }
