@@ -250,7 +250,7 @@ namespace sensors {
         }
 
         /**
-         * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest).
+         * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest). In raw reflection light mode, the range will be different.
          * @param sensor the color sensor port
          */
         //% help=sensors/color-sensor/light
