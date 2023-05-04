@@ -5,10 +5,14 @@ export interface FieldColorEnumOptions extends pxtblockly.FieldColourNumberOptio
 }
 
 export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Blockly.FieldCustom {
+
     public isFieldCustom_ = true;
+    private paramsData: any[];
 
     constructor(text: string, params: FieldColorEnumOptions, opt_validator?: Function) {
         super(text, params, opt_validator);
+
+        this.paramsData = params["data"];
     }
 
     mapColour(enumString: string) {
@@ -33,9 +37,19 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
             case 'ColorSensorColor.Red': return '#f12a21';
             case 'ColorSensorColor.White': return '#ffffff';
             case 'ColorSensorColor.Brown': return '#6c2d00';
-            case 'ColorSensorColor.None': return '#dfe6e9'; // Grey
+            case 'ColorSensorColor.None': return '#dfe6e9';
             default: return colorString;
         }
+    }
+
+    showEditor_() {
+        super.showEditor_();
+        const colorCells = document.querySelectorAll('.legoColorPicker td');
+        colorCells.forEach((cell) => {
+            const titleName = this.mapColour(cell.getAttribute("title"));
+            const index = this.paramsData.findIndex(item => item[1] === titleName);
+            cell.setAttribute("title", this.paramsData[index][0]);
+        });
     }
 
     /**
