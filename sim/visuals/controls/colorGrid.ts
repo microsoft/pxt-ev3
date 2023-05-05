@@ -5,8 +5,8 @@ namespace pxsim.visuals {
     export class ColorGridControl extends ControlView<ColorSensorNode> {
         private group: SVGGElement;
 
-        private static colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'grey', 'white'];
-        private static colorValue = [5, 4, 2, 3, 1, 7, 6];
+        private static colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'grey', 'white', 'none'];
+        private static colorValue = [5, 4, 2, 3, 1, 7, 6, 0];
 
         private colorDivs: Element[] = [];
 
@@ -33,11 +33,18 @@ namespace pxsim.visuals {
             }
 
             const whiteCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'white-cirlce-wrapper' });
-            const circle = pxsim.svg.child(whiteCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-white', 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: #fff` });
-            this.colorDivs.push(circle);
-            pxsim.svg.child(whiteCircleWrapper, "circle", { 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: none;stroke: #94989b;stroke-width: 0.1px` });
+            const noneCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'nothing-circle-wrapper' });
+            const whiteCircle = pxsim.svg.child(whiteCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-white', 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: #fff` });
+            const noneCircle = pxsim.svg.child(noneCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-none', 'cx': 7.5, 'cy': '16', 'r': '2', 'style': `fill: #fff; fill-opacity: 0%;` });
+            this.colorDivs.push(whiteCircle);
+            this.colorDivs.push(noneCircle);
+            pxsim.svg.child(whiteCircleWrapper, "circle", { 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: none; stroke: #94989b; stroke-width: 0.1px` });
+            pxsim.svg.child(noneCircleWrapper, "circle", { 'cx': 7.5, 'cy': '16', 'r': '2', 'style': `fill: none; stroke: #94989b; stroke-width: 0.1px` });
             pointerEvents.down.forEach(evid => whiteCircleWrapper.addEventListener(evid, ev => {
                 this.setColor(6);
+            }));
+            pointerEvents.down.forEach(evid => noneCircleWrapper.addEventListener(evid, ev => {
+                this.setColor(0);
             }));
             return this.group;
         }
