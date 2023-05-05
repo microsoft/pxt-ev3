@@ -22,6 +22,7 @@ namespace _screen_internal {
 namespace brick {
     const textOffset = 4;
     const lineOffset = 2;
+
     enum ScreenMode {
         None,
         ShowLines,
@@ -29,6 +30,7 @@ namespace brick {
         Ports,
         Custom
     }
+
     let screenMode = ScreenMode.None;
     export let font = image.font8;
 
@@ -126,8 +128,8 @@ namespace brick {
     //% weight=10 group="Screen"
     export function showPorts() {
         if (screenMode == ScreenMode.Ports) return;
-
         screenMode = ScreenMode.Ports;
+
         renderPorts();
         control.runInParallel(function () {
             while (screenMode == ScreenMode.Ports) {
@@ -146,11 +148,14 @@ namespace brick {
 
         for (let i = 0; i < 4; ++i) {
             const x = i * col + 2;
-            screen.print("ABCD"[i], x, 1 * lineHeight8, 1, image.font8)
-            screen.print((i + 1).toString(), x, h - lineHeight8, 1, image.font8)
+            if (screenMode != ScreenMode.Ports) return;
+            screen.print("ABCD"[i], x, 1 * lineHeight8, 1, image.font8);
+            screen.print((i + 1).toString(), x, h - lineHeight8, 1, image.font8);
         }
+
+        if (screenMode != ScreenMode.Ports) return;
         screen.drawLine(0, 5 * lineHeight8, screen.width, 5 * lineHeight8, 1);
-        screen.drawLine(0, h - 5 * lineHeight8, screen.width, h - 5 * lineHeight8, 1)
+        screen.drawLine(0, h - 5 * lineHeight8, screen.width, h - 5 * lineHeight8, 1);
 
         function scale(x: number) {
             if (Math.abs(x) >= 5000) {
@@ -167,8 +172,9 @@ namespace brick {
             const data = datas[i];
             const x = i * col + 2;
             if (!data.actualSpeed && !data.count) continue;
-            screen.print(`${scale(data.actualSpeed)}%`, x, 3 * lineHeight8, 1, image.font8)
-            screen.print(`${scale(data.count)}>`, x, 4 * lineHeight8, 1, image.font8)
+            if (screenMode != ScreenMode.Ports) return;
+            screen.print(`${scale(data.actualSpeed)}%`, x, 3 * lineHeight8, 1, image.font8);
+            screen.print(`${scale(data.count)}>`, x, 4 * lineHeight8, 1, image.font8);
         }
 
         // sensors
@@ -177,16 +183,16 @@ namespace brick {
             const si = sis[i];
             const x = (si.port() - 1) * col + 2;
             const inf = si._info();
-            if (inf)
-                screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
+            if (screenMode != ScreenMode.Ports) return;
+            if (inf) screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
         }
     }
 
     export function showBoot() {
         // pulse green, play startup sound, turn off light
         brick.setStatusLight(StatusLight.GreenPulse);
-        // We pause for 100ms to give time to read sensor values, so they work in on_start block
-        pause(400)
+        // We pause to give time to read sensor values, so they work in on_start block
+        pause(400); // It turns out that this time is not enough for the simulator to display the LED change
         // and we're ready
         brick.setStatusLight(StatusLight.Off);
         // always show port by default if no UI is set
