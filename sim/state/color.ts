@@ -21,7 +21,7 @@ namespace pxsim {
     export class ColorSensorNode extends UartSensorNode {
         id = NodeType.ColorSensor;
 
-        private color: number = 50;
+        private color: number = 0;
 
         constructor(port: number) {
             super(port);
@@ -39,6 +39,14 @@ namespace pxsim {
 
         getValue() {
             return this.color;
+        }
+
+        setMode(mode: number) {
+            this.mode = mode;
+            if (this.mode == ColorSensorMode.RefRaw) this.color = 512; 
+            else this.color = 50;
+            this.changed = true;
+            this.modeChanged = true;
         }
     }
 }

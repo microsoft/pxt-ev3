@@ -26,8 +26,12 @@ namespace pxsim.visuals {
             return 131;
         }
 
-        private getMaxValue() {
-            return 100;
+        private getMaxValue(state: ColorSensorMode) {
+            return (state == ColorSensorMode.RefRaw ? 1023 : 100);
+        }
+
+        private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {
+            return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
         }
 
         updateState() {
@@ -35,10 +39,12 @@ namespace pxsim.visuals {
                 return;
             }
             const node = this.state;
-            const percentage = node.getValue();
-            const inversePercentage = this.getMaxValue() - percentage;
-            svg.setGradientValue(this.colorGradient, inversePercentage + "%");
-            this.reporter.textContent = `${parseFloat((percentage).toString()).toFixed(0)}%`;
+            const value = node.getValue();
+            let inverseValue = this.getMaxValue(node.getMode()) - value;
+            if (node.getMode() == ColorSensorMode.RefRaw) inverseValue = this.mapValue(inverseValue, 0, 1023, 0, 100);
+            svg.setGradientValue(this.colorGradient, inverseValue + "%");
+            this.reporter.textContent = `${parseFloat((value).toString()).toFixed(0)}`;
+            if (node.getMode() != ColorSensorMode.RefRaw) this.reporter.textContent += `%`;
         }
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
@@ -47,7 +53,7 @@ namespace pxsim.visuals {
             const height = bBox.height;
             let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
             const state = this.state;
-            state.setColor(t * this.getMaxValue());
+            state.setColor(t * this.getMaxValue(state.getMode()));
         }
 
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
