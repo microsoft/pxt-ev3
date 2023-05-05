@@ -72,7 +72,7 @@ namespace brick {
      * @param column the column number to print the text at (starting at 1), eg: 1
      * @param printStyle print style black on white or white on black
      */
-    //% blockId=screenPrintString block="show string %text|at line %line||and column %column|with style %printStyle"
+    //% blockId=screenPrintString block="show string $text|at line $line||column $column|style $printStyle"
     //% weight=98 group="Screen" inlineInputMode="inline" blockGap=8
     //% expandableArgumentMode="enabled"
     //% help=brick/show-string
