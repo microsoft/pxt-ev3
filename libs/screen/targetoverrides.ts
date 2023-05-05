@@ -304,7 +304,7 @@ namespace brick {
      * Clear on the screen at a specific line.
      * @param line the line number to clear at (starting at 1), eg: 1
      */
-    //% blockId=clearLine block="clear line %line"
+    //% blockId=clearLine block="clear line $line"
     //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=1 line.max=12
     export function clearLine(line: number) {
