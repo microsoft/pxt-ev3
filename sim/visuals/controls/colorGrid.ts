@@ -33,7 +33,7 @@ namespace pxsim.visuals {
             }
 
             const whiteCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'white-cirlce-wrapper' });
-            const noneCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'nothing-cirlce-wrapper' });
+            const noneCircleWrapper = pxsim.svg.child(this.group, "g", { 'id': 'nothing-circle-wrapper' });
             const whiteCircle = pxsim.svg.child(whiteCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-white', 'cx': 2.2, 'cy': '16', 'r': '2', 'style': `fill: #fff` });
             const noneCircle = pxsim.svg.child(noneCircleWrapper, "circle", { 'class': 'sim-color-grid-circle sim-color-grid-none', 'cx': 7.5, 'cy': '16', 'r': '2', 'style': `fill: #fff; fill-opacity: 0%;` });
             this.colorDivs.push(whiteCircle);
