@@ -11,6 +11,7 @@ declare const pxtTargetBundle: any;
 
 let soundCache: any;
 let soundIconCache: any;
+let soundIconCacheArray: any;
 
 export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldCustom {
     public isFieldCustom_ = true;
@@ -23,7 +24,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         super(text, { blocksInfo: options.blocksInfo, sort: true, data: options.data }, validator);
 
         this.columns_ = parseInt(options.columns) || 4;
-        this.width_ = parseInt(options.width) || 380;
+        this.width_ = parseInt(options.width) || 450;
 
         this.setText = Blockly.FieldDropdown.prototype.setText;
         this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
@@ -33,6 +34,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         }
         if (!soundIconCache) {
             soundIconCache = JSON.parse(pxtTargetBundle.bundledpkgs['music']['icons.jres']);
+            soundIconCacheArray = Object.entries(soundIconCache).filter(el => el[0] !== "*");
         }
     }
 
@@ -55,8 +57,11 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         contentDiv.setAttribute('role', 'menu');
         contentDiv.setAttribute('aria-haspopup', 'true');
         contentDiv.className = 'blocklyMusicFieldOptions';
+        contentDiv.style.display = "flex";
+        contentDiv.style.flexWrap = "wrap";
+        contentDiv.style.float = "none";
         const options = this.getOptions();
-        options.sort();
+        //options.sort(); // Do not need to use to not apply sorting in different languages
 
         // Create categoies
         const categories = this.getCategories(options);
@@ -125,6 +130,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
                 backgroundColor = '#0c4e5e';
                 button.setAttribute('aria-selected', 'true');
             }
+            button.style.padding = "2px 6px";
             button.style.backgroundColor = backgroundColor;
             button.style.borderColor = backgroundColor;
             Blockly.bindEvent_(button, 'click', this, this.categoryClick_);
@@ -138,7 +144,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     }
 
     refreshOptions(contentDiv: Element, options: any) {
-
+        const categories = this.getCategories(options);
         // Show options
         for (let i = 0, option: any; option = options[i]; i++) {
             let content = (options[i] as any)[0]; // Human-readable text or image.
@@ -202,15 +208,27 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
                 this.setAttribute('class', 'blocklyDropDownButton');
                 contentDiv.removeAttribute('aria-activedescendant');
             });
+
+            // Find index in array by category name
+            const categoryIndex = categories.indexOf(category);
+
             let buttonImg = document.createElement('img');
-            buttonImg.src = this.getSoundIcon(category);
-            //buttonImg.alt = icon.alt;
+            buttonImg.src = this.getSoundIcon(categoryIndex);
+
             // Upon click/touch, we will be able to get the clicked element as e.target
             // Store a data attribute on all possible click targets so we can match it to the icon.
             const textNode = this.createTextNode_(content);
             button.setAttribute('data-value', value);
             buttonImg.setAttribute('data-value', value);
+            buttonImg.style.height = "auto";
             textNode.setAttribute('data-value', value);
+            if (pxt.Util.userLanguage() !== "en") textNode.setAttribute('lang', pxt.Util.userLanguage()); // for hyphens, here you need to set the correct abbreviation of the selected language 
+            textNode.style.display = "block";
+            textNode.style.lineHeight = "1rem";
+            textNode.style.marginBottom = "5%";
+            textNode.style.padding = "0px 8px";
+            textNode.style.wordBreak = "break-word";
+            textNode.style.hyphens = "auto";
 
             button.appendChild(buttonImg);
             button.appendChild(textNode);
@@ -237,7 +255,7 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
     protected createTextNode_(content: string) {
         const category = this.parseCategory(content);
         let text = content.substr(content.indexOf(' ') + 1);
-        text = text.length > 15 ? text.substr(0, 12) + "..." : text;
+        
         const textSpan = document.createElement('span');
         textSpan.setAttribute('class', 'blocklyDropdownText');
         textSpan.textContent = text;
@@ -305,9 +323,9 @@ export class FieldMusic extends pxtblockly.FieldImages implements Blockly.FieldC
         pxsim.AudioContextManager.stop();
     }
 
-    private getSoundIcon(category: string) {
-        if (soundIconCache && soundIconCache[category]) {
-            return soundIconCache[category].icon;
+    private getSoundIcon(indexCategory: number) {
+        if (soundIconCacheArray && soundIconCacheArray[indexCategory]) {
+            return soundIconCacheArray[indexCategory][1].icon;
         }
         return undefined;
     }
