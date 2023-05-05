@@ -10,8 +10,8 @@ const screen = image.create(DAL.LCD_WIDTH, DAL.LCD_HEIGHT)
 namespace _screen_internal {
     //% shim=pxt::updateScreen
     function updateScreen(img: Image): void { }
-    function updateStats(msg: string): void { }
     //% shim=pxt::updateStats
+    function updateStats(msg: string): void { }
 
     control.__screen.setupUpdate(() => updateScreen(screen))
     control.EventContext.onStats = function (msg: string) {
