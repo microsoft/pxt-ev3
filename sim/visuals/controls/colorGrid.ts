@@ -5,7 +5,7 @@ namespace pxsim.visuals {
     export class ColorGridControl extends ControlView<ColorSensorNode> {
         private group: SVGGElement;
 
-        private static colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'grey', 'white', 'none'];
+        private static colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'brown', 'white', 'none'];
         private static colorValue = [5, 4, 2, 3, 1, 7, 6, 0];
 
         private colorDivs: Element[] = [];
@@ -15,7 +15,7 @@ namespace pxsim.visuals {
             this.group.setAttribute("transform", `translate(2, 2.5) scale(0.6)`)
 
             const colors = ['#f12a21', '#ffd01b', '#006db3', '#00934b', '#000', '#6c2d00'];
-            const colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'grey'];
+            const colorIds = ['red', 'yellow', 'blue', 'green', 'black', 'brown'];
 
             let cy = -4;
             for (let c = 0; c < colorIds.length; c++) {
