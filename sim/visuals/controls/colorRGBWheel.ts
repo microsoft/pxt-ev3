@@ -66,6 +66,9 @@ namespace pxsim.visuals {
             svg.setGradientValue(this.colorGradient, "50%");
             svg.setGradientColors(this.colorGradient, "black", "yellow");
 
+            let pt = parent.createSVGPoint();
+            let captured: boolean[] = [false, false, false];
+
             let reporterGroup: SVGElement[] = [];
             for (let i = 0; i < 3; i++) {
                 reporterGroup[i] = pxsim.svg.child(this.group, "g");
@@ -89,7 +92,7 @@ namespace pxsim.visuals {
                 console.log(`sliderGroup[${i}]:`);
                 console.log(sliderGroup[i]);
 
-                this.rect[0] = pxsim.svg.child(sliderGroup[i], "rect", {
+                this.rect[i] = pxsim.svg.child(sliderGroup[i], "rect", {
                     "width": this.getSliderWidth(),
                     "height": this.getSliderHeight(),
                     "style": `fill: url(#${gc})`
@@ -97,67 +100,26 @@ namespace pxsim.visuals {
                 );
 
                 console.log(`this.rect[${i}]:`);
-                console.log(this.rect[0]);
+                console.log(this.rect[i]);
             }
-            /*
-            const sliderGroupR = pxsim.svg.child(this.group, "g");
-            const sliderGroupG = pxsim.svg.child(this.group, "g");
-            const sliderGroupB = pxsim.svg.child(this.group, "g");
-            sliderGroupR.setAttribute("transform", `translate(${this.getWidth() / 2 - this.getSliderWidth() / 2 - 36}, ${this.getReporterHeight()})`);
-            sliderGroupG.setAttribute("transform", `translate(${this.getWidth() / 2 - this.getSliderWidth() / 2}, ${this.getReporterHeight()})`);
-            sliderGroupB.setAttribute("transform", `translate(${this.getWidth() / 2 - this.getSliderWidth() / 2 + 36}, ${this.getReporterHeight()})`);
-            console.log("sliderGroupR:");
-            console.log(sliderGroupR);
-            console.log("sliderGroupG:");
-            console.log(sliderGroupG);
-            console.log("sliderGroupB:");
-            console.log(sliderGroupB);
 
-            this.rect[0] = pxsim.svg.child(sliderGroupR, "rect", {
-                    "width": this.getSliderWidth(),
-                    "height": this.getSliderHeight(),
-                    "style": `fill: url(#${gc})`
-                }
-            );
-            this.rect[1] = pxsim.svg.child(sliderGroupG, "rect", {
-                    "width": this.getSliderWidth(),
-                    "height": this.getSliderHeight(),
-                    "style": `fill: url(#${gc})`
-                }
-            );
-            this.rect[2] = pxsim.svg.child(sliderGroupB, "rect", {
-                    "width": this.getSliderWidth(),
-                    "height": this.getSliderHeight(),
-                    "style": `fill: url(#${gc})`
-                }
-            );
-            
-            console.log("this.rectR:");
-            console.log(this.rect[0]);
-            console.log("this.rectG:");
-            console.log(this.rect[1]);
-            console.log("this.rectB:");
-            console.log(this.rect[2]);
-            */
-
-            let pt = parent.createSVGPoint();
-            let captured: boolean[] = [false, false, false];
-
-            touchEvents(this.rect[0], ev => {
-                if (captured[0] && (ev as MouseEvent).clientY) {
-                    ev.preventDefault();
-                    this.updateColorLevel(pt, parent, ev as MouseEvent);
-                }
-            }, ev => {
-                captured[0] = true;
-                if ((ev as MouseEvent).clientY) {
-                    this.rect[0].setAttribute('cursor', '-webkit-grabbing');
-                    this.updateColorLevel(pt, parent, ev as MouseEvent);
-                }
-            }, () => {
-                captured[0] = false;
-                this.rect[0].setAttribute('cursor', '-webkit-grab');
-            });
+            for (let i = 0; i < 3; i++) {
+                touchEvents(this.rect[i], ev => {
+                    if (captured[i] && (ev as MouseEvent).clientY) {
+                        ev.preventDefault();
+                        this.updateColorLevel(pt, parent, ev as MouseEvent);
+                    }
+                }, ev => {
+                    captured[i] = true;
+                    if ((ev as MouseEvent).clientY) {
+                        this.rect[i].setAttribute('cursor', '-webkit-grabbing');
+                        this.updateColorLevel(pt, parent, ev as MouseEvent);
+                    }
+                }, () => {
+                    captured[i] = false;
+                    this.rect[i].setAttribute('cursor', '-webkit-grab');
+                });
+            }
 
             return this.group;
         }

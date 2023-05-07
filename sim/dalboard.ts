@@ -189,6 +189,7 @@ namespace pxsim {
     }
 
     export function inHighcontrastMode(): boolean {
+        ////
         return ev3board().highcontrastMode;
     }
 
