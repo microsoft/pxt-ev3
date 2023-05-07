@@ -239,6 +239,8 @@ namespace pxsim.visuals {
                     const state = ev3board().getInputNodes()[port] as ColorSensorNode;
                     if (state.getMode() == ColorSensorMode.Colors) {
                         view = new ColorGridControl(this.element, this.defs, state, port);
+                    } else if (state.getMode() == ColorSensorMode.RgbRaw) {
+                        view = new ColorRGBWheelControl(this.element, this.defs, state, port);
                     } else if (state.getMode() == ColorSensorMode.Reflected) {
                         view = new ColorWheelControl(this.element, this.defs, state, port);
                     } else if (state.getMode() == ColorSensorMode.RefRaw) {
