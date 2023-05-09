@@ -151,7 +151,7 @@ namespace pxsim {
             return !!this.inputNodes[port];
         }
 
-        getSensor(port: number, type: number): SensorNode {
+        getSensor(port: number, type: number): SensorNode | SensorExtendedNode {
             if (!this.inputNodes[port]) {
                 switch (type) {
                     case DAL.DEVICE_TYPE_GYRO: this.inputNodes[port] = new GyroSensorNode(port); break;
@@ -189,7 +189,7 @@ namespace pxsim {
     }
 
     export function inHighcontrastMode(): boolean {
-        ////
+        ///
         return ev3board().highcontrastMode;
     }
 

@@ -21,7 +21,9 @@ namespace pxsim {
     export class ColorSensorNode extends UartSensorNode {
         id = NodeType.ColorSensor;
 
+        //private colors: number[] = [0];
         private color: number = 0;
+        private colors: number[] = [0, 0, 0];
 
         constructor(port: number) {
             super(port);
@@ -32,8 +34,13 @@ namespace pxsim {
             return DAL.DEVICE_TYPE_COLOR;
         }
 
-        setColor(color: number) {
-            this.color = color;
+        setColors(colors: number[]) {
+            this.colors = colors;
+            this.setChangedState();
+        }
+
+        setColor(colors: number) {
+            this.colors = [colors];
             this.setChangedState();
         }
 
@@ -41,10 +48,15 @@ namespace pxsim {
             return this.color;
         }
 
+        getValues() {
+            return this.colors;
+        }
+
         setMode(mode: number) {
             this.mode = mode;
-            if (this.mode == ColorSensorMode.RefRaw) this.color = 512; 
-            else this.color = 50;
+            if (this.mode == ColorSensorMode.RefRaw) this.color = 512;
+            else if (this.mode == ColorSensorMode.RgbRaw) this.colors = [128, 128, 128];
+            else this.color = 50; // Reflection or ambiend light
             this.changed = true;
             this.modeChanged = true;
         }

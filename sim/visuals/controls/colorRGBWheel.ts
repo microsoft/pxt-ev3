@@ -2,11 +2,15 @@ namespace pxsim.visuals {
 
     export class ColorRGBWheelControl extends ControlView<ColorSensorNode> {
         private group: SVGGElement;
-        private colorGradient: SVGLinearGradientElement;
+        private colorGradient: SVGLinearGradientElement[] = [];
         private reporter: SVGTextElement[] = [];
         private rect: SVGElement[] = [];
 
-        private printOffsetH = 18;
+        private printOffsetH = 16;
+        private rgbLetters: string[] = ["R", "G", "B"];
+        private rectNames: string[] = ["rectR", "rectG", "rectB"];
+        private captured: boolean = false;
+        private classVal: string;
 
         getInnerWidth() {
             return 120;
@@ -29,7 +33,7 @@ namespace pxsim.visuals {
         }
 
         private getMaxValue() {
-            return 1023;
+            return 512;
         }
 
         private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {
@@ -39,48 +43,59 @@ namespace pxsim.visuals {
         updateState() {
             if (!this.visible) return;
             const node = this.state;
-            const value = node.getValue();
-            let inverseValue = this.getMaxValue() - value;
-            inverseValue = this.mapValue(inverseValue, 0, 1023, 0, 100);
-            svg.setGradientValue(this.colorGradient, inverseValue + "%");
-            this.reporter[0].textContent = "R: " + `${parseFloat((value).toString()).toFixed(0)}`;
-            this.reporter[1].textContent = "G: " + `${parseFloat((value).toString()).toFixed(0)}`;
-            this.reporter[2].textContent = "B: " + `${parseFloat((value).toString()).toFixed(0)}`;
+            const values = node.getValues();
+            //console.log("values: ");
+            console.log(values);
+            let inverseValue: number[] = [];
+            for (let i = 0; i < 3; i++) {
+                inverseValue[i] = this.getMaxValue() - values[i];
+                inverseValue[i] = this.mapValue(inverseValue[i], 0, this.getMaxValue(), 0, 100);
+                svg.setGradientValue(this.colorGradient[i], inverseValue[i] + "%");
+                this.reporter[i].textContent = this.rgbLetters[i] + ": " + `${parseFloat((values[i]).toString()).toFixed(0)}`;
+            }
         }
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
+            //console.log(ev);
+            //console.log(ev.target);
+            if (!this.classVal) this.classVal = (ev.target as HTMLElement).classList.value;
+            //console.log("classVal: " + this.classVal);
             let cur = svg.cursorPoint(pt, parent, ev);
-            const bBox = this.rect[0].getBoundingClientRect();
+            let index = this.rectNames.findIndex(i => i == this.classVal);
+            //console.log("index: " + index);
+            const bBox = this.rect[index].getBoundingClientRect();
             const height = bBox.height;
             let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
             const state = this.state;
-            state.setColor(t * this.getMaxValue());
+            let colorsVal = this.state.getValues();
+            colorsVal[index] = t * this.getMaxValue();
+            state.setColors(colorsVal);
         }
 
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
             this.group = svg.elt("g") as SVGGElement;
 
             let gc = "gradient-color-" + this.getPort();
-            const prevColorGradient = globalDefs.querySelector(`#${gc}`) as SVGLinearGradientElement;
-            this.colorGradient = prevColorGradient ? prevColorGradient : svg.linearGradient(globalDefs, gc, false);
-            svg.setGradientValue(this.colorGradient, "50%");
-            svg.setGradientColors(this.colorGradient, "black", "yellow");
+            let prevColorGradient: SVGLinearGradientElement[] = [];
+            for (let i = 0; i < 3; i++) {
+                prevColorGradient[i] = globalDefs.querySelector(`#${gc + "-" + i}`) as SVGLinearGradientElement;
+                this.colorGradient[i] = prevColorGradient[i] ? prevColorGradient[i] : svg.linearGradient(globalDefs, gc + "-" + i, false);
+                svg.setGradientValue(this.colorGradient[i], "50%");
+                svg.setGradientColors(this.colorGradient[i], "black", "yellow");
+            }
 
             let pt = parent.createSVGPoint();
-            let captured: boolean[] = [false, false, false];
 
             let reporterGroup: SVGElement[] = [];
             for (let i = 0; i < 3; i++) {
                 reporterGroup[i] = pxsim.svg.child(this.group, "g");
-
-                console.log(`reporterGroup[${i}]:`);
-                console.log(reporterGroup[i]);
+                //console.log(`reporterGroup[${i}]:`);
+                //console.log(reporterGroup[i]);
 
                 reporterGroup[i].setAttribute("transform", `translate(${this.getWidth() / 2}, ${18 + this.printOffsetH * i})`);
                 this.reporter[i] = pxsim.svg.child(reporterGroup[i], "text", { 'text-anchor': 'middle', 'class': 'sim-text number large inverted', 'style': 'font-size: 18px;' }) as SVGTextElement;
-                
-                console.log(`this.reporter[${i}]:`);
-                console.log(this.reporter[0]);
+                //console.log(`this.reporter[${i}]:`);
+                //console.log(this.reporter[0]);
             }
             
             let sliderGroup: SVGElement[] = [];
@@ -88,35 +103,35 @@ namespace pxsim.visuals {
                 sliderGroup[i] = pxsim.svg.child(this.group, "g");
                 const translateX = (this.getWidth() / 2 - this.getSliderWidth() / 2 - 36) + 36 * i;
                 sliderGroup[i].setAttribute("transform", `translate(${translateX}, ${this.getReporterHeight()})`);
-
-                console.log(`sliderGroup[${i}]:`);
-                console.log(sliderGroup[i]);
+                //console.log(`sliderGroup[${i}]:`);
+                //console.log(sliderGroup[i]);
 
                 this.rect[i] = pxsim.svg.child(sliderGroup[i], "rect", {
                     "width": this.getSliderWidth(),
                     "height": this.getSliderHeight(),
-                    "style": `fill: url(#${gc})`
+                    "style": `fill: url(#${gc + "-" + i})`
                     }
                 );
-
-                console.log(`this.rect[${i}]:`);
-                console.log(this.rect[i]);
+                //console.log(`this.rect[${i}]:`);
+                //console.log(this.rect[i]);
             }
 
             for (let i = 0; i < 3; i++) {
                 touchEvents(this.rect[i], ev => {
-                    if (captured[i] && (ev as MouseEvent).clientY) {
+                    if (this.captured && (ev as MouseEvent).clientY) {
                         ev.preventDefault();
                         this.updateColorLevel(pt, parent, ev as MouseEvent);
                     }
                 }, ev => {
-                    captured[i] = true;
+                    this.captured = true;
                     if ((ev as MouseEvent).clientY) {
                         this.rect[i].setAttribute('cursor', '-webkit-grabbing');
+                        this.rect[i].setAttribute('class', this.rectNames[i]);
                         this.updateColorLevel(pt, parent, ev as MouseEvent);
                     }
                 }, () => {
-                    captured[i] = false;
+                    this.captured = false;
+                    this.classVal = '';
                     this.rect[i].setAttribute('cursor', '-webkit-grab');
                 });
             }
