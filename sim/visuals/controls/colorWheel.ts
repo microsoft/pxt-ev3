@@ -74,8 +74,6 @@ namespace pxsim.visuals {
 
             const rect = pxsim.svg.child(sliderGroup, "rect",
                 {
-                    "x": 0,
-                    "y": 0,
                     "width": this.getSliderWidth(),
                     "height": this.getSliderHeight(),
                     "style": `fill: url(#${gc})`

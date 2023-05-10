@@ -33,7 +33,7 @@ namespace pxsim.visuals {
         }
 
         private getMaxValue() {
-            return 512;
+            return 511;
         }
 
         private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {
@@ -45,7 +45,7 @@ namespace pxsim.visuals {
             const node = this.state;
             const values = node.getValues();
             //console.log("values: ");
-            console.log(values);
+            //console.log(values);
             let inverseValue: number[] = [];
             for (let i = 0; i < 3; i++) {
                 inverseValue[i] = this.getMaxValue() - values[i];
