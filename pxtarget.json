@@ -109,6 +109,8 @@
         "copyrightText": "LEGO, the LEGO logo, MINDSTORMS and the MINDSTORMS EV3 logo are trademarks and/ or copyrights of the LEGO Group. ©2018 The LEGO Group. All rights reserved.",
         "crowdinProject": "makecode",
         "selectLanguage": true,
+        "blocksCollapsing": true,
+        "highContrast": false,
         "greenScreen": true,
         "availableLocales": [
             "en",
@@ -118,7 +120,6 @@
             "zh-CN",
             "fr"
         ],
-        "highContrast": true,
         "lightToc": true,
         "docMenu": [{
                 "name": "Support",
@@ -161,6 +162,7 @@
         "scriptManager": true,
         "debugger": true,
         "importExtensionFiles": true,
+        "addNewTypeScriptFile": true,
         "experiments": [
             "python",
             "alwaysGithubItemBlocks"
