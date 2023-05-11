@@ -110,7 +110,7 @@
         "crowdinProject": "makecode",
         "selectLanguage": true,
         "blocksCollapsing": true,
-        "highContrast": false,
+        "highContrast": true,
         "greenScreen": true,
         "availableLocales": [
             "en",
