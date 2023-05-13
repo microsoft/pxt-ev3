@@ -5,7 +5,6 @@ namespace pxsim.visuals {
         private colorGradient: SVGLinearGradientElement[] = [];
         private reporter: SVGTextElement[] = [];
         private rect: SVGElement[] = [];
-
         private printOffsetH = 16;
         private rgbLetters: string[] = ["R", "G", "B"];
         private rectNames: string[] = ["rectR", "rectG", "rectB"];
@@ -33,7 +32,7 @@ namespace pxsim.visuals {
         }
 
         private getMaxValue() {
-            return 511;
+            return 512;
         }
 
         private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {
@@ -44,8 +43,6 @@ namespace pxsim.visuals {
             if (!this.visible) return;
             const node = this.state;
             const values = node.getValues();
-            //console.log("values: ");
-            //console.log(values);
             let inverseValue: number[] = [];
             for (let i = 0; i < 3; i++) {
                 inverseValue[i] = this.getMaxValue() - values[i];
@@ -56,13 +53,9 @@ namespace pxsim.visuals {
         }
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
-            //console.log(ev);
-            //console.log(ev.target);
             if (!this.classVal) this.classVal = (ev.target as HTMLElement).classList.value;
-            //console.log("classVal: " + this.classVal);
             let cur = svg.cursorPoint(pt, parent, ev);
             let index = this.rectNames.findIndex(i => i == this.classVal);
-            //console.log("index: " + index);
             const bBox = this.rect[index].getBoundingClientRect();
             const height = bBox.height;
             let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
@@ -84,18 +77,12 @@ namespace pxsim.visuals {
                 svg.setGradientColors(this.colorGradient[i], "black", "yellow");
             }
 
-            let pt = parent.createSVGPoint();
-
             let reporterGroup: SVGElement[] = [];
             for (let i = 0; i < 3; i++) {
                 reporterGroup[i] = pxsim.svg.child(this.group, "g");
-                //console.log(`reporterGroup[${i}]:`);
-                //console.log(reporterGroup[i]);
 
                 reporterGroup[i].setAttribute("transform", `translate(${this.getWidth() / 2}, ${18 + this.printOffsetH * i})`);
                 this.reporter[i] = pxsim.svg.child(reporterGroup[i], "text", { 'text-anchor': 'middle', 'class': 'sim-text number large inverted', 'style': 'font-size: 18px;' }) as SVGTextElement;
-                //console.log(`this.reporter[${i}]:`);
-                //console.log(this.reporter[0]);
             }
             
             let sliderGroup: SVGElement[] = [];
@@ -103,8 +90,6 @@ namespace pxsim.visuals {
                 sliderGroup[i] = pxsim.svg.child(this.group, "g");
                 const translateX = (this.getWidth() / 2 - this.getSliderWidth() / 2 - 36) + 36 * i;
                 sliderGroup[i].setAttribute("transform", `translate(${translateX}, ${this.getReporterHeight()})`);
-                //console.log(`sliderGroup[${i}]:`);
-                //console.log(sliderGroup[i]);
 
                 this.rect[i] = pxsim.svg.child(sliderGroup[i], "rect", {
                     "width": this.getSliderWidth(),
@@ -112,10 +97,9 @@ namespace pxsim.visuals {
                     "style": `fill: url(#${gc + "-" + i})`
                     }
                 );
-                //console.log(`this.rect[${i}]:`);
-                //console.log(this.rect[i]);
             }
 
+            let pt = parent.createSVGPoint();
             for (let i = 0; i < 3; i++) {
                 touchEvents(this.rect[i], ev => {
                     if (this.captured && (ev as MouseEvent).clientY) {

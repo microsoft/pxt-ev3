@@ -43,8 +43,8 @@ namespace pxsim {
             this.setChangedState();
         }
 
-        setColor(colors: number) {
-            this.color = colors;
+        setColor(color: number) {
+            this.color = color;
             this.setChangedState();
         }
 
@@ -60,12 +60,15 @@ namespace pxsim {
             this.mode = mode;
             if (this.mode == ColorSensorMode.RefRaw) {
                 this.color = 512;
+                this.colors = [0, 0, 0];
                 this.modeReturnArr = false;
             } else if (this.mode == ColorSensorMode.RgbRaw) {
+                this.color = 0;
                 this.colors = [128, 128, 128];
                 this.modeReturnArr = true;
             } else { // Reflection or ambiend light
                 this.color = 50;
+                this.colors = [0, 0, 0];
                 this.modeReturnArr = false;
             }
             this.changed = true;
