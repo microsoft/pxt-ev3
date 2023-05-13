@@ -92,12 +92,12 @@ namespace pxsim {
                             // Actual
                             const index = 0; //UartOff.Actual + port * 2;
                             if (!node.isModeReturnArr()) {
-                                const value = Math.floor(node.getValue());
+                                const value = Math.round(node.getValue());
                                 util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index, value);
                             } else {
                                 const values = node.getValues();
                                 for (let i = 0, offset = 0; i < values.length; i++, offset += 2) {
-                                    util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + offset, Math.floor(values[i]));
+                                    util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + offset, Math.round(values[i]));
                                 }
                             }
                             // Status
