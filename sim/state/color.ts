@@ -66,6 +66,10 @@ namespace pxsim {
                 this.color = 0;
                 this.colors = [128, 128, 128];
                 this.modeReturnArr = true;
+            } else if (this.mode == ColorSensorMode.Colors) {
+                this.color = 0; // None defl color
+                this.colors = [0, 0, 0];
+                this.modeReturnArr = false;
             } else { // Reflection or ambiend light
                 this.color = 50;
                 this.colors = [0, 0, 0];
