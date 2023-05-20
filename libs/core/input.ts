@@ -400,6 +400,10 @@ void      cUiUpdatePower(void)
             return this._query().toString();
         }
 
+        _infoArr(): string[] {
+            return [this._query().toString()];
+        }
+
         _update(prev: number, curr: number) {
         }
 

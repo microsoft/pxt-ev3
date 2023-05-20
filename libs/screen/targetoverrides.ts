@@ -272,7 +272,14 @@ namespace brick {
             const x = (si.port() - 1) * col + 2;
             const inf = si._info();
             if (screenMode != ScreenMode.Ports) return;
-            if (inf) screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
+            if (inf == "array") {
+                let infArr = si._infoArr();
+                for (let data = 0, str = Math.min(infArr.length + 1, 4); data < Math.min(infArr.length, 3); data++, str--) {
+                    screen.print(infArr[data], x, h - str * lineHeight8, 1, infArr[data].length > 4 ? image.font5 : image.font8);
+                }
+            } else if (inf) {
+                screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
+            }
         }
     }
 

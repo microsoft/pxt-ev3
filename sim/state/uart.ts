@@ -91,7 +91,15 @@ namespace pxsim {
                         if (node && node.isUart()) {
                             // Actual
                             const index = 0; //UartOff.Actual + port * 2;
-                            util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index, Math.floor(node.getValue()))
+                            if (!node.isModeReturnArr()) {
+                                const value = Math.round(node.getValue());
+                                util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index, value);
+                            } else {
+                                const values = node.getValues();
+                                for (let i = 0, offset = 0; i < values.length; i++, offset += 2) {
+                                    util.map16Bit(data, UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + offset, Math.round(values[i]));
+                                }
+                            }
                             // Status
                             data[UartOff.Status + port] = node.valueChange() ? UartStatus.UART_PORT_CHANGED : UartStatus.UART_DATA_READY;
                         }

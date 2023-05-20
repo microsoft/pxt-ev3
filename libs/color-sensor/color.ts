@@ -87,9 +87,16 @@ namespace sensors {
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
                 return this.getNumber(NumberFormat.UInt8LE, 0)
-            if (this.mode == ColorSensorMode.RefRaw || this.mode == ColorSensorMode.RgbRaw)
+            if (this.mode == ColorSensorMode.RefRaw)
                 return this.getNumber(NumberFormat.UInt16LE, 0)
             return 0
+        }
+
+        _queryArr(): number[] {
+            if (this.mode == ColorSensorMode.RgbRaw) {
+                return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
+            }
+            return [0, 0, 0];
         }
 
         _info(): string {
@@ -106,8 +113,20 @@ namespace sensors {
                 case ColorSensorMode.AmbientLightIntensity:
                 case ColorSensorMode.ReflectedLightIntensity:
                     return `${this._query()}%`;
+                case ColorSensorMode.RgbRaw:
+                    return "array";
                 default:
                     return this._query().toString();
+            }
+        }
+
+        _infoArr(): string[] {
+            switch (this.mode) {
+                case ColorSensorMode.RgbRaw:
+                    const queryArr = this._queryArr().map(number => number.toString());
+                    return queryArr;
+                default:
+                    return ["0", "0", "0"];
             }
         }
 

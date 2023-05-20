@@ -28,6 +28,7 @@ namespace pxsim.visuals {
 
             switch (mode) {
                 case ColorSensorMode.Colors: this.updateSensorLightVisual('#0062DD'); return; // blue
+                case ColorSensorMode.RgbRaw: this.updateSensorLightVisual('#0062DD'); return; // blue
                 case ColorSensorMode.Reflected: this.updateSensorLightVisual('#F86262'); return; // red
                 case ColorSensorMode.RefRaw: this.updateSensorLightVisual('#F86262'); return; // red
                 case ColorSensorMode.Ambient: this.updateSensorLightVisual('#67C3E2'); return; // light blue
