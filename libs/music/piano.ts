@@ -12,6 +12,7 @@ namespace music {
     //% note.fieldOptions.minNote=40 note.fieldOptions.maxNote=75
     //% useEnumVal=1
     //% weight=10 blockGap=8
+    //% group="Tone"
     export function noteFrequency(note: Note): number {
         //TODO fill in actual min/max note values
         return note;
