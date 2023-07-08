@@ -7,7 +7,7 @@ const enum ColorSensorMode {
     Color = 2,
     RefRaw = 3,
     RgbRaw = 4,
-    ColorCal = 5,
+    Calibration = 5,
 }
 
 enum LightIntensityMode {
@@ -71,8 +71,31 @@ namespace sensors {
         }
 
         setMode(m: ColorSensorMode) {
-            // don't change threshold after initialization
-            this._setMode(m)
+            if (this.mode != m) { // If the new mode is different from what was set for the sensor
+                let previousValues: number[];
+                if (this.mode == ColorSensorMode.RgbRaw) previousValues = this._queryArr();
+                else previousValues[0] = this._query();
+                this._setMode(m);
+                let valueChangesCount = 0; // Value changes counter
+                while (valueChangesCount < 3) {
+                    if (this.mode == ColorSensorMode.RgbRaw) { // Return array RGB mode
+                        const currentValues = this._queryArr();
+                        for (let i = 0; i < currentValues.length; i++) { // If any of the RGB components have changed
+                            if (previousValues[i] != currentValues[i] && currentValues[i] <= 1023) valueChangesCount++;
+                        }
+                    } else if (this.mode == ColorSensorMode.Color) { // Color mode
+                        const currentValue = this._query();
+                        if (previousValues[0] != currentValue && currentValue <= 7) valueChangesCount++;
+                    } else { // After modes return one value
+                        const currentValue = this._query();
+                        if (previousValues[0] != currentValue && currentValue <= (m == ColorSensorMode.RefRaw ? 1023 : 100)) valueChangesCount++;
+                    }
+                    pause(5);
+                }
+            } else {
+                // don't change threshold after initialization
+                this._setMode(m);
+            }
         }
 
         /**
@@ -282,12 +305,12 @@ namespace sensors {
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.poke();
-            this.setMode(<ColorSensorMode><number>mode)
+            this.setMode(<ColorSensorMode><number>mode);
             switch (mode) {
                 case LightIntensityMode.ReflectedRaw:
-                    return this.reflectedLightRaw();
+                    return this.getNumber(NumberFormat.UInt16LE, 0);
                 default:
-                    return this.getNumber(NumberFormat.UInt8LE, 0)
+                    return this.getNumber(NumberFormat.UInt8LE, 0);
             }
         }
 
@@ -312,9 +335,7 @@ namespace sensors {
          */
         //%
         reflectedLightRaw(): number {
-            this.poke();
-            this.setMode(ColorSensorMode.RefRaw);
-            return this.getNumber(NumberFormat.UInt16LE, 0);
+            return this.light(LightIntensityMode.ReflectedRaw);
         }
 
         /**
