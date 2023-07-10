@@ -93,7 +93,7 @@ namespace sensors {
                         const currentValue = this._query();
                         if (previousValues[0] != currentValue && currentValue <= (m == ColorSensorMode.RefRaw ? 1023 : 100)) valueChangesCount++;
                     }
-                    pause(5);
+                    pause(valueChangesCount < 1 ? 5 : 10);
                 }
             } else {
                 // don't change threshold after initialization
