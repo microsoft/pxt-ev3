@@ -70,14 +70,17 @@ namespace sensors {
             return DAL.DEVICE_TYPE_COLOR
         }
 
-        setMode(m: ColorSensorMode) {
-            if (this.mode != m) { // If the new mode is different from what was set for the sensor
-                let previousValues: number[];
-                if (this.mode == ColorSensorMode.RgbRaw) previousValues = this._queryArr();
+        setMode(m: ColorSensorMode) {;
+            if (m != this.mode && this.isActive()) { // If the new mode is different from what was set for the sensor
+                let previousValues: number[] = [];
+                if (this.mode == ColorSensorMode.RgbRaw) previousValues = this._queryArr(); // Before changing the mode, remember what the value was
                 else previousValues[0] = this._query();
-                this._setMode(m);
-                let valueChangesCount = 0; // Value changes counter
-                while (valueChangesCount < 3) {
+                this._setMode(m); // Change mode
+                let valueChangesCount = 0; // Value change count
+                let currTime = 0;
+                const maxTime = control.millis() + 100;
+                while (valueChangesCount < 2 && currTime < maxTime) { // Waiting for multiple changes
+                    currTime = control.millis();
                     if (this.mode == ColorSensorMode.RgbRaw) { // Return array RGB mode
                         const currentValues = this._queryArr();
                         for (let i = 0; i < currentValues.length; i++) { // If any of the RGB components have changed
@@ -110,7 +113,7 @@ namespace sensors {
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
                 return this.getNumber(NumberFormat.UInt8LE, 0)
-            if (this.mode == ColorSensorMode.RefRaw)
+            else if (this.mode == ColorSensorMode.RefRaw)
                 return this.getNumber(NumberFormat.UInt16LE, 0)
             return 0
         }
