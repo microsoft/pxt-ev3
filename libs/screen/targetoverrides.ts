@@ -28,6 +28,7 @@ namespace brick {
         ShowLines,
         Image,
         Ports,
+        Console,
         Custom
     }
 
@@ -296,6 +297,12 @@ namespace brick {
             if (screenMode != ScreenMode.None) return;
             showPorts();
         })
+    }
+
+    export function showConsole() {
+        console.sendToScreen();
+        screenMode = ScreenMode.Console;
+        clearScreen();
     }
 
     /**

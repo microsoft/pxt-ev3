@@ -19,8 +19,9 @@ namespace console._screen {
         if (!lines) {
             lines = [];
             console.addListener(log);
-            brick.buttonUp.onEvent(ButtonEvent.Bumped, () => scroll(-3))
-            brick.buttonDown.onEvent(ButtonEvent.Bumped, () => scroll(3))
+            brick.buttonUp.onEvent(ButtonEvent.Bumped, () => scroll(-3));
+            brick.buttonDown.onEvent(ButtonEvent.Bumped, () => scroll(3));
+            brick.showConsole();
         }
     }
 

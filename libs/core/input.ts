@@ -220,42 +220,7 @@ namespace sensors.internal {
         const CinCnt = batteryInfo.CinCnt;
         const CoutCnt = batteryInfo.CoutCnt;
         const VinCnt = batteryInfo.VinCnt;
-        /*
-void      cUiUpdatePower(void)
-{
-#ifndef Linux_X86
-  DATAF   CinV;
-  DATAF   CoutV;
 
-  if ((UiInstance.Hw == FINAL) || (UiInstance.Hw == FINALB))
-  {
-    CinV                =  CNT_V(UiInstance.CinCnt) / AMP_CIN;
-    UiInstance.Vbatt    =  (CNT_V(UiInstance.VinCnt) / AMP_VIN) + CinV + VCE;
-
-    UiInstance.Ibatt    =  CinV / SHUNT_IN;
-    CoutV               =  CNT_V(UiInstance.CoutCnt) / AMP_COUT;
-    UiInstance.Imotor   =  CoutV / SHUNT_OUT;
-
-  }
-  else
-  {
-    CinV                =  CNT_V(UiInstance.CinCnt) / EP2_AMP_CIN;
-    UiInstance.Vbatt    =  (CNT_V(UiInstance.VinCnt) / AMP_VIN) + CinV + VCE;
-
-    UiInstance.Ibatt    =  CinV / EP2_SHUNT_IN;
-    UiInstance.Imotor   =  0;
-
-  }
-
-#endif
-#ifdef DEBUG_TEMP_SHUTDOWN
-
-  UiInstance.Vbatt  =  7.0;
-  UiInstance.Ibatt  =  5.0;
-
-#endif
-}        
-        */
         const CinV = CNT_V(CinCnt) / AMP_CIN;
         const Vbatt = CNT_V(VinCnt) / AMP_VIN + CinV + VCE;
         const Ibatt = CinV / SHUNT_IN;
@@ -283,13 +248,14 @@ void      cUiUpdatePower(void)
 
     let nonActivated = 0;
     function detectDevices() {
-        control.dmesg(`detect devices (hash ${hashDevices()})`)
-        const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS)
+        control.dmesg(`detect devices (hash ${hashDevices()})`);
+        const inDcm = analogMM.slice(AnalogOff.InDcm, DAL.NUM_INPUTS);
+        const inConn = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS);
         let numChanged = 0;
         const uartSensors: SensorInfo[] = [];
 
         for (const sensorInfo of sensorInfos) {
-            const newConn = conns[sensorInfo.port]
+            const newConn = inConn[sensorInfo.port]
             if (newConn == sensorInfo.connType
                 && sensorInfo.sensor
                 && sensorInfo.sensor.isActive()) {
@@ -297,26 +263,30 @@ void      cUiUpdatePower(void)
                     uartSensors.push(sensorInfo);
                 continue;
             }
-            numChanged++
-            sensorInfo.connType = newConn
-            sensorInfo.devType = DAL.DEVICE_TYPE_NONE
+            numChanged++;
+            sensorInfo.connType = newConn;
+            sensorInfo.devType = DAL.DEVICE_TYPE_NONE;
             if (newConn == DAL.CONN_INPUT_UART) {
-                control.dmesg(`new UART connection at ${sensorInfo.port}`)
+                control.dmesg(`new UART connection at ${sensorInfo.port}`);
                 updateUartMode(sensorInfo.port, 0);
                 uartSensors.push(sensorInfo);
             } else if (newConn == DAL.CONN_NXT_IIC) {
-                control.dmesg(`new IIC connection at ${sensorInfo.port}`)
-                sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN
-                sensorInfo.iicid = readIICID(sensorInfo.port)
-                control.dmesg(`IIC ID ${sensorInfo.iicid.length}`)
+                control.dmesg(`new IIC connection at ${sensorInfo.port}`);
+                sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN;
+                sensorInfo.iicid = readIICID(sensorInfo.port);
+                control.dmesg(`IIC ID ${sensorInfo.iicid.length}`);
+            } else if (newConn == DAL.CONN_NXT_DUMB) {
+                control.dmesg(`new NXT analog connection at ${sensorInfo.port}`);
+                sensorInfo.devType = inDcm[sensorInfo.port];
+                control.dmesg(`NXT analog dev type ${sensorInfo.devType}`);
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
-                control.dmesg(`new DUMB connection at ${sensorInfo.port}`)
+                control.dmesg(`new DUMB connection at ${sensorInfo.port}`);
                 // TODO? for now assume touch
-                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH
+                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH;
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
                 //control.dmesg(`disconnect at port ${sensorInfo.port}`)
             } else {
-                control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`)
+                control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`);
             }
         }
 
@@ -417,13 +387,35 @@ void      cUiUpdatePower(void)
     }
 
     export class AnalogSensor extends Sensor {
+        protected mode: number // the mode user asked for
+        protected realmode: number // the mode the hardware is in
+
         constructor(port: number) {
-            super(port)
+            super(port);
+            this.mode = 0;
+            this.realmode = 0;
+        }
+
+        protected _setMode(m: number) {
+            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`);
+            let v = m | 0;
+            this.mode = v;
+            if (!this.isActive()) return;
+            if (this.realmode != this.mode) {
+                control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
+                this.realmode = v;
+                setUartMode(this._port, v);
+            }
+        }
+
+        _readPin1() {
+            if (!this.isActive()) return 0;
+            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin1 + 2 * this._port);
         }
 
         _readPin6() {
-            if (!this.isActive()) return 0
-            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port)
+            if (!this.isActive()) return 0;
+            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port);
         }
     }
 
@@ -432,24 +424,25 @@ void      cUiUpdatePower(void)
         protected realmode: number // the mode the hardware is in
 
         constructor(port: number) {
-            super(port)
-            this.mode = 0
-            this.realmode = 0
+            super(port);
+            this.mode = 0;
+            this.realmode = 0;
         }
 
         _activated() {
-            this.realmode = 0
-            this._setMode(this.mode)
+            this.realmode = 0;
+            this._setMode(this.mode);
         }
 
         protected _setMode(m: number) {
-            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
-            let v = m | 0
-            this.mode = v
-            if (!this.isActive()) return
+            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`);
+            let v = m | 0;
+            this.mode = v;
+            if (!this.isActive()) return;
             if (this.realmode != this.mode) {
-                this.realmode = v
-                setUartMode(this._port, v)
+                control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
+                this.realmode = v;
+                setUartMode(this._port, v);
             }
         }
 
@@ -516,7 +509,10 @@ void      cUiUpdatePower(void)
         }
     }
 
-    export const iicsensor = new IICSensor(3)
+    export const i2cSensor1 = new IICSensor(1);
+    export const i2cSensor2 = new IICSensor(2);
+    export const i2cSensor3 = new IICSensor(3);
+    export const i2cSensor4 = new IICSensor(4);
 
     function uartReset(port: number) {
         if (port < 0) return
@@ -588,8 +584,9 @@ void      cUiUpdatePower(void)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
     }
 
-    const UART_PORT_CHANGED = 1
-    const UART_DATA_READY = 8
+    const UART_PORT_CHANGED = 1;
+    const UART_DATA_READY = 8;
+
     function setUartMode(port: number, mode: number) {
         while (true) {
             if (port < 0) return
@@ -617,15 +614,16 @@ void      cUiUpdatePower(void)
             DAL.MAX_DEVICE_DATALENGTH)
     }
 
-    function getUartNumber(fmt: NumberFormat, off: number, port: number) {
+    function getUartNumber(fmt: NumberFormat, off: number, port: number): number {
         if (port < 0) return 0
-        let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
+        const index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
         return uartMM.getNumber(fmt,
             UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
     }
 
     export function setIICMode(port: number, type: number, mode: number) {
         if (port < 0) return;
+        control.dmesg(`iic set type ${type} mode ${mode} at ${port}`);
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
