@@ -81,6 +81,7 @@ namespace sensors {
                 const maxTime = control.millis() + 100;
                 while (valueChangesCount < 2 && currTime < maxTime) { // Waiting for multiple changes
                     currTime = control.millis();
+                    this.poke();
                     if (this.mode == ColorSensorMode.RgbRaw) { // Return array RGB mode
                         const currentValues = this._queryArr();
                         for (let i = 0; i < currentValues.length; i++) { // If any of the RGB components have changed
@@ -219,9 +220,9 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         color(): ColorSensorColor {
+            this.setMode(ColorSensorMode.Color);
             this.poke();
-            this.setMode(ColorSensorMode.Color)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
+            return this.getNumber(NumberFormat.UInt8LE, 0);
         }
 
         /**
@@ -253,8 +254,8 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         rgbRaw(): number[] {
-            this.poke();
             this.setMode(ColorSensorMode.RgbRaw);
+            this.poke();
             return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
         }
 
@@ -307,8 +308,8 @@ namespace sensors {
         //% weight=87 blockGap=8
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
-            this.poke();
             this.setMode(<ColorSensorMode><number>mode);
+            this.poke();
             switch (mode) {
                 case LightIntensityMode.ReflectedRaw:
                     return this.getNumber(NumberFormat.UInt16LE, 0);
