@@ -300,9 +300,9 @@ namespace brick {
     }
 
     export function showConsole() {
-        console.sendToScreen();
+        //console.sendToScreen();
         screenMode = ScreenMode.Console;
-        clearScreen();
+        //clearScreen();
     }
 
     /**

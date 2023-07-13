@@ -255,7 +255,7 @@ namespace sensors.internal {
         const uartSensors: SensorInfo[] = [];
 
         for (const sensorInfo of sensorInfos) {
-            const newConn = inConn[sensorInfo.port]
+            const newConn = inConn[sensorInfo.port];
             if (newConn == sensorInfo.connType
                 && sensorInfo.sensor
                 && sensorInfo.sensor.isActive()) {
@@ -397,14 +397,13 @@ namespace sensors.internal {
         }
 
         protected _setMode(m: number) {
-            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`);
             let v = m | 0;
             this.mode = v;
             if (!this.isActive()) return;
             if (this.realmode != this.mode) {
                 control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
                 this.realmode = v;
-                setUartMode(this._port, v);
+                // setAnalogMode()
             }
         }
 

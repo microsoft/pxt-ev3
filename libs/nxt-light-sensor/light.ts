@@ -1,10 +1,15 @@
 const enum NXTLightSensorMode {
-    //% block="reflected light (raw)"
-    ReflectedLightRaw = 0,
     //% block="reflected light"
-    ReflectedLight = 1,
+    ReflectedLight = 0,
     //% block="ambient light"
-    AmbientLight = 2
+    AmbientLight = 1
+}
+
+enum ReflectedLightMode {
+    //% block="reflected light"
+    Reflected = 0,
+    //% block="reflected light (raw)"
+    ReflectedRaw = 1
 }
 
 enum Light {
@@ -24,7 +29,7 @@ namespace sensors {
         }
 
         _query() {
-            return this._readPin1();
+            return this.readValue();
         }
 
         _info(): string {
@@ -32,7 +37,7 @@ namespace sensors {
         }
 
         _update(prev: number, curr: number) {
-            return this._readPin1();
+            return this.readValue();
         }
 
         _deviceType() {
@@ -67,10 +72,8 @@ namespace sensors {
             //this.setMode(<NXTLightSensorMode><number>mode);
             this.poke();
             switch (mode) {
-                case NXTLightSensorMode.ReflectedLightRaw:
-                    return this.reflectetLightRaw();
                 case NXTLightSensorMode.ReflectedLight:
-                    return this.reflectetLight();
+                    return this.reflectetLightRaw();
                 case NXTLightSensorMode.AmbientLight:
                     return this.ambientLight();
                 default:
@@ -91,7 +94,6 @@ namespace sensors {
          */
         //%
         reflectetLightRaw() {
-            this.poke();
             return this.readValue();
         }
 
@@ -100,7 +102,6 @@ namespace sensors {
          */
         //%
         reflectetLight() {
-            this.poke();
             return this.readValue();
         }
 
@@ -109,7 +110,6 @@ namespace sensors {
          */
         //%
         ambientLight() {
-            this.poke();
             return this.readValue();
         }
     }
