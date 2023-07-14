@@ -47,6 +47,8 @@ enum Light {
 
 namespace sensors {
 
+    const MODE_SWITCH_DELAY = 10;
+
     /**
      * The color sensor is a digital sensor that can detect the color or intensity
      * of light that enters the small window on the face of the sensor.
@@ -72,33 +74,42 @@ namespace sensors {
 
         setMode(m: ColorSensorMode) {;
             if (m != this.mode && this.isActive()) { // If the new mode is different from what was set for the sensor
-                let previousValues: number[] = [];
-                if (this.mode == ColorSensorMode.RgbRaw) previousValues = this._queryArr(); // Before changing the mode, remember what the value was
-                else previousValues[0] = this._query();
+                let previousValue = 0;
+                if (this.mode == ColorSensorMode.RgbRaw) previousValue = this._queryArr()[0]; // Before changing the mode, remember what the value was
+                else previousValue = this._query();
+                //control.dmesg(`previousValues: ${previousValue}`);
                 this._setMode(m); // Change mode
                 let valueChangesCount = 0; // Value change count
+                const startTime = control.millis();
+                pause(MODE_SWITCH_DELAY);
                 let currTime = 0;
                 const maxTime = control.millis() + 100;
+                //let i = 0;
                 while (valueChangesCount < 2 && currTime < maxTime) { // Waiting for multiple changes
                     currTime = control.millis();
                     this.poke();
                     if (this.mode == ColorSensorMode.RgbRaw) { // Return array RGB mode
-                        const currentValues = this._queryArr();
-                        for (let i = 0; i < currentValues.length; i++) { // If any of the RGB components have changed
-                            if (previousValues[i] != currentValues[i] && currentValues[i] <= 1023) valueChangesCount++;
-                        }
+                        const currentValue = this._queryArr()[0];
+                        if (previousValue != currentValue) valueChangesCount++;
                     } else if (this.mode == ColorSensorMode.Color) { // Color mode
                         const currentValue = this._query();
-                        if (previousValues[0] != currentValue && currentValue <= 7) valueChangesCount++;
+                        if (previousValue != currentValue && currentValue <= 7) valueChangesCount++;
                     } else { // After modes return one value
                         const currentValue = this._query();
-                        if (previousValues[0] != currentValue && currentValue <= (m == ColorSensorMode.RefRaw ? 1023 : 100)) valueChangesCount++;
+                        //control.dmesg(`currentValue${i}: ${currentValue}`);
+                        if (previousValue != currentValue && currentValue <= (m == ColorSensorMode.RefRaw ? 1023 : 100)) valueChangesCount++;
+                        else if (m == ColorSensorMode.RefRaw && currentValue > 1023) {
+                            pause(2);
+                            continue;
+                        }
                     }
-                    pause(valueChangesCount < 1 ? 5 : 10);
+                    //i++;
+                    pause(MODE_SWITCH_DELAY);
                 }
+                const endTime = control.millis() - startTime;
+                control.dmesg(`endTime: ${endTime}`);
             } else {
-                // don't change threshold after initialization
-                this._setMode(m);
+                this._setMode(m); // don't change threshold after initialization
             }
         }
 
