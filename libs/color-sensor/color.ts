@@ -75,17 +75,15 @@ namespace sensors {
         setMode(m: ColorSensorMode) {
             // don't change threshold after initialization
             if (m != this.mode && this.isActive()) { // If the new mode is different from what was set for the sensor
-                /*
                 let maxModeRange = 0;
                 if (m == ColorSensorMode.RefRaw || m == ColorSensorMode.RgbRaw) maxModeRange = 1023;
                 else if (m == ColorSensorMode.Color) maxModeRange = 7;
                 else maxModeRange = 100; // ReflectedLightIntensity or AmbientLightIntensity
-                */
                 //const previousValue = this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query(); // Before changing the mode, remember what the value was
                 this._setMode(m); // Change mode
                 //const startModeChangeTime = control.millis();
                 pause(MODE_SWITCH_DELAY);
-                pauseUntil(() => (this.getStatus() == 8 && (this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()) <= 1023)); // Pause until mode change
+                pauseUntil(() => (this.getStatus() == 8 && (this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()) <= maxModeRange)); // Pause until mode change
                 /*
                 const modeChangeTime = control.millis() - startModeChangeTime;
                 control.dmesg(`Previous value ${previousValue} before mode change on port ${this._port}`);
