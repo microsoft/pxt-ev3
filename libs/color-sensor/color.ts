@@ -77,7 +77,7 @@ namespace sensors {
             if (m != this.mode && this.isActive()) { // If the new mode is different from what was set for the sensor
                 //const previousValue = this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query(); // Before changing the mode, remember what the value was
                 this._setMode(m); // Change mode
-                const startChangeTime = control.millis();
+                //const startChangeTime = control.millis();
                 pause(MODE_SWITCH_DELAY);
                 pauseUntil(() => (this.getStatus() == 8 && (this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()) < 1024)); // Pause until mode change
                 /*
