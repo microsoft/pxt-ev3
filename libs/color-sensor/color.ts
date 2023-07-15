@@ -72,44 +72,22 @@ namespace sensors {
             return DAL.DEVICE_TYPE_COLOR
         }
 
-        setMode(m: ColorSensorMode) {;
+        setMode(m: ColorSensorMode) {
+            // don't change threshold after initialization
             if (m != this.mode && this.isActive()) { // If the new mode is different from what was set for the sensor
-                let previousValue = 0;
-                if (this.mode == ColorSensorMode.RgbRaw) previousValue = this._queryArr()[0]; // Before changing the mode, remember what the value was
-                else previousValue = this._query();
-                //control.dmesg(`previousValues: ${previousValue}`);
+                //const previousValue = this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query(); // Before changing the mode, remember what the value was
                 this._setMode(m); // Change mode
-                let valueChangesCount = 0; // Value change count
-                const startTime = control.millis();
+                const startChangeTime = control.millis();
                 pause(MODE_SWITCH_DELAY);
-                let currTime = 0;
-                const maxTime = control.millis() + 100;
-                //let i = 0;
-                while (valueChangesCount < 2 && currTime < maxTime) { // Waiting for multiple changes
-                    currTime = control.millis();
-                    this.poke();
-                    if (this.mode == ColorSensorMode.RgbRaw) { // Return array RGB mode
-                        const currentValue = this._queryArr()[0];
-                        if (previousValue != currentValue) valueChangesCount++;
-                    } else if (this.mode == ColorSensorMode.Color) { // Color mode
-                        const currentValue = this._query();
-                        if (previousValue != currentValue && currentValue <= 7) valueChangesCount++;
-                    } else { // After modes return one value
-                        const currentValue = this._query();
-                        //control.dmesg(`currentValue${i}: ${currentValue}`);
-                        if (previousValue != currentValue && currentValue <= (m == ColorSensorMode.RefRaw ? 1023 : 100)) valueChangesCount++;
-                        else if (m == ColorSensorMode.RefRaw && currentValue > 1023) {
-                            pause(2);
-                            continue;
-                        }
-                    }
-                    //i++;
-                    pause(MODE_SWITCH_DELAY);
-                }
-                const endTime = control.millis() - startTime;
-                control.dmesg(`endTime: ${endTime}`);
+                pauseUntil(() => (this.getStatus() == 8 && (this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()) < 1024)); // Pause until mode change
+                /*
+                const modeChangeTime = control.millis() - startChangeTime;
+                control.dmesg(`Previous value ${previousValue} before mode change on port ${this._port}`);
+                control.dmesg(`Value ${this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()} after mode change in port ${this._port}`);
+                control.dmesg(`Time at mode change ${modeChangeTime} msec in port ${this._port}`);
+                */
             } else {
-                this._setMode(m); // don't change threshold after initialization
+                this._setMode(m);
             }
         }
 
