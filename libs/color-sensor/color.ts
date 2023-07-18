@@ -84,12 +84,6 @@ namespace sensors {
                 //const startModeChangeTime = control.millis();
                 pause(MODE_SWITCH_DELAY);
                 pauseUntil(() => (this.getStatus() == 8 && (this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()) <= maxModeRange)); // Pause until mode change
-                /*
-                const modeChangeTime = control.millis() - startModeChangeTime;
-                control.dmesg(`Previous value ${previousValue} before mode change on port ${this._port}`);
-                control.dmesg(`Value ${this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()} after mode change in port ${this._port}`);
-                control.dmesg(`Time at mode change ${modeChangeTime} msec in port ${this._port}`);
-                */
             } else {
                 this._setMode(m);
             }
