@@ -16,6 +16,7 @@ namespace sensors {
 //% groups='["Move", "Counters", "Properties"]'
 //% labelLineWidth=50
 namespace motors {
+
 }
 
 //% labelLineWidth=0
@@ -25,20 +26,17 @@ namespace chassis {
 
 //% labelLineWidth=0
 namespace behaviors {
+
 }
 
 //% color="#D67923" weight=80 icon="\uf10e"
+//% groups='["Sounds", "Tone", "Volume", "Tempo"]'
 namespace music {
 
 }
 
 //% color="#5F3109" icon="\uf107"
 namespace control {
-
-}
-
-//% color="#EF2D56"
-namespace pins {
 
 }
 
