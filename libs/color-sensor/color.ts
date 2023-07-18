@@ -7,7 +7,7 @@ const enum ColorSensorMode {
     Color = 2,
     RefRaw = 3,
     RgbRaw = 4,
-    Calibration = 5,
+    ColorCal = 5,
 }
 
 enum LightIntensityMode {
