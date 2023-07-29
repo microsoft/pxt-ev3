@@ -19,12 +19,6 @@ enum Output {
     ALL = 0x0f
 }
 
-enum OutputType {
-    None = 0,
-    Tacho = 7,
-    MiniTacho = 8,
-}
-
 enum MoveUnit {
     //% block="rotations"
     Rotations,
