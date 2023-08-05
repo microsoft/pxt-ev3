@@ -23,7 +23,7 @@ enum ParityType {
     "space"
 }
 declare interface SerialOptions {
-    baudrate?: number;
+    baudRate?: number;
     databits?: number;
     stopbits?: number;
     parity?: ParityType;
@@ -97,7 +97,7 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
                 let io = WebSerialPackageIO.portIos.filter(i => i.port == port)[0];
                 if (!io) {
                     const options: SerialOptions = {
-                        baudrate: 460800,
+                        baudRate: 460800,
                         buffersize: 4096
                     };
                     io = new WebSerialPackageIO(port, options);

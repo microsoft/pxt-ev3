@@ -162,13 +162,13 @@
         "scriptManager": true,
         "debugger": true,
         "errorList": true,
+        "workspaceSearch": true,
         "importExtensionFiles": true,
         "addNewTypeScriptFile": true,
         "experiments": [
             "python",
             "alwaysGithubItemBlocks"
         ],
-        "disableBlockIcons": true,
         "blocklyOptions": {
             "grid": {
                 "spacing": 40,
