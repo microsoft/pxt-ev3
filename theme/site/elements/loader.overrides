@@ -2,7 +2,7 @@
          Site Overrides
 *******************************/
 
-.ui.loader.main:before, 
+.ui.loader.main:not(.msft):before, 
 .ui.loader.avatar:before {
    border: none;
    border-radius: 0px;
@@ -11,68 +11,68 @@
    background-size: 100%;
 }
 
-.ui.loader.main:after {
+.ui.loader.main:not(.msft):after {
    border: none;
    box-shadow: none;
    border-radius: 0px;
    background: transparent @loaderImage no-repeat center center;
    background-size: 100%;
-  -webkit-animation: @loaderAnimation @loaderSpeed infinite linear;
-  animation: @loaderAnimation @loaderSpeed infinite linear;
+  -webkit-animation: @ev3LoaderAnimation @ev3LoaderSpeed infinite linear;
+  animation: @ev3LoaderAnimation @ev3LoaderSpeed infinite linear;
 }
 
-.ui.loader.avatar:after {
+.ui.loader.avatar:not(.msft):after {
    border: none;
    box-shadow: none;
    border-radius: 0px;
    background: transparent @avatarImage no-repeat center center;
    background-size: 100%;
-  -webkit-animation: @loaderAnimation @loaderSpeed infinite linear;
-  animation: @loaderAnimation @loaderSpeed infinite linear;
+  -webkit-animation: @ev3LoaderAnimation @ev3LoaderSpeed infinite linear;
+  animation: @ev3LoaderAnimation @ev3LoaderSpeed infinite linear;
 }
 
 @-webkit-keyframes loader-pxt-ev3 {
   0% {
-    -webkit-transform: translateX(@loaderStartPoint);
-            transform: translateX(@loaderStartPoint);
+    -webkit-transform: translateX(@ev3LoaderStartPoint);
+            transform: translateX(@ev3LoaderStartPoint);
             }
   20% {
-    -webkit-transform: translateX(-@loaderMiddlePoint);
-            transform: translateX(-@loaderMiddlePoint);
+    -webkit-transform: translateX(-@ev3LoaderMiddlePoint);
+            transform: translateX(-@ev3LoaderMiddlePoint);
             }
   50% {
-    -webkit-transform: translateX(-@loaderEndPoint);
-            transform: translateX(-@loaderEndPoint);
+    -webkit-transform: translateX(-@ev3LoaderEndPoint);
+            transform: translateX(-@ev3LoaderEndPoint);
             }
   75% {
-    -webkit-transform: translateX(-@loaderMiddlePoint);
-            transform: translateX(-@loaderMiddlePoint);
+    -webkit-transform: translateX(-@ev3LoaderMiddlePoint);
+            transform: translateX(-@ev3LoaderMiddlePoint);
             }
   100% {
-    -webkit-transform: translateX(@loaderStartPoint);
-            transform: translateX(@loaderStartPoint);
+    -webkit-transform: translateX(@ev3LoaderStartPoint);
+            transform: translateX(@ev3LoaderStartPoint);
             }
 }
 
 @keyframes loader-pxt-ev3 {
   0% {
-    -webkit-transform: translateX(@loaderStartPoint);
-            transform: translateX(@loaderStartPoint);
+    -webkit-transform: translateX(@ev3LoaderStartPoint);
+            transform: translateX(@ev3LoaderStartPoint);
             }
   20% {
-    -webkit-transform: translateX(-@loaderMiddlePoint);
-            transform: translateX(-@loaderMiddlePoint);
+    -webkit-transform: translateX(-@ev3LoaderMiddlePoint);
+            transform: translateX(-@ev3LoaderMiddlePoint);
             }
   50% {
-    -webkit-transform: translateX(-@loaderEndPoint);
-            transform: translateX(-@loaderEndPoint);
+    -webkit-transform: translateX(-@ev3LoaderEndPoint);
+            transform: translateX(-@ev3LoaderEndPoint);
             }
   75% {
-    -webkit-transform: translateX(-@loaderMiddlePoint);
-            transform: translateX(-@loaderMiddlePoint);
+    -webkit-transform: translateX(-@ev3LoaderMiddlePoint);
+            transform: translateX(-@ev3LoaderMiddlePoint);
             }
   100% {
-    -webkit-transform: translateX(@loaderStartPoint);
-            transform: translateX(@loaderStartPoint);
+    -webkit-transform: translateX(@ev3LoaderStartPoint);
+            transform: translateX(@ev3LoaderStartPoint);
             }
 }

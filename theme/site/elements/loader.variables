@@ -8,12 +8,12 @@
 @loaderImageUrl: "../docs/static/loader_front.svg";
 @loaderImage: data-uri(@loaderImageUrl);
 
-@loaderSpeed: 2s;
+@ev3LoaderSpeed: 2s;
 
-@loaderStartPoint: 0px;
-@loaderMiddlePoint: 14px;
-@loaderEndPoint: 28px;
+@ev3LoaderStartPoint: 0px;
+@ev3LoaderMiddlePoint: 14px;
+@ev3LoaderEndPoint: 28px;
 
-@loaderAnimation: loader-pxt-ev3;
+@ev3LoaderAnimation: loader-pxt-ev3;
 
-@large   : 200px;
+@large: 200px;
