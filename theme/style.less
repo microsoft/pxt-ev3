@@ -77,6 +77,13 @@
 }
 
 /* Editor menu toggle */
+#root:not(.hc) #editordropdown {
+    padding: 0 1em;
+}
+#root:not(.hc) #editordropdown #mainmenu #editordropdown.active:focus,
+    #root:not(.hc) #editordropdown.active {
+    background-color: @mainMenuBlocksJsToggleColor!important;
+}
 .menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
     background: fade(@blue, 10%) !important;
     border: 1px solid #888888;
@@ -84,9 +91,6 @@
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item {
     border-radius: 0px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
     color: white;
