@@ -1,6 +1,7 @@
 /// <reference path="../node_modules/pxt-core/built/pxteditor.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
+import HF2 = pxt.HF2;
 import UF2 = pxtc.UF2;
 import { Ev3Wrapper } from "./wrap";
 import { bluetoothTryAgainAsync } from "./dialogs";
@@ -23,7 +24,7 @@ enum ParityType {
     "space"
 }
 declare interface SerialOptions {
-    baudrate?: number;
+    baudRate?: number;
     databits?: number;
     stopbits?: number;
     parity?: ParityType;
@@ -75,9 +76,14 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
                 tmp.set(value, buffer.length)
                 buffer = tmp;
             }
-            if (buffer && buffer.length >= 6) {
-                this.onData(new Uint8Array(buffer));
-                buffer = undefined;
+            if (buffer) {
+                let size = HF2.read16(buffer, 0);
+                if (buffer.length == size + 2) {
+                    this.onData(new Uint8Array(buffer));
+                    buffer = undefined;
+                } else {
+                    console.warn("Incomplete command " + size);
+                }
             }
         }
     }
@@ -97,7 +103,7 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
                 let io = WebSerialPackageIO.portIos.filter(i => i.port == port)[0];
                 if (!io) {
                     const options: SerialOptions = {
-                        baudrate: 460800,
+                        baudRate: 460800,
                         buffersize: 4096
                     };
                     io = new WebSerialPackageIO(port, options);
