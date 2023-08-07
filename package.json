@@ -44,6 +44,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "node-hid": "^2.1.2",
     "pxt-common-packages": "9.2.7",
     "pxt-core": "7.2.27"
   },

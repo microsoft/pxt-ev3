@@ -40,7 +40,7 @@ export class Ev3Wrapper {
                         window.postMessage({
                             type: 'serial',
                             id: 'n/a', // TODO?
-                            data: str
+                                data: str
                         }, "*")
                 } else
                     pxt.debug("Magic: " + code + ": " + U.toHex(payload))
@@ -55,8 +55,8 @@ export class Ev3Wrapper {
     private allocCore(addSize: number, replyType: number) {
         let len = 5 + addSize
         let buf = new Uint8Array(len)
-        HF2.write16(buf, 0, len - 2)  // pktLen
-        HF2.write16(buf, 2, this.cmdSeq++) // msgCount
+        HF2.write16(buf, 0, len - 2)  //  pktLen
+        HF2.write16(buf, 2, this.cmdSeq++) //  msgCount
         buf[4] = replyType
         return buf
     }
@@ -110,14 +110,99 @@ export class Ev3Wrapper {
         })
     }
 
+    dumpInputCmd(buf : Uint8Array) {
+        log(" --==>> ")
+        log("   Reply size: " + HF2.read16(buf, 0))
+        log("   Message counter: " + HF2.read16(buf, 2))
+        log("   Reply type: " + buf[4])
+        switch (buf[5]) {
+            case 0x03: log("  System command:  System command reply OK")
+                break;
+            case 0x05: log("  System command:  System command reply ERROR")
+                break;
+            case 0x00: log("  Reply Status SUCCESS")
+                break;
+            case 0x01: log("  Reply Status UNKNOWN_HANDLE")
+                break;
+            case 0x02: log("  Reply Status HANDLE_NOT_READY")
+                break;
+            case 0x03: log("  Reply Status CORRUPT_FILE")
+                break;
+            case 0x04: log("  Reply Status NO_HANDLES_AVAILABLE")
+                break;
+            case 0x05: log("  Reply Status NO_PERMISSION")
+                break;
+            case 0x06: log("  Reply Status ILLEGAL_PATH")
+                break;
+            case 0x07: log("  Reply Status FILE_EXITS")
+                break;
+            case 0x08: log("  Reply Status END_OF_FILE")
+                break;
+            case 0x09: log("  Reply Status SIZE_ERROR")
+                break;
+            case 0x0A: log("  Reply Status UNKNOWN_ERROR")
+                break;
+            case 0x0B: log("  Reply Status ILLEGAL_FILENAME")
+                break;
+            case 0x0C: log("  Reply Status ILLEGAL_CONNECTION")
+                break;
+        }
+    }
+
+    dumpOutputCmd(buf: Uint8Array) {
+        log(" <<==-- ")
+        log("   Command size: " + HF2.read16(buf, 0))
+        log("   Message counter: " + HF2.read16(buf, 2))
+        log("   Command type: " + buf[4])
+        switch (buf[5]) {
+            case 0x01: log("  System command, reply required")
+                break;
+            case 0x81: log("  System command, reply not require")
+                break;
+            case 0x92: log("  System command: Begin file download")
+                break;
+            case 0x93: log("  System command:  Continue file download")
+                break;
+            case 0x94: log("  System command:  Begin file upload")
+                break;
+            case 0x95: log("  System command:  Continue file upload")
+                break;
+            case 0x96: log("  System command:  Begin get bytes from a file (while writing to the file)")
+                break;
+            case 0x97: log("  System command:  Continue get byte from a file (while writing to the file)")
+                break;
+            case 0x98: log("  System command:  Close file handle")
+                break;
+            case 0x99: log("  System command:  List files")
+                break;
+            case 0x9A: log("  System command:  Continue list files")
+                break;
+            case 0x9B: log("  System command:  Create directory")
+                break;
+            case 0x9C: log("  System command:  Delete")
+                break;
+            case 0x9D: log("  System command:  List handles")
+                break;
+            case 0x9E: log("  System command:  Write to mailbox")
+                break;
+            case 0x9F: log("  System command:  Transfer trusted pin code to brick")
+                break;
+            case 0xA0: log("  System command:  Restart the brick in Firmware update mode")
+                break;
+        }
+        log("   System Command: " + buf[5])
+    }
+
     talkAsync(buf: Uint8Array, altResponse = 0) {
         return this.lock.enqueue("talk", () => {
             this.msgs.drain()
             if (this.dataDump)
                 log("TALK: " + U.toHex(buf))
+            this.dumpOutputCmd(buf)
             return this.io.sendPacketAsync(buf)
                 .then(() => this.msgs.shiftAsync(5000))
                 .then(resp => {
+                    this.dumpInputCmd(resp)
                     if (resp[2] != buf[2] || resp[3] != buf[3])
                         U.userError("msg count de-sync")
                     if (buf[4] == 1) {
@@ -143,12 +228,12 @@ export class Ev3Wrapper {
             let upl = this.allocSystem(1 + size, 0x93, 0x1)
             upl[6] = handle
             U.memcpy(upl, 6 + 1, file, pos, size)
-            return this.talkAsync(upl, 8) // 8=EOF
+            return this.talkAsync(upl, 8) //  8=EOF
                 .then(() => loopAsync(pos + size))
         }
 
         let begin = this.allocSystem(4 + path.length + 1, 0x92)
-        HF2.write32(begin, 6, file.length) // fileSize
+        HF2.write32(begin, 6, file.length) //  fileSize
         U.memcpy(begin, 10, U.stringToUint8Array(path))
         return this.lock.enqueue("file", () =>
             this.talkAsync(begin)
@@ -160,7 +245,7 @@ export class Ev3Wrapper {
 
     lsAsync(path: string): Promise<DirEntry[]> {
         let lsReq = this.allocSystem(2 + path.length + 1, 0x99)
-        HF2.write16(lsReq, 6, 1024) // maxRead
+        HF2.write16(lsReq, 6, 1024) //  maxRead
         U.memcpy(lsReq, 8, U.stringToUint8Array(path))
 
         return this.talkAsync(lsReq, 8)
@@ -208,79 +293,79 @@ export class Ev3Wrapper {
         let handle = -1
         let resp = (buf: Uint8Array): Promise<void> => {
             if (buf[6] == 2) {
-                // handle not ready - file is missing
+                //  handle not ready - file is missing
                 this.isStreaming = false
                 return Promise.resolve()
-            }
+    }
 
-            if (buf[6] != 0 && buf[6] != 8)
-                U.userError("bad response when streaming file: " + buf[6] + " " + U.toHex(buf))
+    if(buf[6] != 0 && buf[6] != 8)
+U.userError("bad response when streaming file: " + buf[6] + " " + U.toHex(buf))
 
-            this.isStreaming = true
-            fileSize = HF2.read32(buf, 7)
-            if (handle == -1) {
-                handle = buf[11]
-                log(`stream on, handle=${handle}`)
-            }
-            let data = buf.slice(12)
-            filePtr += data.length
-            if (data.length > 0)
-                cb(data)
+this.isStreaming = true
+fileSize = HF2.read32(buf, 7)
+if (handle == -1) {
+    handle = buf[11]
+    log(`stream on, handle=${handle}`)
+}
+let data = buf.slice(12)
+filePtr += data.length
+if (data.length > 0)
+    cb(data)
 
-            if (buf[6] == 8) {
-                // end of file
+if (buf[6] == 8) {
+                //  end of file
                 this.isStreaming = false
                 return this.rmAsync(path)
-            }
+}
 
-            let contFileReq = this.allocSystem(1 + 2, 0x97)
-            HF2.write16(contFileReq, 7, 1000) // maxRead
+let contFileReq = this.allocSystem(1 + 2, 0x97)
+HF2.write16(contFileReq, 7, 1000) //  maxRead
             contFileReq[6] = handle
             return pxt.U.delay(data.length > 0 ? 0 : 500)
-                .then(() => this.talkAsync(contFileReq, -1))
-                .then(resp)
+    .then(() => this.talkAsync(contFileReq, -1))
+    .then(resp)
         }
 
-        let getFileReq = this.allocSystem(2 + path.length + 1, 0x96)
-        HF2.write16(getFileReq, 6, 1000) // maxRead
+let getFileReq = this.allocSystem(2 + path.length + 1, 0x96)
+HF2.write16(getFileReq, 6, 1000) //  maxRead
         U.memcpy(getFileReq, 8, U.stringToUint8Array(path))
         return this.talkAsync(getFileReq, -1).then(resp)
     }
 
-    streamFileAsync(path: string, cb: (d: Uint8Array) => void) {
-        let loop = (): Promise<void> =>
-            this.lock.enqueue("file", () =>
-                this.streamFileOnceAsync(path, cb))
-                .then(() => pxt.U.delay(500))
-                .then(loop)
-        return loop()
-    }
-
-
-    downloadFileAsync(path: string, cb: (d: Uint8Array) => void) {
-        return this.lock.enqueue("file", () =>
+streamFileAsync(path: string, cb: (d: Uint8Array) => void) {
+    let loop = (): Promise<void> =>
+        this.lock.enqueue("file", () =>
             this.streamFileOnceAsync(path, cb))
-    }
+            .then(() => pxt.U.delay(500))
+            .then(loop)
+    return loop()
+}
+
+
+downloadFileAsync(path: string, cb: (d: Uint8Array) => void) {
+    return this.lock.enqueue("file", () =>
+        this.streamFileOnceAsync(path, cb))
+}
 
 
     private initAsync() {
-        return Promise.resolve()
-    }
+    return Promise.resolve()
+}
 
     private resetState() {
 
-    }
+}
 
-    reconnectAsync(first = false): Promise<void> {
-        this.resetState()
-        if (first) return this.initAsync()
+reconnectAsync(first = false): Promise < void> {
+    this.resetState()
+        if(first) return this.initAsync()
         log(`reconnect`);
         return this.io.reconnectAsync()
-            .then(() => this.initAsync())
-    }
+        .then(() => this.initAsync())
+}
 
-    disconnectAsync() {
-        log(`disconnect`);
-        return this.io.disconnectAsync()
-    }
+disconnectAsync() {
+    log(`disconnect`);
+    return this.io.disconnectAsync()
+}
 }
