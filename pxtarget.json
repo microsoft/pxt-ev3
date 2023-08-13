@@ -168,7 +168,6 @@
         "allowPackageExtensions": true,
         "addNewTypeScriptFile": true,
         "experiments": [
-            "python",
             "alwaysGithubItemBlocks",
             "blocksErrorList"
         ],
@@ -212,7 +211,8 @@
         "enableTrace": true,
         "githubEditor": true,
         "chooseLanguageRestrictionOnNewProject": true,
-        "openProjectNewTab": true
+        "openProjectNewTab": true,
+        "python": true
     },
     "ignoreDocsErrors": true,
     "uploadDocs": true
