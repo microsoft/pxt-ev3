@@ -160,14 +160,17 @@
         "extendEditor": true,
         "extendFieldEditors": true,
         "scriptManager": true,
+        "showProjectSettings": true,
         "debugger": true,
         "errorList": true,
         "workspaceSearch": true,
         "importExtensionFiles": true,
+        "allowPackageExtensions": true,
         "addNewTypeScriptFile": true,
         "experiments": [
             "python",
-            "alwaysGithubItemBlocks"
+            "alwaysGithubItemBlocks",
+            "blocksErrorList"
         ],
         "blocklyOptions": {
             "grid": {
@@ -207,7 +210,9 @@
         "shareFinishedTutorials": true,
         "nameProjectFirst": true,
         "enableTrace": true,
-        "githubEditor": true
+        "githubEditor": true,
+        "chooseLanguageRestrictionOnNewProject": true,
+        "openProjectNewTab": true
     },
     "ignoreDocsErrors": true,
     "uploadDocs": true
