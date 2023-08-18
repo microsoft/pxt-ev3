@@ -30,10 +30,6 @@ namespace music {
 namespace control {
 }
 
-//% color="#b0b0b0" weight=5 icon="\uf1c0"
-namespace storage {
-}
-
 //% icon="\uf0d0"
 namespace automation {
 }
