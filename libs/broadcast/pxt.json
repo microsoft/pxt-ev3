@@ -1,8 +1,12 @@
 {
     "name": "broadcast",
+    "version": "0.0.2",
     "description": "Broadcasting messages - beta",
     "files": [
         "broadcast.ts"
+    ],
+    "testFiles": [
+        "test.ts"
     ],
     "public": true,
     "dependencies": {
