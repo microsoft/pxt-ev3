@@ -7,6 +7,7 @@ namespace storage {
     //% fixedInstances
     export class Storage {
         csvSeparator: string;
+
         constructor() {
             this.csvSeparator = ",";
         }
@@ -37,21 +38,25 @@ namespace storage {
         }
 
         /**
-         *  Append string data to a new or existing file. 
+         * Append string data to a new or existing file.
          * @param filename the file name to append data, eg: "data.txt"
          * @param data the data to append
          */
-        //% blockId=storageAppend block="storage %source|%filename|append %data"
+        //% blockId=storageAppend
+        //% block="storage %source|%filename|append %data"
+        //% weight=94
         append(filename: string, data: string): void {
             this.appendBuffer(filename, __stringToBuffer(data))
         }
 
         /**
-         * Appends a new line of data in the file
+         * Appends a new line of data in the file.
          * @param filename the file name to append data, eg: "data.txt"
          * @param data the data to append
          */
-        //% blockId=storageAppendLine block="storage %source|%filename|append line %data"
+        //% blockId=storageAppendLine
+        //% block="storage %source|%filename|append line %data"
+        //% weight=93
         appendLine(filename: string, data: string): void {
             this.append(filename, data + "\r\n");
         }
@@ -68,7 +73,9 @@ namespace storage {
          * @param filename the file name to append data, eg: "data.csv"
          * @param headers the data to append
          */
-        //% blockId=storageAppendCSVHeaders block="storage %source|%filename|append CSV headers %headers"
+        //% blockId=storageAppendCSVHeaders
+        //% block="storage %source|%filename|append CSV headers %headers"
+        //% weight=90
         appendCSVHeaders(filename: string, headers: string[]) {
             let s = ""
             for (const d of headers) {
@@ -84,17 +91,22 @@ namespace storage {
          * @param filename the file name to append data, eg: "data.csv"
          * @param data the data to append
          */
-        //% blockId=storageAppendCSV block="storage %source|%filename|append CSV %data"
+        //% blockId=storageAppendCSV
+        //% block="storage %source|%filename|append CSV %data"
+        //% weight=89
         appendCSV(filename: string, data: number[]) {
             let s = toCSV(data, this.csvSeparator);
             this.append(filename, s)
         }
 
-        /** Overwrite file with string data.
+        /**
+         * Overwrite file with string data.
          * @param filename the file name to append data, eg: "data.txt"
          * @param data the data to append
          */
-        //% blockId=storageOverwrite block="storage %source|%filename|overwrite with|%data"
+        //% blockId=storageOverwrite
+        //% block="storage %source|%filename|overwrite with|%data"
+        //% weight=95
         overwrite(filename: string, data: string): void {
             this.overwriteWithBuffer(filename, __stringToBuffer(data))
         }
@@ -105,30 +117,48 @@ namespace storage {
             this.appendBuffer(filename, data)
         }
 
-        /** Tests if a file exists
+        /**
+         * Tests if a file exists.
          * @param filename the file name to append data, eg: "data.txt"
          */
-        //% blockId=storageExists block="storage %source|%filename|exists"
+        //% blockId=storageExists
+        //% block="storage %source|%filename|exists"
+        //% weight=99
         exists(filename: string): boolean {
             return !!control.mmap(this.mapFilename(filename), 0, 0);
         }
 
-        /** Delete a file, or do nothing if it doesn't exist. */
-        //% blockId=storageRemove block="storage %source|remove %filename"
+        /**
+         * Delete a file, or do nothing if it doesn't exist.
+         * @param filename the file name to append data, eg: "data.txt"
+         */
+        //% blockId=storageRemove
+        //% block="storage %source|remove %filename"
+        //% weight=97
         remove(filename: string): void {
             __unlink(this.mapFilename(filename))
         }
 
-        /** Return the size of the file, or -1 if it doesn't exists. */
-        //% blockId=storageSize block="storage %source|%filename|size"
+        /**
+         * Return the size of the file, or -1 if it doesn't exists.
+         * @param filename the file name to append data, eg: "data.txt"
+         */
+        //% blockId=storageSize
+        //% block="storage %source|%filename|size"
+        //% weight=98
         size(filename: string): int32 {
             let f = control.mmap(this.mapFilename(filename), 0, 0)
             if (!f) return -1;
             return f.lseek(0, SeekWhence.End)
         }
 
-        /** Read contents of file as a string. */
-        //% blockId=storageRead block="storage %source|read %filename|as string"
+        /**
+         * Read contents of file as a string.
+         * @param filename the file name to append data, eg: "data.txt"
+         */
+        //% blockId=storageRead
+        //% block="storage %source|read %filename|as string"
+        //% weight=96
         read(filename: string): string {
             return __bufferToString(this.readAsBuffer(filename))
         }
@@ -145,11 +175,13 @@ namespace storage {
         }
 
         /**
-         * Resizing the size of a file to stay under the limit
-         * @param filename name of the file to drop
+         * Resizing the size of a file to stay under the limit.
+         * @param filename name of the file to drop, eg: "data.txt"
          * @param size maximum length
          */
-        //% blockId=storageLimit block="storage %source|limit %filename|to %size|bytes"
+        //% blockId=storageLimit
+        //% block="storage %source|limit %filename|to %size|bytes"
+        //% weight=100
         limit(filename: string, size: number) {
             if (!this.exists(filename) || size < 0) return;
 
