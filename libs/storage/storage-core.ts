@@ -69,7 +69,7 @@ namespace storage {
         }
 
         /**
-         * Append a row of CSV headers
+         * Append a row of CSV headers.
          * @param filename the file name to append data, eg: "data.csv"
          * @param headers the data to append
          */
@@ -87,7 +87,7 @@ namespace storage {
         }
 
         /**
-         * Append a row of CSV data
+         * Append a row of CSV data.
          * @param filename the file name to append data, eg: "data.csv"
          * @param data the data to append
          */
