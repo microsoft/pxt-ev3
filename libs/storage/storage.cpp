@@ -10,13 +10,13 @@ namespace storage {
 /** Will be moved. */
 //%
 Buffer __stringToBuffer(String s) {
-    return mkBuffer((uint8_t *)s->data, s->length);
+    return mkBuffer((uint8_t *)PXT_STRING_DATA(s), PXT_STRING_DATA_LENGTH(s));
 }
 
 /** Will be moved. */
 //%
 String __bufferToString(Buffer s) {
-    return mkString((char*)s->data, s->length);
+    return mkString((char*)PXT_BUFFER_DATA(s), PXT_BUFFER_LENGTH(s));
 }
 
 //%
@@ -26,19 +26,19 @@ void __init() {
 
 //%
 void __unlink(String filename) {
-    ::unlink(filename->data);
+    ::unlink(PXT_STRING_DATA(filename));
 }
 
 //%
 void __truncate(String filename) {
-    int fd = open(filename->data, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+    int fd = open(PXT_STRING_DATA(filename), O_CREAT | O_TRUNC | O_WRONLY, 0777);
     close(fd);
 }
 
 /** Create named directory. */
 //%
 void __mkdir(String filename) {
-    ::mkdir(filename->data, 0777);
+    ::mkdir(PXT_STRING_DATA(filename), 0777);
 }
 
 } // namespace storage
