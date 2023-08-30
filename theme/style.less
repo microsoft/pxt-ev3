@@ -77,6 +77,13 @@
 }
 
 /* Editor menu toggle */
+#root:not(.hc) #editordropdown {
+    padding: 0 1em;
+}
+#root:not(.hc) #editordropdown #mainmenu #editordropdown.active:focus,
+    #root:not(.hc) #editordropdown.active {
+    background-color: @mainMenuBlocksJsToggleColor!important;
+}
 .menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
     background: fade(@blue, 10%) !important;
     border: 1px solid #888888;
@@ -84,17 +91,14 @@
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item {
     border-radius: 0px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
     color: white;
 }
 
-/* active toggle */
+/* Blocks or JS active toggle color */
 .ui.item.editor-menuitem .active~.item.toggle {
-    background: @editorToggleColor!important;
+    background: @mainMenuBlocksJsToggleColor!important;
 }
 
 .menubar .ui.item.editor-menuitem .item.toggle {
@@ -136,6 +140,9 @@
 @media only screen and (max-width: @largestMobileScreen) {
     #filelist {
         background: transparent;
+    }
+    #blocklySearchArea {
+        display: none !important;
     }
 }
 
@@ -198,10 +205,4 @@
 .bluetooth {
     background-color: #007EF4 !important;
     color: white !important;
-}
-
-/* Temporary fix simPanel jump for some screen resolutions so-as the problem is in the pxt version. Need pxt version 8.2.7 and up */
-.invisibleScrollbar::-webkit-scrollbar {
-    background: transparent !important;
-    width: initial !important;
 }

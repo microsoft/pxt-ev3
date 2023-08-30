@@ -1,14 +1,23 @@
 namespace storage {
+
+    export enum Separators {
+        //% block="comma"
+        Comma,
+        //% block="semicolon"
+        Semicolon
+    }
+
     //% shim=storage::__unlink
     function __unlink(filename: string): void { }
     //% shim=storage::__truncate
     function __truncate(filename: string): void { }
 
+    let csvSeparator = separatorConverter(Separators.Comma);
+
     //% fixedInstances
     export class Storage {
-        csvSeparator: string;
+
         constructor() {
-            this.csvSeparator = ",";
         }
 
         protected mapFilename(filename: string) {
@@ -37,21 +46,23 @@ namespace storage {
         }
 
         /**
-         *  Append string data to a new or existing file. 
+         * Append string data to a new or existing file.
          * @param filename the file name to append data, eg: "data.txt"
          * @param data the data to append
          */
         //% blockId=storageAppend block="storage %source|%filename|append %data"
+        //% weight=94
         append(filename: string, data: string): void {
             this.appendBuffer(filename, __stringToBuffer(data))
         }
 
         /**
-         * Appends a new line of data in the file
+         * Appends a new line of data in the file.
          * @param filename the file name to append data, eg: "data.txt"
          * @param data the data to append
          */
         //% blockId=storageAppendLine block="storage %source|%filename|append line %data"
+        //% weight=93
         appendLine(filename: string, data: string): void {
             this.append(filename, data + "\r\n");
         }
@@ -64,15 +75,16 @@ namespace storage {
         }
 
         /**
-         * Append a row of CSV headers
+         * Append a row of CSV headers.
          * @param filename the file name to append data, eg: "data.csv"
          * @param headers the data to append
          */
         //% blockId=storageAppendCSVHeaders block="storage %source|%filename|append CSV headers %headers"
+        //% weight=89
         appendCSVHeaders(filename: string, headers: string[]) {
             let s = ""
             for (const d of headers) {
-                if (s) s += this.csvSeparator;
+                if (s) s += csvSeparator;
                 s = s + d;
             }
             s += "\r\n"
@@ -80,21 +92,24 @@ namespace storage {
         }
 
         /**
-         * Append a row of CSV data
+         * Append a row of CSV data.
          * @param filename the file name to append data, eg: "data.csv"
          * @param data the data to append
          */
         //% blockId=storageAppendCSV block="storage %source|%filename|append CSV %data"
+        //% weight=88
         appendCSV(filename: string, data: number[]) {
-            let s = toCSV(data, this.csvSeparator);
+            let s = toCSV(data, csvSeparator);
             this.append(filename, s)
         }
 
-        /** Overwrite file with string data.
+        /**
+         * Overwrite file with string data.
          * @param filename the file name to append data, eg: "data.txt"
          * @param data the data to append
          */
         //% blockId=storageOverwrite block="storage %source|%filename|overwrite with|%data"
+        //% weight=95
         overwrite(filename: string, data: string): void {
             this.overwriteWithBuffer(filename, __stringToBuffer(data))
         }
@@ -105,30 +120,44 @@ namespace storage {
             this.appendBuffer(filename, data)
         }
 
-        /** Tests if a file exists
+        /**
+         * Tests if a file exists.
          * @param filename the file name to append data, eg: "data.txt"
          */
         //% blockId=storageExists block="storage %source|%filename|exists"
+        //% weight=99
         exists(filename: string): boolean {
             return !!control.mmap(this.mapFilename(filename), 0, 0);
         }
 
-        /** Delete a file, or do nothing if it doesn't exist. */
+        /**
+         * Delete a file, or do nothing if it doesn't exist.
+         * @param filename the file name to append data, eg: "data.txt"
+         */
         //% blockId=storageRemove block="storage %source|remove %filename"
+        //% weight=97
         remove(filename: string): void {
             __unlink(this.mapFilename(filename))
         }
 
-        /** Return the size of the file, or -1 if it doesn't exists. */
+        /**
+         * Return the size of the file, or -1 if it doesn't exists.
+         * @param filename the file name to append data, eg: "data.txt"
+         */
         //% blockId=storageSize block="storage %source|%filename|size"
+        //% weight=98
         size(filename: string): int32 {
             let f = control.mmap(this.mapFilename(filename), 0, 0)
             if (!f) return -1;
             return f.lseek(0, SeekWhence.End)
         }
 
-        /** Read contents of file as a string. */
+        /**
+         * Read contents of file as a string.
+         * @param filename the file name to append data, eg: "data.txt"
+         */
         //% blockId=storageRead block="storage %source|read %filename|as string"
+        //% weight=96
         read(filename: string): string {
             return __bufferToString(this.readAsBuffer(filename))
         }
@@ -145,11 +174,12 @@ namespace storage {
         }
 
         /**
-         * Resizing the size of a file to stay under the limit
-         * @param filename name of the file to drop
+         * Resizing the size of a file to stay under the limit.
+         * @param filename name of the file to drop, eg: "data.txt"
          * @param size maximum length
          */
         //% blockId=storageLimit block="storage %source|limit %filename|to %size|bytes"
+        //% weight=100
         limit(filename: string, size: number) {
             if (!this.exists(filename) || size < 0) return;
 
@@ -170,6 +200,21 @@ namespace storage {
         }
         s += "\r\n"
         return s;
+    }
+
+    /**
+     * Set for CSV file separator. It is necessary to use depending on your regional settings of the application displaying CSV. By default, a comma is used.
+     * @param sep separator character, eg: Separators.Comma
+     */
+    //% blockId=setCSVSeparator block="storage CSV set $sep|separator"
+    //% weight=80
+    export function setCSVSeparator(sep: Separators) {
+        csvSeparator = separatorConverter(sep);
+    }
+
+    function separatorConverter(sep: Separators): string {
+        if (sep == Separators.Semicolon) return ";";
+        else return ",";
     }
 
     class TemporaryStorage extends Storage {
