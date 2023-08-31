@@ -9,7 +9,10 @@
         ],
         "preferredRepos": [
             "microsoft/pxt-automation"
-        ]
+        ],
+        "approvedRepoLib": {
+            "microsoft/pxt-automation": {}
+        }
     },
     "galleries": {
         "Getting Started": "getting-started",
