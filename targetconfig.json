@@ -11,7 +11,9 @@
             "microsoft/pxt-automation"
         ],
         "approvedRepoLib": {
-            "microsoft/pxt-automation": {}
+            "microsoft/pxt-automation": {
+                "preferred": true
+            }
         }
     },
     "galleries": {
