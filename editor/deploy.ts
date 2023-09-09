@@ -24,7 +24,6 @@ enum ParityType {
     "space"
 }
 declare interface SerialOptions {
-    baudrate?: number;
     baudRate?: number;
     databits?: number;
     stopbits?: number;
@@ -64,12 +63,16 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
         console.log(`serial: new io`)
     }
 
+    bufferSize(buffer: Uint8Array){
+        return HF2.read16(buffer, 0) + 2
+    }
+
     async readSerialAsync() {
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
         const reader = this._reader;
         while (reader === this._reader) { // will change if we recycle the connection
-            const { done, value } = await this._reader.read()
+            const { done, value } = await this._reader.read() 
             if (!buffer) buffer = value;
             else { // concat
                 let tmp = new Uint8Array(buffer.length + value.byteLength)
@@ -77,13 +80,24 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
                 tmp.set(value, buffer.length)
                 buffer = tmp;
             }
-            if (buffer) {
-                let size = HF2.read16(buffer, 0)
-                if (buffer.length == size+2){
+            if (buffer) {       
+                console.debug("Current buffer size: "+buffer.length)     
+                let size = this.bufferSize(buffer)
+                if (buffer.length == size){
                     this.onData(new Uint8Array(buffer));
                     buffer = undefined;
+                }else if (buffer.length > size){
+                    console.warn("Received larger bufer then command command: "+buffer.length+" recieved but waiting for "+size);
+
+                    let tmp = buffer.slice(0, size-1)
+                    this.onData(new Uint8Array(tmp));
+
+                    tmp = buffer.slice(size, buffer.length - 1)
+                    buffer = tmp;
+
+                    console.debug("Next buffer size: "+this.bufferSize(buffer))
                 }else{
-                    console.warn("Incomplete command "+size);                    
+                    console.warn("Incomplete command: "+buffer.length+" recieved but waiting for "+size+". Keep waiting...");
                 }
             }
         }
@@ -104,7 +118,7 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
                 let io = WebSerialPackageIO.portIos.filter(i => i.port == port)[0];
                 if (!io) {
                     const options: SerialOptions = {
-                        baudrate: 460800,
+                        baudRate: 460800,
                         buffersize: 4096
                     };
                     io = new WebSerialPackageIO(port, options);
@@ -128,7 +142,6 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
         if (!!this._reader) return Promise.resolve();
         this._reader = undefined;
         this._writer = undefined;
-        this.options.baudRate = this.options.baudrate
         return this.port.open(this.options)
             .then(() => {
                 this.readSerialAsync();
