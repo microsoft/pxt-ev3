@@ -5,10 +5,6 @@
 import HF2 = pxt.HF2
 import U = pxt.U
 
-function log(msg: string) {
-    pxt.log("serial: " + msg)
-}
-
 export interface DirEntry {
     name: string;
     md5?: string;
