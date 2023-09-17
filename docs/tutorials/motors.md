@@ -42,8 +42,9 @@
 }, {
   "name": "Turtle",
   "description": "Encode moves and run them on a driving base",
+  "cardType": "example",
   "url":"/tutorials/turtle",
-  "cardType": "example"
+  "imageUrl":"/static/tutorials/turtle.png"
 }]
 ```
 
