@@ -51,7 +51,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=100 blockGap=8
-        //% group="Ultrasonic Sensor"
+        //% group="Ultrasonic Sensor" 
         onEvent(event: UltrasonicSensorEvent, handler: () => void) {
             control.onEvent(this._id, event, handler);
         }
@@ -81,7 +81,7 @@ namespace sensors {
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=65
+        //% weight=98
         //% group="Ultrasonic Sensor"
         distance(): number {
             this.poke();
@@ -97,7 +97,8 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=ultrasonicSetThreshold block="set **ultrasonic** %this|%condition|to %value"
-        //% group="Calibration" blockGap=8 weight=80
+        //% weight=89 blockGap=8
+        //% group="Ultrasonic Sensor"
         //% value.min=0 value.max=255
         //% this.fieldEditor="ports"
         setThreshold(condition: UltrasonicSensorEvent, value: number) {
@@ -112,7 +113,8 @@ namespace sensors {
          * @param condition the proximity condition
          */
         //% blockId=ultrasonicGetThreshold block="**ultrasonic** %this|%condition"
-        //% group="Calibration" weight=79
+        //% weight=88
+        //% group="Ultrasonic Sensor"
         //% this.fieldEditor="ports"
         threshold(condition: UltrasonicSensorEvent): number {
             switch (condition) {
