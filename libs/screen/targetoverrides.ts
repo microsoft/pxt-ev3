@@ -312,7 +312,7 @@ namespace brick {
     }
 
     /**
-     * Clear on the screen at a specific lines.
+     * Clear on the screen at a specific lines (1..12).
      * @param lines list of lines to clear (starting at 1 and ends with 12)
      */
     //% blockId=clearLines block="clear lines $lines"
