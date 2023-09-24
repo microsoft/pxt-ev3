@@ -315,7 +315,7 @@ namespace brick {
      * Clear on the screen at a specific lines.
      * @param lines list of lines to clear (starting at 1 and ends with 12)
      */
-    //% blockId=clearLines block="clear line(s) $lines"
+    //% blockId=clearLines block="clear lines $lines"
     //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
     export function clearLines(lines: number[]) {
         if (screenMode != ScreenMode.ShowLines) {
@@ -324,7 +324,7 @@ namespace brick {
         }
 
         for (let i = 0; i < lines.length; i++) {
-            clearLine(i);
+            clearLine(lines[i]);
         }
     }
 
