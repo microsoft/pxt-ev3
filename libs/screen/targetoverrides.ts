@@ -312,8 +312,8 @@ namespace brick {
     }
 
     /**
-     * Clear on the screen at a specific line or lines.
-     * @param lines list of lines to clear (starting at 1)
+     * Clear on the screen at a specific lines.
+     * @param lines list of lines to clear (starting at 1 and ends with 12)
      */
     //% blockId=clearLines block="clear line(s) $lines"
     //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
@@ -335,7 +335,6 @@ namespace brick {
     //% blockId=clearLine block="clear line $line"
     //% weight=93 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=1 line.max=12
-    //% deprecated=true
     export function clearLine(line: number) {
         if (screenMode != ScreenMode.ShowLines) {
             screenMode = ScreenMode.ShowLines;
