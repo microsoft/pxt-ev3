@@ -12,6 +12,9 @@
             "microsoft/pxt-automation"
         ],
         "approvedRepoLib": {
+            "microsoft/pxt-automation": {
+                "preferred": true
+            },
             "THEb0nny/HiTechnic-Color-Sensor-v2": {
                 "preferred": true
             }
