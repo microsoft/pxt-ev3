@@ -5,11 +5,17 @@
             "LEGO"
         ],
         "approvedRepos": [
-            "microsoft/pxt-automation"
+            "microsoft/pxt-automation",
+            "THEb0nny/HiTechnic-Color-Sensor-v2"
         ],
         "preferredRepos": [
             "microsoft/pxt-automation"
-        ]
+        ],
+        "approvedRepoLib": {
+            "THEb0nny/HiTechnic-Color-Sensor-v2": {
+                "preferred": true
+            }
+        }
     },
     "galleries": {
         "Getting Started": "getting-started",
