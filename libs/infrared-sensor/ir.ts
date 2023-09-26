@@ -155,19 +155,19 @@ namespace sensors {
 
         _query() {
             if (this.mode == InfraredSensorMode.RemoteControl)
-                return mapButton(this.getNumber(NumberFormat.UInt8LE, this._channel));
+                return [mapButton(this.getNumber(NumberFormat.UInt8LE, this._channel))];
             else if (this.mode == InfraredSensorMode.Proximity) {
-                return this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff;
+                return [this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff];
             }
-            return 0
+            return [0];
         }
 
-        _info(): string {
+        _info() {
             if (this.mode == InfraredSensorMode.RemoteControl)
-                return "remote";
+                return ["remote"];
             else if (this.mode == InfraredSensorMode.Proximity)
-                return `${this._query()}%`;
-            return "";
+                return [`${this._query()}%`];
+            return [""];
         }
 
         _update(prev: number, curr: number) {

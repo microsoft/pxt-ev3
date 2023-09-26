@@ -23,10 +23,10 @@ namespace sensors {
             return DAL.DEVICE_TYPE_GYRO
         }
 
-        _query(): number {
+        _query() {
             const v = this.getNumber(NumberFormat.Int16LE, 0);
             this._angle.integrate(v - this._drift);
-            return v;
+            return [v];
         }
 
         setMode(m: GyroSensorMode) {
@@ -73,7 +73,7 @@ namespace sensors {
             this.poke();
             if (this._calibrating)
                 pauseUntil(() => !this._calibrating, 2000);
-            return this._query() - this._drift;
+            return this._query()[0] - this._drift;
         }
 
         /**
@@ -253,21 +253,21 @@ namespace sensors {
             const n = 10;
             let d = 0;
             for (let i = 0; i < n; ++i) {
-                d += this._query();
+                d += this._query()[0];
                 pause(20);
             }
             this._drift = d / n;
             this._angle.reset();
         }
 
-        _info(): string {
+        _info() {
             if (this._calibrating)
-                return "cal...";
+                return ["cal..."];
 
-            let r = `${this._query()}r`;
+            let r = `${this._query()[0]}r`;
             if (this._drift != 0)
                 r += `-${this._drift | 0}`;
-            return r;
+            return [r];
         }
     }
 

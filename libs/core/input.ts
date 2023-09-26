@@ -94,7 +94,7 @@ namespace sensors.internal {
         }
 
         private query() {
-            if (this.sensor) return this.sensor._query();
+            if (this.sensor) return this.sensor._query()[0];
             return 0;
         }
 
@@ -392,16 +392,12 @@ void      cUiUpdatePower(void)
             return sensorInfos[this._port].sensor == this
         }
 
-        _query() {
-            return 0
+        _query(): number[] {
+            return [0];
         }
 
-        _info(): string {
-            return this._query().toString();
-        }
-
-        _infoArr(): string[] {
-            return [this._query().toString()];
+        _info(): string[] {
+            return [this._query()[0].toString()];
         }
 
         _update(prev: number, curr: number) {
