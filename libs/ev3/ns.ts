@@ -1,5 +1,5 @@
 //% color="#68C3E2" weight=100 icon="\uf106"
-//% groups='["Buttons", "Indicator", "Screen", "Power"]'
+//% groups='["Buttons", "Indicator", "Screen", "Power", "Program"]'
 //% labelLineWidth=60
 namespace brick {
 }
