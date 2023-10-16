@@ -67,7 +67,6 @@ namespace sensors.internal {
     let devcon: Buffer;
     let devPoller: Poller;
     let sensorInfos: SensorInfo[];
-    let pollerInterval: number;
 
     let batteryInfo: {
         CinCnt: number;
