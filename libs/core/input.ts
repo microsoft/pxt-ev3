@@ -254,7 +254,7 @@ namespace sensors.internal {
                 control.dmesg(`new IIC connection at port ${sensorInfo.port} with ID ${sensorInfo.iicid.length}`);
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
                 control.dmesg(`new DUMB connection at port ${sensorInfo.port}`);
-                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH;
+                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH; // TODO? for now assume touch sensor
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
                 control.dmesg(`disconnect at port ${sensorInfo.port}`);
             } else {
