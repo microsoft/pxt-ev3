@@ -1,22 +1,10 @@
 const enum NXTLightSensorMode {
-    //% block="reflected light"
-    ReflectedLight = 0,
-    //% block="ambient light"
-    AmbientLight = 1
-}
-
-enum ReflectedLightMode {
-    //% block="reflected light"
-    Reflected = 0,
     //% block="reflected light (raw)"
-    ReflectedRaw = 1
-}
-
-enum Light {
-    //% block="dark"
-    High = sensors.ThresholdState.Low,
-    //% block="bright"
-    Low = sensors.ThresholdState.High
+    ReflectedLightRaw = 0,
+    //% block="reflected light"
+    ReflectedLight = 1,
+    //% block="ambient light"
+    AmbientLight = 2,
 }
 
 namespace sensors {
@@ -66,14 +54,16 @@ namespace sensors {
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=99 blockGap=8
-        //% subcategory="NXT Sensors"
+        //% subcategory="NXT"
         //% group="Light Sensor"
         light(mode: NXTLightSensorMode) {
             //this.setMode(<NXTLightSensorMode><number>mode);
             this.poke();
             switch (mode) {
-                case NXTLightSensorMode.ReflectedLight:
+                case NXTLightSensorMode.ReflectedLightRaw:
                     return this.reflectetLightRaw();
+                case NXTLightSensorMode.ReflectedLight:
+                    return this.reflectetLight();
                 case NXTLightSensorMode.AmbientLight:
                     return this.ambientLight();
                 default:
@@ -115,11 +105,14 @@ namespace sensors {
     }
 
     //% whenUsed block="2" weight=95 fixedInstance jres=icons.port2
-    export const nxtLight2: NXTLightSensor = new NXTLightSensor(2)
+    export const nxtLight2: NXTLightSensor = new NXTLightSensor(2);
+
     //% whenUsed block="1" weight=90 fixedInstance jres=icons.port1
-    export const nxtLight1: NXTLightSensor = new NXTLightSensor(1)
+    export const nxtLight1: NXTLightSensor = new NXTLightSensor(1);
+
     //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
-    export const nxtLight3: NXTLightSensor = new NXTLightSensor(3)
+    export const nxtLight3: NXTLightSensor = new NXTLightSensor(3);
+    
     //% whenUsed block="4" weight=90 fixedInstance jres=icons.port4
-    export const nxtLight4: NXTLightSensor = new NXTLightSensor(4)
+    export const nxtLight4: NXTLightSensor = new NXTLightSensor(4);
 }
