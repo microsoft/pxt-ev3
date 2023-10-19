@@ -12,6 +12,9 @@ namespace sensors {
     //% fixedInstances
     export class NXTLightSensor extends internal.AnalogSensor {
 
+        darkValue: number;
+        lightValue: number;
+
         constructor(port: number) {
             super(port);
         }
@@ -20,7 +23,8 @@ namespace sensors {
             return this.readValue();
         }
 
-        _info(): string {
+        _info() {
+            console.log(this._query().toString());
             return this._query().toString();
         }
 
@@ -48,7 +52,7 @@ namespace sensors {
          * @param sensor the color sensor port
          */
         //% help=sensors/nxt-light-sensor/light
-        //% block="**nxt light sensor** %this|%mode"
+        //% block="**nxt light sensor** $this|$mode"
         //% blockId=nxtLight
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
@@ -57,7 +61,7 @@ namespace sensors {
         //% subcategory="NXT"
         //% group="Light Sensor"
         light(mode: NXTLightSensorMode) {
-            //this.setMode(<NXTLightSensorMode><number>mode);
+            this.setMode(<NXTLightSensorMode><number>mode);
             this.poke();
             switch (mode) {
                 case NXTLightSensorMode.ReflectedLightRaw:
@@ -72,10 +76,30 @@ namespace sensors {
         }
 
         /**
+         * Set the minimum and maximum range of values for determining dark and light. This must be done so that the reflection and ambient lighting mode determines the value in the range from 0 to 100 percent.
+         * @param sensor the color sensor port
+         * @param dark the value of dark
+         * @param light the value of light
+         */
+        //% help=sensors/nxt-light-sensor/light
+        //% block="**nxt light sensor** $this| set dark $dark|light $light"
+        //% blockId=setRange
+        //% parts="nxtlightsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=89 blockGap=8
+        //% subcategory="NXT"
+        //% group="Light Sensor"
+        setRange(dark: number, light: number) {
+            this.darkValue = dark;
+            this.lightValue = light;
+        }
+
+        /**
          * Gets the raw light value.
          */
         //%
-        readValue() {
+        private readValue() {
             return this._readPin1();
         }
 

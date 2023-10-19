@@ -3,6 +3,7 @@
 namespace pxsim {
 
     export enum NXTLightSensorMode {
+        None = -1,
         ReflectedLightRaw = 0,
         ReflectedLight = 1,
         AmbientLight = 2,
