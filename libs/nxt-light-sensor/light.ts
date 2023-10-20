@@ -17,6 +17,8 @@ namespace sensors {
 
         constructor(port: number) {
             super(port);
+            this.darkValue = 4096;
+            this.lightValue = 0;
         }
 
         _query() {
@@ -24,7 +26,6 @@ namespace sensors {
         }
 
         _info() {
-            console.log(this._query().toString());
             return this._query().toString();
         }
 
@@ -78,8 +79,8 @@ namespace sensors {
         /**
          * Set the minimum and maximum range of values for determining dark and light. This must be done so that the reflection and ambient lighting mode determines the value in the range from 0 to 100 percent.
          * @param sensor the color sensor port
-         * @param dark the value of dark
-         * @param light the value of light
+         * @param dark the value of dark, eg: 0
+         * @param light the value of light, eg: 4096
          */
         //% help=sensors/nxt-light-sensor/light
         //% block="**nxt light sensor** $this| set dark $dark|light $light"
@@ -116,7 +117,9 @@ namespace sensors {
          */
         //%
         reflectetLight() {
-            return this.readValue();
+            let reflectedVal = Math.map(this.readValue(), this.lightValue, this.darkValue, 0, 100);
+            reflectedVal = Math.constrain(reflectedVal, 0, 100);
+            return reflectedVal;
         }
 
         /**
@@ -124,15 +127,17 @@ namespace sensors {
          */
         //%
         ambientLight() {
-            return this.readValue();
+            let ambientVal = Math.map(this.readValue(), this.lightValue, this.darkValue, 0, 100);
+            ambientVal = Math.constrain(ambientVal, 0, 100);
+            return ambientVal;
         }
     }
 
-    //% whenUsed block="2" weight=95 fixedInstance jres=icons.port2
-    export const nxtLight2: NXTLightSensor = new NXTLightSensor(2);
-
-    //% whenUsed block="1" weight=90 fixedInstance jres=icons.port1
+    //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
     export const nxtLight1: NXTLightSensor = new NXTLightSensor(1);
+
+    //% whenUsed block="2" weight=90 fixedInstance jres=icons.port2
+    export const nxtLight2: NXTLightSensor = new NXTLightSensor(2);
 
     //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
     export const nxtLight3: NXTLightSensor = new NXTLightSensor(3);

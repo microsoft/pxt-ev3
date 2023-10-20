@@ -1,6 +1,6 @@
 namespace pxsim {
 
-    enum AnalogOff {
+    export enum AnalogOff {
         InPin1 = 0, // int16[4]
         InPin6 = 8, // int16[4]
         OutPin5 = 16, // int16[4]
@@ -36,10 +36,10 @@ namespace pxsim {
                     for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                         const node = inputNodes[port];
                         if (node) {
-                            data[AnalogOff.InConn + port] = node.isUart() ? DAL.CONN_INPUT_UART : DAL.CONN_INPUT_DUMB;
+                            data[AnalogOff.InConn + port] = node.isUart() ? DAL.CONN_INPUT_UART : DAL.CONN_INPUT_DUMB; // CONN_NXT_DUMB
                             if (node.isAnalog() && node.hasData()) {
                                 //data[AnalogOff.InPin6 + 2 * port] = node.getValue();
-                                util.map16Bit(data, AnalogOff.InPin6 + 2 * port, Math.floor(node.getValue()));
+                                util.map16Bit(data, node.getAnalogReadPin() + 2 * port, Math.floor(node.getValue()));
                             }
                         }
                     }

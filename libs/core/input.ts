@@ -256,6 +256,7 @@ namespace sensors.internal {
 
         for (const sensorInfo of sensorInfos) {
             const newConn = inConn[sensorInfo.port];
+            console.log("newConn: " + newConn);
             if (newConn == sensorInfo.connType
                 && sensorInfo.sensor
                 && sensorInfo.sensor.isActive()) {
@@ -276,8 +277,9 @@ namespace sensors.internal {
                 sensorInfo.iicid = readIICID(sensorInfo.port);
                 control.dmesg(`IIC ID ${sensorInfo.iicid.length}`);
             } else if (newConn == DAL.CONN_NXT_DUMB) {
-                control.dmesg(`new NXT analog connection at ${sensorInfo.port}`);
+                control.dmesg(`new NXT analog connection at port ${sensorInfo.port}`);
                 sensorInfo.devType = inDcm[sensorInfo.port];
+                console.log("sensorInfo.devType: " + sensorInfo.devType);
                 control.dmesg(`NXT analog dev type ${sensorInfo.devType}`);
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
                 control.dmesg(`new DUMB connection at ${sensorInfo.port}`);
@@ -408,12 +410,12 @@ namespace sensors.internal {
         }
 
         _readPin1() {
-            if (!this.isActive()) return 0;
+            //if (!this.isActive()) return 0;
             return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin1 + 2 * this._port);
         }
 
         _readPin6() {
-            if (!this.isActive()) return 0;
+            //if (!this.isActive()) return 0;
             return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port);
         }
     }

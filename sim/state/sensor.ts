@@ -32,6 +32,10 @@ namespace pxsim {
             return [0];
         }
 
+        public getAnalogReadPin() {
+            return AnalogOff.InPin6; // Defl for ev3 sensor
+        }
+
         setMode(mode: number) {
             this.mode = mode;
             this.changed = true;
