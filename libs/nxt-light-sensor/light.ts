@@ -101,8 +101,9 @@ namespace sensors {
         //% subcategory="NXT"
         //% group="Light Sensor"
         setReflectedLightRange(dark: number, light: number) {
-            this.darkRefLight = dark;
-            this.lightRefLight = light;
+            if (dark <= light) return;
+            this.darkRefLight = Math.constrain(dark, 0, 4096);
+            this.lightRefLight = Math.constrain(light, 0, 4096);
         }
 
         /**
@@ -121,8 +122,9 @@ namespace sensors {
         //% subcategory="NXT"
         //% group="Light Sensor"
         setAmbientLightRange(dark: number, light: number) {
-            this.darkAmbientLight = dark;
-            this.lightAmbientLight = light;
+            if (dark <= light) return;
+            this.darkAmbientLight = Math.constrain(dark, 0, 4096);
+            this.lightAmbientLight = Math.constrain(light, 0, 4096);
         }
 
         /**
