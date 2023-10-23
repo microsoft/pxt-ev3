@@ -48,6 +48,11 @@ namespace sensors {
             return <NXTLightSensorMode>this.mode;
         }
 
+        // This pin is not used by the NXT Analog Sensor
+        _readPin6() {
+            return 0;
+        }
+
         /**
          * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest). For raw reflection values, the range can be from 0 to 4096.
          * @param sensor the color sensor port

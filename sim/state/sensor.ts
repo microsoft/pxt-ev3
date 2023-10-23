@@ -20,6 +20,10 @@ namespace pxsim {
             return false;
         }
 
+        public isNXT() {
+            return false;
+        }
+
         public isModeReturnArr() {
             return this.modeReturnArr;
         }

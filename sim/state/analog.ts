@@ -36,7 +36,8 @@ namespace pxsim {
                     for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                         const node = inputNodes[port];
                         if (node) {
-                            data[AnalogOff.InConn + port] = node.isUart() ? DAL.CONN_INPUT_UART : DAL.CONN_INPUT_DUMB; // CONN_NXT_DUMB
+                            if (node.isAnalog()) data[AnalogOff.InDcm + port] = node.getDeviceType();
+                            data[AnalogOff.InConn + port] = node.isUart() ? DAL.CONN_INPUT_UART : (!node.isNXT() ? DAL.CONN_INPUT_DUMB : DAL.CONN_NXT_DUMB);
                             if (node.isAnalog() && node.hasData()) {
                                 //data[AnalogOff.InPin6 + 2 * port] = node.getValue();
                                 util.map16Bit(data, node.getAnalogReadPin() + 2 * port, Math.floor(node.getValue()));

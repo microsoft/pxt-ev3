@@ -43,12 +43,12 @@ namespace pxsim {
             this.modeChanged = true;
         }
 
-        public hasData() {
-            return this.value > 0;
-        }
-
         getAnalogReadPin() {
             return AnalogOff.InPin1;
+        }
+
+        isNXT() {
+            return true;
         }
     }
 }
