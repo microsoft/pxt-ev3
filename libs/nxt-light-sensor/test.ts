@@ -1,4 +1,4 @@
-sensors.nxtLight1.setRange(2600, 1600);
+sensors.nxtLight1.setReflectedLightRange(2600, 1600);
 
 forever(function () {
     control.timer1.reset();
