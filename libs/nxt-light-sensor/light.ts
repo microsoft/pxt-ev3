@@ -122,7 +122,7 @@ namespace sensors {
          */
         //%
         reflectetLight() {
-            let reflectedVal = Math.map(this.readValue(), this.lightValue, this.darkValue, 0, 100);
+            let reflectedVal = Math.map(this.readValue(), this.darkValue, this.lightValue, 0, 100);
             reflectedVal = Math.constrain(reflectedVal, 0, 100);
             return reflectedVal;
         }
@@ -132,7 +132,7 @@ namespace sensors {
          */
         //%
         ambientLight() {
-            let ambientVal = Math.map(this.readValue(), this.lightValue, this.darkValue, 0, 100);
+            let ambientVal = Math.map(this.readValue(), this.darkValue, this.lightValue, 0, 100);
             ambientVal = Math.constrain(ambientVal, 0, 100);
             return ambientVal;
         }
