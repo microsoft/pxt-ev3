@@ -14,6 +14,6 @@ forever(function () {
     brick.printValue("rrrcs", rrrcs, 4);
     brick.printValue("t", t, 5);
     brick.printValue("active1", sensors.nxtLight1.isActive() ? 1 : 0, 11);
-    brick.printValue("active2", sensors.touch4.isActive() ? 1 : 0, 12);
+    brick.printValue("active4", sensors.touch4.isActive() ? 1 : 0, 12);
     control.timer1.pauseUntil(10);
 })
