@@ -5,14 +5,14 @@ namespace pxsim.visuals {
 
         private control: LightWheelControl;
 
-        private static sensor_hole_id = 'color_sensor_white_big';
+        private static sensor_hole_id = 'light_sensor_light_red';
 
         constructor(port: number) {
-            super(COLOR_SENSOR_SVG, "color", NodeType.NXTLightSensor, port);
+            super(NXT_LIGHT_SENSOR_SVG, "color", NodeType.NXTLightSensor, port);
         }
 
         protected optimizeForLightMode() {
-            (this.content.getElementById(this.normalizeId('color_bigbox-2_path')) as SVGElement).style.fill = '#a8aaa8';
+            (this.content.getElementById(this.normalizeId('box')) as SVGElement).style.fill = '#a8aaa8';
         }
 
         public getPaddingRatio() {
