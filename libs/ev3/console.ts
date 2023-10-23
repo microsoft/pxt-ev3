@@ -21,7 +21,6 @@ namespace console._screen {
             console.addListener(log);
             brick.buttonUp.onEvent(ButtonEvent.Bumped, () => scroll(-3));
             brick.buttonDown.onEvent(ButtonEvent.Bumped, () => scroll(3));
-            brick.showConsole();
         }
     }
 
