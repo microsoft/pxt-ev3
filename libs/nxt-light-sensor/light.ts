@@ -12,13 +12,17 @@ namespace sensors {
     //% fixedInstances
     export class NXTLightSensor extends internal.AnalogSensor {
 
-        darkValue: number;
-        lightValue: number;
+        darkRefLight: number;
+        lightRefLight: number;
+        darkAmbientLight: number;
+        lightAmbientLight: number;
 
         constructor(port: number) {
             super(port);
-            this.darkValue = 4096;
-            this.lightValue = 0;
+            this.darkRefLight = 4096;
+            this.lightRefLight = 0;
+            this.darkAmbientLight = 4096;
+            this.lightAmbientLight = 0;
         }
 
         _query() {
@@ -82,23 +86,43 @@ namespace sensors {
         }
 
         /**
-         * Set the minimum and maximum range of values for determining dark and light. This must be done so that the reflection and ambient lighting mode determines the value in the range from 0 to 100 percent.
+         * Set the range of values for determining dark and light in light reflection mode. This must be done so that the reflection mode defines a value in the range from 0 to 100 percent.
          * @param sensor the color sensor port
          * @param dark the value of dark, eg: 0
          * @param light the value of light, eg: 4096
          */
         //% help=sensors/nxt-light-sensor/light
-        //% block="**nxt light sensor** $this| set dark $dark|light $light"
-        //% blockId=setRange
+        //% block="**nxt light sensor** $this| set reflected range dark $dark|light $light"
+        //% blockId=setReflectedLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=89 blockGap=8
         //% subcategory="NXT"
         //% group="Light Sensor"
-        setRange(dark: number, light: number) {
-            this.darkValue = dark;
-            this.lightValue = light;
+        setReflectedLightRange(dark: number, light: number) {
+            this.darkRefLight = dark;
+            this.lightRefLight = light;
+        }
+
+        /**
+         * Set the value range for dark and light detection in ambient light mode. This must be done so that the ambient light mode determines the value in the range from 0 to 100 percent.
+         * @param sensor the color sensor port
+         * @param dark the value of dark, eg: 0
+         * @param light the value of light, eg: 4096
+         */
+        //% help=sensors/nxt-light-sensor/light
+        //% block="**nxt light sensor** $this| set ambient range dark $dark|light $light"
+        //% blockId=setAmbientLightRange
+        //% parts="nxtlightsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=88 blockGap=8
+        //% subcategory="NXT"
+        //% group="Light Sensor"
+        setAmbientLightRange(dark: number, light: number) {
+            this.darkAmbientLight = dark;
+            this.lightAmbientLight = light;
         }
 
         /**
@@ -122,7 +146,7 @@ namespace sensors {
          */
         //%
         reflectetLight() {
-            let reflectedVal = Math.map(this.readValue(), this.darkValue, this.lightValue, 0, 100);
+            let reflectedVal = Math.map(this.readValue(), this.darkRefLight, this.lightRefLight, 0, 100);
             reflectedVal = Math.constrain(reflectedVal, 0, 100);
             return reflectedVal;
         }
@@ -132,7 +156,7 @@ namespace sensors {
          */
         //%
         ambientLight() {
-            let ambientVal = Math.map(this.readValue(), this.darkValue, this.lightValue, 0, 100);
+            let ambientVal = Math.map(this.readValue(), this.darkAmbientLight, this.lightAmbientLight, 0, 100);
             ambientVal = Math.constrain(ambientVal, 0, 100);
             return ambientVal;
         }
