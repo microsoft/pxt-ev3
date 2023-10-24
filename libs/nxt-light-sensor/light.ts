@@ -3,8 +3,10 @@ const enum NXTLightSensorMode {
     ReflectedLightRaw = 0,
     //% block="reflected light"
     ReflectedLight = 1,
+    //% block="ambient light (raw)"
+    AmbientLightRaw = 2,
     //% block="ambient light"
-    AmbientLight = 2,
+    AmbientLight = 3,
 }
 
 namespace sensors {
@@ -122,6 +124,7 @@ namespace sensors {
         //% subcategory="NXT"
         //% group="Light Sensor"
         setAmbientLightRange(dark: number, light: number) {
+            // ToDo: the red LED should be turned off in ambient lighting mode
             if (dark <= light) return;
             this.darkAmbientLight = Math.constrain(dark, 0, 4096);
             this.lightAmbientLight = Math.constrain(light, 0, 4096);
