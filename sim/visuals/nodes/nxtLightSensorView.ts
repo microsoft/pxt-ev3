@@ -5,7 +5,7 @@ namespace pxsim.visuals {
 
         private control: LightWheelControl;
 
-        private static sensor_hole_id = 'light_sensor_light_red';
+        private static sensor_hole_id = 'led';
 
         constructor(port: number) {
             super(NXT_LIGHT_SENSOR_SVG, "color", NodeType.NXTLightSensor, port);
@@ -26,12 +26,11 @@ namespace pxsim.visuals {
             if (!lightState) return;
             const mode = lightState.getMode();
 
-            switch (mode) {
-                case NXTLightSensorMode.ReflectedLightRaw: this.updateSensorLightVisual('#F86262'); return; // red
-                case NXTLightSensorMode.ReflectedLight: this.updateSensorLightVisual('#F86262'); return; // red
-                case NXTLightSensorMode.AmbientLight: this.updateSensorLightVisual('#0062DD'); return; // blue
+            if (mode == NXTLightSensorMode.ReflectedLightRaw || mode == NXTLightSensorMode.ReflectedLight) {
+                this.updateSensorLightVisual('#eb0c0c');
+            } else {
+                this.updateSensorLightVisual('#ffffff');
             }
-            this.updateSensorLightVisual('#ffffff');
         }
 
         private updateSensorLightVisual(color: string) {

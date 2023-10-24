@@ -32,7 +32,11 @@ namespace sensors {
         }
 
         _info() {
-            return this._query().toString();
+            if (this.mode == NXTLightSensorMode.ReflectedLight || this.mode == NXTLightSensorMode.AmbientLightRaw) {
+                return `${this._query().toString()}%`;
+            } else {
+                return this._query().toString();
+            }
         }
 
         _update(prev: number, curr: number) {
@@ -80,6 +84,8 @@ namespace sensors {
                     return this.reflectetLightRaw();
                 case NXTLightSensorMode.ReflectedLight:
                     return this.reflectetLight();
+                case NXTLightSensorMode.AmbientLightRaw:
+                    return this.ambientLightRaw();
                 case NXTLightSensorMode.AmbientLight:
                     return this.ambientLight();
                 default:
@@ -124,7 +130,6 @@ namespace sensors {
         //% subcategory="NXT"
         //% group="Light Sensor"
         setAmbientLightRange(dark: number, light: number) {
-            // ToDo: the red LED should be turned off in ambient lighting mode
             if (dark <= light) return;
             this.darkAmbientLight = Math.constrain(dark, 0, 4096);
             this.lightAmbientLight = Math.constrain(light, 0, 4096);
@@ -143,11 +148,21 @@ namespace sensors {
          */
         //%
         reflectetLightRaw() {
+            // ToDo: the red LED should be turned off in ambient lighting mode
             return this.readValue();
         }
 
         /**
-         * Gets the reflection light value.
+         * Gets the raw ambient light value.
+         */
+        //%
+        ambientLightRaw() {
+            // ToDo: the red LED should be turned off in ambient lighting mode
+            return this.readValue();
+        }
+
+        /**
+         * Gets the normalize reflection light value.
          */
         //%
         reflectetLight() {
@@ -157,7 +172,7 @@ namespace sensors {
         }
 
         /**
-         * Gets the ambient light value.
+         * Gets the normalize ambient light value.
          */
         //%
         ambientLight() {
