@@ -312,11 +312,28 @@ namespace brick {
     }
 
     /**
+     * Clear on the screen at a specific lines (1..12).
+     * @param lines list of lines to clear (starting at 1 and ends with 12)
+     */
+    //% blockId=clearLines block="clear lines $lines"
+    //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
+    export function clearLines(lines: number[]) {
+        if (screenMode != ScreenMode.ShowLines) {
+            screenMode = ScreenMode.ShowLines;
+            screen.fill(0);
+        }
+
+        for (let i = 0; i < lines.length; i++) {
+            clearLine(lines[i]);
+        }
+    }
+
+    /**
      * Clear on the screen at a specific line.
      * @param line the line number to clear at (starting at 1), eg: 1
      */
     //% blockId=clearLine block="clear line $line"
-    //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
+    //% weight=93 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=1 line.max=12
     export function clearLine(line: number) {
         if (screenMode != ScreenMode.ShowLines) {
@@ -337,7 +354,7 @@ namespace brick {
      * Clear the screen
      */
     //% blockId=screen_clear_screen block="clear screen"
-    //% weight=93 group="Screen"
+    //% weight=92 group="Screen"
     //% help=brick/clear-screen weight=1
     export function clearScreen() {
         screen.fill(0)
