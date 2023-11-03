@@ -1,5 +1,5 @@
 //% color="#68C3E2" weight=100 icon="\uf106"
-//% groups='["Buttons", "Screen", "Power"]'
+//% groups='["Buttons", "Indicator", "Screen", "Power", "Program"]'
 //% labelLineWidth=60
 namespace brick {
 }
@@ -7,6 +7,7 @@ namespace brick {
 //% color="#C8509B" weight=95 icon="\uf10f"
 //% labelLineWidth=100
 //% groups='["Touch Sensor", "Color Sensor", "Ultrasonic Sensor", "Gyro Sensor", "Infrared Sensor", "Remote Infrared Beacon", "Calibration"]'
+//% subcategories='["NXT", "HiTechnic"]'
 namespace sensors {
 }
 
