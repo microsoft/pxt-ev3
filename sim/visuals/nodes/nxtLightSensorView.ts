@@ -28,8 +28,6 @@ namespace pxsim.visuals {
 
             if (mode == NXTLightSensorMode.ReflectedLightRaw || mode == NXTLightSensorMode.ReflectedLight) {
                 this.updateSensorLightVisual('#eb0c0c');
-            } else {
-                this.updateSensorLightVisual('#ffffff');
             }
         }
 
