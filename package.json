@@ -1,6 +1,6 @@
 {
   "name": "pxt-ev3",
-  "version": "1.4.33",
+  "version": "1.4.37",
   "description": "LEGO MINDSTORMS EV3 for Microsoft MakeCode",
   "private": false,
   "keywords": [
@@ -38,14 +38,15 @@
     "@types/react-dom": "16.0.3",
     "@types/web-bluetooth": "0.0.4",
     "@vusion/webfonts-generator": "^0.7.1",
+    "less": "3.13.1",
     "react": "16.8.3",
     "react-dom": "16.11.0",
     "semantic-ui-less": "2.4.1",
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "pxt-common-packages": "9.2.7",
-    "pxt-core": "7.2.27"
+    "pxt-common-packages": "11.1.2",
+    "pxt-core": "9.1.23"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"

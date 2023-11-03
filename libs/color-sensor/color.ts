@@ -47,6 +47,8 @@ enum Light {
 
 namespace sensors {
 
+    const MODE_SWITCH_DELAY = 10;
+
     /**
      * The color sensor is a digital sensor that can detect the color or intensity
      * of light that enters the small window on the face of the sensor.
@@ -72,7 +74,17 @@ namespace sensors {
 
         setMode(m: ColorSensorMode) {
             // don't change threshold after initialization
-            this._setMode(m)
+            if (m != this.mode && this.isActive()) { // If the new mode is different from what was set for the sensor
+                let maxModeRange = 0;
+                if (m == ColorSensorMode.RefRaw || m == ColorSensorMode.RgbRaw) maxModeRange = 1023;
+                else if (m == ColorSensorMode.Color) maxModeRange = 7;
+                else maxModeRange = 100; // ReflectedLightIntensity or AmbientLightIntensity
+                this._setMode(m); // Change mode
+                pause(MODE_SWITCH_DELAY);
+                pauseUntil(() => (this.getStatus() == 8 && this._query()[0] <= maxModeRange)); // Pause until mode change
+            } else {
+                this._setMode(m);
+            }
         }
 
         /**
@@ -86,47 +98,33 @@ namespace sensors {
             if (this.mode == ColorSensorMode.Color
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
-                return this.getNumber(NumberFormat.UInt8LE, 0)
-            if (this.mode == ColorSensorMode.RefRaw)
-                return this.getNumber(NumberFormat.UInt16LE, 0)
-            return 0
-        }
-
-        _queryArr(): number[] {
-            if (this.mode == ColorSensorMode.RgbRaw) {
+                return [this.getNumber(NumberFormat.UInt8LE, 0)];
+            else if (this.mode == ColorSensorMode.RefRaw)
+                return [this.getNumber(NumberFormat.UInt16LE, 0)];
+            else if (this.mode == ColorSensorMode.RgbRaw) {
                 return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
             }
-            return [0, 0, 0];
+            return [0];
         }
 
-        _info(): string {
+        _info() {
             switch (this.mode) {
                 case ColorSensorMode.Color:
-                    return ["none",
+                    return [["none",
                         "black",
                         "blue",
                         "green",
                         "yellow",
                         "red",
                         "white",
-                        "brown"][this._query()];
+                        "brown"][this._query()[0]]];
                 case ColorSensorMode.AmbientLightIntensity:
                 case ColorSensorMode.ReflectedLightIntensity:
-                    return `${this._query()}%`;
+                    return [`${this._query()}%`];
                 case ColorSensorMode.RgbRaw:
-                    return "array";
+                    return this._query().map(number => number.toString());
                 default:
-                    return this._query().toString();
-            }
-        }
-
-        _infoArr(): string[] {
-            switch (this.mode) {
-                case ColorSensorMode.RgbRaw:
-                    const queryArr = this._queryArr().map(number => number.toString());
-                    return queryArr;
-                default:
-                    return ["0", "0", "0"];
+                    return [this._query()[0].toString()];
             }
         }
 
@@ -193,9 +191,9 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         color(): ColorSensorColor {
+            this.setMode(ColorSensorMode.Color);
             this.poke();
-            this.setMode(ColorSensorMode.Color)
-            return this.getNumber(NumberFormat.UInt8LE, 0)
+            return this.getNumber(NumberFormat.UInt8LE, 0);
         }
 
         /**
@@ -227,8 +225,8 @@ namespace sensors {
         //% group="Color Sensor"
         //% blockGap=8
         rgbRaw(): number[] {
-            this.poke();
             this.setMode(ColorSensorMode.RgbRaw);
+            this.poke();
             return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
         }
 
@@ -281,13 +279,13 @@ namespace sensors {
         //% weight=87 blockGap=8
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
+            this.setMode(<ColorSensorMode><number>mode);
             this.poke();
-            this.setMode(<ColorSensorMode><number>mode)
             switch (mode) {
                 case LightIntensityMode.ReflectedRaw:
-                    return this.reflectedLightRaw();
+                    return this.getNumber(NumberFormat.UInt16LE, 0);
                 default:
-                    return this.getNumber(NumberFormat.UInt8LE, 0)
+                    return this.getNumber(NumberFormat.UInt8LE, 0);
             }
         }
 
@@ -312,9 +310,7 @@ namespace sensors {
          */
         //%
         reflectedLightRaw(): number {
-            this.poke();
-            this.setMode(ColorSensorMode.RefRaw);
-            return this.getNumber(NumberFormat.UInt16LE, 0);
+            return this.light(LightIntensityMode.ReflectedRaw);
         }
 
         /**

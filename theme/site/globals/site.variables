@@ -13,7 +13,6 @@
 @teal:#08415C;
 @violet:#C200C0;
 @brown:#2E282A;
-@grey:#999;
 @pink:#FB48C7;
 @purple:#8073E5;
 
@@ -107,9 +106,10 @@
 --------------------*/
 
 @mainMenuBackground: @legoGreyLight;
-@mainMenuInvertedBackground: #FFFFFF;
+@mainMenuInvertedBackground: @darkGrey;
 @mainMenuTutorialBackground: @orange;
 
+@mainMenuBlocksJsToggleColor: @primaryColor;
 
 @tutorialSelectedMenuColor: @blue;
 
@@ -158,8 +158,6 @@
 
 @blocklyToolboxColor: #FFF; /*#FAC80A;*/
 @trashIconColor: #FAC80A; /*white*/
-
-@editorToggleColor: @primaryColor;
 
 /*-------------------
    Blockly

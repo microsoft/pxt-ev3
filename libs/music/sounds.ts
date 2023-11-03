@@ -256,16 +256,30 @@ namespace sounds {
 }
 
 namespace music {
+
     let numSoundsPlaying = 0;
     const soundsLimit = 1;
 
     /**
-     * Play a sound and wait until it finishes
+     * A sound.
+     * @param sound the sound
+     */
+    //% blockId=music_sound_picker block="%sound" shim=TD_ID
+    //% sound.fieldEditor="music"
+    //% weight=0 blockHidden=1
+    //% group="Sounds"
+    export function __soundPicker(sound: Sound): Sound {
+        return sound;
+    }
+
+    /**
+     * Start playing a sound and wait until it finishes.
      * @param sound the sound to play
      */
     //% blockId=music_play_sound_effect_until_done block="play sound effect %sound=music_sound_picker|until done"
     //% weight=98 blockGap=8
     //% help=music/play-sound-effect-until-done
+    //% group="Sounds"
     export function playSoundEffectUntilDone(sound: Sound) {
         if (!sound || numSoundsPlaying >= soundsLimit) return;
         numSoundsPlaying++;
@@ -274,23 +288,13 @@ namespace music {
     }
 
     /**
-     * A sound
-     * @param sound the sound
-     */
-    //% blockId=music_sound_picker block="%sound" shim=TD_ID
-    //% sound.fieldEditor="music"
-    //% weight=0 blockHidden=1
-    export function __soundPicker(sound: Sound): Sound {
-        return sound;
-    }
-
-    /**
      * Start playing a sound and don't wait for it to finish.
      * @param sound the sound to play
      */
-    //% blockId=music_play_sound_effect block="play sound effect %sound=music_sound_picker"
+    //% blockId=music_play_sound_effect block="play sound effect %sound=music_sound_picker|in background"
     //% weight=99 blockGap=8
     //% help=music/play-sound-effect
+    //% group="Sounds"
     export function playSoundEffect(sound: Sound) {
         if (!sound || numSoundsPlaying >= soundsLimit) return;
         numSoundsPlaying++;

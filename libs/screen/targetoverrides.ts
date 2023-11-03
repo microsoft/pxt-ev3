@@ -272,13 +272,13 @@ namespace brick {
             const x = (si.port() - 1) * col + 2;
             const inf = si._info();
             if (screenMode != ScreenMode.Ports) return;
-            if (inf == "array") {
-                let infArr = si._infoArr();
+            if (inf.length > 1) {
+                let infArr = si._info();
                 for (let data = 0, str = Math.min(infArr.length + 1, 4); data < Math.min(infArr.length, 3); data++, str--) {
                     screen.print(infArr[data], x, h - str * lineHeight8, 1, infArr[data].length > 4 ? image.font5 : image.font8);
                 }
-            } else if (inf) {
-                screen.print(inf, x, h - 2 * lineHeight8, 1, inf.length > 4 ? image.font5 : image.font8);
+            } else if (inf[0]) {
+                screen.print(inf[0], x, h - 2 * lineHeight8, 1, inf[0].length > 4 ? image.font5 : image.font8);
             }
         }
     }
@@ -312,11 +312,28 @@ namespace brick {
     }
 
     /**
+     * Clear on the screen at a specific lines (1..12).
+     * @param lines list of lines to clear (starting at 1 and ends with 12)
+     */
+    //% blockId=clearLines block="clear lines $lines"
+    //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
+    export function clearLines(lines: number[]) {
+        if (screenMode != ScreenMode.ShowLines) {
+            screenMode = ScreenMode.ShowLines;
+            screen.fill(0);
+        }
+
+        for (let i = 0; i < lines.length; i++) {
+            clearLine(lines[i]);
+        }
+    }
+
+    /**
      * Clear on the screen at a specific line.
      * @param line the line number to clear at (starting at 1), eg: 1
      */
     //% blockId=clearLine block="clear line $line"
-    //% weight=94 group="Screen" inlineInputMode="inline" blockGap=8
+    //% weight=93 group="Screen" inlineInputMode="inline" blockGap=8
     //% line.min=1 line.max=12
     export function clearLine(line: number) {
         if (screenMode != ScreenMode.ShowLines) {
@@ -337,7 +354,7 @@ namespace brick {
      * Clear the screen
      */
     //% blockId=screen_clear_screen block="clear screen"
-    //% weight=93 group="Screen"
+    //% weight=92 group="Screen"
     //% help=brick/clear-screen weight=1
     export function clearScreen() {
         screen.fill(0)

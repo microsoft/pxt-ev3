@@ -76,7 +76,19 @@
     min-width: 2.0rem;
 }
 
+/* lego and microsoft logos separator */
+.menubar .ui.menu .brand:before {
+    border-left: 2px solid #888888;
+}
+
 /* Editor menu toggle */
+#root:not(.hc) #editordropdown {
+    padding: 0 1em;
+}
+#root:not(.hc) #editordropdown #mainmenu #editordropdown.active:focus,
+    #root:not(.hc) #editordropdown.active {
+    background-color: @mainMenuBlocksJsToggleColor!important;
+}
 .menubar .ui.menu.fixed .item.editor-menuitem .ui.grid {
     background: fade(@blue, 10%) !important;
     border: 1px solid #888888;
@@ -84,21 +96,18 @@
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item {
     border-radius: 0px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .menubar .ui.menu.fixed .ui.item.editor-menuitem .item.active {
     color: white;
 }
 
-/* active toggle */
+/* Blocks or JS active toggle color */
 .ui.item.editor-menuitem .active~.item.toggle {
-    background: @editorToggleColor!important;
+    background: @mainMenuBlocksJsToggleColor!important;
 }
 
 .menubar .ui.item.editor-menuitem .item.toggle {
-    height: 45px;
+    height: 100%;
 }
 
 .sandboxfooter a:not(.thin) {
@@ -111,12 +120,8 @@
     text-transform: lowercase;
 }
 
-#filelist {
+#simulator .editor-sidebar {
     background: @simulatorBackground data-uri("../docs/static/backgrounds/simulator.png") 0 0 repeat !important;
-}
-
-#downloadArea {
-    background: @legoGreyLight;
 }
 
 /* Editor download dialog */
@@ -136,6 +141,9 @@
 @media only screen and (max-width: @largestMobileScreen) {
     #filelist {
         background: transparent;
+    }
+    #blocklySearchArea {
+        display: none !important;
     }
 }
 

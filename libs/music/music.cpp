@@ -48,6 +48,7 @@ int writeDev(void *data, int size) {
 //% volume.min=0 volume.max=100
 //% help=music/set-volume
 //% weight=1
+//% group="Volume"
 void setVolume(int volume) {
     currVolume = max(0, min(100, volume));
 }
@@ -60,6 +61,7 @@ void setVolume(int volume) {
 //% parts="speaker" blockGap=8
 //% help=music/volume
 //% weight=1
+//% group="Volume"
 int volume() {
     return currVolume;
 }
@@ -188,6 +190,7 @@ void playSample(Buffer buf) {
 //% parts="headphone" async
 //% blockNamespace=music
 //% weight=76 blockGap=8
+//% group="Tone"
 void playTone(int frequency, int ms) {
     if (frequency <= 0) {
         _stopSound();
@@ -215,6 +218,7 @@ void playTone(int frequency, int ms) {
 //% parts="headphone"
 //% blockNamespace=music
 //% weight=97
+//% group="Volume"
 void stopAllSounds() {
     if (currentSample) {
         samplePtr = currentSample->length;

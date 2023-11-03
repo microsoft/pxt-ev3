@@ -10,7 +10,8 @@ declare namespace music {
     //% parts="speaker" blockGap=8
     //% volume.min=0 volume.max=100
     //% help=music/set-volume
-    //% weight=1 shim=music::setVolume
+    //% weight=1
+    //% group="Volume" shim=music::setVolume
     function setVolume(volume: int32): void;
 
     /**
@@ -20,7 +21,8 @@ declare namespace music {
     //% blockId=synth_get_volume block="volume"
     //% parts="speaker" blockGap=8
     //% help=music/volume
-    //% weight=1 shim=music::volume
+    //% weight=1
+    //% group="Volume" shim=music::volume
     function volume(): int32;
 
     /**
@@ -32,7 +34,8 @@ declare namespace music {
     //% blockId=music_play_note block="play tone|at %note=device_note|for %duration=device_beat"
     //% parts="headphone" async
     //% blockNamespace=music
-    //% weight=76 blockGap=8 shim=music::playTone
+    //% weight=76 blockGap=8
+    //% group="Tone" shim=music::playTone
     function playTone(frequency: int32, ms: int32): void;
 
     /**
@@ -42,7 +45,8 @@ declare namespace music {
     //% blockId=music_stop_all_sounds block="stop all sounds"
     //% parts="headphone"
     //% blockNamespace=music
-    //% weight=97 shim=music::stopAllSounds
+    //% weight=97
+    //% group="Volume" shim=music::stopAllSounds
     function stopAllSounds(): void;
 
     /** Makes a sound bound to a buffer in WAV format. */

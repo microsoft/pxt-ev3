@@ -13,6 +13,7 @@
         "timer.ts",
         "serialnumber.cpp",
         "buttons.ts",
+        "indicator.ts",
         "screen.cpp",
         "battery.ts",
         "output.cpp",

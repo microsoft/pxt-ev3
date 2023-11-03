@@ -592,7 +592,7 @@ namespace motors {
         //% help=motors/motor/speed
         speed(): number {
             this.init();
-            return getMotorData(this._port).actualSpeed;
+            return getMotorData(this._port).actualSpeed * this.invertedFactor();
         }
 
         /**

@@ -7,11 +7,13 @@
 /* Fonts for toolbox icons */
 @font-face {
     font-family: 'legoIcons';
+    size-adjust: 110%;
     src: data-uri("../docs/static/fonts/icons/iconfont.woff");
 }
 
 span.blocklyTreeIcon {
-    font-family: 'legoIcons' !important;
+    font-family: 'legoIcons', 'Icons' !important;
+    font-size: 1.2rem !important;
 }
 
 /* Toolbox padding */
@@ -25,11 +27,7 @@ span.blocklyTreeIcon {
 
 div.blocklyTreeRow {
     border-radius: 0px;
-    margin-bottom: 7px;
-    /*-webkit-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);
-    -moz-box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);
-    box-shadow: inset 0px 0px 0px 3px rgba(0,0,0,0.2);*/
-
+    margin-bottom: 0px;
     border: none !important;
     border-bottom: 1px solid #EBEBEB !important;
 }
@@ -48,9 +46,9 @@ span.blocklyTreeLabel {
 
 /* Search box */
 #blocklySearchArea {
-    margin: 0.5rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
     margin-bottom: 0.8rem;
 }
 .blocklySearchInputField {
@@ -75,5 +73,6 @@ span.blocklyTreeLabel {
 *******************************/
 
 span.blocklyTreeIcon.blocklyTreeIconfunctions {
-    font-family: 'legoIcons' !important;
+    font-family: 'legoIcons', 'Icons' !important;
+    font-size: 1.2rem !important;
 }
