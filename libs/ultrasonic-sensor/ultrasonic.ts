@@ -23,12 +23,12 @@ namespace sensors {
             return DAL.DEVICE_TYPE_ULTRASONIC
         }
 
-        _query(): number {
-            return ((this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff) / 10) >> 0; // range is 0..2550, in 0.1 cm increments.
+        _query() {
+            return [((this.getNumber(NumberFormat.UInt16LE, 0) & 0x0fff) / 10) >> 0]; // range is 0..2550, in 0.1 cm increments.
         }
 
-        _info(): string {
-            return `${this.distance()}cm`
+        _info() {
+            return [`${this.distance()}cm`];
         }
 
         _update(prev: number, curr: number) {
@@ -87,7 +87,7 @@ namespace sensors {
             this.poke();
             // it supposedly also has an inch mode, but we stick to cm
             this._setMode(0)
-            return this._query();
+            return this._query()[0];
         }
 
 

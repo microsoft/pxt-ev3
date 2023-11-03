@@ -6,7 +6,7 @@ namespace brick {
     //% help=reference/brick/exit-program
     //% weight=10
     //% blockGap=8
-    //% group="Buttons"
+    //% group="Program"
     export function exitProgram() {
         control.reset();
     }

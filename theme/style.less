@@ -76,6 +76,11 @@
     min-width: 2.0rem;
 }
 
+/* lego and microsoft logos separator */
+.menubar .ui.menu .brand:before {
+    border-left: 2px solid #888888;
+}
+
 /* Editor menu toggle */
 #root:not(.hc) #editordropdown {
     padding: 0 1em;
@@ -102,7 +107,7 @@
 }
 
 .menubar .ui.item.editor-menuitem .item.toggle {
-    height: 45px;
+    height: 100%;
 }
 
 .sandboxfooter a:not(.thin) {
@@ -115,12 +120,8 @@
     text-transform: lowercase;
 }
 
-#filelist {
+#simulator .editor-sidebar {
     background: @simulatorBackground data-uri("../docs/static/backgrounds/simulator.png") 0 0 repeat !important;
-}
-
-#downloadArea {
-    background: @legoGreyLight;
 }
 
 /* Editor download dialog */

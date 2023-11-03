@@ -81,7 +81,7 @@ namespace sensors {
                 else maxModeRange = 100; // ReflectedLightIntensity or AmbientLightIntensity
                 this._setMode(m); // Change mode
                 pause(MODE_SWITCH_DELAY);
-                pauseUntil(() => (this.getStatus() == 8 && (this.mode == ColorSensorMode.RgbRaw ? this._queryArr()[0] : this._query()) <= maxModeRange)); // Pause until mode change
+                pauseUntil(() => (this.getStatus() == 8 && this._query()[0] <= maxModeRange)); // Pause until mode change
             } else {
                 this._setMode(m);
             }
@@ -98,47 +98,33 @@ namespace sensors {
             if (this.mode == ColorSensorMode.Color
                 || this.mode == ColorSensorMode.AmbientLightIntensity
                 || this.mode == ColorSensorMode.ReflectedLightIntensity)
-                return this.getNumber(NumberFormat.UInt8LE, 0)
+                return [this.getNumber(NumberFormat.UInt8LE, 0)];
             else if (this.mode == ColorSensorMode.RefRaw)
-                return this.getNumber(NumberFormat.UInt16LE, 0)
-            return 0
-        }
-
-        _queryArr(): number[] {
-            if (this.mode == ColorSensorMode.RgbRaw) {
+                return [this.getNumber(NumberFormat.UInt16LE, 0)];
+            else if (this.mode == ColorSensorMode.RgbRaw) {
                 return [this.getNumber(NumberFormat.UInt16LE, 0), this.getNumber(NumberFormat.UInt16LE, 2), this.getNumber(NumberFormat.UInt16LE, 4)];
             }
-            return [0, 0, 0];
+            return [0];
         }
 
-        _info(): string {
+        _info() {
             switch (this.mode) {
                 case ColorSensorMode.Color:
-                    return ["none",
+                    return [["none",
                         "black",
                         "blue",
                         "green",
                         "yellow",
                         "red",
                         "white",
-                        "brown"][this._query()];
+                        "brown"][this._query()[0]]];
                 case ColorSensorMode.AmbientLightIntensity:
                 case ColorSensorMode.ReflectedLightIntensity:
-                    return `${this._query()}%`;
+                    return [`${this._query()}%`];
                 case ColorSensorMode.RgbRaw:
-                    return "array";
+                    return this._query().map(number => number.toString());
                 default:
-                    return this._query().toString();
-            }
-        }
-
-        _infoArr(): string[] {
-            switch (this.mode) {
-                case ColorSensorMode.RgbRaw:
-                    const queryArr = this._queryArr().map(number => number.toString());
-                    return queryArr;
-                default:
-                    return ["0", "0", "0"];
+                    return [this._query()[0].toString()];
             }
         }
 
