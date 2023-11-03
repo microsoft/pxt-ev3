@@ -1,4 +1,8 @@
 namespace sensors.internal {
+
+    const UART_PORT_CHANGED = 1;
+    const UART_DATA_READY = 8;
+
     export class Poller {
         private query: () => number;
         private update: (previous: number, current: number) => void;
@@ -7,7 +11,7 @@ namespace sensors.internal {
         private previousValue: number;
         private currentValue: number;
         private lastQuery: number; // track down the last time we did a query/update cycle
-        private lastPause: number;  // track down the last time we pause in the sensor polling loop
+        private lastPause: number; // track down the last time we pause in the sensor polling loop
 
         constructor(interval: number, query: () => number, update: (previous: number, current: number) => void) {
             this.interval = interval | 0;
@@ -35,6 +39,7 @@ namespace sensors.internal {
 
         private poll() {
             control.runInBackground(() => {
+                pause(this.interval);
                 this.lastQuery = this.lastPause = control.millis();
                 this.previousValue = this.currentValue = this.query();
                 this.update(this.previousValue, this.currentValue);
@@ -55,12 +60,12 @@ namespace sensors.internal {
         return s
     }
 
-    let analogMM: MMap
-    let uartMM: MMap
-    let IICMM: MMap
-    let powerMM: MMap
-    let devcon: Buffer
-    let devPoller: Poller
+    let analogMM: MMap;
+    let uartMM: MMap;
+    let IICMM: MMap;
+    let powerMM: MMap;
+    let devcon: Buffer;
+    let devPoller: Poller;
     let sensorInfos: SensorInfo[];
 
     let batteryInfo: {
@@ -94,7 +99,7 @@ namespace sensors.internal {
         }
 
         private query() {
-            if (this.sensor) return this.sensor._query();
+            if (this.sensor) return this.sensor._query()[0];
             return 0;
         }
 
@@ -120,34 +125,16 @@ namespace sensors.internal {
 
         powerMM = control.mmap("/dev/lms_power", 2, 0)
 
-        devPoller = new Poller(250, () => { return hashDevices(); },
+        devPoller = new Poller(900, () => { return hashDevices(); },
             (prev, curr) => {
                 detectDevices();
-            });
+            }
+        );
     }
 
     export function getActiveSensors(): Sensor[] {
         init();
         return sensorInfos.filter(si => si.sensor && si.sensor.isActive()).map(si => si.sensor);
-    }
-
-    function readUartInfo(port: number, mode: number) {
-        let buf = output.createBuffer(UartCtlOff.Size)
-        buf[UartCtlOff.Port] = port
-        buf[UartCtlOff.Mode] = mode
-        uartMM.ioctl(IO.UART_READ_MODE_INFO, buf)
-        return buf
-        //let info = `t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`
-        //serial.writeLine("UART " + port + " / " + mode + " - " + info)
-    }
-
-    export function readIICID(port: number) {
-        const buf = output.createBuffer(IICStr.Size)
-        buf[IICStr.Port] = port
-        IICMM.ioctl(IO.IIC_READ_TYPE_INFO, buf)
-        const manufacturer = bufferToString(buf.slice(IICStr.Manufacturer, 8))
-        const sensorType = bufferToString(buf.slice(IICStr.SensorType, 8))
-        return manufacturer + sensorType;
     }
 
     const ADC_REF = 5000                  //!< [mV]  maximal value on ADC
@@ -246,35 +233,26 @@ namespace sensors.internal {
         return r;
     }
 
-    let nonActivated = 0;
     function detectDevices() {
-        control.dmesg(`detect devices (hash ${hashDevices()})`);
+        control.dmesg(`DETECT DEVICES (hash ${hashDevices()})`);
         const inDcm = analogMM.slice(AnalogOff.InDcm, DAL.NUM_INPUTS);
         const inConn = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS);
-        let numChanged = 0;
-        const uartSensors: SensorInfo[] = [];
 
         for (const sensorInfo of sensorInfos) {
             const newConn = inConn[sensorInfo.port];
-            if (newConn == sensorInfo.connType
-                && sensorInfo.sensor
-                && sensorInfo.sensor.isActive()) {
-                if (newConn == DAL.CONN_INPUT_UART)
-                    uartSensors.push(sensorInfo);
+            if (newConn == sensorInfo.connType && sensorInfo.sensor && sensorInfo.sensor.isActive()) {
                 continue;
             }
-            numChanged++;
             sensorInfo.connType = newConn;
             sensorInfo.devType = DAL.DEVICE_TYPE_NONE;
             if (newConn == DAL.CONN_INPUT_UART) {
-                control.dmesg(`new UART connection at ${sensorInfo.port}`);
+                const status = getUartStatus(sensorInfo.port);
+                control.dmesg(`new UART connection at port ${sensorInfo.port} with status ${status}`);
                 updateUartMode(sensorInfo.port, 0);
-                uartSensors.push(sensorInfo);
             } else if (newConn == DAL.CONN_NXT_IIC) {
-                control.dmesg(`new IIC connection at ${sensorInfo.port}`);
                 sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN;
                 sensorInfo.iicid = readIICID(sensorInfo.port);
-                control.dmesg(`IIC ID ${sensorInfo.iicid.length}`);
+                control.dmesg(`new IIC connection at port ${sensorInfo.port} with ID ${sensorInfo.iicid.length}`);
             } else if (newConn == DAL.CONN_NXT_DUMB) {
                 sensorInfo.devType = inDcm[sensorInfo.port];
                 control.dmesg(`new NXT DUMB connection at ${sensorInfo.port} dev type ${sensorInfo.devType}`);
@@ -283,49 +261,45 @@ namespace sensors.internal {
                 sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH; // TODO? for now assume touch
                 control.dmesg(`new DUMB connection at ${sensorInfo.port} dev type ${sensorInfo.devType}`);
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
-                //control.dmesg(`disconnect at port ${sensorInfo.port}`)
+                control.dmesg(`disconnect at port ${sensorInfo.port}`);
             } else {
-                control.dmesg(`unknown connection type: ${newConn} at ${sensorInfo.port}`);
+                control.dmesg(`unknown connection type ${newConn} at port ${sensorInfo.port}`);
             }
         }
 
-        if (uartSensors.length > 0) {
+        const uartSens = sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART).length;
+        if (uartSens > 0) {
             setUartModes();
-            for (const sensorInfo of uartSensors) {
-                let uinfo = readUartInfo(sensorInfo.port, 0)
-                sensorInfo.devType = uinfo[TypesOff.Type]
+            for (const sensorInfo of sensorInfos.filter(si => si.connType == DAL.CONN_INPUT_UART && si.devType == DAL.CONN_NONE)) {
+                const uinfo = readUartInfo(sensorInfo.port, 0);
+                sensorInfo.devType = uinfo[TypesOff.Type];
                 const mode = uinfo[TypesOff.Mode];
-                control.dmesg(`UART type ${sensorInfo.devType} mode ${mode}`)
+                control.dmesg(`UART type ${sensorInfo.devType} mode ${mode} at port ${sensorInfo.port}`);
             }
         }
 
-        if (numChanged == 0 && nonActivated == 0)
-            return
-
-        //control.dmesg(`updating sensor status`)
-        nonActivated = 0;
-        for (const sensorInfo of sensorInfos) {
+        control.dmesg(`UPDATE SENSOR STATUS`);
+        for (const sensorInfo of sensorInfos.filter(si => !si.sensor)) {
             if (sensorInfo.devType == DAL.DEVICE_TYPE_IIC_UNKNOWN) {
-                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0]
+                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._IICId() == sensorInfo.iicid)[0];
                 if (!sensorInfo.sensor) {
-                    control.dmesg(`sensor not found for iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
-                    nonActivated++;
+                    control.dmesg(`sensor not found for iicid=${sensorInfo.iicid} at port ${sensorInfo.port}`);
                 } else {
-                    control.dmesg(`sensor connected iicid=${sensorInfo.iicid} at ${sensorInfo.port}`)
-                    sensorInfo.sensor._activated()
+                    control.dmesg(`sensor connected iicid=${sensorInfo.iicid} at port ${sensorInfo.port}`);
+                    sensorInfo.sensor._activated();
                 }
             } else if (sensorInfo.devType != DAL.DEVICE_TYPE_NONE) {
-                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._deviceType() == sensorInfo.devType)[0]
+                sensorInfo.sensor = sensorInfo.sensors.filter(s => s._deviceType() == sensorInfo.devType)[0];
                 if (!sensorInfo.sensor) {
-                    control.dmesg(`sensor not found for type=${sensorInfo.devType} at ${sensorInfo.port}`)
-                    nonActivated++;
+                    control.dmesg(`sensor not found for type=${sensorInfo.devType} at port ${sensorInfo.port}`);
                 } else {
-                    control.dmesg(`sensor connected type=${sensorInfo.devType} at ${sensorInfo.port}`)
-                    sensorInfo.sensor._activated()
+                    control.dmesg(`sensor connected type=${sensorInfo.devType} at port ${sensorInfo.port}`);
+                    sensorInfo.sensor._activated();
                 }
             }
         }
-        //control.dmesg(`detect devices done`)
+
+        control.dmesg(`DETECT DEVICES DONE`);
     }
 
     export class Sensor extends control.Component {
@@ -361,16 +335,12 @@ namespace sensors.internal {
             return sensorInfos[this._port].sensor == this
         }
 
-        _query() {
-            return 0
+        _query(): number[] {
+            return [0];
         }
 
-        _info(): string {
-            return this._query().toString();
-        }
-
-        _infoArr(): string[] {
-            return [this._query().toString()];
+        _info(): string[] {
+            return [this._query()[0].toString()];
         }
 
         _update(prev: number, curr: number) {
@@ -430,6 +400,10 @@ namespace sensors.internal {
         _activated() {
             this.realmode = 0;
             this._setMode(this.mode);
+        }
+
+        getStatus() {
+            return getUartStatus(this._port);
         }
 
         protected _setMode(m: number) {
@@ -507,10 +481,28 @@ namespace sensors.internal {
         }
     }
 
-    export const i2cSensor1 = new IICSensor(1);
-    export const i2cSensor2 = new IICSensor(2);
-    export const i2cSensor3 = new IICSensor(3);
-    export const i2cSensor4 = new IICSensor(4);
+    export const i2csensor1 = new IICSensor(1);
+    export const i2csensor2 = new IICSensor(2);
+    export const i2csensor3 = new IICSensor(3);
+    export const i2csensor4 = new IICSensor(4);
+
+    function readUartInfo(port: number, mode: number) {
+        let buf = output.createBuffer(UartCtlOff.Size);
+        buf[UartCtlOff.Port] = port;
+        buf[UartCtlOff.Mode] = mode;
+        uartMM.ioctl(IO.UART_READ_MODE_INFO, buf);
+        //control.dmesg(`UART_READ_MODE p:${port} t:${buf[TypesOff.Type]} c:${buf[TypesOff.Connection]} m:${buf[TypesOff.Mode]} n:${buf.slice(0, 12).toHex()}`);
+        return buf;
+    }
+
+    export function readIICID(port: number) {
+        const buf = output.createBuffer(IICStr.Size);
+        buf[IICStr.Port] = port;
+        IICMM.ioctl(IO.IIC_READ_TYPE_INFO, buf);
+        const manufacturer = bufferToString(buf.slice(IICStr.Manufacturer, 8));
+        const sensorType = bufferToString(buf.slice(IICStr.SensorType, 8));
+        return manufacturer + sensorType;
+    }
 
     function uartReset(port: number) {
         if (port < 0) return
@@ -527,16 +519,18 @@ namespace sensors.internal {
     }
 
     function waitNonZeroUartStatus(port: number) {
-        while (true) {
-            if (port < 0) return 0
-            let s = getUartStatus(port)
-            if (s) return s
-            pause(25)
+        let retry = 20;
+        while (retry-- > 0) {
+            const s = getUartStatus(port);
+            if (s) return s;
+            control.dmesg(`UART status 0 at port ${port}, waiting...`);
+            pause(25);
         }
+        return 0;
     }
 
     function uartClearChange(port: number) {
-        control.dmesg(`UART clear change`);
+        control.dmesg(`UART clear change at port ${port}`);
         while (true) {
             let status = getUartStatus(port)
             if (port < 0) break
@@ -547,18 +541,17 @@ namespace sensors.internal {
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 0)
             devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, 0)
-
+            control.dmesg(`UART_CLEAR_CHANGED status ${status} ${devcon.toHex()}`)
             uartMM.ioctl(IO.UART_CLEAR_CHANGED, devcon)
 
-            uartMM.setNumber(NumberFormat.Int8LE, UartOff.Status + port,
-                getUartStatus(port) & 0xfffe)
+            uartMM.setNumber(NumberFormat.Int8LE, UartOff.Status + port, getUartStatus(port) & 0xfffe)
             pause(10)
         }
     }
 
     function setUartModes() {
-        control.dmesg(`UART set modes 0x${devcon.toHex()}`)
-        uartMM.ioctl(IO.UART_SET_CONN, devcon)
+        control.dmesg(`UART_SET_CONN ${devcon.toHex()}`);
+        uartMM.ioctl(IO.UART_SET_CONN, devcon);
         const ports: number[] = [];
         for (let port = 0; port < DAL.NUM_INPUTS; ++port) {
             if (devcon.getNumber(NumberFormat.Int8LE, DevConOff.Connection + port) == DAL.CONN_INPUT_UART) {
@@ -568,39 +561,36 @@ namespace sensors.internal {
 
         while (ports.length) {
             const port = ports.pop();
-            const status = waitNonZeroUartStatus(port)
-            control.dmesg(`UART status ${status} at ${port}`);
+            const status = waitNonZeroUartStatus(port);
+            control.dmesg(`UART status ${status} at port ${port}`);
             if (!(status & UART_DATA_READY))
                 setUartMode(port, devcon[DevConOff.Mode + port]);
         }
     }
 
     function updateUartMode(port: number, mode: number) {
-        control.dmesg(`UART update mode to ${mode} at ${port}`)
+        control.dmesg(`UART update mode to ${mode} at port ${port}`);
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_INPUT_UART)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, 33)
         devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
     }
-
-    const UART_PORT_CHANGED = 1;
-    const UART_DATA_READY = 8;
-
+    
     function setUartMode(port: number, mode: number) {
         while (true) {
-            if (port < 0) return
+            if (port < 0) return;
             updateUartMode(port, mode);
-            control.dmesg(`UART set mode 0x${devcon.toHex()}`)
-            uartMM.ioctl(IO.UART_SET_CONN, devcon)
-            let status = waitNonZeroUartStatus(port)
+            control.dmesg(`UART_SET_CONN ${devcon.toHex()}`);
+            uartMM.ioctl(IO.UART_SET_CONN, devcon);
+            let status = waitNonZeroUartStatus(port);
             if (status & UART_PORT_CHANGED) {
-                control.dmesg(`UART clear changed at ${port}`)
-                uartClearChange(port)
+                control.dmesg(`UART clear changed at port ${port}`);
+                uartClearChange(port);
             } else {
-                control.dmesg(`UART status ${status}`);
+                control.dmesg(`UART status ${status} at port ${port}`);
                 if (status & UART_DATA_READY)
                     break;
             }
-            pause(10)
+            pause(10);
         }
     }
 
@@ -630,7 +620,7 @@ namespace sensors.internal {
 
     export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number) {
         if (port < 0) return;
-        let iicdata = output.createBuffer(IICDat.Size)
+        const iicdata = output.createBuffer(IICDat.Size)
         iicdata.setNumber(NumberFormat.Int8LE, IICDat.Port, port)
         iicdata.setNumber(NumberFormat.Int8LE, IICDat.Repeat, 0)
         iicdata.setNumber(NumberFormat.Int16LE, IICDat.Time, 0)
