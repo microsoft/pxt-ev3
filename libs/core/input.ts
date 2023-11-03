@@ -406,14 +406,6 @@ namespace sensors.internal {
             return getUartStatus(this._port);
         }
 
-        getStatus() {
-            return getUartStatus(this._port);
-        }
-
-        getStatus() {
-            return getUartStatus(this._port);
-        }
-
         protected _setMode(m: number) {
             //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`);
             let v = m | 0;

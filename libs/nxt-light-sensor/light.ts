@@ -28,14 +28,14 @@ namespace sensors {
         }
 
         _query() {
-            return this.readValue();
+            return [this.readValue()];
         }
 
         _info() {
             if (this.mode == NXTLightSensorMode.ReflectedLight || this.mode == NXTLightSensorMode.AmbientLightRaw) {
-                return `${this._query().toString()}%`;
+                return [`${this._query()[0].toString()}%`];
             } else {
-                return this._query().toString();
+                return [this._query()[0].toString()];
             }
         }
 
