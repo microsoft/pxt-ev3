@@ -255,7 +255,7 @@ namespace sensors.internal {
                 control.dmesg(`new IIC connection at port ${sensorInfo.port} with ID ${sensorInfo.iicid.length}`);
             } else if (newConn == DAL.CONN_NXT_DUMB) {
                 sensorInfo.devType = inDcm[sensorInfo.port];
-                control.dmesg(`new NXT DUMB connection at ${sensorInfo.port} dev type ${sensorInfo.devType}`);
+                control.dmesg(`new NXT DUMB connection at port ${sensorInfo.port} dev type ${sensorInfo.devType}`);
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
                 //sensorInfo.devType = inDcm[sensorInfo.port]; // We get the result DEVICE_TYPE_UNKNOWN
                 sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH; // TODO? for now assume touch
@@ -372,7 +372,7 @@ namespace sensors.internal {
             if (this.realmode != this.mode) {
                 control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
                 this.realmode = v;
-                // setAnalogMode()
+                // setAnalogMode();
             }
         }
 
