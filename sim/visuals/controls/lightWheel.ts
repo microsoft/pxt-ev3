@@ -27,7 +27,7 @@ namespace pxsim.visuals {
         }
 
         private getMaxValue(state: NXTLightSensorMode) {
-            return (state == NXTLightSensorMode.ReflectedLightRaw ? 4096 : 100);
+            return (state == NXTLightSensorMode.ReflectedLightRaw ? 4095 : 100);
         }
 
         private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {

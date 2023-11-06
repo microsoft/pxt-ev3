@@ -64,7 +64,7 @@ namespace sensors {
         }
 
         /**
-         * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest). For raw reflection values, the range can be from 0 to 4096.
+         * Measure the ambient or reflected light value from 0 (darkest) to 100 (brightest). For raw reflection values, the range can be from 0 to 4095.
          * @param sensor the color sensor port
          */
         //% help=sensors/nxt-light-sensor/light
@@ -97,7 +97,7 @@ namespace sensors {
          * Set the range of values for determining dark and light in light reflection mode. This must be done so that the reflection mode defines a value in the range from 0 to 100 percent.
          * @param sensor the color sensor port
          * @param dark the value of dark, eg: 0
-         * @param light the value of light, eg: 4096
+         * @param light the value of light, eg: 4095
          */
         //% help=sensors/nxt-light-sensor/light
         //% block="**nxt light sensor** $this|set reflected range dark $dark|light $light"
@@ -110,15 +110,15 @@ namespace sensors {
         //% group="Light Sensor"
         setReflectedLightRange(dark: number, light: number) {
             if (dark <= light) return;
-            this.darkRefLight = Math.constrain(dark, 0, 4096);
-            this.lightRefLight = Math.constrain(light, 0, 4096);
+            this.darkRefLight = Math.constrain(dark, 0, 4095);
+            this.lightRefLight = Math.constrain(light, 0, 4095);
         }
 
         /**
          * Set the value range for dark and light detection in ambient light mode. This must be done so that the ambient light mode determines the value in the range from 0 to 100 percent.
          * @param sensor the color sensor port
          * @param dark the value of dark, eg: 0
-         * @param light the value of light, eg: 4096
+         * @param light the value of light, eg: 4095
          */
         //% help=sensors/nxt-light-sensor/light
         //% block="**nxt light sensor** $this|set ambient range dark $dark|light $light"
@@ -131,8 +131,8 @@ namespace sensors {
         //% group="Light Sensor"
         setAmbientLightRange(dark: number, light: number) {
             if (dark <= light) return;
-            this.darkAmbientLight = Math.constrain(dark, 0, 4096);
-            this.lightAmbientLight = Math.constrain(light, 0, 4096);
+            this.darkAmbientLight = Math.constrain(dark, 0, 4095);
+            this.lightAmbientLight = Math.constrain(light, 0, 4095);
         }
 
         /**
