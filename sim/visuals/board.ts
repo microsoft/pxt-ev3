@@ -270,7 +270,9 @@ namespace pxsim.visuals {
                 }
                 case NodeType.NXTLightSensor: {
                     const state = ev3board().getInputNodes()[port] as NXTLightSensorNode;
-                    view = new LightWheelControl(this.element, this.defs, state, port);
+                    if (state.getMode() != NXTLightSensorMode.None) {
+                        view = new LightWheelControl(this.element, this.defs, state, port);
+                    }
                     break;
                 }
                 case NodeType.MediumMotor:
