@@ -32,7 +32,7 @@ namespace sensors {
         }
 
         _info() {
-            if (this.mode == NXTLightSensorMode.ReflectedLight || this.mode == NXTLightSensorMode.AmbientLightRaw) {
+            if (this.mode == NXTLightSensorMode.ReflectedLight || this.mode == NXTLightSensorMode.AmbientLight) {
                 return [`${this._query()[0].toString()}%`];
             } else {
                 return [this._query()[0].toString()];
