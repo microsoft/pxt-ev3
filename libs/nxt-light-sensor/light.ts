@@ -21,10 +21,10 @@ namespace sensors {
 
         constructor(port: number) {
             super(port);
-            this.darkRefLight = 4096;
-            this.lightRefLight = 0;
-            this.darkAmbientLight = 4096;
-            this.lightAmbientLight = 0;
+            this.darkRefLight = 3064;
+            this.lightRefLight = 1016;
+            this.darkAmbientLight = 3064;
+            this.lightAmbientLight = 1016;
         }
 
         _query() {
