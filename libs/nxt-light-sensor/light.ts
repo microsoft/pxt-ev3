@@ -9,6 +9,17 @@ const enum NXTLightSensorMode {
     AmbientLight = 3,
 }
 
+enum NXTLightIntensityMode {
+    //% block="reflected light (raw)"
+    ReflectedRaw = NXTLightSensorMode.ReflectedLightRaw,
+    //% block="ambient light (raw)"
+    Reflected = NXTLightSensorMode.ReflectedLight,
+    //% block="ambient light (raw)"
+    AmbientRaw = NXTLightSensorMode.AmbientLightRaw,
+    //% block="ambient light"
+    Ambient = NXTLightSensorMode.AmbientLight
+}
+
 namespace sensors {
 
     //% fixedInstances
@@ -76,17 +87,17 @@ namespace sensors {
         //% weight=99 blockGap=8
         //% subcategory="NXT"
         //% group="Light Sensor"
-        light(mode: NXTLightSensorMode) {
+        light(mode: NXTLightIntensityMode) {
             this.setMode(<NXTLightSensorMode><number>mode);
             this.poke();
             switch (mode) {
-                case NXTLightSensorMode.ReflectedLightRaw:
+                case NXTLightIntensityMode.ReflectedRaw:
                     return this.reflectetLightRaw();
-                case NXTLightSensorMode.ReflectedLight:
+                case NXTLightIntensityMode.Reflected:
                     return this.reflectetLight();
-                case NXTLightSensorMode.AmbientLightRaw:
+                case NXTLightIntensityMode.AmbientRaw:
                     return this.ambientLightRaw();
-                case NXTLightSensorMode.AmbientLight:
+                case NXTLightIntensityMode.Ambient:
                     return this.ambientLight();
                 default:
                     return 0;
