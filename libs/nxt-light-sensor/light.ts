@@ -100,7 +100,7 @@ namespace sensors {
          * @param light the value of light, eg: 4096
          */
         //% help=sensors/nxt-light-sensor/light
-        //% block="**nxt light sensor** $this| set reflected range dark $dark|light $light"
+        //% block="**nxt light sensor** $this|set reflected range dark $dark|light $light"
         //% blockId=setReflectedLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
@@ -121,7 +121,7 @@ namespace sensors {
          * @param light the value of light, eg: 4096
          */
         //% help=sensors/nxt-light-sensor/light
-        //% block="**nxt light sensor** $this| set ambient range dark $dark|light $light"
+        //% block="**nxt light sensor** $this|set ambient range dark $dark|light $light"
         //% blockId=setAmbientLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors

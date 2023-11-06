@@ -1,4 +1,3 @@
-
 namespace pxsim {
 
     export class SensorNode extends BaseNode {

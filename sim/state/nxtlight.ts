@@ -6,7 +6,8 @@ namespace pxsim {
         None = -1,
         ReflectedLightRaw = 0,
         ReflectedLight = 1,
-        AmbientLight = 2,
+        AmbientLightRaw = 2,
+        AmbientLight = 3,
     }
 
     export class NXTLightSensorNode extends AnalogSensorNode {
@@ -34,7 +35,7 @@ namespace pxsim {
 
         setMode(mode: number) {
             this.mode = mode;
-            if (this.mode == NXTLightSensorMode.ReflectedLightRaw) {
+            if (this.mode == NXTLightSensorMode.ReflectedLightRaw || this.mode == NXTLightSensorMode.AmbientLightRaw) {
                 this.value = 2048;
             } else { // Reflection or ambiend light
                 this.value = 50;
