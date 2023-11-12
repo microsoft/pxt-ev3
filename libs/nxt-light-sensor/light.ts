@@ -34,10 +34,10 @@ namespace sensors {
 
         constructor(port: number) {
             super(port);
-            this.darkRefLight = 3064;
-            this.lightRefLight = 1016;
-            this.darkAmbientLight = 3064;
-            this.lightAmbientLight = 1016;
+            this.darkRefLight = 3372;
+            this.lightRefLight = 445;
+            this.darkAmbientLight = 3411;
+            this.lightAmbientLight = 633;
         }
 
         _query() {
