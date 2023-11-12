@@ -3,9 +3,9 @@ const enum NXTLightSensorMode {
     ReflectedLightRaw = 0,
     //% block="reflected light"
     ReflectedLight = 1,
-    //% block="ambient light (raw)"
+    //% block="ambient light (raw)" blockHidden=true
     AmbientLightRaw = 2,
-    //% block="ambient light"
+    //% block="ambient light" blockHidden=true
     AmbientLight = 3,
 }
 
@@ -14,9 +14,9 @@ enum NXTLightIntensityMode {
     ReflectedRaw = NXTLightSensorMode.ReflectedLightRaw,
     //% block="ambient light (raw)"
     Reflected = NXTLightSensorMode.ReflectedLight,
-    //% block="ambient light (raw)"
+    //% block="ambient light (raw)" blockHidden=true
     AmbientRaw = NXTLightSensorMode.AmbientLightRaw,
-    //% block="ambient light"
+    //% block="ambient light" blockHidden=true
     Ambient = NXTLightSensorMode.AmbientLight
 }
 
@@ -24,6 +24,8 @@ namespace sensors {
 
     //% fixedInstances
     export class NXTLightSensor extends internal.AnalogSensor {
+
+        // https://github.com/mindboards/ev3sources-xtended/blob/master/ev3sources/lms2012/lms2012/Linux_AM1808/sys/settings/typedata.rcf
 
         darkRefLight: number;
         lightRefLight: number;
@@ -140,6 +142,7 @@ namespace sensors {
         //% weight=88 blockGap=8
         //% subcategory="NXT"
         //% group="Light Sensor"
+        //% blockHidden=true
         setAmbientLightRange(dark: number, light: number) {
             if (dark <= light) return;
             this.darkAmbientLight = Math.constrain(dark, 0, 4095);
