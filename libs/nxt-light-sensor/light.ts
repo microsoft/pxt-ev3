@@ -3,20 +3,20 @@ const enum NXTLightSensorMode {
     ReflectedLightRaw = 0,
     //% block="reflected light"
     ReflectedLight = 1,
-    //% block="ambient light (raw)" blockHidden=true
+    //% block="ambient light (raw)"
     AmbientLightRaw = 2,
-    //% block="ambient light" blockHidden=true
+    //% block="ambient light"
     AmbientLight = 3,
 }
 
 enum NXTLightIntensityMode {
     //% block="reflected light (raw)"
     ReflectedRaw = NXTLightSensorMode.ReflectedLightRaw,
-    //% block="ambient light (raw)"
+    //% block="reflected light"
     Reflected = NXTLightSensorMode.ReflectedLight,
-    //% block="ambient light (raw)" blockHidden=true
+    //% block="ambient light (raw)"
     AmbientRaw = NXTLightSensorMode.AmbientLightRaw,
-    //% block="ambient light" blockHidden=true
+    //% block="ambient light"
     Ambient = NXTLightSensorMode.AmbientLight
 }
 
@@ -27,6 +27,7 @@ namespace sensors {
 
         // https://github.com/mindboards/ev3sources-xtended/blob/master/ev3sources/lms2012/lms2012/Linux_AM1808/sys/settings/typedata.rcf
 
+        thresholdDetector: sensors.ThresholdDetector;
         darkRefLight: number;
         lightRefLight: number;
         darkAmbientLight: number;
@@ -34,6 +35,7 @@ namespace sensors {
 
         constructor(port: number) {
             super(port);
+            this.thresholdDetector = new sensors.ThresholdDetector(this.id());
             this.darkRefLight = 3372;
             this.lightRefLight = 445;
             this.darkAmbientLight = 3411;
@@ -41,7 +43,16 @@ namespace sensors {
         }
 
         _query() {
-            return [this.readValue()];
+            if (this.mode == NXTLightSensorMode.ReflectedLight) {
+                return [this.reflectetLight()];
+            } else if (this.mode == NXTLightSensorMode.AmbientLight) {
+                return [this.ambientLight()];
+            } else if (this.mode == NXTLightSensorMode.ReflectedLightRaw) {
+                return [this.reflectetLightRaw()];
+            } else if (this.mode == NXTLightSensorMode.AmbientLightRaw) {
+                return [this.ambientLightRaw()];
+            }
+            return [0];
         }
 
         _info() {
@@ -181,7 +192,7 @@ namespace sensors {
         //%
         reflectetLight() {
             let reflectedVal = Math.map(this.readValue(), this.darkRefLight, this.lightRefLight, 0, 100);
-            reflectedVal = Math.constrain(reflectedVal, 0, 100);
+            reflectedVal = Math.round(Math.constrain(reflectedVal, 0, 100));
             return reflectedVal;
         }
 
@@ -191,8 +202,95 @@ namespace sensors {
         //%
         ambientLight() {
             let ambientVal = Math.map(this.readValue(), this.darkAmbientLight, this.lightAmbientLight, 0, 100);
-            ambientVal = Math.constrain(ambientVal, 0, 100);
+            ambientVal = Math.round(Math.constrain(ambientVal, 0, 100));
             return ambientVal;
+        }
+
+        /**
+         * Set a threshold value
+         * @param condition the dark or bright light condition
+         * @param value the value threshold, eg: 10
+         */
+        //% help=sensors/nxt-light-sensor/set-threshold
+        //% blockId=nxtLightSetThreshold
+        //% block="set **nxt light sensor** %this|%condition|to %value"
+        //% parts="nxtlightsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% value.min=0 value.max=100
+        //% weight=90 blockGap=8
+        //% subcategory="NXT"
+        //% group="Light Sensor"
+        setThreshold(condition: Light, value: number) {
+            // threshold is used in ambient or reflected modes
+            if (this.mode != NXTLightIntensityMode.Ambient && this.mode != NXTLightIntensityMode.Reflected) {
+                this.setMode(NXTLightSensorMode.ReflectedLight);
+            }
+            if (condition == Light.Dark) {
+                this.thresholdDetector.setLowThreshold(value)
+            } else {
+                this.thresholdDetector.setHighThreshold(value);
+            }
+        }
+
+        /**
+         * Registers code to run when the ambient light changes.
+         * @param condition the light condition
+         * @param handler the code to run when detected
+         */
+        //% help=sensors/nxt-light-sensor/on-light-detected
+        //% block="on **nxt light sensor** %this|%mode|%condition"
+        //% blockId=nxtLightOnLightDetected
+        //% parts="nxtlightsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=89 blockGap=12
+        //% subcategory="NXT"
+        //% group="Light Sensor"
+        onLightDetected(mode: NXTLightIntensityMode, condition: Light, handler: () => void) {
+            this.setMode(<NXTLightSensorMode><number>mode);
+            control.onEvent(this._id, <number>condition, handler);
+        }
+
+        /**
+         * Wait for the given color to be detected
+         * @param color the color to detect
+         */
+        //% help=sensors/nxt-light-sensor/pause-until-light-detected
+        //% block="pause until **nxt light sensor** %this|%mode|%condition"
+        //% blockId=nxtLightPauseUntilLightDetected
+        //% parts="nxtlightsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=88 blockGap=8
+        //% subcategory="NXT"
+        //% group="Light Sensor"
+        pauseUntilLightDetected(mode: NXTLightIntensityMode, condition: Light) {
+            this.setMode(<NXTLightSensorMode><number>mode);
+            if (this.thresholdDetector.state != <number>condition) {
+                control.waitForEvent(this._id, <number>condition);
+            }
+        }
+
+        /**
+         * Get a threshold value
+         * @param condition the light condition
+         */
+        //% help=sensors/nxt-light-sensor/threshold
+        //% blockId=nxtLightGetThreshold
+        //% parts="nxtlightsensor"
+        //% blockNamespace=sensors
+        //% block="**nxt light sensor** %this|%condition"
+        //% this.fieldEditor="ports"
+        //% weight=89
+        //% subcategory="NXT"
+        //% group="Light Sensor"
+        threshold(condition: Light): number {
+            // threshold is used in ambient or reflected modes
+            if (this.mode != NXTLightIntensityMode.Ambient && this.mode != NXTLightIntensityMode.Reflected) {
+                this.setMode(NXTLightSensorMode.ReflectedLight);
+            }
+            return this.thresholdDetector.threshold(<ThresholdState><number>condition);
         }
     }
 
