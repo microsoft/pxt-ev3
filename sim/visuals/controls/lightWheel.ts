@@ -27,7 +27,7 @@ namespace pxsim.visuals {
         }
 
         private getMaxValue(state: NXTLightSensorMode) {
-            return (state == NXTLightSensorMode.ReflectedLightRaw ? 4095 : 100);
+            return (state == NXTLightSensorMode.ReflectedLightRaw || state == NXTLightSensorMode.AmbientLightRaw ? 4095 : 100);
         }
 
         private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {
@@ -41,10 +41,14 @@ namespace pxsim.visuals {
             const node = this.state;
             const value = node.getValue();
             let inverseValue = this.getMaxValue(node.getMode()) - value;
-            if (node.getMode() == NXTLightSensorMode.ReflectedLightRaw || node.getMode() == NXTLightSensorMode.AmbientLightRaw) inverseValue = this.mapValue(inverseValue, 0, 4096, 0, 100);
+            if (node.getMode() == NXTLightSensorMode.ReflectedLightRaw || node.getMode() == NXTLightSensorMode.AmbientLightRaw) {
+                inverseValue = this.mapValue(inverseValue, 0, 4095, 0, 100);
+            }
             svg.setGradientValue(this.colorGradient, inverseValue + "%");
-            this.reporter.textContent = `${parseFloat((value).toString()).toFixed(0)}`;
-            if (node.getMode() == NXTLightSensorMode.ReflectedLight || node.getMode() == NXTLightSensorMode.AmbientLight) this.reporter.textContent += `%`;
+            this.reporter.textContent = `${Math.floor(parseFloat(value.toString()))}`;
+            if (node.getMode() == NXTLightSensorMode.ReflectedLight || node.getMode() == NXTLightSensorMode.AmbientLight) {
+                this.reporter.textContent += `%`;
+            }
         }
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
