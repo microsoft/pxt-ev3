@@ -3,7 +3,7 @@ sensors.nxtLight1.setReflectedLightRange(2600, 1600);
 forever(function () {
     control.timer1.reset();
     let nls1 = sensors.nxtLight1.reflectetLightRaw();
-    let nls2 = sensors.nxtLight1.light(NXTLightSensorMode.ReflectedLight);
+    let nls2 = sensors.nxtLight1.light(NXTLightIntensityMode.ReflectedRaw);
     let rrlcs = sensors.color2.light(LightIntensityMode.ReflectedRaw);
     let rrrcs = sensors.color3.light(LightIntensityMode.ReflectedRaw);
     let t = sensors.touch4.isPressed() ? 1 : 0;
