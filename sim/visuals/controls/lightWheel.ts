@@ -1,6 +1,7 @@
 namespace pxsim.visuals {
 
     export class LightWheelControl extends ControlView<NXTLightSensorNode> {
+
         private group: SVGGElement;
         private colorGradient: SVGLinearGradientElement;
         private reporter: SVGTextElement;
@@ -45,9 +46,11 @@ namespace pxsim.visuals {
                 inverseValue = this.mapValue(inverseValue, 0, 4095, 0, 100);
             }
             svg.setGradientValue(this.colorGradient, inverseValue + "%");
-            this.reporter.textContent = `${Math.floor(parseFloat(value.toString()))}`;
-            if (node.getMode() == NXTLightSensorMode.ReflectedLight || node.getMode() == NXTLightSensorMode.AmbientLight) {
-                this.reporter.textContent += `%`;
+            //console.log(`node.getMode(): ${node.getMode()}`);
+            if (node.getMode() == NXTLightSensorMode.ReflectedLightRaw || node.getMode() == NXTLightSensorMode.AmbientLightRaw) {
+                this.reporter.textContent = `${Math.floor(parseFloat(value.toString()))}`;
+            } else {
+                this.reporter.textContent = `${this.mapValue(Math.floor(parseFloat(value.toString())), 0, 4095, 0, 100)}%`;
             }
         }
 
