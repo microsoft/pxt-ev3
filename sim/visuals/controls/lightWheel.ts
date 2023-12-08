@@ -27,8 +27,21 @@ namespace pxsim.visuals {
             return 131;
         }
 
-        private getMaxValue(state: NXTLightSensorMode) {
-            return (state == NXTLightSensorMode.ReflectedLightRaw || state == NXTLightSensorMode.AmbientLightRaw ? 4095 : 100);
+        private getMinValue(state: NXTLightSensorNode) {
+            if (state.getMode() == NXTLightSensorMode.ReflectedLight) return state.brightReflectedLight;
+            else if (state.getMode() == NXTLightSensorMode.AmbientLight) return state.brightAmbientLight;
+            return 0;
+        }
+
+        private getMaxValue(state: NXTLightSensorNode) {
+            if (state.getMode() == NXTLightSensorMode.ReflectedLightRaw || state.getMode() == NXTLightSensorMode.AmbientLightRaw) {
+                return 4095;
+            } else if (state.getMode() == NXTLightSensorMode.ReflectedLight) {
+                return state.darkReflectedLight;
+            } else if (state.getMode() == NXTLightSensorMode.AmbientLight) {
+                return state.darkAmbientLight;
+            }
+            return 100;
         }
 
         private mapValue(x: number, inMin: number, inMax: number, outMin: number, outMax: number) {
@@ -41,26 +54,30 @@ namespace pxsim.visuals {
             }
             const node = this.state;
             const value = node.getValue();
-            let inverseValue = this.getMaxValue(node.getMode()) - value;
+            let inverseValue = this.getMaxValue(node) - value + this.getMinValue(node);
             if (node.getMode() == NXTLightSensorMode.ReflectedLightRaw || node.getMode() == NXTLightSensorMode.AmbientLightRaw) {
                 inverseValue = this.mapValue(inverseValue, 0, 4095, 0, 100);
+            } else if (node.getMode() == NXTLightSensorMode.ReflectedLight) {
+                inverseValue = this.mapValue(inverseValue, node.darkReflectedLight, node.brightReflectedLight, 0, 100);
+            } else if (node.getMode() == NXTLightSensorMode.AmbientLight) {
+                inverseValue = this.mapValue(inverseValue, node.darkAmbientLight, node.brightAmbientLight, 0, 100);
             }
             svg.setGradientValue(this.colorGradient, inverseValue + "%");
-            //console.log(`node.getMode(): ${node.getMode()}`);
             if (node.getMode() == NXTLightSensorMode.ReflectedLightRaw || node.getMode() == NXTLightSensorMode.AmbientLightRaw) {
                 this.reporter.textContent = `${Math.floor(parseFloat(value.toString()))}`;
             } else {
-                this.reporter.textContent = `${this.mapValue(Math.floor(parseFloat(value.toString())), 0, 4095, 0, 100)}%`;
+                this.reporter.textContent = `${Math.floor(this.mapValue(parseFloat(value.toString()), this.getMaxValue(node), this.getMinValue(node), 0, 100))}%`;
             }
         }
 
         updateColorLevel(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
+            const state = this.state;
             let cur = svg.cursorPoint(pt, parent, ev);
             const bBox = this.rect.getBoundingClientRect();
             const height = bBox.height;
             let t = Math.max(0, Math.min(1, (height + bBox.top / this.scaleFactor - cur.y / this.scaleFactor) / height));
-            const state = this.state;
-            state.setColor(t * this.getMaxValue(state.getMode()));
+            if (state.getMode() == NXTLightSensorMode.ReflectedLight || state.getMode() == NXTLightSensorMode.AmbientLight) t = 1 - t;
+            state.setValue(this.getMinValue(state) + t * (this.getMaxValue(state) - this.getMinValue(state)));
         }
 
         getInnerView(parent: SVGSVGElement, globalDefs: SVGDefsElement) {
