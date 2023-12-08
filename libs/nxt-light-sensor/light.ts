@@ -27,19 +27,15 @@ namespace sensors {
 
         // https://github.com/mindboards/ev3sources-xtended/blob/master/ev3sources/lms2012/lms2012/Linux_AM1808/sys/settings/typedata.rcf
 
-        thresholdDetector: sensors.ThresholdDetector;
-        darkRefLight: number;
-        lightRefLight: number;
-        darkAmbientLight: number;
-        lightAmbientLight: number;
+        private thresholdDetector: sensors.ThresholdDetector;
+        private darkReflectedLight: number = 3372;
+        private brightReflectedLight: number = 445;
+        private darkAmbientLight: number = 3411;
+        private brightAmbientLight: number = 633;
 
         constructor(port: number) {
             super(port);
             this.thresholdDetector = new sensors.ThresholdDetector(this.id());
-            this.darkRefLight = 3372;
-            this.lightRefLight = 445;
-            this.darkAmbientLight = 3411;
-            this.lightAmbientLight = 633;
         }
 
         _query() {
@@ -134,8 +130,8 @@ namespace sensors {
         //% group="Light Sensor"
         setReflectedLightRange(dark: number, light: number) {
             if (dark <= light) return;
-            this.darkRefLight = Math.constrain(dark, 0, 4095);
-            this.lightRefLight = Math.constrain(light, 0, 4095);
+            this.darkReflectedLight = Math.constrain(dark, 0, 4095);
+            this.brightReflectedLight = Math.constrain(light, 0, 4095);
         }
 
         /**
@@ -157,7 +153,7 @@ namespace sensors {
         setAmbientLightRange(dark: number, light: number) {
             if (dark <= light) return;
             this.darkAmbientLight = Math.constrain(dark, 0, 4095);
-            this.lightAmbientLight = Math.constrain(light, 0, 4095);
+            this.brightAmbientLight = Math.constrain(light, 0, 4095);
         }
 
         /**
@@ -191,7 +187,7 @@ namespace sensors {
          */
         //%
         reflectetLight() {
-            let reflectedVal = Math.map(this.readValue(), this.darkRefLight, this.lightRefLight, 0, 100);
+            let reflectedVal = Math.map(this.readValue(), this.brightReflectedLight, this.darkReflectedLight, 0, 100);
             reflectedVal = Math.round(Math.constrain(reflectedVal, 0, 100));
             return reflectedVal;
         }
@@ -201,7 +197,7 @@ namespace sensors {
          */
         //%
         ambientLight() {
-            let ambientVal = Math.map(this.readValue(), this.darkAmbientLight, this.lightAmbientLight, 0, 100);
+            let ambientVal = Math.map(this.readValue(), this.brightAmbientLight, this.darkAmbientLight, 0, 100);
             ambientVal = Math.round(Math.constrain(ambientVal, 0, 100));
             return ambientVal;
         }
