@@ -372,7 +372,7 @@ namespace sensors.internal {
             if (this.realmode != this.mode) {
                 control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
                 this.realmode = v;
-                // setAnalogMode();
+                //setAnalogMode(this._port, this._deviceType(), this.mode);
             }
         }
 
@@ -384,6 +384,10 @@ namespace sensors.internal {
         _readPin6() {
             if (!this.isActive()) return 0;
             return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port);
+        }
+
+        _deviceType() {
+            return DAL.DEVICE_TYPE_UNKNOWN;
         }
     }
 
@@ -611,11 +615,11 @@ namespace sensors.internal {
 
     export function setIICMode(port: number, type: number, mode: number) {
         if (port < 0) return;
-        control.dmesg(`iic set type ${type} mode ${mode} at ${port}`);
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
-        IICMM.ioctl(IO.IIC_SET_CONN, devcon)
+        control.dmesg(`iic set type ${type} mode ${mode} at port ${port}`);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode);
+        IICMM.ioctl(IO.IIC_SET_CONN, devcon);
     }
 
     export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number) {
