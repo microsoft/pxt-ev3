@@ -39,7 +39,7 @@ namespace pxsim {
     }
 
 
-    enum DevConOff {
+    export enum DevConOff {
         Connection = 0, // int8[4]
         Type = 4, // int8[4]
         Mode = 8, // int8[4]
@@ -106,13 +106,13 @@ namespace pxsim {
                     }
                 },
                 read: buf => {
-                    let v = "vSIM"
+                    let v = "vSIM";
                     // for (let i = 0; i < buf.data.length; ++i)
                     //     buf.data[i] = v.charCodeAt(i) || 0
-                    return buf.data.length
+                    return buf.data.length;
                 },
                 write: buf => {
-                    return 2
+                    return 2;
                 },
                 ioctl: (id, buf) => {
                     switch (id) {
