@@ -25,7 +25,7 @@ namespace pxsim {
 
     export class EV3AnalogState {
         constructor() {
-            let data = new Uint8Array(5172)
+            let data = new Uint8Array(5172);
             MMapMethods.register("/dev/lms_analog", {
                 data,
                 beforeMemRead: () => {
@@ -46,15 +46,24 @@ namespace pxsim {
                     }
                 },
                 read: buf => {
-                    let v = "vSIM"
+                    let v = "vSIM";
                     for (let i = 0; i < buf.data.length; ++i)
-                        buf.data[i] = v.charCodeAt(i) || 0
-                    return buf.data.length
+                        buf.data[i] = v.charCodeAt(i) || 0;
+                    return buf.data.length;
                 },
                 write: buf => {
-                    return 2
+                    return 2;
                 },
                 ioctl: (id, buf) => {
+                    //console.log("ioctl: " + id);
+                    for (let port = 0; port < DAL.NUM_INPUTS; port++) {
+                        const connection = buf.data[DevConOff.Connection + port];
+                        const type = buf.data[DevConOff.Type + port];
+                        const mode = buf.data[DevConOff.Mode + port];
+                        //console.log(`${port}, mode: ${mode}`);
+                        const node = ev3board().getInputNodes()[port];
+                        if (node) node.setMode(mode);
+                    }
                     return 2;
                 }
             })

@@ -356,13 +356,19 @@ namespace sensors.internal {
     }
 
     export class AnalogSensor extends Sensor {
-        protected mode: number // the mode user asked for
-        protected realmode: number // the mode the hardware is in
+        
+        protected mode: number; // the mode user asked for
+        protected realmode: number;
 
         constructor(port: number) {
             super(port);
             this.mode = 0;
             this.realmode = 0;
+        }
+
+        _activated() {
+            this.realmode = 0;
+            this._setMode(this.mode);
         }
 
         protected _setMode(m: number) {
@@ -372,7 +378,7 @@ namespace sensors.internal {
             if (this.realmode != this.mode) {
                 control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
                 this.realmode = v;
-                //setAnalogMode(this._port, this._deviceType(), this.mode);
+                setAnalogMode(this._port, this._deviceType(), this.mode);
             }
         }
 
@@ -611,6 +617,15 @@ namespace sensors.internal {
         const index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
         return uartMM.getNumber(fmt,
             UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
+    }
+
+    function setAnalogMode(port: number, type: number, mode: number) {
+        if (port < 0) return;
+        control.dmesg(`analog set type ${type} mode ${mode} at port ${port}`);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_DUMB);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode);
+        analogMM.ioctl(0, devcon);
     }
 
     export function setIICMode(port: number, type: number, mode: number) {
