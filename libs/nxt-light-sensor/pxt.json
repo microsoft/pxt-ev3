@@ -1,6 +1,6 @@
 {
     "name": "nxt-light-sensor",
-    "description": "NXT Light Sensor support",
+    "description": "NXT Light Sensor support - beta",
     "files": [
         "README.md",
         "light.ts"
@@ -10,6 +10,6 @@
     ],
     "public": true,
     "dependencies": {
-            "core": "file:../core"
+        "core": "file:../core"
     }
 }
