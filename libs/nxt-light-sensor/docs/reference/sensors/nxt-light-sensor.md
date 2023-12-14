@@ -1,7 +1,8 @@
 # NXT light sensor
 
 ```cards
-sensors.color1.light(LightIntensityMode.Ambient)
+sensors.nxtLight1.light(NXTLightIntensityMode.Reflected)
+sensors.nxtLight1.light(NXTLightIntensityMode.ReflectedRaw)
 ```
 
 ## See slso
