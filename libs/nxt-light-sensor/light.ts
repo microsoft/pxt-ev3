@@ -119,10 +119,10 @@ namespace sensors {
          * Set the range of values for determining dark and light in light reflection mode. This must be done so that the reflection mode defines a value in the range from 0 to 100 percent.
          * @param sensor the color sensor port
          * @param dark the value of dark, eg: 0
-         * @param light the value of light, eg: 4095
+         * @param bright the value of bright, eg: 4095
          */
         //% help=sensors/nxt-light-sensor/set-reflected-range
-        //% block="**nxt light sensor** $this|set reflected range dark $dark|light $light"
+        //% block="**nxt light sensor** $this|set reflected range dark $dark|bright $bright"
         //% blockId=setReflectedLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
@@ -140,10 +140,10 @@ namespace sensors {
          * Set the value range for dark and light detection in ambient light mode. This must be done so that the ambient light mode determines the value in the range from 0 to 100 percent.
          * @param sensor the color sensor port
          * @param dark the value of dark, eg: 0
-         * @param light the value of light, eg: 4095
+         * @param bright the value of bright, eg: 4095
          */
         //% help=sensors/nxt-light-sensor/set-ambient-range
-        //% block="**nxt light sensor** $this|set ambient range dark $dark|light $light"
+        //% block="**nxt light sensor** $this|set ambient range dark $dark|bright $bright"
         //% blockId=setAmbientLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
