@@ -24,9 +24,9 @@ namespace pxsim.visuals {
                 } else if (this.syncedLabelG) {
                     this.syncedLabelG.parentNode.removeChild(this.syncedLabelG);
                 }
-                this.setMotorLabel(motorState.getSpeed(), true);
+                this.setMotorLabel(motorState.getSpeed(), motorState.isInverted(), true);
             }
-            this.setMotorLabel(motorState.getSpeed());
+            this.setMotorLabel(motorState.getSpeed(), motorState.isInverted());
         }
 
         private showSyncedLabel(motorNode: MotorNode, syncedMotor: MotorNode) {
