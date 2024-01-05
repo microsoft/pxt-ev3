@@ -1,5 +1,3 @@
-
-
 namespace pxsim.visuals {
 
     export class MotorSliderControl extends ControlView<MotorNode> {
@@ -81,6 +79,7 @@ namespace pxsim.visuals {
 
         private lastPosition: number;
         private prevVal: number;
+        
         private updateSliderValue(pt: SVGPoint, parent: SVGSVGElement, ev: MouseEvent) {
             let cur = svg.cursorPoint(pt, parent, ev);
             let bBox = this.content.getBoundingClientRect();
@@ -147,10 +146,10 @@ namespace pxsim.visuals {
                 return;
             }
             const node = this.state;
-            const angle = node.getAngle() % 360;
+            const angle = (node.isInverted() ? 360 - node.getAngle() : node.getAngle()) % 360;
 
             // Update reporter
-            this.reporter.textContent = `${angle}°`;
+            this.reporter.textContent = `${(node.isInverted() ? 'R' : '') + angle}°`;
         }
     }
 
