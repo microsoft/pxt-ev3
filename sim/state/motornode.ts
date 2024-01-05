@@ -16,6 +16,7 @@ namespace pxsim {
         private speedCmdTacho: number;
         private speedCmdTime: number;
         private _synchedMotor: MotorNode; // non-null if synchronized
+        private _inverted: boolean;
 
         private manualReferenceAngle: number = undefined;
         private manualAngle: number = undefined;
@@ -23,6 +24,7 @@ namespace pxsim {
         constructor(port: number, large: boolean) {
             super(port);
             this.setLarge(large);
+            this._inverted = false;
         }
 
         isReady() {
@@ -40,6 +42,10 @@ namespace pxsim {
         // returns the secondary motor if any
         getSynchedMotor() {
             return this._synchedMotor;
+        }
+
+        invertedFactor(): number {
+            return this._inverted ? -1 : 1;
         }
 
         setSpeedCmd(cmd: DAL, values: number[]) {
@@ -75,6 +81,14 @@ namespace pxsim {
             this.id = large ? NodeType.LargeMotor : NodeType.MediumMotor;
             // large 170 rpm  (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
             this.rotationsPerMilliSecond = (large ? 170 : 250) / 60000;
+        }
+
+        setInverted(inverted: boolean) {
+            this._inverted = inverted;
+        }
+
+        isInverted(): boolean {
+            return this._inverted;
         }
 
         isLarge(): boolean {
