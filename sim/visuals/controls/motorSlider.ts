@@ -149,7 +149,7 @@ namespace pxsim.visuals {
             const angle = (node.isInverted() ? 360 - node.getAngle() : node.getAngle()) % 360;
 
             // Update reporter
-            this.reporter.textContent = `${(node.isInverted() ? 'R' : '') + angle}°`;
+            this.reporter.textContent = `${angle}°`;
         }
     }
 

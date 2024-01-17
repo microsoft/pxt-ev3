@@ -27,9 +27,13 @@ namespace pxsim.visuals {
             holeEl.setAttribute("transform", transform);
         }
 
-        protected positionMotorLabel() {
-            this.motorLabelGroup.setAttribute('transform', 'translate(25 13)');
+        protected positionMotorLabel(reverse: boolean) {
+            this.motorLabelGroup.setAttribute('transform', 'translate(25 25)');
             this.motorLabel.style.fontSize = '11px';
+            if (reverse) {
+                this.motorReverseLabelGroup.setAttribute('transform', `translate(25 12)`);
+                this.motorReverseLabel.style.fontSize = '10px';
+            }
         }
     }
 }

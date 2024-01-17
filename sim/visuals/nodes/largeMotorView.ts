@@ -58,10 +58,14 @@ namespace pxsim.visuals {
             return 0.37;
         }
 
-        protected positionMotorLabel() {
+        protected positionMotorLabel(reverse: boolean) {
             const hasSyncedLabel = this.syncedMotor;
-            this.motorLabelGroup.setAttribute('transform', `translate(${hasSyncedLabel ? '15 35' : '25 15'})`);
+            this.motorLabelGroup.setAttribute('transform', `translate(${hasSyncedLabel ? '15 55' : '25 35'})`);
             this.motorLabel.style.fontSize = '13px';
+            if (reverse) {
+                this.motorReverseLabelGroup.setAttribute('transform', `translate(25 20)`);
+                this.motorReverseLabel.style.fontSize = '10px';
+            }
         }
     }
 }

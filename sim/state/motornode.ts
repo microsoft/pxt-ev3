@@ -24,7 +24,7 @@ namespace pxsim {
         constructor(port: number, large: boolean) {
             super(port);
             this.setLarge(large);
-            this._inverted = false;
+            this.setInverted(false);
         }
 
         isReady() {
@@ -85,6 +85,7 @@ namespace pxsim {
 
         setInverted(inverted: boolean) {
             this._inverted = inverted;
+            //this.setChangedState();
         }
 
         isInverted(): boolean {

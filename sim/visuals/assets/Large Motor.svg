@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="82px" height="156px" viewBox="0 0 82 156" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="82px" height="176px" viewBox="0 0 82 176" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
     <title>Large Motor</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-66.000000, -54.000000)">
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-66.000000, -34.000000)">
         <g id="Large-Motor" transform="translate(66.000000, 54.000000)">
             <path d="M39.98,155.52 L13.67,155.52 C13.3386292,155.52 13.07,155.251371 13.07,154.92 L13.07,149.62 C13.07,149.288629 13.3386292,149.02 13.67,149.02 L39.98,149.02 C40.3113708,149.02 40.58,149.288629 40.58,149.62 L40.58,154.9 C40.5854219,155.062566 40.5246096,155.220368 40.4114947,155.337253 C40.2983799,155.454138 40.1426565,155.52009 39.98,155.52 Z" id="LM_back2" fill="#A8AAA8" fill-rule="nonzero"></path>
             <g id="Group" transform="translate(9.000000, 136.000000)">
