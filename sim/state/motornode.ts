@@ -44,10 +44,6 @@ namespace pxsim {
             return this._synchedMotor;
         }
 
-        invertedFactor(): number {
-            return this._inverted ? -1 : 1;
-        }
-
         setSpeedCmd(cmd: DAL, values: number[]) {
             if (this.speedCmd != cmd ||
                 JSON.stringify(this.speedCmdValues) != JSON.stringify(values))
@@ -85,7 +81,7 @@ namespace pxsim {
 
         setInverted(inverted: boolean) {
             this._inverted = inverted;
-            //this.setChangedState();
+            this.setChangedState();
         }
 
         isInverted(): boolean {

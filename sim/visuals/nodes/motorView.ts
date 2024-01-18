@@ -8,6 +8,7 @@ namespace pxsim.visuals {
         protected motorReverseLabelGroup: SVGGElement;
         protected motorReverseLabel: SVGTextElement;
         private currentLabel: string;
+        private currentReverseLabelState: boolean;
 
         constructor(xml: string, prefix: string, id: NodeType, port: NodeType,
             protected rotating_hole_id: string) {
@@ -16,12 +17,9 @@ namespace pxsim.visuals {
 
         updateState() {
             super.updateState();
-            console.log(`updateState() before return`);
             const motorState = ev3board().getMotors()[this.port];
             if (!motorState) return;
-            console.log(`updateState() after return`);
             const speed = motorState.getSpeed();
-            //console.log(`speed: ${speed}, ${motorState.invertedFactor()}`);
             this.setMotorAngle((motorState.isInverted() ? 360 - motorState.getAngle() : motorState.getAngle()) % 360);
             this.setMotorLabel(speed, motorState.isInverted());
         }
@@ -38,19 +36,20 @@ namespace pxsim.visuals {
         }
 
         setMotorLabel(speed: number, reverse: boolean, force?: boolean) {
-            if (!force && this.currentLabel === `${speed}`) return;
+            if (!force && this.currentLabel === `${speed}` && this.currentReverseLabelState == reverse) return;
             this.currentLabel = `${speed}`;
-            console.log(`reverse: ${reverse}, ${this.currentLabel}%`);
+            this.currentReverseLabelState = reverse;
             if (!this.motorLabel) {
                 this.motorLabelGroup = pxsim.svg.child(this.content, "g") as SVGGElement;
                 this.motorLabel = pxsim.svg.child(this.motorLabelGroup, "text", { 'text-anchor': 'middle', 'x': '0', 'y': '0', 'class': 'sim-text number inverted' }) as SVGTextElement;
             }
-            if (reverse && !this.motorReverseLabel) {
+            if (reverse && !this.motorReverseLabel) { // Create if it doesn't exist before
                 this.motorReverseLabelGroup = pxsim.svg.child(this.content, "g") as SVGGElement;
                 this.motorReverseLabel = pxsim.svg.child(this.motorReverseLabelGroup, "text", { 'text-anchor': 'middle', 'x': '0', 'y': '0', 'class': 'sim-text number inverted' }) as SVGTextElement;
             }
             this.motorLabel.textContent = `${this.currentLabel}%`;
             if (reverse) this.motorReverseLabel.textContent = "reverse";
+            else this.motorReverseLabel.textContent = null;
             this.positionMotorLabel(reverse);
         }
 
