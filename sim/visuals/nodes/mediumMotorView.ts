@@ -32,7 +32,7 @@ namespace pxsim.visuals {
             this.motorLabel.style.fontSize = '11px';
             if (reverse) {
                 this.motorReverseLabelGroup.setAttribute('transform', `translate(25 12)`);
-                this.motorReverseLabel.style.fontSize = '10px';
+                this.motorReverseLabel.style.fontSize = '9px';
             }
         }
     }

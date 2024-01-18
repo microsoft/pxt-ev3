@@ -63,8 +63,8 @@ namespace pxsim.visuals {
             this.motorLabelGroup.setAttribute('transform', `translate(${hasSyncedLabel ? '15 55' : '25 35'})`);
             this.motorLabel.style.fontSize = '13px';
             if (reverse) {
-                this.motorReverseLabelGroup.setAttribute('transform', `translate(25 20)`);
-                this.motorReverseLabel.style.fontSize = '10px';
+                this.motorReverseLabelGroup.setAttribute('transform', `translate(25 18)`);
+                this.motorReverseLabel.style.fontSize = '12px';
             }
         }
     }
