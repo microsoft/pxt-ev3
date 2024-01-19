@@ -75,7 +75,7 @@ namespace pxsim {
 
         setLarge(large: boolean) {
             this.id = large ? NodeType.LargeMotor : NodeType.MediumMotor;
-            // large 170 rpm  (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
+            // large 170 rpm (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
             this.rotationsPerMilliSecond = (large ? 170 : 250) / 60000;
         }
 

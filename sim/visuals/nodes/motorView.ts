@@ -20,7 +20,7 @@ namespace pxsim.visuals {
             const motorState = ev3board().getMotors()[this.port];
             if (!motorState) return;
             const speed = motorState.getSpeed();
-            this.setMotorAngle((motorState.isInverted() ? 360 - motorState.getAngle() : motorState.getAngle()) % 360);
+            this.setMotorAngle(motorState.getAngle() % 360);
             this.setMotorLabel(speed, motorState.isInverted());
         }
 
@@ -37,7 +37,8 @@ namespace pxsim.visuals {
 
         setMotorLabel(speed: number, reverse: boolean, force?: boolean) {
             if (!force && this.currentLabel === `${speed}` && this.currentReverseLabelState == reverse) return;
-            this.currentLabel = `${speed}`;
+            const invertedFactor = reverse ? -1 : 1;
+            this.currentLabel = `${speed * invertedFactor}`;
             this.currentReverseLabelState = reverse;
             if (!this.motorLabel) {
                 this.motorLabelGroup = pxsim.svg.child(this.content, "g") as SVGGElement;
@@ -49,7 +50,7 @@ namespace pxsim.visuals {
             }
             this.motorLabel.textContent = `${this.currentLabel}%`;
             if (reverse) this.motorReverseLabel.textContent = "reverse";
-            else this.motorReverseLabel.textContent = null;
+            else if (this.motorReverseLabel) this.motorReverseLabel.textContent = null;
             this.positionMotorLabel(reverse);
         }
 
