@@ -45,8 +45,8 @@
     "typescript": "4.8.3"
   },
   "dependencies": {
-    "pxt-common-packages": "11.1.4",
-    "pxt-core": "9.3.11"
+    "pxt-common-packages": "11.1.6",
+    "pxt-core": "9.3.13"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"
