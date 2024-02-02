@@ -123,6 +123,7 @@ namespace pxsim {
                             for (let i = 0, offset = 2; i < DAL.NUM_OUTPUTS; i++) {
                                 if (portIndex & (1 << i)) {
                                     const inverted = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, offset) == -1? true : false;
+                                    //console.log(`port${i}: ${inverted}`);
                                     const motor = ev3board().getMotors()[i];
                                     if (motor) motor.setInverted(inverted);
                                     offset++;

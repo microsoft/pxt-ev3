@@ -188,7 +188,6 @@ namespace motors {
                 this._initialized = true;
                 this._init();
             }
-            //console.log(`init this._port: ${this._port}, this._portName: ${this._portName}`);
         }
 
         /**
@@ -230,7 +229,6 @@ namespace motors {
         //% group="Properties"
         //% help=motors/motor/set-inverted
         setInverted(inverted: boolean) {
-            // https://github.com/c4ev3/ev3duder/blob/master/util/cat/ev3_output.c
             this.init();
             let portsIndex: number[] = [];
             if (this._port == Output.A) portsIndex = [0];
@@ -245,8 +243,10 @@ namespace motors {
                 MotorBase.output_inversions[index] = inverted;
             }
             //console.log(`${MotorBase.output_inversions[0]}, ${MotorBase.output_inversions[1]}, ${MotorBase.output_inversions[2]}, ${MotorBase.output_inversions[3]}`);
-            const bSize = outputToName(this._port).length > 1 ? 2 : 1;
-            const b = mkCmd(this._port, DAL.opOutputPolarity, bSize);
+            const bSize = outputToName(this._port).length > 1 ? 2 : 1; // Dual or single motor
+            const b = mkCmd(this._port, DAL.opOutputPolarity, bSize); // https://github.com/c4ev3/ev3duder/blob/master/util/cat/ev3_output.c
+            // If we write to index/address two, then the motor starts to spin in the other direction because reverse is set in the firmware
+            // But we use DAL.opOutputPolarity to transmit motor reverses for the simulator
             for (let i = 0; i < bSize; i++) {
                 b.setNumber(NumberFormat.Int8LE, i + 2, MotorBase.output_inversions[portsIndex[i]]? -1 : 1);
             }
@@ -331,7 +331,7 @@ namespace motors {
         }
 
         private normalizeSchedule(speed: number, step1: number, step2: number, step3: number, unit: MoveUnit): MoveSchedule {
-            // motor polarity is not supported at the firmware level for sync motor operations
+            // Motor polarity is not supported at the firmware level for sync motor, but schedule supported!
             const r: MoveSchedule = {
                 speed: Math.clamp(-100, 100, speed | 0), // * this.invertedFactor()[0],
                 useSteps: true,
@@ -733,7 +733,6 @@ namespace motors {
 
         private __init() {
             this.setOutputType(this._large);
-            //this.setInverted(true); // Нужно одному дать реверс?
         }
 
         /**
@@ -757,17 +756,17 @@ namespace motors {
         tank(speedLeft: number, speedRight: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
 
-            const outputs = splitDoubleOutput(this._port);
-            speedLeft = Math.clamp(-100, 100, speedLeft >> 0) * getInverseFactor(outputs[0]);
-            speedRight = Math.clamp(-100, 100, speedRight >> 0) * getInverseFactor(outputs[1]);
+            speedLeft = Math.clamp(-100, 100, speedLeft >> 0);
+            speedRight = Math.clamp(-100, 100, speedRight >> 0);
 
             const speed = Math.abs(speedLeft) > Math.abs(speedRight) ? speedLeft : speedRight;
             let turnRatio = speedLeft == speed
                 ? speedLeft == 0 ? 0 : (100 - speedRight / speedLeft * 100)
                 : speedRight == 0 ? 0 : (speedLeft / speedRight * 100 - 100);
+            //console.log(`speedTank: ${speed}, turnRatioTank: ${turnRatio}`);
             turnRatio = Math.floor(turnRatio);
 
-            //control.dmesg(`tank ${speedLeft} ${speedRight} => ${turnRatio} ${speed}`)
+            //control.dmesg(`tank ${speedLeft} ${speedRight} => ${turnRatio} ${speed}`);
             this.steer(turnRatio, speed, value, unit);
         }
 
@@ -788,13 +787,33 @@ namespace motors {
         //% help=motors/synced/steer
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
-            speed = Math.clamp(-100, 100, speed >> 0) * this.invertedFactor()[0]; // ToDo about invertedFactor
+
+            const outputs = splitDoubleOutput(this._port);
+            const invertedFactors = [getInverseFactor(outputs[0]), getInverseFactor(outputs[1])];
+            const invertedFactorsIsMatch = invertedFactors[0] == invertedFactors[1];
+            if (invertedFactorsIsMatch) { // Intensive factor coefficient if two motors are directed in the same direction
+                const invertedFactor = invertedFactors[0] && invertedFactors[1];
+                speed = Math.clamp(-100, 100, speed >> 0) * invertedFactor;
+            } else {
+                speed = Math.clamp(-100, 100, speed >> 0) * (turnRatio > 0 ? -1 : 1);
+            }
+
             if (!speed) {
                 this.stop();
                 return;
             }
 
-            turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
+            if (invertedFactorsIsMatch) { // Intensive factor coefficient if two motors are directed in the same direction
+                turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
+            } else {
+                // We recalculate turnRatio to support control of two motors with different inversion factors
+                // for example if there are two middle motors in the motor chassis
+                if (turnRatio > 0) turnRatio = Math.map(turnRatio, 0, 200, 200, 0);
+                else turnRatio = Math.map(turnRatio, -200, 0, 0, -200);
+                turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
+            }
+            console.log(`speedSteer: ${speed}, turnRatioSteer: ${turnRatio}`);
+
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -919,6 +938,7 @@ namespace motors {
         init();
         const buf = motorMM.slice(outOffset(out), MotorDataOff.Size);
         const invertedFactor = getInverseFactor(out);
+        //console.log(`out: ${out}, invertedFactor: ${invertedFactor}`);
         return {
             actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed) * invertedFactor,
             tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts) * invertedFactor,
