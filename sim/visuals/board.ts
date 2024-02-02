@@ -268,6 +268,13 @@ namespace pxsim.visuals {
                     view = new RotationSliderControl(this.element, this.defs, state, port);
                     break;
                 }
+                case NodeType.NXTLightSensor: {
+                    const state = ev3board().getInputNodes()[port] as NXTLightSensorNode;
+                    if (state.getMode() != NXTLightSensorMode.None) {
+                        view = new LightWheelControl(this.element, this.defs, state, port);
+                    }
+                    break;
+                }
                 case NodeType.MediumMotor:
                 case NodeType.LargeMotor: {
                     const state = ev3board().getMotors()[port];
@@ -306,6 +313,8 @@ namespace pxsim.visuals {
                     view = new UltrasonicSensorView(port); break;
                 case NodeType.InfraredSensor:
                     view = new InfraredView(port); break;
+                case NodeType.NXTLightSensor:
+                    view = new NXTLightSensorView(port); break;
                 case NodeType.Brick:
                     //return new BrickView(0);
                     view = this.layoutView.getBrick(); break;

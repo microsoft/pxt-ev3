@@ -235,10 +235,11 @@ namespace sensors.internal {
 
     function detectDevices() {
         control.dmesg(`DETECT DEVICES (hash ${hashDevices()})`);
-        const conns = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS);
+        const inDcm = analogMM.slice(AnalogOff.InDcm, DAL.NUM_INPUTS);
+        const inConn = analogMM.slice(AnalogOff.InConn, DAL.NUM_INPUTS);
 
         for (const sensorInfo of sensorInfos) {
-            const newConn = conns[sensorInfo.port];
+            const newConn = inConn[sensorInfo.port];
             if (newConn == sensorInfo.connType && sensorInfo.sensor && sensorInfo.sensor.isActive()) {
                 continue;
             }
@@ -252,9 +253,13 @@ namespace sensors.internal {
                 sensorInfo.devType = DAL.DEVICE_TYPE_IIC_UNKNOWN;
                 sensorInfo.iicid = readIICID(sensorInfo.port);
                 control.dmesg(`new IIC connection at port ${sensorInfo.port} with ID ${sensorInfo.iicid.length}`);
+            } else if (newConn == DAL.CONN_NXT_DUMB) {
+                sensorInfo.devType = inDcm[sensorInfo.port];
+                control.dmesg(`new NXT DUMB connection at port ${sensorInfo.port} dev type ${sensorInfo.devType}`);
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
-                control.dmesg(`new DUMB connection at port ${sensorInfo.port}`);
-                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH; // TODO? for now assume touch sensor
+                //sensorInfo.devType = inDcm[sensorInfo.port]; // We get the result DEVICE_TYPE_UNKNOWN
+                sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH; // TODO? for now assume touch
+                control.dmesg(`new DUMB connection at ${sensorInfo.port} dev type ${sensorInfo.devType}`);
             } else if (newConn == DAL.CONN_NONE || newConn == 0) {
                 control.dmesg(`disconnect at port ${sensorInfo.port}`);
             } else {
@@ -351,13 +356,44 @@ namespace sensors.internal {
     }
 
     export class AnalogSensor extends Sensor {
+        
+        protected mode: number; // the mode user asked for
+        protected realmode: number;
+
         constructor(port: number) {
-            super(port)
+            super(port);
+            this.mode = 0;
+            this.realmode = 0;
+        }
+
+        _activated() {
+            this.realmode = 0;
+            this._setMode(this.mode);
+        }
+
+        protected _setMode(m: number) {
+            let v = m | 0;
+            this.mode = v;
+            if (!this.isActive()) return;
+            if (this.realmode != this.mode) {
+                control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
+                this.realmode = v;
+                setAnalogMode(this._port, this._deviceType(), this.mode);
+            }
+        }
+
+        _readPin1() {
+            if (!this.isActive()) return 0;
+            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin1 + 2 * this._port);
         }
 
         _readPin6() {
-            if (!this.isActive()) return 0
-            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port)
+            if (!this.isActive()) return 0;
+            return analogMM.getNumber(NumberFormat.Int16LE, AnalogOff.InPin6 + 2 * this._port);
+        }
+
+        _deviceType() {
+            return DAL.DEVICE_TYPE_UNKNOWN;
         }
     }
 
@@ -366,14 +402,14 @@ namespace sensors.internal {
         protected realmode: number // the mode the hardware is in
 
         constructor(port: number) {
-            super(port)
-            this.mode = 0
-            this.realmode = 0
+            super(port);
+            this.mode = 0;
+            this.realmode = 0;
         }
 
         _activated() {
-            this.realmode = 0
-            this._setMode(this.mode)
+            this.realmode = 0;
+            this._setMode(this.mode);
         }
 
         getStatus() {
@@ -381,13 +417,14 @@ namespace sensors.internal {
         }
 
         protected _setMode(m: number) {
-            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`)
-            let v = m | 0
-            this.mode = v
-            if (!this.isActive()) return
+            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`);
+            let v = m | 0;
+            this.mode = v;
+            if (!this.isActive()) return;
             if (this.realmode != this.mode) {
-                this.realmode = v
-                setUartMode(this._port, v)
+                control.dmesg(`_setMode p=${this._port} m: ${this.realmode} -> ${v}`);
+                this.realmode = v;
+                setUartMode(this._port, v);
             }
         }
 
@@ -575,19 +612,29 @@ namespace sensors.internal {
             DAL.MAX_DEVICE_DATALENGTH)
     }
 
-    function getUartNumber(fmt: NumberFormat, off: number, port: number) {
+    function getUartNumber(fmt: NumberFormat, off: number, port: number): number {
         if (port < 0) return 0
-        let index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
+        const index = uartMM.getNumber(NumberFormat.UInt16LE, UartOff.Actual + port * 2)
         return uartMM.getNumber(fmt,
             UartOff.Raw + DAL.MAX_DEVICE_DATALENGTH * 300 * port + DAL.MAX_DEVICE_DATALENGTH * index + off)
     }
 
+    function setAnalogMode(port: number, type: number, mode: number) {
+        if (port < 0) return;
+        control.dmesg(`analog set type ${type} mode ${mode} at port ${port}`);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_DUMB);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode);
+        analogMM.ioctl(0, devcon);
+    }
+
     export function setIICMode(port: number, type: number, mode: number) {
         if (port < 0) return;
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type)
-        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode)
-        IICMM.ioctl(IO.IIC_SET_CONN, devcon)
+        control.dmesg(`iic set type ${type} mode ${mode} at port ${port}`);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Connection + port, DAL.CONN_NXT_IIC);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Type + port, type);
+        devcon.setNumber(NumberFormat.Int8LE, DevConOff.Mode + port, mode);
+        IICMM.ioctl(IO.IIC_SET_CONN, devcon);
     }
 
     export function transactionIIC(port: number, deviceAddress: number, writeBuf: number[], readLen: number) {
