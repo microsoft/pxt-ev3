@@ -42,11 +42,11 @@
     "react": "16.8.3",
     "react-dom": "16.11.0",
     "semantic-ui-less": "2.4.1",
-    "typescript": "^4.2.3"
+    "typescript": "4.8.3"
   },
   "dependencies": {
-    "pxt-common-packages": "11.1.2",
-    "pxt-core": "9.1.23"
+    "pxt-common-packages": "11.1.6",
+    "pxt-core": "9.3.13"
   },
   "scripts": {
     "test": "node node_modules/pxt-core/built/pxt.js travis"
