@@ -246,7 +246,6 @@ namespace motors {
             const bSize = outputToName(this._port).length > 1 ? 2 : 1; // Dual or single motor
             const b = mkCmd(this._port, DAL.opOutputPolarity, bSize); // https://github.com/c4ev3/ev3duder/blob/master/util/cat/ev3_output.c
             // If we write to index/address two, then the motor starts to spin in the other direction because reverse is set in the firmware
-            // But we use DAL.opOutputPolarity to transmit motor reverses for the simulator
             for (let i = 0; i < bSize; i++) {
                 b.setNumber(NumberFormat.Int8LE, i + 2, MotorBase.output_inversions[portsIndex[i]]? -1 : 1);
             }
