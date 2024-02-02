@@ -47,7 +47,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=64 blockGap=8
+        //% weight=100 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
             this.poke();
@@ -67,7 +67,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=65 blockGap=8
+        //% weight=99 blockGap=8
         //% group="Gyro Sensor"
         rate(): number {
             this.poke();
@@ -86,7 +86,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=51 blockGap=8
+        //% weight=89 blockGap=8
         //% group="Gyro Sensor"
         calibrate(): void {
             if (this._calibrating) return; // already in calibration mode
@@ -157,7 +157,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=50 blockGap=8
+        //% weight=88
         //% group="Gyro Sensor"
         reset(): void {
             if (this._calibrating) return; // already in calibration mode
@@ -202,7 +202,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=9 blockGap=8
+        //% weight=78 blockGap=8
         //% group="Gyro Sensor"
         drift(): number {
             return this._drift;
@@ -217,7 +217,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=10 blockGap=8
+        //% weight=79 blockGap=8
         //% group="Gyro Sensor"
         computeDrift() {
             if (this._calibrating)
@@ -238,7 +238,7 @@ namespace sensors {
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% degrees.defl=90
-        //% weight=63
+        //% weight=98
         //% group="Gyro Sensor"
         pauseUntilRotated(degrees: number, timeOut?: number): void {
             let a = this.angle();

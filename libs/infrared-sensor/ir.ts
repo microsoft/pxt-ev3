@@ -231,7 +231,7 @@ namespace sensors {
         //% blockId=infraredGetProximity
         //% parts="infrared"
         //% blockNamespace=sensors
-        //% weight=98 blockGap=8
+        //% weight=98
         //% group="Infrared Sensor"
         //% this.fieldEditor="ports"
         proximity(): number {
@@ -262,7 +262,8 @@ namespace sensors {
          * @param value the value threshold
          */
         //% blockId=irSetThreshold block="set **infrared** %this|%condition|to %value"
-        //% group="Calibration" blockGap=8 weight=49
+        //% blockGap=8 weight=49
+        //% group="Infrared Sensor"
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
         setPromixityThreshold(condition: InfraredSensorEvent, value: number) {
@@ -277,7 +278,8 @@ namespace sensors {
          * @param condition the proximity condition
          */
         //% blockId=irGetThreshold block="**infrared** %this|%condition"
-        //% group="Calibration" weight=49
+        //% weight=48
+        //% group="Infrared Sensor"
         //% this.fieldEditor="ports"
         proximityThreshold(condition: InfraredSensorEvent): number {
             return this._proximityThreshold.threshold(<ThresholdState><number>condition);

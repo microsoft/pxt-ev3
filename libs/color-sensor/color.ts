@@ -147,7 +147,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=100 blockGap=12
+        //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: number, handler: () => void) {
             this.setMode(ColorSensorMode.Color)
@@ -167,7 +167,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=99 blockGap=8
+        //% weight=98 blockGap=8
         //% group="Color Sensor"
         pauseUntilColorDetected(color: number) {
             this.setMode(ColorSensorMode.Color);
@@ -187,9 +187,8 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=98
+        //% weight=97 blockGap=8
         //% group="Color Sensor"
-        //% blockGap=8
         color(): ColorSensorColor {
             this.setMode(ColorSensorMode.Color);
             this.poke();
@@ -221,9 +220,8 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=1
+        //% weight=89
         //% group="Color Sensor"
-        //% blockGap=8
         rgbRaw(): number[] {
             this.setMode(ColorSensorMode.RgbRaw);
             this.poke();
@@ -241,7 +239,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=89 blockGap=12
+        //% weight=79 blockGap=8
         //% group="Color Sensor"
         onLightDetected(mode: LightIntensityMode, condition: Light, handler: () => void) {
             this.setMode(<ColorSensorMode><number>mode)
@@ -258,7 +256,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=88 blockGap=8
+        //% weight=78 blockGap=8
         //% group="Color Sensor"
         pauseUntilLightDetected(mode: LightIntensityMode, condition: Light) {
             this.setMode(<ColorSensorMode><number>mode)
@@ -276,7 +274,7 @@ namespace sensors {
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=87 blockGap=8
+        //% weight=77
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
             this.setMode(<ColorSensorMode><number>mode);
@@ -318,11 +316,12 @@ namespace sensors {
          * @param condition the dark or bright light condition
          * @param value the value threshold, eg: 10
          */
+        //% help=sensors/color-sensor/set-threshold
         //% blockId=colorSetThreshold block="set **color sensor** %this|%condition|to %value"
-        //% group="Calibration" blockGap=8 weight=90
         //% value.min=0 value.max=100
         //% this.fieldEditor="ports"
-        //% help=sensors/color-sensor/set-threshold
+        //% weight=67 blockGap=8
+        //% group="Color Sensor"
         setThreshold(condition: Light, value: number) {
             // threshold is used in ambient or reflected modes
             if (this.mode != LightIntensityMode.Ambient &&
@@ -339,10 +338,11 @@ namespace sensors {
          * Get a threshold value
          * @param condition the light condition
          */
-        //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
-        //% group="Calibration" weight=89
-        //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/threshold
+        //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
+        //% this.fieldEditor="ports"
+        //% weight=68 blockGap=8
+        //% group="Color Sensor"
         threshold(condition: Light): number {
             // threshold is used in ambient or reflected modes
             if (this.mode != LightIntensityMode.Ambient &&
@@ -355,10 +355,11 @@ namespace sensors {
         /**
          * Collects measurement of the light condition and adjusts the threshold to 10% / 90%.
          */
-        //% blockId=colorCalibrateLight block="calibrate **color sensor** %this|for %mode"
-        //% group="Calibration" weight=91 blockGap=8
-        //% this.fieldEditor="ports"
         //% help=sensors/color-sensor/calibrate-light
+        //% blockId=colorCalibrateLight block="calibrate **color sensor** %this|for %mode"
+        //% this.fieldEditor="ports"
+        //% weight=69 blockGap=8
+        //% group="Color Sensor"
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
             this.calibrating = true; // prevent events
 
@@ -423,10 +424,11 @@ namespace sensors {
      * @param color the color sensed by the sensor, eg: ColorSensorColor.Red
      */
     //% shim=TD_ID
-    //% blockId=colorSensorColor block="color %color=colorEnumPicker"
-    //% group="Color Sensor"
-    //% weight=97
     //% help=sensors/color
+    //% blockId=colorSensorColor
+    //% block="color %color=colorEnumPicker"
+    //% weight=96
+    //% group="Color Sensor"
     export function color(color: number): ColorSensorColor {
         return color;
     }
