@@ -12,11 +12,11 @@ namespace sensors {
         }
 
         _query() {
-            return this._readPin6() > 2500 ? [1] : [0];
+            return [this._readPin6() > 2500 ? 1 : 0];
         }
 
         _info() {
-            return this._query() ? ["pres"] : ["rel"];
+            return [this._query()[0] ? "pres" : "rel"];
         }
 
         _update(prev: number, curr: number) {

@@ -1,6 +1,6 @@
 namespace pxsim {
 
-    enum AnalogOff {
+    export enum AnalogOff {
         InPin1 = 0, // int16[4]
         InPin6 = 8, // int16[4]
         OutPin5 = 16, // int16[4]
@@ -25,7 +25,7 @@ namespace pxsim {
 
     export class EV3AnalogState {
         constructor() {
-            let data = new Uint8Array(5172)
+            let data = new Uint8Array(5172);
             MMapMethods.register("/dev/lms_analog", {
                 data,
                 beforeMemRead: () => {
@@ -36,24 +36,34 @@ namespace pxsim {
                     for (let port = 0; port < DAL.NUM_INPUTS; port++) {
                         const node = inputNodes[port];
                         if (node) {
-                            data[AnalogOff.InConn + port] = node.isUart() ? DAL.CONN_INPUT_UART : DAL.CONN_INPUT_DUMB;
+                            if (node.isAnalog()) data[AnalogOff.InDcm + port] = node.getDeviceType();
+                            data[AnalogOff.InConn + port] = node.isUart() ? DAL.CONN_INPUT_UART : (!node.isNXT() ? DAL.CONN_INPUT_DUMB : DAL.CONN_NXT_DUMB);
                             if (node.isAnalog() && node.hasData()) {
                                 //data[AnalogOff.InPin6 + 2 * port] = node.getValue();
-                                util.map16Bit(data, AnalogOff.InPin6 + 2 * port, Math.floor(node.getValue()));
+                                util.map16Bit(data, node.getAnalogReadPin() + 2 * port, Math.floor(node.getValue()));
                             }
                         }
                     }
                 },
                 read: buf => {
-                    let v = "vSIM"
+                    let v = "vSIM";
                     for (let i = 0; i < buf.data.length; ++i)
-                        buf.data[i] = v.charCodeAt(i) || 0
-                    return buf.data.length
+                        buf.data[i] = v.charCodeAt(i) || 0;
+                    return buf.data.length;
                 },
                 write: buf => {
-                    return 2
+                    return 2;
                 },
                 ioctl: (id, buf) => {
+                    //console.log("ioctl: " + id);
+                    for (let port = 0; port < DAL.NUM_INPUTS; port++) {
+                        const connection = buf.data[DevConOff.Connection + port];
+                        const type = buf.data[DevConOff.Type + port];
+                        const mode = buf.data[DevConOff.Mode + port];
+                        //console.log(`${port}, mode: ${mode}`);
+                        const node = ev3board().getInputNodes()[port];
+                        if (node) node.setMode(mode);
+                    }
                     return 2;
                 }
             })

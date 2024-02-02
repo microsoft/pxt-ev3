@@ -1,4 +1,3 @@
-
 namespace pxsim {
 
     export class SensorNode extends BaseNode {
@@ -20,6 +19,10 @@ namespace pxsim {
             return false;
         }
 
+        public isNXT() {
+            return false;
+        }
+
         public isModeReturnArr() {
             return this.modeReturnArr;
         }
@@ -30,6 +33,10 @@ namespace pxsim {
 
         public getValues() {
             return [0];
+        }
+
+        public getAnalogReadPin() {
+            return AnalogOff.InPin6; // Defl for ev3 sensor
         }
 
         setMode(mode: number) {
