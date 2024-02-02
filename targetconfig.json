@@ -5,11 +5,20 @@
             "LEGO"
         ],
         "approvedRepos": [
-            "microsoft/pxt-automation"
+            "microsoft/pxt-automation",
+            "THEb0nny/makecode-ev3-hitechnic-color-sensor-v2"
         ],
         "preferredRepos": [
             "microsoft/pxt-automation"
-        ]
+        ],
+        "approvedRepoLib": {
+            "microsoft/pxt-automation": {
+                "preferred": true
+            },
+            "theb0nny/makecode-ev3-hitechnic-color-sensor-v2": {
+                "preferred": true
+            }
+        }
     },
     "galleries": {
         "Getting Started": "getting-started",
