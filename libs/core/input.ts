@@ -256,6 +256,7 @@ namespace sensors.internal {
             } else if (newConn == DAL.CONN_NXT_DUMB) {
                 sensorInfo.devType = inDcm[sensorInfo.port];
                 control.dmesg(`new NXT DUMB connection at port ${sensorInfo.port} dev type ${sensorInfo.devType}`);
+                setAnalogMode(sensorInfo.port, sensorInfo.devType, 0);
             } else if (newConn == DAL.CONN_INPUT_DUMB) {
                 //sensorInfo.devType = inDcm[sensorInfo.port]; // We get the result DEVICE_TYPE_UNKNOWN
                 sensorInfo.devType = DAL.DEVICE_TYPE_TOUCH; // TODO? for now assume touch
@@ -367,7 +368,6 @@ namespace sensors.internal {
         }
 
         _activated() {
-            this.realmode = 0;
             this._setMode(this.mode);
         }
 
@@ -417,7 +417,6 @@ namespace sensors.internal {
         }
 
         protected _setMode(m: number) {
-            //control.dmesg(`_setMode p=${this.port} m: ${this.realmode} -> ${m}`);
             let v = m | 0;
             this.mode = v;
             if (!this.isActive()) return;
