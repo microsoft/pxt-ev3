@@ -2,8 +2,8 @@
     "name": "ev3",
     "description": "The EV3 library",
     "files": [
-        "README.md",        
-        "ns.ts",
+        "README.md", 
+        "ns.ts",       
         "brick.ts",
         "startup.ts",
         "images.jres",
@@ -27,8 +27,8 @@
         "infrared-sensor": "file:../infrared-sensor"
     },
     "palette": [
-       "#ffffff",
-       "#000000"
+        "#ffffff",
+        "#000000"
     ],
     "public": true
 }
