@@ -1,4 +1,6 @@
-
+//% color="#00852B" weight=90 icon="\uf10d"
+//% groups='["Move", "Counters", "Properties"]'
+//% labelLineWidth=50
 namespace motors {
 
     /**
@@ -24,7 +26,19 @@ namespace motors {
     }
 }
 
-//% icon="\uf112"
-namespace console {
+//% color="#C8509B" weight=95 icon="\uf10f"
+//% labelLineWidth=100
+//% groups='["Touch Sensor", "Color Sensor", "Ultrasonic Sensor", "Gyro Sensor", "Infrared Sensor", "Remote Infrared Beacon",  "Light Sensor"]'
+//% subcategories='["NXT", "HiTechnic"]'
+namespace sensors {
+}
 
+//% color="#5F3109" icon="\uf107"
+namespace control {
+}
+
+//% color="#68C3E2" weight=100 icon="\uf106"
+//% groups='["Buttons", "Indicator", "Screen", "Power", "Program"]'
+//% labelLineWidth=60
+namespace brick {
 }
