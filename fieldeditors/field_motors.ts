@@ -108,6 +108,7 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         }
         contentDiv.style.width = (this as any).width_ + 'px';
         contentDiv.style.display = 'flex';
+        contentDiv.style.flexWrap = 'wrap';
         contentDiv.style.alignItems = 'stretch';
         dropdownDiv.appendChild(contentDiv);
 
