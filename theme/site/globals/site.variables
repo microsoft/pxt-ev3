@@ -206,6 +206,7 @@
 /*---------------------------
    Teaching Bubble
 ----------------------------*/
+
 @teachingBubbleBackgroundColor: @teal;
 @teachingBubbleTextColor: @white;
 @teachingBubbleStepsColor: @lightNougat;
