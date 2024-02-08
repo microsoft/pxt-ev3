@@ -208,4 +208,4 @@
 ----------------------------*/
 @teachingBubbleBackgroundColor: @teal;
 @teachingBubbleTextColor: @white;
-@teachingBubbleStepsColor: @beige;
+@teachingBubbleStepsColor: @lightNougat;
