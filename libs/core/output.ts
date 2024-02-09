@@ -786,15 +786,18 @@ namespace motors {
         //% help=motors/synced/steer
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
+            const inputSpeed = speed;
 
             const outputs = splitDoubleOutput(this._port);
             const invertedFactors = [getInverseFactor(outputs[0]), getInverseFactor(outputs[1])];
             const invertedFactorsIsMatch = invertedFactors[0] == invertedFactors[1];
-            if (invertedFactorsIsMatch) { // Intensive factor coefficient if two motors are directed in the same direction
+            if (invertedFactorsIsMatch) { // Inverse factors are the same, the motors are directed in the same direction
                 const invertedFactor = invertedFactors[0] && invertedFactors[1];
                 speed = Math.clamp(-100, 100, speed >> 0) * invertedFactor;
-            } else {
-                speed = Math.clamp(-100, 100, speed >> 0) * (turnRatio > 0 ? -1 : 1);
+            } else { // Inverse factors are different
+                if (inputSpeed > 0) speed = Math.clamp(-100, 100, speed >> 0) * (turnRatio > 0 ? -1 : 1); // Forward
+                else if (inputSpeed <= 0 && turnRatio > 0) speed = Math.clamp(-100, 100, speed >> 0) * -1; // Back right
+                else speed = Math.clamp(-100, 100, speed >> 0); // Back left
             }
 
             if (!speed) {
@@ -802,13 +805,18 @@ namespace motors {
                 return;
             }
 
-            if (invertedFactorsIsMatch) { // Intensive factor coefficient if two motors are directed in the same direction
+            if (invertedFactorsIsMatch) { // Inverse factors are the same, the motors are directed in the same direction
                 turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
-            } else {
+            } else { // Inverse factors are different
                 // We recalculate turnRatio to support control of two motors with different inversion factors
                 // for example if there are two middle motors in the motor chassis
-                if (turnRatio > 0) turnRatio = Math.map(turnRatio, 0, 200, 200, 0);
-                else turnRatio = Math.map(turnRatio, -200, 0, 0, -200);
+                if (inputSpeed > 0) { // Forward
+                    if (turnRatio > 0) turnRatio = Math.map(turnRatio, 0, 200, 200, 0); // Forward right
+                    else turnRatio = Math.map(turnRatio, -200, 0, 0, -200); // Forward left
+                } else { // Back
+                    if (turnRatio > 0) turnRatio = Math.map(turnRatio, 0, 200, 200, 0); // Back left
+                    else turnRatio = Math.map(turnRatio, -200, 0, 0, -200); // Back right
+                }
                 turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
             }
             console.log(`speedSteer: ${speed}, turnRatioSteer: ${turnRatio}`);
