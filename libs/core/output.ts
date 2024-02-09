@@ -890,16 +890,16 @@ namespace motors {
     //% whenUsed fixedInstance block="large motors C+D" jres=icons.dualMotorLargePortCD
     export const largeCD = new SynchedMotorPair(Output.CD, true);
 
-    //% whenUsed fixedInstance block="medium motors B+C" jres=icons.portBC
+    //% whenUsed fixedInstance block="medium motors B+C" jres=icons.dualMotorMediumPortBC
     export const mediumBC = new SynchedMotorPair(Output.BC, false);
 
-    //% whenUsed fixedInstance block="medium motors A+D" jres=icons.portAD
+    //% whenUsed fixedInstance block="medium motors A+D" jres=icons.dualMotorMediumPortAD
     export const mediumAD = new SynchedMotorPair(Output.AD, false);
 
-    //% whenUsed fixedInstance block="medium motors A+B" jres=icons.portAB
+    //% whenUsed fixedInstance block="medium motors A+B" jres=icons.dualMotorMediumPortAB
     export const mediumAB = new SynchedMotorPair(Output.AB, false);
 
-    //% whenUsed fixedInstance block="medium motors C+D" jres=icons.portCD
+    //% whenUsed fixedInstance block="medium motors C+D" jres=icons.dualMotorMediumPortCD
     export const mediumCD = new SynchedMotorPair(Output.CD, false);
 
     function reset(out: Output) {
