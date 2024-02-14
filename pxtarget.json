@@ -213,7 +213,10 @@
         "githubEditor": true,
         "chooseLanguageRestrictionOnNewProject": true,
         "openProjectNewTab": true,
-        "python": true
+        "python": true,
+        "tours": {
+            "editor": "/tours/editor-tour"
+        }
     },
     "ignoreDocsErrors": true,
     "uploadDocs": true
