@@ -84,9 +84,9 @@ namespace sensors {
             return Math.round(this._rotationAngle.value);
         }
 
-        rotationAngle(mode: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
-            if (mode == GyroGetMethodValues.RateEulerIntegrator) return this.angle();
-            else if (mode == GyroGetMethodValues.DeflVersion) {
+        rotationAngle(method: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
+            if (method == GyroGetMethodValues.RateEulerIntegrator) return this.angle();
+            else if (method == GyroGetMethodValues.DeflVersion) {
                 this.setMode(GyroSensorMode.Angle);
                 this.poke();
                 if (this._calibrating) {
@@ -97,15 +97,15 @@ namespace sensors {
             return 0;
         }
 
-        tiltAngle(mode: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
-            if (mode == GyroGetMethodValues.RateEulerIntegrator) {
+        tiltAngle(method: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
+            if (method == GyroGetMethodValues.RateEulerIntegrator) {
                 this.setMode(GyroSensorMode.TiltRate);
                 this.poke();
                 if (this._calibrating) {
                     pauseUntil(() => !this._calibrating, 2000);
                 }
                 return Math.round(this._tiltAngle.value);
-            } else if (mode == GyroGetMethodValues.DeflVersion) {
+            } else if (method == GyroGetMethodValues.DeflVersion) {
                 this.setMode(GyroSensorMode.TiltAngle);
                 this.poke();
                 if (this._calibrating) {
