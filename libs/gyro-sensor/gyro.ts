@@ -1,36 +1,61 @@
 const enum GyroSensorMode {
     None = 0,
-    Angle = 0,
-    Rate = 1,
+    Angle = 0, // Rotation angle
+    Rate = 1, // Rotational speed
+    GnA = 2, // Angle and rotational speed
+    Fas = 3, // Raw sensor value
+    Cal = 4, // Calibration
+    TiltRate = 5, // Tilt speed
+    TiltAngle = 6 // Tilt angle
+}
+
+const enum GyroGetMethodValues {
+    RateEulerIntegrator = 0,
+    DeflVersion = 1
 }
 
 namespace sensors {
+
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
+
         private _calibrating: boolean;
-        private _drift: number;
-        private _angle: control.EulerIntegrator;
+        private _rotationDrift: number;
+        private _tiltDrift: number;
+        private _rotationAngle: control.EulerIntegrator;
+        private _tiltAngle: control.EulerIntegrator;
+
         constructor(port: number) {
             super(port)
             this._calibrating = false;
-            this._drift = 0;
-            this._angle = new control.EulerIntegrator();
-            this._setMode(GyroSensorMode.Rate);
+            this._rotationDrift = 0;
+            this._tiltDrift = 0;
+            this._rotationAngle = new control.EulerIntegrator();
+            this._tiltAngle = new control.EulerIntegrator();
             this.setMode(GyroSensorMode.Rate);
         }
 
         _deviceType() {
-            return DAL.DEVICE_TYPE_GYRO
+            return DAL.DEVICE_TYPE_GYRO;
         }
 
         _query() {
-            const v = this.getNumber(NumberFormat.Int16LE, 0);
-            this._angle.integrate(v - this._drift);
-            return [v];
+            if (this.mode == GyroSensorMode.Rate) { // this.mode == GyroSensorMode.Angle || this.mode == GyroSensorMode.Rate
+                const v = this.getNumber(NumberFormat.Int16LE, 0);
+                this._rotationAngle.integrate(v - this._rotationDrift);
+                return [v];
+            } else if (this.mode == GyroSensorMode.Angle || this.mode == GyroSensorMode.TiltAngle) {
+                return [this.getNumber(NumberFormat.Int16LE, 0)];
+            } else if (this.mode == GyroSensorMode.TiltRate) {
+                const v = this.getNumber(NumberFormat.Int16LE, 0);
+                this._tiltAngle.integrate(v - this._tiltDrift);
+                return [v];
+            }
+            return [0];
         }
 
         setMode(m: GyroSensorMode) {
-            // decrecated
+            this._setMode(m);
         }
 
         isCalibrating(): boolean {
@@ -49,12 +74,46 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Gyro Sensor"
+        //% deprecated=true
         angle(): number {
+            this.setMode(GyroSensorMode.Rate);
             this.poke();
-            if (this._calibrating)
+            if (this._calibrating) {
                 pauseUntil(() => !this._calibrating, 2000);
+            }
+            return Math.round(this._rotationAngle.value);
+        }
 
-            return Math.round(this._angle.value);
+        rotationAngle(mode: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
+            if (mode == GyroGetMethodValues.RateEulerIntegrator) return this.angle();
+            else if (mode == GyroGetMethodValues.DeflVersion) {
+                this.setMode(GyroSensorMode.Angle);
+                this.poke();
+                if (this._calibrating) {
+                    pauseUntil(() => !this._calibrating, 2000);
+                }
+                return this._query()[0];
+            }
+            return 0;
+        }
+
+        tiltAngle(mode: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
+            if (mode == GyroGetMethodValues.RateEulerIntegrator) {
+                this.setMode(GyroSensorMode.TiltRate);
+                this.poke();
+                if (this._calibrating) {
+                    pauseUntil(() => !this._calibrating, 2000);
+                }
+                return Math.round(this._tiltAngle.value);
+            } else if (mode == GyroGetMethodValues.DeflVersion) {
+                this.setMode(GyroSensorMode.TiltAngle);
+                this.poke();
+                if (this._calibrating) {
+                    pauseUntil(() => !this._calibrating, 2000);
+                }
+                return this._query()[0];
+            }
+            return 0;
         }
 
         /**
@@ -69,11 +128,27 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% weight=99 blockGap=8
         //% group="Gyro Sensor"
+        //% deprecated=true
         rate(): number {
+            this.setMode(GyroSensorMode.Rate);
             this.poke();
-            if (this._calibrating)
+            if (this._calibrating) {
                 pauseUntil(() => !this._calibrating, 2000);
-            return this._query()[0] - this._drift;
+            }
+            return this._query()[0] - this._rotationDrift;
+        }
+
+        rotationRate(): number {
+            return this.rate();
+        }
+
+        tiltRate(): number {
+            this.setMode(GyroSensorMode.TiltRate);
+            this.poke();
+            if (this._calibrating) {
+                pauseUntil(() => !this._calibrating, 2000);
+            }
+            return this._query()[0] - this._tiltDrift;
         }
 
         /**
@@ -108,7 +183,7 @@ namespace sensors {
                 brick.setStatusLight(statusLight); // resture previous light
 
                 // and we're done
-                this._angle.reset();
+                this._rotationAngle.reset();
                 this._calibrating = false;
                 return;
             }
@@ -121,16 +196,16 @@ namespace sensors {
             // wait till sensor is live
             pauseUntil(() => this.isActive(), 7000);
             // mode toggling
-            this._setMode(GyroSensorMode.Rate);
-            this._setMode(GyroSensorMode.Angle);
-            this._setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Angle);
+            this.setMode(GyroSensorMode.Rate);
 
             // check sensor is ready
             if (!this.isActive()) {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
-                this._angle.reset();
+                this._rotationAngle.reset();
                 this._calibrating = false;
                 return;
             }
@@ -144,7 +219,7 @@ namespace sensors {
             brick.setStatusLight(statusLight); // resture previous light
 
             // and we're done
-            this._angle.reset();
+            this._rotationAngle.reset();
             this._calibrating = false;
         }
 
@@ -168,8 +243,8 @@ namespace sensors {
 
             // send a reset command
             super.reset();
-            this._drift = 0;
-            this._angle.reset();
+            this._rotationDrift = 0;
+            this._rotationAngle.reset();
             pauseUntil(() => this.isActive(), 7000);
 
             // check sensor is ready
@@ -177,19 +252,19 @@ namespace sensors {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
-                this._angle.reset();
+                this._rotationAngle.reset();
                 this._calibrating = false;
                 return;
             }
 
-            this._setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Rate);
 
             // and done
             brick.setStatusLight(StatusLight.Green); // success
             pause(1000);
             brick.setStatusLight(statusLight); // resture previous light
             // and done
-            this._angle.reset();
+            this._rotationAngle.reset();
             this._calibrating = false;
         }
 
@@ -205,7 +280,7 @@ namespace sensors {
         //% weight=78 blockGap=8
         //% group="Gyro Sensor"
         drift(): number {
-            return this._drift;
+            return this._rotationDrift;
         }
 
         /**
@@ -249,15 +324,15 @@ namespace sensors {
 
         private computeDriftNoCalibration() {
             // clear drift
-            this._drift = 0;
+            this._rotationDrift = 0;
             const n = 10;
             let d = 0;
             for (let i = 0; i < n; ++i) {
                 d += this._query()[0];
                 pause(20);
             }
-            this._drift = d / n;
-            this._angle.reset();
+            this._rotationDrift = d / n;
+            this._rotationAngle.reset();
         }
 
         _info() {
@@ -265,8 +340,8 @@ namespace sensors {
                 return ["cal..."];
 
             let r = `${this._query()[0]}r`;
-            if (this._drift != 0)
-                r += `-${this._drift | 0}`;
+            if (this._rotationDrift != 0)
+                r += `-${this._rotationDrift | 0}`;
             return [r];
         }
     }
