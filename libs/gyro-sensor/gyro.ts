@@ -9,9 +9,18 @@ const enum GyroSensorMode {
     TiltAngle = 6 // Tilt angle
 }
 
-const enum GyroGetMethodValues {
+const enum GyroGetAngleMethod {
+    //% block="rate Euler integrator"
     RateEulerIntegrator = 0,
-    DeflVersion = 1
+    //% block="default"
+    Default = 1
+}
+
+const enum GyroAxis {
+    //% block="rotation"
+    Rotation,
+    //% block="tilt"
+    Tilt
 }
 
 namespace sensors {
@@ -87,18 +96,20 @@ namespace sensors {
         /**
          * Get the current rotate angle from the gyroscope.
          * @param sensor the gyroscope to query the request
+         * @param method the method to get the value
          */
         //% help=sensors/gyro/rotate-angle
-        //% block="**gyro** %this|rotate angle"
+        //% block="**gyro** $this|rotation angle||at $method|metod"
         //% blockId=gyroGetRotateAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
+        //% expandableArgumentMode="toggle"
         //% weight=100 blockGap=8
         //% group="Gyro Sensor"
-        rotationAngle(method: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
-            if (method == GyroGetMethodValues.RateEulerIntegrator) return this.angle();
-            else if (method == GyroGetMethodValues.DeflVersion) {
+        rotationAngle(method: GyroGetAngleMethod = GyroGetAngleMethod.RateEulerIntegrator): number {
+            if (method == GyroGetAngleMethod.RateEulerIntegrator) return this.angle();
+            else if (method == GyroGetAngleMethod.Default) {
                 this.setMode(GyroSensorMode.Angle);
                 this.poke();
                 if (this._calibrating) {
@@ -112,24 +123,26 @@ namespace sensors {
         /**
          * Get the current tilt angle from the gyroscope.
          * @param sensor the gyroscope to query the request
+         * @param method the method to get the value
          */
         //% help=sensors/gyro/tilt-angle
-        //% block="**gyro** %this|tilt angle"
+        //% block="**gyro** $this|tilt angle||at $method|metod"
         //% blockId=gyroGetTiltAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=99 blockGap=8
+        //% expandableArgumentMode="toggle"
+        //% weight=99
         //% group="Gyro Sensor"
-        tiltAngle(method: GyroGetMethodValues = GyroGetMethodValues.RateEulerIntegrator): number {
-            if (method == GyroGetMethodValues.RateEulerIntegrator) {
+        tiltAngle(method: GyroGetAngleMethod = GyroGetAngleMethod.RateEulerIntegrator): number {
+            if (method == GyroGetAngleMethod.RateEulerIntegrator) {
                 this.setMode(GyroSensorMode.TiltRate);
                 this.poke();
                 if (this._calibrating) {
                     pauseUntil(() => !this._calibrating, 2000);
                 }
                 return Math.round(this._tiltAngle.value);
-            } else if (method == GyroGetMethodValues.DeflVersion) {
+            } else if (method == GyroGetAngleMethod.Default) {
                 this.setMode(GyroSensorMode.TiltAngle);
                 this.poke();
                 if (this._calibrating) {
@@ -150,7 +163,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=99 blockGap=8
+        //% weight=98 blockGap=8
         //% group="Gyro Sensor"
         //% deprecated=true
         rate(): number {
@@ -167,12 +180,12 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=sensors/gyro/rotation-rate
-        //% block="**gyro** %this|rotation rate"
+        //% block="**gyro** $this|rotation rate"
         //% blockId=gyroGetRotationRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=99 blockGap=8
+        //% weight=98 blockGap=8
         //% group="Gyro Sensor"
         rotationRate(): number {
             return this.rate();
@@ -183,12 +196,12 @@ namespace sensors {
          * @param sensor the gyroscope to query the request
          */
         //% help=sensors/gyro/tilt-rate
-        //% block="**gyro** %this|tilt rate"
+        //% block="**gyro** $this|tilt rate"
         //% blockId=gyroGetTiltRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=98 blockGap=8
+        //% weight=97
         //% group="Gyro Sensor"
         tiltRate(): number {
             this.setMode(GyroSensorMode.TiltRate);
@@ -209,7 +222,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=89 blockGap=8
+        //% weight=69 blockGap=8
         //% group="Gyro Sensor"
         calibrate(): void {
             if (this._calibrating) return; // already in calibration mode
@@ -284,7 +297,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=88
+        //% weight=68
         //% group="Gyro Sensor"
         reset(): void {
             if (this._calibrating) return; // already in calibration mode
@@ -333,7 +346,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=78 blockGap=8
+        //% weight=89 blockGap=8
         //% group="Gyro Sensor"
         //% deprecated=true
         drift(): number {
@@ -344,12 +357,12 @@ namespace sensors {
          * Gets the computed rotation rate drift.
          */
         //% help=sensors/gyro/rotation-drift
-        //% block="**gyro** %this|rotation drift"
+        //% block="**gyro** $this|rotation drift"
         //% blockId=gyroRotationDrift
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=78 blockGap=8
+        //% weight=89 blockGap=8
         //% group="Gyro Sensor"
         rotationDrift(): number {
             return this._rotationDrift;
@@ -359,12 +372,12 @@ namespace sensors {
          * Gets the computed tilt rate drift.
          */
         //% help=sensors/gyro/tilt-drift
-        //% block="**gyro** %this|tilt drift"
+        //% block="**gyro** $this|tilt drift"
         //% blockId=gyroTiltDrift
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=78 blockGap=8
+        //% weight=88
         //% group="Gyro Sensor"
         tiltDrift(): number {
             return this._tiltDrift;
@@ -393,7 +406,7 @@ namespace sensors {
          * Computes the current sensor rotation drift when using rate measurements.
          */
         //% help=sensors/gyro/compute-rotation-drift
-        //% block="compute **gyro** %this|rotation drift"
+        //% block="compute **gyro** $this|rotation drift"
         //% blockId=gyroComputeRotationDrift
         //% parts="gyroscope"
         //% blockNamespace=sensors
@@ -411,12 +424,12 @@ namespace sensors {
          * Computes the current sensor tilt drift when using rate measurements.
          */
         //% help=sensors/gyro/compute-tilt-drift
-        //% block="compute **gyro** %this|tilt drift"
+        //% block="compute **gyro** $this|tilt drift"
         //% blockId=gyroComputeTiltDrift
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=79 blockGap=8
+        //% weight=78
         //% group="Gyro Sensor"
         computeTiltDrift() {
             if (this._calibrating)
@@ -437,8 +450,9 @@ namespace sensors {
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% degrees.defl=90
-        //% weight=98
+        //% weight=96
         //% group="Gyro Sensor"
+        //% deprecated=true
         pauseUntilRotated(degrees: number, timeOut?: number): void {
             let a = this.angle();
             const end = a + degrees;
@@ -446,9 +460,32 @@ namespace sensors {
             pauseUntil(() => (end - this.angle()) * direction <= 0, timeOut);
         }
 
+        /**
+         * Pauses the program until the gyro detected
+         * that the angle changed by the desired amount of degrees.
+         * @param degrees the degrees to turn
+         * @param axis the axis to rotation
+         * @param timeOut the max waiting time
+         */
+        //% help=sensors/gyro/pause-until-angle-rotated
+        //% block="pause until **gyro** $this|rotated $degrees=rotationPicker|degree $axis||at max waiting $timeOut"
+        //% blockId=pauseUntilAngleRotated
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% expandableArgumentMode="toogle"
+        //% degrees.defl=90
+        //% weight=96
+        //% group="Gyro Sensor"
+        pauseUntilAngleRotated(degrees: number, axis: GyroAxis, timeOut?: number): void {
+            let a = (axis == GyroAxis.Rotation ? this.rotationAngle() : this.tiltAngle());
+            const end = a + degrees;
+            const direction = (end - a) > 0 ? 1 : -1;
+            pauseUntil(() => (end - GyroAxis.Rotation ? this.rotationAngle() : this.tiltAngle()) * direction <= 0, timeOut);
+        }
+
         private computeRotationDriftNoCalibration() {
-            // clear rotation drift
-            this._rotationDrift = 0;
+            this._rotationDrift = 0; // clear rotation drift
             const n = 10;
             let d = 0;
             for (let i = 0; i < n; ++i) {
@@ -460,8 +497,7 @@ namespace sensors {
         }
 
         private computeTiltDriftNoCalibration() {
-            // clear tilt drift
-            this._tiltDrift = 0;
+            this._tiltDrift = 0; // clear tilt drift
             const n = 10;
             let d = 0;
             for (let i = 0; i < n; ++i) {
