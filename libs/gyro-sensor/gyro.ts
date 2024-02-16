@@ -1,36 +1,70 @@
 const enum GyroSensorMode {
     None = 0,
-    Angle = 0,
-    Rate = 1,
+    Angle = 0, // Rotation angle
+    Rate = 1, // Rotational speed
+    GnA = 2, // Angle and rotational speed
+    Fas = 3, // Raw sensor value
+    Cal = 4, // Calibration
+    TiltRate = 5, // Tilt speed
+    TiltAngle = 6 // Tilt angle
+}
+
+const enum GyroGetAngleMethod {
+    //% block="rate Euler integrator"
+    RateEulerIntegrator = 0,
+    //% block="default"
+    Default = 1
+}
+
+const enum GyroAxis {
+    //% block="rotation"
+    Rotation,
+    //% block="tilt"
+    Tilt
 }
 
 namespace sensors {
+
     //% fixedInstances
     export class GyroSensor extends internal.UartSensor {
+
         private _calibrating: boolean;
-        private _drift: number;
-        private _angle: control.EulerIntegrator;
+        private _rotationDrift: number;
+        private _tiltDrift: number;
+        private _rotationAngle: control.EulerIntegrator;
+        private _tiltAngle: control.EulerIntegrator;
+
         constructor(port: number) {
             super(port)
             this._calibrating = false;
-            this._drift = 0;
-            this._angle = new control.EulerIntegrator();
-            this._setMode(GyroSensorMode.Rate);
+            this._rotationDrift = 0;
+            this._tiltDrift = 0;
+            this._rotationAngle = new control.EulerIntegrator();
+            this._tiltAngle = new control.EulerIntegrator();
             this.setMode(GyroSensorMode.Rate);
         }
 
         _deviceType() {
-            return DAL.DEVICE_TYPE_GYRO
+            return DAL.DEVICE_TYPE_GYRO;
         }
 
         _query() {
-            const v = this.getNumber(NumberFormat.Int16LE, 0);
-            this._angle.integrate(v - this._drift);
-            return [v];
+            if (this.mode == GyroSensorMode.Rate) { // this.mode == GyroSensorMode.Angle || this.mode == GyroSensorMode.Rate
+                const v = this.getNumber(NumberFormat.Int16LE, 0);
+                this._rotationAngle.integrate(v - this._rotationDrift);
+                return [v];
+            } else if (this.mode == GyroSensorMode.Angle || this.mode == GyroSensorMode.TiltAngle) {
+                return [this.getNumber(NumberFormat.Int16LE, 0)];
+            } else if (this.mode == GyroSensorMode.TiltRate) {
+                const v = this.getNumber(NumberFormat.Int16LE, 0);
+                this._tiltAngle.integrate(v - this._tiltDrift);
+                return [v];
+            }
+            return [0];
         }
 
         setMode(m: GyroSensorMode) {
-            // decrecated
+            this._setMode(m);
         }
 
         isCalibrating(): boolean {
@@ -49,12 +83,74 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% weight=100 blockGap=8
         //% group="Gyro Sensor"
+        //% deprecated=true
         angle(): number {
+            this.setMode(GyroSensorMode.Rate);
             this.poke();
-            if (this._calibrating)
+            if (this._calibrating) {
                 pauseUntil(() => !this._calibrating, 2000);
+            }
+            return Math.round(this._rotationAngle.value);
+        }
 
-            return Math.round(this._angle.value);
+        /**
+         * Get the current rotate angle from the gyroscope.
+         * @param sensor the gyroscope to query the request
+         * @param method the method to get the value
+         */
+        //% help=sensors/gyro/rotate-angle
+        //% block="**gyro** $this|rotation angle||at $method|metod"
+        //% blockId=gyroGetRotateAngle
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% expandableArgumentMode="toggle"
+        //% weight=100 blockGap=8
+        //% group="Gyro Sensor"
+        rotationAngle(method: GyroGetAngleMethod = GyroGetAngleMethod.RateEulerIntegrator): number {
+            if (method == GyroGetAngleMethod.RateEulerIntegrator) return this.angle();
+            else if (method == GyroGetAngleMethod.Default) {
+                this.setMode(GyroSensorMode.Angle);
+                this.poke();
+                if (this._calibrating) {
+                    pauseUntil(() => !this._calibrating, 2000);
+                }
+                return this._query()[0];
+            }
+            return 0;
+        }
+
+        /**
+         * Get the current tilt angle from the gyroscope.
+         * @param sensor the gyroscope to query the request
+         * @param method the method to get the value
+         */
+        //% help=sensors/gyro/tilt-angle
+        //% block="**gyro** $this|tilt angle||at $method|metod"
+        //% blockId=gyroGetTiltAngle
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% expandableArgumentMode="toggle"
+        //% weight=99
+        //% group="Gyro Sensor"
+        tiltAngle(method: GyroGetAngleMethod = GyroGetAngleMethod.RateEulerIntegrator): number {
+            if (method == GyroGetAngleMethod.RateEulerIntegrator) {
+                this.setMode(GyroSensorMode.TiltRate);
+                this.poke();
+                if (this._calibrating) {
+                    pauseUntil(() => !this._calibrating, 2000);
+                }
+                return Math.round(this._tiltAngle.value);
+            } else if (method == GyroGetAngleMethod.Default) {
+                this.setMode(GyroSensorMode.TiltAngle);
+                this.poke();
+                if (this._calibrating) {
+                    pauseUntil(() => !this._calibrating, 2000);
+                }
+                return this._query()[0];
+            }
+            return 0;
         }
 
         /**
@@ -67,13 +163,53 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=99 blockGap=8
+        //% weight=98 blockGap=8
         //% group="Gyro Sensor"
+        //% deprecated=true
         rate(): number {
+            this.setMode(GyroSensorMode.Rate);
             this.poke();
-            if (this._calibrating)
+            if (this._calibrating) {
                 pauseUntil(() => !this._calibrating, 2000);
-            return this._query()[0] - this._drift;
+            }
+            return this._query()[0] - this._rotationDrift;
+        }
+
+        /**
+         * Get the current rotation rate from the gyroscope.
+         * @param sensor the gyroscope to query the request
+         */
+        //% help=sensors/gyro/rotation-rate
+        //% block="**gyro** $this|rotation rate"
+        //% blockId=gyroGetRotationRate
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=98 blockGap=8
+        //% group="Gyro Sensor"
+        rotationRate(): number {
+            return this.rate();
+        }
+
+        /**
+         * Get the current tilt rate from the gyroscope.
+         * @param sensor the gyroscope to query the request
+         */
+        //% help=sensors/gyro/tilt-rate
+        //% block="**gyro** $this|tilt rate"
+        //% blockId=gyroGetTiltRate
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=97
+        //% group="Gyro Sensor"
+        tiltRate(): number {
+            this.setMode(GyroSensorMode.TiltRate);
+            this.poke();
+            if (this._calibrating) {
+                pauseUntil(() => !this._calibrating, 2000);
+            }
+            return this._query()[0] - this._tiltDrift;
         }
 
         /**
@@ -86,7 +222,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=89 blockGap=8
+        //% weight=69 blockGap=8
         //% group="Gyro Sensor"
         calibrate(): void {
             if (this._calibrating) return; // already in calibration mode
@@ -100,15 +236,17 @@ namespace sensors {
             pause(700);
 
             // compute drift
-            this.computeDriftNoCalibration();
-            if (Math.abs(this.drift()) < 0.1) {
+            //this.computeTiltDriftNoCalibration();
+            this.computeRotationDriftNoCalibration();
+            if (Math.abs(this.rotationDrift()) < 0.1) {
                 // no drift, skipping calibration
                 brick.setStatusLight(StatusLight.Green); // success
                 pause(1000);
                 brick.setStatusLight(statusLight); // resture previous light
 
                 // and we're done
-                this._angle.reset();
+                this._rotationAngle.reset();
+                this._tiltAngle.reset();
                 this._calibrating = false;
                 return;
             }
@@ -121,22 +259,23 @@ namespace sensors {
             // wait till sensor is live
             pauseUntil(() => this.isActive(), 7000);
             // mode toggling
-            this._setMode(GyroSensorMode.Rate);
-            this._setMode(GyroSensorMode.Angle);
-            this._setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Angle);
+            this.setMode(GyroSensorMode.Rate);
 
             // check sensor is ready
             if (!this.isActive()) {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
-                this._angle.reset();
+                this._rotationAngle.reset();
+                this._tiltAngle.reset();
                 this._calibrating = false;
                 return;
             }
 
-            // switch to rate mode
-            this.computeDriftNoCalibration();
+            //this.computeTiltDriftNoCalibration();
+            this.computeRotationDriftNoCalibration(); // switch to rate mode
 
             // and done
             brick.setStatusLight(StatusLight.Green); // success
@@ -144,7 +283,8 @@ namespace sensors {
             brick.setStatusLight(statusLight); // resture previous light
 
             // and we're done
-            this._angle.reset();
+            this._rotationAngle.reset();
+            this._tiltAngle.reset();
             this._calibrating = false;
         }
 
@@ -157,7 +297,7 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=88
+        //% weight=68
         //% group="Gyro Sensor"
         reset(): void {
             if (this._calibrating) return; // already in calibration mode
@@ -168,8 +308,10 @@ namespace sensors {
 
             // send a reset command
             super.reset();
-            this._drift = 0;
-            this._angle.reset();
+            this._rotationDrift = 0;
+            this._tiltDrift = 0;
+            this._rotationAngle.reset();
+            this._tiltAngle.reset();
             pauseUntil(() => this.isActive(), 7000);
 
             // check sensor is ready
@@ -177,19 +319,21 @@ namespace sensors {
                 brick.setStatusLight(StatusLight.RedFlash); // didn't work
                 pause(2000);
                 brick.setStatusLight(statusLight); // restore previous light
-                this._angle.reset();
+                this._rotationAngle.reset();
+                this._tiltAngle.reset();
                 this._calibrating = false;
                 return;
             }
 
-            this._setMode(GyroSensorMode.Rate);
+            this.setMode(GyroSensorMode.Rate);
 
             // and done
             brick.setStatusLight(StatusLight.Green); // success
             pause(1000);
             brick.setStatusLight(statusLight); // resture previous light
             // and done
-            this._angle.reset();
+            this._rotationAngle.reset();
+            this._tiltAngle.reset();
             this._calibrating = false;
         }
 
@@ -202,10 +346,41 @@ namespace sensors {
         //% parts="gyroscope"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=78 blockGap=8
+        //% weight=89 blockGap=8
         //% group="Gyro Sensor"
+        //% deprecated=true
         drift(): number {
-            return this._drift;
+            return this._rotationDrift;
+        }
+
+        /**
+         * Gets the computed rotation rate drift.
+         */
+        //% help=sensors/gyro/rotation-drift
+        //% block="**gyro** $this|rotation drift"
+        //% blockId=gyroRotationDrift
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=89 blockGap=8
+        //% group="Gyro Sensor"
+        rotationDrift(): number {
+            return this._rotationDrift;
+        }
+
+        /**
+         * Gets the computed tilt rate drift.
+         */
+        //% help=sensors/gyro/tilt-drift
+        //% block="**gyro** $this|tilt drift"
+        //% blockId=gyroTiltDrift
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=88
+        //% group="Gyro Sensor"
+        tiltDrift(): number {
+            return this._tiltDrift;
         }
 
         /**
@@ -219,11 +394,48 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% weight=79 blockGap=8
         //% group="Gyro Sensor"
+        //% deprecated=true
         computeDrift() {
             if (this._calibrating)
                 pauseUntil(() => !this._calibrating, 2000);
             pause(1000); // let the robot settle
-            this.computeDriftNoCalibration();
+            this.computeRotationDriftNoCalibration();
+        }
+
+        /**
+         * Computes the current sensor rotation drift when using rate measurements.
+         */
+        //% help=sensors/gyro/compute-rotation-drift
+        //% block="compute **gyro** $this|rotation drift"
+        //% blockId=gyroComputeRotationDrift
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=79 blockGap=8
+        //% group="Gyro Sensor"
+        computeRotationDrift() {
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
+            pause(1000); // let the robot settle
+            this.computeRotationDriftNoCalibration();
+        }
+
+        /**
+         * Computes the current sensor tilt drift when using rate measurements.
+         */
+        //% help=sensors/gyro/compute-tilt-drift
+        //% block="compute **gyro** $this|tilt drift"
+        //% blockId=gyroComputeTiltDrift
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=78
+        //% group="Gyro Sensor"
+        computeTiltDrift() {
+            if (this._calibrating)
+                pauseUntil(() => !this._calibrating, 2000);
+            pause(1000); // let the robot settle
+            this.computeTiltDriftNoCalibration();
         }
 
         /**
@@ -238,8 +450,9 @@ namespace sensors {
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% degrees.defl=90
-        //% weight=98
+        //% weight=96
         //% group="Gyro Sensor"
+        //% deprecated=true
         pauseUntilRotated(degrees: number, timeOut?: number): void {
             let a = this.angle();
             const end = a + degrees;
@@ -247,27 +460,73 @@ namespace sensors {
             pauseUntil(() => (end - this.angle()) * direction <= 0, timeOut);
         }
 
-        private computeDriftNoCalibration() {
-            // clear drift
-            this._drift = 0;
+        /**
+         * Pauses the program until the gyro detected
+         * that the angle changed by the desired amount of degrees.
+         * @param degrees the degrees to turn
+         * @param axis the axis to rotation
+         * @param timeOut the max waiting time
+         */
+        //% help=sensors/gyro/pause-until-angle-rotated
+        //% block="pause until **gyro** $this|rotated $degrees=rotationPicker|degree $axis||at max waiting $timeOut"
+        //% blockId=pauseUntilAngleRotated
+        //% parts="gyroscope"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% expandableArgumentMode="toogle"
+        //% degrees.defl=90
+        //% weight=96
+        //% group="Gyro Sensor"
+        pauseUntilAngleRotated(degrees: number, axis: GyroAxis, timeOut?: number): void {
+            let a = (axis == GyroAxis.Rotation ? this.rotationAngle() : this.tiltAngle());
+            const end = a + degrees;
+            const direction = (end - a) > 0 ? 1 : -1;
+            pauseUntil(() => (end - GyroAxis.Rotation ? this.rotationAngle() : this.tiltAngle()) * direction <= 0, timeOut);
+        }
+
+        private computeRotationDriftNoCalibration() {
+            this._rotationDrift = 0; // clear rotation drift
             const n = 10;
             let d = 0;
             for (let i = 0; i < n; ++i) {
                 d += this._query()[0];
                 pause(20);
             }
-            this._drift = d / n;
-            this._angle.reset();
+            this._rotationDrift = d / n;
+            this._rotationAngle.reset();
+        }
+
+        private computeTiltDriftNoCalibration() {
+            this._tiltDrift = 0; // clear tilt drift
+            const n = 10;
+            let d = 0;
+            for (let i = 0; i < n; ++i) {
+                d += this._query()[0];
+                pause(20);
+            }
+            this._tiltDrift = d / n;
+            this._tiltAngle.reset();
         }
 
         _info() {
-            if (this._calibrating)
+            if (this._calibrating) {
                 return ["cal..."];
+            }
 
-            let r = `${this._query()[0]}r`;
-            if (this._drift != 0)
-                r += `-${this._drift | 0}`;
-            return [r];
+            if (this.mode == GyroSensorMode.Rate || this.mode == GyroSensorMode.Angle) {
+                let r = `${this._query()[0]}r`;
+                if (this._rotationDrift != 0) {
+                    r += `-${this._rotationDrift | 0}`;
+                }
+                return [r];
+            } else if (this.mode == GyroSensorMode.TiltRate || this.mode == GyroSensorMode.TiltAngle) {
+                let r = `${this._query()[0]}r`;
+                if (this._tiltDrift != 0) {
+                    r += `-${this._tiltDrift | 0}`;
+                }
+                return [r];
+            }
+            return [`0`];
         }
     }
 
