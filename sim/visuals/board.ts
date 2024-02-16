@@ -265,7 +265,9 @@ namespace pxsim.visuals {
                 }
                 case NodeType.GyroSensor: {
                     const state = ev3board().getInputNodes()[port] as GyroSensorNode;
-                    view = new RotationSliderControl(this.element, this.defs, state, port);
+                    if (state.getMode() == GyroSensorMode.Rate || state.getMode() == GyroSensorMode.TiltRate) {
+                        view = new RotationSliderControl(this.element, this.defs, state, port);
+                    }
                     break;
                 }
                 case NodeType.NXTLightSensor: {
