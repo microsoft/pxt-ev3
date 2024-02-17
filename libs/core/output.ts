@@ -867,8 +867,7 @@ namespace motors {
         //%
         toString(): string {
             this.init();
-
-            let r = outputToName(this._port);
+            let r = `${this._large ? "large" : "medium"} ${outputToName(this._port)}`;
             for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
                     r += ` ${getMotorData(1 << i).actualSpeed}%`
