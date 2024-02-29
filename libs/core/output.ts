@@ -889,11 +889,6 @@ namespace motors {
         }
     }
 
-    interface motorsPair {
-        leftMotor: motors.Motor,
-        rightMotor: motors.Motor
-    }
-
     //% whenUsed fixedInstance block="large motors B+C" jres=icons.dualMotorLargePortBC
     export const largeBC = new SynchedMotorPair(Output.BC, true);
 
