@@ -585,11 +585,14 @@ namespace motors {
 
     //% fixedInstances
     export class Motor extends MotorBase {
+
+        static instances: Motor[] = [];
         private _large: boolean;
 
         constructor(port: Output, large: boolean) {
             super(port, () => this.__init());
             this._large = large;
+            Motor.instances.push(this);
             this.markUsed();
         }
 
@@ -600,6 +603,10 @@ namespace motors {
         private __init() {
             this.setOutputType(this._large);
             this.setInverted(false);
+        }
+
+        static getAllInstances() {
+            return Motor.instances;
         }
 
         /**
@@ -660,7 +667,7 @@ namespace motors {
          */
         //%
         toString(): string {
-            return `${this._large ? "" : "M"}${this._portName} ${this.speed()}% ${this.angle()}>`;
+            return `${this._large ? "large" : "medium"} ${this._portName} ${this.speed()}% ${this.angle()}>`;
         }
 
         /**
@@ -875,6 +882,16 @@ namespace motors {
             }
             return r;
         }
+
+        motorsInPair(): motors.Motor[] {
+            const allInstances = Motor.getAllInstances();
+            return allInstances;
+        }
+    }
+
+    interface motorsPair {
+        leftMotor: motors.Motor,
+        rightMotor: motors.Motor
     }
 
     //% whenUsed fixedInstance block="large motors B+C" jres=icons.dualMotorLargePortBC
