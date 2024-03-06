@@ -146,6 +146,14 @@ namespace motors {
         steps: number[];
     }
 
+    interface InvertedFactor {
+        amount: number;
+        single?: number;
+        first?: number;
+        second?: number;
+        all?: number[];
+    }
+
     //% fixedInstances
     export class MotorBase extends control.Component {
         protected _port: Output;
@@ -250,9 +258,10 @@ namespace motors {
                 b.setNumber(NumberFormat.Int8LE, i + 2, MotorBase.output_inversions[portsIndex[i]]? -1 : 1);
             }
             writePWM(b);
+            if (this.isReady()) stop(this._port, this._brake);
         }
-
-        invertedFactor(): number[] {
+        
+        invertedFactor(): InvertedFactor {
             let inverted: boolean[] = [];
             if (this._port == Output.A) inverted = [MotorBase.output_inversions[0]];
             else if (this._port == Output.B) inverted = [MotorBase.output_inversions[1]];
@@ -263,7 +272,24 @@ namespace motors {
             else if (this._port == Output.CD) inverted = [MotorBase.output_inversions[2], MotorBase.output_inversions[3]];
             else if (this._port == Output.AD) inverted = [MotorBase.output_inversions[0], MotorBase.output_inversions[3]];
             else inverted = MotorBase.output_inversions;
-            return inverted.map((value) => value ? -1 : 1);
+            const invertedFactor = inverted.map((value) => value ? -1 : 1);
+            if (inverted.length == 1) {
+                return {
+                    amount: 1,
+                    single: invertedFactor[0]
+                }
+            } else if (inverted.length == 2) {
+                return {
+                    amount: 2,
+                    first: invertedFactor[0],
+                    second: invertedFactor[1]
+                }
+            } else {
+                return {
+                    amount: 4,
+                    all: invertedFactor
+                }
+            }
         }
 
         /**
@@ -331,8 +357,9 @@ namespace motors {
 
         private normalizeSchedule(speed: number, step1: number, step2: number, step3: number, unit: MoveUnit): MoveSchedule {
             // Motor polarity is not supported at the firmware level for sync motor, but schedule supported!
+            //console.log(`this._port: ${this._port}`);
             const r: MoveSchedule = {
-                speed: Math.clamp(-100, 100, speed | 0), // * this.invertedFactor()[0],
+                speed: Math.clamp(-100, 100, speed | 0),
                 useSteps: true,
                 steps: [step1 || 0, step2 || 0, step3 || 0]
             }
@@ -794,7 +821,6 @@ namespace motors {
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
             const inputSpeed = speed;
-
             const outputs = splitDoubleOutput(this._port);
             const invertedFactors = [getInverseFactor(outputs[0]), getInverseFactor(outputs[1])];
             const invertedFactorsIsMatch = invertedFactors[0] == invertedFactors[1];
@@ -883,10 +909,6 @@ namespace motors {
             return r;
         }
 
-        motorsInPair(): motors.Motor[] {
-            const allInstances = Motor.getAllInstances();
-            return allInstances;
-        }
     }
 
     //% whenUsed fixedInstance block="large motors B+C" jres=icons.dualMotorLargePortBC
@@ -927,7 +949,7 @@ namespace motors {
     }
 
     // Only a double output at a time
-    function splitDoubleOutput(out: Output): Output[] {
+    export function splitDoubleOutput(out: Output): Output[] {
         if (out == Output.BC) return [Output.B, Output.C];
         else if (out == Output.AB) return [Output.A, Output.B];
         else if (out == Output.CD) return [Output.C, Output.D];
@@ -1014,7 +1036,7 @@ namespace motors {
     }
 
     function step(out: Output, opts: StepOptions) {
-        control.dmesg('step')
+        //control.dmesg('step')
         let op = opts.useSteps ? DAL.opOutputStepSpeed : DAL.opOutputTimeSpeed
         let speed = opts.speed
         if (undefined == speed) {
