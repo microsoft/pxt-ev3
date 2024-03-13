@@ -82,15 +82,17 @@ namespace pxsim {
                             const motors = ev3board().getMotor(port);
                             // cancel any other sync command
                             for(const motor of ev3board().getMotors().filter(motor => motors.indexOf(motor) < 0)) {
-                                motor.clearSyncCmd()
+                                motor.clearSyncCmd();
                             }
 
                             // apply commands to all motors
                             for (const motor of motors) {
+                                const invertedFactor = motor.isInverted() ? -1 : 1;
+                                //console.log(`motor.port: ${motor.port}, invertedFactor: ${invertedFactor}, speed * inv: ${speed * invertedFactor}`);
                                 const otherMotor = motors.filter(m => m.port != motor.port)[0];
                                 motor.setSyncCmd(
                                     otherMotor,
-                                    cmd, [speed, turnRatio, stepsOrTime, brake]);
+                                    cmd, [speed * invertedFactor, turnRatio, stepsOrTime, brake]);
                             }
                             return 2;
                         }

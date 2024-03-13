@@ -32,11 +32,11 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return Math.round(this.speed * (this._inverted ? -1 : 1));
+            return Math.round(this.speed * this.invertedFactor());
         }
 
         getAngle() {
-            return Math.round(this.angle * (this._inverted ? -1 : 1));
+            return Math.round(this.angle * this.invertedFactor());
         }
 
         // returns the secondary motor if any
@@ -57,6 +57,7 @@ namespace pxsim {
         }
 
         setSyncCmd(motor: MotorNode, cmd: DAL, values: number[]) {
+            console.log(`motor: ${motor.port}, speed: ${values[0]}, turnRatio: ${values[0]}`);
             this.setSpeedCmd(cmd, values);
             this._synchedMotor = motor;
         }
@@ -86,6 +87,10 @@ namespace pxsim {
 
         isInverted(): boolean {
             return this._inverted;
+        }
+
+        invertedFactor(): number {
+            return this._inverted ? -1 : 1
         }
 
         isLarge(): boolean {
@@ -206,7 +211,7 @@ namespace pxsim {
                             : this.tacho - this.speedCmdTacho;
                         // 0 is special case, run infinite
                         if (!stepsOrTime || dstep < stepsOrTime)
-                            this.speed = speed;
+                            this.speed = speed * this.invertedFactor();
                         else {
                             if (brake) this.speed = 0;
                             this.clearSpeedCmd();
@@ -214,7 +219,7 @@ namespace pxsim {
 
                         // turn ratio is a bit weird to interpret
                         // see https://communities.theiet.org/blogs/698/1706
-                        otherMotor.speed = this.speed * (100 - Math.abs(turnRatio)) / 100;
+                        otherMotor.speed = this.speed * otherMotor.invertedFactor() * (100 - Math.abs(turnRatio)) / 100;
 
                         // clamp
                         this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
