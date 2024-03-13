@@ -32,11 +32,11 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return Math.round(this.speed);
+            return Math.round(this.speed * (this._inverted ? -1 : 1));
         }
 
         getAngle() {
-            return Math.round(this.angle);
+            return Math.round(this.angle * (this._inverted ? -1 : 1));
         }
 
         // returns the secondary motor if any
@@ -218,7 +218,7 @@ namespace pxsim {
 
                         // clamp
                         this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
-                        otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));;
+                        otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));
 
                         // stop other motor if needed
                         if (!this._synchedMotor)
