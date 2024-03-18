@@ -23,6 +23,7 @@ enum OutputType {
     None = 0,
     Tacho = 7,
     MiniTacho = 8,
+    NewTacho = 9
 }
 
 enum MoveUnit {
@@ -145,6 +146,14 @@ namespace motors {
         steps: number[];
     }
 
+    interface InvertedFactor {
+        amount: number;
+        single?: number;
+        first?: number;
+        second?: number;
+        all?: number[];
+    }
+
     //% fixedInstances
     export class MotorBase extends control.Component {
         protected _port: Output;
@@ -159,8 +168,8 @@ namespace motors {
         private _accelerationTime: number;
         private _decelerationSteps: number;
         private _decelerationTime: number;
-        private _inverted: boolean;
 
+        public static output_inversions: boolean[] = [false, false, false, false];
         protected static output_types: number[] = [0x7, 0x7, 0x7, 0x7];
 
         constructor(port: Output, init: () => void) {
@@ -177,7 +186,6 @@ namespace motors {
             this._accelerationTime = 0;
             this._decelerationSteps = 0;
             this._decelerationTime = 0;
-            this._inverted = false;
         }
 
         /**
@@ -230,11 +238,58 @@ namespace motors {
         //% help=motors/motor/set-inverted
         setInverted(inverted: boolean) {
             this.init();
-            this._inverted = inverted;
+            let portsIndex: number[] = [];
+            if (this._port == Output.A) portsIndex = [0];
+            else if (this._port == Output.B) portsIndex = [1];
+            else if (this._port == Output.C) portsIndex = [2];
+            else if (this._port == Output.D) portsIndex = [3];
+            else if (this._port == Output.BC) portsIndex = [1, 2];
+            else if (this._port == Output.AB) portsIndex = [0, 1];
+            else if (this._port == Output.CD) portsIndex = [2, 3];
+            else if (this._port == Output.AD) portsIndex = [0, 3];
+            for (let index of portsIndex) {
+                MotorBase.output_inversions[index] = inverted;
+            }
+            //console.log(`${MotorBase.output_inversions[0]}, ${MotorBase.output_inversions[1]}, ${MotorBase.output_inversions[2]}, ${MotorBase.output_inversions[3]}`);
+            const bSize = outputToName(this._port).length > 1 ? 2 : 1; // Dual or single motor
+            const b = mkCmd(this._port, DAL.opOutputPolarity, bSize); // https://github.com/c4ev3/ev3duder/blob/master/util/cat/ev3_output.c
+            // If we write to index/address two, then the motor starts to spin in the other direction because reverse is set in the firmware
+            for (let i = 0; i < bSize; i++) {
+                b.setNumber(NumberFormat.Int8LE, i + 2, MotorBase.output_inversions[portsIndex[i]]? -1 : 1);
+            }
+            writePWM(b);
+            if (this.isReady()) stop(this._port, this._brake);
         }
-
-        protected invertedFactor(): number {
-            return this._inverted ? -1 : 1;
+        
+        invertedFactor(): InvertedFactor {
+            let inverted: boolean[] = [];
+            if (this._port == Output.A) inverted = [MotorBase.output_inversions[0]];
+            else if (this._port == Output.B) inverted = [MotorBase.output_inversions[1]];
+            else if (this._port == Output.C) inverted = [MotorBase.output_inversions[2]];
+            else if (this._port == Output.D) inverted = [MotorBase.output_inversions[3]];
+            else if (this._port == Output.BC) inverted = [MotorBase.output_inversions[1], MotorBase.output_inversions[2]];
+            else if (this._port == Output.AB) inverted = [MotorBase.output_inversions[0], MotorBase.output_inversions[1]];
+            else if (this._port == Output.CD) inverted = [MotorBase.output_inversions[2], MotorBase.output_inversions[3]];
+            else if (this._port == Output.AD) inverted = [MotorBase.output_inversions[0], MotorBase.output_inversions[3]];
+            else inverted = MotorBase.output_inversions;
+            const invertedFactor = inverted.map((value) => value ? -1 : 1);
+            if (inverted.length == 1) {
+                return {
+                    amount: 1,
+                    single: invertedFactor[0]
+                }
+            } else if (inverted.length == 2) {
+                return {
+                    amount: 2,
+                    first: invertedFactor[0],
+                    second: invertedFactor[1]
+                }
+            } else {
+                return {
+                    amount: 4,
+                    all: invertedFactor
+                }
+            }
         }
 
         /**
@@ -249,7 +304,6 @@ namespace motors {
         //% help=motors/motor/set-brake-settle-time
         setBrakeSettleTime(millis: number) {
             this.init();
-            // ensure in [0,500]
             this._brakeSettleTime = Math.max(0, Math.min(500, millis | 0))
         }
 
@@ -269,7 +323,7 @@ namespace motors {
 
         protected settle() {
             // if we've recently completed a motor command with brake
-            // allow 500ms for robot to settle
+            // allow 10ms for robot to settle
             if (this._brake && this._brakeSettleTime > 0)
                 pause(this._brakeSettleTime);
             else {
@@ -302,9 +356,10 @@ namespace motors {
         }
 
         private normalizeSchedule(speed: number, step1: number, step2: number, step3: number, unit: MoveUnit): MoveSchedule {
-            // motor polarity is not supported at the firmware level for sync motor operations
+            // Motor polarity is not supported at the firmware level for sync motor, but schedule supported!
+            //console.log(`this._port: ${this._port}`);
             const r: MoveSchedule = {
-                speed: Math.clamp(-100, 100, speed | 0) * this.invertedFactor(),
+                speed: Math.clamp(-100, 100, speed | 0),
                 useSteps: true,
                 steps: [step1 || 0, step2 || 0, step3 || 0]
             }
@@ -533,15 +588,10 @@ namespace motors {
             pauseUntil(() => this.isReady(), timeOut);
         }
 
-        setRunSmoothness(accelerationPercent: number, decelerationPercent: number) {
-
-        }
-
         protected setOutputType(large: boolean) {
             for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
-                    // (0x07: Large motor, Medium motor = 0x08)
-                    MotorBase.output_types[i] = large ? 0x07 : 0x08;
+                    MotorBase.output_types[i] = large ? 0x07 : 0x08; // (0x07: Large motor, Medium motor = 0x08)
                 }
             }
             MotorBase.setTypes();
@@ -562,11 +612,14 @@ namespace motors {
 
     //% fixedInstances
     export class Motor extends MotorBase {
+
+        static instances: Motor[] = [];
         private _large: boolean;
 
         constructor(port: Output, large: boolean) {
             super(port, () => this.__init());
             this._large = large;
+            Motor.instances.push(this);
             this.markUsed();
         }
 
@@ -576,7 +629,34 @@ namespace motors {
 
         private __init() {
             this.setOutputType(this._large);
-            this.setInverted(false);
+            const allUsedPairMotors = motors.SynchedMotorPair.getAllInstances();
+            if (allUsedPairMotors.length > 0) {
+                const thisMotor = this.toString().split(" ").slice(0, 2).join(" ");
+                const foundMotor = allUsedPairMotors.filter((motors) => {
+                    const motorsName = motors.toString().split(" ");
+                    const motorsType = motorsName[0];
+                    const motorsPort = motorsName[1].split("+");
+                    //console.log(`motorsType: ${motorsType}, ${motorsPort[0]} + ${motorsPort[1]}`);
+                    let motorIsFound = false;
+                    for (let i = 0; i < motorsPort.length; i++) {
+                        if (thisMotor == motorsType + " " + motorsPort[i]) {
+                            motorIsFound = true;
+                            break;
+                        }
+                    }
+                    return motorIsFound;
+                })[0];
+                //console.log(`foundMotor: ${foundMotor}`);
+                if (foundMotor == undefined) {
+                    this.setInverted(false);
+                }
+            } else {
+                this.setInverted(false);
+            }
+        }
+
+        static getAllInstances() {
+            return Motor.instances;
         }
 
         /**
@@ -592,7 +672,7 @@ namespace motors {
         //% help=motors/motor/speed
         speed(): number {
             this.init();
-            return getMotorData(this._port).actualSpeed * this.invertedFactor();
+            return getMotorData(this._port).actualSpeed;
         }
 
         /**
@@ -608,7 +688,7 @@ namespace motors {
         //% help=motors/motor/angle
         angle(): number {
             this.init();
-            return getMotorData(this._port).count * this.invertedFactor();
+            return getMotorData(this._port).count;
         }
 
         /**
@@ -637,7 +717,7 @@ namespace motors {
          */
         //%
         toString(): string {
-            return `${this._large ? "" : "M"}${this._portName} ${this.speed()}% ${this.angle()}>`;
+            return `${this._large ? "large" : "medium"} ${this._portName} ${this.speed()}% ${this.angle()}>`;
         }
 
         /**
@@ -696,17 +776,26 @@ namespace motors {
     //% fixedInstances
     export class SynchedMotorPair extends MotorBase {
 
-        constructor(ports: Output) {
+        static instances: SynchedMotorPair[] = [];
+        private _large: boolean;
+
+        constructor(ports: Output, large: boolean) {
             super(ports, () => this.__init());
+            this._large = large;
+            SynchedMotorPair.instances.push(this);
             this.markUsed();
         }
 
         markUsed() {
-            motors.__motorUsed(this._port, true);
+            motors.__motorUsed(this._port, this._large);
         }
 
         private __init() {
-            this.setOutputType(true);
+            this.setOutputType(this._large);
+        }
+
+        static getAllInstances() {
+            return SynchedMotorPair.instances;
         }
 
         /**
@@ -737,9 +826,10 @@ namespace motors {
             let turnRatio = speedLeft == speed
                 ? speedLeft == 0 ? 0 : (100 - speedRight / speedLeft * 100)
                 : speedRight == 0 ? 0 : (speedLeft / speedRight * 100 - 100);
+            //console.log(`speedTank: ${speed}, turnRatioTank: ${turnRatio}`);
             turnRatio = Math.floor(turnRatio);
 
-            //control.dmesg(`tank ${speedLeft} ${speedRight} => ${turnRatio} ${speed}`)
+            //control.dmesg(`tank ${speedLeft} ${speedRight} => ${turnRatio} ${speed}`);
             this.steer(turnRatio, speed, value, unit);
         }
 
@@ -760,13 +850,40 @@ namespace motors {
         //% help=motors/synced/steer
         steer(turnRatio: number, speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
             this.init();
-            speed = Math.clamp(-100, 100, speed >> 0) * this.invertedFactor();
+            const inputSpeed = speed;
+            const outputs = splitDoubleOutput(this._port);
+            const invertedFactors = [getInverseFactor(outputs[0]), getInverseFactor(outputs[1])];
+            const invertedFactorsIsMatch = invertedFactors[0] == invertedFactors[1];
+            if (invertedFactorsIsMatch) { // Inverse factors are the same, the motors are directed in the same direction
+                const invertedFactor = invertedFactors[0] && invertedFactors[1];
+                speed = Math.clamp(-100, 100, speed >> 0) * invertedFactor;
+            } else { // Inverse factors are different
+                if (inputSpeed > 0) speed = Math.clamp(-100, 100, speed >> 0) * (turnRatio > 0 ? -1 : 1); // Forward
+                else if (inputSpeed <= 0 && turnRatio > 0) speed = Math.clamp(-100, 100, speed >> 0) * -1; // Back right
+                else speed = Math.clamp(-100, 100, speed >> 0); // Back left
+            }
+
             if (!speed) {
                 this.stop();
                 return;
             }
 
-            turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
+            if (invertedFactorsIsMatch) { // Inverse factors are the same, the motors are directed in the same direction
+                turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
+            } else { // Inverse factors are different
+                // We recalculate turnRatio to support control of two motors with different inversion factors
+                // for example if there are two middle motors in the motor chassis
+                if (inputSpeed > 0) { // Forward
+                    if (turnRatio > 0) turnRatio = Math.map(turnRatio, 0, 200, 200, 0); // Forward right
+                    else turnRatio = Math.map(turnRatio, -200, 0, 0, -200); // Forward left
+                } else { // Back
+                    if (turnRatio > 0) turnRatio = Math.map(turnRatio, 0, 200, 200, 0); // Back left
+                    else turnRatio = Math.map(turnRatio, -200, 0, 0, -200); // Back right
+                }
+                turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
+            }
+            //console.log(`speedSteer: ${speed}, turnRatioSteer: ${turnRatio}`);
+
             let useSteps: boolean;
             let stepsOrTime: number;
             switch (unit) {
@@ -813,8 +930,7 @@ namespace motors {
         //%
         toString(): string {
             this.init();
-
-            let r = outputToName(this._port);
+            let r = `${this._large ? "large" : "medium"} ${outputToName(this._port)}`;
             for (let i = 0; i < DAL.NUM_OUTPUTS; ++i) {
                 if (this._port & (1 << i)) {
                     r += ` ${getMotorData(1 << i).actualSpeed}%`
@@ -822,19 +938,32 @@ namespace motors {
             }
             return r;
         }
+
     }
 
     //% whenUsed fixedInstance block="large motors B+C" jres=icons.dualMotorLargePortBC
-    export const largeBC = new SynchedMotorPair(Output.BC);
+    export const largeBC = new SynchedMotorPair(Output.BC, true);
 
     //% whenUsed fixedInstance block="large motors A+D" jres=icons.dualMotorLargePortAD
-    export const largeAD = new SynchedMotorPair(Output.AD);
+    export const largeAD = new SynchedMotorPair(Output.AD, true);
 
     //% whenUsed fixedInstance block="large motors A+B" jres=icons.dualMotorLargePortAB
-    export const largeAB = new SynchedMotorPair(Output.AB);
+    export const largeAB = new SynchedMotorPair(Output.AB, true);
 
     //% whenUsed fixedInstance block="large motors C+D" jres=icons.dualMotorLargePortCD
-    export const largeCD = new SynchedMotorPair(Output.CD);
+    export const largeCD = new SynchedMotorPair(Output.CD, true);
+
+    //% whenUsed fixedInstance block="medium motors B+C" jres=icons.dualMotorMediumPortBC
+    export const mediumBC = new SynchedMotorPair(Output.BC, false);
+
+    //% whenUsed fixedInstance block="medium motors A+D" jres=icons.dualMotorMediumPortAD
+    export const mediumAD = new SynchedMotorPair(Output.AD, false);
+
+    //% whenUsed fixedInstance block="medium motors A+B" jres=icons.dualMotorMediumPortAB
+    export const mediumAB = new SynchedMotorPair(Output.AB, false);
+
+    //% whenUsed fixedInstance block="medium motors C+D" jres=icons.dualMotorMediumPortCD
+    export const mediumCD = new SynchedMotorPair(Output.CD, false);
 
     function reset(out: Output) {
         writePWM(mkCmd(out, DAL.opOutputReset, 0))
@@ -849,20 +978,41 @@ namespace motors {
         return 0
     }
 
+    // Only a double output at a time
+    export function splitDoubleOutput(out: Output): Output[] {
+        if (out == Output.BC) return [Output.B, Output.C];
+        else if (out == Output.AB) return [Output.A, Output.B];
+        else if (out == Output.CD) return [Output.C, Output.D];
+        else if (out == Output.AD) return [Output.A, Output.D];
+        return [];
+    }
+
+    // Only a single output at a time
+    function getInverseFactor(out: Output): number {
+        let isInverted = false;
+        if (out == Output.A) isInverted = MotorBase.output_inversions[0];
+        else if (out == Output.B) isInverted = MotorBase.output_inversions[1];
+        else if (out == Output.C) isInverted = MotorBase.output_inversions[2];
+        else if (out == Output.D) isInverted = MotorBase.output_inversions[3];
+        return isInverted ? -1 : 1;
+    }
+
     export interface MotorData {
         actualSpeed: number; // -100..+100
         tachoCount: number;
         count: number;
     }
 
-    // only a single output at a time
+    // Only a single output at a time
     function getMotorData(out: Output): MotorData {
-        init()
-        const buf = motorMM.slice(outOffset(out), MotorDataOff.Size)
+        init();
+        const buf = motorMM.slice(outOffset(out), MotorDataOff.Size);
+        const invertedFactor = getInverseFactor(out);
+        //console.log(`out: ${out}, invertedFactor: ${invertedFactor}`);
         return {
-            actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed),
-            tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts),
-            count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor),
+            actualSpeed: buf.getNumber(NumberFormat.Int8LE, MotorDataOff.Speed) * invertedFactor,
+            tachoCount: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoCounts) * invertedFactor,
+            count: buf.getNumber(NumberFormat.Int32LE, MotorDataOff.TachoSensor) * invertedFactor,
         }
     }
 
@@ -916,7 +1066,7 @@ namespace motors {
     }
 
     function step(out: Output, opts: StepOptions) {
-        control.dmesg('step')
+        //control.dmesg('step')
         let op = opts.useSteps ? DAL.opOutputStepSpeed : DAL.opOutputTimeSpeed
         let speed = opts.speed
         if (undefined == speed) {

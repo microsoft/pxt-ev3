@@ -24,16 +24,16 @@ namespace pxsim.visuals {
                 } else if (this.syncedLabelG) {
                     this.syncedLabelG.parentNode.removeChild(this.syncedLabelG);
                 }
-                this.setMotorLabel(motorState.getSpeed(), true);
+                this.setMotorLabel(motorState.getSpeed(), motorState.isInverted(), true);
             }
-            this.setMotorLabel(motorState.getSpeed());
+            this.setMotorLabel(motorState.getSpeed(), motorState.isInverted());
         }
 
         private showSyncedLabel(motorNode: MotorNode, syncedMotor: MotorNode) {
             const a = String.fromCharCode('A'.charCodeAt(0) + motorNode.port);
             const b = String.fromCharCode('A'.charCodeAt(0) + syncedMotor.port);
 
-            this.syncedLabelG = pxsim.svg.child(this.element, 'g', {'transform': 'scale(0.5)'}) as SVGGElement;
+            this.syncedLabelG = pxsim.svg.child(this.element, 'g', {'transform': 'translate(0, 28), scale(0.5)'}) as SVGGElement;
             pxsim.svg.child(this.syncedLabelG, 'rect', {'rx': 15, 'ry': 15, 'x': 0, 'y': 0, 'width': 84, 'height': 34, 'fill': '#A8A9A8'});
             pxsim.svg.child(this.syncedLabelG, 'circle', {'cx': 17, 'cy': 17, 'r': 15, 'fill': 'white'});
             const leftLabel = pxsim.svg.child(this.syncedLabelG, 'text', {'transform': 'translate(11, 22)', 'class': 'no-drag', 'style': 'isolation: isolate;font-size: 16px;fill: #A8A9A8;font-family: ArialMT, Arial'});
@@ -58,10 +58,14 @@ namespace pxsim.visuals {
             return 0.37;
         }
 
-        protected positionMotorLabel() {
+        protected positionMotorLabel(reverse: boolean) {
             const hasSyncedLabel = this.syncedMotor;
-            this.motorLabelGroup.setAttribute('transform', `translate(${hasSyncedLabel ? '15 35' : '25 15'})`);
+            this.motorLabelGroup.setAttribute('transform', `translate(${hasSyncedLabel ? '15 65' : '25 47'})`);
             this.motorLabel.style.fontSize = '13px';
+            if (reverse) {
+                this.motorReverseLabelGroup.setAttribute('transform', `translate(40 18)`);
+                this.motorReverseLabel.style.fontSize = '12px';
+            }
         }
     }
 }

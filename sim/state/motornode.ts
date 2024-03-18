@@ -16,6 +16,7 @@ namespace pxsim {
         private speedCmdTacho: number;
         private speedCmdTime: number;
         private _synchedMotor: MotorNode; // non-null if synchronized
+        private _inverted: boolean;
 
         private manualReferenceAngle: number = undefined;
         private manualAngle: number = undefined;
@@ -23,6 +24,7 @@ namespace pxsim {
         constructor(port: number, large: boolean) {
             super(port);
             this.setLarge(large);
+            this.setInverted(false);
         }
 
         isReady() {
@@ -30,11 +32,11 @@ namespace pxsim {
         }
 
         getSpeed() {
-            return Math.round(this.speed);
+            return Math.round(this.speed * this.invertedFactor());
         }
 
         getAngle() {
-            return Math.round(this.angle);
+            return Math.round(this.angle * this.invertedFactor());
         }
 
         // returns the secondary motor if any
@@ -55,6 +57,7 @@ namespace pxsim {
         }
 
         setSyncCmd(motor: MotorNode, cmd: DAL, values: number[]) {
+            console.log(`motor: ${motor.port}, speed: ${values[0]}, turnRatio: ${values[0]}`);
             this.setSpeedCmd(cmd, values);
             this._synchedMotor = motor;
         }
@@ -73,8 +76,21 @@ namespace pxsim {
 
         setLarge(large: boolean) {
             this.id = large ? NodeType.LargeMotor : NodeType.MediumMotor;
-            // large 170 rpm  (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
+            // large 170 rpm (https://education.lego.com/en-us/products/ev3-large-servo-motor/45502)
             this.rotationsPerMilliSecond = (large ? 170 : 250) / 60000;
+        }
+
+        setInverted(inverted: boolean) {
+            this._inverted = inverted;
+            this.setChangedState();
+        }
+
+        isInverted(): boolean {
+            return this._inverted;
+        }
+
+        invertedFactor(): number {
+            return this._inverted ? -1 : 1
         }
 
         isLarge(): boolean {
@@ -195,7 +211,7 @@ namespace pxsim {
                             : this.tacho - this.speedCmdTacho;
                         // 0 is special case, run infinite
                         if (!stepsOrTime || dstep < stepsOrTime)
-                            this.speed = speed;
+                            this.speed = speed * this.invertedFactor();
                         else {
                             if (brake) this.speed = 0;
                             this.clearSpeedCmd();
@@ -203,11 +219,11 @@ namespace pxsim {
 
                         // turn ratio is a bit weird to interpret
                         // see https://communities.theiet.org/blogs/698/1706
-                        otherMotor.speed = this.speed * (100 - Math.abs(turnRatio)) / 100;
+                        otherMotor.speed = this.speed * otherMotor.invertedFactor() * (100 - Math.abs(turnRatio)) / 100;
 
                         // clamp
                         this.speed = Math.max(-100, Math.min(100, this.speed >> 0));
-                        otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));;
+                        otherMotor.speed = Math.max(-100, Math.min(100, otherMotor.speed >> 0));
 
                         // stop other motor if needed
                         if (!this._synchedMotor)
