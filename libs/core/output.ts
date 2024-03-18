@@ -250,7 +250,7 @@ namespace motors {
             for (let index of portsIndex) {
                 MotorBase.output_inversions[index] = inverted;
             }
-            console.log(`${MotorBase.output_inversions[0]}, ${MotorBase.output_inversions[1]}, ${MotorBase.output_inversions[2]}, ${MotorBase.output_inversions[3]}`);
+            //console.log(`${MotorBase.output_inversions[0]}, ${MotorBase.output_inversions[1]}, ${MotorBase.output_inversions[2]}, ${MotorBase.output_inversions[3]}`);
             const bSize = outputToName(this._port).length > 1 ? 2 : 1; // Dual or single motor
             const b = mkCmd(this._port, DAL.opOutputPolarity, bSize); // https://github.com/c4ev3/ev3duder/blob/master/util/cat/ev3_output.c
             // If we write to index/address two, then the motor starts to spin in the other direction because reverse is set in the firmware
