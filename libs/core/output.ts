@@ -250,7 +250,7 @@ namespace motors {
             for (let index of portsIndex) {
                 MotorBase.output_inversions[index] = inverted;
             }
-            //console.log(`${MotorBase.output_inversions[0]}, ${MotorBase.output_inversions[1]}, ${MotorBase.output_inversions[2]}, ${MotorBase.output_inversions[3]}`);
+            console.log(`${MotorBase.output_inversions[0]}, ${MotorBase.output_inversions[1]}, ${MotorBase.output_inversions[2]}, ${MotorBase.output_inversions[3]}`);
             const bSize = outputToName(this._port).length > 1 ? 2 : 1; // Dual or single motor
             const b = mkCmd(this._port, DAL.opOutputPolarity, bSize); // https://github.com/c4ev3/ev3duder/blob/master/util/cat/ev3_output.c
             // If we write to index/address two, then the motor starts to spin in the other direction because reverse is set in the firmware
@@ -629,7 +629,30 @@ namespace motors {
 
         private __init() {
             this.setOutputType(this._large);
-            this.setInverted(false);
+            const allUsedPairMotors = motors.SynchedMotorPair.getAllInstances();
+            if (allUsedPairMotors.length > 0) {
+                const thisMotor = this.toString().split(" ").slice(0, 2).join(" ");
+                const foundMotor = allUsedPairMotors.filter((motors) => {
+                    const motorsName = motors.toString().split(" ");
+                    const motorsType = motorsName[0];
+                    const motorsPort = motorsName[1].split("+");
+                    //console.log(`motorsType: ${motorsType}, ${motorsPort[0]} + ${motorsPort[1]}`);
+                    let motorIsFound = false;
+                    for (let i = 0; i < motorsPort.length; i++) {
+                        if (thisMotor == motorsType + " " + motorsPort[i]) {
+                            motorIsFound = true;
+                            break;
+                        }
+                    }
+                    return motorIsFound;
+                })[0];
+                //console.log(`foundMotor: ${foundMotor}`);
+                if (foundMotor == undefined) {
+                    this.setInverted(false);
+                }
+            } else {
+                this.setInverted(false);
+            }
         }
 
         static getAllInstances() {
@@ -752,11 +775,14 @@ namespace motors {
 
     //% fixedInstances
     export class SynchedMotorPair extends MotorBase {
+
+        static instances: SynchedMotorPair[] = [];
         private _large: boolean;
 
         constructor(ports: Output, large: boolean) {
             super(ports, () => this.__init());
             this._large = large;
+            SynchedMotorPair.instances.push(this);
             this.markUsed();
         }
 
@@ -766,6 +792,10 @@ namespace motors {
 
         private __init() {
             this.setOutputType(this._large);
+        }
+
+        static getAllInstances() {
+            return SynchedMotorPair.instances;
         }
 
         /**
@@ -852,7 +882,7 @@ namespace motors {
                 }
                 turnRatio = Math.clamp(-200, 200, turnRatio >> 0);
             }
-            console.log(`speedSteer: ${speed}, turnRatioSteer: ${turnRatio}`);
+            //console.log(`speedSteer: ${speed}, turnRatioSteer: ${turnRatio}`);
 
             let useSteps: boolean;
             let stepsOrTime: number;
