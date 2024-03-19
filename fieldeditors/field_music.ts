@@ -1,9 +1,9 @@
 /// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-import * as Blockly from "blockly";
+import { BlockSvg } from "blockly";
 
 const pxtblockly = pxt.blocks.requirePxtBlockly()
-const BlocklyBlockly = pxt.blocks.requireBlockly();
+const Blockly = pxt.blocks.requireBlockly();
 
 export interface FieldMusicOptions {
     columns?: string;
@@ -30,6 +30,7 @@ export class FieldMusic extends pxtblockly.FieldImages {
         this.columns_ = parseInt(options.columns) || 4;
         this.width_ = parseInt(options.width) || 450;
 
+        this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
         this.addLabel_ = true;
 
         if (!pxt.BrowserUtils.isIE() && !soundCache) {
@@ -47,14 +48,14 @@ export class FieldMusic extends pxtblockly.FieldImages {
      */
     public showEditor_() {
         // If there is an existing drop-down we own, this is a request to hide the drop-down.
-        if (BlocklyBlockly.DropDownDiv.hideIfOwner(this)) {
+        if (Blockly.DropDownDiv.hideIfOwner(this)) {
             return;
         }
         // If there is an existing drop-down someone else owns, hide it immediately and clear it.
-        BlocklyBlockly.DropDownDiv.hideWithoutAnimation();
-        BlocklyBlockly.DropDownDiv.clearContent();
+        Blockly.DropDownDiv.hideWithoutAnimation();
+        Blockly.DropDownDiv.clearContent();
         // Populate the drop-down with the icons for this field.
-        let dropdownDiv = BlocklyBlockly.DropDownDiv.getContentDiv() as HTMLElement;
+        let dropdownDiv = Blockly.DropDownDiv.getContentDiv() as HTMLElement;
         let contentDiv = document.createElement('div');
         // Accessibility properties
         contentDiv.setAttribute('role', 'menu');
@@ -75,7 +76,8 @@ export class FieldMusic extends pxtblockly.FieldImages {
         // Accessibility properties
         categoriesDiv.setAttribute('role', 'menu');
         categoriesDiv.setAttribute('aria-haspopup', 'true');
-        categoriesDiv.style.backgroundColor = (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary();
+        categoriesDiv.style.backgroundColor = (this.sourceBlock_ as BlockSvg).getColourTertiary();
+        console.log((this.sourceBlock_ as BlockSvg).getColourTertiary());
         categoriesDiv.className = 'blocklyMusicFieldCategories';
 
         this.refreshCategories(categoriesDiv, categories);
@@ -89,18 +91,18 @@ export class FieldMusic extends pxtblockly.FieldImages {
         dropdownDiv.appendChild(categoriesDiv);
         dropdownDiv.appendChild(contentDiv);
 
-        BlocklyBlockly.DropDownDiv.setColour(this.sourceBlock_.getColour(), (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary());
+        Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(), (this.sourceBlock_ as BlockSvg).getColourTertiary());
         
         // Position based on the field position.
-        BlocklyBlockly.DropDownDiv.showPositionedByField(this, this.onHide_.bind(this));
+        Blockly.DropDownDiv.showPositionedByField(this, this.onHide_.bind(this));
 
         // Update colour to look selected.
-        let source = this.sourceBlock_ as Blockly.BlockSvg;
+        let source = this.sourceBlock_ as any;
         this.savedPrimary_ = source?.getColour();
         if (source?.isShadow()) {
             source.setColour(source.getColourTertiary());
         } else if (this.borderRect_) {
-            this.borderRect_.setAttribute('fill', (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary());
+            this.borderRect_.setAttribute('fill', (this.sourceBlock_ as BlockSvg).getColourTertiary());
         }
     }
 
@@ -186,36 +188,26 @@ export class FieldMusic extends pxtblockly.FieldImages {
             let backgroundColor = this.savedPrimary_ || this.sourceBlock_.getColour();
             if (value == this.getValue()) {
                 // This icon is selected, show it in a different colour
-                backgroundColor = (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary();
+                backgroundColor = (this.sourceBlock_ as BlockSvg).getColourTertiary();
                 button.setAttribute('aria-selected', 'true');
             }
             button.style.backgroundColor = backgroundColor;
-            button.style.borderColor = (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary();
-            button.addEventListener("click", (event) => {
-                this.buttonClick_(event);
-            });
-            button.addEventListener("mouseup", (event) => {
-                this.buttonClick_(event);
-            });
+            button.style.borderColor = (this.sourceBlock_ as BlockSvg).getColourTertiary();
+            button.addEventListener("click", (event) => this.buttonClick_(event));
+            button.addEventListener("mouseup", (event) => this.buttonClick_(event));
             // These are applied manually instead of using the :hover pseudoclass
             // because Android has a bad long press "helper" menu and green highlight
-            // that we must prevent with ontouchstart preventDefault
-            let that = this;
             button.addEventListener("mousedown", (event) => {
                 button.setAttribute('class', 'blocklyDropDownButton blocklyDropDownButtonHover');
                 event.preventDefault();
             });
-            button.addEventListener("mouseenter", (event) => {
-                that.buttonEnter_(value);
-            });
-            button.addEventListener("mouseleave", (event) => {
-                that.buttonLeave_();
-            });
-            button.addEventListener("mouseover", (event) => {
+            button.addEventListener("mouseenter", () => this.buttonEnter_(value));
+            button.addEventListener("mouseleave", () => this.buttonLeave_());
+            button.addEventListener("mouseover", () => {
                 button.setAttribute('class', 'blocklyDropDownButton blocklyDropDownButtonHover');
                 contentDiv.setAttribute('aria-activedescendant', button.id);
             });
-            button.addEventListener("mouseout", (event) => {
+            button.addEventListener("mouseout", () => {
                 button.setAttribute('class', 'blocklyDropDownButton');
                 contentDiv.removeAttribute('aria-activedescendant');
             });
@@ -249,10 +241,10 @@ export class FieldMusic extends pxtblockly.FieldImages {
 
     protected onHide_() {
         super.onHide_();
-        (BlocklyBlockly.DropDownDiv.getContentDiv() as HTMLElement).style.maxHeight = '';
+        (Blockly.DropDownDiv.getContentDiv() as HTMLElement).style.maxHeight = '';
         this.stopSounds();
         // Update color (deselect) on dropdown hide
-        let source = this.sourceBlock_ as Blockly.BlockSvg;
+        let source = this.sourceBlock_ as BlockSvg;
         if (source?.isShadow()) {
             source.setColour(this.savedPrimary_);
         } else if (this.borderRect_) {
@@ -286,7 +278,7 @@ export class FieldMusic extends pxtblockly.FieldImages {
         options.sort();
         const categories = this.getCategories(options);
 
-        const dropdownDiv = BlocklyBlockly.DropDownDiv.getContentDiv();
+        const dropdownDiv = Blockly.DropDownDiv.getContentDiv();
         const categoriesDiv = dropdownDiv.childNodes[0] as HTMLElement;
         const contentDiv = dropdownDiv.childNodes[1] as HTMLDivElement;
         categoriesDiv.innerHTML = '';
