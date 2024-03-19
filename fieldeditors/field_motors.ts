@@ -1,14 +1,18 @@
-/// <reference path="../node_modules/pxt-core/localtypings/blockly.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtblocks.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
+/// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-export interface FieldMotorsOptions extends pxtblockly.FieldImagesOptions {
+import { BlockSvg } from "blockly";
+
+const pxtblockly = pxt.blocks.requirePxtBlockly()
+const Blockly = pxt.blocks.requireBlockly();
+
+export interface FieldMotorsOptions {
+    blocksInfo: any;
     columns?: string;
     width?: string;
     //sort?: boolean;
 }
 
-export class FieldMotors extends pxtblockly.FieldImages implements Blockly.FieldCustom {
+export class FieldMotors extends pxtblockly.FieldImages {
     public isFieldCustom_ = true;
     //public shouldSort_: boolean;
 
@@ -20,7 +24,7 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         //this.shouldSort_ = options.sort;
         this.addLabel_ = true;
 
-        this.renderSelectedImage_ = Blockly.FieldDropdown.prototype.renderSelectedText_;
+        //this.renderSelectedImage_ = Blockly.FieldDropdown.prototype.renderSelectedText_;
         this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
     }
 
@@ -33,7 +37,7 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         if (Blockly.DropDownDiv.hideIfOwner(this)) {
             return;
         }
-        let sourceBlock = this.sourceBlock_ as Blockly.BlockSvg;
+        let sourceBlock = this.sourceBlock_ as BlockSvg;
         // If there is an existing drop-down someone else owns, hide it immediately and clear it.
         Blockly.DropDownDiv.hideWithoutAnimation();
         Blockly.DropDownDiv.clearContent();
@@ -78,13 +82,13 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
             }
             button.style.backgroundColor = backgroundColor;
             button.style.borderColor = sourceBlock.getColourTertiary();
-            Blockly.bindEvent_(button, 'click', this, this.buttonClick_);
-            Blockly.bindEvent_(button, 'mouseover', button, function () {
-                this.setAttribute('class', 'blocklyDropDownButton blocklyDropDownButtonHover');
-                contentDiv.setAttribute('aria-activedescendant', this.id);
+            button.addEventListener("click", (event) => this.buttonClick_(event));
+            button.addEventListener("mouseover", () => {
+                button.setAttribute('class', 'blocklyDropDownButton blocklyDropDownButtonHover');
+                contentDiv.setAttribute('aria-activedescendant', button.id);
             });
-            Blockly.bindEvent_(button, 'mouseout', button, function () {
-                this.setAttribute('class', 'blocklyDropDownButton');
+            button.addEventListener("mouseout", () => {
+                button.setAttribute('class', 'blocklyDropDownButton');
                 contentDiv.removeAttribute('aria-activedescendant');
             });
             let buttonImg = document.createElement('img');
@@ -125,12 +129,4 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         }
     }
 
-    trimOptions_() {
-    }
-
-    protected buttonClick_ = function (e: any) {
-        let value = e.target.getAttribute('data-value');
-        this.setValue(value);
-        Blockly.DropDownDiv.hide();
-    };
 }
