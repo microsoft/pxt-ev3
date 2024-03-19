@@ -1,17 +1,18 @@
-/// <reference path="../node_modules/pxt-core/localtypings/blockly.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtblocks.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
+/// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-export interface FieldPortsOptions extends pxtblockly.FieldImagesOptions {
+const pxtblockly = pxt.blocks.requirePxtBlockly()
+const Blockly = pxt.blocks.requireBlockly();
+
+export interface FieldPortsOptions {
     columns?: string;
     width?: string;
 }
 
-export class FieldPorts extends pxtblockly.FieldImages implements Blockly.FieldCustom {
+export class FieldPorts extends pxtblockly.FieldImages {
     public isFieldCustom_ = true;
 
     constructor(text: string, options: FieldPortsOptions, validator?: Function) {
-        super(text, { blocksInfo: options.blocksInfo, sort: true, data: options.data }, validator);
+        super(text, options as any, validator);
 
         this.columns_ = parseInt(options.columns) || 4;
         this.width_ = parseInt(options.width) || 300;
@@ -19,13 +20,5 @@ export class FieldPorts extends pxtblockly.FieldImages implements Blockly.FieldC
         //this.setText = Blockly.FieldDropdown.prototype.setText;
         this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
     }
-
-    trimOptions_() {
-    }
-
-    protected buttonClick_ = function (e: any) {
-        let value = e.target.getAttribute('data-value');
-        this.setValue(value);
-        Blockly.DropDownDiv.hide();
-    };
+    
 }
