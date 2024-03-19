@@ -1,5 +1,4 @@
 /// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
 import * as Blockly from "blockly";
 
@@ -18,6 +17,7 @@ let soundIconCache: any;
 let soundIconCacheArray: any;
 
 export class FieldMusic extends pxtblockly.FieldImages {
+
     public isFieldCustom_ = true;
 
     private selectedCategory_: string;
