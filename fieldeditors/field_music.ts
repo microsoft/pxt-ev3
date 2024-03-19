@@ -77,7 +77,6 @@ export class FieldMusic extends pxtblockly.FieldImages {
         categoriesDiv.setAttribute('role', 'menu');
         categoriesDiv.setAttribute('aria-haspopup', 'true');
         categoriesDiv.style.backgroundColor = (this.sourceBlock_ as BlockSvg).getColourTertiary();
-        console.log((this.sourceBlock_ as BlockSvg).getColourTertiary());
         categoriesDiv.className = 'blocklyMusicFieldCategories';
 
         this.refreshCategories(categoriesDiv, categories);
