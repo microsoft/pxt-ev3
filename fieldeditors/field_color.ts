@@ -14,11 +14,13 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
     public isFieldCustom_ = true;
 
     private paramsData: any[];
+    private className_: string;
 
     constructor(text: string, params: FieldColorEnumOptions, opt_validator?: FieldValidator) {
         super(text, params as any, opt_validator);
 
         this.paramsData = params["data"];
+        this.className_ = params.className;
     }
 
     mapColour(enumString: string) {
@@ -50,9 +52,11 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
 
     showEditor_() {
         super.showEditor_();
-        // Due to FieldColorNumber not being set to className in latest update
-        //const colorCells = document.querySelectorAll('.legoColorPicker td'); 
-        const colorCells = document.querySelectorAll('.blocklyColourTable td');
+        const picker = Blockly.DropDownDiv.getContentDiv().childNodes[0] as HTMLElement;
+        if (this.className_ && picker) {
+            pxt.BrowserUtils.addClass(picker as HTMLElement, this.className_);
+        }
+        const colorCells = document.querySelectorAll('.legoColorPicker td');
         colorCells.forEach((cell) => {
             const titleName = this.mapColour(cell.getAttribute("title"));
             const index = this.paramsData.findIndex(item => item[1] === titleName);
@@ -91,4 +95,5 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
             this.sourceBlock_.setColour(colour);
         }
     }
+    
 }
