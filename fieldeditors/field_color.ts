@@ -6,16 +6,17 @@ const pxtblockly = pxt.blocks.requirePxtBlockly()
 const Blockly = pxt.blocks.requireBlockly();
 
 export interface FieldColorEnumOptions {
-    blocksInfo: string;
+    className?: string;
 }
 
 export class FieldColorEnum extends pxtblockly.FieldColorNumber {
 
     public isFieldCustom_ = true;
+
     private paramsData: any[];
 
     constructor(text: string, params: FieldColorEnumOptions, opt_validator?: FieldValidator) {
-        super(text, params, opt_validator);
+        super(text, params as any, opt_validator);
 
         this.paramsData = params["data"];
     }
@@ -49,7 +50,9 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
 
     showEditor_() {
         super.showEditor_();
-        const colorCells = document.querySelectorAll('.legoColorPicker td');
+        // Due to FieldColorNumber not being set to className in latest update
+        //const colorCells = document.querySelectorAll('.legoColorPicker td'); 
+        const colorCells = document.querySelectorAll('.blocklyColourTable td');
         colorCells.forEach((cell) => {
             const titleName = this.mapColour(cell.getAttribute("title"));
             const index = this.paramsData.findIndex(item => item[1] === titleName);
@@ -66,6 +69,8 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
         const colour = this.mapColour(this.value_);
         if (!opt_asHex && colour.indexOf('#') > -1) {
             return `0x${colour.replace(/^#/, '')}`;
+        } else if (opt_asHex) {
+            return this.value_;
         }
         return colour;
     }
