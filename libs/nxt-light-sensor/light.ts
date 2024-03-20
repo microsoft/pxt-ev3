@@ -94,7 +94,9 @@ namespace sensors {
         //% blockId=nxtLight
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=99 blockGap=8
         //% subcategory="NXT"
         //% group="Light Sensor"
@@ -126,7 +128,9 @@ namespace sensors {
         //% blockId=setReflectedLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=89 blockGap=8
         //% subcategory="NXT"
         //% group="Light Sensor"
@@ -147,7 +151,9 @@ namespace sensors {
         //% blockId=setAmbientLightRange
         //% parts="nxtlightsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=88 blockGap=8
         //% subcategory="NXT"
         //% group="Light Sensor"

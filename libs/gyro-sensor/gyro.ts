@@ -46,7 +46,9 @@ namespace sensors {
         //% blockId=gyroGetAngle
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=100 blockGap=8
         //% group="Gyro Sensor"
         angle(): number {
@@ -66,7 +68,9 @@ namespace sensors {
         //% blockId=gyroGetRate
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=99 blockGap=8
         //% group="Gyro Sensor"
         rate(): number {
@@ -85,7 +89,9 @@ namespace sensors {
         //% blockId=gyroCalibrate
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=89 blockGap=8
         //% group="Gyro Sensor"
         calibrate(): void {
@@ -156,7 +162,9 @@ namespace sensors {
         //% blockId=gyroReset
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=88
         //% group="Gyro Sensor"
         reset(): void {
@@ -201,7 +209,9 @@ namespace sensors {
         //% blockId=gyroDrift
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=78 blockGap=8
         //% group="Gyro Sensor"
         drift(): number {
@@ -216,7 +226,9 @@ namespace sensors {
         //% blockId=gyroComputeDrift
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=79 blockGap=8
         //% group="Gyro Sensor"
         computeDrift() {
@@ -236,7 +248,9 @@ namespace sensors {
         //% blockId=gyroPauseUntilRotated
         //% parts="gyroscope"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% degrees.defl=90
         //% weight=98
         //% group="Gyro Sensor"

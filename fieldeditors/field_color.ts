@@ -1,12 +1,12 @@
 /// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-import * as Blockly from "blockly";
+import { FieldValidator } from "blockly";
 
 const pxtblockly = pxt.blocks.requirePxtBlockly()
-const BlocklyBlockly = pxt.blocks.requireBlockly();
+const Blockly = pxt.blocks.requireBlockly();
 
 export interface FieldColorEnumOptions {
-    blocksInfo: any;
+    blocksInfo: string;
 }
 
 export class FieldColorEnum extends pxtblockly.FieldColorNumber {
@@ -14,7 +14,7 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
     public isFieldCustom_ = true;
     private paramsData: any[];
 
-    constructor(text: string, params: FieldColorEnumOptions, opt_validator?: Blockly.FieldValidator) {
+    constructor(text: string, params: FieldColorEnumOptions, opt_validator?: FieldValidator) {
         super(text, params, opt_validator);
 
         this.paramsData = params["data"];
