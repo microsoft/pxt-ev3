@@ -49,7 +49,9 @@ namespace sensors {
         //% block="on **ultrasonic** %this|%event"
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=100 blockGap=8
         //% group="Ultrasonic Sensor" 
         onEvent(event: UltrasonicSensorEvent, handler: () => void) {
@@ -64,7 +66,9 @@ namespace sensors {
         //% blockId=ultrasonicWait
         //% parts="ultrasonicsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=99 blockGap=8
         //% group="Ultrasonic Sensor"
         pauseUntil(event: UltrasonicSensorEvent) {
