@@ -2,7 +2,6 @@
 
 import { BlockSvg } from "blockly";
 
-//const pxtblockly = pxt.blocks.requirePxtBlockly()
 const Blockly = pxt.blocks.requireBlockly();
 
 export interface FieldPortsOptions {
