@@ -64,6 +64,20 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
         });
     }
 
+    doValueUpdate_(colour: string) {
+        super.doValueUpdate_(colour);
+        this.applyColour();
+    }
+
+    applyColour() {
+        if (this.borderRect_) {
+            this.borderRect_.style.fill = this.value_;
+        } else if (this.sourceBlock_) {
+            (this.sourceBlock_ as any)?.pathObject?.svgPath?.setAttribute('fill', this.value_);
+            (this.sourceBlock_ as any)?.pathObject?.svgPath?.setAttribute('stroke', '#fff');
+        }
+    };
+
     /**
      * Return the current colour.
      * @param {boolean} opt_asHex optional field if the returned value should be a hex
@@ -73,8 +87,6 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber {
         const colour = this.mapColour(this.value_);
         if (!opt_asHex && colour.indexOf('#') > -1) {
             return `0x${colour.replace(/^#/, '')}`;
-        } else if (opt_asHex) {
-            return this.value_;
         }
         return colour;
     }
