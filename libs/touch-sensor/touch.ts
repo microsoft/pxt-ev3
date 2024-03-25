@@ -37,7 +37,9 @@ namespace sensors {
         //% blockId=touchEvent block="on **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=99 blockGap=8
         //% group="Touch Sensor"
         onEvent(ev: ButtonEvent, body: () => void) {
@@ -53,7 +55,9 @@ namespace sensors {
         //% blockId=touchWaitUntil block="pause until **touch** %this|%event"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=98 blockGap=8
         //% group="Touch Sensor"
         pauseUntil(ev: ButtonEvent) {
@@ -68,7 +72,9 @@ namespace sensors {
         //% blockId=touchIsPressed block="**touch** %this|is pressed"
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=81 blockGap=8
         //% group="Touch Sensor"
         isPressed() {
@@ -85,7 +91,9 @@ namespace sensors {
         //% blockHidden=true
         //% parts="touch"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=80
         //% group="Touch Sensor"
         wasPressed() {

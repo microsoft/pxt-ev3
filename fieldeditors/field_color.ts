@@ -1,18 +1,26 @@
-/// <reference path="../node_modules/pxt-core/localtypings/blockly.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
+/// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-export interface FieldColorEnumOptions extends pxtblockly.FieldColourNumberOptions {
+import { FieldValidator } from "blockly";
+
+const pxtblockly = pxt.blocks.requirePxtBlockly()
+const Blockly = pxt.blocks.requireBlockly();
+
+export interface FieldColorEnumOptions {
+    className?: string;
 }
 
-export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Blockly.FieldCustom {
+export class FieldColorEnum extends pxtblockly.FieldColorNumber {
 
     public isFieldCustom_ = true;
-    private paramsData: any[];
 
-    constructor(text: string, params: FieldColorEnumOptions, opt_validator?: Function) {
-        super(text, params, opt_validator);
+    private paramsData: any[];
+    private className_: string;
+
+    constructor(text: string, params: FieldColorEnumOptions, opt_validator?: FieldValidator) {
+        super(text, params as any, opt_validator);
 
         this.paramsData = params["data"];
+        this.className_ = params.className;
     }
 
     mapColour(enumString: string) {
@@ -44,6 +52,10 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
 
     showEditor_() {
         super.showEditor_();
+        const picker = Blockly.DropDownDiv.getContentDiv().childNodes[0] as HTMLElement;
+        if (this.className_ && picker) {
+            pxt.BrowserUtils.addClass(picker as HTMLElement, this.className_);
+        }
         const colorCells = document.querySelectorAll('.legoColorPicker td');
         colorCells.forEach((cell) => {
             const titleName = this.mapColour(cell.getAttribute("title"));
@@ -51,6 +63,20 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
             cell.setAttribute("title", this.paramsData[index][0]);
         });
     }
+
+    doValueUpdate_(colour: string) {
+        super.doValueUpdate_(colour);
+        this.applyColour();
+    }
+
+    applyColour() {
+        if (this.borderRect_) {
+            this.borderRect_.style.fill = this.value_;
+        } else if (this.sourceBlock_) {
+            (this.sourceBlock_ as any)?.pathObject?.svgPath?.setAttribute('fill', this.value_);
+            (this.sourceBlock_ as any)?.pathObject?.svgPath?.setAttribute('stroke', '#fff');
+        }
+    };
 
     /**
      * Return the current colour.
@@ -81,4 +107,5 @@ export class FieldColorEnum extends pxtblockly.FieldColorNumber implements Block
             this.sourceBlock_.setColour(colour);
         }
     }
+    
 }

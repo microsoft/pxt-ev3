@@ -1,20 +1,18 @@
-/// <reference path="../node_modules/pxt-core/built/pxteditor.d.ts"/>
+/// <reference path="../node_modules/pxt-core/localtypings/pxteditor.d.ts"/>
 /// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
-import { FieldPorts } from "./field_ports";
+const Blockly = pxt.blocks.requireBlockly();
+
 import { FieldMotors } from "./field_motors";
 import { FieldBrickButtons } from "./field_brickbuttons";
 import { FieldColorEnum } from "./field_color";
 import { FieldMusic } from "./field_music";
 
 pxt.editor.initFieldExtensionsAsync = function (opts: pxt.editor.FieldExtensionOptions): Promise<pxt.editor.FieldExtensionResult> {
-    pxt.debug('loading pxt-ev3 target extensions...')
+    pxt.debug('loading pxt-ev3 target extensions...');
     updateBlocklyShape();
     const res: pxt.editor.FieldExtensionResult = {
         fieldEditors: [{
-            selector: "ports",
-            editor: FieldPorts
-        }, {
             selector: "motors",
             editor: FieldMotors
         }, {
@@ -133,9 +131,3 @@ function updateBlocklyShape() {
     (Blockly as any).Flyout.prototype.MARGIN = 8;
 
 }
-
-// When require()d from node, bind the global pxt namespace
-// namespace pxt {
-//     export const dummyExport = 1;
-// }
-// eval("if (typeof process === 'object' && process + '' === '[object process]') pxt = global.pxt")
