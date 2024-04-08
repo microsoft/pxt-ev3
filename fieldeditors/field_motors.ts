@@ -1,14 +1,18 @@
-/// <reference path="../node_modules/pxt-core/localtypings/blockly.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtblocks.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
+/// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-export interface FieldMotorsOptions extends pxtblockly.FieldImagesOptions {
+import { BlockSvg } from "blockly";
+
+const pxtblockly = pxt.blocks.requirePxtBlockly()
+const Blockly = pxt.blocks.requireBlockly();
+
+export interface FieldMotorsOptions {
+    blocksInfo: any;
     columns?: string;
     width?: string;
     //sort?: boolean;
 }
 
-export class FieldMotors extends pxtblockly.FieldImages implements Blockly.FieldCustom {
+export class FieldMotors extends pxtblockly.FieldImages {
     public isFieldCustom_ = true;
     //public shouldSort_: boolean;
 
@@ -19,9 +23,92 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         this.width_ = parseInt(options.width) || 400;
         //this.shouldSort_ = options.sort;
         this.addLabel_ = true;
+    }
 
-        this.renderSelectedImage_ = Blockly.FieldDropdown.prototype.renderSelectedText_;
-        this.updateSize_ = (Blockly.Field as any).prototype.updateSize_;
+    protected render_(): void {
+        if (this.addLabel_) {
+            this.renderSelectedText_()
+            this.positionBorderRect_();
+        }
+        else {
+            super.render_();
+        }
+    }
+
+    /** Renders the selected option, which must be text. */
+    protected renderSelectedText_() {
+        // Retrieves the selected option to display through getText_.
+        this.getTextContent().nodeValue = this.getDisplayText_();
+        const textElement = this.getTextElement();
+        Blockly.utils.dom.addClass(textElement, 'blocklyDropdownText');
+        textElement.setAttribute('text-anchor', 'start');
+
+        // Height and width include the border rect.
+        const hasBorder = !!this.borderRect_;
+        const height = Math.max(
+            hasBorder ? this.getConstants()!.FIELD_DROPDOWN_BORDER_RECT_HEIGHT : 0,
+            this.getConstants()!.FIELD_TEXT_HEIGHT,
+        );
+        const textWidth = Blockly.utils.dom.getFastTextWidth(
+            this.getTextElement(),
+            this.getConstants()!.FIELD_TEXT_FONTSIZE,
+            this.getConstants()!.FIELD_TEXT_FONTWEIGHT,
+            this.getConstants()!.FIELD_TEXT_FONTFAMILY,
+        );
+        const xPadding = hasBorder
+            ? this.getConstants()!.FIELD_BORDER_RECT_X_PADDING
+            : 0;
+        let arrowWidth = 0;
+        if (this.getSvgArrow()) {
+            arrowWidth = this.positionSVGArrow_(
+                textWidth + xPadding,
+                height / 2 - this.getConstants()!.FIELD_DROPDOWN_SVG_ARROW_SIZE / 2,
+            );
+        }
+        this.size_.width = textWidth + arrowWidth + xPadding * 2;
+        this.size_.height = height;
+
+        this.positionTextElement_(xPadding, textWidth);
+    }
+
+    positionSVGArrow_(x: number, y: number): number {
+        const svgArrow = this.getSvgArrow();
+        if (!svgArrow) {
+            return 0;
+        }
+        const block = this.getSourceBlock();
+        const hasBorder = !!this.borderRect_;
+        const xPadding = hasBorder
+            ? this.getConstants()!.FIELD_BORDER_RECT_X_PADDING
+            : 0;
+        const textPadding = this.getConstants()!.FIELD_DROPDOWN_SVG_ARROW_PADDING;
+        const svgArrowSize = this.getConstants()!.FIELD_DROPDOWN_SVG_ARROW_SIZE;
+        const arrowX = block.RTL ? xPadding : x + textPadding;
+        svgArrow.setAttribute(
+            'transform',
+            'translate(' + arrowX + ',' + y + ')',
+        );
+        return svgArrowSize + textPadding;
+    }
+
+    // This hack exists because svgArrow is private in Blockly's field dropdown.
+    // It should always be the last image element in the field group
+    protected getSvgArrow() {
+        if (this.fieldGroup_) {
+            const children = this.fieldGroup_.children;
+
+            let lastImage: SVGImageElement;
+
+            for (let i = 0; i < children.length; i++) {
+                if (children.item(i).tagName.toLowerCase() === "image") {
+                    lastImage = children.item(i) as SVGImageElement;
+                }
+            }
+
+            return lastImage;
+        }
+
+        return undefined;
     }
 
     /**
@@ -33,7 +120,7 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         if (Blockly.DropDownDiv.hideIfOwner(this)) {
             return;
         }
-        let sourceBlock = this.sourceBlock_ as Blockly.BlockSvg;
+        let sourceBlock = this.sourceBlock_ as BlockSvg;
         // If there is an existing drop-down someone else owns, hide it immediately and clear it.
         Blockly.DropDownDiv.hideWithoutAnimation();
         Blockly.DropDownDiv.clearContent();
@@ -78,13 +165,13 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
             }
             button.style.backgroundColor = backgroundColor;
             button.style.borderColor = sourceBlock.getColourTertiary();
-            Blockly.bindEvent_(button, 'click', this, this.buttonClick_);
-            Blockly.bindEvent_(button, 'mouseover', button, function () {
-                this.setAttribute('class', 'blocklyDropDownButton blocklyDropDownButtonHover');
-                contentDiv.setAttribute('aria-activedescendant', this.id);
+            button.addEventListener("click", (event) => this.buttonClick_(event));
+            button.addEventListener("mouseover", () => {
+                button.setAttribute('class', 'blocklyDropDownButton blocklyDropDownButtonHover');
+                contentDiv.setAttribute('aria-activedescendant', button.id);
             });
-            Blockly.bindEvent_(button, 'mouseout', button, function () {
-                this.setAttribute('class', 'blocklyDropDownButton');
+            button.addEventListener("mouseout", () => {
+                button.setAttribute('class', 'blocklyDropDownButton');
                 contentDiv.removeAttribute('aria-activedescendant');
             });
             let buttonImg = document.createElement('img');
@@ -125,12 +212,4 @@ export class FieldMotors extends pxtblockly.FieldImages implements Blockly.Field
         }
     }
 
-    trimOptions_() {
-    }
-
-    protected buttonClick_ = function (e: any) {
-        let value = e.target.getAttribute('data-value');
-        this.setValue(value);
-        Blockly.DropDownDiv.hide();
-    };
 }

@@ -1,24 +1,26 @@
-/// <reference path="../node_modules/pxt-core/localtypings/blockly.d.ts"/>
-/// <reference path="../node_modules/pxt-core/built/pxtsim.d.ts"/>
+/// <reference path="../node_modules/pxt-core/localtypings/pxtblockly.d.ts"/>
 
-export interface FieldPortsOptions extends Blockly.FieldCustomDropdownOptions {
+import { BlockSvg } from "blockly";
+
+const Blockly = pxt.blocks.requireBlockly();
+
+export interface FieldPortsOptions {
+    data: string;
     columns?: string;
     width?: string;
 }
 
-export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.FieldCustom {
+export class FieldBrickButtons extends Blockly.FieldDropdown {
+
     public isFieldCustom_ = true;
 
-    // Width in pixels
-    private width_: number;
-
-    // Columns in grid
-    private columns_: number;
+    private width_: number; // Width in pixels
+    private columns_: number; // Columns in grid
 
     private savedPrimary_: string;
 
     constructor(text: string, options: FieldPortsOptions, validator?: Function) {
-        super(options.data);
+        super(options.data as any);
 
         this.columns_ = parseInt(options.columns) || 4;
         this.width_ = parseInt(options.width) || 150;
@@ -96,20 +98,24 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
             const title = pxsim.svg.child(button, 'title');
             title.textContent = content;
 
-            Blockly.bindEvent_(button, 'click', this, this.buttonClick_);
-            Blockly.bindEvent_(button, 'mouseup', this, this.buttonClick_);
+            button.addEventListener("click", (event) => {
+                this.buttonClick_(event);
+            });
+            button.addEventListener("mouseup", (event) => {
+                this.buttonClick_(event);
+            });
             // These are applied manually instead of using the :hover pseudoclass
             // because Android has a bad long press "helper" menu and green highlight
             // that we must prevent with ontouchstart preventDefault
-            Blockly.bindEvent_(button, 'mousedown', button, function (e) {
-                this.setAttribute('stroke', '#ffffff');
-                e.preventDefault();
+            button.addEventListener("mousedown", (event) => {
+                button.setAttribute('stroke', '#ffffff');
+                event.preventDefault();
             });
-            Blockly.bindEvent_(button, 'mouseover', button, function () {
-                this.setAttribute('stroke', '#ffffff');
+            button.addEventListener("mouseover", (event) => {
+                button.setAttribute('stroke', '#ffffff');
             });
-            Blockly.bindEvent_(button, 'mouseout', button, function () {
-                this.setAttribute('stroke', 'transparent');
+            button.addEventListener("mouseout", (event) => {
+                button.setAttribute('stroke', 'transparent');
             });
 
             button.setAttribute('data-value', value);
@@ -124,12 +130,12 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
         Blockly.DropDownDiv.showPositionedByField(this, this.onHide_.bind(this));
 
         // Update colour to look selected.
-        let source = this.sourceBlock_ as Blockly.BlockSvg;
+        let source = this.sourceBlock_ as BlockSvg;
         this.savedPrimary_ = source?.getColour();
         if (source?.isShadow()) {
             source.setColour(source.getColourTertiary());
         } else if (this.borderRect_) {
-            this.borderRect_.setAttribute('fill', (this.sourceBlock_ as Blockly.BlockSvg).getColourTertiary());
+            this.borderRect_.setAttribute('fill', (this.sourceBlock_ as BlockSvg).getColourTertiary());
         }
     }
 
@@ -155,7 +161,7 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
         content.removeAttribute('aria-activedescendant');
         (content as HTMLElement).style.width = '';
         // Update color (deselect) on dropdown hide
-        let source = this.sourceBlock_ as Blockly.BlockSvg;
+        let source = this.sourceBlock_ as BlockSvg;
         if (source?.isShadow()) {
             source.setColour(this.savedPrimary_);
         } else if (this.borderRect_) {

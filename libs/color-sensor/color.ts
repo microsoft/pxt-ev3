@@ -146,7 +146,9 @@ namespace sensors {
         //% blockId=colorOnColorDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=100 blockGap=8
         //% group="Color Sensor"
         onColorDetected(color: number, handler: () => void) {
@@ -166,7 +168,9 @@ namespace sensors {
         //% blockId=colorpauseUntilColorDetectedDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=98 blockGap=8
         //% group="Color Sensor"
         pauseUntilColorDetected(color: number) {
@@ -186,7 +190,9 @@ namespace sensors {
         //% blockId=colorGetColor
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=97 blockGap=8
         //% group="Color Sensor"
         color(): ColorSensorColor {
@@ -204,7 +210,9 @@ namespace sensors {
         //% blockId=colorisColorDetectedDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=99 blockGap=8
         //% group="Color Sensor"
         isColorDetected(color: number) {
@@ -219,7 +227,9 @@ namespace sensors {
         //% blockId=colorRgbRaw block="**color sensor** %this| RGB raw"
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=89
         //% group="Color Sensor"
         rgbRaw(): number[] {
@@ -238,7 +248,9 @@ namespace sensors {
         //% blockId=colorOnLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=79 blockGap=8
         //% group="Color Sensor"
         onLightDetected(mode: LightIntensityMode, condition: Light, handler: () => void) {
@@ -255,7 +267,9 @@ namespace sensors {
         //% blockId=colorPauseUntilLightDetected
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=78 blockGap=8
         //% group="Color Sensor"
         pauseUntilLightDetected(mode: LightIntensityMode, condition: Light) {
@@ -273,7 +287,9 @@ namespace sensors {
         //% blockId=colorLight
         //% parts="colorsensor"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=77
         //% group="Color Sensor"
         light(mode: LightIntensityMode) {
@@ -319,7 +335,9 @@ namespace sensors {
         //% help=sensors/color-sensor/set-threshold
         //% blockId=colorSetThreshold block="set **color sensor** %this|%condition|to %value"
         //% value.min=0 value.max=100
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=67 blockGap=8
         //% group="Color Sensor"
         setThreshold(condition: Light, value: number) {
@@ -340,7 +358,9 @@ namespace sensors {
          */
         //% help=sensors/color-sensor/threshold
         //% blockId=colorGetThreshold block="**color sensor** %this|%condition"
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=68 blockGap=8
         //% group="Color Sensor"
         threshold(condition: Light): number {
@@ -357,7 +377,9 @@ namespace sensors {
          */
         //% help=sensors/color-sensor/calibrate-light
         //% blockId=colorCalibrateLight block="calibrate **color sensor** %this|for %mode"
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=69 blockGap=8
         //% group="Color Sensor"
         calibrateLight(mode: LightIntensityMode, deviation: number = 8) {
