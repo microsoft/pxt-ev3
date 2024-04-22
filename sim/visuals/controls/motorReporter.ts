@@ -1,5 +1,3 @@
-
-
 namespace pxsim.visuals {
 
     export class MotorReporterControl extends ControlView<MotorNode> {

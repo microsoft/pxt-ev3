@@ -82,15 +82,17 @@ namespace pxsim {
                             const motors = ev3board().getMotor(port);
                             // cancel any other sync command
                             for(const motor of ev3board().getMotors().filter(motor => motors.indexOf(motor) < 0)) {
-                                motor.clearSyncCmd()
+                                motor.clearSyncCmd();
                             }
 
                             // apply commands to all motors
                             for (const motor of motors) {
+                                const invertedFactor = motor.isInverted() ? -1 : 1;
+                                //console.log(`motor.port: ${motor.port}, invertedFactor: ${invertedFactor}, speed * inv: ${speed * invertedFactor}`);
                                 const otherMotor = motors.filter(m => m.port != motor.port)[0];
                                 motor.setSyncCmd(
                                     otherMotor,
-                                    cmd, [speed, turnRatio, stepsOrTime, brake]);
+                                    cmd, [speed * invertedFactor, turnRatio, stepsOrTime, brake]);
                             }
                             return 2;
                         }
@@ -119,7 +121,16 @@ namespace pxsim {
                             return 2;
                         }
                         case DAL.opOutputPolarity: {
-                            console.error("opOutputPolarity not supported");
+                            const portIndex = buf.data[1];
+                            for (let i = 0, offset = 2; i < DAL.NUM_OUTPUTS; i++) {
+                                if (portIndex & (1 << i)) {
+                                    const inverted = pxsim.BufferMethods.getNumber(buf, BufferMethods.NumberFormat.Int8LE, offset) == -1? true : false;
+                                    //console.log(`port${i}: ${inverted}`);
+                                    const motor = ev3board().getMotors()[i];
+                                    if (motor) motor.setInverted(inverted);
+                                    offset++;
+                                }
+                            }
                             return 2;
                         }
                         case DAL.opOutputSetType: {
