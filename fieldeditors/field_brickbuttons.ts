@@ -21,8 +21,8 @@ export class FieldBrickButtons extends Blockly.FieldDropdown {
 
     constructor(text: string, options: FieldPortsOptions, validator?: Function) {
         super(options.data as any);
-
-        this.columns_ = parseInt(options.columns) || 4;
+        
+        this.columns_ = parseInt(options.columns) || 1;
         this.width_ = parseInt(options.width) || 150;
     }
 
@@ -86,7 +86,7 @@ export class FieldBrickButtons extends Blockly.FieldDropdown {
             d: 'M 157.78865,189.01028 108.18908,189.38233 70.654464,150.794 86.323259,135.4895 v -28.08625 h 14.101921 v 16.11144 a 12.006218,12.006218 0 0 0 11.85346,11.9788 c 11.59882,0.1841 43.13227,0 43.13227,0 a 10.18472,10.18472 0 0 0 10.38059,-10.38058 v -17.70966 h 14.39179 v 28.08632 l 15.3045,15.3045 z'
         })
 
-        const buttons = [buttonEnter, buttonLeft, buttonRight, buttonTop, buttonBottom];
+        const buttons = [buttonEnter, buttonLeft, buttonTop, buttonBottom, buttonRight];
         const options = this.getOptions();
         for (let i = 0, option: any; option = options[i]; i++) {
             let content = (options[i] as any)[0]; // Human-readable text or image.
