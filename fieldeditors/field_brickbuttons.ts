@@ -4,7 +4,7 @@ import { BlockSvg } from "blockly";
 
 const Blockly = pxt.blocks.requireBlockly();
 
-export interface FieldPortsOptions {
+export interface FieldBrickButtonsOptions {
     data: string;
     columns?: string;
     width?: string;
@@ -19,7 +19,7 @@ export class FieldBrickButtons extends Blockly.FieldDropdown {
 
     private savedPrimary_: string;
 
-    constructor(text: string, options: FieldPortsOptions, validator?: Function) {
+    constructor(text: string, options: FieldBrickButtonsOptions, validator?: Function) {
         super(options.data as any);
         
         this.columns_ = parseInt(options.columns) || 1;
