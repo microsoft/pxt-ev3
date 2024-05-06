@@ -110,14 +110,128 @@ export class Ev3Wrapper {
         })
     }
 
+    dumpInputCmd(buf : Uint8Array) {
+        log(`Reply size: ${HF2.read16(buf, 0)}`);
+        log(`Message counter: ${HF2.read16(buf, 2)}`);
+        log(`Reply type: ${buf[4]}`);
+        switch (buf[5]) {
+            case 0x03:
+                log("System command: System command reply OK");
+                break;
+            case 0x05:
+                log("System command: System command reply ERROR");
+                break;
+            case 0x00:
+                log("Reply Status SUCCESS");
+                break;
+            case 0x01:
+                log("Reply Status UNKNOWN_HANDLE");
+                break;
+            case 0x02:
+                log("Reply Status HANDLE_NOT_READY");
+                break;
+            case 0x03:
+                log("Reply Status CORRUPT_FILE");
+                break;
+            case 0x04:
+                log("Reply Status NO_HANDLES_AVAILABLE");
+                break;
+            case 0x05:
+                log("Reply Status NO_PERMISSION");
+                break;
+            case 0x06:
+                log("Reply Status ILLEGAL_PATH");
+                break;
+            case 0x07:
+                log("Reply Status FILE_EXITS");
+                break;
+            case 0x08:
+                log("Reply Status END_OF_FILE");
+                break;
+            case 0x09:
+                log("Reply Status SIZE_ERROR");
+                break;
+            case 0x0A:
+                log("Reply Status UNKNOWN_ERROR");
+                break;
+            case 0x0B:
+                log("Reply Status ILLEGAL_FILENAME");
+                break;
+            case 0x0C:
+                log("Reply Status ILLEGAL_CONNECTION");
+                break;
+        }
+    }
+
+    dumpOutputCmd(buf: Uint8Array) {
+        log(`Command size: ${HF2.read16(buf, 0)}`);
+        log(`Message counter: ${HF2.read16(buf, 2)}`);
+        log(`Command type: ${buf[4]}`);
+        switch (buf[5]) {
+            case 0x01:
+                log("System command, reply required");
+                break;
+            case 0x81:
+                log("System command, reply not require");
+                break;
+            case 0x92:
+                log("System command: Begin file download");
+                break;
+            case 0x93:
+                log("System command: Continue file download");
+                break;
+            case 0x94:
+                log("System command: Begin file upload");
+                break;
+            case 0x95:
+                log("System command: Continue file upload");
+                break;
+            case 0x96:
+                log("System command: Begin get bytes from a file (while writing to the file)");
+                break;
+            case 0x97:
+                log("System command: Continue get byte from a file (while writing to the file)");
+                break;
+            case 0x98:
+                log("System command: Close file handle");
+                break;
+            case 0x99:
+                log("System command: List files");
+                break;
+            case 0x9A:
+                log("System command: Continue list files");
+                break;
+            case 0x9B:
+                log("System command: Create directory");
+                break;
+            case 0x9C:
+                log("System command: Delete");
+                break;
+            case 0x9D:
+                log("System command: List handles");
+                break;
+            case 0x9E:
+                log("System command: Write to mailbox");
+                break;
+            case 0x9F:
+                log("System command: Transfer trusted pin code to brick");
+                break;
+            case 0xA0:
+                log("System command: Restart the brick in Firmware update mode");
+                break;
+        }
+    }
+
     talkAsync(buf: Uint8Array, altResponse = 0) {
         return this.lock.enqueue("talk", () => {
             this.msgs.drain()
             if (this.dataDump)
                 log("TALK: " + U.toHex(buf))
+            this.dumpOutputCmd(buf)
             return this.io.sendPacketAsync(buf)
                 .then(() => this.msgs.shiftAsync(5000))
                 .then(resp => {
+                    this.dumpInputCmd(resp)
                     if (resp[2] != buf[2] || resp[3] != buf[3])
                         U.userError("msg count de-sync")
                     if (buf[4] == 1) {

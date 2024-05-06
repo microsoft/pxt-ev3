@@ -14,6 +14,7 @@ export function debug() {
 }
 
 // Web Serial API https://wicg.github.io/serial/
+// https://www.npmjs.com/package/@types/web-bluetooth
 // chromium bug https://bugs.chromium.org/p/chromium/issues/detail?id=884928
 // Under experimental features in Chrome Desktop 77+
 enum ParityType {
@@ -63,26 +64,37 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
         console.log(`serial: new io`)
     }
 
+    bufferSize(buffer: Uint8Array) {
+        return HF2.read16(buffer, 0) + 2;
+    }
+
     async readSerialAsync() {
         this._reader = this.port.readable.getReader();
         let buffer: Uint8Array;
         const reader = this._reader;
         while (reader === this._reader) { // will change if we recycle the connection
-            const { done, value } = await this._reader.read()
+            const { done, value } = await this._reader.read();
             if (!buffer) buffer = value;
             else { // concat
-                let tmp = new Uint8Array(buffer.length + value.byteLength)
-                tmp.set(buffer, 0)
-                tmp.set(value, buffer.length)
+                let tmp = new Uint8Array(buffer.length + value.byteLength);
+                tmp.set(buffer, 0);
+                tmp.set(value, buffer.length);
                 buffer = tmp;
             }
             if (buffer) {
-                let size = HF2.read16(buffer, 0);
-                if (buffer.length == size + 2) {
+                let size = this.bufferSize(buffer);
+                if (buffer.length == size) {
                     this.onData(new Uint8Array(buffer));
                     buffer = undefined;
+                } else if (buffer.length > size) {
+                    console.warn(`Received larger bufer then command command: ${buffer.length} recieved but waiting for ${size}`);
+                    let tmp = buffer.slice(0, size - 1);
+                    this.onData(new Uint8Array(tmp));
+                    tmp = buffer.slice(size, buffer.length - 1);
+                    buffer = tmp;
+                    console.debug(`Next buffer size: ${this.bufferSize(buffer)}`);
                 } else {
-                    console.warn("Incomplete command " + size);
+                    console.warn(`Incomplete command: ${buffer.length} recieved but waiting for ${size}. Keep waiting...`);
                 }
             }
         }
@@ -97,6 +109,9 @@ class WebSerialPackageIO implements pxt.packetio.PacketIO {
         const serial = (<any>navigator).serial;
         if (serial) {
             try {
+                // const requestOptions: SerialPortRequestOptions = {
+                //     filters: [{ usbVendorId: 0x0694, usbProductId: 0x0005 }],
+                // };
                 const requestOptions: SerialPortRequestOptions = {};
                 const port = await serial.requestPort(requestOptions);
 
