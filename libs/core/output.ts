@@ -194,10 +194,11 @@ namespace motors {
          * Sets the automatic brake on or off when the motor is off
          * @param brake a value indicating if the motor should break when off
          */
-        //% blockId=outputMotorSetBrakeMode block="set %motor|brake %brake=toggleOnOff"
+        //% blockId=outputMotorSetBrakeMode block="set %motor|brake $brake"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=60 blockGap=8
+        //% brake.shadow="toggleOnOff"
         //% group="Properties"
         //% help=motors/motor/set-brake
         setBrake(brake: boolean) {
@@ -207,30 +208,32 @@ namespace motors {
 
         /**
          * Indicates to pause while a motor moves for a given distance or duration.
-         * @param value true to pause; false to continue the program execution
+         * @param brake true to pause; false to continue the program execution
          */
-        //% blockId=outputMotorSetPauseMode block="set %motor|pause on run %brake=toggleOnOff"
+        //% blockId=outputMotorSetPauseMode block="set %motor|pause on run $brake"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
+        //% brake.shadow="toggleOnOff"
         //% weight=60 blockGap=8
         //% group="Properties"
-        setPauseOnRun(value: boolean) {
+        setPauseOnRun(brake: boolean) {
             this.init();
-            this._pauseOnRun = value;
+            this._pauseOnRun = brake;
         }
 
         /**
          * Inverts the motor polarity
         */
-        //% blockId=motorSetInverted block="set %motor|inverted %reversed=toggleOnOff"
+        //% blockId=motorSetInverted block="set %motor|inverted $reversed"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=59 blockGap=8
+        //% reversed.shadow="toggleOnOff"
         //% group="Properties"
         //% help=motors/motor/set-inverted
-        setInverted(inverted: boolean) {
+        setInverted(reversed: boolean) {
             this.init();
-            this._inverted = inverted;
+            this._inverted = reversed;
         }
 
         protected invertedFactor(): number {
@@ -240,7 +243,7 @@ namespace motors {
         /**
          * Set the settle time after braking in milliseconds (default is 10ms).
         */
-        //% blockId=motorSetBrakeSettleTime block="set %motor|brake settle time %millis|ms"
+        //% blockId=motorSetBrakeSettleTime block="set %motor|brake settle time $millis|ms"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=1 blockGap=8
@@ -344,11 +347,12 @@ namespace motors {
          * @param value (optional) measured distance or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorRun block="run %motor at %speed=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorRun block="run %motor at $speed|\\%||for $value $unit"
         //% weight=100 blockGap=8
         //% group="Move"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
+        //% speed.shadow="motorSpeedPicker"
         //% expandableArgumentMode=toggle
         //% help=motors/motor/run
         run(speed: number, value: number = 0, unit: MoveUnit = MoveUnit.MilliSeconds) {
@@ -394,11 +398,12 @@ namespace motors {
          * @param acceleration acceleration phase measured distance or rotation, eg: 500
          * @param deceleration deceleration phase measured distance or rotation, eg: 500
          */
-        //% blockId=motorSchedule block="ramp %motor at %speed=motorSpeedPicker|\\%|for %value|%unit||accelerate %acceleration|decelerate %deceleration"
+        //% blockId=motorSchedule block="ramp %motor at $speed|\\%|for $value|$unit||accelerate $acceleration|decelerate $deceleration"
         //% weight=99 blockGap=8
         //% group="Move"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
+        //% speed.shadow="motorSpeedPicker"
         //% help=motors/motor/ramp
         //% inlineInputMode=inline
         //% expandableArgumentMode=toggle
@@ -426,7 +431,7 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunRamp block="set %motor|run %ramp to $value||$unit"
+        //% blockId=outputMotorsetRunRamp block="set %motor|run %phase to $value||$unit"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=21 blockGap=8
@@ -498,9 +503,10 @@ namespace motors {
          * Indicates if the motor(s) speed should be regulated. Default is true.
          * @param value true for regulated motor
          */
-        //% blockId=outputMotorSetRegulated block="set %motor|regulated %value=toggleOnOff"
+        //% blockId=outputMotorSetRegulated block="set %motor|regulated $value"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
+        //% value.shadow="toggleOnOff"
         //% weight=58 blockGap=8
         //% group="Properties"
         //% help=motors/motor/set-regulated
@@ -524,11 +530,12 @@ namespace motors {
          * Pauses the execution until the previous command finished.
          * @param timeOut optional maximum pausing time in milliseconds
          */
-        //% blockId=motorPauseUntilRead block="pause until %motor|ready"
+        //% blockId=motorPauseUntilRead block="pause until %motor|ready||timeout $timeOut"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=90 blockGap=8
         //% group="Move"
+        //% expandableArgumentMode="toggle"
         pauseUntilReady(timeOut?: number) {
             pauseUntil(() => this.isReady(), timeOut);
         }
@@ -642,12 +649,14 @@ namespace motors {
 
         /**
          * Pauses the program until the motor is stalled.
+         * @param timeOut optional maximum pausing time in milliseconds
          */
-        //% blockId=motorPauseUntilStall block="pause until %motor|stalled"
+        //% blockId=motorPauseUntilStall block="pause until %motor|stalled||timeout $timeOut"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=89
         //% group="Move"
+        //% expandableArgumentMode="toggle"
         //% help=motors/motor/pause-until-stalled
         pauseUntilStalled(timeOut?: number): void {
             // let it start
@@ -720,10 +729,12 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairTank block="tank **motors** %motors %speedLeft=motorSpeedPicker|\\% %speedRight=motorSpeedPicker|\\%||for %value %unit"
+        //% blockId=motorPairTank block="tank **motors** %motors $speedLeft|\\% $speedRight|\\%||for $value $unit"
         //% motors.fieldEditor="motors"
         //% weight=96 blockGap=8
         //% inlineInputMode=inline
+        //% speedLeft.shadow="motorSpeedPicker"
+        //% speedRight.shadow="motorSpeedPicker"
         //% group="Move"
         //% expandableArgumentMode=toggle
         //% help=motors/synced/tank
@@ -750,10 +761,12 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairSteer block="steer **motors** %chassis turn ratio %turnRatio=motorTurnRatioPicker speed %speed=motorSpeedPicker|\\%||for %value %unit"
-        //% chassis.fieldEditor="motors"
+        //% blockId=motorPairSteer block="steer **motors** %motors turn ratio $turnRatio speed $speed|\\%||for $value $unit"
+        //% motors.fieldEditor="motors"
         //% weight=95
+        //% turnRatio.shadow="motorTurnRatioPicker"
         //% turnRatio.min=-200 turnRatio=200
+        //% speed.shadow="motorSpeedPicker"
         //% inlineInputMode=inline
         //% group="Move"
         //% expandableArgumentMode=toggle
