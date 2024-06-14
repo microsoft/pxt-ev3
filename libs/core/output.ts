@@ -431,7 +431,7 @@ namespace motors {
          * Specifies the amount of rotation or time for the acceleration
          * of run commands.
          */
-        //% blockId=outputMotorsetRunRamp block="set %motor|run %phase to $value||$unit"
+        //% blockId=outputMotorsetRunRamp block="set %motor|run %ramp to $value||$unit"
         //% motor.fieldEditor="motors"
         //% motor.fieldOptions.decompileLiterals=1
         //% weight=21 blockGap=8
@@ -761,8 +761,8 @@ namespace motors {
          * @param value (optional) move duration or rotation
          * @param unit (optional) unit of the value
          */
-        //% blockId=motorPairSteer block="steer **motors** %motors turn ratio $turnRatio speed $speed|\\%||for $value $unit"
-        //% motors.fieldEditor="motors"
+        //% blockId=motorPairSteer block="steer **motors** %chassis turn ratio $turnRatio speed $speed|\\%||for $value $unit"
+        //% chassis.fieldEditor="motors"
         //% weight=95
         //% turnRatio.shadow="motorTurnRatioPicker"
         //% turnRatio.min=-200 turnRatio=200
