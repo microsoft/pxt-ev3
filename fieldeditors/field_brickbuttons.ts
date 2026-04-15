@@ -74,18 +74,19 @@ export class FieldBrickButtons extends Blockly.FieldDropdown implements Blockly.
             d: 'm 109.27806,78.357208 h 46.9398 a 1.782326,1.782326 0 0 1 1.78233,1.782326 V 124.7016 a 1.782326,1.782326 0 0 1 -1.78233,1.78233 h -46.9398 a 1.782326,1.782326 0 0 1 -1.78233,-1.78233 V 80.139534 a 1.782326,1.782326 0 0 1 1.78233,-1.782326 z'
         })
 
-        const buttonTop = pxsim.svg.child(gInnerWrapper, 'path', {
+        const buttonUp = pxsim.svg.child(gInnerWrapper, 'path', {
             style: 'fill:#a8a9a8;stroke-width:3.91719985',
             d: 'm 108.09114,15.967966 49.90905,-0.59542 37.43276,38.619675 -15.44943,15.449437 V 97.367379 H 165.7249 V 81.306861 A 11.978797,11.978797 0 0 0 153.84012,69.422075 c -11.59883,-0.184102 -43.37516,0 -43.37516,0 A 9.6676495,9.6676495 0 0 0 100.36251,79.520618 V 97.347793 H 86.103905 V 69.422075 L 70.654464,53.97264 Z'
         })
 
-        const buttonBottom = pxsim.svg.child(gInnerWrapper, 'path', {
+        const buttonDown = pxsim.svg.child(gInnerWrapper, 'path', {
             style: 'fill:#a8a9a8;stroke-width:3.91719985',
             d: 'M 157.78865,189.01028 108.18908,189.38233 70.654464,150.794 86.323259,135.4895 v -28.08625 h 14.101921 v 16.11144 a 12.006218,12.006218 0 0 0 11.85346,11.9788 c 11.59882,0.1841 43.13227,0 43.13227,0 a 10.18472,10.18472 0 0 0 10.38059,-10.38058 v -17.70966 h 14.39179 v 28.08632 l 15.3045,15.3045 z'
         })
 
-        const buttons = [buttonEnter, buttonLeft, buttonRight, buttonTop, buttonBottom];
+        const buttons = [buttonDown, buttonEnter, buttonLeft, buttonRight, buttonUp];
         const options = this.getOptions();
+        options.sort((a, b) => a[1].localeCompare(b[1]));
         for (let i = 0, option: any; option = options[i]; i++) {
             let content = (options[i] as any)[0]; // Human-readable text or image.
             const value = (options[i] as any)[1]; // Language-neutral value.
