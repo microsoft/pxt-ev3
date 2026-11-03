@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "pxt-common-packages": "14.2.1",
-    "pxt-core": "13.2.13"
+    "pxt-core": "13.2.18"
   },
   "overrides": {
       "@blockly/field-grid-dropdown": {
